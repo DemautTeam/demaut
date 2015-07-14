@@ -45,6 +45,6 @@ public class AnnexeServiceTest {
     public void shouldStoreAnnexe() throws Exception {
         byte[] content = "Ce fichier doit contenir un content non vide".getBytes();
         Annexe annexe = new Annexe("Test_annexe.pdf", (long)content.length, "pdf", content);
-        assertTrue(annexeService.storeAnnexe(annexe)); // TODO bug openjpa transactional
+        assertTrue(annexeService.storeAnnexe(annexe));
     }
 }
