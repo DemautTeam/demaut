@@ -16,7 +16,7 @@ import static org.junit.Assert.assertNotNull;
 @ContextConfiguration({"classpath*:/persistenceTest-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class AnnexeDemautRepositoryImplTest {
+public class AnnexeDemautRepositoryTest {
 
     @Autowired
     private AnnexeDemautRepository annexeDemautRepository;
@@ -27,14 +27,12 @@ public class AnnexeDemautRepositoryImplTest {
     }
 
     @Test
-//    @Transactional
     public void shouldFindAnnexeById() throws Exception {
         Annexe annexe = annexeDemautRepository.find((long) 100);
         assertNotNull(annexe);
     }
 
     @Test
-//    @Transactional
     public void shouldSaveNewAnnexe() throws Exception {
         byte[] content = "Ce fichier doit contenir un content non vide".getBytes();
         Annexe annexe = new Annexe("Test_annexe.pdf", (long)content.length, "pdf", content);
