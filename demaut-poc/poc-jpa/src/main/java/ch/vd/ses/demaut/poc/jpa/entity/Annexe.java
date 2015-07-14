@@ -10,23 +10,25 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @javax.persistence.Entity
+@Table(name = "ANNEXE")
 public class Annexe implements Serializable {
 
     @Id
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(length = 50, nullable = false)
+    @Column(name = "NAME", length = 50, nullable = false)
     private String name;
 
-    @Column
+    @Column(name = "SIZE")
     private Long size;
 
-    @Column(length = 100, nullable = false)
+    @Column(name="TYPE", length = 100, nullable = false)
     private String type;
 
     @Lob
-    @Column(nullable = false)
+    @Column(name = "FILE", nullable = false)
     protected  byte[] file;
 
 

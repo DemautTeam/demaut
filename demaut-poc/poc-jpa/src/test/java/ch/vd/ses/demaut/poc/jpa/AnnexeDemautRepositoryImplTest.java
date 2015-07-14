@@ -10,14 +10,13 @@ import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.assertNotNull;
 
 @ContextConfiguration({"classpath*:/persistenceTest-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class AnnexeDemautRepositoryTest {
+public class AnnexeDemautRepositoryImplTest {
 
     @Autowired
     private AnnexeDemautRepository annexeDemautRepository;
@@ -28,14 +27,14 @@ public class AnnexeDemautRepositoryTest {
     }
 
     @Test
-    @Transactional
+//    @Transactional
     public void shouldFindAnnexeById() throws Exception {
         Annexe annexe = annexeDemautRepository.find((long) 100);
         assertNotNull(annexe);
     }
 
     @Test
-    @Transactional
+//    @Transactional
     public void shouldSaveNewAnnexe() throws Exception {
         byte[] content = "Ce fichier doit contenir un content non vide".getBytes();
         Annexe annexe = new Annexe("Test_annexe.pdf", (long)content.length, "pdf", content);

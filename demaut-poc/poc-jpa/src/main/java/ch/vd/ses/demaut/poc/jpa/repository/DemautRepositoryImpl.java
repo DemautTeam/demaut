@@ -8,7 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
 
-public class DemautRepositoryImpl<T, I> implements DemautRepository<T, I> {
+public abstract class DemautRepositoryImpl<T, I> implements DemautRepository<T, I> {
 
     protected Class<T> entityClass;
 
