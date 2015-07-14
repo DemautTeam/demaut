@@ -1,7 +1,7 @@
 package ch.vd.ses.demaut.poc.domain;
 
 import ch.vd.ses.demaut.poc.jpa.entity.Annexe;
-import ch.vd.ses.demaut.poc.jpa.repository.AnnexeDemautRepository;
+import ch.vd.ses.demaut.poc.jpa.repository.AnnexeDemautRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,21 +11,21 @@ import java.util.List;
 public class AnnexeServiceImpl implements AnnexeService {
 
     @Autowired
-    private AnnexeDemautRepository annexeDemautRepository;
+    private AnnexeDemautRepositoryImpl annexeDemautRepositoryImpl;
 
     @Override
     public List<Annexe> fetchAnnexes() {
-        return annexeDemautRepository.findAll();
+        return annexeDemautRepositoryImpl.findAll();
     }
 
     @Override
     public Annexe fetchAnnexeByName(String annexeName) {
-        return annexeDemautRepository.fetchByName(annexeName);
+        return annexeDemautRepositoryImpl.fetchByName(annexeName);
     }
 
     @Override
     public boolean storeAnnexe(Annexe annexe) {
-        Annexe savedAnnexe = annexeDemautRepository.save(annexe);
+        Annexe savedAnnexe = annexeDemautRepositoryImpl.save(annexe);
         return savedAnnexe != null && savedAnnexe.getId() != null;
     }
 }
