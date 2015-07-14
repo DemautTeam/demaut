@@ -49,11 +49,11 @@
     </bean>
 
     <!-- TransactionManager is required -->
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+    <bean id="transactionManagerDemaut" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
-    <tx:annotation-driven/>
+    <tx:annotation-driven transaction-manager="transactionManagerDemaut"/>
 
     <context:annotation-config/>
     <context:component-scan base-package="ch.vd.ses.demaut"/>
