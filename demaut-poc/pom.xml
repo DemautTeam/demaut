@@ -849,11 +849,17 @@
     </build>
     <distributionManagement>
         <snapshotRepository>
-            <id>DEMAUT-repo</id>
-            <name>DEMAUT-repo</name>
-            <url>http://spip.etat-de-vaud.ch:8081/nexus/content/repositories/snapshots</url>
+            <id>DEMAUT-repo-snapshots</id>
+            <name>DEMAUT-repo-snapshots</name>
+            <url>http://spip.etat-de-vaud.ch:8081/nexus/content/repositories/snapshots/</url>
             <layout>default</layout>
         </snapshotRepository>
+        <repository>
+            <id>DEMAUT-repo</id>
+            <name>DEMAUT-repo</name>
+            <url>http://spip.etat-de-vaud.ch:8081/nexus/content/repositories/releases/</url>
+            <layout>default</layout>
+        </repository>
     </distributionManagement>
 
 </project>
