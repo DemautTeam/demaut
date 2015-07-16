@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html ng-app="ngApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap-usabilis.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" language="Javascript" src="js/jquery-1.11.1.js"></script>
+    <script type="text/javascript" language="Javascript" src="js/bootstrap.js"></script>
+
+    <script type="text/javascript" language="JavaScript" src="js/angular.js"></script>
+    <script type="text/javascript" language="JavaScript" src="js/angular-sanitize.js"></script>
+
+    <script type="text/javascript" language="JavaScript" src="js/app.js"></script>
+
+
+    <style>
+        /* Ici se définit l'image d'entête propre à l'application */
+        .navbar-application {
+            background: url("img/longemalles.jpg") no-repeat right;
+        }
+
+        .navbar-brand {
+            background: url("img/logo_vd_mono.png") no-repeat 15px 1px;
+            padding-left: 50px;
+        }
+    </style>
+
+    <title>poc</title>
+</head>
+<body ng-controller="Demo1Controller">
+
+<div id="wrap">
+
+    <!-- la barre de menu -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="navbar-fat-header">
+            <div ng-if="!main.environment" class="navbar-logo"></div>
+
+            <!-- Entête spécial pour les environnements hors-prod -->
+            <div ng-if="main.environment" class="navbar-env-hors-prod">
+                <div>Canton<br/>de Vaud</div>
+                <div>Intégration<br/>Version {{main.buildVersion}}</div>
+            </div>
+            <div class="navbar-application">
+                <div>SPOP<br/>Demo1</div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Demo1</a>
+            </div>
+
+            <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="">Suivi</a></li>
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown"><span
+                                class="glyphicon glyphicon-user"></span> Menu {{main.user}} <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/iam/accueil">Portail IAM</a></li>
+                            <li><a href="#" onclick="$('body').toggleClass('compact'); return false;">Vue
+                                compacte/normale</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!--/.navbar-collapse -->
+        </div>
+    </div>
+
+    <!-- le corps principal -->
+    <div class="container">
+        <!-- Onglet paramètres -->
+        <div class="bloc" style="margin-top: 10px">
+             Contenu page d'accueil
+            <button ng-click="onClickTest1()" class="btn btn-default">Test appel REST 1 avec traitement dans une route camel</button>
+            <button ng-click="onClickTest2()" class="btn btn-default">Test appel REST 2 sans route</button>
+
+        </div>
+    </div>
+    <div id="push"></div>
+</div>
+
+<!-- le pied de page -->
+<div id="footer">
+    <div class="container">
+        <p style="margin-top:9px;">
+		<span class="disclaimer" style="color: white;">
+			<span class="glyphicon glyphicon-info-sign"></span>
+		</span>
+		<span class="muted credit pull-right">
+			<strong>Version <span style="color: white">{{main.version}}</span></strong>
+		</span>
+        </p>
+    </div>
+</div>
+</body>
+</html>
