@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" 
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+  <proxies>
+    <proxy>
+      <id>optional</id>
+      <active>true</active>
+      <protocol>http</protocol>
+      <host>webproxy.vd.ch</host>
+      <port>8080</port>
+    </proxy>
+  </proxies>
+
+  <profiles>
+    <profile>
+      <id>alwaysActiveProfile</id>
+      <repositories>
+        <repository>
+          <id>DSI-repo</id>
+          <name>DSI-repo</name>
+          <url>http://spip.etat-de-vaud.ch:8081/nexus/content/repositories/releases</url>
+          <layout>default</layout>
+        </repository>
+        <repository>
+          <id>DSAS-repo</id>
+          <name>DSAS-repo</name>
+          <url>http://spip.etat-de-vaud.ch:8081/nexus/content/repositories/dsas-releases</url>
+          <layout>default</layout>
+        </repository>
+      	<repository>
+          <id>ESB-repo</id>
+          <name>ESB-repo</name>
+          <url>http://spip.etat-de-vaud.ch:8081/nexus/content/repositories/ESB-redhat</url>
+          <layout>default</layout>
+        </repository>
+        <repository>
+          <id>maven-central-repo</id>
+          <name>maven-central-repo</name>
+          <url>http://spip.etat-de-vaud.ch:8081/nexus/content/repositories/central</url>
+          <layout>default</layout>
+        </repository>
+        <repository>
+          <id>ESB-public-repo</id>
+          <name>ESB-public-repo</name>
+          <url>http://spip.etat-de-vaud.ch:8081/nexus/content/groups/esb-public</url>
+          <layout>default</layout>
+        </repository>
+        <repository>
+          <id>Sonatype-public-repo</id>
+          <name>Sonatype-public-repo</name>
+          <url>http://spip.etat-de-vaud.ch:8081/nexus/content/repositories/sonatype-forge</url>
+          <layout>default</layout>
+        </repository>
+        <repository>
+          <id>IAM-third-party</id>
+          <name>IAM-third-party</name>
+          <url>http://spip.etat-de-vaud.ch:8081/nexus/content/repositories/iam-third-party</url>
+          <layout>default</layout>
+        </repository>
+      </repositories>
+    </profile>
+  </profiles>
+
+
+  <activeProfiles>
+    <activeProfile>alwaysActiveProfile</activeProfile>
+  </activeProfiles>
+</settings>
