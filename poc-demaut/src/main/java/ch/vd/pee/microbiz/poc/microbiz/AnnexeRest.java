@@ -20,7 +20,7 @@ public interface AnnexeRest {
     @Path("/main")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    Response mainData();
+    Response mainData() throws JsonProcessingException;
 
     @GET
     @Path("/annexes/all")

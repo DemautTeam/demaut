@@ -11,6 +11,7 @@ import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -21,8 +22,8 @@ import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
-
 
 @Service
 @Path("/services")
@@ -30,20 +31,42 @@ public class AnnexeRestImpl implements AnnexeRest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AnnexeRestImpl.class);
 
-
     @Autowired
     private AnnexeService annexeService;
+
+    @Value("${environment}")
+    private String environment;
+
+    @Value("${buildVersion}")
+    private String buildVersion;
+
+    @Value("${project}")
+    private String project;
+
+    // TODO Processor Camel
+    @Value("${user}")
+    private String user;
 
     @Override
     @GET
     @Path("/main")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response mainData() {
+    public Response mainData() throws JsonProcessingException {
 
         LOGGER.info("mainData");
-
-        return Response.ok(Json.newObject().put("response", "mainData")).build();
+        ObjectWriter viewWriter = new ObjectMapper().writer();
+        return Response.ok(
+                Json.newObject().put("main",
+                    viewWriter.writeValueAsString(
+                        new HashMap<String, String>(){{
+                            put("environment", environment);
+                            put("buildVersion",buildVersion);
+                            put("project", project);
+                            put("user", user);
+                        }}
+                    ))
+        ).build();
     }
 
     @Override
