@@ -5,6 +5,8 @@ import ch.vd.pee.microbiz.core.utils.Json;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,8 @@ public class MainProcessor implements Processor {
     public static final String BUILD_VERSION_KEY = "buildVersion";
     public static final String VERSION_KEY = "version";
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MainProcessor.class);
+
     @Value("${environment}")
     private String environment;
 
@@ -25,6 +29,9 @@ public class MainProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
+
+        LOGGER.info("MainProcessor");
+
         ObjectNode response = Json.newObject();
 
         response.put(ENVIRONMENT_KEY, environment)

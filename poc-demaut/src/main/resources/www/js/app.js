@@ -13,7 +13,7 @@ ngApp.controller('Demo1Controller', ['$scope', '$http', function ($scope, $http,
         });
 
     $scope.onClickTest1 = function () {
-        $http.get('../services/test1').
+        $http.get('../services/annexes/all').
             success(function (data, status, headers, config) {
                 alert(data.response);
             }).

@@ -8,6 +8,7 @@
        xmlns:jdbc="http://www.springframework.org/schema/jdbc"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:cxf="http://cxf.apache.org/jaxrs"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
@@ -19,11 +20,31 @@
 		http://www.springframework.org/schema/tx
 		http://www.springframework.org/schema/tx/spring-tx.xsd
 		http://www.springframework.org/schema/util
-		http://www.springframework.org/schema/util/spring-util.xsd">
+		http://www.springframework.org/schema/util/spring-util.xsd
+		http://cxf.apache.org/jaxrs
+		http://cxf.apache.org/schemas/jaxrs.xsd">
 
     <ctx:property-placeholder properties-ref="props"/>
 
     <ctx:component-scan base-package="ch.vd.pee.microbiz.poc" />
+
+    <cxf:server address="${service.endpoint}">
+        <cxf:serviceBeans>
+            <ref local="annexeRestImpl"/>
+        </cxf:serviceBeans>
+        <cxf:providers>
+            <ref local="JacksonJaxbJsonProvider"/>
+            <ref local="authenticationFilter"/>
+        </cxf:providers>
+    </cxf:server>
+
+    <bean id="JacksonJaxbJsonProvider" class="ch.vd.pee.microbiz.poc.microbiz.CustomeJacksonJaxbJsonProvider"/>
+
+    <bean id="authenticationFilter" class="ch.vd.pee.microbiz.poc.microbiz.CustomAuthenticationFilter">
+        <property name="contextName" value="karaf"/>
+        <property name="realmName" value="poc"/>
+        <property name="active" value="${security.active}"/>
+    </bean>
 
     <bean id="camelTracer" class="org.apache.camel.processor.interceptor.Tracer">
         <property name="traceExceptions" value="true"/>
