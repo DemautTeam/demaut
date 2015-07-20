@@ -63,6 +63,10 @@ ngApp.controller('IndexController', ['$scope', '$http', function ($scope, $http,
             alert('Error ../services/annexes/all');
         });
 
+    $scope.isDocument = function(annexe) {
+        return annexe.type == 'application/pdf';
+    };
+
     $scope.viewEntry = function(annexe) {
 
         $http.get('../services/annexe/binary/' + annexe.name).

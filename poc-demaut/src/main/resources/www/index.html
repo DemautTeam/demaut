@@ -63,7 +63,7 @@
 
             <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="">Demande</a></li>
+                    <li class="active"><a href="">Annexes</a></li>
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -92,6 +92,10 @@
 
             <table class="table table-striped">
                 <tr ng-repeat="annexe in annexes | filter: '' | orderBy:'name'">
+                    <td>
+                        <span ng-show="isDocument(annexe)" class="glyphicon glyphicon-certificate"></span>
+                        <span ng-hide="isDocument(annexe)" class="glyphicon glyphicon-picture"></span>
+                    </td>
                     <td>{{annexe.id}}</td>
                     <td>{{annexe.name}}</td>
                     <td>{{annexe.type}}</td>
