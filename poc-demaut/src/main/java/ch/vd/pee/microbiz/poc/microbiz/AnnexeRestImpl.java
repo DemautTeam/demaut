@@ -34,15 +34,6 @@ public class AnnexeRestImpl implements AnnexeRest {
     @Autowired
     private AnnexeService annexeService;
 
-    @Value("${environment}")
-    private String environment;
-
-    @Value("${buildVersion}")
-    private String buildVersion;
-
-    @Value("${project}")
-    private String project;
-
     // TODO Processor Camel
     @Value("${user}")
     private String user;
@@ -53,16 +44,13 @@ public class AnnexeRestImpl implements AnnexeRest {
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
     public Response mainData() throws JsonProcessingException {
-
+        // TODO variables à renseigner dans un buildInfo.cfg compilé
         LOGGER.info("mainData");
         ObjectWriter viewWriter = new ObjectMapper().writer();
         return Response.ok(
                 Json.newObject().put("main",
                     viewWriter.writeValueAsString(
                         new HashMap<String, String>(){{
-                            put("environment", environment);
-                            put("buildVersion",buildVersion);
-                            put("project", project);
                             put("user", user);
                         }}
                     ))

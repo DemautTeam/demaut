@@ -2,10 +2,31 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>ch.vd.pee.microbiz</groupId>
-    <artifactId>poc</artifactId>
+    <artifactId>poc-demaut</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
-    <name>poc</name>
+    <name>poc-demaut</name>
+
+    <developers>
+        <developer>
+            <name>Fabien Benichou</name>
+            <id>gut6te</id>
+            <organization>Altran</organization>
+            <email>fabien.benichou@vd.ch</email>
+        </developer>
+        <developer>
+            <name>Charles Mourad Jaber</name>
+            <id>jaxija</id>
+            <organization>Altran</organization>
+            <email>charles.mourad.jaber@vd.ch</email>
+        </developer>
+        <developer>
+            <name>Ezzedine Thebti</name>
+            <id>b5cav2</id>
+            <organization>Altran</organization>
+            <email>ezzedine.thebti@vd.ch</email>
+        </developer>
+    </developers>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -648,8 +669,18 @@
                         </replacement>
 
                         <replacement>
-                            <token><![CDATA[var microbizAppVersion="dev";]]></token>
+                            <token><![CDATA[var microbizAppVersion="v0.0.1";]]></token>
                             <value>var microbizAppVersion = "${project.version}";</value>
+                        </replacement>
+
+                        <replacement>
+                            <token><![CDATA[var microbizAppEnviron = "Dev";]]></token>
+                            <value>var microbizAppEnviron = "POC";</value>
+                        </replacement>
+
+                        <replacement>
+                            <token><![CDATA[var microbizAppFullame = "Poc-Demaut";]]></token>
+                            <value>var microbizAppFullame = "${project.name}";</value>
                         </replacement>
 
                     </replacements>

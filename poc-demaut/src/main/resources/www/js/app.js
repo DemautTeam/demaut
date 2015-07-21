@@ -1,7 +1,9 @@
-var microbizAppVersion = "dev";
-var ngApp = angular.module('ngApp', ['ngSanitize', 'ngRoute']);
+var microbizAppVersion = "v0.0.1";
+var microbizAppEnviron = "Dev";
+var microbizAppFullame = "Poc-Demaut";
+var ngApp = angular.module('ngApp', ['ngSanitize']);
 ngApp
-    .config([ '$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider) {
+    .config([ '$locationProvider', '$httpProvider', function($locationProvider, $httpProvider) {
 
         $httpProvider.interceptors.push(function ($q, $rootScope, $location) {
             return {
@@ -39,11 +41,10 @@ ngApp
 
         $http.get('../services/main').
             success(function (data, status, headers, config) {
-                var MainFromJson = angular.fromJson(data.main);
-                $rootScope.environment = MainFromJson.environment;
-                $rootScope.buildVersion = MainFromJson.buildVersion;
-                $rootScope.project = MainFromJson.project;
-                $rootScope.user = MainFromJson.user;
+                $rootScope.environment = microbizAppEnviron;
+                $rootScope.buildVersion = microbizAppVersion;
+                $rootScope.project = microbizAppFullame;
+                $rootScope.user = angular.fromJson(data.main).user;
             }).
             error(function (data, status, headers, config) {
                 alert('Error ../services/main');
@@ -88,7 +89,7 @@ ngApp.controller('IndexController', ['$scope', '$http', function ($scope, $http,
 
 function displayAnnexeFromBinary(annexe, data) {
     var binary = new Blob([data], {
-        type: 'application/octet-stream'
+        type: 'application/octet-stream' //TODO encoding binary
     });
     var fileURL = URL.createObjectURL(binary);
     var elementLink = document.createElement('a');
