@@ -17,8 +17,8 @@
                       value="buildSchema(SchemaAction='add,deleteTableContents')"/>
             <property name="openjpa.Log"
                       value="DefaultLevel=INFO, Runtime=INFO, Tool=INFO, SQL=INFO"/>
-            <property name="openjpa.jdbc.DBDictionary"
-                      value="h2(useSchemaName=false)"/>
+            <!--<property name="openjpa.jdbc.DBDictionary"-->
+                      <!--value="h2(useSchemaName=false)"/>-->
             <!--<property name="openjpa.jdbc.Schema"-->
                       <!--value="DEMAUT"/>-->
             <property name="openjpa.RuntimeUnenhancedClasses"
