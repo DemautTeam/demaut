@@ -1,0 +1,6 @@
+ch/vd/ses/demaut/poc/jpa/entity/Annexe.class
+ch/vd/ses/demaut/poc/jpa/repository/AnnexeDemautRepository.class
+ch/vd/ses/demaut/poc/jpa/repository/DemautRepository.class
+ch/vd/ses/demaut/poc/jpa/entity/Annexe$1.class
+ch/vd/ses/demaut/poc/jpa/repository/DemautRepositoryImpl.class
+ch/vd/ses/demaut/poc/jpa/repository/AnnexeDemautRepositoryImpl.class

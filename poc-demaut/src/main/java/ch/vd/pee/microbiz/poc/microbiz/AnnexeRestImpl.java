@@ -38,7 +38,8 @@ public class AnnexeRestImpl implements AnnexeRest {
     @Value("${user}")
     private String user;
 
-    @Override
+    @SuppressWarnings("serial")
+	@Override
     @GET
     @Path("/main")
     @Produces(MediaType.APPLICATION_JSON)
