@@ -6,10 +6,10 @@ import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "src/test/resources/features", //
+@CucumberOptions(features = "src/test/resources/features", // ou classpath:**/*.feature
+glue = "ch.vd.demaut.cucumber.steps.definitions", //
 strict = true, //
 monochrome = true, //
-glue = "ch.vd.demaut.cucumber.steps", //
 plugin = { "pretty",//
 		"html:target/demaut-tests-report",//
 		"junit:target/demaut-tests-report.xml",//

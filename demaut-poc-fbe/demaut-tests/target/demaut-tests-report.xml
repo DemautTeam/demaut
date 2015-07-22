@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testsuite failures="1" name="cucumber.runtime.formatter.JUnitFormatter" skipped="0" tests="5" time="0.352127">
+<testcase classname="Attacher une ou plusieurs annexes à une demande" name="Attacher une annexe valide à une demande" time="0.345032">
+<system-out><![CDATA[Etant donné la date du jour: "15.07.2015 11:00".............................passed
+Etant donné le demandeur professionnel "DALTON, Joe"........................passed
+Etant donné qu'il a une demande d'autorisation de type "Medecin" en cours de saisie.passed
+Etant donné le fichier "attestation-valide.pdf" est un PDF non vide.........passed
+Lorsque qu'il attache le fichier "attestation-valide.pdf" de type "Certificat" à cette demande.passed
+Alors le système Demaut annexe le fichier à la demande avec succès..........passed
+]]></system-out>
+</testcase>
+<testcase classname="Attacher une ou plusieurs annexes à une demande" name="Refuser un fichier vide" time="0.002551">
+<system-out><![CDATA[Etant donné la date du jour: "15.07.2015 11:00".............................passed
+Etant donné le demandeur professionnel "DALTON, Joe"........................passed
+Etant donné qu'il a une demande d'autorisation de type "Medecin" en cours de saisie.passed
+Etant donné le fichier "attestation-non-valide.pdf" est un PDF vide.........passed
+Lorsque qu'il attache le fichier "attestation-non-valide.pdf" de type "Certificat" à cette demande.passed
+Alors le système Demaut n'annexe pas le fichier à la demande car il est vide.passed
+]]></system-out>
+</testcase>
+<testcase classname="Attacher une ou plusieurs annexes à une demande nouvelle" name="Attacher une annexe valide à une demande nouvelle" time="0.000333">
+<failure message="The scenario has pending or undefined step(s)"><![CDATA[Etant donné le demandeur fait une nouvelle demande..........................undefined
+Lorsque ce dernier veut attacher une annexe à cette demande.................undefined
+Alors le system Demaut valide av que l annexe est valide....................undefined
+Alors le systeme stocke l annexe et confirme la bonne reception de l annexe.undefined
+]]></failure>
+</testcase>
+<testcase classname="Soumettre une demande en cours de saisie" name="Soumettre une demande valide" time="0.002025">
+<system-out><![CDATA[Etant donné la date du jour: "15.07.2015 11:00".............................passed
+Etant donné le demandeur professionnel "DALTON, Joe"........................passed
+Etant donné qu'il a une demande d'autorisation de type "Medecin" en cours de saisie.passed
+Etant donné que le nom et prénom "DALTON, Joe" sont renseignés dans les données personnelles de la demande.passed
+Lorsque que le demandeur professionnel soumet sa demande au système Demaut..passed
+Alors le système Demaut accepte la soumission de la demande.................passed
+Et la demande passe dans l'état "Soumise"...................................passed
+Et la date de soumission de la demande est "15.07.2015 11:00"...............passed
+]]></system-out>
+</testcase>
+<testcase classname="Soumettre une demande en cours de saisie" name="Refuser la soumission d'une demande non valide" time="0.002186">
+<system-out><![CDATA[Etant donné la date du jour: "15.07.2015 11:00".............................passed
+Etant donné le demandeur professionnel "DALTON, Joe"........................passed
+Etant donné qu'il a une demande d'autorisation de type "Medecin" en cours de saisie.passed
+Etant donné que le nom et prénom n'ont pas été renseignés dans les données personnelles de la demande.passed
+Lorsque que le demandeur professionnel soumet sa demande au système Demaut..passed
+Alors le système Demaut refuse la soumission de la demande..................passed
+Et la demande reste dans l'état "Brouillon".................................passed
+Et il n'y a pas de date de soumission de la demande.........................passed
+]]></system-out>
+</testcase>
+</testsuite>

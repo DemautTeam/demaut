@@ -1,0 +1,9 @@
+/home/fabien/work/demaut-edv/demaut/demaut-poc-fbe/demaut-tests/src/test/java/ch/vd/demaut/cucumber/steps/definitions/SoumettreDemandeStepDefinitions.java
+/home/fabien/work/demaut-edv/demaut/demaut-poc-fbe/demaut-tests/src/test/java/ch/vd/demaut/domain/repository/impl/DispatchCodeConfigurationMock.java
+/home/fabien/work/demaut-edv/demaut/demaut-poc-fbe/demaut-tests/src/test/java/ch/vd/demaut/cucumber/runner/CukeTestRunner.java
+/home/fabien/work/demaut-edv/demaut/demaut-poc-fbe/demaut-tests/src/test/java/ch/vd/demaut/cucumber/steps/definitions/BackgroundStepDefinitions.java
+/home/fabien/work/demaut-edv/demaut/demaut-poc-fbe/demaut-tests/src/test/java/ch/vd/demaut/cucumber/steps/AnnexesSteps.java
+/home/fabien/work/demaut-edv/demaut/demaut-poc-fbe/demaut-tests/src/test/java/ch/vd/demaut/cucumber/steps/definitions/StepDefinitions.java
+/home/fabien/work/demaut-edv/demaut/demaut-poc-fbe/demaut-tests/src/test/java/ch/vd/demaut/cucumber/converters/common/DateTimeConverterTest.java
+/home/fabien/work/demaut-edv/demaut/demaut-poc-fbe/demaut-tests/src/test/java/ch/vd/demaut/cucumber/steps/definitions/AttacherAnnexeStepDefinitions.java
+/home/fabien/work/demaut-edv/demaut/demaut-poc-fbe/demaut-tests/src/test/java/ch/vd/demaut/cucumber/steps/ChargerAnnexeSteps.java

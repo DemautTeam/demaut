@@ -1,12 +1,12 @@
 package ch.vd.demaut.commons.validation;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-
-import junit.framework.TestCase;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -14,9 +14,7 @@ import org.junit.runners.JUnit4;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ch.vd.demaut.commons.validation.ValidatorFactoryDefault;
-
-import static org.assertj.core.api.Assertions.*;
+import junit.framework.TestCase;
 
 @RunWith(JUnit4.class)
 abstract public class AbstractValidationTest<T> extends TestCase {

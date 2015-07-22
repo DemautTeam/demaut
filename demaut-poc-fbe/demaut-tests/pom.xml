@@ -27,7 +27,6 @@
 							<goal>test</goal>
 						</goals>
 						<configuration>
-							<outputEncoding>UTF-8</outputEncoding>
 							<parallel>classes</parallel>
 							<perCoreThreadCount>true</perCoreThreadCount>
 							<threadCountClasses>10</threadCountClasses>
@@ -37,6 +36,7 @@
 								<include>**/Cuke*Run*.java</include>
 							</includes>
 							<testFailureIgnore>true</testFailureIgnore>
+							<outputEncoding>UTF-8</outputEncoding>
 						</configuration>
 					</execution>
 				</executions>
@@ -44,7 +44,7 @@
 			<plugin>
 				<groupId>net.masterthought</groupId>
 				<artifactId>maven-cucumber-reporting</artifactId>
-				<version>0.0.5</version>
+				<version>${maven-cucumber-reporting-version}</version>
 				<executions>
 					<execution>
 						<id>execution</id>
@@ -65,10 +65,31 @@
 	</build>
 
 	<dependencies>
+
+		<!-- Demaut -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>demaut-domain</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>demaut-commons</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.vd.demaut</groupId>
+			<artifactId>demaut-commons-test</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- Totally lazy - TODO: remove me -->
+		<dependency>
+			<groupId>com.googlecode.totallylazy</groupId>
+			<artifactId>totallylazy</artifactId>
+			<version>1.20</version>
 		</dependency>
 
 		<!-- Spring -->
@@ -89,31 +110,26 @@
 			<groupId>info.cukes</groupId>
 			<artifactId>cucumber-java</artifactId>
 			<version>${cucumber-version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>info.cukes</groupId>
 			<artifactId>cucumber-junit</artifactId>
 			<version>${cucumber-version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>info.cukes</groupId>
 			<artifactId>cucumber-spring</artifactId>
 			<version>${cucumber-version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>net.masterthought</groupId>
 			<artifactId>cucumber-reporting</artifactId>
 			<version>${cucumber-reporting-version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>net.masterthought</groupId>
 			<artifactId>maven-cucumber-reporting</artifactId>
 			<version>${maven-cucumber-reporting-version}</version>
-			<scope>test</scope>
 		</dependency>
 
 

@@ -2,7 +2,7 @@ package ch.vd.demaut.commons.validation;
 
 import javax.validation.ConstraintViolation;
 
-import ch.vd.demaut.commons.BaseValueObject;
+import ch.vd.demaut.commons.vo.BaseValueObject;
 
 /**
  * Help to test constraint violations
