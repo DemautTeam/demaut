@@ -1,0 +1,4 @@
+ch/vd/demaut/commons/validation/SimpleConstraintViolation.class
+ch/vd/demaut/commons/validation/SimpleConstraintViolationWithMsgTemplate.class
+ch/vd/demaut/commons/validation/SimpleConstraintViolationWithMsg.class
+ch/vd/demaut/commons/validation/AbstractValidationTest.class

@@ -2,21 +2,37 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>ch.vd.pee.microbiz</groupId>
-    <artifactId>poc</artifactId>
+    <artifactId>poc-demaut</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
-    <name>poc</name>
+    <name>poc-demaut</name>
+
+    <developers>
+        <developer>
+            <name>Fabien Benichou</name>
+            <id>gut6te</id>
+            <organization>Altran</organization>
+            <email>fabien.benichou@vd.ch</email>
+        </developer>
+        <developer>
+            <name>Charles Mourad Jaber</name>
+            <id>jaxija</id>
+            <organization>Altran</organization>
+            <email>charles.mourad.jaber@vd.ch</email>
+        </developer>
+        <developer>
+            <name>Ezzedine Thebti</name>
+            <id>b5cav2</id>
+            <organization>Altran</organization>
+            <email>ezzedine.thebti@vd.ch</email>
+        </developer>
+    </developers>
 
     <properties>
-        <camel.version>2.14.1</camel.version>
-        <spring.version>3.2.11.RELEASE</spring.version>
-        <activemq.version>5.10.0</activemq.version>
-        <jackson.version>2.5.1</jackson.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- ServiceMix -->
-        <osgi.core.version>4.3.1</osgi.core.version>
         <camel.version>2.14.1</camel.version>
         <felix-version>2.0.1</felix-version>
         <camel.microbiz.version>2.0.0</camel.microbiz.version>
@@ -24,15 +40,15 @@
         <cxf.rt.transports.http.jetty.version>3.0.2</cxf.rt.transports.http.jetty.version>
         <selenium.firefox.driver.version>2.45.0</selenium.firefox.driver.version>
         <activemq.version>5.10.0</activemq.version>
+
         <apache.servicemix.bundles.spring.core.version>3.2.11.RELEASE_2</apache.servicemix.bundles.spring.core.version>
         <demaut.microbiz.bundle.symbolic.name>ch.vd.ses.demaut.microbiz.${project.artifactId}</demaut.microbiz.bundle.symbolic.name>
         <demaut.microbiz.imports.packag.name>javax.jms,*</demaut.microbiz.imports.packag.name>
         <demaut.microbiz.priv.packag.name>ch.vd.esb.progres.ciad</demaut.microbiz.priv.packag.name>
 
         <!-- Spring -->
-        <spring.framework.version>3.2.11.RELEASE</spring.framework.version>
+        <spring.version>3.2.11.RELEASE</spring.version>
         <spring.security.version>3.2.7.RELEASE</spring.security.version>
-        <spring.osgi.core.version>1.2.1</spring.osgi.core.version>
 
         <!-- Persistence -->
         <demaut.openjpa.includes.mask>**/entity/*.class</demaut.openjpa.includes.mask>
@@ -154,7 +170,7 @@
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-transports-http-jetty</artifactId>
-            <version>3.0.2</version>
+            <version>${cxf.rt.transports.http.jetty.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -296,47 +312,47 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>${spring.framework.version}</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>${spring.framework.version}</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
-            <version>${spring.framework.version}</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
-            <version>${spring.framework.version}</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
-            <version>${spring.framework.version}</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
-            <version>${spring.framework.version}</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>${spring.framework.version}</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-expression</artifactId>
-            <version>${spring.framework.version}</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
-            <version>${spring.framework.version}</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.servicemix.bundles</groupId>
@@ -426,7 +442,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>${spring.framework.version}</version>
+            <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -653,8 +669,18 @@
                         </replacement>
 
                         <replacement>
-                            <token><![CDATA[var microbizAppVersion="dev";]]></token>
+                            <token><![CDATA[var microbizAppVersion="v0.0.1";]]></token>
                             <value>var microbizAppVersion = "${project.version}";</value>
+                        </replacement>
+
+                        <replacement>
+                            <token><![CDATA[var microbizAppEnviron = "Dev";]]></token>
+                            <value>var microbizAppEnviron = "POC";</value>
+                        </replacement>
+
+                        <replacement>
+                            <token><![CDATA[var microbizAppFullame = "Poc-Demaut";]]></token>
+                            <value>var microbizAppFullame = "${project.name}";</value>
                         </replacement>
 
                     </replacements>

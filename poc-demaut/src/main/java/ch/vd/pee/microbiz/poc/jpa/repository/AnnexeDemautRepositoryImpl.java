@@ -16,7 +16,7 @@ public class AnnexeDemautRepositoryImpl extends DemautRepositoryImpl<Annexe, Lon
     @Override
     @Transactional(readOnly = true)
     public Annexe fetchByName(String annexeName) {
-        List resultList = this.getEntityManager()
+        List<?> resultList = this.getEntityManager()
                 .createQuery("select o from " + entityClass.getSimpleName() + " as o where o.name = :name ")
                 .setParameter("name", annexeName)
                 .getResultList();

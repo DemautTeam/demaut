@@ -8,7 +8,10 @@
        http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd
        http://www.springframework.org/schema/osgi-compendium http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium.xsd">
 
-    <osgix:cm-properties id="props" persistent-id="poc"/>
+    <osgix:cm-properties id="props" persistent-id="poc">
+        <prop key="service.endpoint">/poc</prop>
+        <prop key="security.active">true</prop>
+    </osgix:cm-properties>
 
     <osgi:reference id="connectionFactory" interface="javax.jms.ConnectionFactory"/>
     <osgi:reference id="esbStore" interface="ch.vd.technical.esb.store.EsbStore"/>

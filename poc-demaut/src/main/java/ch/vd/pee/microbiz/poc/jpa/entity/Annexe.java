@@ -13,7 +13,9 @@ import java.io.Serializable;
 @Table(name = "ANNEXE")
 public class Annexe implements Serializable {
 
-    @Id
+	private static final long serialVersionUID = 3465920890363302474L;
+
+	@Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
