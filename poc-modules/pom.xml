@@ -44,6 +44,7 @@
         <module>poc-domain</module>
         <module>poc-microbiz</module>
         <module>poc-angular</module>
+        <module>poc-portlet</module>
     </modules>
 
     <properties>
