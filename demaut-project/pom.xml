@@ -35,6 +35,7 @@
 		<module>demaut-domain</module>
 		<module>demaut-services</module>
 		<module>demaut-tests</module>
+		<module>demaut-portail</module>
 	</modules>
 
 	<properties>
