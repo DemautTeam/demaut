@@ -1,76 +1,99 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" 
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+<settings>
+	<!--
+		localRepository | The path to the local repository maven will use to
+		store artifacts. | | Default: ~/.m2/repository
+		<localRepository>/path/to/local/repo</localRepository>
+	-->
 
-  <proxies>
-    <proxy>
-      <id>optional</id>
-      <active>true</active>
-      <protocol>http</protocol>
-      <host>webproxy.vd.ch</host>
-      <port>8080</port>
-    </proxy>
-  </proxies>
+	<!--
+		interactiveMode | This will determine whether maven prompts you when
+		it needs input. If set to false, | maven will use a sensible default
+		value, perhaps based on some other setting, for | the parameter in
+		question. | | Default: true <interactiveMode>true</interactiveMode>
+	-->
 
-  <profiles>
-    <profile>
-      <id>alwaysActiveProfile</id>
-      <repositories>
-        <repository>
-          <id>DSI-repo</id>
-          <name>DSI-repo</name>
-          <url>http://spip.etat-de-vaud.ch:8081/nexus/content/repositories/releases</url>
-          <layout>default</layout>
-        </repository>
-        <repository>
-          <id>DSAS-repo</id>
-          <name>DSAS-repo</name>
-          <url>http://spip.etat-de-vaud.ch:8081/nexus/content/repositories/dsas-releases</url>
-          <layout>default</layout>
-        </repository>
-      	<repository>
-          <id>ESB-repo</id>
-          <name>ESB-repo</name>
-          <url>http://spip.etat-de-vaud.ch:8081/nexus/content/repositories/ESB-redhat</url>
-          <layout>default</layout>
-        </repository>
-        <repository>
-          <id>maven-central-repo</id>
-          <name>maven-central-repo</name>
-          <url>http://spip.etat-de-vaud.ch:8081/nexus/content/repositories/central</url>
-          <layout>default</layout>
-        </repository>
-        <repository>
-          <id>ESB-public-repo</id>
-          <name>ESB-public-repo</name>
-          <url>http://spip.etat-de-vaud.ch:8081/nexus/content/groups/esb-public</url>
-          <layout>default</layout>
-        </repository>
-        <repository>
-          <id>Sonatype-public-repo</id>
-          <name>Sonatype-public-repo</name>
-          <url>http://spip.etat-de-vaud.ch:8081/nexus/content/repositories/sonatype-forge</url>
-          <layout>default</layout>
-        </repository>
-        <repository>
-          <id>IAM-third-party</id>
-          <name>IAM-third-party</name>
-          <url>http://spip.etat-de-vaud.ch:8081/nexus/content/repositories/iam-third-party</url>
-          <layout>default</layout>
-        </repository>
-	<repository>
-          <id>fusesource_nexus_release</id>
-          <name>Fusesource_nexus_release</name>
-          <url>http://spip.etat-de-vaud.ch:8081/nexus/service/local/repositories/fusesource_nexus_release</url>
-          <layout>default</layout>
-        </repository>
-      </repositories>
-    </profile>
-  </profiles>
+	<!--
+		offline | Determines whether maven should attempt to connect to the
+		network when executing a build. | This will have an effect on artifact
+		downloads, artifact deployment, and others. | | Default: false
+		<offline>false</offline>
+	-->
 
+	<mirrors>
+		<mirror>
+			<id>nexus-public-snapshots</id>
+			<mirrorOf>dsas-snapshots-group</mirrorOf>
+			<url>http://spip.etat-de-vaud.ch:8081/nexus/content/groups/dsas-snapshots-group</url>
+		</mirror>
+		<mirror>
+			<!--This sends everything else to /public -->
+			<id>nexus-public</id>
+			<mirrorOf>*</mirrorOf>
+			<url>http://spip.etat-de-vaud.ch:8081/nexus/content/groups/dsas-group</url>
+		</mirror>
+	</mirrors>
 
-  <activeProfiles>
-    <activeProfile>alwaysActiveProfile</activeProfile>
-  </activeProfiles>
+    <!--
+	<proxies>
+		<proxy>
+			<active>true</active>
+			<host>proxy1.vd.ch</host>
+			<port>8080</port>
+			<nonProxyHosts>localhost|titi*|spip*</nonProxyHosts>
+		</proxy>
+	</proxies>
+    -->
+
+	<profiles>
+		<profile>
+			<!--this profile will allow snapshots to be searched when activated-->
+			<id>public-snapshots</id>
+			<repositories>
+				<repository>
+					<id>dsas-snapshots-group</id>
+					<url>http://dsas-snapshots-group</url>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</repository>
+			</repositories>
+			<pluginRepositories>
+				<pluginRepository>
+					<id>dsas-snapshots-group</id>
+					<url>http://dsas-snapshots-group</url>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</pluginRepository>
+			</pluginRepositories>
+		</profile>
+
+		<profile>
+			<id>nexus-urls</id>
+			<properties>
+				<nexus.url>http://spip.etat-de-vaud.ch:8081/nexus/content/repositories</nexus.url>
+				<nexus.url.releases>${nexus.url}/dsas-releases</nexus.url.releases>
+				<nexus.url.snapshots>${nexus.url}/dsas-snapshots</nexus.url.snapshots>
+			</properties>
+		</profile>
+
+	</profiles>
+
+	<activeProfiles>
+		<activeProfile>public-snapshots</activeProfile>
+		<activeProfile>nexus-urls</activeProfile>
+	</activeProfiles>
+
+	<!--
+		activeProfiles | List of profiles that are active for all builds. |
+		<activeProfiles> <activeProfile>alwaysActiveProfile</activeProfile>
+		<activeProfile>anotherAlwaysActiveProfile</activeProfile>
+		</activeProfiles>
+	-->
 </settings>
