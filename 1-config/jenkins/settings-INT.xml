@@ -59,12 +59,6 @@
                         <enabled>true</enabled>
                     </snapshots>
                 </repository>
-                <repository>
-                    <id>Third-party-repo</id>
-                    <name>Third-party-repo</name>
-                    <url>http://spip.etat-de-vaud.ch:8081/nexus/content/repositories/thirdparty</url>
-                    <layout>default</layout>
-                </repository>
             </repositories>
 
             <pluginRepositories>
@@ -88,6 +82,14 @@
                 <nexus.url.releases>${nexus.url}/dsas-releases</nexus.url.releases>
                 <nexus.url.snapshots>${nexus.url}/dsas-snapshots</nexus.url.snapshots>
             </properties>
+            <repositories>
+                <repository>
+                    <id>Third-party-repo</id>
+                    <name>Third-party-repo</name>
+                    <url>http://spip.etat-de-vaud.ch:8081/nexus/content/repositories/thirdparty</url>
+                    <layout>default</layout>
+                </repository>
+            </repositories>
         </profile>
 
     </profiles>
