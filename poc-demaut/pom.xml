@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>ch.vd.pee.microbiz</groupId>
     <artifactId>poc-demaut</artifactId>
@@ -42,7 +43,8 @@
         <activemq.version>5.10.0</activemq.version>
 
         <apache.servicemix.bundles.spring.core.version>3.2.11.RELEASE_2</apache.servicemix.bundles.spring.core.version>
-        <demaut.microbiz.bundle.symbolic.name>ch.vd.ses.demaut.microbiz.${project.artifactId}</demaut.microbiz.bundle.symbolic.name>
+        <demaut.microbiz.bundle.symbolic.name>ch.vd.ses.demaut.microbiz.${project.artifactId}
+        </demaut.microbiz.bundle.symbolic.name>
         <demaut.microbiz.imports.packag.name>javax.jms,*</demaut.microbiz.imports.packag.name>
         <demaut.microbiz.priv.packag.name>ch.vd.esb.progres.ciad</demaut.microbiz.priv.packag.name>
 
@@ -86,6 +88,12 @@
         <!-- Test -->
         <com.h2.version>1.4.186</com.h2.version>
         <junit.version>4.12</junit.version>
+        <sonar.language>java</sonar.language>
+        <sonar.host.url>http://spip.etat-de-vaud.ch:4062</sonar.host.url>
+        <sonar.jdbc.driverClassName>oracle.jdbc.driver.OracleDriver</sonar.jdbc.driverClassName>
+        <sonar.jdbc.url>jdbc:oracle:thin:@sli2315t.etat-de-vaud.ch:1526:SESPOL1L</sonar.jdbc.url>
+        <sonar.jdbc.username>SES_DEMAUT_DEV</sonar.jdbc.username>
+        <sonar.jdbc.password>p0dUq19</sonar.jdbc.password>
     </properties>
 
     <dependencies>
@@ -416,14 +424,14 @@
 
         <!-- Tools -->
         <!--<dependency>-->
-            <!--<groupId>com.google.guava</groupId>-->
-            <!--<artifactId>guava</artifactId>-->
-            <!--<version>${guava.version}</version>-->
+        <!--<groupId>com.google.guava</groupId>-->
+        <!--<artifactId>guava</artifactId>-->
+        <!--<version>${guava.version}</version>-->
         <!--</dependency>-->
         <!--<dependency>-->
-            <!--<groupId>org.apache.felix</groupId>-->
-            <!--<artifactId>org.apache.felix.framework</artifactId>-->
-            <!--<version>${felix-version}</version>-->
+        <!--<groupId>org.apache.felix</groupId>-->
+        <!--<artifactId>org.apache.felix.framework</artifactId>-->
+        <!--<version>${felix-version}</version>-->
         <!--</dependency>-->
         <dependency>
             <groupId>commons-io</groupId>
@@ -464,10 +472,10 @@
             <scope>test</scope>
         </dependency>
         <!--<dependency>-->
-            <!--<groupId>org.seleniumhq.selenium</groupId>-->
-            <!--<artifactId>selenium-firefox-driver</artifactId>-->
-            <!--<version>${selenium.firefox.driver.version}</version>-->
-            <!--<scope>test</scope>-->
+        <!--<groupId>org.seleniumhq.selenium</groupId>-->
+        <!--<artifactId>selenium-firefox-driver</artifactId>-->
+        <!--<version>${selenium.firefox.driver.version}</version>-->
+        <!--<scope>test</scope>-->
         <!--</dependency>-->
 
     </dependencies>
@@ -643,29 +651,36 @@
                         </replacement>
 
                         <replacement>
-                            <token><![CDATA[<link href="css/bootstrap-usabilis.css" rel="stylesheet" type="text/css">]]></token>
+                            <token>
+                                <![CDATA[<link href="css/bootstrap-usabilis.css" rel="stylesheet" type="text/css">]]></token>
                             <value></value>
                         </replacement>
 
                         <replacement>
-                            <token><![CDATA[<script type="text/javascript" language="Javascript" src="js/jquery-1.11.1.js"></script>]]></token>
+                            <token>
+                                <![CDATA[<script type="text/javascript" language="Javascript" src="js/jquery-1.11.1.js"></script>]]></token>
                         </replacement>
 
                         <replacement>
-                            <token><![CDATA[<script type="text/javascript" language="Javascript" src="js/bootstrap.js"></script>]]></token>
+                            <token>
+                                <![CDATA[<script type="text/javascript" language="Javascript" src="js/bootstrap.js"></script>]]></token>
                         </replacement>
 
                         <replacement>
-                            <token><![CDATA[<script type="text/javascript" language="JavaScript" src="js/angular.js"></script>]]></token>
+                            <token>
+                                <![CDATA[<script type="text/javascript" language="JavaScript" src="js/angular.js"></script>]]></token>
                         </replacement>
 
                         <replacement>
-                            <token><![CDATA[<script type="text/javascript" language="JavaScript" src="js/angular-sanitize.js"></script>]]></token>
+                            <token>
+                                <![CDATA[<script type="text/javascript" language="JavaScript" src="js/angular-sanitize.js"></script>]]></token>
                         </replacement>
 
                         <replacement>
-                            <token><![CDATA[<script type="text/javascript" language="JavaScript" src="js/app.js"></script>]]></token>
-                            <value><![CDATA[<script type="text/javascript" language="JavaScript" src="js/all.min.js"></script>]]></value>
+                            <token>
+                                <![CDATA[<script type="text/javascript" language="JavaScript" src="js/app.js"></script>]]></token>
+                            <value>
+                                <![CDATA[<script type="text/javascript" language="JavaScript" src="js/all.min.js"></script>]]></value>
                         </replacement>
 
                         <replacement>
@@ -711,6 +726,23 @@
             </plugin>
 
         </plugins>
+        <pluginManagement>
+            <plugins>
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>2.3</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>oracle</groupId>
+                            <artifactId>oracle-jdbc</artifactId>
+                            <version>6.0</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <scm>
