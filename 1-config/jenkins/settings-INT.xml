@@ -26,11 +26,6 @@
             <url>http://spip.etat-de-vaud.ch:8081/nexus/content/groups/dsas-snapshots-group</url>
         </mirror>
         <mirror>
-            <id>thirdparty</id>
-            <mirrorOf>oracle</mirrorOf>
-            <url>http://spip.etat-de-vaud.ch:8081/nexus/content/repositories/thirdparty</url>
-        </mirror>
-        <mirror>
             <!--This sends everything else to /public -->
             <id>nexus-public</id>
             <mirrorOf>*</mirrorOf>
@@ -87,14 +82,6 @@
                 <nexus.url.releases>${nexus.url}/dsas-releases</nexus.url.releases>
                 <nexus.url.snapshots>${nexus.url}/dsas-snapshots</nexus.url.snapshots>
             </properties>
-            <repositories>
-                <repository>
-                    <id>Third-party-repo</id>
-                    <name>Third-party-repo</name>
-                    <url>http://spip.etat-de-vaud.ch:8081/nexus/content/repositories/thirdparty</url>
-                    <layout>default</layout>
-                </repository>
-            </repositories>
         </profile>
 
     </profiles>
