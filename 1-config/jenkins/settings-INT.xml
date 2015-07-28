@@ -60,6 +60,12 @@
 					</snapshots>
 				</repository>
 			</repositories>
+			<repository>
+				<id>Third-party-repo</id>
+				<name>Third-party-repo</name>
+				<url>http://spip.etat-de-vaud.ch:8081/nexus/service/local/repositories/thirdparty/content</url>
+				<layout>default</layout>
+			</repository>
 			<pluginRepositories>
 				<pluginRepository>
 					<id>dsas-snapshots-group</id>
