@@ -59,6 +59,12 @@
           <url>http://spip.etat-de-vaud.ch:8081/nexus/content/repositories/iam-third-party</url>
           <layout>default</layout>
         </repository>
+	<repository>
+          <id>fusesource_nexus_release</id>
+          <name>Fusesource_nexus_release</name>
+          <url>http://spip.etat-de-vaud.ch:8081/nexus/service/local/repositories/fusesource_nexus_release</url>
+          <layout>default</layout>
+        </repository>
       </repositories>
     </profile>
   </profiles>
