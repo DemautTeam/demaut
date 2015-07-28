@@ -735,9 +735,9 @@
                     <version>2.3</version>
                     <dependencies>
                         <dependency>
-                            <groupId>oracle</groupId>
-                            <artifactId>oracle-jdbc</artifactId>
-                            <version>6.0</version>
+                            <groupId>oracle.jdbc</groupId>
+                            <artifactId>ojdbc7</artifactId>
+                            <version>12.1.0.2.0</version>
                         </dependency>
                     </dependencies>
                 </plugin>
