@@ -63,7 +63,7 @@
 			<repository>
 				<id>Third-party-repo</id>
 				<name>Third-party-repo</name>
-				<url>http://spip.etat-de-vaud.ch:8081/nexus/service/local/repositories/thirdparty/content</url>
+				<url>http://spip.etat-de-vaud.ch:8081/nexus/content/repositories/thirdparty</url>
 				<layout>default</layout>
 			</repository>
 			<pluginRepositories>
