@@ -2,6 +2,8 @@ var microbizAppVersion = "v0.0.1";
 var microbizAppEnviron = "Dev";
 var microbizAppFullame = "Poc-Demaut";
 var ngApp = angular.module('ngApp', ['ngSanitize']);
+/*Necessaire si les services ne sont pas dans la même arborescence que la page html*/
+ngApp.constant('urlPrefix', '/outils/poc-demaut-api');
 ngApp
     .config([ '$locationProvider', '$httpProvider', function($locationProvider, $httpProvider) {
 
@@ -27,7 +29,7 @@ ngApp
         });
     }
     ])
-    .run(function($rootScope, $sce, $location, $http) {
+    .run(function($rootScope, $sce, $location, $http, urlPrefix) {
 
         var myLocation = $location.path();
 
@@ -39,7 +41,7 @@ ngApp
 
         });
 
-        $http.get('../services/main').
+        $http.get(urlPrefix + '/services/main').
             success(function (data, status, headers, config) {
                 $rootScope.environment = microbizAppEnviron;
                 $rootScope.buildVersion = microbizAppVersion;
@@ -47,16 +49,15 @@ ngApp
                 $rootScope.user = angular.fromJson(data.main).user;
             }).
             error(function (data, status, headers, config) {
-                alert('Error ../services/main');
+                alert('Error ../services/main\nStatus :' +  status);
             });
 
         // indispensable pour le rendering initial
         $rootScope.initialized = true;
     });
 
-ngApp.controller('IndexController', ['$scope', '$http', function ($scope, $http, $location, focus, $interval) {
-
-    $http.get('../services/annexes/all').
+ngApp.controller('IndexController', ['$scope', '$http', '$location',  '$interval', 'urlPrefix', '$log', function ($scope, $http, $location, $interval, urlPrefix, $log ) {
+    $http.get(urlPrefix + '/services/annexes/all').
         success(function (data, status, headers, config) {
             $scope.annexes = angular.fromJson(data.response);
         }).
@@ -69,8 +70,7 @@ ngApp.controller('IndexController', ['$scope', '$http', function ($scope, $http,
     };
 
     $scope.viewEntry = function(annexe) {
-
-        $http.get('../services/annexe/binary/' + annexe.name).
+        $http.get(urlPrefix + '/services/annexe/binary/' + annexe.name, {responseType:'arraybuffer'}).
             success(function (data, status, headers, config) {
                 displayAnnexeFromBinary(annexe, data);
             }).
@@ -88,11 +88,10 @@ ngApp.controller('IndexController', ['$scope', '$http', function ($scope, $http,
 }]);
 
 function displayAnnexeFromBinary(annexe, data) {
-    var binary = new Blob([data], {
-        type: 'application/octet-stream' //TODO encoding binary
-    });
+    var binary = new Blob([data], { type: annexe.type });
     var fileURL = URL.createObjectURL(binary);
-    var elementLink = document.createElement('a');
+    console.log(fileURL);
+    var elementLink = document.createElement('A');
     elementLink.href = fileURL;
     elementLink.target = '_blank';
     elementLink.download = annexe.name;
