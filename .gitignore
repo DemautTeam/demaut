@@ -1,10 +1,6 @@
-/target/*
+*/target
 *.iml
-/.idea/*
-
-poc-demaut/.idea
-poc-demaut/.settings
-poc-demaut/.classpath
-poc-demaut/.project
-poc-modules/target
-.idea
+*/.idea
+*/.settings
+*/.classpath
+*/.project
