@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assembly>
+  <id>bin</id>
+  <formats>
+    <format>zip</format>
+  </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
+  <fileSets>
+    <fileSet>
+      <directory>conf</directory>
+      <outputDirectory>${artifactId}-${version}/conf</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>doc</directory>
+      <outputDirectory>${artifactId}-${version}/doc</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>${project.build.directory}</directory>
+      <outputDirectory>/</outputDirectory>
+      <includes>
+        <include>*.jar</include>
+      </includes>
+    </fileSet>
+  </fileSets>
+  <files>
+    <file>
+      <source>target/${build.finalName}.jar</source>
+      <destName>${artifactId}-microbiz.jar</destName>
+      <outputDirectory>${artifactId}-${version}</outputDirectory>
+    </file>
+  </files>
+</assembly>
+

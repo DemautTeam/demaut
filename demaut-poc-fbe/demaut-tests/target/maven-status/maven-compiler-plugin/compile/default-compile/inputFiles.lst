@@ -1,0 +1,5 @@
+/home/fabien/work/demaut-edv/demaut/demaut-poc-fbe/demaut-tests/src/main/java/ch/vd/demaut/domain/demandes/autorisation/DemandeAutorisationRepositoryMock.java
+/home/fabien/work/demaut-edv/demaut/demaut-poc-fbe/demaut-tests/src/main/java/ch/vd/demaut/cucumber/converters/commons/DateTimeConverter.java
+/home/fabien/work/demaut-edv/demaut/demaut-poc-fbe/demaut-tests/src/main/java/ch/vd/demaut/domain/demandeurs/DemandeurRepositoryMock.java
+/home/fabien/work/demaut-edv/demaut/demaut-poc-fbe/demaut-tests/src/main/java/ch/vd/demaut/cucumber/converters/demandeurs/NomEtPrenomDemandeurConverter.java
+/home/fabien/work/demaut-edv/demaut/demaut-poc-fbe/demaut-tests/src/main/java/ch/vd/demaut/commons/DateEtHeureCourant.java

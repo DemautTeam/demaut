@@ -1,0 +1,5 @@
+ch/vd/demaut/cucumber/converters/commons/DateTimeConverter.class
+ch/vd/demaut/domain/demandes/autorisation/DemandeAutorisationRepositoryMock.class
+ch/vd/demaut/cucumber/converters/demandeurs/NomEtPrenomDemandeurConverter.class
+ch/vd/demaut/domain/demandeurs/DemandeurRepositoryMock.class
+ch/vd/demaut/commons/DateEtHeureCourant.class
