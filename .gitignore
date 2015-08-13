@@ -1,6 +1,13 @@
 **/target
 **/*.iml
+**/*.bak
+**/*.tmp
+**/*.*~
 **/.idea
 **/.settings
 **/.classpath
 **/.project
+**/._.DS_Store
+**/._style.css
+**/.name
+**/.sonartmp
