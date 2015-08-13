@@ -1,9 +1,0 @@
-ch/vd/demaut/cucumber/steps/ChargerAnnexeSteps.class
-ch/vd/demaut/cucumber/steps/definitions/SoumettreDemandeStepDefinitions.class
-ch/vd/demaut/cucumber/runner/CukeTestRunner.class
-ch/vd/demaut/cucumber/steps/definitions/AttacherAnnexeStepDefinitions.class
-ch/vd/demaut/cucumber/steps/AnnexesSteps.class
-ch/vd/demaut/domain/repository/impl/DispatchCodeConfigurationMock.class
-ch/vd/demaut/cucumber/steps/definitions/StepDefinitions.class
-ch/vd/demaut/cucumber/converters/common/DateTimeConverterTest.class
-ch/vd/demaut/cucumber/steps/definitions/BackgroundStepDefinitions.class

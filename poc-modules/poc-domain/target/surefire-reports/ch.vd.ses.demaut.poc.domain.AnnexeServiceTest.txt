@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: ch.vd.ses.demaut.poc.domain.AnnexeServiceTest
--------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.458 sec - in ch.vd.ses.demaut.poc.domain.AnnexeServiceTest
