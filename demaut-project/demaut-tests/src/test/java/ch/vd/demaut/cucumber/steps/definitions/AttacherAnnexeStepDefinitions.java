@@ -15,8 +15,8 @@ import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.ContenuAnnexeNonValideException;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.demandeurs.Demandeur;
 import ch.vd.demaut.domain.demandeurs.DemandeurRepository;
 import ch.vd.demaut.domain.demandeurs.NomEtPrenomDemandeur;
@@ -70,7 +70,7 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
     @Etantdonné("^qu'il a une demande d'autorisation de type \"([^\"]*)\" en cours de saisie$")
     public void qu_il_a_une_demande_d_autorisation_de_type_en_cours_de_saisie(ProfessionDeLaSante typeAutorisation) throws Throwable {
     	
-    	demande = new DemandeAutorisation(demandeur, typeAutorisation);
+    	demande = new DemandeAutorisation();
     	demandeAutorisationRepository.store(demande);
         
     	LOGGER.debug("La demande " + demande + " a été ajoutée au repository avec l'id technique:" + demande.getId());
@@ -99,7 +99,7 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
     	
     	byte[] contenuFichier = extractContenuFichier(nomFichier);
     	
-    	Annexe annexe = new Annexe(typeAnnexe, contenuFichier);
+    	Annexe annexe = new Annexe(typeAnnexe, nomFichier, contenuFichier);
     	
     	try {
     		demande.attacherUneAnnexe(annexe);

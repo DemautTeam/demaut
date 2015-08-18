@@ -8,10 +8,13 @@ public class ContenuAnnexe extends BaseValueObject{
 
 	// ********************************************************* Fields
 	final byte[] contenu;
+	
+	final long taille; //en octets
 
 	// ********************************************************* Constructor
 	public ContenuAnnexe(byte[] contenu) {
 		this.contenu = contenu;
+		this.taille = contenu.length;
 	}
 
 	// ********************************************************* Business Methods
@@ -29,6 +32,10 @@ public class ContenuAnnexe extends BaseValueObject{
 	// ********************************************************* Getters
 	public byte[] getContenu() {
 		return contenu;
+	}
+	
+	public long getTaille() {
+		return taille;
 	}
 	
 }

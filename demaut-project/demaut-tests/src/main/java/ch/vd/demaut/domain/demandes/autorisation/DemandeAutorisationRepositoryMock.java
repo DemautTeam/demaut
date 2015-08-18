@@ -2,6 +2,7 @@ package ch.vd.demaut.domain.demandes.autorisation;
 
 import ch.vd.demaut.commons.repo.GenericRepository;
 import ch.vd.demaut.commons.test.repo.GenericFKARepositoryMock;
+import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 
 /**
  * Mock du {@link DemandeAutorisationRepository}

@@ -4,7 +4,7 @@ import ch.vd.demaut.commons.fk.ObjectFunctionalKeyAware;
 
 abstract public class EntityFunctionalKeyAware extends ObjectFunctionalKeyAware implements Entity<Long> {
 
-    protected Long id; //Technical Id
+	protected Long id; //Technical Id
 
     @Override
     public Long getId() {

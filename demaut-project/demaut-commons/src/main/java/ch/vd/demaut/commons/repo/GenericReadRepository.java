@@ -1,8 +1,8 @@
 package ch.vd.demaut.commons.repo;
 
-import ch.vd.demaut.commons.entities.Entity;
-
 import java.util.List;
+
+import ch.vd.demaut.commons.entities.Entity;
 
 /**
  * Gestion générique des méthodes basiques de lecture sur le repository d'une {@link Entity}.

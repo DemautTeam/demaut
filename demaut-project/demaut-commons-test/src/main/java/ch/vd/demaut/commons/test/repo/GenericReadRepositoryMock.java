@@ -1,11 +1,12 @@
 package ch.vd.demaut.commons.test.repo;
 
-import ch.vd.demaut.commons.entities.Entity;
-import ch.vd.demaut.commons.repo.GenericReadRepository;
+import java.io.Serializable;
+
 import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
 import org.apache.commons.collections.CollectionUtils;
 
-import java.io.Serializable;
+import ch.vd.demaut.commons.entities.Entity;
+import ch.vd.demaut.commons.repo.GenericReadRepository;
 
 /**
  * Implémentation mock du {@link GenericReadRepository}.

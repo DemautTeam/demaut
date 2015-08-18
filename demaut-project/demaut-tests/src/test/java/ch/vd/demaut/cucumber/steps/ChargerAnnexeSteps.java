@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cucumber.api.java.fr.Alors;
-import cucumber.api.java.fr.Lorsque;
 import cucumber.api.java.fr.Etantdonné;
+import cucumber.api.java.fr.Lorsque;
 
 public class ChargerAnnexeSteps {
 

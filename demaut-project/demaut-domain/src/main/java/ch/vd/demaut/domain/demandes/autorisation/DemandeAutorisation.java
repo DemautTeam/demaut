@@ -2,38 +2,22 @@ package ch.vd.demaut.domain.demandes.autorisation;
 
 import java.util.Collection;
 
-import javax.validation.constraints.NotNull;
-
 import ch.vd.demaut.commons.annotations.Aggregate;
 import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.demandes.Demande;
 import ch.vd.demaut.domain.demandes.DemandeFK;
-import ch.vd.demaut.domain.demandeurs.Demandeur;
 
 @Aggregate
+@javax.persistence.Entity
 public class DemandeAutorisation extends Demande {
 
 	// ********************************************************* Fields	
-	@NotNull
-	final private ProfessionDeLaSante profession;
-	
-	final private Demandeur demandeur;
-	
-	@NotNull
-	private StatutDemandeAutorisation statut;
-
-	private DateSoumissionDemande dateDeSoumission;
-	
 	private ListeDesAnnexes annexes; 
-	
 
 	// ********************************************************* Constructor
-	public DemandeAutorisation(Demandeur demandeur, ProfessionDeLaSante profession) {
+	public DemandeAutorisation() {
 		super();
 		annexes = new ListeDesAnnexes();
-		statut = StatutDemandeAutorisation.Brouillon;
-		this.demandeur = demandeur;
-		this.profession = profession;
 	}
 
 	// ********************************************************* Business Methods
@@ -52,18 +36,6 @@ public class DemandeAutorisation extends Demande {
 	// ********************************************************* Getters
 	public Collection<Annexe> listerLesAnnexes(){
 		return annexes.listerAnnexes();
-	}
-
-	public ProfessionDeLaSante getProfession() {
-		return profession;
-	}
-	
-	public DateSoumissionDemande getDateDeSoumission() {
-		return dateDeSoumission;
-	}
-	
-	public Demandeur getDemandeur() {
-		return demandeur;
 	}
 
 	// ********************************************************* Technical methods

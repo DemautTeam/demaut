@@ -1,12 +1,12 @@
 package ch.vd.demaut.commons.validation;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.validation.Configuration;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Factory to create a JavaBean validator

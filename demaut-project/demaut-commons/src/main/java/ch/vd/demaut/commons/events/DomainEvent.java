@@ -1,10 +1,10 @@
 package ch.vd.demaut.commons.events;
 
+import java.io.Serializable;
+
 import ch.vd.demaut.commons.fk.FunctionalKey;
 import ch.vd.demaut.commons.fk.FunctionalKeyAware;
 import ch.vd.demaut.commons.vo.ValueObject;
-
-import java.io.Serializable;
 
 /**
  * Evénement domaine. Evènement qui a une signification métier et reste agnostique à Spring ou autres framework (POJO)

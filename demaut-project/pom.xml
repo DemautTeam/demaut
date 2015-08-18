@@ -11,25 +11,25 @@
 	<packaging>pom</packaging>
 
 
-    <developers>
-        <developer>
-            <name>Fabien Benichou</name>
-            <id>gut6te</id>
-            <email>fabien.benichou@vd.ch</email>
-        </developer>
-        <developer>
-            <name>Charles Mourad Jaber</name>
-            <id>jaxija</id>
-            <email>charles.mourad.jaber@vd.ch</email>
-        </developer>
-        <developer>
-            <name>Ezzedine Thebti</name>
-            <id>b5cav2</id>
-            <email>ezzedine.thebti@vd.ch</email>
-        </developer>
-    </developers>
+	<developers>
+		<developer>
+			<name>Fabien Benichou</name>
+			<id>gut6te</id>
+			<email>fabien.benichou@vd.ch</email>
+		</developer>
+		<developer>
+			<name>Charles Mourad Jaber</name>
+			<id>jaxija</id>
+			<email>charles.mourad.jaber@vd.ch</email>
+		</developer>
+		<developer>
+			<name>Ezzedine Thebti</name>
+			<id>b5cav2</id>
+			<email>ezzedine.thebti@vd.ch</email>
+		</developer>
+	</developers>
 
-    <modules>
+	<modules>
 		<module>demaut-commons</module>
 		<module>demaut-commons-test</module>
 		<module>demaut-domain</module>
@@ -39,58 +39,104 @@
 	</modules>
 
 	<properties>
+		<!-- Encoding -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<resource.encoding>UTF-8</resource.encoding>
-		<project-version>0.0.1-SNAPSHOT</project-version>
 
+		<!-- Java -->
 		<jdk-version>1.7</jdk-version>
+		<java.target>1.7</java.target>
 
-		<javax-validation-version>1.1.0.Final</javax-validation-version>
-		<javax-el-version>3.0.0</javax-el-version>
-		<hibernate-validator-version>5.1.3.Final</hibernate-validator-version>
+		<!-- Maven -->
+		<maven-compiler-version>3.1</maven-compiler-version>
+		<maven-surefire-version>2.18.1</maven-surefire-version>
+		<maven-jar-version>2.6</maven-jar-version>
 
-		<jbehave-version>3.9.5</jbehave-version>
-		<jbehave-site-version>3.2</jbehave-site-version>
-		<jbehave-junit-runner-version>1.1.2</jbehave-junit-runner-version>
 
+		<!-- Beans Validation -->
+		<javax.validation.version>1.1.0.Final</javax.validation.version>
+		<javax.el.version>3.0.0</javax.el.version>
+		<hibernate.validator.version>5.1.3.Final</hibernate.validator.version>
+
+		<!-- Cucumber -->
 		<cucumber-version>1.2.3</cucumber-version>
 		<cucumber-reporting-version>0.1.0</cucumber-reporting-version>
 		<maven-cucumber-reporting-version>0.0.8</maven-cucumber-reporting-version>
 
-		<slf4j-version>1.7.12</slf4j-version>
-		<logback-version>1.1.3</logback-version>
+		<!-- Logging -->
+		<logback.version>1.1.3</logback.version>
+		<slf4j.version>1.7.5</slf4j.version>
+		<log4j.version>1.2.16</log4j.version>
 
-		<spring-version>4.1.7.RELEASE</spring-version>
-
+		<!-- Utilities -->
 		<joda-time-version>2.8.1</joda-time-version>
-		<guava-version>18.0</guava-version>
 		<commons-collections4-version>4.0</commons-collections4-version>
 		<commons-lang3-version>3.3.2</commons-lang3-version>
 		<commons-beanutils-version>1.9.2</commons-beanutils-version>
+		<jackson.version>2.5.1</jackson.version>
+		<jackson.mapper.asl.version>1.9.13</jackson.mapper.asl.version>
+		<tika.core.version>1.7</tika.core.version>
+		<commons.io.version>2.4</commons.io.version>
 
-		<mockito-version>1.10.19</mockito-version>
-		<assertj-version>2.1.0</assertj-version>
-		<junit-version>4.12</junit-version>
+		<!-- ServiceMix -->
+		<camel.version>2.14.1</camel.version>
+		<felix-version>2.0.1</felix-version>
+		<camel.microbiz.version>2.0.0</camel.microbiz.version>
+		<esb.client.version>4.0</esb.client.version>
+		<cxf.rt.transports.http.jetty.version>3.0.2</cxf.rt.transports.http.jetty.version>
+		<selenium.firefox.driver.version>2.45.0</selenium.firefox.driver.version>
+		<activemq.version>5.10.0</activemq.version>
 
-		<maven-compiler-version>3.1</maven-compiler-version>
-		<maven-surefire-version>2.18.1</maven-surefire-version>
-		<maven-jar-version>2.6</maven-jar-version>
+		<apache.servicemix.bundles.spring.core.version>3.2.11.RELEASE_2</apache.servicemix.bundles.spring.core.version>
+		<demaut.microbiz.bundle.symbolic.name>ch.vd.ses.demaut.microbiz.${project.artifactId}
+		</demaut.microbiz.bundle.symbolic.name>
+		<demaut.microbiz.imports.packag.name>javax.jms,*</demaut.microbiz.imports.packag.name>
+		<demaut.microbiz.priv.packag.name>ch.vd.esb.progres.ciad</demaut.microbiz.priv.packag.name>
+
+		<!-- Spring -->
+		<spring.version>3.2.11.RELEASE</spring.version>
+		<spring.security.version>3.2.7.RELEASE</spring.security.version>
+
+		<!-- Persistence -->
+		<demaut.openjpa.includes.mask>**/entity/*.class</demaut.openjpa.includes.mask>
+		<demaut.openjpa.priv.packag.name>ch.vd.demaut.data</demaut.openjpa.priv.packag.name>
+		<demaut.openjpa.export.packag.names>
+			ch.vd.ses.demaut.poc.entity,
+			ch.vd.ses.demaut.poc
+		</demaut.openjpa.export.packag.names>
+		<demaut.openjpa.imports.packag.names>
+			org.springframework*;version="[2.5,4.0)",
+			javax.persistence*;version="[2.0.0,2.1.0)",
+			javax.persistence.criteria;version="[2.0.0,2.1.0)",
+			javax.sql,
+			*
+		</demaut.openjpa.imports.packag.names>
+
+		<openjpa.version>2.3.0</openjpa.version>
+		<geronimo.jpa.spec.version>1.1.1</geronimo.jpa.spec.version>
+		<eclipse.persistence.version>2.1.0</eclipse.persistence.version>
+		<commons.dbcp.version>1.4</commons.dbcp.version>
+
+		<javax.jta.version>1.1</javax.jta.version>
+
+		<!-- Test -->
+		<junit.version>4.12</junit.version>
+		<mockito.version>1.10.19</mockito.version>
+		<assertj.version>2.1.0</assertj.version>
+
+		<com.h2.version>1.4.186</com.h2.version>
+
+		<!-- Sonar -->
+		<sonar.language>java</sonar.language>
+		<sonar.host.url>http://spip.etat-de-vaud.ch:4062</sonar.host.url>
+		<sonar.jdbc.driverClassName>oracle.jdbc.driver.OracleDriver</sonar.jdbc.driverClassName>
+		<sonar.jdbc.url>jdbc:oracle:thin:@sli2315t.etat-de-vaud.ch:1526:SESPOL1L</sonar.jdbc.url>
+		<sonar.jdbc.username>SES_DEMAUT_DEV</sonar.jdbc.username>
+		<sonar.jdbc.password>p0dUq19</sonar.jdbc.password>
+		<sonar.scm.disabled>true</sonar.scm.disabled>
+
 	</properties>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${maven-compiler-version}</version>
-				<configuration>
-					<source>${jdk-version}</source>
-					<target>${jdk-version}</target>
-					<showDeprecation>false</showDeprecation>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 
 	<dependencies>
 
@@ -126,18 +172,18 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j-version}</version>
+			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>${logback-version}</version>
+			<version>${logback.version}</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
-			<version>${logback-version}</version>
+			<version>${logback.version}</version>
 			<scope>runtime</scope>
 		</dependency>
 
@@ -145,19 +191,25 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>${junit-version}</version>
+			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
-			<version>${assertj-version}</version>
+			<version>${assertj.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
-			<version>${mockito-version}</version>
+			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>${com.h2.version}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -165,28 +217,245 @@
 		<dependency>
 			<groupId>javax.el</groupId>
 			<artifactId>javax.el-api</artifactId>
-			<version>${javax-el-version}</version>
+			<version>${javax.el.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.el</artifactId>
-			<version>${javax-el-version}</version>
+			<version>${javax.el.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
-			<version>${javax-validation-version}</version>
+			<version>${javax.validation.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>${hibernate-validator-version}</version>
+			<version>${hibernate.validator.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator-cdi</artifactId>
-			<version>${hibernate-validator-version}</version>
+			<version>${hibernate.validator.version}</version>
 		</dependency>
+
 	</dependencies>
+
+
+	<build>
+		<finalName>${project.artifactId}-microbiz-nondistributable-${project.version}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-version}</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<source>${java.target}</source>
+					<target>${java.target}</target>
+					<fork>true</fork>
+					<showDeprecation>true</showDeprecation>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<descriptors>
+						<descriptor>src/main/assembly/assembly.xml</descriptor>
+					</descriptors>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<!--Enhancement des classe entity à la compilation pour OpenJPA -->
+				<groupId>org.apache.openjpa</groupId>
+				<artifactId>openjpa-maven-plugin</artifactId>
+				<version>2.4.0</version>
+				<configuration>
+					<includes>**/domain/**/*.class</includes>
+					<addDefaultConstructor>true</addDefaultConstructor>
+					<enforcePropertyRestrictions>true</enforcePropertyRestrictions>
+				</configuration>
+				<executions>
+					<execution>
+						<id>enhancer</id>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>enhance</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.openjpa</groupId>
+						<artifactId>openjpa</artifactId>
+						<version>${openjpa.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
+			<!-- see plugin doc : http://felix.apache.org/site/apache-felix-maven-bundle-plugin-bnd.html -->
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>2.5.4</version>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-SymbolicName>ch.vd.pee.microbiz.${project.artifactId}</Bundle-SymbolicName>
+						<Bundle-Version>${project.version}</Bundle-Version>
+						<Import-Package>javax.jms,
+							javax.persistence,javax.persistence.spi,javax.persistence.criteria,javax.persistence.metamodel,
+							javax.annotation,oracle.jdbc.driver,javax.sql,
+							*
+						</Import-Package>
+						<Private-Package>ch.vd.esb.progres.ciad</Private-Package>
+						<Distributable>true</Distributable>
+						<Include-Resource>target/classes</Include-Resource>
+						<DynamicImport-Package>*</DynamicImport-Package>
+					</instructions>
+				</configuration>
+				<executions>
+					<execution>
+						<id>wrap-my-dependency</id>
+						<goals>
+							<goal>wrap</goal>
+						</goals>
+						<configuration>
+							<wrapImportPackage>;</wrapImportPackage>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>cei.aew.web</groupId>
+				<artifactId>cei-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<configuration>
+					<webresourceurl>http://exploitation.etat-de-vaud.ch/outils/web/ws/rest</webresourceurl>
+					<filetoupload>${project.build.directory}/${project.build.finalName}-bin.zip</filetoupload>
+					<from>xsicrz</from>
+					<to>WEB</to>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<goals>clean install assembly:single cei:upload</goals>
+				</configuration>
+			</plugin>
+
+			<!-- CI-DESSOUS : PLUGINS POUR MIGNIFIER LES RESSOURCES DU PROJET -->
+			<!--<plugin> <groupId>com.samaxes.maven</groupId> <artifactId>minify-maven-plugin</artifactId> 
+				<version>1.7.4</version> <executions> <execution> <id>default-minify</id> 
+				<phase>process-resources</phase> <configuration> <webappTargetDir>target/classes/www</webappTargetDir> 
+				<webappSourceDir>${basedir}/src/main/resources/www</webappSourceDir> <cssSourceDir>css</cssSourceDir> 
+				<cssSourceFiles> <cssSourceFile>bootstrap.css</cssSourceFile> <cssSourceFile>bootstrap-usabilis.css</cssSourceFile> 
+				</cssSourceFiles> <jsSourceDir>js</jsSourceDir> <jsSourceFiles> <jsSourceFile>jquery-1.11.1.js</jsSourceFile> 
+				<jsSourceFile>bootstrap.js</jsSourceFile> <jsSourceFile>angular.js</jsSourceFile> 
+				<jsSourceFile>angular-sanitize.js</jsSourceFile> <jsSourceFile>app.js</jsSourceFile> 
+				</jsSourceFiles> <jsTargetDir>js</jsTargetDir> <jsFinalFile>all.js</jsFinalFile> 
+				<cssTargetDir>css</cssTargetDir> <cssFinalFile>all.css</cssFinalFile> <yuiLineBreak>4000</yuiLineBreak> 
+				<closureLanguage>ECMASCRIPT5</closureLanguage> <jsEngine>CLOSURE</jsEngine> 
+				</configuration> <goals> <goal>minify</goal> </goals> </execution> </executions> 
+				</plugin> <plugin> <groupId>com.google.code.maven-replacer-plugin</groupId> 
+				<artifactId>replacer</artifactId> <version>1.5.3</version> <executions> <execution> 
+				<phase>process-resources</phase> <goals> <goal>replace</goal> </goals> </execution> 
+				</executions> <configuration> <includes> <include>${basedir}/target/classes/www/*.html</include> 
+				<include>${basedir}/target/classes/www/js/all.js</include> <include>${basedir}/target/classes/www/js/all.min.js</include> 
+				</includes> <replacements> <replacement> <token><![CDATA[<link href="css/bootstrap.css" 
+				rel="stylesheet" type="text/css">]]></token> <value><![CDATA[<link href="css/all.min.css" 
+				rel="stylesheet" type="text/css">]]></value> </replacement> <replacement> 
+				<token> <![CDATA[<link href="css/bootstrap-usabilis.css" rel="stylesheet" 
+				type="text/css">]]></token> <value></value> </replacement> <replacement> 
+				<token> <![CDATA[<script type="text/javascript" language="Javascript" src="js/jquery-1.11.1.js"></script>]]></token> 
+				</replacement> <replacement> <token> <![CDATA[<script type="text/javascript" 
+				language="Javascript" src="js/bootstrap.js"></script>]]></token> </replacement> 
+				<replacement> <token> <![CDATA[<script type="text/javascript" language="JavaScript" 
+				src="js/angular.js"></script>]]></token> </replacement> <replacement> <token> 
+				<![CDATA[<script type="text/javascript" language="JavaScript" src="js/angular-sanitize.js"></script>]]></token> 
+				</replacement> <replacement> <token> <![CDATA[<script type="text/javascript" 
+				language="JavaScript" src="js/app.js"></script>]]></token> <value> <![CDATA[<script 
+				type="text/javascript" language="JavaScript" src="js/all.min.js"></script>]]></value> 
+				</replacement> <replacement> <token><![CDATA[var microbizAppVersion="v0.0.1";]]></token> 
+				<value>var microbizAppVersion = "${project.version}";</value> </replacement> 
+				<replacement> <token><![CDATA[var microbizAppEnviron = "Dev";]]></token> 
+				<value>var microbizAppEnviron = "POC";</value> </replacement> <replacement> 
+				<token><![CDATA[var microbizAppFullame = "Poc-Demaut";]]></token> <value>var 
+				microbizAppFullame = "${project.name}";</value> </replacement> </replacements> 
+				</configuration> </plugin> -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.9</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+							<excludeClassifiers>test</excludeClassifiers>
+							<includeScope>compile</includeScope>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.18.1</version>
+				<configuration>
+					<argLine>-XX:-UseSplitVerifier</argLine>
+				</configuration>
+			</plugin>
+
+		</plugins>
+		<pluginManagement>
+			<plugins>
+
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>sonar-maven-plugin</artifactId>
+					<version>2.3</version>
+					<dependencies>
+						<dependency>
+							<groupId>oracle</groupId>
+							<artifactId>oracle-jdbc</artifactId>
+							<version>6.0</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<scm>
+		<connection>scm:git:git@git.etat-de-vaud.ch:pee/microbiz/${project.artifactId}</connection>
+		<developerConnection>scm:git:git@git.etat-de-vaud.ch:pee/microbiz/${project.artifactId}</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
 
 </project>

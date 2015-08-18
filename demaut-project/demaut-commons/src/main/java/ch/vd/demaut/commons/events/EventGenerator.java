@@ -1,8 +1,8 @@
 package ch.vd.demaut.commons.events;
 
-import org.joda.time.DateTime;
-
 import java.util.Collection;
+
+import org.joda.time.DateTime;
 
 /**
  * 

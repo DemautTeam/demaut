@@ -1,11 +1,13 @@
 package ch.vd.demaut.commons.repo;
 
-import ch.vd.demaut.commons.entities.Entity;
-
-import javax.validation.ConstraintViolation;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+
+import ch.vd.demaut.commons.entities.Entity;
+import ch.vd.demaut.commons.exceptions.DomainException;
 
 /**
  * Gestion générique des méthodes basiques sur le repository d'une {@link Entity}.

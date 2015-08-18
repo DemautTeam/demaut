@@ -1,10 +1,10 @@
 package ch.vd.demaut.commons.test.repo;
 
+import java.io.Serializable;
+
 import ch.vd.demaut.commons.entities.Entity;
 import ch.vd.demaut.commons.repo.GenericRepository;
 import ch.vd.demaut.commons.repo.RepositoryAvecSequence;
-
-import java.io.Serializable;
 
 /**
  * Implémentation mock du {@link GenericRepository}.
