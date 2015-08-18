@@ -1,6 +1,7 @@
 var microbizAppVersion = "v0.0.1";
 var microbizAppEnviron = "Dev";
 var microbizAppFullame = "Poc-Demaut";
+var microbizAppUserame = "Poc-User";
 var ngApp = angular.module('ngApp', ['ngSanitize']);
 /*Necessaire si les services ne sont pas dans la même arborescence que la page html*/
 ngApp.constant('urlPrefix', '/outils/poc-demaut-api');
@@ -49,7 +50,7 @@ ngApp
                 $rootScope.user = angular.fromJson(data.main).user;
             }).
             error(function (data, status, headers, config) {
-                alert('Error ../services/main\nStatus :' +  status);
+                alert('Error ' + urlPrefix + '/services/main\nStatus :' +  status);
             });
 
         // indispensable pour le rendering initial
@@ -57,12 +58,17 @@ ngApp
     });
 
 ngApp.controller('IndexController', ['$scope', '$http', '$location',  '$interval', 'urlPrefix', '$log', function ($scope, $http, $location, $interval, urlPrefix, $log ) {
+    $scope.environment = microbizAppEnviron;
+    $scope.buildVersion = microbizAppVersion;
+    $scope.project = microbizAppFullame;
+    $scope.user = microbizAppUserame;
+
     $http.get(urlPrefix + '/services/annexes/all').
         success(function (data, status, headers, config) {
             $scope.annexes = angular.fromJson(data.response);
         }).
         error(function (data, status, headers, config) {
-            alert('Error ../services/annexes/all');
+            alert('Error ' + urlPrefix + '/services/annexes/all\nStatus :' +  status);
         });
 
     $scope.isDocument = function(annexe) {
