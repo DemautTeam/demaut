@@ -8,7 +8,6 @@ import ch.vd.demaut.domain.demandes.Demande;
 import ch.vd.demaut.domain.demandes.DemandeFK;
 
 @Aggregate
-@javax.persistence.Entity
 public class DemandeAutorisation extends Demande {
 
 	// ********************************************************* Fields	

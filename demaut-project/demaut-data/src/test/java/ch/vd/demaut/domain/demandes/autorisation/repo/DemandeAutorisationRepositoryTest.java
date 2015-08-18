@@ -15,7 +15,6 @@ import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 
 @ContextConfiguration({"classpath*:/persistenceTest-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DemandeAutorisationRepositoryTest {
 
     @Autowired
@@ -27,13 +26,13 @@ public class DemandeAutorisationRepositoryTest {
     }
     
     @Test
-    public void shouldFindAnnexeById() throws Exception {
+    public void trouverDemandeAvecUnId() throws Exception {
     	DemandeAutorisation demande = repo.findBy(100L);
         assertNotNull(demande);
     }
 
     @Test
-    public void shouldSaveNewAnnexe() throws Exception {
+    public void sauverUneDemande() throws Exception {
         byte[] content = "Ce fichier doit contenir un content non vide".getBytes();
         DemandeAutorisation demande = new DemandeAutorisation();
         demande = repo.store(demande);

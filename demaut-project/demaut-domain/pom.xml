@@ -20,25 +20,5 @@
 			<version>${project.version}</version>
 		</dependency>
 
-		<!-- Persistence -->
-		<dependency>
-			<groupId>org.apache.openjpa</groupId>
-			<artifactId>openjpa</artifactId>
-			<version>${openjpa.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
-		<dependency>
-			<groupId>org.eclipse.persistence</groupId>
-			<artifactId>javax.persistence</artifactId>
-			<version>${eclipse.persistence.version}</version>
-		</dependency>
-
-
 	</dependencies>
 </project>
