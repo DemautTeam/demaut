@@ -4,7 +4,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import ch.vd.demaut.commons.BaseValueObject;
+import ch.vd.demaut.commons.vo.BaseValueObject;
 
 /**
  * Represented the document code of a {@link Document} associated to a type of document.

@@ -1,6 +1,6 @@
 package ch.vd.demaut.domain.model.demandes;
 
-import ch.vd.demaut.commons.ObjectFunctionalKeyAware;
+import ch.vd.demaut.commons.fk.ObjectFunctionalKeyAware;
 
 public abstract class Demande extends ObjectFunctionalKeyAware {
 

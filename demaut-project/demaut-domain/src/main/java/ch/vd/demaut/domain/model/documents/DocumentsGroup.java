@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.validation.constraints.Min;
 
-import ch.vd.demaut.commons.ObjectFunctionalKeyAware;
+import ch.vd.demaut.commons.fk.ObjectFunctionalKeyAware;
 import ch.vd.demaut.commons.annotations.Entity;
 import ch.vd.demaut.domain.model.DispatchCode;
 import ch.vd.demaut.domain.model.RegionCode;

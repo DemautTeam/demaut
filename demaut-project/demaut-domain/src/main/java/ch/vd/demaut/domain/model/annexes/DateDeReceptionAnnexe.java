@@ -1,6 +1,6 @@
 package ch.vd.demaut.domain.model.annexes;
 
-import ch.vd.demaut.commons.DateTimeVO;
+import ch.vd.demaut.commons.vo.DateTimeVO;
 import ch.vd.demaut.commons.annotations.ValueObject;
 
 @ValueObject

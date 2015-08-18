@@ -2,7 +2,7 @@ package ch.vd.demaut.domain.model.demandeurs;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import ch.vd.demaut.commons.BaseValueObject;
+import ch.vd.demaut.commons.vo.BaseValueObject;
 import ch.vd.demaut.commons.annotations.ValueObject;
 
 @ValueObject

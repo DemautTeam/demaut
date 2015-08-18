@@ -1,6 +1,6 @@
 package ch.vd.demaut.domain.model.demandeurs;
 
-import ch.vd.demaut.commons.FunctionalKeyAbstract;
+import ch.vd.demaut.commons.fk.FunctionalKeyAbstract;
 
 public class DemandeurFK extends FunctionalKeyAbstract<Demandeur> {
 

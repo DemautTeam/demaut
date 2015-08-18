@@ -1,6 +1,6 @@
 package ch.vd.demaut.domain.model.demandes.autorisation;
 
-import ch.vd.demaut.commons.DateTimeVO;
+import ch.vd.demaut.commons.vo.DateTimeVO;
 
 public class DateSoumissionDemande extends DateTimeVO{
 

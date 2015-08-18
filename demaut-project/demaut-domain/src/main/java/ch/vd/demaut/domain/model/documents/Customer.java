@@ -4,7 +4,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import ch.vd.demaut.commons.ObjectFunctionalKeyAware;
+import ch.vd.demaut.commons.fk.ObjectFunctionalKeyAware;
 import ch.vd.demaut.commons.annotations.Entity;
 import ch.vd.demaut.domain.model.CustomerNumber;
 

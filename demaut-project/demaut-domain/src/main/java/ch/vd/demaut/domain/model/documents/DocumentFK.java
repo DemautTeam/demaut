@@ -1,6 +1,6 @@
 package ch.vd.demaut.domain.model.documents;
 
-import ch.vd.demaut.commons.FunctionalKeyAbstract;
+import ch.vd.demaut.commons.fk.FunctionalKeyAbstract;
 
 /**
  * Functional key of a {@link Document}

@@ -1,6 +1,6 @@
 package ch.vd.demaut.domain.model.spools;
 
-import ch.vd.demaut.commons.FunctionalKeyAbstract;
+import ch.vd.demaut.commons.fk.FunctionalKeyAbstract;
 import ch.vd.demaut.domain.model.DispatchCode;
 import ch.vd.demaut.domain.model.EnvelopeSize;
 import ch.vd.demaut.domain.model.RegionCode;

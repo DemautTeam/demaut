@@ -1,6 +1,6 @@
 package ch.vd.demaut.domain.model.annexes;
 
-import ch.vd.demaut.commons.BaseValueObject;
+import ch.vd.demaut.commons.vo.BaseValueObject;
 import ch.vd.demaut.commons.annotations.ValueObject;
 
 @ValueObject

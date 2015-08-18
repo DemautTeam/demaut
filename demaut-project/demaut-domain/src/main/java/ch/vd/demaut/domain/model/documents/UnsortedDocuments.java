@@ -3,7 +3,7 @@ package ch.vd.demaut.domain.model.documents;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.vd.demaut.commons.FunctionalKeyEqualsPredicate;
+import ch.vd.demaut.commons.fk.FunctionalKeyEqualsPredicate;
 
 /**
  * Collection of unsorted {@link Document} 

@@ -1,6 +1,6 @@
 package ch.vd.demaut.domain.model.documents;
 
-import ch.vd.demaut.commons.BaseValueObject;
+import ch.vd.demaut.commons.vo.BaseValueObject;
 
 /**
  * Line of an {@link Address}

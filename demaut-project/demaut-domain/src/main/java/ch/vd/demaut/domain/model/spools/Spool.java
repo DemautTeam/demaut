@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 import org.joda.time.DateTime;
 
-import ch.vd.demaut.commons.ObjectFunctionalKeyAware;
+import ch.vd.demaut.commons.fk.ObjectFunctionalKeyAware;
 import ch.vd.demaut.commons.annotations.Entity;
 import ch.vd.demaut.domain.model.DispatchCode;
 import ch.vd.demaut.domain.model.EnvelopeSize;
@@ -64,10 +64,10 @@ public class Spool extends ObjectFunctionalKeyAware  {
 	}
 
 	public boolean doesUnbreakableGroupBelongToSpool(DocumentsGroup group) {
-		if (!group.getDispatchCode().equals(getDispatchCode())) {
+		if (!group.getDispatchCode().getCode().equals(getDispatchCode().getCode())) {
 			return false;
 		}
-		if (!group.getRegionCode().equals(getRegionCode())) {
+		if (!group.getRegionCode().getCode().equals(getRegionCode().getCode())) {
 			return false;
 		}
 		return true;

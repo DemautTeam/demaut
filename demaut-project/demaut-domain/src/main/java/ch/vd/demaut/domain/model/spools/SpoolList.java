@@ -68,14 +68,13 @@ public class SpoolList {
 	/**
 	 * Search the matching spool for a given document group.
 	 * 
-	 * @param doc
+	 * @param group
 	 *            Document to be inserted into the spool
 	 * @param size
 	 *            Size of the envelope
 	 */
 	public Spool searchMatchingSpool(DocumentsGroup group, EnvelopeSize size) {
-		Spool matchingSpool = CollectionUtils.find(spools, new DocumentsGroupPredicate(group, size));
-		return matchingSpool;
+		return CollectionUtils.find(spools, new DocumentsGroupPredicate(group, size));
 
 	}
 
@@ -100,12 +99,9 @@ public class SpoolList {
 		
 		@Override
 		public boolean evaluate(Spool spool) {
-			return spool.getDispatchCode().equals(group.getDispatchCode())
-					&& spool.getRegionCode().equals(group.getRegionCode())
+			return spool.getDispatchCode().getCode().equals(group.getDispatchCode().getCode())
+					&& spool.getRegionCode().getCode().equals(group.getRegionCode().getCode())
 					&& spool.getSize().equals(size);
 		}
 	}
-
-
-
 }

@@ -1,6 +1,6 @@
 package ch.vd.demaut.domain.model.demandeurs;
 
-import ch.vd.demaut.commons.ObjectFunctionalKeyAware;
+import ch.vd.demaut.commons.fk.ObjectFunctionalKeyAware;
 import ch.vd.demaut.commons.annotations.Aggregate;
 
 @Aggregate

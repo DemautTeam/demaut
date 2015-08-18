@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import ch.vd.demaut.commons.ObjectFunctionalKeyAware;
+import ch.vd.demaut.commons.fk.ObjectFunctionalKeyAware;
 import ch.vd.demaut.commons.annotations.Aggregate;
 import ch.vd.demaut.domain.model.CustomerNumber;
 import ch.vd.demaut.domain.model.DispatchCode;

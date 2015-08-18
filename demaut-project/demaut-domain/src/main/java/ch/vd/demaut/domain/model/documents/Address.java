@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.validation.constraints.Size;
 
-import ch.vd.demaut.commons.BaseValueObject;
+import ch.vd.demaut.commons.vo.BaseValueObject;
 import ch.vd.demaut.commons.annotations.ValueObject;
 
 /** 
