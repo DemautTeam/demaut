@@ -18,10 +18,10 @@ mvn clean install assembly:single
 
 # deploy to smx4
 component=$projectFolderName
-remoteBin=/ccv/data/dsi_cyber/microbiz-1.0.0/bin
-remoteDeploy=/ccv/data/dsi_cyber/microbiz-1.0.0/deploy
-remoteConfig=/ccv/data/dsi_cyber/microbiz-1.0.0/config
-remoteServer=dsi_cyber@slv2395t.etat-de-vaud.ch
+localServer=/home/b5cav2/DEMAUT/DevTools/microbiz-1.0.0
+localBin=$localServer/bin
+localDeploy=$localServer/deploy
+localConfig=/$localServer/config
 
 if [ -f target/$component-*.jar ]
 then
@@ -31,33 +31,31 @@ else
     exit 0
 fi
 
-echo "You should copy your public key 'ssh-copy-id $remoteServer' or enter ssh server password!"
-
-echo "Stop du container MicroBiz..."
-ssh $remoteServer $remoteBin/microbiz stop
+echo "Stop du container MicroBiz $localBin/..."
+$localBin/microbiz stop
 echo "Stop du container MicroBiz terminé"
 
 echo "waiting 5s....."
 sleep 5
-echo "Mise à jour du fichier de configuration sur $remoteServer:$remoteConfig..."
-scp conf/$component.cfg $remoteServer:$remoteConfig
+echo "Mise à jour du fichier de configuration sur $localConfig..."
+cp conf/$component.cfg $localConfig
 echo "Mise à jour du fichier de configuration terminée"
 
 
-echo "Suppression de l'ancien bundle sur le serveur $remoteServer:$remoteDeploy"
+echo "Suppression de l'ancien bundle sur le serveur $localDeploy"
 echo "Emplacement du fichier sur le serveur:"
-ssh $remoteServer ls $remoteDeploy/$component-*.jar
+ls $localDeploy/$component-*.jar
 echo "Suppression..."
-ssh $remoteServer rm $remoteDeploy/$component-*.jar
+rm $localDeploy/$component-*.jar
 echo "waiting 5s....."
 sleep 5
-echo "deploying new bundle  in $remoteServer:$remoteDeploy"
+echo "deploying new bundle  in $localDeploy"
 ls target/$component-*.jar
-scp target/$component-*.jar $remoteServer:$remoteDeploy
+cp target/$component-*.jar $localDeploy
 echo "waiting 5s....."
 sleep 5
 echo "Start du container MicroBiz..."
-ssh $remoteServer $remoteBin/microbiz start
+$localBin/microbiz start
 echo "Start du container MicroBiz terminé"
 echo "Status du container MicroBiz..."
-ssh $remoteServer $remoteBin/microbiz status
+$localBin/microbiz status
