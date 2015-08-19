@@ -3,19 +3,19 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>ch.vd.demaut</groupId>
-	<artifactId>demaut</artifactId>
+	<artifactId>demaut-fbe</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>demaut</name>
+	<name>demaut-fbe</name>
 	<description>Demaut Java Parent Project</description>
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>demaut-commons</module>
-		<module>demaut-commons-test</module>
-		<module>demaut-domain</module>
-		<module>demaut-services</module>
-		<module>demaut-tests</module>
+		<module>demaut-commons-fbe</module>
+		<module>demaut-commons-test-fbe</module>
+		<module>demaut-domain-fbe</module>
+		<module>demaut-services-fbe</module>
+		<module>demaut-tests-fbe</module>
 	</modules>
 
 	<properties>
