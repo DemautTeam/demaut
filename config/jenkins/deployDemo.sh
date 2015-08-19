@@ -31,8 +31,7 @@ else
     exit 0
 fi
 
-echo "WARNING : You should copy jenkins public key 'ssh-copy-id $remoteServer' or enter ssh server password!"
-ssh-copy-id dsi_cyber@slv2395t.etat-de-vaud.ch
+echo "WARNING : You should copy jenkins public key to 'ssh-copy-id $remoteServer' or enter $remoteServer server password!"
 
 echo "Stop du container MicroBiz..."
 ssh $remoteServer $remoteBin/microbiz stop
