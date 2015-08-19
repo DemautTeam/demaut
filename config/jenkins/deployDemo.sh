@@ -11,9 +11,7 @@ then
 script_dir="$current_dir"
 fi
 
-projectFolderName=$(basename $script_dir)
-
-ls /ccv/data/ses_slave1/sandbox/workspace/DEMAUT_POC_BUILD/poc-demaut/
+projectFolderName=poc-demaut
 
 # deploy to smx4
 component=$projectFolderName
@@ -33,7 +31,8 @@ else
     exit 0
 fi
 
-echo "You should copy your public key 'ssh-copy-id $remoteServer' or enter ssh server password!"
+echo "WARNING : You should copy jenkins public key 'ssh-copy-id $remoteServer' or enter ssh server password!"
+ssh-copy-id dsi_cyber@slv2395t.etat-de-vaud.ch
 
 echo "Stop du container MicroBiz..."
 ssh $remoteServer $remoteBin/microbiz stop
