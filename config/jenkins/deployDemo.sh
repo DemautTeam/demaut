@@ -17,10 +17,10 @@ cd /ccv/data/ses_slave1/sandbox/workspace/DEMAUT_POC_BUILD/poc-demaut/
 S
 # deploy to smx4
 component=$projectFolderName
-pathServer=/home/b5cav2/DEMAUT/DevTools/microbiz-1.0.0
+pathServer=/ccv/data/dsi_cyber/microbiz-1.0.0
 remoteBin=$pathServer/bin
 remoteDeploy=$pathServer/deploy
-remoteConfig=$pathServer/config
+remoteConfig=/ccv/data/dsi_cyber/microbiz-1.0.0/config
 remoteServer=dsi_cyber@slv2395t.etat-de-vaud.ch
 
 if [ -f /ccv/data/ses_slave1/sandbox/workspace/DEMAUT_POC_BUILD/poc-demaut/target/$component-*.jar ]
