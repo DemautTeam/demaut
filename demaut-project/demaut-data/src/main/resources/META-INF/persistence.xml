@@ -10,10 +10,6 @@
         
         <mapping-file>META-INF/orm.xml</mapping-file>
 
-<!--         <class>ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation</class>
-
-        <exclude-unlisted-classes>true</exclude-unlisted-classes>
- -->
         <properties>
             <property name="openjpa.jdbc.SynchronizeMappings"
                       value="buildSchema(SchemaAction='add,deleteTableContents')"/>

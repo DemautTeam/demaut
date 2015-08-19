@@ -14,7 +14,7 @@ public class ContenuAnnexe extends BaseValueObject{
 	// ********************************************************* Constructor
 	public ContenuAnnexe(byte[] contenu) {
 		this.contenu = contenu;
-		this.taille = contenu.length;
+		this.taille = calculerTaille(contenu);
 	}
 
 	// ********************************************************* Business Methods
@@ -37,5 +37,15 @@ public class ContenuAnnexe extends BaseValueObject{
 	public long getTaille() {
 		return taille;
 	}
-	
+
+	// ********************************************************* Méthodes privées
+	private long calculerTaille(byte[] contenu) {
+		if (contenu == null) {
+			return 0L;
+		} else {
+			return contenu.length;
+		}
+	}
+
+
 }
