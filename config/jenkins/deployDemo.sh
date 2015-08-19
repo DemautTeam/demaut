@@ -13,7 +13,7 @@ fi
 
 projectFolderName=$(basename $script_dir)
 
-cd $script_dir
+cd /ccv/data/ses_slave1/sandbox/workspace/DEMAUT_POC_BUILD/poc-demaut/
 mvn clean install assembly:single
 
 # deploy to smx4
