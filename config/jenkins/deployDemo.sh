@@ -23,6 +23,8 @@ remoteDeploy=$pathServer/deploy
 remoteConfig=/ccv/data/dsi_cyber/microbiz-1.0.0/config
 remoteServer=dsi_cyber@slv2395t.etat-de-vaud.ch
 
+echo Rechercher bundle à déployer $component : `ls /ccv/data/ses_slave1/sandbox/workspace/DEMAUT_POC_BUILD/poc-demaut/target/$component-*.jar`
+
 if [ -f /ccv/data/ses_slave1/sandbox/workspace/DEMAUT_POC_BUILD/poc-demaut/target/$component-*.jar ]
 then
 	 echo Nouveau bundle à déployer: `ls /ccv/data/ses_slave1/sandbox/workspace/DEMAUT_POC_BUILD/poc-demaut/target/$component-*.jar`
