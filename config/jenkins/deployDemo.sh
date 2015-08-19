@@ -13,8 +13,8 @@ fi
 
 projectFolderName=$(basename $script_dir)
 
-cd /ccv/data/ses_slave1/sandbox/workspace/DEMAUT_POC_BUILD/poc-demaut/
-S
+ls /ccv/data/ses_slave1/sandbox/workspace/DEMAUT_POC_BUILD/poc-demaut/
+
 # deploy to smx4
 component=$projectFolderName
 pathServer=/ccv/data/dsi_cyber/microbiz-1.0.0
