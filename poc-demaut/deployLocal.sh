@@ -23,6 +23,8 @@ localBin=$localServer/bin
 localDeploy=$localServer/deploy
 localConfig=/$localServer/config
 
+echo Rechercher bundle à déployer $component: `ls target/$component-*.jar`
+
 if [ -f target/$component-*.jar ]
 then
 	 echo Nouveau bundle à déployer: `ls target/$component-*.jar`
