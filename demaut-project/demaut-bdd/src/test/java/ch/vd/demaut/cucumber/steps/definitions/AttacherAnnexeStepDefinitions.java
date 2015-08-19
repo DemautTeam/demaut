@@ -8,19 +8,19 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 
 import ch.vd.demaut.commons.exceptions.TechnicalException;
 import ch.vd.demaut.cucumber.converters.demandeurs.NomEtPrenomDemandeurConverter;
+import ch.vd.demaut.cucumber.steps.DemandeSteps;
 import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.ContenuAnnexeNonValideException;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
-import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
-import ch.vd.demaut.domain.demandeurs.Demandeur;
-import ch.vd.demaut.domain.demandeurs.DemandeurRepository;
 import ch.vd.demaut.domain.demandeurs.NomEtPrenomDemandeur;
 import cucumber.api.Transform;
+import cucumber.api.java.Before;
 import cucumber.api.java.fr.Alors;
 import cucumber.api.java.fr.Etantdonné;
 import cucumber.api.java.fr.Lorsque;
@@ -35,45 +35,36 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
 	
     private static final Logger LOGGER = LoggerFactory.getLogger(AttacherAnnexeStepDefinitions.class);
 
-    private DemandeurRepository demandeurRepository;
-    private DemandeAutorisationRepository demandeAutorisationRepository;
-
-    private Demandeur demandeur;
-    private DemandeAutorisation demande;
-    private boolean contenuAnnexeNonValideException = false;
+    protected boolean contenuAnnexeNonValideException = false;
     
-    private List<String> nomsDeFichierNonVides = new ArrayList<String>();
-    private List<String> nomsDeFichierVides = new ArrayList<String>();
-
-	// ********************************************************* Technical methods
-
-    public void setDemandeurRepository(DemandeurRepository demandeurRepository) {
-        this.demandeurRepository = demandeurRepository;
-    }
-
-    public void setDemandeAutorisationRepository(DemandeAutorisationRepository demandeAutorisationRepository) {
-    	this.demandeAutorisationRepository = demandeAutorisationRepository;
-    }
+    protected List<String> nomsDeFichierNonVides = new ArrayList<String>();
+    protected List<String> nomsDeFichierVides = new ArrayList<String>();
     
+    private DemandeSteps demandeSteps;
+    
+    @Autowired
+    Environment env;
+    
+    // ********************************************************* Technical methods
+    
+    public DemandeSteps getDemandeSteps() {
+		return demandeSteps;
+	}
+    
+    public void setDemandeSteps(DemandeSteps demandeSteps) {
+		this.demandeSteps = demandeSteps;
+	}
     
     // ********************************************************* Given
     
     @Etantdonné("^le demandeur professionnel \"([^\"]*)\"$")
     public void le_demandeur_professionnel(@Transform(NomEtPrenomDemandeurConverter.class) NomEtPrenomDemandeur nomEtPrenom) throws Throwable {
-       
-    	demandeur = new Demandeur(nomEtPrenom);
-        demandeurRepository.store(demandeur);
-        
-        LOGGER.debug("Le demandeur " + nomEtPrenom + " a été ajouté au repository avec l'id technique:" + demandeur.getId());
+    	demandeSteps.initialiserDemandeur(nomEtPrenom);
     }
 
     @Etantdonné("^qu'il a une demande d'autorisation de type \"([^\"]*)\" en cours de saisie$")
-    public void qu_il_a_une_demande_d_autorisation_de_type_en_cours_de_saisie(ProfessionDeLaSante typeAutorisation) throws Throwable {
-    	
-    	demande = new DemandeAutorisation();
-    	demandeAutorisationRepository.store(demande);
-        
-    	LOGGER.debug("La demande " + demande + " a été ajoutée au repository avec l'id technique:" + demande.getId());
+    public void qu_il_a_une_demande_d_autorisation_de_type_en_cours_de_saisie(ProfessionDeLaSante profession) throws Throwable {
+    	demandeSteps.initialiserDemande(profession);
     }
 
     @Etantdonné("^le fichier \"([^\"]*)\" est un PDF non vide$")
@@ -102,7 +93,7 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
     	Annexe annexe = new Annexe(typeAnnexe, nomFichier, contenuFichier);
     	
     	try {
-    		demande.attacherUneAnnexe(annexe);
+    		demandeSteps.getDemande().attacherUneAnnexe(annexe);
     	} catch(ContenuAnnexeNonValideException e) {
     		contenuAnnexeNonValideException = true;
     	}
@@ -124,7 +115,7 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
 
 	@Alors("^le système Demaut annexe le fichier à la demande avec succès$")
     public void le_système_Demaut_annexe_le_fichier_à_la_demande() throws Throwable {
-    	Collection<Annexe> annexes = demande.listerLesAnnexes();
+    	Collection<Annexe> annexes = demandeSteps.getDemande().listerLesAnnexes();
     	assertThat(annexes).hasSize(1);
     }
 

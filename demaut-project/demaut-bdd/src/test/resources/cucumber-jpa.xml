@@ -9,12 +9,14 @@
 	<!-- <beans profile="jpa"> -->
 	<!-- </beans> -->
 
-	<bean id="demandeurRepo" class="ch.vd.demaut.domain.demandeurs.DemandeurRepositoryMock"
+	<!-- TODO : Make this work -->
+
+	<bean id="demandeurRepo" class="ch.vd.demaut.domain.demandeurs.DemandeurRepository"
 		scope="cucumber-glue">
 	</bean>
 
 	<bean id="demandeAutorisationRepo"
-		class="ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationRepositoryMock"
+		class="ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationRepository"
 		scope="cucumber-glue">
 	</bean>
 

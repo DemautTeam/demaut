@@ -15,9 +15,11 @@ public class DemandeAutorisation extends Demande {
 
 	// ********************************************************* Fields	
 	@NotNull
-	final private ProfessionDeLaSante profession;
+	//TODO: Make it final (be careful with JPA)
+	private ProfessionDeLaSante profession;
 	
-	final private Demandeur demandeur;
+	//TODO: Make it final (be careful with JPA)
+	private Demandeur demandeur;
 	
 	@NotNull
 	private StatutDemandeAutorisation statut;
@@ -42,7 +44,6 @@ public class DemandeAutorisation extends Demande {
 		statut = StatutDemandeAutorisation.Brouillon;
 		this.demandeur = null;
 		this.profession = ProfessionDeLaSante.Medecin;
-		
 	}
 	
 	// ********************************************************* Business Methods

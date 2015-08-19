@@ -3,10 +3,8 @@ package ch.vd.demaut.domain.demandes.autorisation.repo;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -33,7 +31,6 @@ public class DemandeAutorisationRepositoryTest {
 
     @Test
     public void sauverUneDemande() throws Exception {
-        byte[] content = "Ce fichier doit contenir un content non vide".getBytes();
         DemandeAutorisation demande = new DemandeAutorisation();
         demande = repo.store(demande);
         assertNotNull(demande.getId());
