@@ -1,5 +1,5 @@
 Jetty
-    Lancer la classe ch.vd.pee.microbiz.poc.microbiz.StartWebappMain
+    Lancer la classe StartWebappMain
     Accès au poc : http://localhost:8081/deamut-poc
 
 

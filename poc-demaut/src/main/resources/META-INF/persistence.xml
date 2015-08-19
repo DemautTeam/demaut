@@ -8,7 +8,7 @@
 
         <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
 
-        <class>ch.vd.pee.microbiz.poc.jpa.entity.Annexe</class>
+        <class>ch.vd.demaut.poc.jpa.entity.Annexe</class>
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
@@ -19,8 +19,6 @@
                       value="DefaultLevel=INFO, Runtime=INFO, Tool=INFO, SQL=INFO"/>
             <!--<property name="openjpa.jdbc.DBDictionary"-->
                       <!--value="h2(useSchemaName=false)"/>-->
-            <!--<property name="openjpa.jdbc.Schema"-->
-                      <!--value="DEMAUT"/>-->
             <property name="openjpa.RuntimeUnenhancedClasses"
                       value="supported"/>
         </properties>

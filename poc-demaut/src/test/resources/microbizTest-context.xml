@@ -27,7 +27,7 @@
 
     <bean id="esbStore" class="ch.vd.technical.esb.store.EsbStoreMock"/>
 
-    <bean id="iamInteceptor" class="ch.vd.pee.microbiz.poc.microbiz.IamBypassInterceptor" />
+    <bean id="iamInteceptor" class="ch.vd.demaut.poc.microbiz.IamBypassInterceptor" />
 
     <bean id="microbizResourceResolver" class="ch.vd.pee.microbiz.core.web.FSResourceResolver">
         <constructor-arg value="src/main/resources/www"/>

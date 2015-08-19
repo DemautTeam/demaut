@@ -56,6 +56,6 @@
     <tx:annotation-driven transaction-manager="transactionManagerDemaut"/>
 
     <context:annotation-config/>
-    <context:component-scan base-package="ch.vd.pee.microbiz.poc"/>
+    <context:component-scan base-package="ch.vd.demaut.poc"/>
 
 </beans>

@@ -26,7 +26,7 @@
 
     <ctx:property-placeholder properties-ref="props"/>
 
-    <ctx:component-scan base-package="ch.vd.pee.microbiz.poc" />
+    <ctx:component-scan base-package="ch.vd.demaut.poc.poc" />
 
     <cxf:server address="${service.endpoint}">
         <cxf:serviceBeans>
@@ -38,9 +38,9 @@
         </cxf:providers>
     </cxf:server>
 
-    <bean id="JacksonJaxbJsonProvider" class="ch.vd.pee.microbiz.poc.microbiz.CustomeJacksonJaxbJsonProvider"/>
+    <bean id="JacksonJaxbJsonProvider" class="ch.vd.demaut.poc.microbiz.CustomeJacksonJaxbJsonProvider"/>
 
-    <bean id="authenticationFilter" class="ch.vd.pee.microbiz.poc.microbiz.CustomAuthenticationFilter">
+    <bean id="authenticationFilter" class="ch.vd.demaut.poc.microbiz.CustomAuthenticationFilter">
         <property name="contextName" value="karaf"/>
         <property name="realmName" value="poc"/>
         <property name="active" value="${security.active}"/>
@@ -66,7 +66,7 @@
 
         <!--Ressources statiques et services de la prestation -->
         <route id="microbiz">
-            <from uri="microbiz://{{poc.rs.base.endpoint}}?resourceClasses=ch.vd.pee.microbiz.poc.microbiz.AnnexeRest&amp;annotatedAuthClasses=ch.vd.pee.microbiz.poc.microbiz.AnnexeRest&amp;auth=IAM&amp;serviceInstances=annexeRestImpl"/>
+            <from uri="microbiz://{{poc.rs.base.endpoint}}?resourceClasses=ch.vd.demaut.poc.microbiz.AnnexeRest&amp;annotatedAuthClasses=ch.vd.demaut.poc.microbiz.AnnexeRest&amp;auth=IAM&amp;serviceInstances=annexeRestImpl"/>
             <transacted ref="required"/>
             <choice>
                 <when>
@@ -81,7 +81,6 @@
         </route>
 
     </camel:camelContext>
-
 
     <bean id="ack" class="ch.vd.technical.esb.camel.AckEsbMessageProcessor">
         <property name="application" value="microbiz-poc"/>

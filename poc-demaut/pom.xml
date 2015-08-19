@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>ch.vd.pee.microbiz</groupId>
+    <groupId>ch.vd.demaut.poc</groupId>
     <artifactId>poc-demaut</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
@@ -96,6 +96,15 @@
         <sonar.jdbc.username>SES_DEMAUT_DEV</sonar.jdbc.username>
         <sonar.jdbc.password>p0dUq19</sonar.jdbc.password>
         <sonar.scm.disabled>true</sonar.scm.disabled>
+        <sonar.oracle.jdbc.version>6.0</sonar.oracle.jdbc.version>
+
+        <!-- Maven -->
+        <maven.sonar.plugin.version>2.3</maven.sonar.plugin.version>
+        <maven.surefire.plugin.version>2.18.1</maven.surefire.plugin.version>
+        <maven.dependency.plugin.version>2.9</maven.dependency.plugin.version>
+        <maven.google.replacer.plugin>1.5.3</maven.google.replacer.plugin>
+        <maven.samaxes.minify.plugin>1.7.4</maven.samaxes.minify.plugin>
+
     </properties>
 
     <dependencies>
@@ -103,7 +112,7 @@
         <dependency>
             <groupId>ch.vd.pee.microbiz</groupId>
             <artifactId>camel-microbiz</artifactId>
-            <version>2.0.0</version>
+            <version>${camel.microbiz.version}</version>
         </dependency>
 
         <dependency>
@@ -553,7 +562,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Bundle-SymbolicName>ch.vd.pee.microbiz.${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-SymbolicName>ch.vd.demaut.poc.${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Import-Package>javax.jms,
                             javax.persistence,javax.persistence.spi,javax.persistence.criteria,javax.persistence.metamodel,
@@ -603,7 +612,7 @@
             <!--<plugin>
                 <groupId>com.samaxes.maven</groupId>
                 <artifactId>minify-maven-plugin</artifactId>
-                <version>1.7.4</version>
+                <version>${maven.samaxes.minify.plugin}</version>
                 <executions>
                     <execution>
                         <id>default-minify</id>
@@ -642,7 +651,7 @@
             <plugin>
                 <groupId>com.google.code.maven-replacer-plugin</groupId>
                 <artifactId>replacer</artifactId>
-                <version>1.5.3</version>
+                <version>${maven.google.replacer.plugin}1.5.3</version>
                 <executions>
                     <execution>
                         <phase>process-resources</phase>
@@ -718,7 +727,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.9</version>
+                <version>${maven.dependency.plugin.version}</version>
                 <executions>
                     <execution>
                         <id>copy-dependencies</id>
@@ -740,7 +749,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.18.1</version>
+                <version>${maven.surefire.plugin.version}</version>
                 <configuration>
                     <argLine>-XX:-UseSplitVerifier</argLine>
                 </configuration>
@@ -753,12 +762,12 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>sonar-maven-plugin</artifactId>
-                    <version>2.3</version>
+                    <version>${maven.sonar.plugin.version}</version>
                     <dependencies>
                         <dependency>
                             <groupId>oracle</groupId>
                             <artifactId>oracle-jdbc</artifactId>
-                            <version>6.0</version>
+                            <version>${sonar.oracle.jdbc.version}</version>
                         </dependency>
                     </dependencies>
                 </plugin>
