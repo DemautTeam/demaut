@@ -1,6 +1,6 @@
 #language: fr
 
-@annexes
+@soumission-demande
 Fonctionnalité: Soumettre une demande en cours de saisie
 
   Contexte:
