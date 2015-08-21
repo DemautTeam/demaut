@@ -2,9 +2,7 @@ package ch.vd.demaut.commons.entities;
 
 
 /**
- * 
  * {@link Entity} de base qui implémente getId() et setId()
- * 
  */
 public abstract class BaseEntity implements Entity<Long> {
 
@@ -14,10 +12,10 @@ public abstract class BaseEntity implements Entity<Long> {
     public Long getId() {
         return id;
     }
-    
+
     @Override
     public void setId(Long id) {
         this.id = id;
     }
-    
+
 }

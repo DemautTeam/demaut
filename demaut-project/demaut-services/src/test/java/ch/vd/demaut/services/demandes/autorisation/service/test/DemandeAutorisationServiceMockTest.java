@@ -1,0 +1,41 @@
+package ch.vd.demaut.services.demandes.autorisation.service.test;
+
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandeurs.Demandeur;
+import ch.vd.demaut.domain.demandeurs.NomEtPrenomDemandeur;
+import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
+import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+@ContextConfiguration({"classpath*:/servicesMock-context.xml"})
+@RunWith(SpringJUnit4ClassRunner.class)
+public class DemandeAutorisationServiceMockTest extends TestCase {
+
+    @Autowired
+    private DemandeAutorisationService demandeAutorisationService;
+
+    @Before
+    public void setUp() {
+        assertThat(demandeAutorisationService).isNotNull();
+    }
+
+    @Test
+    public void should_initialiser_demande_autorisation() throws Exception {
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.initialiserDemandeAutorisation();
+        assertThat(demandeAutorisation).isNotNull();
+    }
+
+    @Test
+    public void should_suavegarder_demande_autorisation() throws Exception {
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.suavegarderDemandeAutorisation(new DemandeAutorisation());
+        assertThat(demandeAutorisation).isNotNull();
+    }
+}

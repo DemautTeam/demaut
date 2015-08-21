@@ -6,17 +6,17 @@ import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 
 public class DemandeAutorisationFK extends FunctionalKeyAbstract<DemandeAutorisation> {
 
-	// ********************************************************* Fields
-	final private ReferenceDeDemande reference;
+    // ********************************************************* Fields
+    final private ReferenceDeDemande reference;
 
-	// ********************************************************* Constructor
-	public DemandeAutorisationFK(Demande demande) {
-		this.reference = demande.getReference();
-	}
+    // ********************************************************* Constructor
+    public DemandeAutorisationFK(Demande demande) {
+        this.reference = demande.getReferenceDeDemande();
+    }
 
-	// ********************************************************* Getters
-	public ReferenceDeDemande getReference() {
-		return reference;
-	}
+    // ********************************************************* Getters
+    public ReferenceDeDemande getReference() {
+        return reference;
+    }
 
 }

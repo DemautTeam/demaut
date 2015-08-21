@@ -6,17 +6,18 @@ import org.apache.commons.collections4.Transformer;
 
 /**
  * Transformer implementation that returns functional key of input object
- * 
  */
 @SuppressWarnings("rawtypes")
 public class FunctionalKeyTransformer implements Transformer {
 
-    /** Singleton predicate instance */
+    /**
+     * Singleton predicate instance
+     */
     public static final Transformer INSTANCE = new FunctionalKeyTransformer();
 
     /**
      * Factory returning the singleton instance.
-     * 
+     *
      * @return the singleton instance
      */
     public static Transformer getInstance() {

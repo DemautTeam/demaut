@@ -4,11 +4,10 @@ import java.io.Serializable;
 
 /**
  * A implémenter par toutes les {@link Entity}.
- * 
- * @param <I>
- *            l'identifiant de l'{@link Entity}
+ *
+ * @param <I> l'identifiant de l'{@link Entity}
  */
-public interface Entity<I extends Serializable>  {
+public interface Entity<I extends Serializable> {
 
     /**
      * @return l'identifiant de l'{@link Entity}.

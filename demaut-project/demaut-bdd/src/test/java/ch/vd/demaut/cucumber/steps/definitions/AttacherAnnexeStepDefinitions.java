@@ -13,14 +13,13 @@ import org.springframework.core.env.Environment;
 
 import ch.vd.demaut.commons.exceptions.TechnicalException;
 import ch.vd.demaut.cucumber.converters.demandeurs.NomEtPrenomDemandeurConverter;
-import ch.vd.demaut.cucumber.steps.DemandeSteps;
+import ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps;
 import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.ContenuAnnexeNonValideException;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
 import ch.vd.demaut.domain.demandeurs.NomEtPrenomDemandeur;
 import cucumber.api.Transform;
-import cucumber.api.java.Before;
 import cucumber.api.java.fr.Alors;
 import cucumber.api.java.fr.Etantdonné;
 import cucumber.api.java.fr.Lorsque;
@@ -40,31 +39,31 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
     protected List<String> nomsDeFichierNonVides = new ArrayList<String>();
     protected List<String> nomsDeFichierVides = new ArrayList<String>();
     
-    private DemandeSteps demandeSteps;
+    private DemandeAutorisationSteps demandeAutorisationSteps;
     
     @Autowired
     Environment env;
     
     // ********************************************************* Technical methods
     
-    public DemandeSteps getDemandeSteps() {
-		return demandeSteps;
+    public DemandeAutorisationSteps getDemandeAutorisationSteps() {
+		return demandeAutorisationSteps;
 	}
     
-    public void setDemandeSteps(DemandeSteps demandeSteps) {
-		this.demandeSteps = demandeSteps;
+    public void setDemandeAutorisationSteps(DemandeAutorisationSteps demandeAutorisationSteps) {
+		this.demandeAutorisationSteps = demandeAutorisationSteps;
 	}
     
     // ********************************************************* Given
     
     @Etantdonné("^le demandeur professionnel \"([^\"]*)\"$")
     public void le_demandeur_professionnel(@Transform(NomEtPrenomDemandeurConverter.class) NomEtPrenomDemandeur nomEtPrenom) throws Throwable {
-    	demandeSteps.initialiserDemandeur(nomEtPrenom);
+    	demandeAutorisationSteps.initialiserDemandeur(nomEtPrenom);
     }
 
     @Etantdonné("^qu'il a une demande d'autorisation de type \"([^\"]*)\" en cours de saisie$")
     public void qu_il_a_une_demande_d_autorisation_de_type_en_cours_de_saisie(ProfessionDeLaSante profession) throws Throwable {
-    	demandeSteps.initialiserDemande(profession);
+    	demandeAutorisationSteps.initialiserDemande(profession);
     }
 
     @Etantdonné("^le fichier \"([^\"]*)\" est un PDF non vide$")
@@ -93,7 +92,7 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
     	Annexe annexe = new Annexe(typeAnnexe, nomFichier, contenuFichier);
     	
     	try {
-    		demandeSteps.getDemande().attacherUneAnnexe(annexe);
+    		demandeAutorisationSteps.getDemandeAutorisation().attacherUneAnnexe(annexe);
     	} catch(ContenuAnnexeNonValideException e) {
     		contenuAnnexeNonValideException = true;
     	}
@@ -115,7 +114,7 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
 
 	@Alors("^le système Demaut annexe le fichier à la demande avec succès$")
     public void le_système_Demaut_annexe_le_fichier_à_la_demande() throws Throwable {
-    	Collection<Annexe> annexes = demandeSteps.getDemande().listerLesAnnexes();
+    	Collection<Annexe> annexes = demandeAutorisationSteps.getDemandeAutorisation().listerLesAnnexes();
     	assertThat(annexes).hasSize(1);
     }
 

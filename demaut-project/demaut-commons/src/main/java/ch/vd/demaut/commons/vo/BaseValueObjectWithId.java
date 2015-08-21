@@ -2,21 +2,21 @@ package ch.vd.demaut.commons.vo;
 
 import ch.vd.demaut.commons.entities.Entity;
 
-public abstract class BaseValueObjectWithId extends BaseValueObject implements Entity<Long>{
+public abstract class BaseValueObjectWithId extends BaseValueObject implements Entity<Long> {
 
-	// ********************************************************* Fields
-	protected Long id;
+    // ********************************************************* Fields
+    protected Long id;
 
-	// ********************************************************* Getters
+    // ********************************************************* Getters
     @Override
     public Long getId() {
         return id;
     }
-    
-	// ********************************************************* Setters
+
+    // ********************************************************* Setters
     @Override
     public void setId(Long id) {
         this.id = id;
     }
-	
+
 }

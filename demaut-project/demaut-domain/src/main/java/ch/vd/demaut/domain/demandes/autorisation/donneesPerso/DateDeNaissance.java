@@ -1,16 +1,15 @@
 package ch.vd.demaut.domain.demandes.autorisation.donneesPerso;
 
-import org.joda.time.LocalDate;
-
 import ch.vd.demaut.commons.vo.LocalDateVO;
+import org.joda.time.LocalDate;
 
 public class DateDeNaissance extends LocalDateVO {
 
-	// ********************************************************* Fields
-	public DateDeNaissance(LocalDate value) {
-		super(value);
-	}
+    // ********************************************************* Fields
+    public DateDeNaissance(LocalDate value) {
+        super(value);
+    }
 
-	// ********************************************************* Business Methods
+    // ********************************************************* Business Methods
 
 }

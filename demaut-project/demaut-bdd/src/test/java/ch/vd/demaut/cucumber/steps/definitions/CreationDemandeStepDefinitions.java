@@ -1,11 +1,7 @@
 package ch.vd.demaut.cucumber.steps.definitions;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.test.context.ContextConfiguration;
-
 import ch.vd.demaut.cucumber.converters.demandeurs.NomEtPrenomDemandeurConverter;
-import ch.vd.demaut.cucumber.steps.DemandeSteps;
+import ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps;
 import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
 import ch.vd.demaut.domain.demandes.autorisation.StatutDemandeAutorisation;
 import ch.vd.demaut.domain.demandeurs.NomEtPrenomDemandeur;
@@ -21,16 +17,16 @@ public class CreationDemandeStepDefinitions extends StepDefinitions {
 
 	// ********************************************************* Fields
 
-	private DemandeSteps demandeSteps;
+	private DemandeAutorisationSteps demandeAutorisationSteps;
 
     // ********************************************************* Technical methods
     
-    public DemandeSteps getDemandeSteps() {
-		return demandeSteps;
+    public DemandeAutorisationSteps getDemandeAutorisationSteps() {
+		return demandeAutorisationSteps;
 	}
     
-    public void setDemandeSteps(DemandeSteps demandeSteps) {
-		this.demandeSteps = demandeSteps;
+    public void setDemandeAutorisationSteps(DemandeAutorisationSteps demandeAutorisationSteps) {
+		this.demandeAutorisationSteps = demandeAutorisationSteps;
 	}
 
 	// ********************************************************* Given
@@ -38,7 +34,7 @@ public class CreationDemandeStepDefinitions extends StepDefinitions {
 	// ********************************************************* When
 	@Lorsque("^que le demandeur initialise une demande de type \"([^\"]*)\"$")
 	public void que_le_demandeur_initialise_une_demande_de_type(ProfessionDeLaSante profession) throws Throwable {
-		demandeSteps.initialiserDemande(profession);
+		demandeAutorisationSteps.initialiserDemande(profession);
 	}
 
 	// ********************************************************* Then
@@ -48,6 +44,6 @@ public class CreationDemandeStepDefinitions extends StepDefinitions {
 			StatutDemandeAutorisation statut,
 			@Transform(NomEtPrenomDemandeurConverter.class) NomEtPrenomDemandeur nomEtPrenom,
 			ProfessionDeLaSante profession) throws Throwable {
-		demandeSteps.verifieDemandeCree(profession);
+		demandeAutorisationSteps.verifieDemandeCree(profession);
 	}
 }

@@ -4,7 +4,6 @@ import org.apache.commons.lang3.ClassUtils;
 
 /**
  * Object (Entity or VO) with Functional Key
- * 
  */
 public abstract class ObjectFunctionalKeyAware implements FunctionalKeyAware {
 

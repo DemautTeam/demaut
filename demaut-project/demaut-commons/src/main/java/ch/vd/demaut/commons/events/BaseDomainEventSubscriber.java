@@ -3,9 +3,8 @@ package ch.vd.demaut.commons.events;
 import java.lang.reflect.ParameterizedType;
 
 /**
- * 
  * Classe abstraite de base pour l'implémentation d'un {@link DomainEventSubscriber}
- * 
+ *
  * @param <T>
  */
 abstract public class BaseDomainEventSubscriber<T extends DomainEvent> implements DomainEventSubscriber<T> {

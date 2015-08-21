@@ -6,8 +6,8 @@ import ch.vd.demaut.commons.vo.StringVO;
 @ValueObject
 public class Prenom extends StringVO {
 
-	// ********************************************************* Constructor
-	public Prenom(String value) {
-		super(value);
-	}
+    // ********************************************************* Constructor
+    public Prenom(String value) {
+        super(value);
+    }
 }

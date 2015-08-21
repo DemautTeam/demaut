@@ -4,36 +4,38 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<!-- TODO : Use profiles like this -->
-	<!-- <beans profile="mock"> -->
-	<!-- </beans> -->
-	<!-- <beans profile="jpa"> -->
-	<!-- </beans> -->
 
-	<bean id="demandeurRepo" class="ch.vd.demaut.domain.demandeurs.DemandeurRepositoryMock"
+	<!-- Demandeur -->
+
+	<bean id="demandeurRepository"
+		  class="ch.vd.demaut.services.demandeurs.repo.mock.DemandeurRepositoryMock"
 		scope="cucumber-glue">
 	</bean>
 
-	<bean id="demandeAutorisationRepo"
-		class="ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationRepositoryMock"
-		scope="cucumber-glue">
+	<!-- DemandeAutorisation -->
+
+	<bean id="demandeAutorisationRepository"
+		  class="ch.vd.demaut.services.demandes.autorisation.repo.mock.DemandeAutorisationRepositoryMock"
+		  scope="cucumber-glue">
 	</bean>
 
-	<bean id="demandeSteps" class="ch.vd.demaut.cucumber.steps.DemandeSteps"
-		scope="cucumber-glue">
-		<property name="demandeurRepository" ref="demandeurRepo" />
-		<property name="demandeAutorisationRepository" ref="demandeAutorisationRepo" />
+	<bean id="demandeAutorisationSteps"
+		  class="ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps"
+		  scope="cucumber-glue">
+		<property name="demandeurRepository" ref="demandeurRepository" />
+		<property name="demandeAutorisationRepository" ref="demandeAutorisationRepository" />
 	</bean>
 
-	<bean
-		class="ch.vd.demaut.cucumber.steps.definitions.AttacherAnnexeStepDefinitions"
-		scope="cucumber-glue">
-		<property name="demandeSteps" ref="demandeSteps"></property>
+	<bean class="ch.vd.demaut.cucumber.steps.definitions.CreationDemandeStepDefinitions"
+		  scope="cucumber-glue">
+		<property name="demandeAutorisationSteps" ref="demandeAutorisationSteps"/>
 	</bean>
 
-	<bean
-		class="ch.vd.demaut.cucumber.steps.definitions.CreationDemandeStepDefinitions"
+	<!-- Annexe -->
+
+	<bean class="ch.vd.demaut.cucumber.steps.definitions.AttacherAnnexeStepDefinitions"
 		scope="cucumber-glue">
-		<property name="demandeSteps" ref="demandeSteps"></property>
+		<property name="demandeAutorisationSteps" ref="demandeAutorisationSteps"/>
 	</bean>
 
 </beans>

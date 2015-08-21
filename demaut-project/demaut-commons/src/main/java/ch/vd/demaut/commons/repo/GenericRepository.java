@@ -1,24 +1,20 @@
 package ch.vd.demaut.commons.repo;
 
+import ch.vd.demaut.commons.entities.Entity;
+import ch.vd.demaut.commons.exceptions.DomainException;
+
+import javax.validation.ConstraintViolation;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
 
-import javax.validation.ConstraintViolation;
-
-import ch.vd.demaut.commons.entities.Entity;
-import ch.vd.demaut.commons.exceptions.DomainException;
-
 /**
  * Gestion générique des méthodes basiques sur le repository d'une {@link Entity}.
- * 
- * @param <E>
- *            l'{@link Entity} à gérer
- * @param <I>
- *            l'identifiant de l'{@link Entity}
+ *
+ * @param <E> l'{@link Entity} à gérer
+ * @param <I> l'identifiant de l'{@link Entity}
  */
-public interface GenericRepository<E, I extends Serializable> extends
-        GenericReadRepository<E, I> {
+public interface GenericRepository<E, I extends Serializable> extends GenericReadRepository<E, I> {
 
     /**
      * Persiste une {@link Entity}.
@@ -56,7 +52,7 @@ public interface GenericRepository<E, I extends Serializable> extends
 
     /**
      * Valide l'entité
-     * 
+     *
      * @return True si l'entité est valide
      */
     Set<ConstraintViolation<E>> validate(E entity);
@@ -64,7 +60,7 @@ public interface GenericRepository<E, I extends Serializable> extends
     /**
      * Valide puis persiste une {@link Entity}. Renvoie une exception {@link DomainException} si l'entité n'est pas
      * valide
-     * 
+     *
      * @param entity
      * @return l'entité validée et persistée
      */
@@ -73,7 +69,7 @@ public interface GenericRepository<E, I extends Serializable> extends
     /**
      * Valide puis persiste une liste de {@link Entity}. Renvoie une exception {@link DomainException} si une entité de
      * la liste n'est pas valide
-     * 
+     *
      * @param entities
      */
     void validateAndStoreAll(Collection<? extends E> entities);

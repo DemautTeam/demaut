@@ -3,9 +3,7 @@ package ch.vd.demaut.commons.events;
 import ch.vd.demaut.commons.exceptions.TechnicalException;
 
 /**
- * 
  * Exception d'un évènement métier
- * 
  */
 public class DomainEventException extends TechnicalException {
 

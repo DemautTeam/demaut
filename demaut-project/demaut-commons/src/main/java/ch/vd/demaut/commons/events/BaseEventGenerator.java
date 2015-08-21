@@ -1,15 +1,15 @@
 package ch.vd.demaut.commons.events;
 
-import java.util.Collection;
-
 import org.joda.time.DateTime;
+
+import java.util.Collection;
 
 /**
  * Classe abstraite qui imlémente {@link EventGenerator}
- * 
- * @see EventGenerator
+ *
  * @param <E>
  * @param <S>
+ * @see EventGenerator
  */
 public abstract class BaseEventGenerator<E extends BaseDomainEvent<?>, S> implements EventGenerator<E, S> {
 

@@ -1,26 +1,25 @@
 package ch.vd.demaut.commons.events;
 
-import java.util.EventObject;
-
+import ch.vd.demaut.commons.exceptions.NotYetImplementedException;
+import ch.vd.demaut.commons.fk.FunctionalKey;
+import ch.vd.demaut.commons.fk.FunctionalKeyAware;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import ch.vd.demaut.commons.exceptions.NotYetImplementedException;
-import ch.vd.demaut.commons.fk.FunctionalKey;
-import ch.vd.demaut.commons.fk.FunctionalKeyAware;
+import java.util.EventObject;
 
 /**
  * Classe abstraite de base pour l'implémentation d'un {@link DomainEvent}
  */
 abstract public class BaseDomainEvent<S extends DomainEventPublisherAware> extends EventObject implements DomainEvent {
 
-	private static final long serialVersionUID = -5678203769138641673L;
+    private static final long serialVersionUID = -5678203769138641673L;
 
-	// ********************************************************* Attributs
+    // ********************************************************* Attributs
 
-	private final DateDeGenerationEvent dateDeGenerationEvent;
+    private final DateDeGenerationEvent dateDeGenerationEvent;
 
     // ********************************************************* Constructeur
     public BaseDomainEvent(DateDeGenerationEvent dateDeGenerationEvent, S source) {

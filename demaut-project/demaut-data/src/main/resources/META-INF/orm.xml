@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm"
+				 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm
+				 http://java.sun.com/xml/ns/persistence/orm_2_1.xsd">
 	<persistence-unit-metadata>
 		<persistence-unit-defaults>
 			<access>FIELD</access>
@@ -7,12 +10,17 @@
 	</persistence-unit-metadata>
 	
 	<entity class="ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation" access="FIELD">
-		<table name="DEMANDE_AUTORISATION"></table>
+		<table name="DEMANDE_AUTORISATION"/>
 		<attributes>
 			<id name="id">
-			<generated-value strategy="AUTO"/>
+			    <generated-value strategy="AUTO"/>
 			</id>
-		</attributes>
+            <!--<transient name="dateSoumissionDemande"/>-->
+            <transient name="demandeur"/>
+            <!--<transient name="statutDemandeAutorisation"/>-->
+            <!--<transient name="professionDeLaSante"/>-->
+            <!--<transient name="listeDesAnnexes"/>-->
+        </attributes>
 	</entity>
 	
 </entity-mappings>

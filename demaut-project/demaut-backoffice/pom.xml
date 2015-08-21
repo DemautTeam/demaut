@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>demaut</artifactId>
+        <groupId>ch.vd.demaut</groupId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+    
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>demaut-backoffice</artifactId>
+    <name>demaut-backoffice</name>
+    <description>Demaut Backoffice Module</description>
+    <packaging>bundle</packaging>
+
+    <dependencies>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- see plugin doc : http://felix.apache.org/site/apache-felix-maven-bundle-plugin-bnd.html -->
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>ch.vd.demaut.backoffice.${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Version>${project.version}</Bundle-Version>
+                        <Import-Package>javax.jms,
+                            javax.persistence,javax.persistence.spi,javax.persistence.criteria,javax.persistence.metamodel,
+                            javax.annotation,oracle.jdbc.driver,javax.sql,
+                            *
+                        </Import-Package>
+                        <Private-Package>ch.vd.demaut.backoffice</Private-Package>
+                        <Distributable>true</Distributable>
+                        <Include-Resource>target/classes</Include-Resource>
+                        <DynamicImport-Package>*</DynamicImport-Package>
+                    </instructions>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>wrap-my-dependency</id>
+                        <goals>
+                            <goal>wrap</goal>
+                        </goals>
+                        <configuration>
+                            <wrapImportPackage>;</wrapImportPackage>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

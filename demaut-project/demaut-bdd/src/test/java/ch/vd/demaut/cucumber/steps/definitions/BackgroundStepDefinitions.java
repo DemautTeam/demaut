@@ -4,7 +4,7 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ch.vd.demaut.commons.DateEtHeureCourant;
+import ch.vd.demaut.cucumber.DateEtHeureCourant;
 import ch.vd.demaut.cucumber.converters.commons.DateTimeConverter;
 import cucumber.api.Transform;
 import cucumber.api.java.After;

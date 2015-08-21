@@ -5,20 +5,18 @@ import ch.vd.demaut.commons.fk.FunctionalKey;
 
 /**
  * Gestion générique des méthodes basiques sur le repository d'une {@link EntityFunctionalKeyAware}.
- * 
- * @param <E>
- *            l'{@link ch.vd.demaut.commons.entities.Entity} à gérer
- * @param <I>
- *            l'identifiant de l'{@link ch.vd.demaut.commons.entities.Entity}
+ *
+ * @param <E> l'{@link ch.vd.demaut.commons.entities.Entity} à gérer
+ * @param <I> l'identifiant de l'{@link ch.vd.demaut.commons.entities.Entity}
  */
 public interface GenericFKARepository<E extends EntityFunctionalKeyAware, FK extends FunctionalKey<E>> extends
         GenericRepository<E, Long> {
 
     /**
      * Retourne une entité via sa clé fonctionnelle
-     * 
+     * <p/>
      * Renvoie une exception si plusieurs entités correspondante sont trouvées
-     * 
+     *
      * @param functionalKey
      * @return L'entité correspondante à la clé fonctionnelle
      */
@@ -26,10 +24,10 @@ public interface GenericFKARepository<E extends EntityFunctionalKeyAware, FK ext
 
     /**
      * Retourne une entité via sa clé fonctionnelle et une exception si elle n'est pas trouvé o
-     * 
+     * <p/>
      * Renvoie une exception si aucune entité correspondante n'est trouvée Renvoie une exception si plusieurs entités
      * correspondante sont trouvées
-     * 
+     *
      * @param functionalKey
      * @return L'entité correspondante à la clé fonctionnelle
      */
