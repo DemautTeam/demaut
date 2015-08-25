@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:ctx="http://www.springframework.org/schema/context"
+       xmlns:camel="http://camel.apache.org/schema/spring"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:cxf="http://cxf.apache.org/jaxrs"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://camel.apache.org/schema/spring
+       http://camel.apache.org/schema/spring/camel-spring.xsd
+       http://www.springframework.org/schema/jdbc
+		http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util.xsd
+		http://cxf.apache.org/jaxrs
+		http://cxf.apache.org/schemas/jaxrs.xsd">
+
+    <ctx:property-placeholder properties-ref="props"/>
+
+    <ctx:component-scan base-package="ch.vd.demaut.microbiz" />
+
+    <cxf:server address="${service.endpoint}">
+        <cxf:serviceBeans>
+            <ref local="annexeRestImpl"/>
+        </cxf:serviceBeans>
+        <cxf:providers>
+            <ref local="JacksonJaxbJsonProvider"/>
+            <ref local="authenticationFilter"/>
+        </cxf:providers>
+    </cxf:server>
+
+    <bean id="JacksonJaxbJsonProvider" class="ch.vd.demaut.microbiz.provider.CustomeJacksonJaxbJsonProvider"/>
+
+    <bean id="authenticationFilter" class="ch.vd.demaut.microbiz.filter.CustomAuthenticationFilter">
+        <property name="contextName" value="karaf"/>
+        <property name="realmName" value="poc"/>
+        <property name="active" value="${security.active}"/>
+    </bean>
+
+    <bean id="camelTracer" class="org.apache.camel.processor.interceptor.Tracer">
+        <property name="traceExceptions" value="true"/>
+        <property name="traceInterceptors" value="true"/>
+        <property name="logLevel" value="INFO"/>
+        <property name="logName" value="ch.vdl.poc"/>
+    </bean>
+
+    <bean id="traceFormatter" class="org.apache.camel.processor.interceptor.DefaultTraceFormatter">
+        <property name="showBody" value="true"/>
+        <property name="showBodyType" value="true"/>
+        <property name="showBreadCrumb" value="true"/>
+        <property name="maxChars" value="2000"/>
+    </bean>
+
+    <camel:camelContext trace="true" id="demaut-microbiz" xmlns="http://camel.apache.org/schema/spring" depends-on="activemq">
+
+        <propertyPlaceholder id="properties" location="ref:props"/>
+
+        <!--Ressources statiques et services de la prestation -->
+        <route id="microbiz">
+            <from uri="microbiz://{{demaut.rs.base.endpoint}}?resourceClasses=ch.vd.demaut.microbiz.rest.AnnexeRest&amp;annotatedAuthClasses=ch.vd.demaut.microbiz.rest.AnnexeRest&amp;auth=IAM&amp;serviceInstances=annexeRestImpl"/>
+            <transacted ref="required"/>
+            <choice>
+                <when>
+                    <simple>${header.operationName} == "mainData"</simple>
+                    <process ref="mainProcessor"/>
+		            <log message="Operation name header = ${header.operationName}."/>
+                </when>
+		        <otherwise>
+                    <log message="Unknown operation name header ${header.operationName}."/>
+                </otherwise>
+            </choice>
+        </route>
+
+    </camel:camelContext>
+
+    <bean id="ack" class="ch.vd.technical.esb.camel.AckEsbMessageProcessor">
+        <property name="application" value="microbiz-poc"/>
+        <property name="domain" value="socle"/>
+    </bean>
+
+
+    <bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory" init-method="start"
+          destroy-method="stop">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="maxConnections" value="10"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jms.connection.JmsTransactionManager">
+        <property name="connectionFactory" ref="pooledConnectionFactory"/>
+    </bean>
+
+    <bean id="required" class="org.apache.camel.spring.spi.SpringTransactionPolicy">
+        <property name="transactionManager" ref="transactionManager"/>
+    </bean>
+
+    <bean id="jmsConfiguration" class="org.apache.camel.component.jms.JmsConfiguration">
+        <property name="connectionFactory" ref="pooledConnectionFactory"/>
+        <property name="transactionManager" ref="transactionManager"/>
+        <property name="transacted" value="true"/>
+        <property name="cacheLevelName" value="CACHE_CONSUMER"/>
+    </bean>
+
+    <bean id="activemq" class="org.apache.camel.component.jms.JmsComponent">
+        <property name="configuration" ref="jmsConfiguration"/>
+    </bean>
+
+    <import resource="classpath:META-INF/spring/jpa-context.xml"/>
+    <import resource="classpath:META-INF/spring/services-context.xml"/>
+
+</beans>

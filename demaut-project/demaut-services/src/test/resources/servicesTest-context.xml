@@ -21,13 +21,14 @@
         <bean id="props" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
             <property name="locations">
                 <list>
-                    <value>classpath:data.cfg</value>
+                    <value>classpath:demaut-dataTest.cfg</value>
+                    <value>classpath:demaut-servicesTest.cfg</value>
                 </list>
             </property>
         </bean>
 
         <import resource="classpath:jpaTest-context.xml"/>
-        <import resource="classpath:services-context.xml"/>
+        <import resource="classpath:META-INF/spring/services-context.xml"/>
     </beans>
 
 </beans>

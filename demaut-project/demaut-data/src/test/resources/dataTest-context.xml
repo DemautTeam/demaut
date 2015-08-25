@@ -20,7 +20,7 @@
     <bean id="props" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:data.cfg</value>
+                <value>classpath:demaut-dataTest.cfg</value>
             </list>
         </property>
     </bean>

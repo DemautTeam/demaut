@@ -1,9 +1,6 @@
 package ch.vd.ses.demaut.poc.appliquette;
 
-import ch.vd.ses.demaut.poc.appliquette.service.JaxRestService;
-import org.apache.cxf.Bus;
 import org.apache.cxf.bus.spring.SpringBus;
-import org.apache.cxf.endpoint.EndpointImpl;
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 import org.apache.cxf.jaxrs.lifecycle.ResourceProvider;
@@ -14,26 +11,25 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 
 import javax.ws.rs.Path;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by mourad on 31.07.15.
- */
-
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan
-@ImportResource({ "classpath:META-INF/cxf/cxf.xml" })
+@ImportResource({"classpath:META-INF/cxf/cxf.xml"})
 public class BootStrap {
 
     @Autowired
     private ApplicationContext applicationContext;
 
-    public static void main(String... args){
+    public static void main(String... args) {
         SpringApplication.run(BootStrap.class, args);
     }
 

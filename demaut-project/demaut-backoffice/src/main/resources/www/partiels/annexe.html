@@ -1,39 +1,44 @@
 <div ng-include="'partiels/include-steps.html'"></div>
-<div>
+<div class="bs-wizard-info text-left">
     Annexe page<br />
     controller: {{annexe.name}}<br />
     Demande Id: {{annexe.params.demandeId}}<br />
     Annexe Id: {{annexe.params.chapterId}} <br />
 
-    <table class="table table-striped">
-        <tr>
-            <th>Type</th>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Size</th>
-            <th>Action</th>
-        </tr>
-        <tr ng-repeat="annexe in annexes | filter: '' | orderBy:'name'">
-            <td>
-                <span ng-show="isDocument(annexe)" class="glyphicon glyphicon-certificate"></span>
-                <span ng-hide="isDocument(annexe)" class="glyphicon glyphicon-picture"></span>
-            </td>
-            <td>{{annexe.id}}</td>
-            <td>{{annexe.name}}</td>
-            <td>{{annexe.type}}</td>
-            <td>{{annexe.size}}</td>
-            <td>
-                <a href="" ng-click="viewEntry(annexe)" class="btn btn-xs btn-default">
-                    <span class="glyphicon glyphicon-eye-open"></span>
-                </a>
-                <a href="" ng-click="deleteEntry(annexe)" class="btn btn-xs btn-default">
-                    <span class="glyphicon glyphicon-trash"></span>
-                </a>
-                <a href="" ng-click="editEntry(annexe)" class="btn btn-xs btn-default">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                </a>
-            </td>
-        </tr>
-    </table>
+    <fieldset>
+        <legend>Charger des annexex <a style="cursor: pointer" class="cleanHistory">Clear</a></legend>
+        <table class="table table-striped">
+            <thead>
+                <tr bgcolor="#99CC00">
+                    <th>Document attendu</th>
+                    <th>Lien vers le document</th>
+                    <th></th>
+                    <th>Type</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tr ng-repeat="annexeType in annexeTypes">
+                <td>{{annexeType}}</td>
+                <td></td>
+                <td>
+                    <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <input type="file" name="files" multiple ng-disabled="disabled" accept="image/*,application/pdf" onchange="angular.element(this).scope().filesChanged(this)">
+                    </span>
+                </td>
+                <td></td>
+                <td>
+                    <a href="" ng-click="viewEntry(annexeType)" class="btn btn-xs btn-default">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </a>
+                    <a href="" ng-click="deleteEntry(annexeType)" class="btn btn-xs btn-default">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                    <a href="" ng-click="editEntry(annexeType)" class="btn btn-xs btn-default">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
 </div>

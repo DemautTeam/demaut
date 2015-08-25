@@ -5,23 +5,29 @@ var microbizAppUserame = "Back-Office-User";
 var ngApp = angular.module('ngApp', ['ngSanitize', 'ngRoute', 'ngAnimate']);
 /*Necessaire si les services ne sont pas dans la même arborescence que la page html*/
 ngApp.constant('urlPrefix', '/outils/demaut-microbiz');
+function settingScopeVariable($scope) {
+    $scope.environment = microbizAppEnviron;
+    $scope.buildVersion = microbizAppVersion;
+    $scope.project = microbizAppFullame;
+    $scope.user = microbizAppUserame;
+}
 ngApp
     .config([ '$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider) {
 
         $routeProvider
             .when('/Demaut/:demandeId', {
                 templateUrl: 'partiels/demande.html',
-                controller: 'DemandeCtrl',
+                controller: 'DemandeController',
                 controllerAs: 'demande'
             })
             .when('/Demaut/:demandeId/ch/:annexeId', {
                 templateUrl: 'partiels/annexe.html',
-                controller: 'AnnexeCtrl',
+                controller: 'AnnexeController',
                 controllerAs: 'annexe'
             })
             .otherwise({
                 templateUrl: 'partiels/annexe.html',
-                controller: 'AnnexeCtrl',
+                controller: 'AnnexeController',
                 controllerAs: 'annexe'
             });
 
@@ -50,29 +56,33 @@ ngApp
     }
     ])
     .controller('IndexController', ['$scope', '$http', '$location',  '$interval', 'urlPrefix', '$log', function ($scope, $http, $location, $interval, urlPrefix, $log ) {
-        $scope.environment = microbizAppEnviron;
-        $scope.buildVersion = microbizAppVersion;
-        $scope.project = microbizAppFullame;
-        $scope.user = microbizAppUserame;
+        settingScopeVariable($scope);
 
     }])
-    .controller('DemandeCtrl', ['$scope','$routeParams', function($scope, $routeParams) {
-        $scope.environment = microbizAppEnviron;
-        $scope.buildVersion = microbizAppVersion;
-        $scope.project = microbizAppFullame;
-        $scope.user = microbizAppUserame;
+    .controller('DemandeController', ['$scope','$routeParams', function($scope, $routeParams) {
+        settingScopeVariable($scope);
 
-        this.name = "DemandeCtrl";
+        this.name = "DemandeController";
         this.params = $routeParams;
         $scope.indexStep = 2;
     }])
-    .controller('AnnexeCtrl', ['$scope', '$routeParams', function($scope, $routeParams) {
-        $scope.environment = microbizAppEnviron;
-        $scope.buildVersion = microbizAppVersion;
-        $scope.project = microbizAppFullame;
-        $scope.user = microbizAppUserame;
+    .controller('AnnexeController', ['$scope', '$routeParams', function($scope, $routeParams) {
+        settingScopeVariable($scope);
 
-        this.name = "AnnexeCtrl";
+        this.name = "AnnexeController";
         this.params = $routeParams;
         $scope.indexStep = 4;
+
+        $scope.annexeFormats = ["pdf", "jpg", "jpeg", "png", "bmp"];
+        $scope.annexeTypes = [
+            "Curriculum vitae",
+            "Diplôme (médecin)",
+            "Titre (pédiatre)",
+            "Certificats de Travail",
+            "Casier judiciaire"
+        ];
+
+        $scope.filesChanged = function(index) {
+            alert("Uploaded " + index);
+        };
     }]);
