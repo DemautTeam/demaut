@@ -1,8 +1,9 @@
 package ch.vd.demaut.microbiz.rest;
 
+import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import ch.vd.pee.microbiz.core.utils.Json;
-import ch.vd.demaut.poc.domain.AnnexeService;
-import ch.vd.demaut.poc.jpa.entity.Annexe;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -32,7 +33,7 @@ public class AnnexeRestImpl implements AnnexeRest {
     private static final Logger LOGGER = LoggerFactory.getLogger(AnnexeRestImpl.class);
 
     @Autowired
-    private AnnexeService annexeService;
+    private DemandeAutorisationService demandeAutorisationService;
 
     // TODO Processor Camel
     @Value("${user}")
@@ -68,42 +69,42 @@ public class AnnexeRestImpl implements AnnexeRest {
         LOGGER.info("fetchAnnexes");
 
         ObjectWriter viewWriter = new ObjectMapper().writer();
-        List<Annexe> annexes = this.annexeService.fetchAnnexes();
+        List<Annexe> annexes = this.demandeAutorisationService.listerLesAnnexes();
         return annexes != null && !annexes.isEmpty()
                 ? Response.ok(Json.newObject().put("response", viewWriter.writeValueAsString(annexes))).build()
                 : Response.noContent().build();
     }
 
-    @Override
-    @GET
-    @Path("/annexe/{name}")
-    @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed("USER")
-    public Response fetchAnnexeByName(@PathParam("name") String name) throws JsonProcessingException {
-
-        LOGGER.info("fetchAnnexeByName");
-
-        ObjectWriter viewWriter = new ObjectMapper().writer();
-        Annexe annexe = this.annexeService.fetchAnnexeByName(name);
-        return annexe != null
-                ? Response.ok(Json.newObject().put("response", viewWriter.writeValueAsString(annexe))).build()
-                : Response.noContent().build();
-    }
-
-    @Override
-    @GET
-    @Path("/annexe/binary/{name}")
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    @RolesAllowed("USER")
-    public Response fetchAnnexeBinary(@PathParam("name") String name) {
-
-        LOGGER.info("fetchAnnexeBinary");
-
-        Annexe annexe = this.annexeService.fetchAnnexeByName(name);
-        return annexe != null
-                ? Response.ok(annexe.getFile(), MediaType.APPLICATION_OCTET_STREAM_TYPE).build()
-                : Response.noContent().build();
-    }
+//    @Override
+//    @GET
+//    @Path("/annexe/{name}")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @RolesAllowed("USER")
+//    public Response fetchAnnexeByName(@PathParam("name") String name) throws JsonProcessingException {
+//
+//        LOGGER.info("fetchAnnexeByName");
+//
+//        ObjectWriter viewWriter = new ObjectMapper().writer();
+//        Annexe annexe = this.demandeAutorisationService.fetchAnnexeByName(name);
+//        return annexe != null
+//                ? Response.ok(Json.newObject().put("response", viewWriter.writeValueAsString(annexe))).build()
+//                : Response.noContent().build();
+//    }
+//
+//    @Override
+//    @GET
+//    @Path("/annexe/binary/{name}")
+//    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+//    @RolesAllowed("USER")
+//    public Response fetchAnnexeBinary(@PathParam("name") String name) {
+//
+//        LOGGER.info("fetchAnnexeBinary");
+//
+//        Annexe annexe = this.demandeAutorisationService.fetchAnnexeByName(name);
+//        return annexe != null
+//                ? Response.ok(annexe.getFile(), MediaType.APPLICATION_OCTET_STREAM_TYPE).build()
+//                : Response.noContent().build();
+//    }
 
     @Override
     @POST
@@ -115,7 +116,7 @@ public class AnnexeRestImpl implements AnnexeRest {
 
         LOGGER.info("storeAnnexe");
 
-        return this.annexeService.storeAnnexe(annexe)
+        return this.demandeAutorisationService.attacherUneAnnexe(annexe)
                 ? Response.ok(Json.newObject().put("response", true)).build()
                 : Response.notModified().build();
     }
@@ -132,7 +133,7 @@ public class AnnexeRestImpl implements AnnexeRest {
         LOGGER.info("storeMultipart");
 
         return  !StringUtils.isEmpty(name) && !StringUtils.isEmpty(size) && !StringUtils.isEmpty(type) && file != null &&
-                this.annexeService.storeAnnexe(new Annexe(name, Long.parseLong(size), type, IOUtils.toByteArray(new FileInputStream(file))))
+                this.demandeAutorisationService.attacherUneAnnexe(new Annexe(TypeAnnexe.CV, name, IOUtils.toByteArray(new FileInputStream(file))))
                 ? Response.ok(Json.newObject().put("response", true)).build()
                 : Response.notModified().build();
     }

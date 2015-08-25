@@ -28,17 +28,17 @@ public interface AnnexeRest {
     @RolesAllowed("USER")
     Response fetchAnnexes() throws JsonProcessingException;
 
-    @GET
-    @Path("/annexe/{name}")
-    @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed("USER")
-    Response fetchAnnexeByName(@PathParam("name") String name) throws JsonProcessingException;
-
-    @GET
-    @Path("/annexe/binary/{name}")
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    @RolesAllowed("USER")
-    Response fetchAnnexeBinary(@PathParam("name") String name);
+//    @GET
+//    @Path("/annexe/{name}")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @RolesAllowed("USER")
+//    Response fetchAnnexeByName(@PathParam("name") String name) throws JsonProcessingException;
+//
+//    @GET
+//    @Path("/annexe/binary/{name}")
+//    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+//    @RolesAllowed("USER")
+//    Response fetchAnnexeBinary(@PathParam("name") String name);
 
     @POST
     @Path("/annexe/store")

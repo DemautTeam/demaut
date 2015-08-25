@@ -1,6 +1,6 @@
 Jetty
     Lancer la classe StartWebappMain
-    Accès au poc : http://localhost:8081/demaut-microbiz
+    Accès au demaut-microbiz : http://localhost:8081/demaut-microbiz
 
 Microbiz :
     Config
@@ -21,7 +21,7 @@ Microbiz :
 
         poc.cfg sous /microbiz-1.0.0/config
 
-    Sous le projet demaut-microbiz, il y a un script deploy/deployLocal.sh (à configurer le path vers le container) qui permet de deployer le bundle et la config directement dans Microbiz.
+    Sous le projet demaut-microbiz, il y a un script deployLocal.sh (à configurer le path vers le container) qui permet de deployer le bundle et la config directement dans Microbiz.
 
     Stop/Start du container
 

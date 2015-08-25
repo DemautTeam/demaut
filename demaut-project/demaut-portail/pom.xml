@@ -14,12 +14,40 @@
     <description>Demaut Portail Module</description>
     <packaging>war</packaging>
 
+    <properties>
+        <spring.framework.version>4.1.7.RELEASE</spring.framework.version>
+    </properties>
+
     <dependencies>
+
+        <!-- Spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.framework.version}</version>
+        </dependency>
 
         <!-- Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jetty</artifactId>
         </dependency>
 
         <!-- CXF -->
@@ -47,8 +75,12 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.3</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
@@ -56,7 +88,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.5.3</version>
                 <executions>
                     <execution>
                         <id>assemble-cei</id>
@@ -66,17 +97,29 @@
                         <phase>package</phase>
                         <configuration>
                             <descriptors>
-                                <descriptor>${basedir}/assembly/maven-assembly-descriptor.xml</descriptor>
+                                <descriptor>assembly/assembly.xml</descriptor>
                             </descriptors>
                             <appendAssemblyId>false</appendAssemblyId>
-                            <finalName>demaut-${project.version}</finalName>
+                            <finalName>${artifactId}-${project.version}</finalName>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-        </plugins>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <url>http://localhost:8020/manager/text</url>
+                    <server>tomcat-local</server>
+                    <path>/demaut-portail</path>
+                    <username>admin</username>
+                    <password>admin</password>
+                </configuration>
+        </plugin>
 
-        <finalName>prestation-demaut</finalName>
+    </plugins>
+
     </build>
 
 </project>

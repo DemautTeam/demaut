@@ -56,7 +56,7 @@
 		<maven.surefire.plugin.version>2.18.1</maven.surefire.plugin.version>
 		<maven.jar.plugin.version>2.6</maven.jar.plugin.version>
         <maven.resources.plugin.version>2.7</maven.resources.plugin.version>
-        <maven.assembly.plugin.version>2.4.1</maven.assembly.plugin.version>
+        <maven.assembly.plugin.version>2.5.3</maven.assembly.plugin.version>
         <maven.cei.plugin.version>1.0.0</maven.cei.plugin.version>
         <maven.release.plugin.version>2.5.1</maven.release.plugin.version>
         <maven.dependency.plugin.version>2.9</maven.dependency.plugin.version>
@@ -64,6 +64,7 @@
         <maven.openjpa.plugin.version>2.4.0</maven.openjpa.plugin.version>
         <maven.cucumber.reporting.version>0.0.8</maven.cucumber.reporting.version>
         <maven.bundle.plugin.version>2.5.4</maven.bundle.plugin.version>
+        <maven.war.plugin.version>2.3</maven.war.plugin.version>
 
         <!-- Beans Validation -->
 		<javax.validation.version>1.1.0.Final</javax.validation.version>
@@ -332,6 +333,21 @@
                 <artifactId>spring-boot-starter-web</artifactId>
                 <version>${spring.boot.starter.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-tomcat</artifactId>
+                <version>${spring.boot.starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-actuator</artifactId>
+                <version>${spring.boot.starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-jetty</artifactId>
+                <version>${spring.boot.starter.version}</version>
+            </dependency>
 
             <!-- Persistence -->
             <dependency>
@@ -492,7 +508,7 @@
                     <version>${maven.assembly.plugin.version}</version>
                     <configuration>
                         <descriptors>
-                            <descriptor>src/main/assembly/assembly.xml</descriptor>
+                            <descriptor>assembly/assembly.xml</descriptor>
                         </descriptors>
                     </configuration>
                 </plugin>
@@ -545,6 +561,11 @@
                             </configuration>
                         </execution>
                     </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring.boot.starter.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>

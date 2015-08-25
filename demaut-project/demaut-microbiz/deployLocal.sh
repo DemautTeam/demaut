@@ -18,7 +18,7 @@ mvn clean install assembly:single
 
 # deploy to smx4
 component=$projectFolderName
-localServer=/home/b5cav2/DEMAUT/DevTools/microbiz-1.0.0
+localServer=/DEMAUT/microbiz-1.0.0
 localBin=$localServer/bin
 localDeploy=$localServer/deploy
 localConfig=/$localServer/config

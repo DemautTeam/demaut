@@ -1,4 +1,4 @@
-package ch.vd.ses.demaut.poc.appliquette.service;
+package ch.vd.ses.demaut.portail.service;
 
 import org.springframework.stereotype.Service;
 
@@ -11,6 +11,7 @@ import javax.ws.rs.QueryParam;
 public class JaxRestService {
 
     @GET
+    @Path("hello")
     public String sayHelloTo(@QueryParam("name") String name) {
         System.out.println("SayHello to ");
         return "Hello to " + name + " ! ";

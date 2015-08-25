@@ -1,4 +1,4 @@
-package ch.vd.ses.demaut.poc.appliquette;
+package ch.vd.ses.demaut.portail.appliquette;
 
 import org.apache.cxf.bus.spring.SpringBus;
 import org.apache.cxf.endpoint.Server;
@@ -11,10 +11,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.*;
 
 import javax.ws.rs.Path;
 import java.util.LinkedList;
@@ -24,6 +21,7 @@ import java.util.List;
 @EnableAutoConfiguration
 @ComponentScan
 @ImportResource({"classpath:META-INF/cxf/cxf.xml"})
+@PropertySource("classpath:")
 public class BootStrap {
 
     @Autowired
