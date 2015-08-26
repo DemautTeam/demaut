@@ -39,35 +39,6 @@ public class AnnexeRestTest {
     }
 
     @Test
-    public void shouldFetchAnnexes() throws Exception {
-        Response response = annexeRest.fetchAnnexes();
-        assertNotNull(response);
-        assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
-    }
-
-    @Test
-    public void shouldFetchAnnexeByName() throws Exception {
-        Response response = annexeRest.fetchAnnexeByName("Test_annexe_find.pdf");
-        assertNotNull(response);
-        assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
-    }
-
-    @Test
-    public void shouldFetchAnnexeBinary() throws Exception {
-        Response response = annexeRest.fetchAnnexeBinary("Test_annexe_find.pdf");
-        assertNotNull(response);
-        assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
-    }
-
-    @Test
-    public void shouldStoreAnnexe() throws Exception {
-        Annexe annexe = new Annexe(TypeAnnexe.CV, "Test_annexe.pdf", byteArray);
-
-        Response response = annexeRest.storeAnnexe(annexe);
-        assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
-    }
-
-    @Test
     public void shouldStoreMultipart() throws Exception {
         File fileMultipart = new File("target/Test_multipart.cfg");
         FileUtils.writeByteArrayToFile(fileMultipart, byteArray);

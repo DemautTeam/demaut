@@ -60,68 +60,6 @@ public class AnnexeRestImpl implements AnnexeRest {
     }
 
     @Override
-    @GET
-    @Path("/annexes/all")
-    @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed("USER")
-    public Response fetchAnnexes() throws JsonProcessingException {
-
-        LOGGER.info("fetchAnnexes");
-
-        ObjectWriter viewWriter = new ObjectMapper().writer();
-        List<Annexe> annexes = this.demandeAutorisationService.listerLesAnnexes();
-        return annexes != null && !annexes.isEmpty()
-                ? Response.ok(Json.newObject().put("response", viewWriter.writeValueAsString(annexes))).build()
-                : Response.noContent().build();
-    }
-
-//    @Override
-//    @GET
-//    @Path("/annexe/{name}")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @RolesAllowed("USER")
-//    public Response fetchAnnexeByName(@PathParam("name") String name) throws JsonProcessingException {
-//
-//        LOGGER.info("fetchAnnexeByName");
-//
-//        ObjectWriter viewWriter = new ObjectMapper().writer();
-//        Annexe annexe = this.demandeAutorisationService.fetchAnnexeByName(name);
-//        return annexe != null
-//                ? Response.ok(Json.newObject().put("response", viewWriter.writeValueAsString(annexe))).build()
-//                : Response.noContent().build();
-//    }
-//
-//    @Override
-//    @GET
-//    @Path("/annexe/binary/{name}")
-//    @Produces(MediaType.APPLICATION_OCTET_STREAM)
-//    @RolesAllowed("USER")
-//    public Response fetchAnnexeBinary(@PathParam("name") String name) {
-//
-//        LOGGER.info("fetchAnnexeBinary");
-//
-//        Annexe annexe = this.demandeAutorisationService.fetchAnnexeByName(name);
-//        return annexe != null
-//                ? Response.ok(annexe.getFile(), MediaType.APPLICATION_OCTET_STREAM_TYPE).build()
-//                : Response.noContent().build();
-//    }
-
-    @Override
-    @POST
-    @Path("/annexe/store")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed("USER")
-    public Response storeAnnexe(Annexe annexe) {
-
-        LOGGER.info("storeAnnexe");
-
-        return this.demandeAutorisationService.attacherUneAnnexe(annexe)
-                ? Response.ok(Json.newObject().put("response", true)).build()
-                : Response.notModified().build();
-    }
-
-    @Override
     @POST
     @Path("/annexe/multipart")
     @Consumes(MediaType.MULTIPART_FORM_DATA)

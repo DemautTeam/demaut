@@ -2,7 +2,9 @@ var microbizAppVersion = "v0.1.0";
 var microbizAppEnviron = "Demo";
 var microbizAppFullame = "Back-Office-Demaut";
 var microbizAppUserame = "Back-Office-User";
+
 var ngApp = angular.module('ngApp', ['ngSanitize', 'ngRoute', 'ngAnimate']);
+
 /*Necessaire si les services ne sont pas dans la même arborescence que la page html*/
 ngApp.constant('urlPrefix', '/outils/demaut-microbiz');
 function settingScopeVariable($scope) {
@@ -72,6 +74,7 @@ ngApp
         this.name = "AnnexeController";
         this.params = $routeParams;
         $scope.indexStep = 4;
+        $scope.files = [];
 
         $scope.annexeFormats = ["pdf", "jpg", "jpeg", "png", "bmp"];
         $scope.annexeTypes = [
@@ -82,7 +85,24 @@ ngApp
             "Casier judiciaire"
         ];
 
-        $scope.filesChanged = function(index) {
-            alert("Uploaded " + index);
+        $scope.filesChanged = function(targetFiles) {
+            var filesList = targetFiles.files;
+            var typeAnnexe = targetFiles.name;
+
+            for (var i = 0; i < filesList.length; i++) {
+                filesList[i]["typeAnnexe"] = typeAnnexe;
+            }
+            $scope.files[typeAnnexe] = filesList;
+
+            $scope.$apply();
+            //alert(typeAnnexe + " : Uploaded files " + $scope.files[typeAnnexe].length);
+        };
+
+        $scope.viewAnnexe = function(file, annexeType) {
+            alert(annexeType + " : Not implemented view " + file.name);
+        };
+
+        $scope.deleteAnnexe = function(file, annexeType) {
+            alert(annexeType + " : Not implemented delete " + file.name);
         };
     }]);
