@@ -14,7 +14,7 @@ function settingScopeVariable($scope) {
     $scope.user = microbizAppUserame;
 }
 ngApp
-    .config([ '$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider) {
+    .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
 
         $routeProvider
             .when('/Demaut/:demandeId', {
@@ -37,7 +37,7 @@ ngApp
 
         $httpProvider.interceptors.push(function ($q, $rootScope, $location) {
             return {
-                'responseError': function(rejection) {
+                'responseError': function (rejection) {
                     var status = rejection.status;
                     var config = rejection.config;
                     var data = rejection.data;
@@ -45,7 +45,7 @@ ngApp
                     var url = config.url;
 
                     if (status == 401) {
-                        $location.path( "/index" );
+                        $location.path("/index");
                     } else {
                         $rootScope.error = method + ' on ' + url + ' failed with status ' + status + '<br>' + data.substring(data.indexOf('<body>') + 6, data.indexOf('</body>'));
                         angular.element("#errorModal").modal('toggle');
@@ -57,26 +57,24 @@ ngApp
         });
     }
     ])
-    .controller('IndexController', ['$scope', '$http', '$location',  '$interval', 'urlPrefix', '$log', function ($scope, $http, $location, $interval, urlPrefix, $log ) {
+    .controller('IndexController', ['$scope', '$http', '$location', '$interval', 'urlPrefix', '$log', function ($scope, $http, $location, $interval, urlPrefix, $log) {
         settingScopeVariable($scope);
 
     }])
-    .controller('DemandeController', ['$scope','$routeParams', function($scope, $routeParams) {
+    .controller('DemandeController', ['$scope', '$routeParams', function ($scope, $routeParams) {
         settingScopeVariable($scope);
 
         this.name = "DemandeController";
         this.params = $routeParams;
         $scope.indexStep = 2;
     }])
-    .controller('AnnexeController', ['$scope', '$routeParams', function($scope, $routeParams) {
+    .controller('AnnexeController', ['$scope', '$rootScope', '$routeParams', function ($scope, $rootScope, $routeParams) {
         settingScopeVariable($scope);
 
         this.name = "AnnexeController";
         this.params = $routeParams;
         $scope.indexStep = 4;
-        $scope.files = [];
-
-        $scope.annexeFormats = ["pdf", "jpg", "jpeg", "png", "bmp"];
+        $scope.annexeFormats = ["application/pdf", "image/jpg", "image/jpeg", "image/png", "image/bmp"];
         $scope.annexeTypes = [
             "Curriculum vitae",
             "Diplôme (médecin)",
@@ -84,25 +82,92 @@ ngApp
             "Certificats de Travail",
             "Casier judiciaire"
         ];
+        $scope.referenceFiles = [];
 
-        $scope.filesChanged = function(targetFiles) {
-            var filesList = targetFiles.files;
+        $scope.filesChanged = function (targetFiles) {
+            $scope.files = [];
+
+            var newFilesList = targetFiles.files;
             var typeAnnexe = targetFiles.name;
+            var isValidList = true;
 
-            for (var i = 0; i < filesList.length; i++) {
-                filesList[i]["typeAnnexe"] = typeAnnexe;
+            // Check format for all files list
+            for (var indexI = 0; indexI < newFilesList.length; indexI++) {
+                var currentFile = newFilesList[indexI];
+                currentFile["typeAnnexe"] = typeAnnexe;
+                var fileType = currentFile.type;
+                var isValidFormat = $scope.annexeFormats.indexOf(fileType) != -1;
+                if (isValidFormat == false) {
+                    isValidList = false;
+                    break;
+                }
             }
-            $scope.files[typeAnnexe] = filesList;
+
+            // Add new add files to existing lists
+            if (isValidList) {
+                if ($scope.referenceFiles != null && $scope.referenceFiles != undefined &&
+                    $scope.referenceFiles[typeAnnexe] != null && $scope.referenceFiles[typeAnnexe] != undefined &&
+                    $scope.referenceFiles[typeAnnexe].length > 0) {
+                    var existAnnexesList = $scope.referenceFiles[typeAnnexe];
+                    for (var indexJ = 0; indexJ < newFilesList.length; indexJ++) {
+                        var currentNewFile = newFilesList[indexJ];
+                        var isNewFileDejaVu = false;
+                        for (var indexK = 0; indexK < existAnnexesList.length; indexK++) {
+                            var currentExistFile = existAnnexesList[indexK];
+                            if (currentNewFile.name == currentExistFile.name) {
+                                isNewFileDejaVu = true;
+                                break;
+                            }
+                        }
+                        if (isNewFileDejaVu == false) {
+                            $scope.referenceFiles[typeAnnexe].push(currentNewFile);
+                        }
+                    }
+                    $scope.files = $scope.referenceFiles;
+                } else {
+                    $scope.referenceFiles[typeAnnexe] = [];
+                    for (var indexH = 0; indexH < newFilesList.length; indexH++) {
+                        var currentValidFile = newFilesList[indexH];
+                        $scope.referenceFiles[typeAnnexe].push(currentValidFile);
+                    }
+                    $scope.files = $scope.referenceFiles;
+                }
+            } else {
+                $scope.files = $scope.referenceFiles;
+                alert(typeAnnexe + " : une/plusieurs pièces ne correspondent pas aux formats supportés : [" + $scope.annexeFormats + "]");
+            }
 
             $scope.$apply();
-            //alert(typeAnnexe + " : Uploaded files " + $scope.files[typeAnnexe].length);
         };
 
-        $scope.viewAnnexe = function(file, annexeType) {
-            alert(annexeType + " : Not implemented view " + file.name);
+        $scope.viewAnnexe = function (file, annexeType) {
+            alert(annexeType + " : view " + file.name);
+
+            var binary = new Blob([file], {type: file.type});
+            var fileURL = URL.createObjectURL(binary);
+            console.log(fileURL);
+            var elementLink = document.createElement('A');
+            elementLink.href = fileURL;
+            elementLink.target = '_blank';
+            elementLink.download = file.name;
+            document.body.appendChild(elementLink);
+            elementLink.click();
         };
 
-        $scope.deleteAnnexe = function(file, annexeType) {
-            alert(annexeType + " : Not implemented delete " + file.name);
+        $scope.deleteAnnexe = function (file, annexeType) {
+            if ($scope.referenceFiles != null && $scope.referenceFiles != undefined &&
+                $scope.referenceFiles[annexeType] != null && $scope.referenceFiles[annexeType] != undefined &&
+                $scope.referenceFiles[annexeType].length > 0) {
+
+                for (var indexH = 0; indexH < $scope.referenceFiles[annexeType].length; indexH++) {
+                    var currentFetchedFile = $scope.referenceFiles[annexeType][indexH];
+                    if (file.name == currentFetchedFile.name) {
+                        $scope.referenceFiles[annexeType].splice(indexH, 1);
+                        break;
+                    }
+                }
+            }
+            $scope.files = $scope.referenceFiles;
+            //alert(annexeType + " : delete " + file.name);
         };
     }]);
