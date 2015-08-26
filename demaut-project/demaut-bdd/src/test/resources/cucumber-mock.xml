@@ -3,6 +3,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+	<!-- TODO : Use profiles like this -->
+
 	<!-- Demandeur -->
 
 	<bean id="demandeurRepository"
@@ -17,7 +19,8 @@
 		  scope="cucumber-glue">
 	</bean>
 
-	<bean class="ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps"
+	<bean id="demandeAutorisationSteps"
+		  class="ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps"
 		  scope="cucumber-glue">
 		<property name="demandeurRepository" ref="demandeurRepository" />
 		<property name="demandeAutorisationRepository" ref="demandeAutorisationRepository" />
@@ -31,7 +34,7 @@
 	<!-- Annexe -->
 
 	<bean class="ch.vd.demaut.cucumber.steps.definitions.AttacherAnnexeStepDefinitions"
-		  scope="cucumber-glue">
+		scope="cucumber-glue">
 		<property name="demandeAutorisationSteps" ref="demandeAutorisationSteps"/>
 	</bean>
 

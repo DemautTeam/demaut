@@ -38,6 +38,7 @@ public class DemandeAutorisationSteps {
 	public void initialiserDemande(ProfessionDeLaSante profession) {
 		demandeAutorisation = new DemandeAutorisation(demandeur, profession);
 		demandeAutorisationRepository.store(demandeAutorisation);
+		
 		LOGGER.debug("La demande autorisation " + demandeAutorisation + " a été ajoutée au repository avec l'id technique:" + demandeAutorisation.getId());
 	}
 

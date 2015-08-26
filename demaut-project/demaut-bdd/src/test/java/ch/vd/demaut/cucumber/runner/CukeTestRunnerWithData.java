@@ -11,9 +11,7 @@ import org.junit.runner.RunWith;
         strict = false,
         monochrome = true,
         plugin = {"pretty",
-                "html:target/demaut-bdd-report",
-                "junit:target/demaut-bdd-report.xml",
-                "json:target/demaut-bdd-report.json"})
+                "html:target/demaut-bdd-report"})
 public class CukeTestRunnerWithData {
 
     //TODO: Make it run with profile "jpa"
