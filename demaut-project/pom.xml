@@ -32,8 +32,8 @@
 		<module>demaut-data</module>
 		<module>demaut-services</module>
 		<module>demaut-bdd</module>
-		<module>demaut-portail</module>
 		<module>demaut-microbiz</module>
+		<module>demaut-portail</module>
         <module>demaut-backoffice</module>
     </modules>
 
@@ -481,7 +481,6 @@
 				<version>${com.h2.version}</version>
 				<scope>test</scope>
 			</dependency>
-
 		</dependencies>
    </dependencyManagement>
 

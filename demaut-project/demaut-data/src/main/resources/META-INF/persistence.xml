@@ -17,6 +17,8 @@
                       value="DefaultLevel=INFO, Runtime=INFO, Tool=INFO, SQL=INFO"/>
             <property name="openjpa.RuntimeUnenhancedClasses"
                       value="supported"/>
+            <property name="openjpa.DynamicEnhancementAgent"
+                      value="true"/>
         </properties>
 
     </persistence-unit>

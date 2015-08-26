@@ -10,13 +10,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ContextConfiguration({"classpath*:/servicesMock-context.xml"})
+@ContextConfiguration({"classpath*:/servicesTest-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
+@ActiveProfiles({"mock"})
 public class DemandeAutorisationServiceMockTest extends TestCase {
 
     @Autowired
@@ -35,7 +38,7 @@ public class DemandeAutorisationServiceMockTest extends TestCase {
 
     @Test
     public void should_suavegarder_demande_autorisation() throws Exception {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.suavegarderDemandeAutorisation(new DemandeAutorisation());
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.sauvegarderDemandeAutorisation(new DemandeAutorisation());
         assertThat(demandeAutorisation).isNotNull();
     }
 }

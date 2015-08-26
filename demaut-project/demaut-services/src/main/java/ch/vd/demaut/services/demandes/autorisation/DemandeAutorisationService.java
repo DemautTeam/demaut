@@ -11,7 +11,7 @@ public interface DemandeAutorisationService {
 
     DemandeAutorisation initialiserDemandeAutorisation();
 
-    DemandeAutorisation suavegarderDemandeAutorisation(DemandeAutorisation demandeAutorisation);
+    DemandeAutorisation sauvegarderDemandeAutorisation(DemandeAutorisation demandeAutorisation);
 
     List<Annexe> listerLesAnnexes();
 

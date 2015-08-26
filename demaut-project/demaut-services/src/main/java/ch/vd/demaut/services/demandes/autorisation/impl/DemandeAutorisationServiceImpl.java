@@ -22,7 +22,7 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
     }
 
     @Override
-    public DemandeAutorisation suavegarderDemandeAutorisation(DemandeAutorisation demandeAutorisation) {
+    public DemandeAutorisation sauvegarderDemandeAutorisation(DemandeAutorisation demandeAutorisation) {
         return demandeAutorisationRepository.store(demandeAutorisation);
     }
 
