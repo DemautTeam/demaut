@@ -18,6 +18,7 @@ echo Lister config : $configContent
 #fi
 
 projectFolderName=poc-demaut
+projectBasedir="${WORKSPACE}/$projectFolderName"
 
 # deploy to smx4
 component=$projectFolderName
@@ -28,7 +29,7 @@ remoteConfig=/ccv/data/dsi_cyber/microbiz-1.0.0/config
 remoteServer=dsi_cyber@slv2395t.etat-de-vaud.ch
 identityKey="-i \"${WORKSPACE}/config/jenkins/id.rsa.jenkins\""
 
-echo Rechercher bundle à déployer $component : `ls "${WORKSPACE}/poc-demaut/target/"`
+echo Rechercher bundle à déployer $component : `ls $projectBasedir/target/$component-*.jar`
 
 if [ -f (${WORKSPACE}/poc-demaut/target/$component-*.jar) ]
 then
