@@ -10,8 +10,8 @@ whoami
 workspaceContent=ls /ccv/data/ses_slave1/sandbox/workspace/
 buildspaceContent=ls /ccv/data/ses_slave1/sandbox/workspace/DEMAUT_POC_BUILD
 
-echo Lister workspace : '$workspaceContent'
-echo Lister DEMAUT_POC_BUILD : '$buildspaceContent'
+echo Lister workspace : $workspaceContent
+echo Lister DEMAUT_POC_BUILD : $buildspaceContent
 
 #if [ $script_dir = '.' ]
 #then
