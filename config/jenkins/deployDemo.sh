@@ -27,7 +27,7 @@ remoteBin=$pathServer/bin
 remoteDeploy=$pathServer/deploy
 remoteConfig=/ccv/data/dsi_cyber/microbiz-1.0.0/config
 remoteServer=dsi_cyber@slv2395t.etat-de-vaud.ch
-identityKey="-i ${WORKSPACE}/config/jenkins/id.rsa.jenkins"
+sshOptions="-o StrictHostKeyChecking=no -i ${WORKSPACE}/config/jenkins/id.rsa.jenkins"
 
 echo Rechercher bundle à déployer $component : `ls $projectBasedir/target/$component-*.jar`
 
@@ -42,32 +42,32 @@ fi
 echo "WARNING : You should copy jenkins public key to 'ssh-copy-id $remoteServer' or enter $remoteServer server password!"
 
 echo "Stop du container MicroBiz..."
-ssh $identityKey $remoteServer $remoteBin/microbiz stop
+ssh $sshOptions $remoteServer $remoteBin/microbiz stop
 echo "Stop du container MicroBiz terminé"
 
 
 echo "waiting 5s....."
 sleep 5
 echo "Mise à jour du fichier de configuration sur $remoteServer:$remoteConfig..."
-scp $identityKey "${WORKSPACE}/poc-demaut/conf/$component.cfg" $remoteServer:$remoteConfig
+scp $sshOptions "${WORKSPACE}/poc-demaut/conf/$component.cfg" $remoteServer:$remoteConfig
 echo "Mise à jour du fichier de configuration terminée"
 
 
 echo "Suppression de l'ancien bundle sur le serveur $remoteServer:$remoteDeploy"
 echo "Emplacement du fichier sur le serveur:"
-ssh $identityKey $remoteServer ls $remoteDeploy/$component-*.jar
+ssh $sshOptions $remoteServer ls $remoteDeploy/$component-*.jar
 echo "Suppression..."
-ssh $identityKey $remoteServer rm $remoteDeploy/$component-*.jar
+ssh $sshOptions $remoteServer rm $remoteDeploy/$component-*.jar
 echo "waiting 5s....."
 sleep 5
 echo "deploying new bundle  in $remoteServer:$remoteDeploy"
 ls ${WORKSPACE}/poc-demaut/target/$component-*.jar
-scp $identityKey ${WORKSPACE}/poc-demaut/target/$component-*.jar $remoteServer:$remoteDeploy
+scp $sshOptions ${WORKSPACE}/poc-demaut/target/$component-*.jar $remoteServer:$remoteDeploy
 echo "waiting 5s....."
 sleep 5
 echo "Start du container MicroBiz..."
-ssh $identityKey $remoteServer $remoteBin/microbiz start
+ssh $sshOptions $remoteServer $remoteBin/microbiz start
 echo "Start du container MicroBiz terminé"
 echo "Status du container MicroBiz..."
-ssh $identityKey $remoteServer $remoteBin/microbiz status
+ssh $sshOptions $remoteServer $remoteBin/microbiz status
 
