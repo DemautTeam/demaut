@@ -21,22 +21,6 @@
 			<version>${project.version}</version>
 		</dependency>
 
-		<!-- Demaut test -->
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>demaut-data</artifactId>
-			<version>${project.version}</version>
-			<type>test-jar</type>
-			<scope>test</scope>
-		</dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>demaut-services</artifactId>
-            <version>${project.version}</version>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
-
 		<!-- Microbiz -->
 		<dependency>
 			<groupId>ch.vd.pee.microbiz</groupId>
