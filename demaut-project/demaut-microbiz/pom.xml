@@ -24,11 +24,18 @@
 		<!-- Demaut test -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>demaut-services</artifactId>
+			<artifactId>demaut-data</artifactId>
 			<version>${project.version}</version>
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>demaut-services</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
 
 		<!-- Microbiz -->
 		<dependency>
@@ -237,7 +244,7 @@
                         <goals>
                             <goal>single</goal>
                         </goals>
-                        <phase>package</phase>
+                        <phase>verify</phase>
                         <configuration>
                             <descriptors>
                                 <descriptor>assembly/assembly.xml</descriptor>
