@@ -30,7 +30,7 @@ identityKey="-i \"${WORKSPACE}/config/jenkins/id.rsa.jenkins\""
 
 echo Rechercher bundle à déployer $component : `ls "${WORKSPACE}/poc-demaut/target/"`
 
-if [ -f "${WORKSPACE}/poc-demaut/target/$component-*.jar" ]
+if [ -f (${WORKSPACE}/poc-demaut/target/$component-*.jar) ]
 then
 	 echo Nouveau bundle à déployer: `ls "${WORKSPACE}/poc-demaut/target/$component-*.jar"`
 else
