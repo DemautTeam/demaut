@@ -4,14 +4,12 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<!-- TODO : Use profiles like this -->
-
     <beans profile="mock">
         <import resource="classpath:cucumber-mock.xml"/>
     </beans>
 
     <beans profile="data">
-        <import resource="cucumber-data.xml"/>
+        <import resource="classpath:cucumber-data.xml"/>
     </beans>
 
 </beans>
