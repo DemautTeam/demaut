@@ -30,12 +30,12 @@
 		<module>demaut-commons</module>
 		<module>demaut-commons4test</module>
 		<module>demaut-domain</module>
-		<module>demaut-data</module>
-		<module>demaut-data4test</module>
+		<module>demaut-data-jpa</module>
+		<module>demaut-data-mock</module>
 		<module>demaut-services</module>
 		<module>demaut-bdd</module>
 		<module>demaut-microbiz</module>
-		<module>demaut-portail</module>
+		<module>demaut-cyber</module>
         <module>demaut-backoffice</module>
     </modules>
 

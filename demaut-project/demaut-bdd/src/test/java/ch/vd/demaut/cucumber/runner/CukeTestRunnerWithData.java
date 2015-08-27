@@ -4,8 +4,6 @@ import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
 
-import ch.vd.demaut.cucumber.junit.CucumberDataProfile;
-
 @RunWith(CucumberDataProfile.class)
 @CucumberOptions(
         features = "src/test/resources/features", // ou classpath:**/*.feature

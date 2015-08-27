@@ -29,7 +29,7 @@
 		</dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>demaut-data</artifactId>
+            <artifactId>demaut-data-jpa</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -42,7 +42,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>demaut-data4test</artifactId>
+            <artifactId>demaut-data-mock</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
