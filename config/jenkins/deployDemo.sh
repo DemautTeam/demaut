@@ -8,8 +8,9 @@ echo "Script dir $script_dir"
 whoami
 
 workspaceContent=`ls "${WORKSPACE}"`
-
+configContent=`ls -al "${WORKSPACE}/config/jenkins/"`
 echo Lister workspace : $workspaceContent
+echo Lister config : $configContent
 
 #if [ $script_dir = '.' ]
 #then
