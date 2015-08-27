@@ -18,7 +18,7 @@ echo Lister config : $configContent
 #fi
 
 projectFolderName=poc-demaut
-projectBasedir="${WORKSPACE}/$projectFolderName"
+projectBasedir='${WORKSPACE}/$projectFolderName'
 
 # deploy to smx4
 component=$projectFolderName
@@ -31,7 +31,7 @@ identityKey="-i \"${WORKSPACE}/config/jenkins/id.rsa.jenkins\""
 
 echo Rechercher bundle à déployer $component : `ls $projectBasedir/target/$component-*.jar`
 
-if [ -f (${WORKSPACE}/poc-demaut/target/$component-*.jar) ]
+if [ -f $projectBasedir/target/$component-*.jar ]
 then
 	 echo Nouveau bundle à déployer: `ls "${WORKSPACE}/poc-demaut/target/$component-*.jar"`
 else
