@@ -66,7 +66,7 @@ public abstract class GenericRepositoryImpl<T, I extends Serializable> implement
     @Transactional(readOnly = true)
     public long countAll() {
         Query typedQuery = this.getEntityManager()
-                .createQuery("select count(e) from " + entityClass.getSimpleName() + " e");
+                .createQuery("select count(o) from " + entityClass.getSimpleName() + " o");
         return ((Long) typedQuery.getSingleResult()).intValue();
     }
 
