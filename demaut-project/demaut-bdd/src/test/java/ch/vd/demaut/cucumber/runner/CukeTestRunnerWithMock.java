@@ -2,7 +2,6 @@ package ch.vd.demaut.cucumber.runner;
 
 import org.junit.runner.RunWith;
 
-import ch.vd.demaut.cucumber.junit.CucumberMockProfile;
 import cucumber.api.CucumberOptions;
 
 @RunWith(CucumberMockProfile.class)
