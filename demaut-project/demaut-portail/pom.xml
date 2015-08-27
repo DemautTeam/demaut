@@ -94,7 +94,7 @@
                         <goals>
                             <goal>single</goal>
                         </goals>
-                        <phase>package</phase>
+                        <phase>verify</phase>
                         <configuration>
                             <descriptors>
                                 <descriptor>assembly/assembly.xml</descriptor>

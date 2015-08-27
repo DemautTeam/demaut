@@ -13,7 +13,9 @@ import java.io.Serializable;
 @Table(name = "ANNEXE")
 public class Annexe implements Serializable {
 
-    @Id
+	private static final long serialVersionUID = -585189894722223746L;
+
+	@Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -93,21 +95,4 @@ public class Annexe implements Serializable {
                 .toString();
     }
 
-    @Override
-    public int hashCode() {
-        return Hashing.md5().newHasher()
-                .putLong(id)
-                .putString(name, Charsets.UTF_8)
-                .putObject(this, new Funnel<Annexe>() {
-                    @Override
-                    public void funnel(Annexe annexe, PrimitiveSink into) {
-                        into.putLong(annexe.getId())
-                                .putString(annexe.getName(), Charsets.UTF_8)
-                                .putString(annexe.getType(), Charsets.UTF_8)
-                                .putLong(annexe.getSize());
-                    }
-                })
-                .hash()
-                .asInt();
-    }
 }

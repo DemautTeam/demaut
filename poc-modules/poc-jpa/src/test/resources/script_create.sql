@@ -6,4 +6,9 @@ CREATE TABLE ANNEXE (
   FILE  blob NOT NULL
 	);
 
+CREATE TABLE ANNEXE2 (
+	ID    int(11) PRIMARY KEY NOT NULL
+	);
+	
 CREATE INDEX annexe_pkey ON annexe (id);
+CREATE INDEX annexe2_pkey ON annexe2 (id);

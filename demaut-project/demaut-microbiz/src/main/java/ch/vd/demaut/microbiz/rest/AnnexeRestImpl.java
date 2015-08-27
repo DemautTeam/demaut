@@ -24,7 +24,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 
 @Service
 @Path("/services")
@@ -40,7 +39,7 @@ public class AnnexeRestImpl implements AnnexeRest {
     private String user;
 
     @SuppressWarnings("serial")
-	@Override
+    @Override
     @GET
     @Path("/main")
     @Produces(MediaType.APPLICATION_JSON)
@@ -51,11 +50,11 @@ public class AnnexeRestImpl implements AnnexeRest {
         ObjectWriter viewWriter = new ObjectMapper().writer();
         return Response.ok(
                 Json.newObject().put("main",
-                    viewWriter.writeValueAsString(
-                        new HashMap<String, String>(){{
-                            put("user", user);
-                        }}
-                    ))
+                        viewWriter.writeValueAsString(
+                                new HashMap<String, String>() {{
+                                    put("user", user);
+                                }}
+                        ))
         ).build();
     }
 
@@ -70,7 +69,7 @@ public class AnnexeRestImpl implements AnnexeRest {
 
         LOGGER.info("storeMultipart");
 
-        return  !StringUtils.isEmpty(name) && !StringUtils.isEmpty(size) && !StringUtils.isEmpty(type) && file != null &&
+        return !StringUtils.isEmpty(name) && !StringUtils.isEmpty(size) && !StringUtils.isEmpty(type) && file != null &&
                 this.demandeAutorisationService.attacherUneAnnexe(new Annexe(TypeAnnexe.CV, name, IOUtils.toByteArray(new FileInputStream(file))))
                 ? Response.ok(Json.newObject().put("response", true)).build()
                 : Response.notModified().build();

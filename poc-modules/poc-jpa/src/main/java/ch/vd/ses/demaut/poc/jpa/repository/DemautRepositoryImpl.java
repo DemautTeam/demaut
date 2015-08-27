@@ -74,7 +74,6 @@ public abstract class DemautRepositoryImpl<T, I> implements DemautRepository<T, 
         return typedQuery.getResultList();
     }
 
-    @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
     public int count() {
         Query typedQuery = this.getEntityManager()

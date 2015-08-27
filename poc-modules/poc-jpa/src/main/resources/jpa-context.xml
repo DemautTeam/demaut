@@ -37,7 +37,7 @@
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="persistenceUnitName" value="demaut-data"/>
+        <property name="persistenceUnitName" value="poc-jpa"/>
         <property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml"/>
         <property name="jpaDialect">
             <bean class="org.springframework.orm.jpa.vendor.OpenJpaDialect"/>

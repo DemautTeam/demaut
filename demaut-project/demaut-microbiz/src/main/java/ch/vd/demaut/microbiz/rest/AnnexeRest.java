@@ -1,6 +1,5 @@
 package ch.vd.demaut.microbiz.rest;
 
-import ch.vd.demaut.domain.annexes.Annexe;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.springframework.stereotype.Service;
