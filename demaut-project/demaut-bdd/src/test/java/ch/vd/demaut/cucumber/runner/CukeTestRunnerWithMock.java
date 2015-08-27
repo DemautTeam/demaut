@@ -1,10 +1,11 @@
 package ch.vd.demaut.cucumber.runner;
 
-import cucumber.api.CucumberOptions;
-import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
 
-@RunWith(Cucumber.class)
+import ch.vd.demaut.cucumber.junit.CucumberMockProfile;
+import cucumber.api.CucumberOptions;
+
+@RunWith(CucumberMockProfile.class)
 @CucumberOptions(features = "src/test/resources/features", // ou classpath:**/*.feature
         glue = {"ch.vd.demaut.cucumber.steps.definitions"},//
         strict = false, //

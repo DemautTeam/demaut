@@ -3,39 +3,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<!-- TODO : Use profiles like this -->
+	<import resource="cucumber-profiles.xml"/>
 
-	<!-- Demandeur -->
-
-	<bean id="demandeurRepository"
-		  class="ch.vd.demaut.services.demandeurs.repo.mock.DemandeurRepositoryMock"
-		scope="cucumber-glue">
-	</bean>
-
-	<!-- DemandeAutorisation -->
-
-	<bean id="demandeAutorisationRepository"
-		  class="ch.vd.demaut.services.demandes.autorisation.repo.mock.DemandeAutorisationRepositoryMock"
-		  scope="cucumber-glue">
-	</bean>
-
-	<bean id="demandeAutorisationSteps"
-		  class="ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps"
-		  scope="cucumber-glue">
-		<property name="demandeurRepository" ref="demandeurRepository" />
-		<property name="demandeAutorisationRepository" ref="demandeAutorisationRepository" />
-	</bean>
-
-	<bean class="ch.vd.demaut.cucumber.steps.definitions.CreationDemandeStepDefinitions"
-		  scope="cucumber-glue">
-		<property name="demandeAutorisationSteps" ref="demandeAutorisationSteps"/>
-	</bean>
-
-	<!-- Annexe -->
-
-	<bean class="ch.vd.demaut.cucumber.steps.definitions.AttacherAnnexeStepDefinitions"
-		scope="cucumber-glue">
-		<property name="demandeAutorisationSteps" ref="demandeAutorisationSteps"/>
-	</bean>
+	<import resource="cucumber-steps-beans.xml"/>
 
 </beans>

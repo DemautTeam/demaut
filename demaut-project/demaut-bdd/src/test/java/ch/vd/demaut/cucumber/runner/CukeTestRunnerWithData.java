@@ -4,7 +4,9 @@ import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
 
-@RunWith(Cucumber.class)
+import ch.vd.demaut.cucumber.junit.CucumberDataProfile;
+
+@RunWith(CucumberDataProfile.class)
 @CucumberOptions(
         features = "src/test/resources/features", // ou classpath:**/*.feature
         glue = {"ch.vd.demaut.cucumber.steps.definitions", "cucumber.api.spring"},
@@ -14,5 +16,4 @@ import org.junit.runner.RunWith;
                 "html:target/demaut-bdd-report"})
 public class CukeTestRunnerWithData {
 
-    //TODO: Make it run with profile "jpa"
 }
