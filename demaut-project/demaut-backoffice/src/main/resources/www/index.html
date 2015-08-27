@@ -68,21 +68,23 @@
 
             <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-
-                    <li>
-                        <a href="Demaut/Recherche">Recherche</a>
+                    <li ng-class="{active: contextMenu == 'dashboard'}">
+                        <a href="Demaut/dashboard">Dashboard</a>
                     </li>
-                    <li class="active">
-                        <a href="Demaut/Nouvelle/ch/1">Nouvelle: Ch1</a>
+                    <li ng-class="{active: contextMenu == 'demande'}">
+                        <a href="Demaut/demande">Demande</a>
                     </li>
-                    <li>
-                        <a href="Demaut/Contact/ch/4?key=value">Contact: Ch4</a>
+                    <li ng-class="{active: contextMenu == 'annexe'}">
+                        <a href="Demaut/annexe">Annexes</a>
                     </li>
-                    <li>
-                        <a href="Demaut/Aide">Aide Page</a>
+                    <li ng-class="{active: contextMenu == 'recherche'}">
+                        <a href="Demaut/recherche">Recherche</a>
                     </li>
-                    <li>
-                        <a href="Demaut/Formulaire">Formulaire</a>
+                    <li ng-class="{active: contextMenu == 'aide'}">
+                        <a href="Demaut/aide">Aide Page</a>
+                    </li>
+                    <li ng-class="{active: contextMenu == 'formulaire'}">
+                        <a href="Demaut/formulaire">Formulaire</a>
                     </li>
 
                 </ul>

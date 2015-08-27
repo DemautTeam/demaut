@@ -6,31 +6,33 @@ var microbizAppUserame = "Back-Office-User";
 var ngApp = angular.module('ngApp', ['ngSanitize', 'ngRoute', 'ngAnimate']);
 
 /*Necessaire si les services ne sont pas dans la même arborescence que la page html*/
-ngApp.constant('urlPrefix', '/outils/demaut-microbiz');
-function settingScopeVariable($scope) {
-    $scope.environment = microbizAppEnviron;
-    $scope.buildVersion = microbizAppVersion;
-    $scope.project = microbizAppFullame;
-    $scope.user = microbizAppUserame;
+ngApp.constant('urlPrefix', '/outils/demaut-microbiz-api');
+
+function settingScopeVariable(scope) {
+    scope.environment = microbizAppEnviron;
+    scope.buildVersion = microbizAppVersion;
+    scope.project = microbizAppFullame;
+    scope.user = microbizAppUserame;
 }
+
 ngApp
     .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
 
         $routeProvider
-            .when('/Demaut/:demandeId', {
+            .when('/Demaut/demande', {
                 templateUrl: 'partiels/demande.html',
                 controller: 'DemandeController',
                 controllerAs: 'demande'
             })
-            .when('/Demaut/:demandeId/ch/:annexeId', {
+            .when('/Demaut/annexe', {
                 templateUrl: 'partiels/annexe.html',
                 controller: 'AnnexeController',
                 controllerAs: 'annexe'
             })
             .otherwise({
-                templateUrl: 'partiels/annexe.html',
-                controller: 'AnnexeController',
-                controllerAs: 'annexe'
+                templateUrl: 'partiels/dashboard.html',
+                controller: 'DashboardController',
+                controllerAs: 'dashboard'
             });
 
         $locationProvider.html5Mode(true);
@@ -57,22 +59,26 @@ ngApp
         });
     }
     ])
-    .controller('IndexController', ['$scope', '$http', '$location', '$interval', 'urlPrefix', '$log', function ($scope, $http, $location, $interval, urlPrefix, $log) {
-        settingScopeVariable($scope);
+    .controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', 'urlPrefix', '$log', function ($scope, $rootScope, $routeParams, $http, $location, $interval, urlPrefix, $log) {
+        settingScopeVariable($rootScope);
 
+        $rootScope.contextMenu = "dashboard";
+        $scope.indexStep = 0;
+        this.name = "DashboardController";
+        this.params = $routeParams;
     }])
-    .controller('DemandeController', ['$scope', '$routeParams', function ($scope, $routeParams) {
-        settingScopeVariable($scope);
+    .controller('DemandeController', ['$scope', '$rootScope', '$routeParams', function ($scope, $rootScope, $routeParams) {
+        settingScopeVariable($rootScope);
 
+        $rootScope.contextMenu = "demande";
+        $scope.indexStep = 1;
         this.name = "DemandeController";
         this.params = $routeParams;
-        $scope.indexStep = 2;
     }])
     .controller('AnnexeController', ['$scope', '$rootScope', '$routeParams', function ($scope, $rootScope, $routeParams) {
-        settingScopeVariable($scope);
+        settingScopeVariable($rootScope);
 
-        this.name = "AnnexeController";
-        this.params = $routeParams;
+        $rootScope.contextMenu = "annexe";
         $scope.indexStep = 4;
         $scope.annexeFormats = ["application/pdf", "image/jpg", "image/jpeg", "image/png", "image/bmp"];
         $scope.annexeTypes = [
@@ -83,6 +89,8 @@ ngApp
             "Casier judiciaire"
         ];
         $scope.referenceFiles = [];
+        $scope.name = "AnnexeController";
+        $scope.params = $routeParams;
 
         $scope.filesChanged = function (targetFiles) {
             $scope.files = [];
@@ -141,8 +149,6 @@ ngApp
         };
 
         $scope.viewAnnexe = function (file, annexeType) {
-            alert(annexeType + " : view " + file.name);
-
             var binary = new Blob([file], {type: file.type});
             var fileURL = URL.createObjectURL(binary);
             console.log(fileURL);
@@ -168,6 +174,5 @@ ngApp
                 }
             }
             $scope.files = $scope.referenceFiles;
-            //alert(annexeType + " : delete " + file.name);
         };
     }]);
