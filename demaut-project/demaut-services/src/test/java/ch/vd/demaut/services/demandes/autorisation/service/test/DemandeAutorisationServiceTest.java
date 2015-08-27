@@ -1,7 +1,8 @@
 package ch.vd.demaut.services.demandes.autorisation.service.test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
+import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,9 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
-import junit.framework.TestCase;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ContextConfiguration({"classpath*:/servicesTest-context.xml"})
 @ActiveProfiles({"data"})

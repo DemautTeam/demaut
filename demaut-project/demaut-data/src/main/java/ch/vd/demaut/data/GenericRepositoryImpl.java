@@ -9,8 +9,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 
+import ch.vd.demaut.commons.exceptions.ValidationEntityException;
 import ch.vd.demaut.commons.repo.GenericReadRepository;
+import ch.vd.demaut.commons.validation.ValidatorFactoryDefault;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.vd.demaut.commons.repo.GenericRepository;
@@ -35,32 +38,18 @@ public abstract class GenericRepositoryImpl<T, I extends Serializable> implement
     }
 
     @Override
-    @SuppressWarnings("all")
-    @Transactional(readOnly = true)
-    public List<T> findAll() {
-        Query typedQuery = this.getEntityManager()
-                .createQuery("select o from " + entityClass.getSimpleName() + " as o");
-        return typedQuery.getResultList();
-//        return Ordering.usingToString().sortedCopy(typedQuery.getResultList());
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public T findBy(I id) {
         return this.getEntityManager().find(this.entityClass, id);
     }
 
     @Override
-    @Transactional
-    public T store(T entity) {
-        this.getEntityManager().persist(entity);
-        return entity;
-    }
-
-    @Override
-    @Transactional
-    public void delete(T entity) {
-        this.getEntityManager().remove(entity);
+    @SuppressWarnings("all")
+    @Transactional(readOnly = true)
+    public List<T> findAll() {
+        Query typedQuery = this.getEntityManager()
+                .createQuery("select o from " + entityClass.getSimpleName() + " as o");
+        return typedQuery.getResultList();
     }
 
     @SuppressWarnings("unchecked")
@@ -73,60 +62,75 @@ public abstract class GenericRepositoryImpl<T, I extends Serializable> implement
         return typedQuery.getResultList();
     }
 
+    @Override
     @Transactional(readOnly = true)
-    public int count() {
+    public long countAll() {
         Query typedQuery = this.getEntityManager()
-                .createQuery("select count(*) from " + entityClass.getSimpleName());
+                .createQuery("select count(e) from " + entityClass.getSimpleName() + " e");
         return ((Long) typedQuery.getSingleResult()).intValue();
+    }
+
+    @Override
+    @Transactional
+    public T store(T entity) {
+        this.getEntityManager().persist(entity);
+        return entity;
+    }
+
+    @Override
+    @Transactional
+    public void storeAll(Collection<? extends T> entities) {
+        this.getEntityManager().persist(entities);
+    }
+
+    @Override
+    @Transactional
+    public void delete(T entity) {
+        this.getEntityManager().remove(entity);
     }
     
 	@Override
-	public void delete(I arg0) {
-		//TODO : Implement me
+    @Transactional
+	public void delete(I id) {
+        T entity =  this.getEntityManager().find(this.entityClass, id);
+        if(entity != null){
+            this.getEntityManager().remove(entity);
+        }
 	}
 
 	@Override
+    @Transactional
 	public void deleteAll() {
-		//TODO : Implement me
+        Query typedQuery = this.getEntityManager()
+                .createQuery("select o from " + entityClass.getSimpleName() + " as o");
+        List entities = typedQuery.getResultList();
+        if(entities != null && !entities.isEmpty()){
+            this.getEntityManager().remove(entities);
+        }
 	}
 
 	@Override
-	public void storeAll(Collection<? extends T> arg0) {
-		//TODO : Implement me
+	public Set<ConstraintViolation<T>> validate(T entity) {
+        Validator validator = ValidatorFactoryDefault.getValidator();
+        return validator.validate(entity);
 	}
 
 	@Override
-	public Set<ConstraintViolation<T>> validate(T arg0) {
-		//TODO : Implement me
-		return null;
+    @Transactional
+	public T validateAndStore(T entity) {
+        Set<ConstraintViolation<T>> constraintsViolation = validate(entity);
+        if (constraintsViolation == null || constraintsViolation.size() == 0) {
+            return store(entity);
+        } else {
+            throw new ValidationEntityException();
+        }
 	}
 
 	@Override
-	public T validateAndStore(T arg0) {
-		//TODO : Implement me
-		return null;
-	}
-
-	@Override
-	public void validateAndStoreAll(Collection<? extends T> arg0) {
-		//TODO : Implement me
-	}
-
-	@Override
-	public long countAll() {
-		//TODO : Implement me
-		return 0;
-	}
-
-	@Override
-	public T findFirst() {
-		//TODO : Implement me
-		return null;
-	}
-
-	@Override
-	public T getById(I arg0) {
-		//TODO : Implement me
-		return null;
+    @Transactional
+	public void validateAndStoreAll(Collection<? extends T> entities) {
+        for (T entity : entities) {
+            validateAndStore(entity);
+        }
 	}
 }

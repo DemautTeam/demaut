@@ -29,17 +29,6 @@ public abstract class GenericReadRepositoryMock<T extends Entity<ID>, ID extends
      * {@inheritDoc}
      */
     @Override
-    public T findFirst() {
-        if (findAll().isEmpty()) {
-            return null;
-        }
-        return findAll().get(0);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public long countAll() {
         return findAll().size();
     }

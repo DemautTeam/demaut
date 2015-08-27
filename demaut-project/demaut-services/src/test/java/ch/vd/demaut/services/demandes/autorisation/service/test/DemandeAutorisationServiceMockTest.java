@@ -1,16 +1,12 @@
 package ch.vd.demaut.services.demandes.autorisation.service.test;
 
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
-import ch.vd.demaut.domain.demandeurs.Demandeur;
-import ch.vd.demaut.domain.demandeurs.NomEtPrenomDemandeur;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -18,8 +14,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ContextConfiguration({"classpath*:/servicesTest-context.xml"})
-@ActiveProfiles({"mock"})
 @RunWith(SpringJUnit4ClassRunner.class)
+@ActiveProfiles({"mock"})
 public class DemandeAutorisationServiceMockTest extends TestCase {
 
     @Autowired

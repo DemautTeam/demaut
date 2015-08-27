@@ -69,8 +69,9 @@ public class AnnexeRestImpl implements AnnexeRest {
 
         LOGGER.info("storeMultipart");
 
-        return !StringUtils.isEmpty(name) && !StringUtils.isEmpty(size) && !StringUtils.isEmpty(type) && file != null &&
-                this.demandeAutorisationService.attacherUneAnnexe(new Annexe(TypeAnnexe.CV, name, IOUtils.toByteArray(new FileInputStream(file))))
+        return !StringUtils.isEmpty(name) && !StringUtils.isEmpty(size) && !StringUtils.isEmpty(type) && file != null
+                // TODO implement attacherUneAnnexe
+                //&& this.demandeAutorisationService.attacherUneAnnexe(new Annexe(TypeAnnexe.CV, name, IOUtils.toByteArray(new FileInputStream(file))))
                 ? Response.ok(Json.newObject().put("response", true)).build()
                 : Response.notModified().build();
     }
