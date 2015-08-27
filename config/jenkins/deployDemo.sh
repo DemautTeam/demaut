@@ -6,8 +6,12 @@ script_dir="$(dirname $0)"
 echo "Current dir $current_dir"
 echo "Script dir $script_dir"
 whoami
-echo Lister workspace 'ls /ccv/data/ses_slave1/sandbox/workspace/'
-echo Lister DEMAUT_POC_BUILD 'ls /ccv/data/ses_slave1/sandbox/workspace/DEMAUT_POC_BUILD'
+
+workspaceContent=ls /ccv/data/ses_slave1/sandbox/workspace/
+buildspaceContent=ls /ccv/data/ses_slave1/sandbox/workspace/DEMAUT_POC_BUILD
+
+echo Lister workspace : '$workspaceContent'
+echo Lister DEMAUT_POC_BUILD : '$workspaceContent'
 
 #if [ $script_dir = '.' ]
 #then
