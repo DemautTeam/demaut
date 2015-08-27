@@ -1,0 +1,26 @@
+Graphic : gitk --all
+git checkout
+git status
+git pull
+
+git add -A
+git commit -m "Mon commentaire"
+git push
+git rm -r --cached ./*
+git check-ignore *
+
+git clean -n
+git clean -df
+git reset --hard branch
+
+git clone git@git.etat-de-vaud.ch:/cyber/prestations/demaut demautPortail
+
+git clone git@git.etat-de-vaud.ch:/ses/demaut demautTest
+git clone git@git.etat-de-vaud.ch:/ses/progres/divess divessLocal
+git clone git@git.etat-de-vaud.ch:/cyber/prestations/demaut demautPortail
+
+
+git log --author="b5cav2"
+git checkout cc5cdca72c18ee859083e2689adf9a8569658b8e
+git checkout c2127dcc3734a03746b8bb73a000fe9a06ed3d18
+
