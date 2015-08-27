@@ -7,7 +7,7 @@ echo "Current dir $current_dir"
 echo "Script dir $script_dir"
 whoami
 
-workspaceContent=`ls ${WORKSPACE}`
+workspaceContent=`ls "${WORKSPACE}"`
 
 echo Lister workspace : $workspaceContent
 
@@ -25,7 +25,7 @@ remoteBin=$pathServer/bin
 remoteDeploy=$pathServer/deploy
 remoteConfig=/ccv/data/dsi_cyber/microbiz-1.0.0/config
 remoteServer=dsi_cyber@slv2395t.etat-de-vaud.ch
-identityKey=-i "${WORKSPACE}/conf/jenkins/id.rsa.jenkins"
+identityKey=-i "${WORKSPACE}/config/jenkins/id.rsa.jenkins"
 
 echo Rechercher bundle à déployer $component : `ls "${WORKSPACE}/poc-demaut/target/$component-*.jar"`
 
