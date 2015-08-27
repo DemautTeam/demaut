@@ -7,7 +7,7 @@ echo "Current dir $current_dir"
 echo "Script dir $script_dir"
 whoami
 
-workspaceContent=`ls "${WORKSPACE}"`
+workspaceContent=`ls ${WORKSPACE}`
 configContent=`ls -al "${WORKSPACE}/config/jenkins/"`
 echo Lister workspace : $workspaceContent
 echo Lister config : $configContent
@@ -18,7 +18,7 @@ echo Lister config : $configContent
 #fi
 
 projectFolderName=poc-demaut
-projectBasedir='${WORKSPACE}/$projectFolderName'
+projectBasedir=${WORKSPACE}/$projectFolderName
 
 # deploy to smx4
 component=$projectFolderName
@@ -33,7 +33,7 @@ echo Rechercher bundle à déployer $component : `ls $projectBasedir/target/$com
 
 if [ -f $projectBasedir/target/$component-*.jar ]
 then
-	 echo Nouveau bundle à déployer: `ls "${WORKSPACE}/poc-demaut/target/$component-*.jar"`
+	 echo Nouveau bundle à déployer: `ls ${WORKSPACE}/poc-demaut/target/$component-*.jar`
 else
      echo "Pas de bundle à déployer dans target. Veuillez compiler le projet"
     exit 0
@@ -61,8 +61,8 @@ ssh $identityKey $remoteServer rm $remoteDeploy/$component-*.jar
 echo "waiting 5s....."
 sleep 5
 echo "deploying new bundle  in $remoteServer:$remoteDeploy"
-ls "${WORKSPACE}/poc-demaut/target/$component-*.jar"
-scp $identityKey "${WORKSPACE}/poc-demaut/target/$component-*.jar" $remoteServer:$remoteDeploy
+ls ${WORKSPACE}/poc-demaut/target/$component-*.jar
+scp $identityKey ${WORKSPACE}/poc-demaut/target/$component-*.jar $remoteServer:$remoteDeploy
 echo "waiting 5s....."
 sleep 5
 echo "Start du container MicroBiz..."
