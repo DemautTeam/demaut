@@ -6,11 +6,13 @@ script_dir="$(dirname $0)"
 echo "Current dir $current_dir"
 echo "Script dir $script_dir"
 whoami
+echo Lister workspace 'ls /ccv/data/ses_slave1/sandbox/workspace/'
+echo Lister DEMAUT_POC_BUILD 'ls /ccv/data/ses_slave1/sandbox/workspace/DEMAUT_POC_BUILD'
 
-if [ $script_dir = '.' ]
-then
-script_dir="$current_dir"
-fi
+#if [ $script_dir = '.' ]
+#then
+#script_dir=$current_dir
+#fi
 
 projectFolderName=poc-demaut
 
