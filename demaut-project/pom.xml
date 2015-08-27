@@ -485,22 +485,8 @@
    </dependencyManagement>
 
 	<build>
-
         <pluginManagement>
             <plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-jar-plugin</artifactId>
-					<version>${maven.jar.plugin.version}</version>
-					<executions>
-						<execution>
-							<id>test</id>
-							<goals>
-								<goal>test-jar</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
