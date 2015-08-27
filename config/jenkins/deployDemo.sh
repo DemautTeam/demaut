@@ -1,7 +1,7 @@
 #!/bin/sh
 
-current_dir=$(pwd)
-script_dir=$(dirname $0)
+current_dir="$(pwd)"
+script_dir="$(dirname $0)"
 
 echo "Current dir $current_dir"
 echo "Script dir $script_dir"
