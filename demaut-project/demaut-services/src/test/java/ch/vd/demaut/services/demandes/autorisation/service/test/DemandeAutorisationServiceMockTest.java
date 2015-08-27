@@ -18,8 +18,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ContextConfiguration({"classpath*:/servicesTest-context.xml"})
-@RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles({"mock"})
+@RunWith(SpringJUnit4ClassRunner.class)
 public class DemandeAutorisationServiceMockTest extends TestCase {
 
     @Autowired

@@ -24,9 +24,8 @@
         <!-- Demaut test -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>demaut-commons</artifactId>
+            <artifactId>demaut-commons4test</artifactId>
             <version>${project.version}</version>
-            <type>test-jar</type>
             <scope>test</scope>
         </dependency>
 
