@@ -13,11 +13,6 @@ import java.util.List;
 public interface GenericReadRepository<E, I> {
 
     /**
-     * @return le premier {@link Entity} trouvé dans le repository.
-     */
-    E findFirst();
-
-    /**
      * Recherche une {@link Entity} par identifiant.
      *
      * @param id
@@ -36,15 +31,5 @@ public interface GenericReadRepository<E, I> {
      * @return le nombre d'{@link Entity} dans le repository.
      */
     long countAll();
-
-    /**
-     * Retourne une {@link Entity} par identifiant.
-     * <p/>
-     * Si elle n'est pas trouvee, alors leve une exception
-     *
-     * @param id
-     * @return
-     */
-    E getById(I id);
 
 }

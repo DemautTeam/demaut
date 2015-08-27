@@ -34,31 +34,8 @@ public abstract class GenericRepositoryMock<T extends Entity<ID>, ID extends Ser
      * {@inheritDoc}
      */
     @Override
-    public T getById(ID id) {
-        T instance = findBy(id);
-        if (instance == null) {
-            throw new EntityNotFoundException();
-        }
-        return instance;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public List<T> findAll() {
         return new ArrayList<T>(entities.values());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public T findFirst() {
-        if (entities.isEmpty()) {
-            return null;
-        }
-        return findAll().get(0);
     }
 
     /**

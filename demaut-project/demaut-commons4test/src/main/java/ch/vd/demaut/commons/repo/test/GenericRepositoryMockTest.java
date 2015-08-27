@@ -35,12 +35,6 @@ public class GenericRepositoryMockTest extends TestCase {
 
     @SuppressWarnings("all")
     @Test
-    public void should_get_next_id() throws Exception {
-        assertThat(genericRepository.getById(1)).isNull();
-    }
-
-    @SuppressWarnings("all")
-    @Test
     public void should_validate_and_store() throws Exception {
         assertThat(genericRepository.validateAndStore(baseValueObject)).isNull();
     }
