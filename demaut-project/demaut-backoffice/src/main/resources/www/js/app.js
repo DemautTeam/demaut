@@ -8,26 +8,59 @@ var ngApp = angular.module('ngApp', ['ngSanitize', 'ngRoute', 'ngAnimate']);
 /*Necessaire si les services ne sont pas dans la même arborescence que la page html*/
 ngApp.constant('urlPrefix', '/outils/demaut-microbiz-api');
 
-function settingScopeVariable(scope) {
-    scope.environment = microbizAppEnviron;
-    scope.buildVersion = microbizAppVersion;
-    scope.project = microbizAppFullame;
-    scope.user = microbizAppUserame;
-}
-
 ngApp
     .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
 
         $routeProvider
-            .when('/Demaut/demande', {
-                templateUrl: 'partiels/demande.html',
+            .when('/Demaut/recherche', {
+                templateUrl: 'partiels/recherche.html',
+                controller: 'RechercheController',
+                controllerAs: 'recherche'
+            })
+            .when('/Demaut/aide', {
+                templateUrl: 'partiels/aide.html',
+                controller: 'AideController',
+                controllerAs: 'aide'
+            })
+            .when('/Demaut/formaulaire', {
+                templateUrl: 'partiels/formaulaire.html',
                 controller: 'DemandeController',
                 controllerAs: 'demande'
             })
-            .when('/Demaut/annexe', {
-                templateUrl: 'partiels/annexe.html',
-                controller: 'AnnexeController',
-                controllerAs: 'annexe'
+            .when('/Demaut/demande', {
+                templateUrl: 'partiels/demande/demande.html',
+                controller: 'DemandeController',
+                controllerAs: 'demande'
+            })
+            .when('/Demaut/demande/donneesPerso', {
+                templateUrl: 'partiels/demande/donneesPerso.html',
+                controller: 'DonneesPersoController',
+                controllerAs: 'donneesPerso'
+            })
+            .when('/Demaut/demande/donneesProf', {
+                templateUrl: 'partiels/demande/donneesProf.html',
+                controller: 'DonneesProfController',
+                controllerAs: 'donneesProf'
+            })
+            .when('/Demaut/demande/donneesProf', {
+                templateUrl: 'partiels/demande/donneesProf.html',
+                controller: 'DonneesProfController',
+                controllerAs: 'donneesProf'
+            })
+            .when('/Demaut/demande/annexes', {
+                templateUrl: 'partiels/demande/annexes.html',
+                controller: 'AnnexesController',
+                controllerAs: 'annexes'
+            })
+            .when('/Demaut/demande/recapitulation', {
+                templateUrl: 'partiels/demande/recapitulation.html',
+                controller: 'RecapitulationController',
+                controllerAs: 'recapitulation'
+            })
+            .when('/Demaut/demande/soumission', {
+                templateUrl: 'partiels/demande/soumission.html',
+                controller: 'SoumissionController',
+                controllerAs: 'soumission'
             })
             .otherwise({
                 templateUrl: 'partiels/dashboard.html',
@@ -60,25 +93,22 @@ ngApp
     }
     ])
     .controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', 'urlPrefix', '$log', function ($scope, $rootScope, $routeParams, $http, $location, $interval, urlPrefix, $log) {
-        settingScopeVariable($rootScope);
-
         $rootScope.contextMenu = "dashboard";
         $scope.indexStep = 0;
         this.name = "DashboardController";
         this.params = $routeParams;
+
+
     }])
     .controller('DemandeController', ['$scope', '$rootScope', '$routeParams', function ($scope, $rootScope, $routeParams) {
-        settingScopeVariable($rootScope);
 
         $rootScope.contextMenu = "demande";
         $scope.indexStep = 1;
         this.name = "DemandeController";
         this.params = $routeParams;
     }])
-    .controller('AnnexeController', ['$scope', '$rootScope', '$routeParams', function ($scope, $rootScope, $routeParams) {
-        settingScopeVariable($rootScope);
-
-        $rootScope.contextMenu = "annexe";
+    .controller('AnnexesController', ['$scope', '$rootScope', '$routeParams', function ($scope, $rootScope, $routeParams) {
+        $rootScope.contextMenu = "demande";
         $scope.indexStep = 4;
         $scope.annexeFormats = ["application/pdf", "image/jpg", "image/jpeg", "image/png", "image/bmp"];
         $scope.annexeTypes = [
@@ -176,3 +206,21 @@ ngApp
             $scope.files = $scope.referenceFiles;
         };
     }]);
+
+ngApp
+    .run(function($rootScope, $sce, $location, $http, urlPrefix) {
+        $http.get(urlPrefix + '/services/main')
+            .success(function (data, status, headers, config) {
+                var fromJson = angular.fromJson(data.main);
+                $rootScope.environment = fromJson.environment;
+                $rootScope.buildVersion = fromJson.buildVersion;
+                $rootScope.project = fromJson.project;
+                $rootScope.user = fromJson.user;
+            })
+            .error(function (data, status, headers, config) {
+                $rootScope.environment = microbizAppEnviron;
+                $rootScope.buildVersion = microbizAppVersion;
+                $rootScope.project = microbizAppFullame;
+                $rootScope.user = microbizAppUserame;
+            });
+    });
