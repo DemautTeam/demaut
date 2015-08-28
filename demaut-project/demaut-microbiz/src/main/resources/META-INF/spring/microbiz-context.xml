@@ -58,15 +58,14 @@
 		<property name="maxChars" value="2000" />
 	</bean>
 
-	<camel:camelContext trace="true" id="demaut-microbiz"
-		xmlns="http://camel.apache.org/schema/spring" depends-on="activemq">
+	<camel:camelContext trace="true" id="demaut-microbiz" xmlns="http://camel.apache.org/schema/spring" depends-on="activemq">
 
 		<propertyPlaceholder id="properties" location="ref:props" />
 
 		<!--Ressources statiques et services de la prestation -->
 		<route id="microbiz">
 			<from
-				uri="microbiz://{{demaut.rs.base.endpoint}}?resourceClasses=ch.vd.demaut.microbiz.rest.AnnexeRest&amp;annotatedAuthClasses=ch.vd.demaut.microbiz.rest.AnnexeRest&amp;auth=IAM&amp;serviceInstances=annexeRestImpl" />
+				uri="microbiz://{{demaut.rs.base.endpoint}}?resourceClasses=ch.vd.demaut.microbiz.rest.MainRest&amp;annotatedAuthClasses=ch.vd.demaut.microbiz.rest.MainRest&amp;auth=IAM&amp;serviceInstances=mainCamelRest" />
 			<transacted ref="required" />
 			<choice>
 				<when>

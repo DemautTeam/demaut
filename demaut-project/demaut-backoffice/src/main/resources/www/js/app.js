@@ -223,4 +223,12 @@ ngApp
                 $rootScope.project = microbizAppFullame;
                 $rootScope.user = microbizAppUserame;
             });
+
+        $rootScope.$on('$viewContentLoaded', function() {
+            delete $rootScope.error;
+        });
+
+        $rootScope.$on('$routeChangeStart', function () {
+
+        });
     });
