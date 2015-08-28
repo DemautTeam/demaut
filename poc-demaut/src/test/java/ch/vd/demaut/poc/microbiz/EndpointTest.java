@@ -68,9 +68,9 @@ public class EndpointTest {
 
         List<Attachment> attachments = new LinkedList<>();
 
-        ContentDisposition contentDisposition = new ContentDisposition("attachment;filename=poc.cfg");
+        ContentDisposition contentDisposition = new ContentDisposition("attachment;filename=pocDemaut.cfg");
 
-        FileInputStream fileInputStream = new FileInputStream("src/test/resources/poc.cfg");
+        FileInputStream fileInputStream = new FileInputStream("src/test/resources/pocDemaut.cfg");
         assertNotNull(fileInputStream);
 
         Attachment attachment = new Attachment("file", fileInputStream, contentDisposition);

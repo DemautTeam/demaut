@@ -9,17 +9,17 @@ Microbiz :
         Il y a encore peut-être un soucis pour trouver le serveur nexus depuis la machine linux, il faut de modifier le fichier /microbiz-1.0.0/etc/org.ops4j.pax.url.mvn.cfg :
             org.ops4j.pax.url.mvn.repositories=http://spip.etat-de-vaud:8081/nexus/content/groups/esb-public@id=esb.public
         Il faut récupérer le context sous :
-            /microbiz-1.0.0/config/poc.cfg                            demaut.rs.base.endpoint=/demaut-microbiz
+            /microbiz-1.0.0/config/demaut-microbiz.cfg                            demaut.rs.base.endpoint=/demaut-microbiz
             /microbiz-1.0.0/etc/org.apache.cxf.osgi.cfg               org.apache.cxf.servlet.context=/outils
 
         Il faut ajouter les variables sous : /microbiz-1.0.0/config/demaut-microbiz.cfg
-            service.endpoint=http://localhost:40009/outils/demaut-microbiz
-            security.active=false
+            demaut.microbiz.service.endpoint=http://localhost:40009/outils/demaut-microbiz
+            demaut.microbiz.security.active=false
             dataSource.url=jdbc:oracle:thin:@sli2315t.etat-de-vaud.ch:1526:SESPOL1L
 
-        poc.jar sous /microbiz-1.0.0/deploy
+        demaut-microbiz.jar sous /microbiz-1.0.0/deploy
 
-        poc.cfg sous /microbiz-1.0.0/config
+        demaut-microbiz.cfg sous /microbiz-1.0.0/config
 
     Sous le projet demaut-microbiz, il y a un script deployLocal.sh (à configurer le path vers le container) qui permet de deployer le bundle et la config directement dans Microbiz.
 

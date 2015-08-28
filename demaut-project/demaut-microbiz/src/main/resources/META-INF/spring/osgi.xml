@@ -8,9 +8,9 @@
        http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd
        http://www.springframework.org/schema/osgi-compendium http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium.xsd">
 
-    <osgix:cm-properties id="props" persistent-id="demaut-microbiz">
-        <prop key="service.endpoint">/demaut-microbiz-</prop>
-        <prop key="security.active">true</prop>
+    <osgix:cm-properties id="props" persistent-id="demautMicrobiz">
+        <prop key="demaut.microbiz.service.endpoint">/demautMicrobiz-</prop>
+        <prop key="demaut.microbiz.security.active">true</prop>
     </osgix:cm-properties>
 
     <osgi:reference id="connectionFactory" interface="javax.jms.ConnectionFactory"/>

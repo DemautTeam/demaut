@@ -20,7 +20,7 @@
     <bean id="props" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:poc.cfg</value>
+                <value>classpath:pocDemaut.cfg</value>
             </list>
         </property>
     </bean>

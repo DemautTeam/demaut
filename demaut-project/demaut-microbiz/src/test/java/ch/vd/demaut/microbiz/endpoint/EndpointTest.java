@@ -68,9 +68,9 @@ public class EndpointTest {
 
         List<Attachment> attachments = new LinkedList<>();
 
-        ContentDisposition contentDisposition = new ContentDisposition("attachment;filename=demaut-microbizTest.cfg");
+        ContentDisposition contentDisposition = new ContentDisposition("attachment;filename=demautMicrobizTest.cfg");
 
-        FileInputStream fileInputStream = new FileInputStream("src/test/resources/demaut-microbizTest.cfg");
+        FileInputStream fileInputStream = new FileInputStream("src/test/resources/demautMicrobizTest.cfg");
         assertNotNull(fileInputStream);
 
         Attachment attachment = new Attachment("file", fileInputStream, contentDisposition);

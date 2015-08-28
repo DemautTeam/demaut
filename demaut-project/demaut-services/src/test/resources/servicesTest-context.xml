@@ -14,10 +14,10 @@
 
 	<beans profile="mock">
 		<bean id="demandeAutorisationRepository"
-			class="ch.vd.demaut.services.demandes.autorisation.repo.mock.DemandeAutorisationRepositoryMock" />
+			class="ch.vd.demaut.services.demandes.autorisation.repo.mock.DemandeAutorisationRepositoryMock"/>
 
 		<bean id="demandeAutorisationService"
-			class="ch.vd.demaut.services.demandes.autorisation.service.mock.DemandeAutorisationServiceMock" />
+			class="ch.vd.demaut.services.demandes.autorisation.service.mock.DemandeAutorisationServiceMock"/>
 	</beans>
 
 	<beans profile="data">
@@ -30,15 +30,15 @@
 			</property>
 		</bean>
 
-		<import resource="classpath:META-INF/spring/jpa-context.xml" />
+		<import resource="classpath:META-INF/spring/jpa-context.xml"/>
 
-		<import resource="classpath:META-INF/spring/services-context.xml" />
+		<import resource="classpath:META-INF/spring/services-context.xml"/>
 
 		<jdbc:initialize-database data-source="dataSource" ignore-failures="DROPS">
-			<jdbc:script location="classpath:${jpa.drop.script}" />
-			<jdbc:script location="classpath:${jpa.create.script}" />
-			<jdbc:script location="classpath:${jpa.delete.script}" />
-			<jdbc:script location="classpath:${jpa.insert.script}" />
+			<jdbc:script location="classpath:${jpa.drop.script}"/>
+			<jdbc:script location="classpath:${jpa.create.script}"/>
+			<jdbc:script location="classpath:${jpa.delete.script}"/>
+			<jdbc:script location="classpath:${jpa.insert.script}"/>
 		</jdbc:initialize-database>
 
 	</beans>

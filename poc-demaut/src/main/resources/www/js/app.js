@@ -4,7 +4,7 @@ var microbizAppFullame = "Poc-Demaut";
 var microbizAppUserame = "Poc-User";
 var ngApp = angular.module('ngApp', ['ngSanitize']);
 /*Necessaire si les services ne sont pas dans la même arborescence que la page html*/
-ngApp.constant('urlPrefix', '/outils/poc-demaut-api');
+ngApp.constant('urlPrefix', '/outils/pocDemaut-api');
 ngApp
     .config([ '$locationProvider', '$httpProvider', function($locationProvider, $httpProvider) {
 

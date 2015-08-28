@@ -26,9 +26,9 @@
 
     <ctx:property-placeholder properties-ref="props"/>
 
-    <ctx:component-scan base-package="ch.vd.demaut.poc.poc" />
+    <ctx:component-scan base-package="ch.vd.demaut.poc" />
 
-    <cxf:server address="${service.endpoint}">
+    <cxf:server address="${poc.service.endpoint}">
         <cxf:serviceBeans>
             <ref local="annexeRestImpl"/>
         </cxf:serviceBeans>
@@ -42,8 +42,8 @@
 
     <bean id="authenticationFilter" class="ch.vd.demaut.poc.microbiz.CustomAuthenticationFilter">
         <property name="contextName" value="karaf"/>
-        <property name="realmName" value="poc"/>
-        <property name="active" value="${security.active}"/>
+        <property name="realmName" value="pocDemaut"/>
+        <property name="active" value="${poc.security.active}"/>
     </bean>
 
     <bean id="camelTracer" class="org.apache.camel.processor.interceptor.Tracer">
@@ -60,12 +60,12 @@
         <property name="maxChars" value="2000"/>
     </bean>
 
-    <camel:camelContext trace="true" id="poc" xmlns="http://camel.apache.org/schema/spring" depends-on="activemq">
+    <camel:camelContext trace="true" id="pocDemaut" xmlns="http://camel.apache.org/schema/spring" depends-on="activemq">
 
         <propertyPlaceholder id="properties" location="ref:props"/>
 
         <!--Ressources statiques et services de la prestation -->
-        <route id="microbiz">
+        <route id="poc">
             <from uri="microbiz://{{poc.rs.base.endpoint}}?resourceClasses=ch.vd.demaut.poc.microbiz.MainRest&amp;annotatedAuthClasses=ch.vd.demaut.poc.microbiz.MainRest&amp;auth=IAM&amp;serviceInstances=mainCamelRest"/>
             <transacted ref="required"/>
             <choice>
@@ -83,7 +83,7 @@
     </camel:camelContext>
 
     <bean id="ack" class="ch.vd.technical.esb.camel.AckEsbMessageProcessor">
-        <property name="application" value="microbiz-poc"/>
+        <property name="application" value="pocDemaut"/>
         <property name="domain" value="socle"/>
     </bean>
 

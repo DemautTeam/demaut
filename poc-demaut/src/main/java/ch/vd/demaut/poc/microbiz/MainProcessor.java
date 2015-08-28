@@ -20,7 +20,7 @@ public class MainProcessor implements Processor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MainProcessor.class);
 
-    @Value("${environment}")
+    @Value("${poc.environment}")
     private String environment;
 
     public void setEnvironment(String environment) {

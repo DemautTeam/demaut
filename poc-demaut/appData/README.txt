@@ -11,17 +11,17 @@ Microbiz :
         Il y a encore peut-être un soucis pour trouver le serveur nexus depuis la machine linux, il faut de modifier le fichier /microbiz-1.0.0/etc/org.ops4j.pax.url.mvn.cfg :
             org.ops4j.pax.url.mvn.repositories=http://spip.etat-de-vaud:8081/nexus/content/groups/esb-public@id=esb.public
         Il faut récupérer le context sous :
-            /microbiz-1.0.0/config/poc.cfg                            poc.rs.base.endpoint=/demaut-poc
+            /microbiz-1.0.0/config/pocDemaut.cfg                      poc.rs.base.endpoint=/pocDemaut
             /microbiz-1.0.0/etc/org.apache.cxf.osgi.cfg               org.apache.cxf.servlet.context=/outils
 
-        Il faut ajouter les variables sous : /microbiz-1.0.0/config/poc.cfg
+        Il faut ajouter les variables sous : /microbiz-1.0.0/config/pocDemaut.cfg
             service.endpoint=http://localhost:40009/outils/poc
             security.active=false
             dataSource.url=jdbc:oracle:thin:@sli2315t.etat-de-vaud.ch:1526:SESPOL1L
 
-        poc.jar sous /microbiz-1.0.0/deploy
+        poc-demaut.jar sous /microbiz-1.0.0/deploy
 
-        poc.cfg sous /microbiz-1.0.0/config
+        pocDemaut.cfg sous /microbiz-1.0.0/config
 
     Stop/Start du container
 

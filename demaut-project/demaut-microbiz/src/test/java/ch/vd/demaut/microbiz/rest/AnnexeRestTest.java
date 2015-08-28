@@ -31,7 +31,7 @@ public class AnnexeRestTest {
 
     @Before
     public void setUp() throws Exception {
-        byteArray = IOUtils.toByteArray(new FileInputStream("src/test/resources/demaut-microbizTest.cfg"));
+        byteArray = IOUtils.toByteArray(new FileInputStream("src/test/resources/demautMicrobizTest.cfg"));
 
         assertNotNull(byteArray);
         assertNotNull(annexeRest);

@@ -1,7 +1,7 @@
-var microbizAppVersion = "v0.1.0";
-var microbizAppEnviron = "Demo";
-var microbizAppFullame = "Back-Office-Demaut";
-var microbizAppUserame = "Back-Office-User";
+var backofficeAppVersion = "v0.1.0";
+var backofficeAppEnviron = "Demo";
+var backofficeAppFullame = "Back-Office-Demaut";
+var backofficeAppUserame = "Back-Office-User";
 
 var ngApp = angular.module('ngApp', ['ngSanitize', 'ngRoute', 'ngAnimate']);
 
@@ -218,10 +218,10 @@ ngApp
                 $rootScope.user = fromJson.user;
             })
             .error(function (data, status, headers, config) {
-                $rootScope.environment = microbizAppEnviron;
-                $rootScope.buildVersion = microbizAppVersion;
-                $rootScope.project = microbizAppFullame;
-                $rootScope.user = microbizAppUserame;
+                $rootScope.environment = backofficeAppEnviron;
+                $rootScope.buildVersion = backofficeAppVersion;
+                $rootScope.project = backofficeAppFullame;
+                $rootScope.user = backofficeAppUserame;
             });
 
         $rootScope.$on('$viewContentLoaded', function() {
