@@ -66,7 +66,7 @@
 
         <!--Ressources statiques et services de la prestation -->
         <route id="microbiz">
-            <from uri="microbiz://{{poc.rs.base.endpoint}}?resourceClasses=ch.vd.demaut.poc.microbiz.AnnexeRest&amp;annotatedAuthClasses=ch.vd.demaut.poc.microbiz.AnnexeRest&amp;auth=IAM&amp;serviceInstances=annexeRestImpl"/>
+            <from uri="microbiz://{{poc.rs.base.endpoint}}?resourceClasses=ch.vd.demaut.poc.microbiz.MainRest&amp;annotatedAuthClasses=ch.vd.demaut.poc.microbiz.MainRest&amp;auth=IAM&amp;serviceInstances=mainCamelRest"/>
             <transacted ref="required"/>
             <choice>
                 <when>

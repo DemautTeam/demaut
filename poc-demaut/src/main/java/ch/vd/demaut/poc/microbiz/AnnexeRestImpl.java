@@ -34,30 +34,6 @@ public class AnnexeRestImpl implements AnnexeRest {
     @Autowired
     private AnnexeService annexeService;
 
-    // TODO Processor Camel
-    @Value("${user}")
-    private String user;
-
-    @SuppressWarnings("serial")
-	@Override
-    @GET
-    @Path("/main")
-    @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed("USER")
-    public Response mainData() throws JsonProcessingException {
-        // TODO variables à renseigner dans un buildInfo.cfg compilé
-        LOGGER.info("mainData");
-        ObjectWriter viewWriter = new ObjectMapper().writer();
-        return Response.ok(
-                Json.newObject().put("main",
-                    viewWriter.writeValueAsString(
-                        new HashMap<String, String>(){{
-                            put("user", user);
-                        }}
-                    ))
-        ).build();
-    }
-
     @Override
     @GET
     @Path("/annexes/all")

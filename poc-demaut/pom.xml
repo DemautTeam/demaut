@@ -46,7 +46,7 @@
         <apache.servicemix.bundles.spring.core.version>3.2.11.RELEASE_2</apache.servicemix.bundles.spring.core.version>
         <demaut.microbiz.bundle.symbolic.name>ch.vd.ses.demaut.microbiz.${project.artifactId}</demaut.microbiz.bundle.symbolic.name>
         <demaut.microbiz.imports.packag.name>javax.jms,*</demaut.microbiz.imports.packag.name>
-        <demaut.microbiz.priv.packag.name>ch.vd.esb.progres.ciad</demaut.microbiz.priv.packag.name>
+        <demaut.microbiz.priv.packag.name>ch.vd.demaut.poc</demaut.microbiz.priv.packag.name>
 
         <!-- Jackson -->
         <jackson.version>2.5.1</jackson.version>
@@ -493,7 +493,7 @@
                             javax.annotation,oracle.jdbc.driver,javax.sql,
                             *
                         </Import-Package>
-                        <Private-Package>ch.vd.esb.progres.ciad</Private-Package>
+                        <Private-Package>ch.vd.demaut.poc</Private-Package>
                         <Distributable>true</Distributable>
                         <Include-Resource>target/classes</Include-Resource>
                         <DynamicImport-Package>*</DynamicImport-Package>

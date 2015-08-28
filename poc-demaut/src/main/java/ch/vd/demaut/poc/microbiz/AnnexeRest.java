@@ -17,12 +17,6 @@ import java.io.IOException;
 public interface AnnexeRest {
 
     @GET
-    @Path("/main")
-    @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed("USER")
-    Response mainData() throws JsonProcessingException;
-
-    @GET
     @Path("/annexes/all")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
