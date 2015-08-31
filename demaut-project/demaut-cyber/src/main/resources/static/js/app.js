@@ -117,16 +117,34 @@ ngApp
         };
 
     }])
-    .controller('DemandeController', ['$scope', '$rootScope', '$routeParams', function ($scope, $rootScope, $routeParams) {
+    .controller('DemandeController', ['$scope', '$rootScope', '$routeParams', '$location', function ($scope, $rootScope, $routeParams, $location) {
 
         $rootScope.contextMenu = "demande";
         $scope.indexStep = 2;
         this.name = "DemandeController";
         this.params = $routeParams;
-
+        $scope.previewStep = function(){
+            $scope.indexStep -= 1;
+            $location.path('/Demaut/demande/donneesPerso');
+        };
         $scope.nextStep = function(){
             $scope.indexStep += 1;
+            $location.path('/Demaut/demande/donneesProf');
+        };
+    }])
+    .controller('DonneesProfController', ['$scope', '$rootScope', '$routeParams', '$location', function ($scope, $rootScope, $routeParams, $location) {
+
+        $rootScope.contextMenu = "DonneesProfessionnelle";
+        $scope.indexStep = 2;
+        this.name = "DonneesProfController";
+        this.params = $routeParams;
+        $scope.previewStep = function(){
+            $scope.indexStep -= 1;
             $location.path('/Demaut/demande');
+        };
+        $scope.nextStep = function(){
+            $scope.indexStep += 1;
+            $location.path('/Demaut/demande/donneesProf');
         };
     }])
     .controller('AnnexesController', ['$scope', '$rootScope', '$routeParams', function ($scope, $rootScope, $routeParams) {
