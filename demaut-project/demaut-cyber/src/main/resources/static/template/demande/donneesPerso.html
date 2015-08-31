@@ -23,19 +23,19 @@
                 <div class="row">
                     <div class="col-md-2">Localité</div>
                     <div class="col-md-2">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" required="required">
                     </div>
                     <div class="col-md-2">
                         NPA
                     </div>
                     <div class="col-md-2">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" required="required">
                     </div>
                     <div class="col-md-2">
                         Pays
                     </div>
                     <div class="col-md-2">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" required="required">
                     </div>
                 </div>
                 <div class="row">
@@ -53,7 +53,7 @@
                 <div class="row">
                     <div class="col-md-2">Adresse email</div>
                     <div class="col-md-6">
-                        <input type="email" class="form-control">
+                        <input type="email" class="form-control" required="required">
                     </div>
                     <div class="col-md-2">
                         Fax
@@ -66,13 +66,13 @@
                     <div class="col-md-2">Sexe</div>
                     <div class="col-md-3">
                         <label>
-                        <input type="radio" name="sexe">
+                        <input type="radio" name="sexe" required="required">
                         Feminin
                         </label>
                     </div>
                     <div class="col-md-3">
                         <label>
-                        <input type="radio" name="sexe">
+                        <input type="radio" name="sexe" required="required">
                         Masculin
                         </label>
                     </div>
@@ -80,22 +80,25 @@
                         Date de naissance
                     </div>
                     <div class="col-md-2">
-                        <input type="text" class="form-control">
+                        <input type="date" placeholder="jj/MM/aaaa" class="form-control" required="required">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-2">Nationalité</div>
-                    <div class="col-md-10"><input type="text" class="form-control"></div>
+                    <div class="col-md-10"><input type="text" class="form-control" ng-model="personalData.nationality" required="required"></div>
                 </div>
                 <div class="row">
                     <div class="col-md-2">Permis</div>
-                    <div class="col-md-2"><label><input type="radio" name="permis"/> B </label></div>
-                    <div class="col-md-2"><label><input type="radio" name="permis"/> C </label></div>
-                    <div class="col-md-2"><label><input type="radio" name="permis"/>Demande en cours</label></div>
-                    <div class="col-md-2"><label><input type="radio" name="permis"/>Autre</label></div>
-                    <div class="col-md-2"><input type="text" class="form-control"></div>
+                    <div class="col-md-2"><label><input type="radio" name="permis" value="B" ng-disabled="testSuisse.isSuisse(personalData.nationality)" ng-model="personalData.permis"/> B </label></div>
+                    <div class="col-md-2"><label><input type="radio" name="permis" value="C" ng-disabled="testSuisse.isSuisse(personalData.nationality)" ng-model="personalData.permis"/> C </label></div>
+                    <div class="col-md-2"><label><input type="radio" name="permis" value="demande en cours" ng-disabled="testSuisse.isSuisse(personalData.nationality)" ng-model="personalData.permis"/>Demande en cours</label></div>
+                    <div class="col-md-2"><label><input type="radio" name="permis" value="autre" ng-disabled="testSuisse.isSuisse(personalData.nationality)" ng-model="personalData.permis"/>Autre</label></div>
+                    <div class="col-md-2"><input type="text" class="form-control" ng-show="(personalData.permis == 'autre')"></div>
                 </div>
-
+                <div class="row">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6"><button class="btn btn-primary submit-btn pull-right" type="submit" aria-label="Suivant" ng-click="nextStep()">Suivant</button></div>
+                </div>
             </ng-form>
         </div>
     </fieldset>

@@ -26,7 +26,7 @@ ngApp
                 controllerAs: 'demande'
             })
             .when('/Demaut/demande', {
-                templateUrl: 'template/demande/demande.html',
+                templateUrl: 'template/demande/infoDemande.html',
                 controller: 'DemandeController',
                 controllerAs: 'demande'
             })
@@ -91,23 +91,43 @@ ngApp
         });
     }
     ])
+    .service('nationalityTest', ['$log', function ($log) {
+        this.suissePattern = new RegExp('[Ss]uisse');
+        this.isSuisse = function(textValue){
+            return this.suissePattern.test(textValue);
+        };
+    }])
     .controller('CockpitController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', 'urlPrefix', '$log', function ($scope, $rootScope, $routeParams, $http, $location, $interval, urlPrefix, $log) {
         $rootScope.contextMenu = "cockpit";
         $scope.indexStep = 0;
         this.name = "CockpitController";
         this.params = $routeParams;
+
+
     }])
-    .controller('DonneesPersoController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', 'urlPrefix', '$log', function ($scope, $rootScope, $routeParams, $http, $location, $interval, urlPrefix, $log) {
+    .controller('DonneesPersoController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', 'urlPrefix', '$log', 'nationalityTest', function ($scope, $rootScope, $routeParams, $http, $location, $interval, urlPrefix, $log, nationalityTest) {
         $rootScope.contextMenu = "Données Personnelles";
         $scope.indexStep = 1;
         this.name = "DonneesPersoController";
         this.params = $routeParams;
+        $scope.testSuisse = nationalityTest;
+        $scope.nextStep = function(){
+            $scope.indexStep += 1;
+            $location.path('/Demaut/demande');
+        };
+
     }])
     .controller('DemandeController', ['$scope', '$rootScope', '$routeParams', function ($scope, $rootScope, $routeParams) {
+
         $rootScope.contextMenu = "demande";
         $scope.indexStep = 2;
         this.name = "DemandeController";
         this.params = $routeParams;
+
+        $scope.nextStep = function(){
+            $scope.indexStep += 1;
+            $location.path('/Demaut/demande');
+        };
     }])
     .controller('AnnexesController', ['$scope', '$rootScope', '$routeParams', function ($scope, $rootScope, $routeParams) {
         $rootScope.contextMenu = "demande";
