@@ -2,6 +2,7 @@ package ch.vd.demaut.domain.demandes.autorisation;
 
 import ch.vd.demaut.commons.annotations.Aggregate;
 import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.domain.annexes.AnnexeValidateur;
 import ch.vd.demaut.domain.demandes.Demande;
 import ch.vd.demaut.domain.demandes.DemandeFK;
 import ch.vd.demaut.domain.demandeurs.Demandeur;
@@ -54,7 +55,7 @@ public class DemandeAutorisation extends Demande {
      * @param annexeALier
      */
     public void attacherUneAnnexe(Annexe annexeALier) {
-        annexeALier.validerContenu();
+    	AnnexeValidateur.getInstance().valider(annexeALier);
         annexes.ajouterAnnexe(annexeALier);
     }
 

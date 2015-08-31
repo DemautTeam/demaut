@@ -5,7 +5,7 @@ import org.junit.runner.RunWith;
 import cucumber.api.CucumberOptions;
 
 @RunWith(CucumberMockProfile.class)
-@CucumberOptions(features = "src/test/resources/features", // ou classpath:**/*.feature
+@CucumberOptions(features = "classpath:features", //
         glue = {"ch.vd.demaut.cucumber.steps.definitions"},//
         strict = false, //
         monochrome = true, //

@@ -3,6 +3,10 @@ package ch.vd.demaut.domain.annexes;
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.BaseValueObject;
 
+/**
+ * Contenu d'une annexe {@link Annexe}
+ *
+ */
 @ValueObject
 public class ContenuAnnexe extends BaseValueObject {
 
@@ -19,15 +23,6 @@ public class ContenuAnnexe extends BaseValueObject {
 
     // ********************************************************* Business Methods
 
-    /**
-     * Vérifie que le contenu de l'annexe est valide.
-     * Si non valide, renvoie une {@link ContenuAnnexeNonValideException}
-     */
-    public void validerContenu() {
-        if (contenu == null) {
-            throw new ContenuAnnexeNonValideException();
-        }
-    }
 
     // ********************************************************* Getters
     public byte[] getContenu() {
@@ -36,6 +31,10 @@ public class ContenuAnnexe extends BaseValueObject {
 
     public long getTaille() {
         return taille;
+    }
+
+    public double getTailleEnMB() {
+        return ((double)taille) / ((double)(1024 * 1024));
     }
 
     // ********************************************************* Méthodes privées

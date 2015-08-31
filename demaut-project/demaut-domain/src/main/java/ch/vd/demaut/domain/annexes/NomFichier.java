@@ -5,6 +5,10 @@ import ch.vd.demaut.commons.vo.BaseValueObject;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * Nom du fichier d'une Annexe
+ *
+ */
 @ValueObject
 public class NomFichier extends BaseValueObject {
 
@@ -23,6 +27,12 @@ public class NomFichier extends BaseValueObject {
 
     public String getValue() {
         return value;
+    }
+    
+    public String extraireExtension() {
+    	int lastIndexOfDot = value.lastIndexOf(".");
+    	String ext = value.substring(lastIndexOfDot + 1);
+    	return ext;
     }
 
 }

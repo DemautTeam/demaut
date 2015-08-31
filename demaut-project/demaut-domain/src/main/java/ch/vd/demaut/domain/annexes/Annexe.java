@@ -2,26 +2,29 @@ package ch.vd.demaut.domain.annexes;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.BaseValueObjectWithId;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 /**
- * Représente une Annexe associée à une demande
+ * Représente une Annexe associée à une demande {@link DemandeAutorisation}
  */
 @ValueObject
 public class Annexe extends BaseValueObjectWithId {
 
+    // ********************************************************* Static Fields
+	
     // ********************************************************* Fields
     @NotNull
     final private TypeAnnexe typeAnnexe;
 
     @NotNull
+    @Valid
     final private ContenuAnnexe contenu;
 
     @NotNull
-    final private FormatFichier formatFichier;
-
-    @NotNull
+    @Valid
     final private NomFichier nomFichier;
 
     // ********************************************************* Constructor
@@ -30,18 +33,7 @@ public class Annexe extends BaseValueObjectWithId {
         this.typeAnnexe = typeAnnexe;
         this.nomFichier = new NomFichier(nomFichier);
         this.contenu = new ContenuAnnexe(contenu);
-        this.formatFichier = FormatFichier.PDF;
     }
-    // ********************************************************* Business Methods
-
-    /**
-     * Valide le contenu de l'annexe.
-     * Renvoie l'exception {@link ContenuAnnexeNonValideException} si non valide
-     */
-    public void validerContenu() {
-        contenu.validerContenu();
-    }
-
 
     // ********************************************************* Getters
 
@@ -51,10 +43,6 @@ public class Annexe extends BaseValueObjectWithId {
 
     public ContenuAnnexe getContenu() {
         return contenu;
-    }
-
-    public FormatFichier getFormatFichier() {
-        return formatFichier;
     }
 
     public long getTaille() {
