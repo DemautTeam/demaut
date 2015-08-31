@@ -135,7 +135,7 @@ ngApp
     .controller('DonneesProfController', ['$scope', '$rootScope', '$routeParams', '$location', function ($scope, $rootScope, $routeParams, $location) {
 
         $rootScope.contextMenu = "DonneesProfessionnelle";
-        $scope.indexStep = 2;
+        $scope.indexStep = 3;
         this.name = "DonneesProfController";
         this.params = $routeParams;
         $scope.previewStep = function(){
@@ -144,7 +144,7 @@ ngApp
         };
         $scope.nextStep = function(){
             $scope.indexStep += 1;
-            $location.path('/Demaut/demande/donneesProf');
+            $location.path('/Demaut/demande/annexes');
         };
     }])
     .controller('AnnexesController', ['$scope', '$rootScope', '$routeParams', function ($scope, $rootScope, $routeParams) {
