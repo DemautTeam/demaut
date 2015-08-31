@@ -35,8 +35,8 @@
 		<module>demaut-services</module>
 		<module>demaut-bdd</module>
 		<module>demaut-microbiz</module>
-		<module>demaut-cyber</module>
         <module>demaut-backoffice</module>
+        <module>demaut-cyber</module>
     </modules>
 
     <prerequisites>
