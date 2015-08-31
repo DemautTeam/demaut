@@ -1,7 +1,5 @@
 var backofficeAppVersion = "v0.1.0";
-var backofficeAppEnviron = "Demo";
 var backofficeAppFullame = "Back-Office-Demaut";
-var backofficeAppUserame = "Back-Office-User";
 
 var ngApp = angular.module('ngApp', ['ngSanitize', 'ngRoute', 'ngAnimate']);
 
@@ -13,62 +11,63 @@ ngApp
 
         $routeProvider
             .when('/Demaut/recherche', {
-                templateUrl: 'partiels/recherche.html',
+                templateUrl: 'template/recherche.html',
                 controller: 'RechercheController',
                 controllerAs: 'recherche'
             })
             .when('/Demaut/aide', {
-                templateUrl: 'partiels/aide.html',
+                templateUrl: 'template/aide.html',
                 controller: 'AideController',
                 controllerAs: 'aide'
             })
-            .when('/Demaut/formaulaire', {
-                templateUrl: 'partiels/formaulaire.html',
+            .when('/Demaut/formulaire', {
+                templateUrl: 'template/formulaire.html',
                 controller: 'DemandeController',
                 controllerAs: 'demande'
             })
             .when('/Demaut/demande', {
-                templateUrl: 'partiels/demande/demande.html',
+                templateUrl: 'template/demande/demande.html',
                 controller: 'DemandeController',
                 controllerAs: 'demande'
             })
             .when('/Demaut/demande/donneesPerso', {
-                templateUrl: 'partiels/demande/donneesPerso.html',
+                templateUrl: 'template/demande/donneesPerso.html',
                 controller: 'DonneesPersoController',
                 controllerAs: 'donneesPerso'
             })
             .when('/Demaut/demande/donneesProf', {
-                templateUrl: 'partiels/demande/donneesProf.html',
+                templateUrl: 'template/demande/donneesProf.html',
                 controller: 'DonneesProfController',
                 controllerAs: 'donneesProf'
             })
             .when('/Demaut/demande/donneesProf', {
-                templateUrl: 'partiels/demande/donneesProf.html',
+                templateUrl: 'template/demande/donneesProf.html',
                 controller: 'DonneesProfController',
                 controllerAs: 'donneesProf'
             })
             .when('/Demaut/demande/annexes', {
-                templateUrl: 'partiels/demande/annexes.html',
+                templateUrl: 'template/demande/annexes.html',
                 controller: 'AnnexesController',
                 controllerAs: 'annexes'
             })
             .when('/Demaut/demande/recapitulation', {
-                templateUrl: 'partiels/demande/recapitulation.html',
+                templateUrl: 'template/demande/recapitulatif.html',
                 controller: 'RecapitulationController',
                 controllerAs: 'recapitulation'
             })
             .when('/Demaut/demande/soumission', {
-                templateUrl: 'partiels/demande/soumission.html',
+                templateUrl: 'template/demande/soumission.html',
                 controller: 'SoumissionController',
                 controllerAs: 'soumission'
             })
             .otherwise({
-                templateUrl: 'partiels/dashboard.html',
-                controller: 'DashboardController',
-                controllerAs: 'dashboard'
+                templateUrl: 'template/cockpit.html',
+                controller: 'CockpitController',
+                controllerAs: 'cockpit'
             });
 
-        $locationProvider.html5Mode(true);
+        $locationProvider.html5Mode(false);
+        $locationProvider.hashPrefix('!');
 
         $httpProvider.interceptors.push(function ($q, $rootScope, $location) {
             return {
@@ -92,18 +91,21 @@ ngApp
         });
     }
     ])
-    .controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', 'urlPrefix', '$log', function ($scope, $rootScope, $routeParams, $http, $location, $interval, urlPrefix, $log) {
-        $rootScope.contextMenu = "dashboard";
+    .controller('CockpitController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', 'urlPrefix', '$log', function ($scope, $rootScope, $routeParams, $http, $location, $interval, urlPrefix, $log) {
+        $rootScope.contextMenu = "cockpit";
         $scope.indexStep = 0;
-        this.name = "DashboardController";
+        this.name = "CockpitController";
         this.params = $routeParams;
-
-
+    }])
+    .controller('DonneesPersoController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', 'urlPrefix', '$log', function ($scope, $rootScope, $routeParams, $http, $location, $interval, urlPrefix, $log) {
+        $rootScope.contextMenu = "Données Personnelles";
+        $scope.indexStep = 1;
+        this.name = "DonneesPersoController";
+        this.params = $routeParams;
     }])
     .controller('DemandeController', ['$scope', '$rootScope', '$routeParams', function ($scope, $rootScope, $routeParams) {
-
         $rootScope.contextMenu = "demande";
-        $scope.indexStep = 1;
+        $scope.indexStep = 2;
         this.name = "DemandeController";
         this.params = $routeParams;
     }])
@@ -209,19 +211,18 @@ ngApp
 
 ngApp
     .run(function($rootScope, $sce, $location, $http, urlPrefix) {
-        $http.get(urlPrefix + '/services/main')
+        $http.get(urlPrefix + '/camel/main')
             .success(function (data, status, headers, config) {
                 var fromJson = angular.fromJson(data.main);
                 $rootScope.environment = fromJson.environment;
-                $rootScope.buildVersion = fromJson.buildVersion;
-                $rootScope.project = fromJson.project;
                 $rootScope.user = fromJson.user;
-            })
-            .error(function (data, status, headers, config) {
-                $rootScope.environment = backofficeAppEnviron;
                 $rootScope.buildVersion = backofficeAppVersion;
                 $rootScope.project = backofficeAppFullame;
-                $rootScope.user = backofficeAppUserame;
+            })
+            .error(function (data, status, headers, config) {
+                $rootScope.buildVersion = backofficeAppVersion;
+                $rootScope.project = backofficeAppFullame;
+                alert('Error ' + urlPrefix + '/camel/main \n Status :' +  status);
             });
 
         $rootScope.$on('$viewContentLoaded', function() {

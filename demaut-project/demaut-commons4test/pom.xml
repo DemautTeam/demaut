@@ -9,8 +9,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>demaut-commons4test</artifactId>
-
-	<name>demaut-commons4test</name>
+	<name>Demaut-commons4test</name>
 	<description>Commons classes used for testing</description>
 	<packaging>jar</packaging>
 

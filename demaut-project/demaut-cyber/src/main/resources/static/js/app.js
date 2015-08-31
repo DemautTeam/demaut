@@ -98,19 +98,14 @@ ngApp
         $scope.indexStep = 0;
         this.name = "CockpitController";
         this.params = $routeParams;
-
-
     }])
     .controller('DonneesPersoController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', 'urlPrefix', '$log', function ($scope, $rootScope, $routeParams, $http, $location, $interval, urlPrefix, $log) {
         $rootScope.contextMenu = "Données Personnelles";
         $scope.indexStep = 1;
         this.name = "DonneesPersoController";
         this.params = $routeParams;
-
-
     }])
     .controller('DemandeController', ['$scope', '$rootScope', '$routeParams', function ($scope, $rootScope, $routeParams) {
-
         $rootScope.contextMenu = "demande";
         $scope.indexStep = 2;
         this.name = "DemandeController";

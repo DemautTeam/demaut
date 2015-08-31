@@ -9,8 +9,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>demaut-services</artifactId>
-	
-	<name>demaut-services</name>
+	<name>Demaut-services</name>
 	<description>Demaut Services Module</description>
 	<packaging>jar</packaging>
 

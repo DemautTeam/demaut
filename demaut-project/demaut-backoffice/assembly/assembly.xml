@@ -14,6 +14,13 @@
             <directory>doc</directory>
             <outputDirectory>${artifactId}-${version}/doc</outputDirectory>
         </fileSet>
+        <fileSet>
+            <directory>${project.build.directory}</directory>
+            <outputDirectory>${artifactId}-${version}/deployment</outputDirectory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
     </fileSets>
     <files>
         <file>

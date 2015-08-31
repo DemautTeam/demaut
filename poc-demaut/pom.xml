@@ -575,7 +575,7 @@
             <plugin>
                 <groupId>com.google.code.maven-replacer-plugin</groupId>
                 <artifactId>replacer</artifactId>
-                <version>${maven.google.replacer.plugin}1.5.3</version>
+                <version>${maven.google.replacer.plugin}</version>
                 <executions>
                     <execution>
                         <phase>process-resources</phase>

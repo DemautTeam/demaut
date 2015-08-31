@@ -10,9 +10,8 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>demaut-cyber</artifactId>
-    <name>demaut-cyber</name>
+    <name>Demaut-cyber</name>
     <description>Demaut Portail Module</description>
-
     <packaging>war</packaging>
 
     <properties>

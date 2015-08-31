@@ -10,7 +10,7 @@
     
     <modelVersion>4.0.0</modelVersion>
     <artifactId>demaut-backoffice</artifactId>
-    <name>demaut-backoffice</name>
+    <name>Demaut-backoffice</name>
     <description>Demaut Backoffice Module</description>
     <packaging>bundle</packaging>
 
@@ -289,6 +289,77 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <argLine>-XX:-UseSplitVerifier</argLine>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>replacer</artifactId>
+                <version>${maven.google.replacer.plugin}</version>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <includes>
+                        <include>${basedir}/target/classes/www/*.html</include>
+                        <!-- TODO -->
+                        <!--<include>${basedir}/target/classes/www/js/all.js</include>-->
+                        <!--<include>${basedir}/target/classes/www/js/all.min.js</include>-->
+                    </includes>
+                    <replacements>
+                        <!--<replacement>-->
+                            <!--<token><![CDATA[<link href="css/bootstrap.css" rel="stylesheet" type="text/css">]]></token>-->
+                            <!--<value><![CDATA[<link href="css/all.min.css" rel="stylesheet" type="text/css">]]></value>-->
+                        <!--</replacement>-->
+
+                        <!--<replacement>-->
+                            <!--<token>-->
+                                <!--<![CDATA[<link href="css/bootstrap-usabilis.css" rel="stylesheet" type="text/css">]]></token>-->
+                            <!--<value></value>-->
+                        <!--</replacement>-->
+
+                        <!--<replacement>-->
+                            <!--<token>-->
+                                <!--<![CDATA[<script type="text/javascript" language="Javascript" src="js/jquery-1.11.1.js"></script>]]></token>-->
+                        <!--</replacement>-->
+
+                        <!--<replacement>-->
+                            <!--<token>-->
+                                <!--<![CDATA[<script type="text/javascript" language="Javascript" src="js/bootstrap.js"></script>]]></token>-->
+                        <!--</replacement>-->
+
+                        <!--<replacement>-->
+                            <!--<token>-->
+                                <!--<![CDATA[<script type="text/javascript" language="JavaScript" src="js/angular.js"></script>]]></token>-->
+                        <!--</replacement>-->
+
+                        <!--<replacement>-->
+                            <!--<token>-->
+                                <!--<![CDATA[<script type="text/javascript" language="JavaScript" src="js/angular-sanitize.js"></script>]]></token>-->
+                        <!--</replacement>-->
+
+                        <!--<replacement>-->
+                            <!--<token>-->
+                                <!--<![CDATA[<script type="text/javascript" language="JavaScript" src="js/app.js"></script>]]></token>-->
+                            <!--<value>-->
+                                <!--<![CDATA[<script type="text/javascript" language="JavaScript" src="js/all.min.js"></script>]]></value>-->
+                        <!--</replacement>-->
+
+                        <replacement>
+                            <token><![CDATA[var backofficeAppVersion="v0.1.0";]]></token>
+                            <value>var backofficeAppVersion = "${project.version}";</value>
+                        </replacement>
+
+                        <replacement>
+                            <token><![CDATA[var microbizAppFullame = "Back-Office-Demaut";]]></token>
+                            <value>var microbizAppFullame = "${project.name}";</value>
+                        </replacement>
+
+                    </replacements>
                 </configuration>
             </plugin>
         </plugins>

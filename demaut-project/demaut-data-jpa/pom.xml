@@ -9,7 +9,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>demaut-data-jpa</artifactId>
-	<name>demaut-data-jpa</name>
+	<name>Demaut-data-jpa</name>
 	<description>Demaut Data Module</description>
 	<packaging>jar</packaging>
 

@@ -9,8 +9,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>demaut-commons</artifactId>
-
-	<name>demaut-commons</name>
+	<name>Demaut-commons</name>
 	<description>Demaut Commons Module</description>
 	<packaging>jar</packaging>
 

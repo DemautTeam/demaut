@@ -68,20 +68,20 @@
 
             <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li ng-class="{active: contextMenu == 'dashboard'}">
-                        <a href="Demaut/dashboard">Dashboard</a>
+                    <li ng-class="{active: contextMenu == 'cockpit'}">
+                        <a href="#!/Demaut/cockpit">Cockpit</a>
                     </li>
                     <li ng-class="{active: contextMenu == 'demande'}">
-                        <a href="Demaut/demande">Demande</a>
+                        <a href="#!/Demaut/demande/donneesPerso">Demande</a>
                     </li>
                     <li ng-class="{active: contextMenu == 'recherche'}">
-                        <a href="Demaut/recherche">Recherche</a>
+                        <a href="#/Demaut/recherche">Recherche</a>
                     </li>
                     <li ng-class="{active: contextMenu == 'aide'}">
-                        <a href="Demaut/aide">Aide Page</a>
+                        <a href="#/Demaut/aide">Aide Page</a>
                     </li>
                     <li ng-class="{active: contextMenu == 'formulaire'}">
-                        <a href="Demaut/formulaire">Formulaire</a>
+                        <a href="#/Demaut/formulaire">Formulaire</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -117,7 +117,7 @@
 		<span class="disclaimer" style="color: white;">
 			<span class="glyphicon glyphicon-info-sign" style="color:white;font-weight:bold"> DEMAUT Application - Etat de Vaud </span>
 		</span>
-		<span class="muted credit pull-right" style="color:white;font-weight:bold">
+		<span ng-if="environment" class="muted credit pull-right" style="color:white;font-weight:bold">
 			<strong>Env <span style="color: white">{{environment}}, </span></strong>
             <strong>Version <span style="color: white">{{buildVersion}}</span></strong>
 		</span>

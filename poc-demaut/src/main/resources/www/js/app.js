@@ -42,7 +42,7 @@ ngApp
 
         });
 
-        $http.get(urlPrefix + '/services/main').
+        $http.get(urlPrefix + '/camel/main').
             success(function (data, status, headers, config) {
                 $rootScope.environment = microbizAppEnviron;
                 $rootScope.buildVersion = microbizAppVersion;
@@ -50,7 +50,7 @@ ngApp
                 $rootScope.user = angular.fromJson(data.main).user;
             }).
             error(function (data, status, headers, config) {
-                alert('Error ' + urlPrefix + '/services/main\nStatus :' +  status);
+                alert('Error ' + urlPrefix + '/camel/main\nStatus :' +  status);
             });
 
         // indispensable pour le rendering initial
