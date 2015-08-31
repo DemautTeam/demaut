@@ -1,8 +1,8 @@
 package ch.vd.demaut.cucumber.runner;
 
-import cucumber.api.CucumberOptions;
-import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
+
+import cucumber.api.CucumberOptions;
 
 @RunWith(CucumberDataProfile.class)
 @CucumberOptions(

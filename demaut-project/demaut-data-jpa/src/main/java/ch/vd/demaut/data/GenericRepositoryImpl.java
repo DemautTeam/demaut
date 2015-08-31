@@ -103,7 +103,8 @@ public abstract class GenericRepositoryImpl<T, I extends Serializable> implement
 	public void deleteAll() {
         Query typedQuery = this.getEntityManager()
                 .createQuery("select o from " + entityClass.getSimpleName() + " as o");
-        List entities = typedQuery.getResultList();
+        @SuppressWarnings("unchecked")
+		List<T> entities = typedQuery.getResultList();
         if(entities != null && !entities.isEmpty()){
             this.getEntityManager().remove(entities);
         }

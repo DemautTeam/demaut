@@ -1,14 +1,7 @@
 package ch.vd.demaut.microbiz.rest;
 
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
-import ch.vd.pee.microbiz.core.utils.Json;
-import org.apache.cxf.jaxrs.ext.multipart.Multipart;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
+import java.io.File;
+import java.io.IOException;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
@@ -17,8 +10,15 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.File;
-import java.io.IOException;
+
+import org.apache.cxf.jaxrs.ext.multipart.Multipart;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import ch.vd.pee.microbiz.core.utils.Json;
 
 @Service
 @Path("/services")
@@ -26,8 +26,8 @@ public class AnnexeRestImpl implements AnnexeRest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AnnexeRestImpl.class);
 
-    @Autowired
-    private DemandeAutorisationService demandeAutorisationService;
+//    @Autowired
+//    private DemandeAutorisationService demandeAutorisationService;
 
     // TODO Processor Camel
     @Value("${user}")

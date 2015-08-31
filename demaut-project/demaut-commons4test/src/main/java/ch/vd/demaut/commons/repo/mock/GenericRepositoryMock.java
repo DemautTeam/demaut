@@ -1,15 +1,20 @@
 package ch.vd.demaut.commons.repo.mock;
 
-import ch.vd.demaut.commons.entities.Entity;
-import ch.vd.demaut.commons.exceptions.EntityNotFoundException;
-import ch.vd.demaut.commons.exceptions.ValidationEntityException;
-import ch.vd.demaut.commons.repo.GenericRepository;
-import ch.vd.demaut.commons.validation.ValidatorFactoryDefault;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-import java.io.Serializable;
-import java.util.*;
+
+import ch.vd.demaut.commons.entities.Entity;
+import ch.vd.demaut.commons.exceptions.ValidationEntityException;
+import ch.vd.demaut.commons.repo.GenericRepository;
+import ch.vd.demaut.commons.validation.ValidatorFactoryDefault;
 
 /**
  * Implémentation mock du {@link GenericRepository}.

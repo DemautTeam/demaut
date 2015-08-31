@@ -7,6 +7,7 @@ import org.junit.runners.JUnit4;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SuppressWarnings("rawtypes")
 @RunWith(JUnit4.class)
 public class ConstraintValidationTest extends AbstractValidationTest {
 
@@ -14,7 +15,8 @@ public class ConstraintValidationTest extends AbstractValidationTest {
     private String message = "Constraint Violation Message for Test!";
     private Object object = new Object();
 
-    @Before
+    @SuppressWarnings("unchecked")
+	@Before
     public void setUp() {
         super.setUp();
         this.simpleConstraintViolationsExpected.clear();
