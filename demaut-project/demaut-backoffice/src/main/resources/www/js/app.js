@@ -222,14 +222,12 @@ ngApp
             .error(function (data, status, headers, config) {
                 $rootScope.buildVersion = backofficeAppVersion;
                 $rootScope.project = backofficeAppFullame;
-                alert('Error ' + urlPrefix + '/camel/main \n Status :' +  status);
+                $rootScope.error = 'Error ' + urlPrefix + '/camel/main \n Status :' +  status;
             });
 
         $rootScope.$on('$viewContentLoaded', function() {
-            delete $rootScope.error;
         });
 
         $rootScope.$on('$routeChangeStart', function () {
-
         });
     });

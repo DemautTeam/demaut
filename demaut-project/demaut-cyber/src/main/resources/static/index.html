@@ -30,7 +30,7 @@
         }
     </style>
 
-    <title>Demaut Cyber</title>
+    <title>{{project}}</title>
 
     <script type="text/javascript">
         angular.element(document.getElementsByTagName('head')).append(angular.element('<base href="' + window.location.pathname + '"/>'));
@@ -63,7 +63,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Demaut Cyber Home</a>
+                <a class="navbar-brand" href="#">{{project}} Home</a>
             </div>
 
             <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
@@ -117,7 +117,7 @@
 		<span class="disclaimer" style="color: white;">
 			<span class="glyphicon glyphicon-info-sign" style="color:white;font-weight:bold"> DEMAUT Application - Etat de Vaud </span>
 		</span>
-		<span class="muted credit pull-right" style="color:white;font-weight:bold">
+		<span ng-if="environment" class="muted credit pull-right" style="color:white;font-weight:bold">
 			<strong>Env <span style="color: white">{{environment}}, </span></strong>
             <strong>Version <span style="color: white">{{buildVersion}}</span></strong>
 		</span>

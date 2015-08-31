@@ -1,7 +1,5 @@
-var microbizAppVersion = "v0.1.0";
-var microbizAppEnviron = "Demo";
-var microbizAppFullame = "Demaut-cyber";
-var microbizAppUserame = "Cyber-User";
+var backofficeAppVersion = "v0.1.0";
+var backofficeAppFullame = "Cyber-Demaut";
 
 var ngApp = angular.module('ngApp', ['ngSanitize', 'ngRoute', 'ngAnimate']);
 
@@ -213,18 +211,23 @@ ngApp
 
 ngApp
     .run(function($rootScope, $sce, $location, $http, urlPrefix) {
-        $http.get(urlPrefix + '/services/main')
+        $http.get(urlPrefix + '/camel/main')
             .success(function (data, status, headers, config) {
                 var fromJson = angular.fromJson(data.main);
                 $rootScope.environment = fromJson.environment;
-                $rootScope.buildVersion = fromJson.buildVersion;
-                $rootScope.project = fromJson.project;
                 $rootScope.user = fromJson.user;
+                $rootScope.buildVersion = backofficeAppVersion;
+                $rootScope.project = backofficeAppFullame;
             })
             .error(function (data, status, headers, config) {
-                $rootScope.environment = microbizAppEnviron;
-                $rootScope.buildVersion = microbizAppVersion;
-                $rootScope.project = microbizAppFullame;
-                $rootScope.user = microbizAppUserame;
+                $rootScope.buildVersion = backofficeAppVersion;
+                $rootScope.project = backofficeAppFullame;
+                $rootScope.error = 'Error ' + urlPrefix + '/camel/main \n Status :' +  status;
             });
+
+        $rootScope.$on('$viewContentLoaded', function() {
+        });
+
+        $rootScope.$on('$routeChangeStart', function () {
+        });
     });
