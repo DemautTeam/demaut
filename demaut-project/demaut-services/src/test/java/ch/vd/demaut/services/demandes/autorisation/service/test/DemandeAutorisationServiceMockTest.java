@@ -1,6 +1,7 @@
 package ch.vd.demaut.services.demandes.autorisation.service.test;
 
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import junit.framework.TestCase;
 import org.junit.Before;
@@ -33,8 +34,8 @@ public class DemandeAutorisationServiceMockTest extends TestCase {
     }
 
     @Test
-    public void should_suavegarder_demande_autorisation() throws Exception {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.sauvegarderDemandeAutorisation(new DemandeAutorisation());
+    public void should_sauvegarder_demande_autorisation() throws Exception {
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.sauvegarderDemandeAutorisation(new DemandeAutorisation(null, ProfessionDeLaSante.Medecin, null));
         assertThat(demandeAutorisation).isNotNull();
     }
 }

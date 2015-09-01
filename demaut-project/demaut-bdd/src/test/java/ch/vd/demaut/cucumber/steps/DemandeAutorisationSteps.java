@@ -11,8 +11,10 @@ import ch.vd.demaut.cucumber.converters.commons.AccepteOuRefuse;
 import ch.vd.demaut.cucumber.steps.definitions.AttacherAnnexeStepDefinitions;
 import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.AnnexeNonValideException;
+import ch.vd.demaut.domain.annexes.AnnexesObligatoires;
+import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
+import ch.vd.demaut.domain.config.ConfigDemaut;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.ListeDesAnnexes;
 import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.demandeurs.Demandeur;
@@ -28,15 +30,25 @@ public class DemandeAutorisationSteps {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AttacherAnnexeStepDefinitions.class);
 
 	// ********************************************************* Fields
+
+	//Beans Initialisés pas Spring Context
 	private DemandeurRepository demandeurRepository;
 	private DemandeAutorisationRepository demandeAutorisationRepository;
+	private ConfigDemaut configDemaut;
+	//////////
 
 	private Demandeur demandeur;
 	private DemandeAutorisation demandeEnCours;
 	private AccepteOuRefuse actualAcceptationAnnexe;
+	
 
 
 	// ********************************************************* Methods
+	
+	public void ajouterAnnexesObligatoires(ProfessionDeLaSante profession, AnnexesObligatoires annexesObligatoires) {
+		configDemaut.ajouterAnnexesObligatoires(profession, annexesObligatoires);
+	}
+
 	public void initialiserDemandeur(NomEtPrenomDemandeur nomPrenomDemandeur) {
 		demandeur = new Demandeur(nomPrenomDemandeur);
 		demandeurRepository.store(demandeur);
@@ -44,12 +56,12 @@ public class DemandeAutorisationSteps {
 	}
 
 	public void initialiserDemandeEnCours(ProfessionDeLaSante profession) {
-		demandeEnCours = new DemandeAutorisation(demandeur, profession);
+		demandeEnCours = new DemandeAutorisation(demandeur, profession, configDemaut);
 		demandeAutorisationRepository.store(demandeEnCours);
 		
 		LOGGER.debug("La demande autorisation " + demandeEnCours + " a été ajoutée au repository avec l'id technique:" + demandeEnCours.getId());
 	}
-
+	
 	public void ajouterAnnexesADemandeEnCours(ListeDesAnnexes listeDesAnnexesInitiales) {
 		Collection<Annexe> annexesInit = listeDesAnnexesInitiales.listerAnnexes();
 		for (Annexe annexe : annexesInit) {
@@ -127,6 +139,9 @@ public class DemandeAutorisationSteps {
 		this.demandeAutorisationRepository = demandeAutorisationRepository;
 	}
 
+	public void setConfigDemaut(ConfigDemaut configDemaut) {
+		this.configDemaut = configDemaut;
+	}
 
 	public void clean() {
 		demandeAutorisationRepository.deleteAll();

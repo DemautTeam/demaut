@@ -4,13 +4,18 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<bean id="demandeurRepository"
-		  class="ch.vd.demaut.services.demandeurs.repo.mock.DemandeurRepositoryMock"
+		class="ch.vd.demaut.services.demandeurs.repo.mock.DemandeurRepositoryMock"
 		scope="cucumber-glue">
 	</bean>
 
 	<bean id="demandeAutorisationRepository"
-		  class="ch.vd.demaut.services.demandes.autorisation.repo.mock.DemandeAutorisationRepositoryMock"
-		  scope="cucumber-glue">
+		class="ch.vd.demaut.services.demandes.autorisation.repo.mock.DemandeAutorisationRepositoryMock"
+		scope="cucumber-glue">
+	</bean>
+
+	<bean id="configDemaut"
+		class="ch.vd.demaut.domain.config.mock.ConfigDemautMock"
+		scope="cucumber-glue">
 	</bean>
 
 </beans>

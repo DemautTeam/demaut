@@ -13,6 +13,10 @@
 		scope="cucumber-glue">
 	</bean>
 
+	<bean id="configDemaut" class="ch.vd.demaut.domain.config.mock.ConfigDemautMock"
+		scope="cucumber-glue">
+	</bean>
+
 	<bean id="props"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
@@ -22,6 +26,6 @@
 		</property>
 	</bean>
 
-	<import resource="classpath:META-INF/spring/jpa-context.xml"/>
+	<import resource="classpath:META-INF/spring/jpa-context.xml" />
 
 </beans>

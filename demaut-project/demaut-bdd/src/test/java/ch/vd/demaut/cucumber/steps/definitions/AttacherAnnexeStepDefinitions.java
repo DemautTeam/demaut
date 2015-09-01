@@ -4,17 +4,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import ch.vd.demaut.commons.utils.FileMockHelper;
 import ch.vd.demaut.cucumber.converters.commons.AccepteOuRefuse;
+import ch.vd.demaut.cucumber.converters.commons.OuiNonConverter;
 import ch.vd.demaut.cucumber.converters.demandeurs.NomEtPrenomDemandeurConverter;
 import ch.vd.demaut.cucumber.converteurs.annexes.ListeDesAnnexesConverter;
 import ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps;
 import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.AnnexeValidateur;
+import ch.vd.demaut.domain.annexes.AnnexesObligatoires;
 import ch.vd.demaut.domain.annexes.FormatFichierAccepte;
+import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
-import ch.vd.demaut.domain.demandes.autorisation.ListeDesAnnexes;
 import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
 import ch.vd.demaut.domain.demandeurs.NomEtPrenomDemandeur;
 import cucumber.api.DataTable;
@@ -32,7 +35,7 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
 	// ********************************************************* Fields
 
 	private DemandeAutorisationSteps demandeAutorisationSteps;
-	
+
 	// ********************************************************* Technical
 	// methods
 
@@ -55,8 +58,7 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
 	}
 
 	@Etantdonné("^une demande de type \"([^\"]*)\" en cours de saisie$")
-	public void initialiserDemandeEnCours(ProfessionDeLaSante profession)
-			throws Throwable {
+	public void initialiserDemandeEnCours(ProfessionDeLaSante profession) throws Throwable {
 		demandeAutorisationSteps.initialiserDemandeEnCours(profession);
 	}
 
@@ -77,25 +79,45 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
 			@Transform(ListeDesAnnexesConverter.class) ListeDesAnnexes listeDesAnnexesInitiales) throws Throwable {
 		demandeAutorisationSteps.ajouterAnnexesADemandeEnCours(listeDesAnnexesInitiales);
 	}
-	
+
 	@Etantdonné("^les annexes obligatoires par type de demande:$")
 	public void les_annexes_obligatoires_par_type_de_demande(DataTable arg1) throws Throwable {
-		//TODO: Implement me
+		List<Map<String, String>> mappingProfessionsAvecTypesAnnexeObligatoires = arg1.asMaps(String.class,
+				String.class);
+		for (Map<String, String> mappingUneProfessionAvecTypesAnnexeObligatoires : mappingProfessionsAvecTypesAnnexeObligatoires) {
+
+			String professionStr = mappingUneProfessionAvecTypesAnnexeObligatoires.get("Type de demande");
+			ProfessionDeLaSante profession = ProfessionDeLaSante.valueOf(professionStr);
+
+			String annexesObligatoiresStr = mappingUneProfessionAvecTypesAnnexeObligatoires
+					.get("Types d´annexe obligatoires");
+			String[] annexesObligatoiresArray = annexesObligatoiresStr.split(",");
+			AnnexesObligatoires.Builder builder = new AnnexesObligatoires.Builder();
+			for (String annexeObligatoireStr : annexesObligatoiresArray) {
+				TypeAnnexe annexeObligatoire = TypeAnnexe.valueOf(annexeObligatoireStr);
+				builder.ajouterAnnexeObligatoire(annexeObligatoire);
+			}
+			AnnexesObligatoires annexesObligatoires = builder.build();
+			demandeAutorisationSteps.ajouterAnnexesObligatoires(profession, annexesObligatoires);
+		}
 	}
 
 	// ********************************************************* When
 
 	@Lorsque("^le demandeur attache le fichier \"([^\"]*)\" de taille (\\d+)M de type \"([^\"]*)\"$")
-	public void le_demandeur_attache_le_fichier_certificat_exe(String nomFichier, Integer tailleFichierEnMB, TypeAnnexe typeAnnexe)
-			throws Throwable {
+	public void le_demandeur_attache_le_fichier_certificat_exe(String nomFichier, Integer tailleFichierEnMB,
+			TypeAnnexe typeAnnexe) throws Throwable {
 
 		creerEtAttacherAnnexe(nomFichier, tailleFichierEnMB, typeAnnexe);
 	}
 
-
-	@Lorsque("^le demandeur attache les annexes de type <type_annexe>$")
-	public void le_demandeur_attache_les_annexes_de_type_type_annexe() throws Throwable {
-	    // TODO : Implement me
+	@Lorsque("^le demandeur attache les annexes de type \"([^\"]*)\"$")
+	public void le_demandeur_attache_les_annexes_de_type(String typesAnnexe) throws Throwable {
+		String[] typesAnnexeArray = typesAnnexe.split(",");
+		for (String typeAnnexeStr : typesAnnexeArray) {
+			TypeAnnexe typeAnnexe = TypeAnnexe.valueOf(typeAnnexeStr);
+			creerEtAttacherAnnexe("annexe.pdf", 5, typeAnnexe);
+		}
 	}
 
 	// ********************************************************* Méthodes
@@ -106,7 +128,7 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
 		byte[] contenuFichier = FileMockHelper.buildContenuFichier(tailleFichier);
 
 		Annexe annexe = new Annexe(typeAnnexe, nomFichier, contenuFichier);
-		
+
 		demandeAutorisationSteps.attacherUneAnnexe(annexe);
 	}
 
@@ -115,11 +137,6 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
 	@Alors("^le système Demaut \"(accepte|refuse)\" d´attacher cette annexe$")
 	public void le_système_Demaut_accepte_ou_refuse_cette_annexe(AccepteOuRefuse action) throws Throwable {
 		demandeAutorisationSteps.verifieAcceptationAnnexe(action);
-	}
-	
-	@Alors("^le système Demaut \"(accepte|refuse)\" d´attacher ces annexes$")
-	public void le_système_Demaut_d_attacher_ces_annexes(String arg1) throws Throwable {
-		//TODO: Implement me
 	}
 
 	@Alors("^les annexes attachées à la demande sont \"([^\"]*)\"$")
@@ -131,8 +148,9 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
 		// TODO : vérifier les noms de fichier
 	}
 
-	@Alors("^la liste des annexes obligatoires est \"([^\"]*)\"$")
-	public void la_liste_des_annexes_obligatoires_est(String arg1) throws Throwable {
-		// TODO : Implement me
+	@Alors("^toutes les annexes obligatoires sont validés: \"([^\"]*)\"$")
+	public void la_liste_des_annexes_obligatoires_est(@Transform(OuiNonConverter.class) Boolean complete)
+			throws Throwable {
+		assertThat(demandeAutorisationSteps.getDemandeEnCours().annexesObligatoiresCompletes()).isEqualTo(complete);
 	}
 }
