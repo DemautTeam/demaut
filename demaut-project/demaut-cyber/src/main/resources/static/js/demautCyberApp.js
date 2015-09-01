@@ -91,12 +91,6 @@ ngDemautCyber
         });
     }
     ])
-    /*.service('nationalityTest', ['$log', function ($log) {
-        this.suissePattern = new RegExp('[Ss]uisse');
-        this.isSuisse = function(textValue){
-            return this.suissePattern.test(textValue);
-        };
-    }])*/
     .controller('CockpitController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', 'urlPrefix', '$log', function ($scope, $rootScope, $routeParams, $http, $location, $interval, urlPrefix, $log) {
         $rootScope.contextMenu = "cockpit";
         $scope.indexStep = 0;
