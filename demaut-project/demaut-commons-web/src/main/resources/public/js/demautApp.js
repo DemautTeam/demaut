@@ -4,7 +4,7 @@ var backofficeAppFullame = "Cyber-Demaut";
 var ngDemautApp = angular.module('ngDemautApp', ['ngSanitize', 'ngRoute', 'ngAnimate', 'commonsModule']);
 
 /*Necessaire si les services ne sont pas dans la même arborescence que la page html*/
-ngDemautApp.constant('urlPrefix', '/outils/demaut-microbiz-api');
+ngDemautApp.constant('urlPrefix', '/outils/demautMicrobiz-api');
 
 ngDemautApp
     .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
