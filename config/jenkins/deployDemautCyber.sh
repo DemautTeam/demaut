@@ -23,7 +23,7 @@ projectBasedir=${WORKSPACE}/demaut-project/$projectFolderName
 
 # deploy to smx4
 component=$projectFolderName
-pathServer=/ccv/data/dsi_cyber/demautIN/
+pathServer=/ccv/data/dsi_cyber/demautIN
 remoteBin=$pathServer
 remoteDeploy=$pathServer/app/demaut/deployment
 remoteConfig=$pathServer/app/demaut/config
