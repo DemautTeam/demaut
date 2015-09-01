@@ -31,6 +31,7 @@
     <cxf:server address="${poc.service.endpoint}">
         <cxf:serviceBeans>
             <ref local="annexeRestImpl"/>
+            <ref local="mainCamelRest"/>
         </cxf:serviceBeans>
         <cxf:providers>
             <ref local="JacksonJaxbJsonProvider"/>
