@@ -17,15 +17,15 @@ echo Lister config : $configContent
 #script_dir=$current_dir
 #fi
 
-projectFolderName=poc-demaut
-projectBasedir=${WORKSPACE}/$projectFolderName
+projectFolderName=demaut-microbiz
+projectBasedir=${WORKSPACE}/demaut-project/$projectFolderName
 
 # deploy to smx4
 component=$projectFolderName
 pathServer=/ccv/data/dsi_cyber/microbiz-1.0.0
 remoteBin=$pathServer/bin
 remoteDeploy=$pathServer/deploy
-remoteConfig=/ccv/data/dsi_cyber/microbiz-1.0.0/config
+remoteConfig=$pathServer/config
 remoteServer=dsi_cyber@slv2395t.etat-de-vaud.ch
 #contourne l'alerte de sécurité de SSH
 chmod 600 ${WORKSPACE}/config/jenkins/id.rsa.jenkins
