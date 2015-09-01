@@ -112,7 +112,6 @@ ngDemautApp
 
     }])
     .controller('DemandeController', ['$scope', '$rootScope', '$routeParams', '$location', function ($scope, $rootScope, $routeParams, $location) {
-
         $rootScope.contextMenu = "demande";
         $scope.indexStep = 2;
         this.name = "DemandeController";
@@ -127,7 +126,6 @@ ngDemautApp
         };
     }])
     .controller('DonneesProfController', ['$scope', '$rootScope', '$routeParams', '$location', function ($scope, $rootScope, $routeParams, $location) {
-
         $rootScope.contextMenu = "DonneesProfessionnelle";
         $scope.indexStep = 3;
         this.name = "DonneesProfController";
@@ -141,7 +139,7 @@ ngDemautApp
             $location.path('/Demaut/demande/annexes');
         };
     }])
-    .controller('AnnexesController', ['$scope', '$rootScope', '$routeParams', function ($scope, $rootScope, $routeParams) {
+    .controller('AnnexesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix) {
         $rootScope.contextMenu = "demande";
         $scope.indexStep = 4;
         $scope.annexeFormats = ["application/pdf", "image/jpg", "image/jpeg", "image/png", "image/bmp"];
@@ -155,6 +153,15 @@ ngDemautApp
         $scope.referenceFiles = [];
         $scope.name = "AnnexeController";
         $scope.params = $routeParams;
+        $scope.previewStep = function(){
+            $scope.indexStep -= 1;
+            $location.path('/Demaut/demande/donneesProf');
+        };
+        $scope.nextStep = function(){
+            $scope.indexStep += 1;
+            $location.path('/Demaut/demande/recapitulation');
+            doUploadFiles();
+        };
 
         $scope.filesChanged = function (targetFiles) {
             $scope.files = [];
@@ -238,6 +245,51 @@ ngDemautApp
                 }
             }
             $scope.files = $scope.referenceFiles;
+        };
+
+        $scope.uploadAnnexes = function () {
+            doUploadFiles();
+        };
+
+        function doUploadFiles() {
+            var annexeTypeGroups = Object.keys($scope.referenceFiles);
+            for (var indexH = 0; indexH < annexeTypeGroups.length; indexH++) {
+                var currentTypeFiles = $scope.referenceFiles[annexeTypeGroups[indexH]];
+                for (var indexJ = 0; indexJ < currentTypeFiles.length; indexJ++) {
+                    var currentFetchedFile = currentTypeFiles[indexJ];
+                    var formData = new FormData();
+                    formData.append('ajaxAction', 'upload');
+                    formData.append("annexeFile", currentFetchedFile);
+                    formData.append("annexeFileName", currentFetchedFile.name);
+                    formData.append("annexeFileSize", currentFetchedFile.size);
+                    formData.append("annexeFileType", currentFetchedFile.type);
+                    formData.append("annexeType", currentFetchedFile.typeAnnexe);
+                    $http.post(urlPrefix + '/services/annexe/multipart', formData, {
+                        transformRequest: angular.identity,
+                        headers: {'Content-Type': undefined}
+                    })
+                        .success(function (data, status, headers, config) {
+                            alert("Une annexe a été envoyée avec succès: [" + status + "] ");
+                        })
+                        .error(function (data, status, headers, config) {
+                            alert("Error Upload: [" + urlPrefix + '/services/annexe/multipart' + "] " + status);
+                        });
+                }
+            }
+        }
+    }])
+    .controller('RecapitulationController', ['$scope', '$rootScope', '$routeParams', '$location', function ($scope, $rootScope, $routeParams, $location) {
+        $rootScope.contextMenu = "demande";
+        $scope.indexStep = 5;
+        this.name = "RecapitulationController";
+        this.params = $routeParams;
+        $scope.previewStep = function(){
+            $scope.indexStep -= 1;
+            $location.path('/Demaut/demande/annexes');
+        };
+        $scope.nextStep = function(){
+            $scope.indexStep += 1;
+            $location.path('/Demaut/demande/soumission');
         };
     }]);
 
