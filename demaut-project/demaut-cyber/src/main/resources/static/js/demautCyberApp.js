@@ -1,7 +1,7 @@
 var backofficeAppVersion = "v0.1.0";
 var backofficeAppFullame = "Cyber-Demaut";
 
-var ngApp = angular.module('ngApp', ['ngSanitize', 'ngRoute', 'ngAnimate']);
+var ngApp = angular.module('ngDemautCyber', ['ngSanitize', 'ngRoute', 'ngAnimate', 'commonsModule']);
 
 /*Necessaire si les services ne sont pas dans la même arborescence que la page html*/
 ngApp.constant('urlPrefix', '/outils/demaut-microbiz-api');
@@ -91,12 +91,12 @@ ngApp
         });
     }
     ])
-    .service('nationalityTest', ['$log', function ($log) {
+    /*.service('nationalityTest', ['$log', function ($log) {
         this.suissePattern = new RegExp('[Ss]uisse');
         this.isSuisse = function(textValue){
             return this.suissePattern.test(textValue);
         };
-    }])
+    }])*/
     .controller('CockpitController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', 'urlPrefix', '$log', function ($scope, $rootScope, $routeParams, $http, $location, $interval, urlPrefix, $log) {
         $rootScope.contextMenu = "cockpit";
         $scope.indexStep = 0;
