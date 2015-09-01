@@ -18,6 +18,7 @@ echo Lister config : $configContent
 #fi
 
 projectFolderName=demaut-microbiz
+projectConfigName=demautMicrobiz
 projectBasedir=${WORKSPACE}/demaut-project/$projectFolderName
 
 # deploy to smx4
@@ -51,7 +52,7 @@ echo "Stop du container MicroBiz terminé"
 echo "waiting 5s....."
 sleep 5
 echo "Mise à jour du fichier de configuration sur $remoteServer:$remoteConfig..."
-scp $sshOptions "${WORKSPACE}/poc-demaut/conf/$component.cfg" $remoteServer:$remoteConfig
+scp $sshOptions "${WORKSPACE}/poc-demaut/conf/$projectConfigName.cfg" $remoteServer:$remoteConfig
 echo "Mise à jour du fichier de configuration terminée"
 
 

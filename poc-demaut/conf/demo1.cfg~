@@ -1,4 +1,0 @@
-#Url de base de l'application
-demo1.rs.base.endpoint=/dev-demo1
-
-environment=Intégration

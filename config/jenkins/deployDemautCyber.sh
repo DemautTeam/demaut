@@ -18,6 +18,7 @@ echo Lister config : $configContent
 #fi
 
 projectFolderName=demaut-cyber
+projectConfigName=application
 projectBasedir=${WORKSPACE}/demaut-project/$projectFolderName
 
 # deploy to smx4
@@ -51,7 +52,7 @@ echo "Stop du container Tomcat terminé"
 echo "waiting 5s....."
 sleep 5
 echo "Mise à jour du fichier de configuration sur $remoteServer:$remoteConfig..."
-scp $sshOptions "${WORKSPACE}/$projectFolderName/conf/$component.properties" $remoteServer:$remoteConfig
+scp $sshOptions "${WORKSPACE}/$projectFolderName/conf/$projectConfigName.properties" $remoteServer:$remoteConfig
 echo "Mise à jour du fichier de configuration terminée"
 
 
