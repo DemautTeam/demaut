@@ -1,11 +1,17 @@
 package ch.vd.demaut.microbiz.rest;
 
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
-import ch.vd.pee.microbiz.core.utils.Json;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import org.apache.commons.io.IOUtils;
+import java.io.File;
+import java.io.IOException;
+
+import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import org.apache.cxf.common.util.StringUtils;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.slf4j.Logger;
@@ -14,13 +20,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+
+import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
+import ch.vd.pee.microbiz.core.utils.Json;
 
 @Service
 @Path("/services")
@@ -28,7 +33,8 @@ public class AnnexeRestImpl implements AnnexeRest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AnnexeRestImpl.class);
 
-    @Autowired
+    @SuppressWarnings("unused")
+	@Autowired
     private DemandeAutorisationService demandeAutorisationService;
 
     // TODO Processor Camel
@@ -59,8 +65,8 @@ public class AnnexeRestImpl implements AnnexeRest {
                                  @Multipart("annexeType") String annexeType) throws IOException {
 
         LOGGER.info("storeMultipart");
-        String fileName = file.getName();
-        byte[] fileStream = IOUtils.toByteArray(new FileInputStream(file));
+        //String fileName = file.getName();
+        //byte[] fileStream = IOUtils.toByteArray(new FileInputStream(file));
 
         return !StringUtils.isEmpty(annexeFileName) && !StringUtils.isEmpty(annexeFileSize) && !StringUtils.isEmpty(annexeFileType) &&
                 file != null && !StringUtils.isEmpty(annexeType)
