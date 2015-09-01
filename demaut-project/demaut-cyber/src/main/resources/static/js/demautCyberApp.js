@@ -1,12 +1,12 @@
 var backofficeAppVersion = "v0.1.0";
 var backofficeAppFullame = "Cyber-Demaut";
 
-var ngApp = angular.module('ngDemautCyber', ['ngSanitize', 'ngRoute', 'ngAnimate', 'commonsModule']);
+var ngDemautCyber = angular.module('ngDemautCyber', ['ngSanitize', 'ngRoute', 'ngAnimate', 'commonsModule']);
 
 /*Necessaire si les services ne sont pas dans la même arborescence que la page html*/
-ngApp.constant('urlPrefix', '/outils/demaut-microbiz-api');
+ngDemautCyber.constant('urlPrefix', '/outils/demaut-microbiz-api');
 
-ngApp
+ngDemautCyber
     .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
 
         $routeProvider
@@ -247,7 +247,7 @@ ngApp
         };
     }]);
 
-ngApp
+ngDemautCyber
     .run(function($rootScope, $sce, $location, $http, urlPrefix) {
         $http.get(urlPrefix + '/camel/main')
             .success(function (data, status, headers, config) {
