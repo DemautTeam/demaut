@@ -36,7 +36,7 @@ echo Rechercher bundle à déployer $component : `ls $projectBasedir/target/$com
 
 if [ -f $projectBasedir/target/$component-*.war ]
 then
-	 echo Nouveau bundle à déployer: `ls ${WORKSPACE}/poc-demaut/target/$component-*.war`
+	 echo Nouveau bundle à déployer: `ls ${WORKSPACE}/$projectFolderName/target/$component-*.war`
 else
      echo "Pas de bundle à déployer dans target. Veuillez compiler le projet"
     exit 0
@@ -64,8 +64,8 @@ ssh $sshOptions $remoteServer rm $remoteDeploy/$component-*.war
 echo "waiting 5s....."
 sleep 5
 echo "deploying new bundle  in $remoteServer:$remoteDeploy"
-ls ${WORKSPACE}/poc-demaut/target/$component-*.war
-scp $sshOptions ${WORKSPACE}/poc-demaut/target/$component-*.war $remoteServer:$remoteDeploy
+ls ${WORKSPACE}/$projectFolderName/target/$component-*.war
+scp $sshOptions ${WORKSPACE}/$projectFolderName/target/$component-*.war $remoteServer:$remoteDeploy
 echo "waiting 5s....."
 sleep 5
 echo "Start du container MicroBiz..."

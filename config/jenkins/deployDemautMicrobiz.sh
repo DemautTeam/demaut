@@ -36,7 +36,7 @@ echo Rechercher bundle à déployer $component : `ls $projectBasedir/target/$com
 
 if [ -f $projectBasedir/target/$component-*.jar ]
 then
-	 echo Nouveau bundle à déployer: `ls ${WORKSPACE}/poc-demaut/target/$component-*.jar`
+	 echo Nouveau bundle à déployer: `ls ${WORKSPACE}/$projectFolderName/target/$component-*.jar`
 else
      echo "Pas de bundle à déployer dans target. Veuillez compiler le projet"
     exit 0
@@ -52,7 +52,7 @@ echo "Stop du container MicroBiz terminé"
 echo "waiting 5s....."
 sleep 5
 echo "Mise à jour du fichier de configuration sur $remoteServer:$remoteConfig..."
-scp $sshOptions "${WORKSPACE}/poc-demaut/conf/$projectConfigName.cfg" $remoteServer:$remoteConfig
+scp $sshOptions "${WORKSPACE}/$projectFolderName/conf/$projectConfigName.cfg" $remoteServer:$remoteConfig
 echo "Mise à jour du fichier de configuration terminée"
 
 
@@ -64,8 +64,8 @@ ssh $sshOptions $remoteServer rm $remoteDeploy/$component-*.jar
 echo "waiting 5s....."
 sleep 5
 echo "deploying new bundle  in $remoteServer:$remoteDeploy"
-ls ${WORKSPACE}/poc-demaut/target/$component-*.jar
-scp $sshOptions ${WORKSPACE}/poc-demaut/target/$component-*.jar $remoteServer:$remoteDeploy
+ls ${WORKSPACE}/$projectFolderName/target/$component-*.jar
+scp $sshOptions ${WORKSPACE}/$projectFolderName/target/$component-*.jar $remoteServer:$remoteDeploy
 echo "waiting 5s....."
 sleep 5
 echo "Start du container MicroBiz..."
