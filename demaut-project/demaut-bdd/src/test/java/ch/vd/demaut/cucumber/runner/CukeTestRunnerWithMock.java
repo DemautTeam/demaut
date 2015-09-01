@@ -9,8 +9,11 @@ import cucumber.api.CucumberOptions;
         glue = {"ch.vd.demaut.cucumber.steps.definitions"},//
         strict = false, //
         monochrome = true, //
-        plugin = {"pretty",//
-                "html:target/demaut-bdd-report",})
+        tags = {"~@soumission-demande","~@creation-demande"},
+        //name = "attacher-annexes",
+        plugin = {"pretty", //
+                "html:target/bdd-mock-html",
+                "json:target/bdd-mock-json/demaut-report.json"})
 public class CukeTestRunnerWithMock {
 
 }

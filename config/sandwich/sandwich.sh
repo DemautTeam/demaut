@@ -1,0 +1,2 @@
+java -jar cucumber-sandwich.jar -f ../../demaut-project/demaut-bdd/target/bdd-mock-json -o ../../demaut-project/demaut-bdd/target/bdd-mock-html -n
+java -jar cucumber-sandwich.jar -f ../../demaut-project/demaut-bdd/target/bdd-data-json -o ../../demaut-project/demaut-bdd/target/bdd-data-html -n

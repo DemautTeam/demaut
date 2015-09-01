@@ -111,11 +111,11 @@
                             <goal>test</goal>
                         </goals>
                         <configuration>
-                            <parallel>classes</parallel>
-                            <perCoreThreadCount>true</perCoreThreadCount>
-                            <threadCountClasses>10</threadCountClasses>
-                            <argLine>-Xmx1024m</argLine>
-                            <argLine>-XX:MaxPermSize=256m</argLine>
+<!--                             <parallel>classes</parallel> -->
+<!--                             <perCoreThreadCount>true</perCoreThreadCount> -->
+<!--                             <threadCountClasses>10</threadCountClasses> -->
+<!--                             <argLine>-Xmx1024m</argLine> -->
+<!--                             <argLine>-XX:MaxPermSize=256m</argLine> -->
                             <includes>
                                 <include>**/Cuke*Run*.java</include>
                             </includes>

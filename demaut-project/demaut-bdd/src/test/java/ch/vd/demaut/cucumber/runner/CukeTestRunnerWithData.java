@@ -6,12 +6,14 @@ import cucumber.api.CucumberOptions;
 
 @RunWith(CucumberDataProfile.class)
 @CucumberOptions(
-        features = "src/test/resources/features", // ou classpath:**/*.feature
-        glue = {"ch.vd.demaut.cucumber.steps.definitions", "cucumber.api.spring"},
+        features = "classpath:features", // ou classpath:**/*.feature
+        glue = {"ch.vd.demaut.cucumber.steps.definitions"},
         strict = false,
         monochrome = true,
-        plugin = {"pretty",
-                "html:target/demaut-bdd-report"})
+        tags = {"~@soumission-demande,~@creation-demande"},
+        plugin = {"pretty", //
+        		"html:target/bdd-data-html",
+                "json:target/bdd-data-json/demaut-report.json"})
 public class CukeTestRunnerWithData {
 
 }

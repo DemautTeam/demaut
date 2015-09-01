@@ -2,11 +2,17 @@ package ch.vd.demaut.cucumber.steps;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Collection;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ch.vd.demaut.cucumber.converters.commons.AccepteOuRefuse;
 import ch.vd.demaut.cucumber.steps.definitions.AttacherAnnexeStepDefinitions;
+import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.domain.annexes.AnnexeNonValideException;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.ListeDesAnnexes;
 import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.demandeurs.Demandeur;
@@ -26,7 +32,9 @@ public class DemandeAutorisationSteps {
 	private DemandeAutorisationRepository demandeAutorisationRepository;
 
 	private Demandeur demandeur;
-	private DemandeAutorisation demandeAutorisation;
+	private DemandeAutorisation demandeEnCours;
+	private AccepteOuRefuse actualAcceptationAnnexe;
+
 
 	// ********************************************************* Methods
 	public void initialiserDemandeur(NomEtPrenomDemandeur nomPrenomDemandeur) {
@@ -35,26 +43,54 @@ public class DemandeAutorisationSteps {
 		LOGGER.debug("Le demandeur " + nomPrenomDemandeur + " a été ajouté au repository avec l'id technique:" + demandeur.getId());
 	}
 
-	public void initialiserDemande(ProfessionDeLaSante profession) {
-		demandeAutorisation = new DemandeAutorisation(demandeur, profession);
-		demandeAutorisationRepository.store(demandeAutorisation);
+	public void initialiserDemandeEnCours(ProfessionDeLaSante profession) {
+		demandeEnCours = new DemandeAutorisation(demandeur, profession);
+		demandeAutorisationRepository.store(demandeEnCours);
 		
-		LOGGER.debug("La demande autorisation " + demandeAutorisation + " a été ajoutée au repository avec l'id technique:" + demandeAutorisation.getId());
+		LOGGER.debug("La demande autorisation " + demandeEnCours + " a été ajoutée au repository avec l'id technique:" + demandeEnCours.getId());
 	}
 
-	public void verifieDemandeCree(ProfessionDeLaSante profession) {
-		demandeAutorisationRepository.findBy(demandeAutorisation.getId());
-		assertThat(demandeAutorisation.getProfessionDeLaSante()).isEqualTo(profession);
+	public void ajouterAnnexesADemandeEnCours(ListeDesAnnexes listeDesAnnexesInitiales) {
+		Collection<Annexe> annexesInit = listeDesAnnexesInitiales.listerAnnexes();
+		for (Annexe annexe : annexesInit) {
+			demandeEnCours.attacherUneAnnexe(annexe);
+		}
+		assertThat(demandeEnCours.getAnnexes().listerAnnexes()).hasSameSizeAs(annexesInit);
 	}
 	
-	public DemandeAutorisation getDemandeAutorisation() {
-		return demandeAutorisation;
+	public void verifieDemandeCree(ProfessionDeLaSante profession) {
+		demandeAutorisationRepository.findBy(demandeEnCours.getId());
+		assertThat(demandeEnCours.getProfessionDeLaSante()).isEqualTo(profession);
+	}
+	
+	public DemandeAutorisation getDemandeEnCours() {
+		return demandeEnCours;
 	}
 	
 	public Demandeur getDemandeur() {
 		return demandeur;
 	}
+	
+	public void attacherUneAnnexe(Annexe annexe) {
+		try {
+			getDemandeEnCours().attacherUneAnnexe(annexe);
+			accepteAnnexe();
+		} catch (AnnexeNonValideException e) {
+			refuseAnnexe();
+		}
+	}
+	
+	public void accepteAnnexe() {
+		actualAcceptationAnnexe = AccepteOuRefuse.accepte;
+	}
 
+	public void refuseAnnexe() {
+		actualAcceptationAnnexe = AccepteOuRefuse.refuse;
+	}
+
+	public void verifieAcceptationAnnexe(AccepteOuRefuse expectedAcceptationAnnexe) {
+		assertThat(actualAcceptationAnnexe).isEqualTo(expectedAcceptationAnnexe);		
+	}
 	// ********************************************************* Instanciation
 
 	/**
@@ -92,8 +128,9 @@ public class DemandeAutorisationSteps {
 	}
 
 
-	private void clean() {
-		
+	public void clean() {
+		demandeAutorisationRepository.deleteAll();
+		demandeurRepository.deleteAll();
 	}
 	
 	// ***************************** **************************** Private
@@ -101,5 +138,8 @@ public class DemandeAutorisationSteps {
 
 	private DemandeAutorisationSteps() {
 	}
+
+
+
 
 }

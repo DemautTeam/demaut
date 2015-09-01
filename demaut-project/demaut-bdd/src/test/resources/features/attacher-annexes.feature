@@ -4,43 +4,76 @@
 Fonctionnalité: Attacher des annexes à la demande par le professionnel
 
   Contexte:
-  	Etant donné la date du jour: "15.07.2015 11:00"
-    Etant donné un demandeur identifié "DALTON, Joe" 
-    Etant donné une demande de type "Medecin" en cours de saisie
 	Etant donné les formats de fichier acceptés:
     	| pdf  |
     	| jpg  |
     	| jpeg |
     	| png  |
     Etant donné la taille maximale de fichier acceptée "10M"
+    Etant donné les annexes obligatoires par type de demande:
+    	| Type de demande 	| Types d´annexe obligatoires 	|
+		| "Medecin" 		| "Certificat","Diplome" 		| 
+		| "Dieteticien" 	| "Certificat"               	| 
+    
+  	Etant donné la date du jour: "15.07.2015 11:00"
+    Etant donné un demandeur identifié "DALTON, Joe" 
 
+  @format-fichier
   Plan du scénario: Accepter ou refuser les annexes en fonction du format de fichier 
-  	Lorsque le demandeur attache le fichier <nom_fichier> de taille <taille_fichier>M
+    Etant donné une demande de type "Medecin" en cours de saisie
+  	Lorsque le demandeur attache le fichier <nom_fichier> de taille 5M de type "Certificat"
   	Alors le système Demaut <action> d´attacher cette annexe
-  	Alors les annexes attachées à la demande sont <annexes> 
   	Exemples:
-    	| nom_fichier       | taille_fichier  | action    | annexes      |
-    	| "certificat.pdf"  | 5               | "accepte" | "certificat.pdf" |
-    	| "certificat.jpg"  | 5               | "accepte" | "certificat.jpg" |
-    	| "certificat.jpeg" | 5               | "accepte" | "certificat.jpeg" |
-    	| "certificat.png"  | 5               | "accepte" | "certificat.png" |
-    	| "certificat.bmp"  | 5               | "refuse"  | "" |
-    	| "certificat.gif"  | 5               | "refuse"  | "" |
-    	| "certificat.docx" | 5               | "refuse"  | "" |
-    	| "certificat.xls"  | 5               | "refuse"  | "" |
-    	| "certificat.exe"  | 5               | "refuse"  | "" |
+    	| nom_fichier       | action    |
+    	| "certificat.pdf"  | "accepte" |
+    	| "certificat.jpg"  | "accepte" |
+    	| "certificat.jpeg" | "accepte" |
+    	| "certificat.png"  | "accepte" |
+    	| "certificat.bmp"  | "refuse"  |
+    	| "certificat.gif"  | "refuse"  |
+    	| "certificat.docx" | "refuse"  |
+    	| "certificat.xls"  | "refuse"  |
+    	| "certificat.exe"  | "refuse"  |
 
+  @taille-fichier
   Plan du scénario: Accepter ou refuser les annexes en fonction de la taille du fichier 
-  	Lorsque le demandeur attache le fichier <nom_fichier> de taille <taille_fichier>M
+    Etant donné une demande de type "Medecin" en cours de saisie
+  	Lorsque le demandeur attache le fichier "certificat.pdf" de taille <taille_fichier>M de type "Certificat"
   	Alors le système Demaut <action> d´attacher cette annexe
-  	Alors les annexes attachées à la demande sont <annexes> 
   	Exemples:
-    	| nom_fichier       | taille_fichier  | action    | annexes      |
-    	| "certificat.pdf"  | 0               | "refuse"  | "" |
-    	| "certificat.pdf"  | 5               | "accepte" | "certificat.pdf" |
-    	| "certificat.pdf"  | 10              | "accepte" | "certificat.pdf" |
-    	| "certificat.pdf"  | 11              | "refuse"  | "" |
-    	| "certificat.pdf"  | 200             | "refuse"  | "" |
+    	| taille_fichier  | action    |
+    	| 0               | "refuse"  |
+    	| 5               | "accepte" |
+    	| 10              | "accepte" |
+    	| 11              | "refuse"  |
+    	| 200             | "refuse"  |
     	
-
+  @atacher-annexe
+  Plan du scénario: Attacher une annexe à une liste existante
+    Etant donné une demande de type "Medecin" en cours de saisie
+  	Etant donné la liste des annexes initiale <annexes_initiales> attachées à la demande en cours
+  	Lorsque le demandeur attache le fichier "certificat.pdf" de taille 5M de type "Certificat"
+  	Alors le système Demaut "accepte" d´attacher cette annexe
+  	Alors les annexes attachées à la demande sont <annexes>
+  	Exemples:
+    	| annexes_initiales      | annexes      						|
+    	| ""                     | "certificat.pdf" 					|
+    	| "cv.pdf"               | "certificat.pdf,cv.pdf" 				|
+    	| "cv.pdf,diplome.pdf"   | "certificat.pdf,cv.pdf,diplome.pdf"  |
+  	
+  @type-demande
+  Plan du scénario: Accepter ou refuser les annexes en fonction de leur type et du type de la demande en cours
+    Etant donné une demande de type <type_demande> en cours de saisie
+  	Lorsque le demandeur attache les annexes de type <type_annexe>
+  	Alors le système Demaut <action> d´attacher ces annexes
+  	Alors la liste des annexes obligatoires est <annexes_complet>
+   	Exemples:
+    	| type_demande | types_annexe 		  | action    | annexes_complet |
+    	| "Medecin"    | "Diplome"    		  | "accepte" | "incomplete"	|
+    	| "Medecin"    | "CV"         		  | "refuse"  | "incomplete"    |
+    	| "Medecin"    | "Certificat,Diplome" | "accepte" | "complete"      |
+    	| "Dieteticien"| "Certificat,Diplome" | "refuse"  | "incomplete"    |
+    	| "Dieteticien"| "Certificat"         | "refuse"  | "incomplete"    |
+  	                    
+  	                    
     	

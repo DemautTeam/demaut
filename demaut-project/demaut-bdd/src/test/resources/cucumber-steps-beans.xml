@@ -15,8 +15,6 @@
 		<property name="demandeAutorisationSteps" ref="demandeAutorisationSteps"/>
 	</bean>
 
-	<!-- Annexe -->
-
 	<bean class="ch.vd.demaut.cucumber.steps.definitions.AttacherAnnexeStepDefinitions"
 		scope="cucumber-glue">
 		<property name="demandeAutorisationSteps" ref="demandeAutorisationSteps"/>

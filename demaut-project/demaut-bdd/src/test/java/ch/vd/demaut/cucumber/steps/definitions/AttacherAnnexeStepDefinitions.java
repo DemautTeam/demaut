@@ -2,14 +2,8 @@ package ch.vd.demaut.cucumber.steps.definitions;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 
 import ch.vd.demaut.commons.utils.FileMockHelper;
 import ch.vd.demaut.cucumber.converters.commons.AccepteOuRefuse;
@@ -17,7 +11,6 @@ import ch.vd.demaut.cucumber.converters.demandeurs.NomEtPrenomDemandeurConverter
 import ch.vd.demaut.cucumber.converteurs.annexes.ListeDesAnnexesConverter;
 import ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps;
 import ch.vd.demaut.domain.annexes.Annexe;
-import ch.vd.demaut.domain.annexes.AnnexeNonValideException;
 import ch.vd.demaut.domain.annexes.AnnexeValidateur;
 import ch.vd.demaut.domain.annexes.FormatFichierAccepte;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
@@ -38,18 +31,8 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
 
 	// ********************************************************* Fields
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(AttacherAnnexeStepDefinitions.class);
-
-	AccepteOuRefuse acceptationDemaut;
-
-	protected List<String> nomsDeFichierNonVides = new ArrayList<String>();
-	protected List<String> nomsDeFichierVides = new ArrayList<String>();
-
 	private DemandeAutorisationSteps demandeAutorisationSteps;
-
-	@Autowired
-	Environment env;
-
+	
 	// ********************************************************* Technical
 	// methods
 
@@ -72,25 +55,9 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
 	}
 
 	@Etantdonné("^une demande de type \"([^\"]*)\" en cours de saisie$")
-	public void qu_il_a_une_demande_d_autorisation_de_type_en_cours_de_saisie(ProfessionDeLaSante profession)
+	public void initialiserDemandeEnCours(ProfessionDeLaSante profession)
 			throws Throwable {
-		demandeAutorisationSteps.initialiserDemande(profession);
-	}
-
-	@Etantdonné("^le fichier \"([^\"]*)\" est un PDF non vide$")
-	public void etant_donne_un_fichier_valide(String nomFichier) {
-
-		nomsDeFichierNonVides.add(nomFichier);
-
-		LOGGER.debug("Le fichier " + nomFichier + " a été ajouté à la liste des fichiers non vides");
-	}
-
-	@Etantdonné("^le fichier \"([^\"]*)\" est un PDF vide$")
-	public void etant_donne_un_fichier_invalide(String nomFichier) {
-
-		nomsDeFichierVides.add(nomFichier);
-
-		LOGGER.debug("Le fichier " + nomFichier + " a été ajouté à la liste des fichiers vides");
+		demandeAutorisationSteps.initialiserDemandeEnCours(profession);
 	}
 
 	@Etantdonné("^les formats de fichier acceptés:$")
@@ -105,46 +72,67 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
 		assertThat(tailleMaxEnOctets).isEqualTo(AnnexeValidateur.getTailleMax());
 	}
 
+	@Etantdonné("^la liste des annexes initiale \"([^\"]*)\" attachées à la demande en cours$")
+	public void la_liste_des_annexes_initiale_attachées_à_la_demande_en_cours(
+			@Transform(ListeDesAnnexesConverter.class) ListeDesAnnexes listeDesAnnexesInitiales) throws Throwable {
+		demandeAutorisationSteps.ajouterAnnexesADemandeEnCours(listeDesAnnexesInitiales);
+	}
+	
+	@Etantdonné("^les annexes obligatoires par type de demande:$")
+	public void les_annexes_obligatoires_par_type_de_demande(DataTable arg1) throws Throwable {
+		//TODO: Implement me
+	}
+
 	// ********************************************************* When
 
-	@Lorsque("^le demandeur attache le fichier \"([^\"]*)\" de taille (\\d+)M$")
-	public void le_demandeur_attache_le_fichier_certificat_exe(String nomFichier, Integer tailleFichierEnMB)
+	@Lorsque("^le demandeur attache le fichier \"([^\"]*)\" de taille (\\d+)M de type \"([^\"]*)\"$")
+	public void le_demandeur_attache_le_fichier_certificat_exe(String nomFichier, Integer tailleFichierEnMB, TypeAnnexe typeAnnexe)
 			throws Throwable {
 
-		creerEtAttacherAnnexe(nomFichier, tailleFichierEnMB);
+		creerEtAttacherAnnexe(nomFichier, tailleFichierEnMB, typeAnnexe);
+	}
+
+
+	@Lorsque("^le demandeur attache les annexes de type <type_annexe>$")
+	public void le_demandeur_attache_les_annexes_de_type_type_annexe() throws Throwable {
+	    // TODO : Implement me
 	}
 
 	// ********************************************************* Méthodes
 	// privées
 
-	private void creerEtAttacherAnnexe(String nomFichier, Integer tailleFichier) {
+	private void creerEtAttacherAnnexe(String nomFichier, Integer tailleFichier, TypeAnnexe typeAnnexe) {
 
 		byte[] contenuFichier = FileMockHelper.buildContenuFichier(tailleFichier);
 
-		Annexe annexe = new Annexe(TypeAnnexe.Certificat, nomFichier, contenuFichier);
-
-		try {
-			demandeAutorisationSteps.getDemandeAutorisation().attacherUneAnnexe(annexe);
-			acceptationDemaut = AccepteOuRefuse.accepte;
-		} catch (AnnexeNonValideException e) {
-			acceptationDemaut = AccepteOuRefuse.refuse;
-		}
+		Annexe annexe = new Annexe(typeAnnexe, nomFichier, contenuFichier);
+		
+		demandeAutorisationSteps.attacherUneAnnexe(annexe);
 	}
 
 	// ********************************************************* Then
 
-	@Alors("^le système Demaut \"([^\"]*)\" d´attacher cette annexe$")
+	@Alors("^le système Demaut \"(accepte|refuse)\" d´attacher cette annexe$")
 	public void le_système_Demaut_accepte_ou_refuse_cette_annexe(AccepteOuRefuse action) throws Throwable {
-		assertThat(action).isEqualTo(acceptationDemaut);
+		demandeAutorisationSteps.verifieAcceptationAnnexe(action);
+	}
+	
+	@Alors("^le système Demaut \"(accepte|refuse)\" d´attacher ces annexes$")
+	public void le_système_Demaut_d_attacher_ces_annexes(String arg1) throws Throwable {
+		//TODO: Implement me
 	}
 
 	@Alors("^les annexes attachées à la demande sont \"([^\"]*)\"$")
 	public void le_système_Demaut_annexe_le_fichier_à_la_demande(
 			@Transform(ListeDesAnnexesConverter.class) ListeDesAnnexes listeDesAnnexesAttendues) throws Throwable {
-		Collection<Annexe> annexesDeLaDemande = demandeAutorisationSteps.getDemandeAutorisation().listerLesAnnexes();
+		Collection<Annexe> annexesDeLaDemande = demandeAutorisationSteps.getDemandeEnCours().listerLesAnnexes();
 		Collection<Annexe> annexesAttendues = listeDesAnnexesAttendues.listerAnnexes();
 		assertThat(annexesDeLaDemande).hasSameSizeAs(annexesAttendues);
-		//TODO : vérifier les noms de fichier
+		// TODO : vérifier les noms de fichier
 	}
 
+	@Alors("^la liste des annexes obligatoires est \"([^\"]*)\"$")
+	public void la_liste_des_annexes_obligatoires_est(String arg1) throws Throwable {
+		// TODO : Implement me
+	}
 }
