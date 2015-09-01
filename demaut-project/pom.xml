@@ -37,6 +37,7 @@
 		<module>demaut-microbiz</module>
         <module>demaut-backoffice</module>
         <module>demaut-cyber</module>
+        <module>demaut-commons-web</module>
     </modules>
 
     <prerequisites>

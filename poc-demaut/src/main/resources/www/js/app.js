@@ -5,6 +5,7 @@ var microbizAppUserame = "Poc-User";
 var ngApp = angular.module('ngApp', ['ngSanitize']);
 /*Necessaire si les services ne sont pas dans la même arborescence que la page html*/
 ngApp.constant('urlPrefix', '/outils/pocDemaut-api');
+
 ngApp
     .config([ '$locationProvider', '$httpProvider', function($locationProvider, $httpProvider) {
 
@@ -42,7 +43,7 @@ ngApp
 
         });
 
-        $http.get(urlPrefix + '/camel/main').
+        $http.get('/outils/pocDemaut/camel/main').
             success(function (data, status, headers, config) {
                 $rootScope.environment = microbizAppEnviron;
                 $rootScope.buildVersion = microbizAppVersion;
@@ -50,7 +51,7 @@ ngApp
                 $rootScope.user = angular.fromJson(data.main).user;
             }).
             error(function (data, status, headers, config) {
-                alert('Error ' + urlPrefix + '/camel/main\nStatus :' +  status);
+                //alert('Error /outils/pocDemaut/camel/main \n Status :' +  status);
             });
 
         // indispensable pour le rendering initial
