@@ -1,5 +1,7 @@
 package ch.vd.demaut.microbiz.rest;
 
+import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
@@ -42,7 +44,7 @@ public class AnnexeRestTest {
     public void shouldStoreMultipart() throws Exception {
         File fileMultipart = new File("target/Test_multipart.cfg");
         FileUtils.writeByteArrayToFile(fileMultipart, byteArray);
-        Response response = annexeRest.storeMultipart("Test_multipart.cfg", String.valueOf(byteArray.length), "application/cfg", fileMultipart);
+        Response response = annexeRest.storeMultipart(fileMultipart, "Test_multipart.cfg", String.valueOf(byteArray.length), "application/cfg", TypeAnnexe.Certificat.name());
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 }

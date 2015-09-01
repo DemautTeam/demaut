@@ -79,9 +79,10 @@ ngDemautApp
                     var url = config.url;
 
                     if (status == 401) {
-                        $location.path("/index");
+                        $location.path("/Demaut/aide");
                     } else {
-                        $rootScope.error = method + ' on ' + url + ' failed with status ' + status + '<br>' + data.substring(data.indexOf('<body>') + 6, data.indexOf('</body>'));
+                        $rootScope.error = method + ' on ' + url + ' failed with status ' + status + '<br>' +
+                            (data != null && data != undefined ? data.substring(data.indexOf('<body>') + 6, data.indexOf('</body>')) : "data empty!");
                         angular.element("#errorModal").modal('toggle');
                         angular.element("#errorModal").modal('show');
                     }
@@ -160,7 +161,6 @@ ngDemautApp
         $scope.nextStep = function(){
             $scope.indexStep += 1;
             $location.path('/Demaut/demande/recapitulation');
-            doUploadFiles();
         };
 
         $scope.filesChanged = function (targetFiles) {
@@ -269,10 +269,10 @@ ngDemautApp
                         headers: {'Content-Type': undefined}
                     })
                         .success(function (data, status, headers, config) {
-                            alert("Une annexe a été envoyée avec succès: [" + status + "] ");
+                            //alert("Une annexe a été envoyée avec succès: [" + status + "] ");
                         })
                         .error(function (data, status, headers, config) {
-                            alert("Error Upload: [" + urlPrefix + '/services/annexe/multipart' + "] " + status);
+                            //alert("Error Upload: [" + urlPrefix + '/services/annexe/multipart' + "] " + status);
                         });
                 }
             }
