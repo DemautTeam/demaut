@@ -1,8 +1,8 @@
 package ch.vd.demaut.cucumber.converteurs.annexes;
 
 import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
-import ch.vd.demaut.domain.demandes.autorisation.ListeDesAnnexes;
 import cucumber.api.Transformer;
 
 public class ListeDesAnnexesConverter extends Transformer<ListeDesAnnexes> {

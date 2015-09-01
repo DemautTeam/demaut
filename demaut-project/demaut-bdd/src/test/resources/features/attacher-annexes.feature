@@ -12,8 +12,8 @@ Fonctionnalité: Attacher des annexes à la demande par le professionnel
     Etant donné la taille maximale de fichier acceptée "10M"
     Etant donné les annexes obligatoires par type de demande:
     	| Type de demande 	| Types d´annexe obligatoires 	|
-		| "Medecin" 		| "Certificat","Diplome" 		| 
-		| "Dieteticien" 	| "Certificat"               	| 
+		| Medecin 		    | Certificat,Diplome 		| 
+		| Dieteticien 	    | Certificat               	| 
     
   	Etant donné la date du jour: "15.07.2015 11:00"
     Etant donné un demandeur identifié "DALTON, Joe" 
@@ -64,16 +64,12 @@ Fonctionnalité: Attacher des annexes à la demande par le professionnel
   @type-demande
   Plan du scénario: Accepter ou refuser les annexes en fonction de leur type et du type de la demande en cours
     Etant donné une demande de type <type_demande> en cours de saisie
-  	Lorsque le demandeur attache les annexes de type <type_annexe>
-  	Alors le système Demaut <action> d´attacher ces annexes
-  	Alors la liste des annexes obligatoires est <annexes_complet>
+  	Lorsque le demandeur attache les annexes de type <types_annexe>
+  	Alors toutes les annexes obligatoires sont validés: <annexes_complet>
    	Exemples:
-    	| type_demande | types_annexe 		  | action    | annexes_complet |
-    	| "Medecin"    | "Diplome"    		  | "accepte" | "incomplete"	|
-    	| "Medecin"    | "CV"         		  | "refuse"  | "incomplete"    |
-    	| "Medecin"    | "Certificat,Diplome" | "accepte" | "complete"      |
-    	| "Dieteticien"| "Certificat,Diplome" | "refuse"  | "incomplete"    |
-    	| "Dieteticien"| "Certificat"         | "refuse"  | "incomplete"    |
+    	| type_demande | types_annexe 	      | annexes_complet |
+    	| "Medecin"    | "Diplome"    		  | "non"	        |
+    	| "Medecin"    | "Certificat,Diplome" | "oui"           |
   	                    
   	                    
     	
