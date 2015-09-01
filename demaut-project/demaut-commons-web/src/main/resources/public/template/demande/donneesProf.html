@@ -3,8 +3,5 @@
     Donnees Prof page<br />
     Donnees Prof controller: {{donneesProf.name}}<br />
     Donnees Prof params: {{donneesProf.params}}<br />
-    <div class="row">
-        <div class="col-md-6"><button class="btn btn-primary submit-btn" type="submit" aria-label="Précédent" ng-click="previewStep()">Précédent</button></div>
-        <div class="col-md-6"><button class="btn btn-primary submit-btn pull-right" type="submit" aria-label="Suivant" ng-click="nextStep()">Suivant</button></div>
-    </div>
 </div>
+<div ng-include="'template/demande/include-actions.html'"></div>

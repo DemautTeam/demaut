@@ -95,11 +95,8 @@
                     <div class="col-md-2"><label><input type="radio" name="permis" value="autre" ng-disabled="testSuisse.isSuisse(personalData.nationality)" ng-model="personalData.permis"/>Autre</label></div>
                     <div class="col-md-2"><input type="text" class="form-control" ng-show="(personalData.permis == 'autre')"></div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6"></div>
-                    <div class="col-md-6"><button class="btn btn-primary submit-btn pull-right" type="submit" aria-label="Suivant" ng-click="nextStep()">Suivant</button></div>
-                </div>
             </ng-form>
         </div>
     </fieldset>
 </div>
+<div ng-include="'template/demande/include-actions.html'"></div>
