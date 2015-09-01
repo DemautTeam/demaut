@@ -1,6 +1,6 @@
 Jetty
     Lancer la classe StartWebappMain
-    Accès au poc : http://localhost:8081/deamut-poc
+    Accès au poc : http://localhost:8083/pocDemaut
 
 
 
@@ -40,6 +40,6 @@ Microbiz :
         Accès à la console :http://localhost:40002/system/console/bundles
 
     Poc Endpoint
-        Accès au poc : http://localhost:40002/outils/demaut-poc
-        Endpoint Main processor : http://localhost:40009/outils/poc/services/main
-        Endpoint all annexes : http://localhost:40009/outils/poc/services/annexes/all
+        Accès au poc : http://localhost:40002/outils/pocDemaut
+        Endpoint Main processor : http://localhost:40009/outils/pocDemaut/services/main
+        Endpoint all annexes : http://localhost:40009/outils/pocDemaut/services/annexes/all
