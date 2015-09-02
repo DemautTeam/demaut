@@ -36,7 +36,7 @@ echo Rechercher bundle à déployer $component : `ls $projectBasedir/target/$com
 
 if [ -f $projectBasedir/target/$component-*.war ]
 then
-	 echo Nouveau bundle à déployer: `ls ${WORKSPACE}/$projectFolderName/target/$component-*.war`
+	 echo Nouveau bundle à déployer: `ls $projectBasedir/target/$component-*.war`
 else
      echo "Pas de bundle à déployer dans target. Veuillez compiler le projet"
     exit 0
@@ -52,7 +52,7 @@ echo "Stop du container Tomcat terminé"
 echo "waiting 5s....."
 sleep 5
 echo "Mise à jour du fichier de configuration sur $remoteServer:$remoteConfig..."
-scp $sshOptions "${WORKSPACE}/$projectFolderName/conf/$projectConfigName.properties" $remoteServer:$remoteConfig
+scp $sshOptions "$projectBasedir/conf/$projectConfigName.properties" $remoteServer:$remoteConfig
 echo "Mise à jour du fichier de configuration terminée"
 
 
@@ -64,8 +64,8 @@ ssh $sshOptions $remoteServer rm $remoteDeploy/$component-*.war
 echo "waiting 5s....."
 sleep 5
 echo "deploying new bundle  in $remoteServer:$remoteDeploy"
-ls ${WORKSPACE}/$projectFolderName/target/$component-*.war
-scp $sshOptions ${WORKSPACE}/$projectFolderName/target/$component-*.war $remoteServer:$remoteDeploy
+ls $projectBasedir/target/$component-*.war
+scp $sshOptions $projectBasedir/target/$component-*.war $remoteServer:$remoteDeploy
 echo "waiting 5s....."
 sleep 5
 echo "Start du container MicroBiz..."
