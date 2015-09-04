@@ -22,17 +22,17 @@
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
 
     <bean id="jpaAdapter" class="org.springframework.orm.jpa.vendor.OpenJpaVendorAdapter">
-        <property name="databasePlatform" value="${database.jpa.dictionary}"/>
-        <property name="database" value="${database.jpa.type}"/>
+        <property name="databasePlatform" value="${demaut.database.jpa.dictionary}"/>
+        <property name="database" value="${demaut.database.jpa.type}"/>
         <property name="showSql" value="true"/>
         <property name="generateDdl" value="true"/>
     </bean>
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <constructor-arg type="java.lang.String" value="${database.driverClassName}"/>
-        <constructor-arg type="java.lang.String" value="${database.url}"/>
-        <constructor-arg type="java.lang.String" value="${database.username}"/>
-        <constructor-arg type="java.lang.String" value="${database.password}"/>
+        <constructor-arg type="java.lang.String" value="${demaut.database.driverClassName}"/>
+        <constructor-arg type="java.lang.String" value="${demaut.database.url}"/>
+        <constructor-arg type="java.lang.String" value="${demaut.database.username}"/>
+        <constructor-arg type="java.lang.String" value="${demaut.database.password}"/>
     </bean>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">

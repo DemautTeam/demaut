@@ -1,0 +1,7 @@
+Shell deploy
+"${WORKSPACE}/config/jenkins/deployPocDemaut.sh"
+"${WORKSPACE}/config/jenkins/deployDemautMicrobiz.sh"
+"${WORKSPACE}/config/jenkins/deployDemautCyber.sh"
+
+Cucumber
+**/demaut-bdd/target/bdd-*-json/demaut-report.json

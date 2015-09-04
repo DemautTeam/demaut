@@ -100,31 +100,23 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>acceptance-test</id>
-                        <phase>integration-test</phase>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                        <configuration>
-<!--                             <parallel>classes</parallel> -->
-<!--                             <perCoreThreadCount>true</perCoreThreadCount> -->
-<!--                             <threadCountClasses>10</threadCountClasses> -->
-<!--                             <argLine>-Xmx1024m</argLine> -->
-<!--                             <argLine>-XX:MaxPermSize=256m</argLine> -->
-                            <includes>
-                                <include>**/Cuke*Run*.java</include>
-                            </includes>
-                            <testFailureIgnore>true</testFailureIgnore>
-                            <!--<outputEncoding>UTF-8</outputEncoding>-->
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<configuration>
+					<testFailureIgnore>false</testFailureIgnore>
+					<includes>
+						<include>**/Cuke*Run*.java</include>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
         </plugins>
     </build>
 

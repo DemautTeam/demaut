@@ -289,6 +289,12 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <argLine>-XX:-UseSplitVerifier</argLine>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/Cuke*Run*.java</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
             <plugin>
