@@ -23,5 +23,11 @@ public interface AnnexeRest {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    Response storeMultipart(File file, String annexeFileName, String annexeFileSize, String annexeFileType, String annexeType) throws IOException;
+    Response storeAnnexe(String demandeReference, File file, String annexeFileName, String annexeFileSize, String annexeFileType, String annexeType) throws IOException;
+
+    @GET
+    @Path("/annexe/{name}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("USER")
+    Response deleteAnnexe(String demandeReference, String annexeFileName, String annexeType) throws JsonProcessingException;
 }

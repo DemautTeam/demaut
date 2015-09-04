@@ -40,12 +40,17 @@ public class AnnexeRestTest {
         assertNotNull(annexeRest);
     }
 
-    @Ignore("//TODO : Implement business method")
     @Test
-    public void shouldStoreMultipart() throws Exception {
+    public void shouldStoreAnnexe() throws Exception {
         File fileMultipart = new File("target/Test_multipart.cfg");
         FileUtils.writeByteArrayToFile(fileMultipart, byteArray);
-        Response response = annexeRest.storeMultipart(fileMultipart, "Test_multipart.cfg", String.valueOf(byteArray.length), "application/cfg", TypeAnnexe.Certificat.name());
+        Response response = annexeRest.storeAnnexe("demandeReference", fileMultipart, "Test_multipart.cfg", String.valueOf(byteArray.length), "application/cfg", TypeAnnexe.Certificat.name());
+        assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
+    }
+
+    @Test
+    public void shouldDeleteAnnexe() throws Exception {
+        Response response = annexeRest.deleteAnnexe("demandeReference", "Test_multipart.cfg", TypeAnnexe.Certificat.name());
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 }
