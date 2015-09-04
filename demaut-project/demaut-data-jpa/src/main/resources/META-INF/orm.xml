@@ -15,11 +15,7 @@
 			<id name="id">
 			    <generated-value strategy="AUTO"/>
 			</id>
-            <!--<transient name="dateSoumissionDemande"/>-->
-            <transient name="demandeur"/>
-            <!--<transient name="statutDemandeAutorisation"/>-->
-            <!--<transient name="professionDeLaSante"/>-->
-            <!--<transient name="listeDesAnnexes"/>-->
+			<basic name="reference"/>
         </attributes>
 	</entity>
 	

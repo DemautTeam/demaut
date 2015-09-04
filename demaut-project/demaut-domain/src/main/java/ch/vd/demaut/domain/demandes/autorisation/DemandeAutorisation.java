@@ -19,6 +19,8 @@ import ch.vd.demaut.domain.demandeurs.Demandeur;
 public class DemandeAutorisation extends Demande {
 
 	// ********************************************************* Fields
+	private Integer reference;
+	
 	@NotNull
 	// TODO: Make it final (be careful with JPA)
 	private ProfessionDeLaSante professionDeLaSante;
@@ -26,7 +28,7 @@ public class DemandeAutorisation extends Demande {
 	// TODO: Make it final (be careful with JPA)
 	private Demandeur demandeur;
 
-	private ConfigDemaut config;
+	private transient ConfigDemaut config;
 
 	@NotNull
 	private StatutDemandeAutorisation statutDemandeAutorisation;
@@ -104,6 +106,10 @@ public class DemandeAutorisation extends Demande {
 
 	public Demandeur getDemandeur() {
 		return demandeur;
+	}
+	
+	public Integer getReference() {
+		return reference;
 	}
 
 	// ********************************************************* Technical
