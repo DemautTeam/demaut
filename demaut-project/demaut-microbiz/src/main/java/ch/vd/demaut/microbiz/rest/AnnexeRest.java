@@ -13,21 +13,27 @@ import java.io.IOException;
 public interface AnnexeRest {
 
     @GET
-    @Path("/annexes/all")
+    @Path("/annexes/lister/{demandeReference}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    String fetchAnnexes() throws JsonProcessingException;
+    Response listerLesAnnexes(String demandeReference) throws JsonProcessingException;
+
+    @GET
+    @Path("/annexes/affichier/{demandeReference}/{annexeFileName}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @RolesAllowed("USER")
+    Response affichierUneAnnexe(String demandeReference, String annexeFileName);
 
     @POST
-    @Path("/annexe/multipart")
+    @Path("/annexes/attacher")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    Response storeAnnexe(String demandeReference, File file, String annexeFileName, String annexeFileSize, String annexeFileType, String annexeType) throws IOException;
+    Response attacherUneAnnexe(String demandeReference, File file, String annexeFileName, String annexeFileSize, String annexeFileType, String annexeType) throws IOException;
 
     @GET
-    @Path("/annexe/{name}")
+    @Path("/annexes/supprimer/{demandeReference}/{annexeFileName}/{annexeType}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    Response deleteAnnexe(String demandeReference, String annexeFileName, String annexeType) throws JsonProcessingException;
+    Response supprimerUneAnnexe(String demandeReference, String annexeFileName, String annexeType) throws JsonProcessingException;
 }

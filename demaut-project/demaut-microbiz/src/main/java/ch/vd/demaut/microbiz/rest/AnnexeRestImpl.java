@@ -29,6 +29,8 @@ public class AnnexeRestImpl implements AnnexeRest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AnnexeRestImpl.class);
 
+    private static final ObjectWriter viewWriter = new ObjectMapper().writer();
+
     @SuppressWarnings("unused")
 	@Autowired
     private DemandeAutorisationService demandeAutorisationService;
@@ -39,55 +41,72 @@ public class AnnexeRestImpl implements AnnexeRest {
 
     @Override
     @GET
-    @Path("/annexes/all")
+    @Path("/annexes/lister/{demandeReference}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public String fetchAnnexes() throws JsonProcessingException {
+    public Response listerLesAnnexes(@PathParam("demandeReference") String demandeReference) throws JsonProcessingException {
 
-        LOGGER.info("fetchAnnexes");
+        LOGGER.info("listerLesAnnexes " + demandeReference);
 
         ObjectWriter viewWriter = new ObjectMapper().writer();
-        return viewWriter.writeValueAsString("Annexes a lister !");
+        // TODO implement lister annexes
+        return Response.ok(Json.newObject().put("response", viewWriter.writeValueAsString(demandeReference))).build();
+    }
+
+    @Override
+    @GET
+    @Path("/annexes/affichier/{demandeReference}/{annexeFileName}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @RolesAllowed("USER")
+    public Response affichierUneAnnexe(@PathParam("demandeReference") String demandeReference,
+                                       @PathParam("annexeFileName") String annexeFileName) {
+
+        LOGGER.info("affichierUneAnnexe " + annexeFileName);
+
+        return !StringUtils.isEmpty(demandeReference) && !StringUtils.isEmpty(annexeFileName)
+                // TODO implement affichier annexe
+                //&& this.demandeAutorisationService.affichierUneAnnexe(new Annexe(TypeAnnexe.CV, name, IOUtils.toByteArray(new FileInputStream(file))))
+                ? Response.ok("annexeFileName".getBytes(), MediaType.APPLICATION_OCTET_STREAM_TYPE).build()
+                : Response.noContent().build();
     }
 
     @Override
     @POST
-    @Path("/annexes/store")
+    @Path("/annexes/attacher")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response storeAnnexe(@Multipart("demandeReference") String demandeReference,
-                                @Multipart("annexeFile") File file,
-                                @Multipart("annexeFileName") String annexeFileName,
-                                @Multipart("annexeFileSize") String annexeFileSize,
-                                @Multipart("annexeFileType") String annexeFileType,
-                                @Multipart("annexeType") String annexeType) throws IOException {
+    public Response attacherUneAnnexe(@Multipart("demandeReference") String demandeReference,
+                                      @Multipart("annexeFile") File file,
+                                      @Multipart("annexeFileName") String annexeFileName,
+                                      @Multipart("annexeFileSize") String annexeFileSize,
+                                      @Multipart("annexeFileType") String annexeFileType,
+                                      @Multipart("annexeType") String annexeType) throws IOException {
 
-        LOGGER.info("storeAnnexe " + annexeFileName);
+        LOGGER.info("attacherUneAnnexe " + annexeFileName);
 
         return !StringUtils.isEmpty(demandeReference) && !StringUtils.isEmpty(annexeFileName) &&
                 !StringUtils.isEmpty(annexeFileSize) && !StringUtils.isEmpty(annexeFileType) &&
                 !StringUtils.isEmpty(annexeType) && file != null
-                // TODO implement store annexe
+                // TODO implement attacher annexe
                 //&& this.demandeAutorisationService.attacherUneAnnexe(new Annexe(TypeAnnexe.CV, name, IOUtils.toByteArray(new FileInputStream(file))))
-                ? Response.ok(Json.newObject().put("response", annexeFileName)).build()
+                ? Response.ok(Json.newObject().put("response", viewWriter.writeValueAsString(annexeFileName))).build()
                 : Response.notModified().build();
     }
 
     @Override
     @GET
-    @Path("/annexes/delete/{demandeReference}/{annexeFileName}/{annexeType}")
+    @Path("/annexes/supprimer/{demandeReference}/{annexeFileName}/{annexeType}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response deleteAnnexe(@PathParam("demandeReference") String demandeReference,
-                                 @PathParam("annexeFileName") String annexeFileName,
-                                 @PathParam("annexeType") String annexeType) throws JsonProcessingException {
+    public Response supprimerUneAnnexe(@PathParam("demandeReference") String demandeReference,
+                                       @PathParam("annexeFileName") String annexeFileName,
+                                       @PathParam("annexeType") String annexeType) throws JsonProcessingException {
 
-        LOGGER.info("deleteAnnexe " + annexeFileName);
+        LOGGER.info("supprimerUneAnnexe " + annexeFileName);
 
-        ObjectWriter viewWriter = new ObjectMapper().writer();
-        return !StringUtils.isEmpty(annexeFileName) && !StringUtils.isEmpty(annexeType)
-                // TODO implement delete annexe
+        return !StringUtils.isEmpty(demandeReference) && !StringUtils.isEmpty(annexeFileName) && !StringUtils.isEmpty(annexeType)
+                // TODO implement supprimer annexe
                 //&& this.demandeAutorisationService.supprimerUneAnnexe(new Annexe(TypeAnnexe.CV, name, IOUtils.toByteArray(new FileInputStream(file))))
                 ? Response.ok(Json.newObject().put("response", viewWriter.writeValueAsString(annexeFileName))).build()
                 : Response.noContent().build();

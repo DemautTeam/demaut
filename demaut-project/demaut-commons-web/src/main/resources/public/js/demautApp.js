@@ -1,6 +1,3 @@
-var backofficeAppVersion = "v0.1.0";
-var backofficeAppFullame = "Cyber-Demaut";
-
 var ngDemautApp = angular.module('ngDemautApp', ['ngSanitize', 'ngRoute', 'ngAnimate', 'commonsModule']);
 
 /*Necessaire si les services ne sont pas dans la même arborescence que la page html*/
@@ -224,15 +221,25 @@ ngDemautApp
         };
 
         $scope.viewAnnexe = function (file, annexeType) {
-            var binary = new Blob([file], {type: file.type});
-            var fileURL = URL.createObjectURL(binary);
-            console.log(fileURL);
-            var elementLink = document.createElement('A');
-            elementLink.href = fileURL;
-            elementLink.target = '_blank';
-            elementLink.download = file.name;
-            document.body.appendChild(elementLink);
-            elementLink.click();
+            $http.get(urlPrefix + '/services/annexes/affichier/' + $scope.demandeReference + '/' + file.name, {responseType:'arraybuffer'}).
+                success(function (data, status, headers, config) {
+                    displayAnnexeFromBinary(data);
+                }).
+                error(function (data, status, headers, config) {
+                    alert('Error downloading ../services/annexes/affichier/' + file.name);
+                });
+
+            function displayAnnexeFromBinary(file){
+                var binary = new Blob([file], {type: file.type});
+                var fileURL = URL.createObjectURL(binary);
+                console.log(fileURL);
+                var elementLink = document.createElement('A');
+                elementLink.href = fileURL;
+                elementLink.target = '_blank';
+                elementLink.download = file.name;
+                document.body.appendChild(elementLink);
+                elementLink.click();
+            }
         };
 
         $scope.deleteAnnexe = function (file, annexeType) {
@@ -253,12 +260,12 @@ ngDemautApp
         };
 
         function doDeleteFile(file, annexeFileType) {
-            $http.get(urlPrefix + '/services/annexes/delete/' + $scope.demandeReference + '/' + file.name + '/' + annexeFileType)
+            $http.get(urlPrefix + '/services/annexes/supprimer/' + $scope.demandeReference + '/' + file.name + '/' + annexeFileType)
                 .success(function (data, status, headers, config) {
                     $rootScope.error = 'Une annexe a été supprimée avec succès: \n Status :' +  status;
                 })
                 .error(function (data, status, headers, config) {
-                    $rootScope.error = 'Error ' + urlPrefix + '/services/annexes/delete/ \n Status :' +  status;
+                    $rootScope.error = 'Error ' + urlPrefix + '/services/annexes/supprimer/ \n Status :' +  status;
                 });
         };
 
@@ -271,15 +278,15 @@ ngDemautApp
             formData.append("annexeFileSize", currentFetchedFile.size);
             formData.append("annexeFileType", currentFetchedFile.type);
             formData.append("annexeType", currentFetchedFile.typeAnnexe);
-            $http.post(urlPrefix + '/services/annexes/store', formData, {
+            $http.post(urlPrefix + '/services/annexes/attacher', formData, {
                 transformRequest: angular.identity,
-                headers: {'Content-Type': undefined}
+                headers: {'Content-Type': 'multipart/form-data'}
             })
                 .success(function (data, status, headers, config) {
                     $rootScope.error = 'Une annexe a été envoyée avec succès: \n Status :' +  status;
                 })
                 .error(function (data, status, headers, config) {
-                    $rootScope.error = 'Error Upload: [' + urlPrefix + '/services/annexes/store' +  status;
+                    $rootScope.error = 'Error Upload: [' + urlPrefix + '/services/annexes/attacher' +  status;
                 });
         };
     }])
@@ -303,14 +310,14 @@ ngDemautApp
         $http.get(urlPrefix + '/camel/main')
             .success(function (data, status, headers, config) {
                 var fromJson = angular.fromJson(data.main);
-                $rootScope.environment = fromJson.environment;
-                $rootScope.user = fromJson.user;
-                $rootScope.buildVersion = backofficeAppVersion;
-                $rootScope.project = backofficeAppFullame;
+                if (fromJson != null && fromJson != undefined) {
+                    $rootScope.environment = fromJson.environment != null && fromJson.environment != undefined ? fromJson.environment : null;
+                    $rootScope.user = fromJson.user != null && fromJson.user != undefined ? fromJson.user : null;
+                    $rootScope.buildVersion = fromJson.buildVersion != null && fromJson.buildVersion != undefined ? fromJson.buildVersion : null;
+                    $rootScope.project = fromJson.project != null && fromJson.project != undefined ? fromJson.project : null;
+                }
             })
             .error(function (data, status, headers, config) {
-                $rootScope.buildVersion = backofficeAppVersion;
-                $rootScope.project = backofficeAppFullame;
                 $rootScope.error = 'Error ' + urlPrefix + '/camel/main \n Status :' +  status;
             });
 
