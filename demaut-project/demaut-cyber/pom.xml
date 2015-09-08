@@ -40,6 +40,16 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>ch.vd.portail</groupId>
+			<artifactId>portail-legacy-theme</artifactId>
+            <version>${portail-legacy-theme.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.vd.cyber</groupId>
+			<artifactId>prestations-common</artifactId>
+            <version>${prestations-common.version}</version>
+		</dependency>
 
 		<!-- Spring 4 est necessaire à Spring-boot -->
 		<dependency>
