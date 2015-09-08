@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: demaut
+  cloud:
+    config:
+      failFast: false

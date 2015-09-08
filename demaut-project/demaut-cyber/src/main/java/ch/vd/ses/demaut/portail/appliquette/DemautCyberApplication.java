@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.ws.rs.Path;
 
+import config.SecurityConfig;
+import config.WebMvcConfig;
 import org.apache.cxf.bus.spring.SpringBus;
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
@@ -12,32 +14,35 @@ import org.apache.cxf.jaxrs.lifecycle.ResourceProvider;
 import org.apache.cxf.jaxrs.spring.SpringResourceFactory;
 import org.apache.cxf.transport.servlet.CXFServlet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.rest.RepositoryRestMvcAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.*;
+import org.springframework.core.annotation.Order;
 
 @Configuration
+@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 @EnableAutoConfiguration
 @ComponentScan
 @ImportResource({"classpath:META-INF/cxf/cxf.xml"})
-public class BootStrap extends SpringBootServletInitializer {
+@Import({ SecurityConfig.class })
+public class DemautCyberApplication extends SpringBootServletInitializer {
 
     @Autowired
     private ApplicationContext applicationContext;
 
-    /*public static void main(String... args) {
-        SpringApplication.run(BootStrap.class, args);
-    }*/
+    public static void main(String... args) {
+        SpringApplication.run(DemautCyberApplication.class, args);
+    }
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        return builder.sources(BootStrap.class);
+        return builder.sources(DemautCyberApplication.class);
     }
 
     @Bean

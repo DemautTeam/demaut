@@ -1,161 +1,86 @@
 <!DOCTYPE html>
-<html ng-app="ngDemautCyber">
+
+<html class=" html-no-dockbar ltr " dir="ltr" lang="fr-CH" >
+<!-- HEAD -->
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portail des prestations en ligne</title>
 
-    <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
-    <link href="css/bootstrap-usabilis.css" rel="stylesheet" type="text/css">
-    <link href="css/animation.css" rel="stylesheet" type="text/css">
+    <!--
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <title>Portail des prestations en ligne</title>
+    -->
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
 
-    <script type="text/javascript" language="Javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" language="Javascript" src="js/bootstrap.js"></script>
+    <link rel="Shortcut Icon" href="legacy/images/favicon.ico" />
 
-    <script type="text/javascript" language="JavaScript" src="js/angular.js"></script>
-    <script type="text/javascript" language="JavaScript" src="js/angular-sanitize.js"></script>
-    <script type="text/javascript" language="JavaScript" src="js/angular-route.js"></script>
-    <script type="text/javascript" language="JavaScript" src="js/angular-animate.js"></script>
+    <link rel="stylesheet" type="text/css" href="legacy/css/main-global.css" />
+    <link rel="stylesheet" type="text/css" href="legacy/css/main-asset.css" />
+    <link rel="stylesheet" type="text/css" href="legacy/css/main-asset.css" />
 
-    <script type="text/javascript" language="JavaScript" src="js/commons-module.js"></script>
-    <script type="text/javascript" language="JavaScript" src="js/demautApp.js"></script>
-    <script type="text/javascript" language="JavaScript" src="js/demautCyberApp.js"></script>
 
-    <style>
-        /* Ici se définit l'image d'entête propre à l'application */
-        .navbar-application {
-            background: url("img/longemalles.jpg") no-repeat right;
+    <script type="text/javascript" src="legacy/js/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="legacy/js/jquery/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="legacy/js/main.js"></script>
+
+    <style type="text/css">
+        span.header-back-to a.main-button {
+        display: none
         }
-
-        .navbar-brand {
-            background: url("img/logo_vd_mono.png") no-repeat 15px 1px;
-            padding-left: 50px;
+        #version-infos{
+        background-color:#ffd800
         }
     </style>
-
-    <title>{{project}}</title>
-
-    <script type="text/javascript">
-        angular.element(document.getElementsByTagName('head')).append(angular.element('<base href="' + window.location.pathname + '"/>'));
-    </script>
+    <link rel="alternate" type="application/rss+xml" title="Prestations en ligne" href="/prestations/web/guest/accueil/-/asset_publisher/2VAj/rss?p_p_cacheability=cacheLevelPage" />
 </head>
-<body>
 
-<div id="wrap">
+<body ng-app="ngDemautCyber" class="2_columns_6040_5050 default yui3-skin-sam controls-visible guest-site signed-out public-page site">
 
-    <!-- la barre de menu -->
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="navbar-fat-header">
-            <div ng-if="!environment" class="navbar-logo"></div>
 
-            <!-- Entête spécial pour les environnements hors-prod -->
-            <div ng-if="environment" class="navbar-env-hors-prod">
-                <div>Canton<br/>de Vaud</div>
-                <div>{{environment}}<br/>Version {{buildVersion}}</div>
-            </div>
-            <div class="navbar-application">
-                <div>DEMAUT<br/>{{project}}</div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">{{project}} Home</a>
-            </div>
 
-            <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li ng-class="{active: contextMenu == 'cockpit'}">
-                        <a href="#!/Demaut/cockpit">Cockpit</a>
-                    </li>
-                    <li ng-class="{active: contextMenu == 'demande'}">
-                        <a href="#!/Demaut/demande/donneesPerso">Demande</a>
-                    </li>
-                    <li ng-class="{active: contextMenu == 'recherche'}">
-                        <a href="#/Demaut/recherche">Recherche</a>
-                    </li>
-                    <li ng-class="{active: contextMenu == 'aide'}">
-                        <a href="#/Demaut/aide">Aide Page</a>
-                    </li>
-                    <li ng-class="{active: contextMenu == 'formulaire'}">
-                        <a href="#/Demaut/formulaire">Formulaire</a>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown"><span
-                                class="glyphicon glyphicon-user"></span> Menu {{user}} <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/iam/accueil">Portail IAM</a></li>
-                            <li><a href="#" onclick="$('body').toggleClass('compact'); return false;">Vue
-                                compacte/normale</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-            <!--/.navbar-collapse -->
-        </div>
-    </div>
 
-    <!-- le corps principal -->
-    <div class="container">
-        <!-- include the rendered template of the current route into the main layout  -->
-        <div class="view-animate-container" style="margin-top: 10px">
-            <div ng-view class="view-animate"></div>
-        </div>
-    </div>
-    <div id="push"></div>
-</div>
+    <!-- ====================================== -->
+    <!-- !!! A inclure dans la page Liferay !!! -->
+    <script>
+        prestationContext = "/prestations/demaut";
+        //prestationContext = "";
+    </script>
+    <!-- !!! A inclure dans la page Liferay !!! -->
+    <!-- ====================================== -->
 
-<!-- le pied de page -->
-<div id="footer">
-    <div class="container">
-        <p style="margin-top:9px;">
-		<span class="disclaimer" style="color: white;">
-			<span class="glyphicon glyphicon-info-sign" style="color:white;font-weight:bold"> DEMAUT Application - Etat de Vaud </span>
-		</span>
-		<span ng-if="environment" class="muted credit pull-right" style="color:white;font-weight:bold">
-			<strong>Env <span style="color: white">{{environment}}, </span></strong>
-            <strong>Version <span style="color: white">{{buildVersion}}</span></strong>
-		</span>
-        </p>
-    </div>
-</div>
 
-<!-- Modal -->
-<div class="modal fade" id="errorModal" name="errorModal" role="dialog">
-    <div class="modal-dialog modal-lg">
 
-        <div class="modal-content">
+    <portail-container>
 
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" >
-                    <span style="color:red" class="glyphicon glyphicon-warning-sign"></span>
-                    <span class="label label-danger">Erreur</span>
-                </h4>
-            </div>
 
-            <div class="modal-body">
-                <div class="alert alert-danger" ng-show="error">
-                    {{error}}
-                </div>
-            </div>
+        <!-- ====================================== -->
+        <!-- !!! A inclure dans la page Liferay !!! -->
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-warning" data-dismiss="modal">
-                    <span class="glyphicon glyphicon-remove-circle"></span>
-                    <span>Fermer</span>
-                </button>
-            </div>
+        <div ng-app="ngDemautCyber">
+            <demaut-container/>
         </div>
 
-    </div>
-</div>
+        <!-- Scripts -->
+        <script src="legacy/js/angular.min.js"></script>
+        <script src="legacy/js/angular-animate.min.js"></script>
+        <script src="legacy/js/angular-route.js"></script>
+        <script src="legacy/js/angular-sanitize.js"></script>
+        <script src="legacy/js/portail.js"></script>
+        <script src="js/commons-module.js"></script>
+        <script src="js/demautApp.js"></script>
+        <script src="js/demautCyberApp.js"></script>
+        <script src="js/bootstrap.js"></script>
+        <!-- styles -->
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-usabilis.css"/>
+        <link rel="stylesheet" type="text/css" href="css/animation.css"/>
+
+        <!-- Scripts -->
+        <!-- !!! A inclure dans la page Liferay !!! -->
+        <!-- ====================================== -->
+
+
+
+    </portail-container>
+
 </body>
 </html>
