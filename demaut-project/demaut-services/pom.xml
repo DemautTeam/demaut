@@ -52,6 +52,12 @@
 			<artifactId>spring-context</artifactId>
 		</dependency>
 
+        <!-- Utilities -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+
         <!-- Testing -->
         <dependency>
             <groupId>org.springframework</groupId>
