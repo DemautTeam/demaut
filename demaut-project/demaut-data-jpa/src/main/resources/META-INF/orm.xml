@@ -15,8 +15,58 @@
 			<id name="id">
 			    <generated-value strategy="AUTO"/>
 			</id>
-			<basic name="reference"/>
+			<version name="version">
+				<column name="VERSION"/>
+			</version>
+            <embedded name="listeDesAnnexes"/>
+            <embedded name="referenceDeDemande"/>
         </attributes>
 	</entity>
+
+	<entity class="ch.vd.demaut.domain.annexes.Annexe" access="FIELD">
+		<table name="ANNEXE"/>
+		<attributes>
+			<id name="id">
+				<generated-value strategy="AUTO"/>
+			</id>
+            <basic name="typeAnnexe"/>
+            <version name="version">
+                <column name="VERSION"/>
+            </version>
+            <embedded name="nomFichier"/>
+            <embedded name="contenu"/>
+        </attributes>
+	</entity>
+
+	<embeddable class="ch.vd.demaut.domain.annexes.NomFichier" access="FIELD">
+		<attributes>
+			<basic name="nomFichier"/>
+		</attributes>
+	</embeddable>
+
+	<embeddable class="ch.vd.demaut.domain.annexes.ContenuAnnexe" access="FIELD">
+		<attributes>
+			<basic name="taille"/>
+			<basic name="contenu"><lob/></basic>
+		</attributes>
+	</embeddable>
+
+    <embeddable class="ch.vd.demaut.domain.annexes.ListeDesAnnexes" access="FIELD">
+        <attributes>
+            <one-to-many name="annexes" fetch="EAGER">
+                <order-by/>
+                <join-column name="DEMANDE_ID"/>
+                <cascade>
+                    <cascade-all/>
+                </cascade>
+            </one-to-many>
+        </attributes>
+    </embeddable>
+
+    <embeddable class="ch.vd.demaut.domain.demandes.ReferenceDeDemande" access="FIELD">
+        <attributes>
+            <basic name="reference"/>
+        </attributes>
+    </embeddable>
 	
 </entity-mappings>

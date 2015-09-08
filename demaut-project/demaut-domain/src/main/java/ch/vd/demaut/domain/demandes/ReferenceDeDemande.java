@@ -2,19 +2,23 @@ package ch.vd.demaut.domain.demandes;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
 
+import javax.validation.constraints.NotNull;
+import java.util.UUID;
+
 @ValueObject
 public class ReferenceDeDemande {
 
     // ********************************************************* Fields
-    private String id;
+    @NotNull
+    private String reference;
 
     // ********************************************************* Constructor
-    public ReferenceDeDemande(String id) {
-        this.id = id;
+    public ReferenceDeDemande() {
+        this.reference = UUID.randomUUID().toString();
     }
 
     // ********************************************************* Getters
-    public String getId() {
-        return id;
+    public String getReference() {
+        return reference;
     }
 }

@@ -70,6 +70,3 @@ Fonctionnalité: Attacher des annexes à la demande par le professionnel
     	| type_demande | types_annexe 	      | annexes_complet |
     	| "Medecin"    | "Diplome"    		  | "non"	        |
     	| "Medecin"    | "Certificat,Diplome" | "oui"           |
-  	                    
-  	                    
-    	

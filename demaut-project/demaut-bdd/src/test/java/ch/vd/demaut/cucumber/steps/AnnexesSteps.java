@@ -2,15 +2,15 @@ package ch.vd.demaut.cucumber.steps;
 
 public class AnnexesSteps {
 
-	// ********************************************************* Static fields
-	
+    // ********************************************************* Static fields
+
     private static AnnexesSteps INSTANCE = null;
 
     // ********************************************************* Instanciation
 
     /**
      * Récupère l'instance de la classe en cours. A utiliser dans les "BeforeScenario".
-     * 
+     *
      * @return
      */
     public static final AnnexesSteps getInstance() {
@@ -36,6 +36,5 @@ public class AnnexesSteps {
     public void clean() {
     }
 
-    
 
 }

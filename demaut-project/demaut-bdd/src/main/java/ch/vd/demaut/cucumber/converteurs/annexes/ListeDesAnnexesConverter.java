@@ -12,10 +12,10 @@ public class ListeDesAnnexesConverter extends Transformer<ListeDesAnnexes> {
         String[] nomFichiers = nomFichiersStr.split(",");
         ListeDesAnnexes listeDesAnnexes = new ListeDesAnnexes();
         for (String nomFichierStr : nomFichiers) {
-        	if (nomFichierStr.length() > 0) {
-        		Annexe annexe = new Annexe(TypeAnnexe.Certificat, nomFichierStr, new byte[1]);
-        		listeDesAnnexes.ajouterAnnexe(annexe);
-        	}
+            if (nomFichierStr.length() > 0) {
+                Annexe annexe = new Annexe(TypeAnnexe.Certificat, nomFichierStr, new byte[1]);
+                listeDesAnnexes.ajouterAnnexe(annexe);
+            }
         }
         return listeDesAnnexes;
     }

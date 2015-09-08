@@ -270,12 +270,13 @@
                         </Import-Package>
                         <Private-Package>ch.vd.demaut.microbiz</Private-Package>
                         <Distributable>true</Distributable>
-                        <Include-Resource>target/classes</Include-Resource>
+                        <Include-Resource>target/classes,target/lib</Include-Resource>
                         <DynamicImport-Package>*</DynamicImport-Package>
                         <!--
                           embed compile/runtime dependencies using path that matches the copied dependency folder
                         -->
-                        <Embed-Dependency>*;scope=compile|runtime;inline=false</Embed-Dependency>
+                        <!--<Embed-Dependency>*;scope=!provided;inline=true</Embed-Dependency>-->
+                        <Embed-Dependency>*;scope=compile|runtime|!provided;inline=true</Embed-Dependency>
                         <Embed-StripGroup>true</Embed-StripGroup>
                     </instructions>
                     <supportedProjectTypes>
@@ -293,13 +294,13 @@
                             <wrapImportPackage>;</wrapImportPackage>
                         </configuration>
                     </execution>
-                    <execution>
-                        <id>bundle-manifest</id>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>manifest</goal>
-                        </goals>
-                    </execution>
+                    <!--<execution>-->
+                        <!--<id>bundle-manifest</id>-->
+                        <!--<phase>process-classes</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>manifest</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
                 </executions>
             </plugin>
 		</plugins>

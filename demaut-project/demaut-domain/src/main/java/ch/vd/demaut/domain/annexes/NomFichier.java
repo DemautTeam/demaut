@@ -7,32 +7,34 @@ import javax.validation.constraints.NotNull;
 
 /**
  * Nom du fichier d'une Annexe
- *
  */
 @ValueObject
 public class NomFichier extends BaseValueObject {
 
     // ********************************************************* Fields
     @NotNull
-    final private String value;
+    private String nomFichier;
 
     // ********************************************************* Constructor
 
-    public NomFichier(String value) {
+    public NomFichier() {
+    }
+
+    public NomFichier(String nomFichier) {
         super();
-        this.value = value;
+        this.nomFichier = nomFichier;
     }
 
     // ********************************************************* Getter
 
-    public String getValue() {
-        return value;
+    public String getNomFichier() {
+        return nomFichier;
     }
-    
+
     public String extraireExtension() {
-    	int lastIndexOfDot = value.lastIndexOf(".");
-    	String ext = value.substring(lastIndexOfDot + 1);
-    	return ext;
+        int lastIndexOfDot = nomFichier.lastIndexOf(".");
+        String ext = nomFichier.substring(lastIndexOfDot + 1);
+        return ext;
     }
 
 }

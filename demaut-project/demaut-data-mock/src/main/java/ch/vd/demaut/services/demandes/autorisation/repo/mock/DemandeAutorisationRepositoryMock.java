@@ -6,6 +6,9 @@ import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFK;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 /**
  * Mock du {@link DemandeAutorisationRepository}
  */
@@ -18,7 +21,7 @@ public class DemandeAutorisationRepositoryMock extends GenericFKARepositoryMock<
 
     public synchronized static DemandeAutorisationRepository getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new DemandeAutorisationRepositoryMock();
+            INSTANCE = mock(DemandeAutorisationRepositoryMock.class);
         }
         return INSTANCE;
     }
@@ -28,4 +31,14 @@ public class DemandeAutorisationRepositoryMock extends GenericFKARepositoryMock<
         return ++idSequence;
     }
 
+    @Override
+    public DemandeAutorisation afficherUneDemandeAutorisation(String demandeReference) {
+        //when()
+        return null; // TODO
+    }
+
+    @Override
+    public DemandeAutorisation sauverLaDemandeAutorisation(DemandeAutorisation demandeAutorisation) {
+        return null; // TODO
+    }
 }

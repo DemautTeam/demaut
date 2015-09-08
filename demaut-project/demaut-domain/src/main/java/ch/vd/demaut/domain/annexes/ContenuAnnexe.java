@@ -3,19 +3,26 @@ package ch.vd.demaut.domain.annexes;
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.BaseValueObject;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Contenu d'une annexe {@link Annexe}
- *
  */
 @ValueObject
 public class ContenuAnnexe extends BaseValueObject {
 
     // ********************************************************* Fields
-    final byte[] contenu;
+    @NotNull
+    private byte[] contenu;
 
-    final long taille; //en octets
+    @NotNull
+    private long taille; //en octets
 
     // ********************************************************* Constructor
+
+    public ContenuAnnexe() {
+    }
+
     public ContenuAnnexe(byte[] contenu) {
         this.contenu = contenu;
         this.taille = calculerTaille(contenu);
@@ -34,7 +41,7 @@ public class ContenuAnnexe extends BaseValueObject {
     }
 
     public double getTailleEnMB() {
-        return ((double)taille) / ((double)(1024 * 1024));
+        return ((double) taille) / ((double) (1024 * 1024));
     }
 
     // ********************************************************* Méthodes privées

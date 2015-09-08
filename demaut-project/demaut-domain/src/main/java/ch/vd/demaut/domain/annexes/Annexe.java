@@ -14,20 +14,24 @@ import javax.validation.constraints.NotNull;
 public class Annexe extends BaseValueObjectWithId {
 
     // ********************************************************* Static Fields
-	
+
     // ********************************************************* Fields
     @NotNull
-    final private TypeAnnexe typeAnnexe;
+    private TypeAnnexe typeAnnexe;
 
     @NotNull
     @Valid
-    final private ContenuAnnexe contenu;
+    private ContenuAnnexe contenu;
 
     @NotNull
     @Valid
-    final private NomFichier nomFichier;
+    private NomFichier nomFichier;
 
     // ********************************************************* Constructor
+
+    public Annexe() {
+    }
+
     public Annexe(TypeAnnexe typeAnnexe, String nomFichier, byte[] contenu) {
         super();
         this.typeAnnexe = typeAnnexe;

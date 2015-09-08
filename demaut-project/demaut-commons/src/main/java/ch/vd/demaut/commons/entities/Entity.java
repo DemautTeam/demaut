@@ -19,4 +19,14 @@ public interface Entity<I extends Serializable> {
      */
     void setId(I id);
 
+    /**
+     * @return la version de l'{@link Entity}.
+     */
+    int getVersion();
+
+    /**
+     * @param version
+     */
+    void setVersion(int version);
+
 }

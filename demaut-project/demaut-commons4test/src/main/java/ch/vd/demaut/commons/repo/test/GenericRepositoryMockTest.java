@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class GenericRepositoryMockTest extends TestCase {
 
     @SuppressWarnings("rawtypes")
-	@Mock
+    @Mock
     private GenericRepository genericRepository;
 
     @Mock

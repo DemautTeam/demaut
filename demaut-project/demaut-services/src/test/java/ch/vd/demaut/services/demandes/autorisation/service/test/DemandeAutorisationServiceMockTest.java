@@ -28,14 +28,14 @@ public class DemandeAutorisationServiceMockTest extends TestCase {
     }
 
     @Test
-    public void should_initialiser_demande_autorisation() throws Exception {
+    public void shouldInitialiserDemandeAutorisation() throws Exception {
         DemandeAutorisation demandeAutorisation = demandeAutorisationService.initialiserDemandeAutorisation();
         assertThat(demandeAutorisation).isNotNull();
     }
 
     @Test
-    public void should_sauvegarder_demande_autorisation() throws Exception {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.sauvegarderDemandeAutorisation(new DemandeAutorisation(null, ProfessionDeLaSante.Medecin, null));
+    public void shouldSauverLaDemandeAutorisation() throws Exception {
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.sauverLaDemandeAutorisation(new DemandeAutorisation(null, ProfessionDeLaSante.Medecin, null));
         assertThat(demandeAutorisation).isNotNull();
     }
 }

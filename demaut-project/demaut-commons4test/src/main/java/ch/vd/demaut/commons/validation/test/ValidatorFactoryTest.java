@@ -12,7 +12,7 @@ import javax.validation.ValidatorFactory;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(JUnit4.class)
-public class ValidatorFactoryTest  extends TestCase {
+public class ValidatorFactoryTest extends TestCase {
 
     private ValidatorFactory validatorFactory;
 

@@ -48,8 +48,8 @@ public class AnnexeRestTest {
     }
 
     @Test
-    public void shouldaffichierUneAnnexe() throws Exception {
-        Response response = annexeRest.affichierUneAnnexe("demandeReference", "Test_multipart.cfg");
+    public void shouldAfficherUneAnnexe() throws Exception {
+        Response response = annexeRest.afficherUneAnnexe("demandeReference", "Test_multipart.cfg");
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 

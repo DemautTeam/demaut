@@ -1,8 +1,7 @@
 package ch.vd.demaut.cucumber.runner;
 
-import org.junit.runner.RunWith;
-
 import cucumber.api.CucumberOptions;
+import org.junit.runner.RunWith;
 
 @RunWith(CucumberDataProfile.class)
 @CucumberOptions(
@@ -12,7 +11,7 @@ import cucumber.api.CucumberOptions;
         monochrome = true,
         tags = {"~@soumission-demande,~@creation-demande"},
         plugin = {"pretty", //
-        		"html:target/bdd-data-html",
+                "html:target/bdd-data-html",
                 "json:target/bdd-data-json/demaut-report.json"})
 public class CukeTestRunnerWithData {
 

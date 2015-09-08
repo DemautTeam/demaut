@@ -8,5 +8,9 @@ import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 @Repository
 public interface DemandeAutorisationRepository extends GenericRepository<DemandeAutorisation, Long>, GenericReadRepository<DemandeAutorisation, Long> {
 
+    DemandeAutorisation afficherUneDemandeAutorisation(String demandeReference);
+
+    DemandeAutorisation sauverLaDemandeAutorisation(DemandeAutorisation demandeAutorisation);
+
 }
 

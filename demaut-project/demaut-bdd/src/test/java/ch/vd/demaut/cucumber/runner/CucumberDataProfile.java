@@ -1,16 +1,15 @@
 package ch.vd.demaut.cucumber.runner;
 
-import java.io.IOException;
-
+import cucumber.api.junit.Cucumber;
 import org.junit.runners.model.InitializationError;
 
-import cucumber.api.junit.Cucumber;
+import java.io.IOException;
 
 public class CucumberDataProfile extends Cucumber {
 
-	public CucumberDataProfile(Class<?> clazz) throws InitializationError, IOException {
-		super(clazz);
-		System.setProperty("spring.profiles.active", "data");
-	}
+    public CucumberDataProfile(Class<?> clazz) throws InitializationError, IOException {
+        super(clazz);
+        System.setProperty("spring.profiles.active", "data");
+    }
 
 }

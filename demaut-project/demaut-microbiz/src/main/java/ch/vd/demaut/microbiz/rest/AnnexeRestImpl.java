@@ -1,13 +1,11 @@
 package ch.vd.demaut.microbiz.rest;
 
-import java.io.File;
-import java.io.IOException;
-
-import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
+import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
+import ch.vd.pee.microbiz.core.utils.Json;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import org.apache.cxf.common.util.StringUtils;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.slf4j.Logger;
@@ -16,12 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
-import ch.vd.pee.microbiz.core.utils.Json;
+import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
 
 @Service
 @Path("/services")
@@ -32,7 +31,7 @@ public class AnnexeRestImpl implements AnnexeRest {
     private static final ObjectWriter viewWriter = new ObjectMapper().writer();
 
     @SuppressWarnings("unused")
-	@Autowired
+    @Autowired
     private DemandeAutorisationService demandeAutorisationService;
 
     // TODO Processor Camel
@@ -48,25 +47,23 @@ public class AnnexeRestImpl implements AnnexeRest {
 
         LOGGER.info("listerLesAnnexes " + demandeReference);
 
-        ObjectWriter viewWriter = new ObjectMapper().writer();
-        // TODO implement lister annexes
-        return Response.ok(Json.newObject().put("response", viewWriter.writeValueAsString(demandeReference))).build();
+        Collection<Annexe> lesAnnexes = demandeAutorisationService.listerLesAnnexes(demandeReference);
+        return Response.ok(Json.newObject().put("response", viewWriter.writeValueAsString(lesAnnexes))).build();
     }
 
     @Override
     @GET
-    @Path("/annexes/affichier/{demandeReference}/{annexeFileName}")
+    @Path("/annexes/afficher/{demandeReference}/{annexeFileName}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @RolesAllowed("USER")
-    public Response affichierUneAnnexe(@PathParam("demandeReference") String demandeReference,
-                                       @PathParam("annexeFileName") String annexeFileName) {
+    public Response afficherUneAnnexe(@PathParam("demandeReference") String demandeReference,
+                                      @PathParam("annexeFileName") String annexeFileName) {
 
-        LOGGER.info("affichierUneAnnexe " + annexeFileName);
+        LOGGER.info("afficherUneAnnexe " + annexeFileName);
 
-        return !StringUtils.isEmpty(demandeReference) && !StringUtils.isEmpty(annexeFileName)
-                // TODO implement affichier annexe
-                //&& this.demandeAutorisationService.affichierUneAnnexe(new Annexe(TypeAnnexe.CV, name, IOUtils.toByteArray(new FileInputStream(file))))
-                ? Response.ok("annexeFileName".getBytes(), MediaType.APPLICATION_OCTET_STREAM_TYPE).build()
+        Annexe annexe = demandeAutorisationService.afficherUneAnnexe(demandeReference, annexeFileName);
+        return !StringUtils.isEmpty(demandeReference) && !StringUtils.isEmpty(annexeFileName) && annexe != null && annexe.getContenu().getContenu() != null
+                ? Response.ok(annexe.getContenu().getContenu(), MediaType.APPLICATION_OCTET_STREAM_TYPE).build()
                 : Response.noContent().build();
     }
 
@@ -85,12 +82,9 @@ public class AnnexeRestImpl implements AnnexeRest {
 
         LOGGER.info("attacherUneAnnexe " + annexeFileName);
 
-        return !StringUtils.isEmpty(demandeReference) && !StringUtils.isEmpty(annexeFileName) &&
-                !StringUtils.isEmpty(annexeFileSize) && !StringUtils.isEmpty(annexeFileType) &&
-                !StringUtils.isEmpty(annexeType) && file != null
-                // TODO implement attacher annexe
-                //&& this.demandeAutorisationService.attacherUneAnnexe(new Annexe(TypeAnnexe.CV, name, IOUtils.toByteArray(new FileInputStream(file))))
-                ? Response.ok(Json.newObject().put("response", viewWriter.writeValueAsString(annexeFileName))).build()
+        boolean attacherUneAnnexe = this.demandeAutorisationService.attacherUneAnnexe(demandeReference, file, annexeFileName, annexeFileSize, annexeFileType, annexeType);
+        return !StringUtils.isEmpty(demandeReference) && !StringUtils.isEmpty(annexeFileName) && !StringUtils.isEmpty(annexeType) && file != null
+                ? Response.ok(Json.newObject().put("response", viewWriter.writeValueAsString(attacherUneAnnexe))).build()
                 : Response.notModified().build();
     }
 
@@ -105,11 +99,9 @@ public class AnnexeRestImpl implements AnnexeRest {
 
         LOGGER.info("supprimerUneAnnexe " + annexeFileName);
 
+        boolean supprimerUneAnnexe = this.demandeAutorisationService.supprimerUneAnnexe(demandeReference, annexeFileName, annexeType);
         return !StringUtils.isEmpty(demandeReference) && !StringUtils.isEmpty(annexeFileName) && !StringUtils.isEmpty(annexeType)
-                // TODO implement supprimer annexe
-                //&& this.demandeAutorisationService.supprimerUneAnnexe(new Annexe(TypeAnnexe.CV, name, IOUtils.toByteArray(new FileInputStream(file))))
-                ? Response.ok(Json.newObject().put("response", viewWriter.writeValueAsString(annexeFileName))).build()
+                ? Response.ok(Json.newObject().put("response", viewWriter.writeValueAsString(supprimerUneAnnexe))).build()
                 : Response.noContent().build();
     }
-
 }

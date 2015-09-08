@@ -221,12 +221,12 @@ ngDemautApp
         };
 
         $scope.viewAnnexe = function (file, annexeType) {
-            $http.get(urlPrefix + '/services/annexes/affichier/' + $scope.demandeReference + '/' + file.name, {responseType:'arraybuffer'}).
+            $http.get(urlPrefix + '/services/annexes/afficher/' + $scope.demandeReference + '/' + file.name, {responseType:'arraybuffer'}).
                 success(function (data, status, headers, config) {
                     displayAnnexeFromBinary(data);
                 }).
                 error(function (data, status, headers, config) {
-                    alert('Error downloading ../services/annexes/affichier/' + file.name);
+                    alert('Error downloading ../services/annexes/afficher/' + file.name);
                 });
 
             function displayAnnexeFromBinary(file){

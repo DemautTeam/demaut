@@ -16,7 +16,7 @@ public class ConstraintValidationTest extends AbstractValidationTest {
     private Object object = new Object();
 
     @SuppressWarnings("unchecked")
-	@Before
+    @Before
     public void setUp() {
         super.setUp();
         this.simpleConstraintViolationsExpected.clear();

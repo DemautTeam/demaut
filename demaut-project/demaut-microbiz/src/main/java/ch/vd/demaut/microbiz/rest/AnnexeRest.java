@@ -22,7 +22,7 @@ public interface AnnexeRest {
     @Path("/annexes/affichier/{demandeReference}/{annexeFileName}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @RolesAllowed("USER")
-    Response affichierUneAnnexe(String demandeReference, String annexeFileName);
+    Response afficherUneAnnexe(String demandeReference, String annexeFileName);
 
     @POST
     @Path("/annexes/attacher")
