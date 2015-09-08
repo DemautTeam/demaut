@@ -58,10 +58,13 @@ ngDemautApp
                 controller: 'SoumissionController',
                 controllerAs: 'soumission'
             })
-            .otherwise({
+            .when('/Demaut/cockpit', {
                 templateUrl: 'template/cockpit.html',
                 controller: 'CockpitController',
                 controllerAs: 'cockpit'
+            })
+            .otherwise({
+                redirectTo: '/Demaut/cockpit'
             });
 
         $locationProvider.html5Mode(false);
