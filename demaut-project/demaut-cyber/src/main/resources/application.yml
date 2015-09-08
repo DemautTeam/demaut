@@ -1,0 +1,21 @@
+info:
+  component: Demaut prestation
+
+endpoints:
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+  health:
+    sensitive: false
+
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .xhtml
+
+eureka:
+  client:
+    enabled: false
+    registerWithEureka: false
+    fetchRegistry: false

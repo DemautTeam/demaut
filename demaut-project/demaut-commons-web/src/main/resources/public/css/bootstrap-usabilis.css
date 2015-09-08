@@ -42,7 +42,7 @@ legend {
   float: left;
   width: 80px;
   height: 150px;
-  background-image: url("../img/logo_vd.png");
+  background-image: url("../../../../../../demaut-cyber/src/main/resources/static/img/logo_vd.png");
   background-repeat: no-repeat;
   background-position: 20px 11px;
 }

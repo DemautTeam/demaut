@@ -1,0 +1,70 @@
+####################################################################################
+# DSI webapp Template : documentation pour le développeur
+####################################################################################
+
+Environnements
+==============================
+CO -> Coder, environnement pour le développeur, sur sa machine. Utilisé par le TomcatRunner
+IN -> Intégration, environnement fourni par le CEI, à disposition du dév
+CEI -> Environnements géré 100% par le CEI, soit Validation, (Pré-Production) et Production
+
+
+
+
+Mise en place de l'application
+==============================
+
+La page wiki: https://portail.etat-de-vaud.ch/outils/dsiwiki/display/SECATEC/Shared+DSI-webapp-template
+
+Pour lancer l'application:
+1. Créer un schéma Oracle
+   - Le nom du schéma est configuré dans appDir/CO/dwt/config/credentials.properties (spring.datasource.username)
+   - Le schéma doit avoir les droits pour la transaction distribuée
+       CREATE USER DBUSER IDENTIFIED BY password
+           DEFAULT TABLESPACE DSI_USERS
+           TEMPORARY TABLESPACE DSI_TEMP
+           PROFILE DEFAULT
+           ACCOUNT UNLOCK;
+       GRANT CONNECT TO DBUSER;
+       GRANT RESOURCE TO DBUSER;
+       GRANT UNLIMITED TABLESPACE TO DBUSER;
+       ALTER USER DBUSER DEFAULT ROLE CONNECT, RESOURCE;
+       grant select on sys.dba_pending_transactions to DBUSER;
+       grant select on sys.pending_trans$ to DBUSER;
+       grant select on sys.dba_2pc_pending to DBUSER;
+       grant execute on sys.dbms_system to DBUSER;
+
+2. Pour surcharger des properties, créer un fichier devel.properties dans appDir/CO/dwt/config (ce fichier est exclu de GIT, il ne pourra pas etre committé)
+3. Y mettre les propriétés surchargées
+   spring.datasource.password=ThePassword
+   spring.jpa.hibernate.ddl-auto=none
+
+
+
+
+*Démarrage de Tomcat*
+==============================
+
+Avec TomcatRunner
+-----------------
+1. Lancer la classe DwtTomcatRunner
+2. c'est tout!
+
+Avec TomcatRunner et spring loaded (https://github.com/spring-projects/spring-loaded)
+-----------------
+1. Ajouter une target sur DwtTomcatRunner
+2. Ajouter la config VM : -javaagent:<HOME>/.m2/repository/org/springframework/springloaded/1.2.3.RELEASE/springloaded-1.2.3.RELEASE.jar -noverify
+3. Lancer la classe DwtTomcatRunner
+4. c'est tout!
+
+Avec Maven (spring loaded sera configuré)
+-----------------
+1. Créer une tache de démarrage maven dans votre IDE
+     - mvn spring-boot:run
+     - Le repertoire courant doit etre la racine du projet, soit celui qui contient le pom.xml
+     - Il faut ajouter la config JVM : -Dch.vd.appDir=appDir/CO -Dch.vd.projectDir=appDir/CO
+2. Lancer mvn spring-boot:run
+3. C'est tout!
+
+
+Pour vérifier que ca fonctionne -> http://localhost:9999/manage/health ou http://localhost:9999/
