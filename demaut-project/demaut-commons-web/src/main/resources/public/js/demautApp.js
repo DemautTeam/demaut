@@ -147,7 +147,7 @@ ngDemautApp
         $scope.indexStep = 4;
         $scope.annexeFormats = ["application/pdf", "image/jpg", "image/jpeg", "image/png", "image/bmp"];
         $scope.annexeTypes = [
-            "Liste non chargée",
+            "Liste locale",
             "Curriculum vitae",
             "Diplôme (médecin)",
             "Titre (pédiatre)",
@@ -157,7 +157,7 @@ ngDemautApp
 
         $http.get(urlPrefix + '/services/annexes/typesList/' + $scope.profession).
             success(function (data, status, headers, config) {
-                $scope.annexeTypes = angular.fromJson(data.typesList);
+                $scope.annexeTypes = angular.fromJson(data.response);
             }).
             error(function (data, status, headers, config) {
                 $rootScope.error ='Error downloading ../services/annexes/typesList/' + $scope.profession;
@@ -178,17 +178,31 @@ ngDemautApp
         $scope.filesChanged = function (targetFiles) {
             $scope.files = [];
 
+            var fileThreshold = 3; // MB
             var newFilesList = targetFiles.files;
             var typeAnnexe = targetFiles.name;
             var isValidList = true;
 
             // Check format for all files list
+            function validateFileName(fileName) {
+                var forbiddenChars = /^(?!\.)[^\|\*\?\\:<>/$"]*[^\.\|\*\?\\:<>/$"]+$/
+                // Must not be empty
+                // Must not start with .
+                // Must not contain | * ? \ : < > $
+                // Must not end with .
+                return forbiddenChars.test(fileName);
+            }
+
             for (var indexI = 0; indexI < newFilesList.length; indexI++) {
                 var currentFile = newFilesList[indexI];
                 currentFile["typeAnnexe"] = typeAnnexe;
                 var fileType = currentFile.type;
+                var fileSize = currentFile.size;
+                var fileName = currentFile.name;
+
+                var isValidName = validateFileName(fileName);
                 var isValidFormat = $scope.annexeFormats.indexOf(fileType) != -1;
-                if (isValidFormat == false) {
+                if (isValidName == false || isValidFormat == false || fileSize <= 0 || fileSize > 1024 * 1024 * fileThreshold) {
                     isValidList = false;
                     break;
                 }
@@ -227,7 +241,7 @@ ngDemautApp
                 }
             } else {
                 $scope.files = $scope.referenceFiles;
-                $rootScope.error = typeAnnexe + ' : une/plusieurs pièces ne correspondent pas aux formats supportés : \n' + $scope.annexeFormats;
+                $rootScope.error = typeAnnexe + ' : une/plusieurs pièces ne respectent pas les règles de nommage ou ne correspondent pas aux formats supportés : \n' + $scope.annexeFormats;
             }
             $scope.$apply();
         };
