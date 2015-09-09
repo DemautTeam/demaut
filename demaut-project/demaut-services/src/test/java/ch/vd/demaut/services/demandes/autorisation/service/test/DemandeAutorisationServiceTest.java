@@ -7,6 +7,7 @@ import junit.framework.TestCase;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,7 @@ public class DemandeAutorisationServiceTest extends TestCase {
         assertNotNull(byteArray);
     }
 
+    @Ignore
     @Test
     public void shouldListerLesAnnexes() throws Exception {
         File fileMultipart = new File("target/Test_multipart.cfg");
@@ -50,12 +52,14 @@ public class DemandeAutorisationServiceTest extends TestCase {
         assertThat(listerLesAnnexes).isNotEmpty();
     }
 
+    @Ignore
     @Test
     public void shouldAfficherUneAnnexe() throws Exception {
         Annexe annexe = demandeAutorisationService.afficherUneAnnexe("7dc53df5-703e-49b3-8670-b1c468f47f1f", "Test_multipart.pdf");
         assertThat(annexe).isNotNull();
     }
 
+    @Ignore
     @Test
     public void shouldAttacherUneAnnexe() throws Exception {
         File fileMultipart = new File("target/Test_multipart.cfg");
@@ -64,6 +68,7 @@ public class DemandeAutorisationServiceTest extends TestCase {
         assertTrue(response);
     }
 
+    @Ignore
     @Test
     public void shouldSupprimerAnnexe() throws Exception {
         boolean response = demandeAutorisationService.supprimerUneAnnexe("7dc53df5-703e-49b3-8670-b1c468f47f1f", "Test_multipart.pdf", TypeAnnexe.Certificat.name());

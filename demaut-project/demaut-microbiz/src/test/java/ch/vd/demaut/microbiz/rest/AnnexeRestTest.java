@@ -12,6 +12,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -47,12 +48,14 @@ public class AnnexeRestTest {
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
+    @Ignore
     @Test
     public void shouldAfficherUneAnnexe() throws Exception {
         Response response = annexeRest.afficherUneAnnexe("demandeReference", "Test_multipart.cfg");
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
+    @Ignore
     @Test
     public void shouldAttacherUneAnnexe() throws Exception {
         File fileMultipart = new File("target/Test_multipart.cfg");
