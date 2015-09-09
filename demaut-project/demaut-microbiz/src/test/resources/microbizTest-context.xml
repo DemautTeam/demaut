@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
-	xmlns:camel="http://camel.apache.org/schema/spring" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:osgix="http://www.springframework.org/schema/osgi-compendium"
-	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
-            http://www.springframework.org/schema/beans/spring-beans.xsd
-			http://www.springframework.org/schema/jdbc
-			http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
-            http://www.springframework.org/schema/util
-            http://www.springframework.org/schema/util/spring-util.xsd
-            http://camel.apache.org/schema/spring
-            http://camel.apache.org/schema/spring/camel-spring.xsd
-            http://www.springframework.org/schema/context
-            http://www.springframework.org/schema/context/spring-context.xsd
-            http://www.springframework.org/schema/osgi
-            http://www.springframework.org/schema/osgi/spring-osgi.xsd
-            http://www.springframework.org/schema/osgi-compendium
-            http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium.xsd">
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ctx="http://www.springframework.org/schema/context"
+	   xmlns:camel="http://camel.apache.org/schema/spring" xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:util="http://www.springframework.org/schema/util" xmlns:cxf="http://cxf.apache.org/jaxrs"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://camel.apache.org/schema/spring
+       http://camel.apache.org/schema/spring/camel-spring.xsd
+       http://www.springframework.org/schema/jdbc
+		http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util.xsd
+		http://cxf.apache.org/jaxrs
+		http://cxf.apache.org/schemas/jaxrs.xsd">
 
 	<util:properties id="props" location="demautMicrobizTest.cfg"/>
 
@@ -34,6 +34,14 @@
 	</bean>
 
 	<import resource="classpath:META-INF/spring/microbiz-context.xml"/>
+
+	<cxf:server address="${demaut.microbiz.progre.soa.url}">
+		<cxf:serviceBeans>
+			<ref local="progreSoaServiceMock"/>
+		</cxf:serviceBeans>
+	</cxf:server>
+
+	<bean id="progreSoaServiceMock" class="ch.vd.demaut.microbiz.progreSoa.ProgreSoaServiceMock"/>
 
 	<jdbc:initialize-database data-source="dataSource"
 		ignore-failures="DROPS">

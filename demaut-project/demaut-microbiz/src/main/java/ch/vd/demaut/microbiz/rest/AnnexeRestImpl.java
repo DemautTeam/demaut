@@ -1,6 +1,8 @@
 package ch.vd.demaut.microbiz.rest;
 
 import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.microbiz.progreSoa.AnnexetypesList;
+import ch.vd.demaut.microbiz.progreSoa.PorgreSoaService;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import ch.vd.pee.microbiz.core.utils.Json;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -20,6 +22,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
@@ -30,13 +33,29 @@ public class AnnexeRestImpl implements AnnexeRest {
 
     private static final ObjectWriter viewWriter = new ObjectMapper().writer();
 
-    @SuppressWarnings("unused")
     @Autowired
     private DemandeAutorisationService demandeAutorisationService;
+
+    @Autowired
+    private PorgreSoaService porgreSoaService;
 
     // TODO Processor Camel
     @Value("${user}")
     private String user;
+
+    @Override
+    @GET
+    @Path("/annexes/typesList/{profession}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("USER")
+    public Response listerLesTypesAnnexes(@PathParam("profession") String profession) throws Exception {
+
+        LOGGER.info("listerLesTypesAnnexes " + profession);
+
+        AnnexetypesList lesTypesAnnexes = porgreSoaService.listerLesTypesAnnexes();
+        // TODO filtrer la liste selon profession
+        return Response.ok(Json.newObject().put("response", viewWriter.writeValueAsString(lesTypesAnnexes))).build();
+    }
 
     @Override
     @GET

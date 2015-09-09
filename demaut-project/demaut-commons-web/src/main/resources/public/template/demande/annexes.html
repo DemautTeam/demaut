@@ -9,6 +9,7 @@
                     <th>Document attendu</th>
                     <th>Fichier</th>
                     <th>Type</th>
+                    <th>Taille</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -20,6 +21,9 @@
                 </td>
                 <td>
                     <li style="list-style-type: none;height:20px;" ng-repeat="file in files[annexeType] | filter: { typeAnnexe: annexeType }">{{file.type}}</li>
+                </td>
+                <td>
+                    <li style="list-style-type: none;height:20px;" ng-repeat="file in files[annexeType] | filter: { typeAnnexe: annexeType }">{{file.size/1024/1024 | number:3}}MB</li>
                 </td>
                 <td>
                     <li style="list-style-type: none;height:20px;" ng-repeat="file in files[annexeType] | filter: { typeAnnexe: annexeType }">
@@ -34,7 +38,7 @@
                 <td>
                     <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
                             <i class="glyphicon glyphicon-plus"></i>
-                            <input type="file" name="{{annexeType}}" multiple ng-disabled="disabled" accept="image/*,application/pdf" onchange="angular.element(this).scope().filesChanged(this)">
+                            <input type="file" name="{{annexeType}}" multiple ng-disabled="disabled" accept="image/*,application/pdf" onchange="angular.element(this).scope().filesChanged(this)" >
                     </span>
                 </td>
 
