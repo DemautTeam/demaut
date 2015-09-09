@@ -1,6 +1,3 @@
-var backofficeAppVersion = "v0.1.0";
-var backofficeAppFullame = "Cyber-Demaut";
-
 var ngDemautApp = angular.module('ngDemautApp', ['ngSanitize', 'ngRoute', 'ngAnimate', 'commonsModule']);
 
 /*Necessaire si les services ne sont pas dans la même arborescence que la page html*/
@@ -61,10 +58,13 @@ ngDemautApp
                 controller: 'SoumissionController',
                 controllerAs: 'soumission'
             })
-            .otherwise({
+            .when('/Demaut/cockpit', {
                 templateUrl: 'template/cockpit.html',
                 controller: 'CockpitController',
                 controllerAs: 'cockpit'
+            })
+            .otherwise({
+                redirectTo: '/Demaut/cockpit'
             });
 
         $locationProvider.html5Mode(false);
@@ -82,7 +82,8 @@ ngDemautApp
                     if (status == 401) {
                         $location.path("/Demaut/aide");
                     } else {
-                        $rootScope.error = method + ' on ' + url + ' failed with status ' + status + '<br>' +
+                        // TODO resolve errors
+                         $rootScope.error = method + ' on ' + url + ' failed with status ' + status + '<br>' +
                             (data != null && data != undefined ? data.substring(data.indexOf('<body>') + 6, data.indexOf('</body>')) : "data empty!");
                         angular.element("#errorModal").modal('toggle');
                         angular.element("#errorModal").modal('show');
@@ -98,8 +99,6 @@ ngDemautApp
         $scope.indexStep = 0;
         this.name = "CockpitController";
         this.params = $routeParams;
-
-
     }])
     .controller('DonneesPersoController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', 'urlPrefix', '$log', 'nationalityTest', function ($scope, $rootScope, $routeParams, $http, $location, $interval, urlPrefix, $log, nationalityTest) {
         $rootScope.contextMenu = "Données Personnelles";
@@ -111,7 +110,6 @@ ngDemautApp
             $scope.indexStep += 1;
             $location.path('/Demaut/demande');
         };
-
     }])
     .controller('DemandeController', ['$scope', '$rootScope', '$routeParams', '$location', function ($scope, $rootScope, $routeParams, $location) {
         $rootScope.contextMenu = "demande";
@@ -143,9 +141,12 @@ ngDemautApp
     }])
     .controller('AnnexesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix) {
         $rootScope.contextMenu = "demande";
+        $scope.demandeReference = "toBeDefinedLater";
+        $scope.profession = "aSaisirEtape2";
         $scope.indexStep = 4;
         $scope.annexeFormats = ["application/pdf", "image/jpg", "image/jpeg", "image/png", "image/bmp"];
         $scope.annexeTypes = [
+            "Liste non chargée",
             "Curriculum vitae",
             "Diplôme (médecin)",
             "Titre (pédiatre)",
@@ -201,6 +202,7 @@ ngDemautApp
                         }
                         if (isNewFileDejaVu == false) {
                             $scope.referenceFiles[typeAnnexe].push(currentNewFile);
+                            doUploadFile(currentNewFile);
                         }
                     }
                     $scope.files = $scope.referenceFiles;
@@ -209,27 +211,37 @@ ngDemautApp
                     for (var indexH = 0; indexH < newFilesList.length; indexH++) {
                         var currentValidFile = newFilesList[indexH];
                         $scope.referenceFiles[typeAnnexe].push(currentValidFile);
+                        doUploadFile(currentValidFile);
                     }
                     $scope.files = $scope.referenceFiles;
                 }
             } else {
                 $scope.files = $scope.referenceFiles;
-                alert(typeAnnexe + " : une/plusieurs pièces ne correspondent pas aux formats supportés : [" + $scope.annexeFormats + "]");
+                $rootScope.error = typeAnnexe + ' : une/plusieurs pièces ne correspondent pas aux formats supportés : \n' + $scope.annexeFormats;
             }
-
             $scope.$apply();
         };
 
         $scope.viewAnnexe = function (file, annexeType) {
-            var binary = new Blob([file], {type: file.type});
-            var fileURL = URL.createObjectURL(binary);
-            console.log(fileURL);
-            var elementLink = document.createElement('A');
-            elementLink.href = fileURL;
-            elementLink.target = '_blank';
-            elementLink.download = file.name;
-            document.body.appendChild(elementLink);
-            elementLink.click();
+            $http.get(urlPrefix + '/services/annexes/afficher/' + $scope.demandeReference + '/' + file.name, {responseType:'arraybuffer'}).
+                success(function (data, status, headers, config) {
+                    displayAnnexeFromBinary(data);
+                }).
+                error(function (data, status, headers, config) {
+                    alert('Error downloading ../services/annexes/afficher/' + file.name);
+                });
+
+            function displayAnnexeFromBinary(file){
+                var binary = new Blob([file], {type: file.type});
+                var fileURL = URL.createObjectURL(binary);
+                console.log(fileURL);
+                var elementLink = document.createElement('A');
+                elementLink.href = fileURL;
+                elementLink.target = '_blank';
+                elementLink.download = file.name;
+                document.body.appendChild(elementLink);
+                elementLink.click();
+            }
         };
 
         $scope.deleteAnnexe = function (file, annexeType) {
@@ -241,6 +253,7 @@ ngDemautApp
                     var currentFetchedFile = $scope.referenceFiles[annexeType][indexH];
                     if (file.name == currentFetchedFile.name) {
                         $scope.referenceFiles[annexeType].splice(indexH, 1);
+                        doDeleteFile(currentFetchedFile, annexeType);
                         break;
                     }
                 }
@@ -248,8 +261,14 @@ ngDemautApp
             $scope.files = $scope.referenceFiles;
         };
 
-        $scope.uploadAnnexes = function () {
-            doUploadFiles();
+        function doDeleteFile(file, annexeFileType) {
+            $http.get(urlPrefix + '/services/annexes/supprimer/' + $scope.demandeReference + '/' + file.name + '/' + annexeFileType)
+                .success(function (data, status, headers, config) {
+                    $rootScope.error = 'Une annexe a été supprimée avec succès: \n Status :' +  status;
+                })
+                .error(function (data, status, headers, config) {
+                    $rootScope.error = 'Error ' + urlPrefix + '/services/annexes/supprimer/ \n Status :' +  status;
+                });
         };
 
         function doUploadFile(currentFetchedFile) {

@@ -24,13 +24,13 @@ public class DemandeAutorisationRepositoryTest {
     }
 
     @Test
-    public void should_find_by() throws Exception {
+    public void shouldFindByDemandeAutorisation() throws Exception {
         DemandeAutorisation demandeAutorisation = demandeAutorisationRepository.findBy(100L);
         assertThat(demandeAutorisation).isNotNull();
     }
 
     @Test
-    public void should_store() throws Exception {
+    public void shouldStoreDemandeAutorisation() throws Exception {
         DemandeAutorisation demandeAutorisation = new DemandeAutorisation();
         demandeAutorisation = demandeAutorisationRepository.store(demandeAutorisation);
         assertThat(demandeAutorisation.getId()).isNotNull();
