@@ -6,73 +6,73 @@
             <ng-form>
                 <div class="row">
                     <div class="col-md-2">Nom</div>
-                    <div class="col-md-10"><input type="text" class="form-control" required="required"></div>
+                    <div class="col-md-10"><input type="text" class="form-control" required="required" ng-model="personalData.name"></div>
                 </div>
                 <div class="row">
                     <div class="col-md-2">Prénom(s)</div>
-                    <div class="col-md-10"><input type="text" class="form-control" required="required"></div>
+                    <div class="col-md-10"><input type="text" class="form-control" required="required" ng-model="personalData.surname"></div>
                 </div>
                 <div class="row">
                     <div class="col-md-2">Nom de célibataire</div>
-                    <div class="col-md-10"><input type="text" class="form-control"></div>
+                    <div class="col-md-10"><input type="text" class="form-control" ng-model="personalData.maidenName"></div>
                 </div>
                 <div class="row">
                     <div class="col-md-2">Adresse privée</div>
-                    <div class="col-md-10"><input type="text" class="form-control" required="required"></div>
+                    <div class="col-md-10"><input type="text" class="form-control" required="required" ng-model="personalData.address"></div>
                 </div>
                 <div class="row">
                     <div class="col-md-2">Localité</div>
                     <div class="col-md-2">
-                        <input type="text" class="form-control" required="required">
+                        <input type="text" class="form-control" required="required" ng-model="personalData.city">
                     </div>
                     <div class="col-md-2">
                         NPA
                     </div>
                     <div class="col-md-2">
-                        <input type="text" class="form-control" required="required">
+                        <input type="text" class="form-control" required="required"  ng-model="personalData.zipCode">
                     </div>
                     <div class="col-md-2">
                         Pays
                     </div>
                     <div class="col-md-2">
-                        <input type="text" class="form-control" required="required">
+                        <input type="text" class="form-control" required="required" ng-model="personalData.country">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-2">Téléphone privé</div>
                     <div class="col-md-6">
-                        <input type="text" class="form-control">
+                        <input type="tel" class="form-control"  ng-model="personalData.personalPhone">
                     </div>
                     <div class="col-md-2">
                         Mobile
                     </div>
                     <div class="col-md-2">
-                        <input type="text" class="form-control">
+                        <input type="tel" class="form-control" ng-model="personalData.mobilePhone">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-2">Adresse email</div>
                     <div class="col-md-6">
-                        <input type="email" class="form-control" required="required">
+                        <input type="email" class="form-control" required="required" ng-model="personalData.email">
                     </div>
                     <div class="col-md-2">
                         Fax
                     </div>
                     <div class="col-md-2">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="personalData.fax">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-2">Sexe</div>
                     <div class="col-md-3">
                         <label>
-                        <input type="radio" name="sexe" required="required">
+                        <input type="radio" name="sexe" required="required" ng-model="personalData.gender">
                         Feminin
                         </label>
                     </div>
                     <div class="col-md-3">
                         <label>
-                        <input type="radio" name="sexe" required="required">
+                        <input type="radio" name="sexe" required="required" ng-model="personalData.gender">
                         Masculin
                         </label>
                     </div>
@@ -80,7 +80,7 @@
                         Date de naissance
                     </div>
                     <div class="col-md-2">
-                        <input type="date" placeholder="jj/MM/aaaa" class="form-control" required="required">
+                        <input type="date" placeholder="jj/MM/aaaa" class="form-control" required="required" ng-model="personalData.birthDate">
                     </div>
                 </div>
                 <div class="row">
@@ -93,7 +93,7 @@
                     <div class="col-md-2"><label><input type="radio" name="permis" value="C" ng-disabled="testSuisse.isSuisse(personalData.nationality)" ng-model="personalData.permis"/> C </label></div>
                     <div class="col-md-2"><label><input type="radio" name="permis" value="demande en cours" ng-disabled="testSuisse.isSuisse(personalData.nationality)" ng-model="personalData.permis"/>Demande en cours</label></div>
                     <div class="col-md-2"><label><input type="radio" name="permis" value="autre" ng-disabled="testSuisse.isSuisse(personalData.nationality)" ng-model="personalData.permis"/>Autre</label></div>
-                    <div class="col-md-2"><input type="text" class="form-control" ng-show="(personalData.permis == 'autre')"></div>
+                    <div class="col-md-2"><input type="text" class="form-control" ng-show="(personalData.permis == 'autre')" ng-model="personalData.permisOther"></div>
                 </div>
             </ng-form>
         </div>
