@@ -1,8 +1,9 @@
 var ngDemautApp = angular.module('ngDemautApp', ['ngSanitize', 'ngRoute', 'ngAnimate', 'commonsModule']);
 
 /*Necessaire si les services ne sont pas dans la même arborescence que la page html*/
-ngDemautApp.constant('urlPrefix', '/outils/demautMicrobiz-api');
-// Dev ngDemautApp.constant('urlPrefix', 'http://localhost:8083/outils/demautMicrobiz-api');
+// TODO Dev à corrigert URL Prefix et Main : ngDemautApp.constant('urlPrefix', '/outils/demautMicrobiz-api');
+ngDemautApp.constant('urlPrefix', 'http://localhost:8083/outils/demautMicrobiz-api');
+ngDemautApp.constant('urlMain', 'http://localhost:8083/demautMicrobiz');
 
 ngDemautApp
     .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
@@ -153,6 +154,15 @@ ngDemautApp
             "Certificats de Travail",
             "Casier judiciaire"
         ];
+
+        $http.get(urlPrefix + '/services/annexes/typesList/' + $scope.profession).
+            success(function (data, status, headers, config) {
+                $scope.annexeTypes = angular.fromJson(data.typesList);
+            }).
+            error(function (data, status, headers, config) {
+                $rootScope.error ='Error downloading ../services/annexes/typesList/' + $scope.profession;
+            });
+
         $scope.referenceFiles = [];
         $scope.name = "AnnexeController";
         $scope.params = $routeParams;
@@ -308,8 +318,8 @@ ngDemautApp
     }]);
 
 ngDemautApp
-    .run(function($rootScope, $sce, $location, $http, urlPrefix) {
-        $http.get(urlPrefix + '/camel/main')
+    .run(function($rootScope, $sce, $location, $http, urlMain) {
+        $http.get(urlMain + '/camel/main')
             .success(function (data, status, headers, config) {
                 var fromJson = angular.fromJson(data.main);
                 if (fromJson != null && fromJson != undefined) {
@@ -320,7 +330,7 @@ ngDemautApp
                 }
             })
             .error(function (data, status, headers, config) {
-                $rootScope.error = 'Error ' + urlPrefix + '/camel/main \n Status :' +  status;
+                $rootScope.error = 'Error ' + urlMain + '/camel/main \n Status :' +  status;
             });
 
         $rootScope.$on('$viewContentLoaded', function() {

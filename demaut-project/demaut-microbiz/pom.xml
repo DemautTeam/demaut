@@ -303,6 +303,36 @@
                     <!--</execution>-->
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxb2-maven-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>xjc1</id>
+                        <goals>
+                            <goal>xjc</goal>
+                        </goals>
+                        <configuration>
+                            <schemaDirectory>src/main/xsd</schemaDirectory>
+                            <outputDirectory>target/classes</outputDirectory>
+                            <schemaFiles>consultePersonneRI.xsd,rechercherPersonnesRI.xsd</schemaFiles>
+                            <packageName>ch.vd.pee.progresoa.model</packageName>
+                            <clearOutputDir>true</clearOutputDir>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>xjc2</id>
+                        <goals>
+                            <goal>xjc</goal>
+                        </goals>
+                        <configuration>
+                            <schemaFiles>tiers-v01.xsd</schemaFiles>
+                            <clearOutputDir>false</clearOutputDir>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 

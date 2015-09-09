@@ -10,17 +10,12 @@ public class CustomeJacksonJaxbJsonProvider implements FactoryBean<JacksonJaxbJs
 
     @Override
     public JacksonJaxbJsonProvider getObject() throws Exception {
-
         JacksonJaxbJsonProvider jacksonJaxbJsonProvider = new JacksonJaxbJsonProvider();
-
         try {
-
             jacksonJaxbJsonProvider.locateMapper(JsonNode.class, MediaType.APPLICATION_JSON_TYPE);
-
         } catch (Throwable e) {
             e.printStackTrace();
         }
-
         return jacksonJaxbJsonProvider;
     }
 

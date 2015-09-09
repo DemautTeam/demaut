@@ -62,12 +62,13 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
                 Annexe annexe = new Annexe(TypeAnnexe.valueOf(annexeType), annexeFileName, IOUtils.toByteArray(new FileInputStream(file)));
                 demandeAutorisation.attacherUneAnnexe(annexe);
                 sauverLaDemandeAutorisation(demandeAutorisation);
+                return true;
             } catch (IOException e) {
                 LOGGER.error("Exception attacherUneAnnexe " + e.getMessage());
                 return false;
             }
         }
-        return true;
+        return false;
     }
 
     @Override

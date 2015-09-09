@@ -13,6 +13,12 @@ import java.io.IOException;
 public interface AnnexeRest {
 
     @GET
+    @Path("/annexes/typesList/{profession}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("USER")
+    Response listerLesTypesAnnexes(String profession) throws Exception;
+
+    @GET
     @Path("/annexes/lister/{demandeReference}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
