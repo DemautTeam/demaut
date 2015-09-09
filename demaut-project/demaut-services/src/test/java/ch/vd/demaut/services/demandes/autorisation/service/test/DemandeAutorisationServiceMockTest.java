@@ -5,6 +5,7 @@ import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import junit.framework.TestCase;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +28,14 @@ public class DemandeAutorisationServiceMockTest extends TestCase {
         assertThat(demandeAutorisationService).isNotNull();
     }
 
+    @Ignore
     @Test
     public void shouldInitialiserDemandeAutorisation() throws Exception {
         DemandeAutorisation demandeAutorisation = demandeAutorisationService.initialiserDemandeAutorisation();
         assertThat(demandeAutorisation).isNotNull();
     }
 
+    @Ignore
     @Test
     public void shouldSauverLaDemandeAutorisation() throws Exception {
         DemandeAutorisation demandeAutorisation = demandeAutorisationService.sauverLaDemandeAutorisation(new DemandeAutorisation(null, ProfessionDeLaSante.Medecin, null));
