@@ -50,8 +50,8 @@ ngDemautApp
             })
             .when('/Demaut/demande/recapitulation', {
                 templateUrl: 'template/demande/recapitulatif.html',
-                controller: 'RecapitulationController',
-                controllerAs: 'recapitulation'
+                controller: 'RecapitulatifController',
+                controllerAs: 'recapitulatif'
             })
             .when('/Demaut/demande/soumission', {
                 templateUrl: 'template/demande/soumission.html',
@@ -105,11 +105,28 @@ ngDemautApp
         $scope.indexStep = 1;
         this.name = "DonneesPersoController";
         this.params = $routeParams;
-        $scope.testSuisse = nationalityTest;
-        $scope.nextStep = function(){
-            $scope.indexStep += 1;
-            $location.path('/Demaut/demande');
+        $scope.testSuisse = nationalityTest;//récupération du service de test des nationnalité
+        $scope.personalData = {};
+        $scope.isPermisRequired = function(){
+            return !nationalityTest.isSuisse($scope.personalData.nationality) && !$scope.personalData.permis;
         };
+        $scope.resetPermis = function(){
+            if(nationalityTest.isSuisse($scope.personalData.nationality)){
+                $scope.personalData.permis = null;
+            }
+        }
+        $scope.nextStep = function(){
+            if($scope.donneesPerso.personalDataForm.$valid) {
+                $log.info('Formulaire valide !');
+                $scope.indexStep += 1;
+                $location.path('/Demaut/demande');
+            }
+            else {
+                $log.info('Formulaire invalide !');
+            }
+        };
+
+
     }])
     .controller('DemandeController', ['$scope', '$rootScope', '$routeParams', '$location', function ($scope, $rootScope, $routeParams, $location) {
         $rootScope.contextMenu = "demande";
@@ -292,10 +309,10 @@ ngDemautApp
                 });
         };
     }])
-    .controller('RecapitulationController', ['$scope', '$rootScope', '$routeParams', '$location', function ($scope, $rootScope, $routeParams, $location) {
+    .controller('RecapitulatifController', ['$scope', '$rootScope', '$routeParams', '$location', function ($scope, $rootScope, $routeParams, $location) {
         $rootScope.contextMenu = "demande";
         $scope.indexStep = 5;
-        this.name = "RecapitulationController";
+        this.name = "RecapitulatifController";
         this.params = $routeParams;
         $scope.previewStep = function(){
             $scope.indexStep -= 1;
