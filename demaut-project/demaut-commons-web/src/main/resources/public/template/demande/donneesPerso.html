@@ -4,18 +4,6 @@
         <legend>Veuillez saisir vos Données Personnelles</legend>
         <div>
             <ng-form name="donneesPerso.personalDataForm">
-                <div ng-show="donneesPerso.personalDataForm.$pristine">
-                    Form Pristine
-                </div>
-                <div ng-show="donneesPerso.personalDataForm.$dirty">
-                    Form Dirty
-                </div>
-                <div ng-show="donneesPerso.personalDataForm.$valid">
-                    Form Valid
-                </div>
-                <div ng-show="donneesPerso.personalDataForm.$error">
-                    Form Error
-                </div>
                 <div class="row">
                     <div class="col-md-2"><label for="name">Nom*</label></div>
                     <div class="col-md-10"><input type="text" id="name" class="form-control" required="required" ng-model="personalData.name"></div>
