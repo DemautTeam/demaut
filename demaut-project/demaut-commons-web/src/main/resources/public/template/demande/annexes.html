@@ -2,7 +2,9 @@
 <div class="bs-wizard-info text-left">
     <fieldset>
         <legend>Pièces à fournir :</legend>
-        <label>En fonction de votre profil et du type d'autorisation que vous souhaitez, vous devez fournir les pièces suivantes :</label>
+        <div style="overflow: auto;height: 460px;">
+        <ng-form>
+            <label>En fonction de votre profil et du type d'autorisation que vous souhaitez, vous devez fournir les pièces suivantes :</label>
         <table class="table table-striped">
             <thead>
                 <tr bgcolor="#99CC00">
@@ -17,23 +19,25 @@
             <tr ng-repeat="annexeType in annexeTypes">
                 <td>{{annexeType}}</td>
                 <td>
-                    <li style="height:20px;" ng-repeat="file in files[annexeType] | filter: { typeAnnexe: annexeType }">{{file.name}}</li>
+                    <ul>
+                        <li ng-repeat="file in files[annexeType] | filter: { typeAnnexe: annexeType }">{{file.name}}</li>
+                    </ul>
                 </td>
                 <td>
-                    <li style="list-style-type: none;height:20px;" ng-repeat="file in files[annexeType] | filter: { typeAnnexe: annexeType }">{{file.type}}</li>
+                    <div ng-repeat="file in files[annexeType] | filter: { typeAnnexe: annexeType }">{{file.type}}</div>
                 </td>
                 <td>
-                    <li style="list-style-type: none;height:20px;" ng-repeat="file in files[annexeType] | filter: { typeAnnexe: annexeType }">{{file.size/1024/1024 | number:3}}MB</li>
+                    <div ng-repeat="file in files[annexeType] | filter: { typeAnnexe: annexeType }">{{file.size/1024/1024 | number:3}}MB</div>
                 </td>
                 <td>
-                    <li style="list-style-type: none;height:20px;" ng-repeat="file in files[annexeType] | filter: { typeAnnexe: annexeType }">
+                    <div ng-repeat="file in files[annexeType] | filter: { typeAnnexe: annexeType }">
                         <a href="" ng-click="viewAnnexe(file, annexeType)" class="btn btn-xs btn-default">
                             <span class="glyphicon glyphicon-eye-open"></span>
                         </a>
                         <a href="" ng-click="deleteAnnexe(file, annexeType)" class="btn btn-xs btn-default">
                             <span class="glyphicon glyphicon-trash"></span>
                         </a>
-                    </li>
+                    </div>
                 </td>
                 <td>
                     <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
@@ -41,9 +45,10 @@
                             <input type="file" name="{{annexeType}}" multiple ng-disabled="disabled" accept="image/jpg,image/png,image/jpeg,application/pdf" onchange="angular.element(this).scope().filesChanged(this)" >
                     </span>
                 </td>
-
             </tr>
         </table>
+        </ng-form>
+        </div>
     </fieldset>
 </div>
-<div ng-include="'template/include/include-actions.html'"></div>
+<step-actions preview-step-fn="previewStep()" next-step-fn="nextStep()"/>
