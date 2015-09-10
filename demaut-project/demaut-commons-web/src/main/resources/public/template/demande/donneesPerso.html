@@ -53,13 +53,13 @@
                 <div class="row">
                     <label for="personalPhone" class="col-md-2">Téléphone privé<span ng-hide="donneesPerso.personalDataForm.mobilePhone.$valid">*</span></label>
                     <div class="col-md-6">
-                        <input type="tel" ng-minlength="4" id="personalPhone" name="personalPhone" ng-required="!donneesPerso.personalDataForm.mobilePhone.$valid"  class="form-control"  ng-model="personalData.personalPhone">
+                        <input type="tel" ng-minlength="4" id="personalPhone" name="personalPhone" ng-required="!donneesPerso.personalDataForm.mobilePhone.$valid || donneesPerso.personalDataForm.$pristine"  class="form-control"  ng-model="personalData.personalPhone">
                     </div>
                     <label for="mobilePhone" class="col-md-2">
                         Mobile<span ng-hide="donneesPerso.personalDataForm.personalPhone.$valid">*</span>
                     </label>
                     <div class="col-md-2">
-                        <input type="tel" ng-minlength="4" id="mobilePhone" ng-required="!donneesPerso.personalDataForm.personalPhone.$valid" name="mobilePhone" class="form-control" ng-model="personalData.mobilePhone">
+                        <input type="tel" ng-minlength="4" id="mobilePhone" ng-required="!donneesPerso.personalDataForm.personalPhone.$valid || donneesPerso.personalDataForm.$pristine" name="mobilePhone" class="form-control" ng-model="personalData.mobilePhone">
                     </div>
                 </div>
                 <div class="row">
