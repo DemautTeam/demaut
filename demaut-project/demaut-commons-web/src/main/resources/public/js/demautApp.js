@@ -162,7 +162,7 @@ ngDemautApp
         $scope.demandeReference = "toBeDefinedLater";
         $scope.profession = "aSaisirEtape2";
         $scope.indexStep = 4;
-        $scope.annexeFormats = ["application/pdf", "image/jpg", "image/jpeg", "image/png", "image/bmp"];
+        $scope.annexeFormats = ["application/pdf", "image/jpg", "image/jpeg", "image/png"];
         $scope.annexeTypes = [
             "Liste locale",
             "Curriculum vitae",
@@ -203,11 +203,12 @@ ngDemautApp
             // Check format for all files list
             function validateFileName(fileName) {
                 var forbiddenChars = /^(?!\.)[^\|\*\?\\:<>/$"]*[^\.\|\*\?\\:<>/$"]+$/
-                // Must not be empty
-                // Must not start with .
-                // Must not contain | * ? \ : < > $
-                // Must not end with .
-                return forbiddenChars.test(fileName);
+                // Ne doit pas etre vide
+                // Ne doit pas commencer par .
+                // Ne doit pas contenir | * ? \ : < > $
+                // Ne doit pas finir avec .
+                // Ne doit pas excèder 255 chars
+                return fileName != null && fileName != undefined && forbiddenChars.test(fileName) && fileName.length <= 255;
             }
 
             for (var indexI = 0; indexI < newFilesList.length; indexI++) {

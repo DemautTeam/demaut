@@ -53,7 +53,7 @@ public class AnnexeRestImpl implements AnnexeRest {
         LOGGER.info("listerLesTypesAnnexes " + profession);
 
         AnnexetypesList lesTypesAnnexes = porgreSoaService.listerLesTypesAnnexes();
-        // TODO filtrer la liste selon profession
+        // TODO filtrer la liste selon profession (liste ordinaire VS simplifiée)
         return Response.ok(Json.newObject().put("response", viewWriter.writeValueAsString(lesTypesAnnexes))).build();
     }
 
