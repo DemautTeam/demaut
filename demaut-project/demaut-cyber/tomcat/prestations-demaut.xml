@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context docBase="${ch.vd.projectDir}/applications/demaut/deployment/prestation-demaut-0.1.0-SNAPSHOT.war"
+         workDir="${catalina.base}/work/demaut"
+         allowLinking="true" unpackWAR="true"
+         path="/prestation-demaut">
+
+    <Valve className="org.apache.catalina.valves.AccessLogValve"
+           prefix="demaut-${ch.vd.serverName}-access_log" suffix=".txt"
+           directory="${ch.vd.projectDir}/logs"
+           pattern="%h %l %u %t &quot;%r&quot; %s %b &quot;%{Referer}i&quot; &quot;%{User-Agent}i&quot; %D"
+           resolveHosts="false"/>
+
+    <!-- IPFILTER rpbeintra1,rpbeintra2 -->
+    <!--
+           <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+                    allow="10.120.195.36|10.120.195.37" />
+                    -->
+
+</Context>
+

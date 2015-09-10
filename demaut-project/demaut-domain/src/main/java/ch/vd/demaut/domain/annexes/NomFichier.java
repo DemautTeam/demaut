@@ -33,8 +33,11 @@ public class NomFichier extends BaseValueObject {
 
     public String extraireExtension() {
         int lastIndexOfDot = nomFichier.lastIndexOf(".");
-        String ext = nomFichier.substring(lastIndexOfDot + 1);
-        return ext;
+        return nomFichier.substring(lastIndexOfDot + 1);
     }
 
+    public String extraireNonSansExtension() {
+        int lastIndexOfDot = nomFichier.lastIndexOf(".");
+        return nomFichier.substring(0, lastIndexOfDot);
+    }
 }

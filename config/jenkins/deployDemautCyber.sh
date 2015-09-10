@@ -19,6 +19,7 @@ echo Lister config : $configContent
 
 projectFolderName=demaut-cyber
 projectConfigName=application
+tomcatConfigName=prestations-demaut.xml
 projectBasedir=${WORKSPACE}/demaut-project/$projectFolderName
 
 # deploy to smx4
@@ -27,6 +28,7 @@ pathServer=/ccv/data/dsi_cyber/demautIN
 remoteBin=$pathServer
 remoteDeploy=$pathServer/app/demaut/deployment
 remoteConfig=$pathServer/app/demaut/config
+remoteTomcatConfig=$pathServer/conf/Catalina/localhost
 remoteServer=dsi_cyber@slv2395t.etat-de-vaud.ch
 #contourne l'alerte de sécurité de SSH
 chmod 600 ${WORKSPACE}/config/jenkins/id.rsa.jenkins
@@ -55,6 +57,13 @@ echo "Mise à jour du fichier de configuration sur $remoteServer:$remoteConfig..
 scp $sshOptions "$projectBasedir/conf/$projectConfigName.properties" $remoteServer:$remoteConfig
 echo "Mise à jour du fichier de configuration terminée"
 
+echo "waiting 5s....."
+sleep 5
+echo "Mise à jour du fichier de configuration tomcat sur $remoteServer:$remoteTomcatConfig..."
+scp $sshOptions "$projectBasedir/tomcat/$tomcatConfigName.xml" $remoteServer:$remoteTomcatConfig
+echo "Mise à jour du fichier de configuration tomcat terminée"
+
+echo "waiting 5s....."
 
 echo "Suppression de l'ancien bundle sur le serveur $remoteServer:$remoteDeploy"
 echo "Emplacement du fichier sur le serveur:"

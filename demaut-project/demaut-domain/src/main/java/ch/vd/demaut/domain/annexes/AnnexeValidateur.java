@@ -5,12 +5,15 @@ import ch.vd.demaut.commons.validation.ValidatorFactoryDefault;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 public class AnnexeValidateur {
 
     // ********************************************************* Static fields
     static private final int tailleMin = 1; //en octets
-    static private final int tailleMax = 10 * 1024 * 1024; //en octets
+    static private final int tailleMax = 3 * 1024 * 1024; //en octets
+
+    static private final int longueurMax = 255; //en octets
 
     // ********************************************************* Singleton
     /**
@@ -47,6 +50,10 @@ public class AnnexeValidateur {
 
     public static int getTailleMax() {
         return tailleMax;
+    }
+
+    public static int getLongueurMax() {
+        return longueurMax;
     }
 
     /**
@@ -90,10 +97,23 @@ public class AnnexeValidateur {
     public void validerNomFichier(Annexe annexe) {
         NomFichier nomFichier = annexe.getNomFichier();
         String extension = nomFichier.extraireExtension();
-        boolean accepte = verifieSiExtensionEstAcceptee(extension);
+        String nomSansExtension = nomFichier.extraireNonSansExtension();
+        boolean accepte = nomFichier.getNomFichier().length() < 255 && nomFichier.getNomFichier().length() > 0 &&
+                verifieSiExtensionEstAcceptee(extension) && verifieSiNomSansExtensionEstAcceptee(nomSansExtension);
         if (!accepte) {
             throw new AnnexeNonValideException();
         }
+    }
+
+    /**
+     * Ne doit pas etre vide
+     * Ne doit pas commencer par .
+     * Ne doit pas contenir | * ? \ : < > $
+     * Ne doit pas finir avec .
+     */
+    private boolean verifieSiNomSansExtensionEstAcceptee(String nomSansExtension) {
+        Pattern pattern = Pattern.compile("^(?!\\.)[^\\|\\*\\?\\\\:<>/$\"]*[^\\.\\|\\*\\?\\\\:<>/$\"]+$");
+        return pattern.matcher(nomSansExtension).matches();
     }
 
     private boolean verifieSiExtensionEstAcceptee(String extension) {
