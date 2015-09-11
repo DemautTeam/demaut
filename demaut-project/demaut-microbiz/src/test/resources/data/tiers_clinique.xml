@@ -1,0 +1,989 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<root xmlns="http://www.vd.ch/ses/referentiel/tiers-v01" xmlns:ns2="http://www.ech.ch/xmlns/eCH-0097/1">
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>17438562</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Animalière Rhenus - Dr Traeschsel</organisation>
+        <adress>
+            <addressLine1>Gewerbezentrum Arova</addressLine1>
+            <town>Flurlingen</town>
+            <zipCode>8247</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>398848885</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Barmelweid</organisation>
+        <adress>
+            <town>Barmelweid</town>
+            <zipCode>5017</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>CTR</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>354477956</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Belmont Sàrl</organisation>
+        <adress>
+            <addressLine1>Route de Chêne 26</addressLine1>
+            <town>Genève</town>
+            <zipCode>1207</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>82360023</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Bernoise Montana</organisation>
+        <adress>
+            <addressLine1>Impasse Palace Bellevue 1</addressLine1>
+            <town>Crans-Montana</town>
+            <zipCode>3963</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>383187502</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Bois-Bougy Sàrl - Myriam Biehler, comptable</organisation>
+        <adress>
+            <addressLine1>Avenue Bois-Bougy 5</addressLine1>
+            <town>Nyon</town>
+            <zipCode>1260</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Entité juridique</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>888224080</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Bois-Cerf</organisation>
+        <adress>
+            <addressLine1>Avenue d'Ouchy 31</addressLine1>
+            <town>Lausanne</town>
+            <zipCode>1001</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Clinique somatique</typeEtab>
+            <mission>Chirurgie</mission>
+            <mission>Médecine interne</mission>
+            <mission>Pédiatrie</mission>
+            <mission>Réadaptation et soins palliatifs</mission>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>66520710</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Bon-Port Biotonus</organisation>
+        <adress>
+            <addressLine1>Rue Bon-Port 21</addressLine1>
+            <town>Territet-Veytaux</town>
+            <zipCode>1820</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Clinique somatique</typeEtab>
+            <mission>Médecine interne</mission>
+            <mission>Psychiatrie</mission>
+            <mission>Réadaptation et soins palliatifs</mission>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>414508524</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique CIC Valais</organisation>
+        <adress>
+            <addressLine1>Route du Léman 29</addressLine1>
+            <town>Saxon</town>
+            <zipCode>1907</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Clinique somatique</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>911212870</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Cecil</organisation>
+        <adress>
+            <addressLine1>Avenue Louis-Ruchonnet 53</addressLine1>
+            <town>Lausanne</town>
+            <zipCode>1003</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Clinique somatique</typeEtab>
+            <mission>Chirurgie</mission>
+            <mission>Médecine interne</mission>
+            <mission>Obstétrique</mission>
+            <mission>Psychiatrie</mission>
+            <mission>Pédiatrie</mission>
+            <mission>Réadaptation et soins palliatifs</mission>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>396546137</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Cecil - Radiologie</organisation>
+        <adress>
+            <addressLine1>Avenue Marc-Dufour 4</addressLine1>
+            <town>Lausanne</town>
+            <zipCode>1007</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>888212870</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Cecil S.A.</organisation>
+        <adress>
+            <addressLine1>Avenue Ruchonnet 53</addressLine1>
+            <town>Lausanne</town>
+            <zipCode>1003</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Entité juridique</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>888274167</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Cecil SA / Laboratoire - de cytologie</organisation>
+        <adress>
+            <addressLine1>Avenue Ruchonnet 58</addressLine1>
+            <town>Lausanne</town>
+            <zipCode>1003</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>344267669</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Champel SA MV Santé</organisation>
+        <adress>
+            <addressLine1>Avenue de Champel 42</addressLine1>
+            <town>Genève</town>
+            <zipCode>1206</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>401456058</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Dentaire Edenweiss - M. Michel Tastet</organisation>
+        <adress>
+            <addressLine1>Avenue du Mont Blanc 2</addressLine1>
+            <town>Gland</town>
+            <zipCode>1196</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Monsieur</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>323902038</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Dentaire d'Aigle SA</organisation>
+        <adress>
+            <addressLine1>Chemin Sous le Grand Pré 2</addressLine1>
+            <addressLine2>Chablais Centre</addressLine2>
+            <town>Aigle</town>
+            <zipCode>1860</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Entité juridique</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>359801032</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Dentaire de Lausanne - + Implantologie SA</organisation>
+        <adress>
+            <addressLine1>Route de Berne 52</addressLine1>
+            <town>Lausanne</town>
+            <zipCode>1010</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Entité juridique</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>346471259</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Dentaire du Chablais - Aigle</organisation>
+        <adress>
+            <addressLine1>Chemin Sous-le-Grand-Pré 2</addressLine1>
+            <addressLine2>Chablais Centre 2</addressLine2>
+            <town>Aigle</town>
+            <zipCode>1860</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Soins ambulatoires</typeEtab>
+            <mission>Soins dentaires</mission>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>415623356</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Eden Suisse SA</organisation>
+        <adress>
+            <addressLine1>Route de la Corniche</addressLine1>
+            <town>Puidoux</town>
+            <zipCode>1070</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Entité juridique</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>415623795</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Eden Suisse SA</organisation>
+        <adress>
+            <addressLine1>Route de la Corniche</addressLine1>
+            <town>Puidoux</town>
+            <zipCode>1070</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Soins ambulatoires</typeEtab>
+            <mission>Médecine esthétique</mission>
+            <mission>Oncologie</mission>
+            <mission>Radiologie</mission>
+            <mission>Revitalisation</mission>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>374366014</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Générale Ste-Anne</organisation>
+        <adress>
+            <addressLine1>Rue Hans-Geiler 6</addressLine1>
+            <town>Fribourg</town>
+            <zipCode>1700</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>349229827</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Générale, Fribourg - Garcia - Ste-Anne</organisation>
+        <adress>
+            <addressLine1>Chemin des Verdiers 2</addressLine1>
+            <town>Fribourg</town>
+            <zipCode>1700</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>376386669</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Joli-Mont</organisation>
+        <adress>
+            <addressLine1>Avenue Trembley 45</addressLine1>
+            <addressLine2>Case postale</addressLine2>
+            <town>Genève 19</town>
+            <zipCode>1211</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>374374745</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique La Colline SA</organisation>
+        <adress>
+            <addressLine1>Avenue de Beau-Séjour 6</addressLine1>
+            <town>Genève</town>
+            <zipCode>1206</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>66520702</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique La Métairie</organisation>
+        <adress>
+            <addressLine1>Avenue de Bois-Bougy</addressLine1>
+            <town>Nyon</town>
+            <zipCode>1260</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Entité juridique</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>66520696</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique La Prairie S.A.</organisation>
+        <adress>
+            <addressLine1>Rue du Lac 142</addressLine1>
+            <town>Clarens</town>
+            <zipCode>1815</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Entité juridique</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>23099099</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique La Rochelle</organisation>
+        <adress>
+            <town>Vaumarcus</town>
+            <zipCode>2028</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>EMS</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>337351810</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique La Rochelle - Centre d'Information de Gestion CIGES</organisation>
+        <adress>
+            <town>Vaumarcus</town>
+            <zipCode>2028</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>374370754</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Le Noirmont</organisation>
+        <adress>
+            <town>Noirmont, Le</town>
+            <zipCode>2340</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>888209730</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Miremont</organisation>
+        <adress>
+            <addressLine1>Avenue Rollier</addressLine1>
+            <town>Leysin</town>
+            <zipCode>1854</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>CTR</typeEtab>
+            <mission>Gériatrie</mission>
+            <mission>Médecine interne</mission>
+            <mission>Réadaptation et soins palliatifs</mission>
+            <mission>Soins palliatifs</mission>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>413390024</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Mont Blanc</organisation>
+        <adress>
+            <addressLine1>Ruelle des Moulins 17</addressLine1>
+            <town>Nyon</town>
+            <zipCode>1260</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Soins ambulatoires</typeEtab>
+            <mission>Médecine esthétique</mission>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>413389689</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Mont Blanc SA</organisation>
+        <adress>
+            <addressLine1>Grand-Rue 27</addressLine1>
+            <town>Nyon</town>
+            <zipCode>1260</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Entité juridique</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>365936261</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Montbrillant SA</organisation>
+        <adress>
+            <addressLine1>Montagne 1</addressLine1>
+            <town>Chaux-de-Fonds, La</town>
+            <zipCode>2300</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>360257125</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Orthodontique Fribourgeoise</organisation>
+        <adress>
+            <addressLine1>Boulevard de Pérolles 23</addressLine1>
+            <town>Fribourg</town>
+            <zipCode>1700</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>144564914</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Orthopédique de Genolier</organisation>
+        <adress>
+            <town>Genolier</town>
+            <zipCode>1272</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>401322324</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Podologique - Mme Sabrina Doucet</organisation>
+        <adress>
+            <addressLine1>Avenue d'Echallens 61</addressLine1>
+            <town>Lausanne</town>
+            <zipCode>1004</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Madame</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>182098408</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Privée La Métairie Sàrl</organisation>
+        <adress>
+            <addressLine1>Avenue de Bois-Bougy</addressLine1>
+            <town>Nyon</town>
+            <zipCode>1260</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Entité juridique</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>888273539</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Seeland</organisation>
+        <adress>
+            <addressLine1>Rue Molz 6</addressLine1>
+            <town>Biel/Bienne</town>
+            <zipCode>2502</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>399381679</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Susenberg</organisation>
+        <adress>
+            <addressLine1>Schrebenweg 9</addressLine1>
+            <town>Zürich</town>
+            <zipCode>8044</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>CTR</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>383187730</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique de Bois-Bougy</organisation>
+        <adress>
+            <addressLine1>Avenue Bois-Bougy 5</addressLine1>
+            <town>Nyon</town>
+            <zipCode>1260</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>CTR</typeEtab>
+            <mission>Réadaptation et soins palliatifs</mission>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>888221702</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique de Genolier</organisation>
+        <adress>
+            <addressLine1>Route du Muids 3</addressLine1>
+            <town>Genolier</town>
+            <zipCode>1272</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Clinique somatique</typeEtab>
+            <mission>Chirurgie</mission>
+            <mission>Médecine interne</mission>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>911221702</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique de Genolier SA</organisation>
+        <adress>
+            <addressLine1>Route du Muids 3</addressLine1>
+            <town>Genolier</town>
+            <zipCode>1272</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Entité juridique</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>888244114</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique de Montchoisi</organisation>
+        <adress>
+            <addressLine1>Chemin des Allinges 10</addressLine1>
+            <town>Lausanne</town>
+            <zipCode>1006</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Clinique somatique</typeEtab>
+            <mission>Chirurgie</mission>
+            <mission>Chirurgie plastique et recons.</mission>
+            <mission>Gynécologie</mission>
+            <mission>Médecine interne</mission>
+            <mission>ORL</mission>
+            <mission>Orthopédie-traumatologie</mission>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>66520700</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique de Valmont S.A.</organisation>
+        <adress>
+            <town>Glion</town>
+            <zipCode>1823</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Entité juridique</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>376385855</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique de Valère</organisation>
+        <adress>
+            <town>Sion</town>
+            <zipCode>1950</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>8929043</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique de la Lignière</organisation>
+        <adress>
+            <addressLine1>La Lignière 5</addressLine1>
+            <town>Gland</town>
+            <zipCode>1196</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Clinique somatique</typeEtab>
+            <mission>Médecine interne</mission>
+            <mission>Psychiatrie</mission>
+            <mission>Réadaptation et soins palliatifs</mission>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>378220571</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique de la Lignière SA</organisation>
+        <adress>
+            <addressLine1>La Lignière 5</addressLine1>
+            <town>Gland</town>
+            <zipCode>1196</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Entité juridique</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>888224774</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique de la Rosiaz SA</organisation>
+        <adress>
+            <addressLine1>Chemin de Beau-Soleil 3</addressLine1>
+            <town>Pully</town>
+            <zipCode>1009</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>888214095</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique de la Source</organisation>
+        <adress>
+            <addressLine1>Avenue de Vinet 30</addressLine1>
+            <town>Lausanne</town>
+            <zipCode>1004</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Clinique somatique</typeEtab>
+            <mission>Chirurgie</mission>
+            <mission>Médecine interne</mission>
+            <mission>Obstétrique</mission>
+            <mission>Pédiatrie</mission>
+            <mission>Réadaptation et soins palliatifs</mission>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>349576672</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique dentaire de Chauderon - (ARDENTIS)</organisation>
+        <adress>
+            <addressLine1>Place Chauderon 16</addressLine1>
+            <town>Lausanne</town>
+            <zipCode>1003</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Soins ambulatoires</typeEtab>
+            <mission>Soins dentaires</mission>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>349575354</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique dentaire de Cossonay - (ARDENTIS)</organisation>
+        <adress>
+            <addressLine1>Rue des Laurelles 3</addressLine1>
+            <town>Cossonay-Ville</town>
+            <zipCode>1304</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Soins ambulatoires</typeEtab>
+            <mission>Soins dentaires</mission>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>359802258</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique dentaire de Lausanne SA</organisation>
+        <adress>
+            <addressLine1>Rue de Renens 3</addressLine1>
+            <town>Bussigny</town>
+            <zipCode>1030</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Soins ambulatoires</typeEtab>
+            <mission>Soins dentaires</mission>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>238598164</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique dentaire de Malombre SA</organisation>
+        <adress>
+            <addressLine1>Chemin de Malombre 5</addressLine1>
+            <town>Genève</town>
+            <zipCode>1206</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>11869269</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique des Grangettes SA</organisation>
+        <adress>
+            <addressLine1>Chemin des Grangettes 7</addressLine1>
+            <town>Chêne-Bougeries</town>
+            <zipCode>1224</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>338911787</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique du Grand-Pont - Médecine Chinoise Sàrl</organisation>
+        <adress>
+            <addressLine1>Rue du Grand-Pont 12</addressLine1>
+            <town>Lausanne</town>
+            <zipCode>1003</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>5117020</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique du Vallon-Armée du Salut - Centre médico-social</organisation>
+        <adress>
+            <addressLine1>Place du Vallon 1A</addressLine1>
+            <town>Lausanne</town>
+            <zipCode>1005</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>396613684</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique et Permanence d'Onex</organisation>
+        <adress>
+            <addressLine1>Route de l'Oëx 3</addressLine1>
+            <town>Onex</town>
+            <zipCode>1213</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>338060134</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique genevoise de Montana</organisation>
+        <adress>
+            <addressLine1>Impasse Clairmont 2</addressLine1>
+            <town>Crans-Montana</town>
+            <zipCode>3963</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>176917557</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique générale-Beaulieu</organisation>
+        <adress>
+            <addressLine1>Chemin Beau-Soleil 20</addressLine1>
+            <town>Genève</town>
+            <zipCode>1206</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>12570904</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique la Métairie</organisation>
+        <adress>
+            <addressLine1>Avenue de Bois-Bougy</addressLine1>
+            <town>Nyon</town>
+            <zipCode>1260</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Clinique psychiatrique</typeEtab>
+            <mission>Psychiatrie</mission>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>7541293</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique la Prairie</organisation>
+        <adress>
+            <addressLine1>Rue du Lac 142</addressLine1>
+            <town>Clarens</town>
+            <zipCode>1815</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Clinique somatique</typeEtab>
+            <mission>Chirurgie</mission>
+            <mission>Chirurgie plastique et recons.</mission>
+            <mission>Gynécologie</mission>
+            <mission>Médecine interne</mission>
+            <mission>ORL</mission>
+            <mission>Ophtalmologie</mission>
+            <mission>Orthopédie-traumatologie</mission>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>888210423</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique médico-chirurgicale - de Longeraie</organisation>
+        <adress>
+            <addressLine1>Avenue de la Gare 9</addressLine1>
+            <town>Lausanne</town>
+            <zipCode>1001</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Clinique somatique</typeEtab>
+            <mission>Chirurgie</mission>
+            <mission>Chirurgie ambulatoire</mission>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>888224641</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique médico-chirurgicale de - Longeraie S.A.</organisation>
+        <adress>
+            <addressLine1>Avenue de la Gare 9</addressLine1>
+            <town>Lausanne</town>
+            <zipCode>1001</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Entité juridique</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>888299665</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique ophtalmologique</organisation>
+        <adress>
+            <addressLine1>Avenue du Bois-de-la-Chapelle 15</addressLine1>
+            <town>Onex</town>
+            <zipCode>1213</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>10646907</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique psychiatrique Bellelay</organisation>
+        <adress>
+            <town>Bellelay</town>
+            <zipCode>2713</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>32632220</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique romande de réadaptation</organisation>
+        <adress>
+            <addressLine1>Avenue Grand- Champsec 90</addressLine1>
+            <town>Sion</town>
+            <zipCode>1950</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>888326722</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique scolaire d'odonto-stomatologie</organisation>
+        <adress>
+            <addressLine1>Rue de la Serre 14</addressLine1>
+            <town>Chaux-de-Fonds, La</town>
+            <zipCode>2300</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>33886560</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique vétérinaire La Confrérie - Dr Herbez Guy</organisation>
+        <adress>
+            <addressLine1>Route du Village 13</addressLine1>
+            <town>Epalinges</town>
+            <zipCode>1066</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>-</typeEtab>
+        </properties>
+    </moralPerson>
+</root>

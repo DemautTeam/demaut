@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:vdl-0023="http://www.vdl.ch/xmlns/vdl-0023/1"
+	targetNamespace="http://www.vdl.ch/xmlns/vdl-0023/1"
+	elementFormDefault="qualified" attributeFormDefault="unqualified"	version="1.0">
+	<xs:annotation>
+		<xs:documentation xml:lang="fr">Créer par DSOL Etat de Vaud :11.08.2015</xs:documentation>
+	</xs:annotation>
+
+	<xs:element name="mutationsRIRoot">
+
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="totalMutation" type="xs:integer"/>
+				<xs:element name="mutationRI" type="vdl-0023:mutationRIType" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+		
+	<xs:complexType name="mutationRIType">
+		<xs:sequence>
+			<xs:element name="dossierId" type="xs:integer" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

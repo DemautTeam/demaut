@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<refRoot>
+    <type>TYPE_PIECE</type>
+    <refElement>
+        <id>50283740</id>
+        <libl>Diplôme ou certificat</libl>
+    </refElement>
+    <refElement>
+        <id>50283742</id>
+        <libl>Certificat de travail</libl>
+    </refElement>
+    <refElement>
+        <id>50283744</id>
+        <libl>Extrait de casier judiciaire</libl>
+    </refElement>
+    <refElement>
+        <id>50283747</id>
+        <libl>Reconnaissance équivalence</libl>
+    </refElement>
+    <refElement>
+        <id>50283749</id>
+        <libl>Curriculum vitae</libl>
+    </refElement>
+    <refElement>
+        <id>50283751</id>
+        <libl>Attestation de travail</libl>
+    </refElement>
+    <refElement>
+        <id>50283753</id>
+        <libl>Copie AP autre canton</libl>
+    </refElement>
+    <refElement>
+        <id>50283755</id>
+        <libl>Spécimen de signature</libl>
+    </refElement>
+    <refElement>
+        <id>50283757</id>
+        <libl>Certificat médical</libl>
+    </refElement>
+    <refElement>
+        <id>50283759</id>
+        <libl>Préavis positif</libl>
+    </refElement>
+    <refElement>
+        <id>50283761</id>
+        <libl>Demande d'autorisation</libl>
+    </refElement>
+    <refElement>
+        <id>51401131</id>
+        <libl>Autre pièce</libl>
+    </refElement>
+    <refElement>
+        <id>53026879</id>
+        <libl>Copie diplôme ou certificat</libl>
+    </refElement>
+    <refElement>
+        <id>53026890</id>
+        <libl>Copie titre spécialiste</libl>
+    </refElement>
+    <refElement>
+        <id>98247240</id>
+        <libl>Titre de spécialiste</libl>
+    </refElement>
+    <refElement>
+        <id>239977844</id>
+        <libl>Formation continue</libl>
+    </refElement>
+    <refElement>
+        <id>304890606</id>
+        <libl>Certif. ambulancier IAS</libl>
+    </refElement>
+    <refElement>
+        <id>304890636</id>
+        <libl>Titre étranger</libl>
+    </refElement>
+    <refElement>
+        <id>304890682</id>
+        <libl>Certif. BLS/AED</libl>
+    </refElement>
+    <refElement>
+        <id>304890769</id>
+        <libl>Certif. formation CFM</libl>
+    </refElement>
+    <refElement>
+        <id>304890879</id>
+        <libl>Post-grade infirmier</libl>
+    </refElement>
+    <refElement>
+        <id>304890929</id>
+        <libl>Dérogation refus</libl>
+    </refElement>
+    <refElement>
+        <id>304890950</id>
+        <libl>Formation médecin conseil</libl>
+    </refElement>
+    <refElement>
+        <id>304890954</id>
+        <libl>Formation CEFOCA</libl>
+    </refElement>
+    <refElement>
+        <id>304890956</id>
+        <libl>Formation SSMUS</libl>
+    </refElement>
+    <refElement>
+        <id>304890962</id>
+        <libl>Cahier des charges</libl>
+    </refElement>
+</refRoot>

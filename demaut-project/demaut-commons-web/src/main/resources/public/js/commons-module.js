@@ -7,6 +7,12 @@ commonsModule.service('nationalityTest', ['$log', function ($log) {
     };
 }]);
 
+commonsModule.service('professionTest', ['$log', function ($log) {
+    this.isProfessionMedicaleUni = function(textValue, listValues){
+        return textValue != null && textValue != undefined && listValues.indexOf(textValue) != -1;
+    };
+}]);
+
 commonsModule.directive('stepActions', function(){
     return {
         restrict: 'E',

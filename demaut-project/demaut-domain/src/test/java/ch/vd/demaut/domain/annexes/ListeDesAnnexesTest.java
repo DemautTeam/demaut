@@ -2,6 +2,8 @@ package ch.vd.demaut.domain.annexes;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import java.util.Collection;
 
@@ -10,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Classe de tests de la classe {@link ListeDesAnnexes}
  */
+@RunWith(JUnit4.class)
 public class ListeDesAnnexesTest {
 
     ListeDesAnnexes listeDesAnnexes = new ListeDesAnnexes();
@@ -24,13 +27,25 @@ public class ListeDesAnnexesTest {
 
     @Test
     public void testerExtraireAnnexesDeTypeAvecPlusieursAnnexes() {
-        Collection<Annexe> annexesDeTypeCertificat = listeDesAnnexes.extraireAnnexesDeType(TypeAnnexe.Certificat);
-        assertThat(annexesDeTypeCertificat).hasSize(3);
+        Collection<Annexe> annexes = listeDesAnnexes.extraireAnnexesDeType(TypeAnnexe.Certificat);
+        assertThat(annexes).hasSize(3);
     }
 
     @Test
     public void testerExtraireAnnexesDeTypeAvecAucuneAnnexe() {
-        Collection<Annexe> annexesDeTypeCertificat = listeDesAnnexes.extraireAnnexesDeType(TypeAnnexe.Diplome);
-        assertThat(annexesDeTypeCertificat).hasSize(0);
+        Collection<Annexe> annexes = listeDesAnnexes.extraireAnnexesDeType(TypeAnnexe.Diplome);
+        assertThat(annexes).hasSize(0);
+    }
+
+    @Test
+    public void testerExtraireAnnexeMetadatasDeTypeAvecPlusieursAnnexes() {
+        Collection<AnnexeMetadata> annexeMetadatas = listeDesAnnexes.extraireAnnexesMetadatasDeType(TypeAnnexe.Certificat);
+        assertThat(annexeMetadatas).hasSize(3);
+    }
+
+    @Test
+    public void testerExtraireAnnexeMetadatasDeTypeAvecAucuneAnnexe() {
+        Collection<AnnexeMetadata> annexeMetadatas = listeDesAnnexes.extraireAnnexesMetadatasDeType(TypeAnnexe.Diplome);
+        assertThat(annexeMetadatas).hasSize(0);
     }
 }

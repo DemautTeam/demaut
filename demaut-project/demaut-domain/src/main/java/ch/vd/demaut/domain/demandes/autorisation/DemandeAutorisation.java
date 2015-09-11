@@ -7,6 +7,9 @@ import ch.vd.demaut.domain.demandes.Demande;
 import ch.vd.demaut.domain.demandes.DemandeFK;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandeurs.Demandeur;
+import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
@@ -93,12 +96,29 @@ public class DemandeAutorisation extends Demande {
         return true;
     }
 
-
     // ********************************************************* Private Methods
 
     // ********************************************************* Getters
     public Collection<Annexe> listerLesAnnexes() {
         return listeDesAnnexes.listerAnnexes();
+    }
+
+    /**
+     * Renvoie la liste des annexeMetadatas
+     */
+    public Collection<AnnexeMetadata> listerLesAnnexeMetadatas() {
+        return listeDesAnnexes.listerAnnexesMetadata();
+    }
+
+    @SuppressWarnings("all")
+    public AnnexeMetadata afficherUneAnnexeMetadata(final String annexeFileName) {
+        Object result = CollectionUtils.find(listerLesAnnexeMetadatas(), new Predicate() {
+            @Override
+            public boolean evaluate(Object input) {
+                return ((AnnexeMetadata) input).getNomFichier().getNomFichier().equals(annexeFileName);
+            }
+        });
+        return result != null ? (AnnexeMetadata) result : null;
     }
 
     public ProfessionDeLaSante getProfessionDeLaSante() {
@@ -127,4 +147,6 @@ public class DemandeAutorisation extends Demande {
     public ListeDesAnnexes getListeDesAnnexes() {
         return listeDesAnnexes;
     }
+
+
 }

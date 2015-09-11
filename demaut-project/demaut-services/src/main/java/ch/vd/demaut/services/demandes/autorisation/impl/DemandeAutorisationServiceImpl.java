@@ -1,6 +1,7 @@
 package ch.vd.demaut.services.demandes.autorisation.impl;
 
 import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.domain.annexes.AnnexeMetadata;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.factory.DemandeAutorisationFactory;
@@ -41,13 +42,26 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
         return demandeAutorisationRepository.sauverLaDemandeAutorisation(demandeAutorisation);
     }
 
+    /**
+     * L'annexe retournée de préférence ne devrait PAS contenir le contunu stream pour la consultation front
+     *
+     * @param demandeReference String
+     * @return Collection AnnexeMetadata
+     */
     @Override
     @SuppressWarnings("unchecked")
-    public Collection<Annexe> listerLesAnnexes(String demandeReference) {
+    public Collection<AnnexeMetadata> listerLesAnnexeMetadatas(String demandeReference) {
         DemandeAutorisation demandeAutorisation = this.afficherUneDemandeAutorisation(demandeReference);
-        return demandeAutorisation != null ? demandeAutorisation.listerLesAnnexes() : new ArrayList<Annexe>();
+        return demandeAutorisation != null ? demandeAutorisation.listerLesAnnexeMetadatas() : new ArrayList<AnnexeMetadata>();
     }
 
+    /**
+     * L'annexe retournée DOIT absolument contenir le contunu stream pour la consultation front
+     *
+     * @param demandeReference String
+     * @param annexeFileName   String
+     * @return Annexe
+     */
     @Override
     public Annexe afficherUneAnnexe(String demandeReference, String annexeFileName) {
         DemandeAutorisation demandeAutorisation = this.afficherUneDemandeAutorisation(demandeReference);

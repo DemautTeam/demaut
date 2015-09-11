@@ -1,19 +1,23 @@
 package ch.vd.demaut.domain.annexes;
 
 import ch.vd.demaut.commons.utils.FileMockHelper;
+import junit.framework.TestCase;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 
+@RunWith(JUnit4.class)
 public class AnnexeValidateurTest {
 
     private AnnexeValidateur validateur;
 
     private String nomFichierValide = "test.pdf";
-    private String nomFichierInvalideLongueur = StringUtils.leftPad("test.pdf", AnnexeValidateur.getLongueurMax(), 't');
+    private String nomFichierInvalideLongueur = StringUtils.leftPad("test.pdf", AnnexeMetadataValidateur.getLongueurMax(), 't');
     private String nomFichierInvalideNommage1 = "." + nomFichierValide;
     private String nomFichierInvalideNommage2 = nomFichierValide + ".";
     private String nomFichierInvalideNommage3 = "test*" + nomFichierValide;

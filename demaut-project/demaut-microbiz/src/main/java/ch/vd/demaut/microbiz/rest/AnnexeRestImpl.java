@@ -1,8 +1,9 @@
 package ch.vd.demaut.microbiz.rest;
 
 import ch.vd.demaut.domain.annexes.Annexe;
-import ch.vd.demaut.microbiz.progreSoa.AnnexetypesList;
+import ch.vd.demaut.domain.annexes.AnnexeMetadata;
 import ch.vd.demaut.microbiz.progreSoa.PorgreSoaService;
+import ch.vd.demaut.microbiz.progreSoa.RefRoot;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import ch.vd.pee.microbiz.core.utils.Json;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,7 +23,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
@@ -52,7 +52,7 @@ public class AnnexeRestImpl implements AnnexeRest {
 
         LOGGER.info("listerLesTypesAnnexes " + profession);
 
-        AnnexetypesList lesTypesAnnexes = porgreSoaService.listerLesTypesAnnexes();
+        RefRoot lesTypesAnnexes = porgreSoaService.listeSOATypesAnnexes();
         // TODO filtrer la liste selon profession (liste ordinaire VS simplifiée)
         return Response.ok(Json.newObject().put("response", viewWriter.writeValueAsString(lesTypesAnnexes))).build();
     }
@@ -66,7 +66,7 @@ public class AnnexeRestImpl implements AnnexeRest {
 
         LOGGER.info("listerLesAnnexes " + demandeReference);
 
-        Collection<Annexe> lesAnnexes = demandeAutorisationService.listerLesAnnexes(demandeReference);
+        Collection<AnnexeMetadata> lesAnnexes = demandeAutorisationService.listerLesAnnexeMetadatas(demandeReference);
         return Response.ok(Json.newObject().put("response", viewWriter.writeValueAsString(lesAnnexes))).build();
     }
 
@@ -81,8 +81,8 @@ public class AnnexeRestImpl implements AnnexeRest {
         LOGGER.info("afficherUneAnnexe " + annexeFileName);
 
         Annexe annexe = demandeAutorisationService.afficherUneAnnexe(demandeReference, annexeFileName);
-        return !StringUtils.isEmpty(demandeReference) && !StringUtils.isEmpty(annexeFileName) && annexe != null && annexe.getContenu().getContenu() != null
-                ? Response.ok(annexe.getContenu().getContenu(), MediaType.APPLICATION_OCTET_STREAM_TYPE).build()
+        return !StringUtils.isEmpty(demandeReference) && !StringUtils.isEmpty(annexeFileName) && annexe != null && annexe.getContenuAnnexe() != null
+                ? Response.ok(annexe.getContenuAnnexe(), MediaType.APPLICATION_OCTET_STREAM_TYPE).build()
                 : Response.noContent().build();
     }
 

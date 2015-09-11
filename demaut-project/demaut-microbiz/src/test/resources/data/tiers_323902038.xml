@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<root xmlns="http://www.vd.ch/ses/referentiel/tiers-v01" xmlns:ns2="http://www.ech.ch/xmlns/eCH-0097/1">
+    <moralPerson>
+        <organisationIdentification>
+            <ns2:uidOrganisationId>323902038</ns2:uidOrganisationId>
+        </organisationIdentification>
+        <organisation>Clinique Dentaire d'Aigle SA</organisation>
+        <adress>
+            <addressLine1>Chemin Sous le Grand Pré 2</addressLine1>
+            <addressLine2>Chablais Centre</addressLine2>
+            <town>Aigle</town>
+            <zipCode>1860</zipCode>
+        </adress>
+        <properties>
+            <typeEtab>Entité juridique</typeEtab>
+        </properties>
+    </moralPerson>
+</root>

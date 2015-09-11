@@ -29,12 +29,11 @@
 			<id name="id">
 				<generated-value strategy="AUTO"/>
 			</id>
-            <basic name="typeAnnexe"/>
+            <basic name="contenuAnnexe"><lob/></basic>
             <version name="version">
                 <column name="VERSION"/>
             </version>
-            <embedded name="nomFichier"/>
-            <embedded name="contenu"/>
+            <embedded name="annexeMetadata"/>
         </attributes>
 	</entity>
 
@@ -44,10 +43,11 @@
 		</attributes>
 	</embeddable>
 
-	<embeddable class="ch.vd.demaut.domain.annexes.ContenuAnnexe" access="FIELD">
+	<embeddable class="ch.vd.demaut.domain.annexes.AnnexeMetadata" access="FIELD">
 		<attributes>
-			<basic name="taille"/>
-			<basic name="contenu"><lob/></basic>
+			<basic name="tailleContenu"/>
+			<basic name="typeAnnexe"/>
+			<embedded name="nomFichier"/>
 		</attributes>
 	</embeddable>
 
