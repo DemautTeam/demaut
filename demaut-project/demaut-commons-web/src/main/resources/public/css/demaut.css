@@ -4,3 +4,22 @@ input.ng-invalid.ng-touched  {
     background-color: #FA787E;
     border-color: #d9534f;
 }
+
+ul.error-message {
+    margin-left: auto;
+    margin-right: auto;
+    width:80%;
+    margin-bottom:20px;
+    overflow:hidden;
+    border: #d9534f 1px solid;
+}
+ul.error-message li{
+    line-height:1.5em;
+    float:left;
+    display:inline;
+    width:50%;
+    text-align: center;
+    font-weight: bold;
+    font-size: larger;
+    color: #a94442;
+}
