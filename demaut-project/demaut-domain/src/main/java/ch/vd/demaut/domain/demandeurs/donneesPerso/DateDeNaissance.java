@@ -1,4 +1,4 @@
-package ch.vd.demaut.domain.demandes.autorisation.donneesPerso;
+package ch.vd.demaut.domain.demandeurs.donneesPerso;
 
 import ch.vd.demaut.commons.vo.LocalDateVO;
 import org.joda.time.LocalDate;
