@@ -1,24 +1,25 @@
 package ch.vd.demaut.domain.demandes;
 
-import ch.vd.demaut.commons.annotations.ValueObject;
-
-import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
+import ch.vd.demaut.commons.annotations.ValueObject;
+import ch.vd.demaut.commons.vo.StringVO;
+
+/**
+ * Référence unique d'une demande dans le système Demaut. Cette référence a une
+ * visibilité client et ne correspond pas à un ID technique en base de données.
+ *
+ */
 @ValueObject
-public class ReferenceDeDemande {
+public class ReferenceDeDemande extends StringVO {
 
     // ********************************************************* Fields
-    @NotNull
-    private String reference;
 
     // ********************************************************* Constructor
     public ReferenceDeDemande() {
-        this.reference = UUID.randomUUID().toString();
+        super(UUID.randomUUID().toString());
     }
-
+    
     // ********************************************************* Getters
-    public String getReference() {
-        return reference;
-    }
+    
 }

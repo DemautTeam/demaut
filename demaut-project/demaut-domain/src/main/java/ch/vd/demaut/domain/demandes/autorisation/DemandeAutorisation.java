@@ -1,46 +1,47 @@
 package ch.vd.demaut.domain.demandes.autorisation;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import javax.validation.constraints.NotNull;
+
 import ch.vd.demaut.commons.annotations.Aggregate;
-import ch.vd.demaut.domain.annexes.*;
+import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.domain.annexes.AnnexeValidateur;
+import ch.vd.demaut.domain.annexes.AnnexesObligatoires;
+import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
+import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.config.ConfigDemaut;
 import ch.vd.demaut.domain.demandes.Demande;
 import ch.vd.demaut.domain.demandes.DemandeFK;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandeurs.Demandeur;
 
-import javax.validation.constraints.NotNull;
-import java.util.Collection;
-
 @Aggregate
 public class DemandeAutorisation extends Demande {
 
     // ********************************************************* Fields
-    @NotNull
-    // TODO: Make it final (be careful with JPA)
     private ProfessionDeLaSante professionDeLaSante;
 
-    // TODO: Make it final (be careful with JPA)
     private Demandeur demandeur;
 
-    private transient ConfigDemaut config;
-
-    @NotNull
     private StatutDemandeAutorisation statutDemandeAutorisation;
 
-    private DateSoumissionDemande dateSoumissionDemande;
-
-    private ListeDesAnnexes listeDesAnnexes = new ListeDesAnnexes();
+    private List<Annexe> annexes;
+    
+    private transient ConfigDemaut config;
 
     // ********************************************************* Constructor
     //TODO: Remove me...but needs to refactor test and tests jpa
     public DemandeAutorisation() {
-        this(null, ProfessionDeLaSante.Medecin, null);
+    	super();
+    	this.annexes = new ArrayList<Annexe>();
     }
 
     public DemandeAutorisation(Demandeur demandeur, ProfessionDeLaSante profession, ConfigDemaut config) {
-        super();
+        this();
         this.referenceDeDemande = new ReferenceDeDemande();
-        this.listeDesAnnexes = new ListeDesAnnexes();
         this.statutDemandeAutorisation = StatutDemandeAutorisation.Brouillon;
         this.demandeur = demandeur;
         this.professionDeLaSante = profession;
@@ -56,75 +57,73 @@ public class DemandeAutorisation extends Demande {
      *
      * @param annexeALier
      */
-    public void attacherUneAnnexe(Annexe annexeALier) {
+    public void validerEtAttacherAnnexe(Annexe annexeALier) {
         AnnexeValidateur.getInstance().valider(annexeALier);
-        listeDesAnnexes.ajouterAnnexe(annexeALier);
-    }
-
-    public Annexe afficherUneAnnexe(String annexeFileName) {
-        return listeDesAnnexes.afficherUneAnnexe(annexeFileName);
-    }
-
-    public boolean supprimerUneAnnexe(final String supprimerUneAnnexe) {
-        return listeDesAnnexes.supprimerUneAnnexe(supprimerUneAnnexe);
+        getListeDesAnnexes().ajouterAnnexe(annexeALier);
     }
 
     /**
      * Retourne la liste des type d'annexe qui sont obligatoires pour la
      * complétude de cette demande
      */
-    public AnnexesObligatoires getAnnexesObligatoires() {
+    public AnnexesObligatoires extraireAnnexesObligatoiresConfigures() {
         return config.getAnnexesObligatoires(professionDeLaSante);
     }
 
     /**
-     * Détermine si tous les aannexes obligatoires sont remplis
+     * Détermine si tous les annexes obligatoires sont remplis
      *
      * @return
      */
     public boolean annexesObligatoiresCompletes() {
-        AnnexesObligatoires annexesObligatoires = getAnnexesObligatoires();
+        AnnexesObligatoires annexesObligatoires = extraireAnnexesObligatoiresConfigures();
         for (TypeAnnexe typeAnnexe : annexesObligatoires.listerTypesAnnexe()) {
-            Collection<Annexe> annexesParType = listeDesAnnexes.extraireAnnexesDeType(typeAnnexe);
+            Collection<Annexe> annexesParType = extraireAnnexesDeType(typeAnnexe);
             if (annexesParType.isEmpty()) {
                 return false;
             }
         }
         return true;
     }
+    
+	public Collection<Annexe> extraireAnnexesDeType(TypeAnnexe typeAnnexe) {
+        return getListeDesAnnexes().extraireAnnexesDeType(typeAnnexe);
+    }
 
+    public Collection<Annexe> listerLesAnnexes() {
+    	return getListeDesAnnexes().listerAnnexes();
+    }
 
     // ********************************************************* Private Methods
 
     // ********************************************************* Getters
-    public Collection<Annexe> listerLesAnnexes() {
-        return listeDesAnnexes.listerAnnexes();
-    }
 
+    @NotNull
     public ProfessionDeLaSante getProfessionDeLaSante() {
         return professionDeLaSante;
     }
 
-    public DateSoumissionDemande getDateSoumissionDemande() {
-        return dateSoumissionDemande;
-    }
-
+    @NotNull
     public Demandeur getDemandeur() {
         return demandeur;
     }
-
-    // ********************************************************* Technical
-    // methods
+    
+    @NotNull
+    public StatutDemandeAutorisation getStatutDemandeAutorisation() {
+    	return statutDemandeAutorisation;
+    }
+    
+    public ListeDesAnnexes getListeDesAnnexes() {
+    	return new ListeDesAnnexes(annexes);
+    }
+    
+    // ********************************************************* Setters
+    
+    
+    // ********************************************************* Technical methods
     @Override
     public DemandeFK getFunctionalKey() {
         return new DemandeFK(this);
     }
 
-    public StatutDemandeAutorisation getStatutDemandeAutorisation() {
-        return statutDemandeAutorisation;
-    }
-
-    public ListeDesAnnexes getListeDesAnnexes() {
-        return listeDesAnnexes;
-    }
 }

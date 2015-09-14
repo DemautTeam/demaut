@@ -30,9 +30,6 @@ public class DemandeAutorisationServiceTest extends TestCase {
     @Autowired
     private DemandeAutorisationService demandeAutorisationService;
 
-    @Autowired
-    private DataSource dataSource;
-
     private byte[] byteArray;
 
     @Before

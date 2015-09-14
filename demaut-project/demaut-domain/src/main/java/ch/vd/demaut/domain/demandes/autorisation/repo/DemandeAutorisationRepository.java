@@ -10,7 +10,5 @@ public interface DemandeAutorisationRepository extends GenericRepository<Demande
 
     DemandeAutorisation afficherUneDemandeAutorisation(String demandeReference);
 
-    DemandeAutorisation sauverLaDemandeAutorisation(DemandeAutorisation demandeAutorisation);
-
 }
 

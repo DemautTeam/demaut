@@ -1,25 +1,29 @@
 package ch.vd.demaut.domain.annexes;
 
-import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
+import org.apache.commons.collections.CollectionUtils;
+
 /**
  * Représente une liste d'annexes
  */
+
 public class ListeDesAnnexes {
 
     // ********************************************************* Fields
-    private List<Annexe> annexes = new ArrayList<>();
+    private List<Annexe> annexes;
 
     // ********************************************************* Constructor
+    
+    public ListeDesAnnexes(List<Annexe> annexes2) {
+    	this.annexes = annexes2;
+	}
 
-    // ********************************************************* Business
+	// ********************************************************* Business
     // methods
     public void ajouterAnnexe(Annexe annexe) {
         annexes.add(annexe);
@@ -30,7 +34,7 @@ public class ListeDesAnnexes {
     /**
      * Renvoie la liste des annexes
      */
-    public Collection<Annexe> listerAnnexes() {
+    public List<Annexe> listerAnnexes() {
         return Collections.unmodifiableList(annexes);
     }
 
@@ -42,25 +46,19 @@ public class ListeDesAnnexes {
         return CollectionUtils.select(annexes, new BeanPropertyValueEqualsPredicate("typeAnnexe", typeAnnexe));
     }
 
-    @SuppressWarnings("all")
-    public Annexe afficherUneAnnexe(final String annexeFileName) {
-        Object result = CollectionUtils.find(annexes, new Predicate() {
-            @Override
-            public boolean evaluate(Object input) {
-                return ((Annexe) input).getNomFichier().getNomFichier().equals(annexeFileName);
-            }
-        });
-        return result != null ? (Annexe) result : null;
+    public void supprimerUneAnnexeParNomFichier(final String nomFichierAnnexe) {
+    	Annexe annexeTrouvee = trouverAnnexeParNomFichier(nomFichierAnnexe);
+        annexes.remove(annexeTrouvee);
     }
+    
+	public Annexe trouverAnnexeParNomFichier(final String annexeFileName) {
+		NomFichier nomFichier = new NomFichier(annexeFileName);
+        Object annexeTrouvee = CollectionUtils.find(annexes, new BeanPropertyValueEqualsPredicate("nomFichier", nomFichier));
+        if (annexeTrouvee == null) {
+        	throw new AnnexeIntrouvableException();
+        }
+		return (Annexe)annexeTrouvee;
+	}
 
-    @SuppressWarnings("all")
-    public boolean supprimerUneAnnexe(final String annexeFileName) {
-        Object result = CollectionUtils.find(annexes, new Predicate() {
-            @Override
-            public boolean evaluate(Object input) {
-                return ((Annexe) input).getNomFichier().getNomFichier().equals(annexeFileName);
-            }
-        });
-        return result != null && annexes.remove(result);
-    }
+	// ********************************************************* Private
 }

@@ -31,20 +31,21 @@
 		<module>demaut-commons4test</module>
 		<module>demaut-domain</module>
 		<module>demaut-data-jpa</module>
-		<module>demaut-data-mock</module>
-		<module>demaut-services</module>
-		<module>demaut-bdd</module>
-		<module>demaut-microbiz</module>
-        <module>demaut-backoffice</module>
-        <module>demaut-cyber</module>
-        <module>demaut-commons-web</module>
-    </modules>
+<!-- 		<module>demaut-data-mock</module> -->
+<!-- 		<module>demaut-services</module> -->
+<!-- 		<module>demaut-bdd</module> -->
+<!-- 		<module>demaut-microbiz</module> -->
+<!-- 		<module>demaut-backoffice</module> -->
+<!-- 		<module>demaut-cyber</module> -->
+<!-- 		<module>demaut-commons-web</module> -->
+		<module>demaut-dummy</module>
+	</modules>
 
-    <prerequisites>
-        <maven>${maven.prerequisites.version}</maven>
-    </prerequisites>
+	<prerequisites>
+		<maven>${maven.prerequisites.version}</maven>
+	</prerequisites>
 
-    <properties>
+	<properties>
 		<!-- Encoding -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -54,24 +55,24 @@
 		<java.target>1.7</java.target>
 
 		<!-- Maven -->
-        <maven.prerequisites.version>3.0.5</maven.prerequisites.version>
+		<maven.prerequisites.version>3.0.5</maven.prerequisites.version>
 		<maven.compiler.plugin.version>3.0</maven.compiler.plugin.version>
 		<maven.surefire.plugin.version>2.18.1</maven.surefire.plugin.version>
 		<maven.jar.plugin.version>2.6</maven.jar.plugin.version>
-        <maven.resources.plugin.version>2.7</maven.resources.plugin.version>
-        <maven.assembly.plugin.version>2.5.3</maven.assembly.plugin.version>
-        <maven.cei.plugin.version>1.0.0</maven.cei.plugin.version>
-        <maven.release.plugin.version>2.5.1</maven.release.plugin.version>
-        <maven.dependency.plugin.version>2.9</maven.dependency.plugin.version>
-        <maven.surefire.plugin.version>2.18.1</maven.surefire.plugin.version>
-        <maven.openjpa.plugin.version>2.4.0</maven.openjpa.plugin.version>
-        <maven.cucumber.reporting.version>0.0.8</maven.cucumber.reporting.version>
-        <maven.bundle.plugin.version>2.5.4</maven.bundle.plugin.version>
-        <maven.war.plugin.version>2.3</maven.war.plugin.version>
-        <maven.google.replacer.plugin>1.5.3</maven.google.replacer.plugin>
-        <maven.failsafe.plugin.version>2.18.1</maven.failsafe.plugin.version>
+		<maven.resources.plugin.version>2.7</maven.resources.plugin.version>
+		<maven.assembly.plugin.version>2.5.3</maven.assembly.plugin.version>
+		<maven.cei.plugin.version>1.0.0</maven.cei.plugin.version>
+		<maven.release.plugin.version>2.5.1</maven.release.plugin.version>
+		<maven.dependency.plugin.version>2.9</maven.dependency.plugin.version>
+		<maven.surefire.plugin.version>2.18.1</maven.surefire.plugin.version>
+		<maven.openjpa.plugin.version>2.4.0</maven.openjpa.plugin.version>
+		<maven.cucumber.reporting.version>0.0.8</maven.cucumber.reporting.version>
+		<maven.bundle.plugin.version>2.5.4</maven.bundle.plugin.version>
+		<maven.war.plugin.version>2.3</maven.war.plugin.version>
+		<maven.google.replacer.plugin>1.5.3</maven.google.replacer.plugin>
+		<maven.failsafe.plugin.version>2.18.1</maven.failsafe.plugin.version>
 
-        <!-- Beans Validation -->
+		<!-- Beans Validation -->
 		<javax.validation.version>1.1.0.Final</javax.validation.version>
 		<javax.el.version>3.0.0</javax.el.version>
 		<hibernate.validator.version>5.1.3.Final</hibernate.validator.version>
@@ -81,9 +82,10 @@
 		<cucumber.reporting.version>0.1.0</cucumber.reporting.version>
 
 		<!-- Logging -->
-		<logback.version>1.1.3</logback.version>
-		<slf4j.version>1.7.5</slf4j.version>
 		<log4j.version>1.2.16</log4j.version>
+		<slf4j.version>1.7.5</slf4j.version>
+		<logback.version>1.1.3</logback.version>
+		<jcl-over-slf4j.version>1.7.5</jcl-over-slf4j.version>
 
 		<!-- Utilities -->
 		<joda.time.version>2.8.1</joda.time.version>
@@ -101,8 +103,8 @@
 		<camel.microbiz.version>2.0.0</camel.microbiz.version>
 		<esb.client.version>4.0</esb.client.version>
 		<cxf.rt.version>3.0.2</cxf.rt.version>
-        <javax.ws.rs.api.version>2.0.1</javax.ws.rs.api.version>
-        <selenium.firefox.driver.version>2.45.0</selenium.firefox.driver.version>
+		<javax.ws.rs.api.version>2.0.1</javax.ws.rs.api.version>
+		<selenium.firefox.driver.version>2.45.0</selenium.firefox.driver.version>
 		<activemq.version>5.10.0</activemq.version>
 
 		<apache.servicemix.bundles.spring.core.version>3.2.11.RELEASE_2</apache.servicemix.bundles.spring.core.version>
@@ -114,12 +116,12 @@
 		<spring.version>3.2.11.RELEASE</spring.version>
 		<spring.security.version>3.2.7.RELEASE</spring.security.version>
 
-        <!-- Spring Boot-->
-        <spring.framework.version>4.1.7.RELEASE</spring.framework.version>
-        <spring.boot.starter.version>1.2.5.RELEASE</spring.boot.starter.version>
+		<!-- Spring Boot -->
+		<spring.framework.version>4.1.7.RELEASE</spring.framework.version>
+		<spring.boot.starter.version>1.2.5.RELEASE</spring.boot.starter.version>
 
 		<!-- Persistence -->
-		<openjpa.version>2.3.0</openjpa.version>
+		<openjpa.version>2.4.0</openjpa.version>
 		<geronimo.jpa.spec.version>1.1.1</geronimo.jpa.spec.version>
 		<eclipse.persistence.version>2.1.0</eclipse.persistence.version>
 		<commons.dbcp.version>1.4</commons.dbcp.version>
@@ -131,17 +133,17 @@
 		<assertj.version>2.1.0</assertj.version>
 		<com.h2.version>1.4.186</com.h2.version>
 
-    </properties>
+	</properties>
 
 	<dependencies>
 
 		<!-- LOGGING -->
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${log4j.version}</version>
-            <scope>provided</scope>
-        </dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -151,15 +153,12 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>${logback.version}</version>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-core</artifactId>
-			<version>${logback.version}</version>
-			<scope>runtime</scope>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${jcl-over-slf4j.version}</version>
 		</dependency>
-
 	</dependencies>
 
 	<dependencyManagement>
@@ -173,136 +172,148 @@
 				<scope>provided</scope>
 			</dependency>
 
-            <!-- ESB -->
-            <dependency>
-                <groupId>ch.vd.technical.esb</groupId>
-                <artifactId>esb-client</artifactId>
-                <version>${esb.client.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>ch.vd.technical.esb</groupId>
-                <artifactId>esb-client</artifactId>
-                <version>${esb.client.version}</version>
-                <classifier>tests</classifier>
-                <scope>provided</scope>
-            </dependency>
+			<!-- ESB -->
+			<dependency>
+				<groupId>ch.vd.technical.esb</groupId>
+				<artifactId>esb-client</artifactId>
+				<version>${esb.client.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>ch.vd.technical.esb</groupId>
+				<artifactId>esb-client</artifactId>
+				<version>${esb.client.version}</version>
+				<classifier>tests</classifier>
+				<scope>provided</scope>
+			</dependency>
 
-            <!-- ServiceMix -->
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-core</artifactId>
-                <version>${camel.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-spring</artifactId>
-                <version>${camel.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-jetty</artifactId>
-                <version>${camel.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-jms</artifactId>
-                <version>${camel.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-ftp</artifactId>
-                <version>${camel.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-cxf</artifactId>
-                <version>${camel.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-http4</artifactId>
-                <version>${camel.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-jpa</artifactId>
-                <version>${camel.version}</version>
-                <scope>provided</scope>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.apache.geronimo.specs</groupId>
-                        <artifactId>geronimo-jpa_3.0_spec</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-bindy</artifactId>
-                <version>${camel.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.tika</groupId>
-                <artifactId>tika-core</artifactId>
-                <version>${tika.core.version}</version>
-                <scope>provided</scope>
-            </dependency>
+			<!-- ServiceMix -->
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-core</artifactId>
+				<version>${camel.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-spring</artifactId>
+				<version>${camel.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-jetty</artifactId>
+				<version>${camel.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-jms</artifactId>
+				<version>${camel.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-ftp</artifactId>
+				<version>${camel.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-cxf</artifactId>
+				<version>${camel.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-http4</artifactId>
+				<version>${camel.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-jpa</artifactId>
+				<version>${camel.version}</version>
+				<scope>provided</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>org.apache.geronimo.specs</groupId>
+						<artifactId>geronimo-jpa_3.0_spec</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-bindy</artifactId>
+				<version>${camel.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.tika</groupId>
+				<artifactId>tika-core</artifactId>
+				<version>${tika.core.version}</version>
+				<scope>provided</scope>
+			</dependency>
 
-            <!-- ActiveMQ-->
-            <dependency>
-                <groupId>org.apache.activemq</groupId>
-                <artifactId>activemq-pool</artifactId>
-                <version>${activemq.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.activemq</groupId>
-                <artifactId>activemq-kahadb-store</artifactId>
-                <version>${activemq.version}</version>
-                <scope>provided</scope>
-            </dependency>
+			<!-- ActiveMQ -->
+			<dependency>
+				<groupId>org.apache.activemq</groupId>
+				<artifactId>activemq-pool</artifactId>
+				<version>${activemq.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.activemq</groupId>
+				<artifactId>activemq-kahadb-store</artifactId>
+				<version>${activemq.version}</version>
+				<scope>provided</scope>
+			</dependency>
 
-            <!-- CXF -->
-            <dependency>
-                <groupId>org.apache.cxf</groupId>
-                <artifactId>cxf-rt-transports-http-jetty</artifactId>
-                <version>${cxf.rt.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.cxf</groupId>
-                <artifactId>cxf-rt-frontend-jaxrs</artifactId>
-                <version>${cxf.rt.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.ws.rs</groupId>
-                <artifactId>javax.ws.rs-api</artifactId>
-                <version>${javax.ws.rs.api.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.jaxrs</groupId>
-                <artifactId>jackson-jaxrs-json-provider</artifactId>
-                <version>${jackson.version}</version>
-                <scope>provided</scope>
-            </dependency>
+			<!-- CXF -->
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-transports-http-jetty</artifactId>
+				<version>${cxf.rt.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-frontend-jaxrs</artifactId>
+				<version>${cxf.rt.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.ws.rs</groupId>
+				<artifactId>javax.ws.rs-api</artifactId>
+				<version>${javax.ws.rs.api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.jaxrs</groupId>
+				<artifactId>jackson-jaxrs-json-provider</artifactId>
+				<version>${jackson.version}</version>
+				<scope>provided</scope>
+			</dependency>
 
 			<!-- Spring -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-core</artifactId>
 				<version>${spring.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-context</artifactId>
 				<version>${spring.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
@@ -325,82 +336,82 @@
 				<version>${spring.version}</version>
 			</dependency>
 
-            <!-- Spring Boot-->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-web</artifactId>
-                <version>${spring.boot.starter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-tomcat</artifactId>
-                <version>${spring.boot.starter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-actuator</artifactId>
-                <version>${spring.boot.starter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-jetty</artifactId>
-                <version>${spring.boot.starter.version}</version>
-            </dependency>
+			<!-- Spring Boot -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-web</artifactId>
+				<version>${spring.boot.starter.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-tomcat</artifactId>
+				<version>${spring.boot.starter.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-actuator</artifactId>
+				<version>${spring.boot.starter.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-jetty</artifactId>
+				<version>${spring.boot.starter.version}</version>
+			</dependency>
 
-            <!-- Persistence -->
-            <dependency>
-                <groupId>org.apache.openjpa</groupId>
-                <artifactId>openjpa</artifactId>
-                <version>${openjpa.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.persistence</groupId>
-                <artifactId>javax.persistence</artifactId>
-                <version>${eclipse.persistence.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.transaction</groupId>
-                <artifactId>jta</artifactId>
-                <version>${javax.jta.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-dbcp</groupId>
-                <artifactId>commons-dbcp</artifactId>
-                <version>${commons.dbcp.version}</version>
-            </dependency>
+			<!-- Persistence -->
+			<dependency>
+				<groupId>org.apache.openjpa</groupId>
+				<artifactId>openjpa</artifactId>
+				<version>${openjpa.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.persistence</groupId>
+				<artifactId>javax.persistence</artifactId>
+				<version>${eclipse.persistence.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.transaction</groupId>
+				<artifactId>jta</artifactId>
+				<version>${javax.jta.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-dbcp</groupId>
+				<artifactId>commons-dbcp</artifactId>
+				<version>${commons.dbcp.version}</version>
+			</dependency>
 
-            <!-- Validation -->
-            <dependency>
-                <groupId>javax.el</groupId>
-                <artifactId>javax.el-api</artifactId>
-                <version>${javax.el.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.glassfish</groupId>
-                <artifactId>javax.el</artifactId>
-                <version>${javax.el.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.validation</groupId>
-                <artifactId>validation-api</artifactId>
-                <version>${javax.validation.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-validator</artifactId>
-                <version>${hibernate.validator.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-validator-cdi</artifactId>
-                <version>${hibernate.validator.version}</version>
-            </dependency>
+			<!-- Validation -->
+			<dependency>
+				<groupId>javax.el</groupId>
+				<artifactId>javax.el-api</artifactId>
+				<version>${javax.el.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.glassfish</groupId>
+				<artifactId>javax.el</artifactId>
+				<version>${javax.el.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.validation</groupId>
+				<artifactId>validation-api</artifactId>
+				<version>${javax.validation.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>${hibernate.validator.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator-cdi</artifactId>
+				<version>${hibernate.validator.version}</version>
+			</dependency>
 
 			<!-- Utilities -->
 			<dependency>
@@ -424,38 +435,38 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>${commons.io.version}</version>
-            </dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons.io.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>joda-time</groupId>
 				<artifactId>joda-time</artifactId>
 				<version>${joda.time.version}</version>
 			</dependency>
 
-            <!-- Testing -->
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-test</artifactId>
-                <version>${camel.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-test-spring</artifactId>
-                <version>${camel.version}</version>
-            </dependency>
+			<!-- Testing -->
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-test</artifactId>
+				<version>${camel.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-test-spring</artifactId>
+				<version>${camel.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-test</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-test</artifactId>
-                <version>${spring.boot.starter.version}</version>
-            </dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-test</artifactId>
+				<version>${spring.boot.starter.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
@@ -477,105 +488,105 @@
 				<version>${com.h2.version}</version>
 			</dependency>
 		</dependencies>
-   </dependencyManagement>
+	</dependencyManagement>
 
 	<build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <version>${maven.assembly.plugin.version}</version>
-                    <configuration>
-                        <descriptors>
-                            <descriptor>assembly/assembly.xml</descriptor>
-                        </descriptors>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-war-plugin</artifactId>
-                    <version>${maven.war.plugin.version}</version>
-                    <configuration>
-                        <webResources>
-                            <resource>
-                                <filtering>true</filtering>
-                                <directory>src/main/webapp</directory>
-                                <includes>
-                                    <include>**/web.xml</include>
-                                    <!-- include any other file types you want to filter -->
-                                </includes>
-                            </resource>
-                        </webResources>
-                        <archive>
-                            <manifestEntries>
-                                <version>${project.version}</version>
-                            </manifestEntries>
-                        </archive>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>cei.aew.web</groupId>
-                    <artifactId>cei-maven-plugin</artifactId>
-                    <version>${maven.cei.plugin.version}</version>
-                    <configuration>
-                        <webresourceurl>http://exploitation.etat-de-vaud.ch/outils/web/ws/rest</webresourceurl>
-                        <filetoupload>${project.build.directory}/${project.build.finalName}-bin.zip</filetoupload>
-                        <from>xsicrz</from>
-                        <to>WEB</to>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.felix</groupId>
-                    <artifactId>maven-bundle-plugin</artifactId>
-                    <version>${maven.bundle.plugin.version}</version>
-                    <extensions>true</extensions>
-                    <executions>
-                        <execution>
-                            <id>wrap-my-dependency</id>
-                            <goals>
-                                <goal>wrap</goal>
-                            </goals>
-                            <configuration>
-                                <wrapImportPackage>;</wrapImportPackage>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>${spring.boot.starter.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-release-plugin</artifactId>
-                    <version>${maven.release.plugin.version}</version>
-                    <configuration>
-                        <goals>clean install assembly:single cei:upload</goals>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>${maven.failsafe.plugin.version}</version>
-                    <configuration>
-                        <testFailureIgnore>false</testFailureIgnore>
-                        <includes>
-                            <include>**/Cuke*Run*.java</include>
-                        </includes>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>integration-test</goal>
-                                <goal>verify</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>${maven.assembly.plugin.version}</version>
+					<configuration>
+						<descriptors>
+							<descriptor>assembly/assembly.xml</descriptor>
+						</descriptors>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>${maven.war.plugin.version}</version>
+					<configuration>
+						<webResources>
+							<resource>
+								<filtering>true</filtering>
+								<directory>src/main/webapp</directory>
+								<includes>
+									<include>**/web.xml</include>
+									<!-- include any other file types you want to filter -->
+								</includes>
+							</resource>
+						</webResources>
+						<archive>
+							<manifestEntries>
+								<version>${project.version}</version>
+							</manifestEntries>
+						</archive>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>cei.aew.web</groupId>
+					<artifactId>cei-maven-plugin</artifactId>
+					<version>${maven.cei.plugin.version}</version>
+					<configuration>
+						<webresourceurl>http://exploitation.etat-de-vaud.ch/outils/web/ws/rest</webresourceurl>
+						<filetoupload>${project.build.directory}/${project.build.finalName}-bin.zip</filetoupload>
+						<from>xsicrz</from>
+						<to>WEB</to>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>maven-bundle-plugin</artifactId>
+					<version>${maven.bundle.plugin.version}</version>
+					<extensions>true</extensions>
+					<executions>
+						<execution>
+							<id>wrap-my-dependency</id>
+							<goals>
+								<goal>wrap</goal>
+							</goals>
+							<configuration>
+								<wrapImportPackage>;</wrapImportPackage>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<version>${spring.boot.starter.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>${maven.release.plugin.version}</version>
+					<configuration>
+						<goals>clean install assembly:single cei:upload</goals>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-failsafe-plugin</artifactId>
+					<version>${maven.failsafe.plugin.version}</version>
+					<configuration>
+						<testFailureIgnore>false</testFailureIgnore>
+						<includes>
+							<include>**/Cuke*Run*.java</include>
+						</includes>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>integration-test</goal>
+								<goal>verify</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 
 		<plugins>
 			<plugin>
@@ -626,12 +637,12 @@
 				<version>${maven.surefire.plugin.version}</version>
 				<configuration>
 					<argLine>-XX:-UseSplitVerifier</argLine>
-                    <includes>
-                        <include>**/*Test.java</include>
-                    </includes>
-                    <excludes>
-                        <exclude>**/Cuke*Run*.java</exclude>
-                    </excludes>
+					<includes>
+						<include>**/*Test.java</include>
+					</includes>
+					<excludes>
+						<exclude>**/Cuke*Run*.java</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -10,4 +10,4 @@ CLASSPATH="./*:$DEMAUT_COMMONS/target/*:$DEMAUT_DOMAIN/target/*:$DEMAUT_DATA_JPA
 
 TOOL=org.apache.openjpa.jdbc.meta.MappingTool
 
-java -cp $CLASSPATH $TOOL -sa build -sql demaut-h2.ddl.sql -p persistence-h2.xml
+java -cp $CLASSPATH $TOOL -sa build -sql demaut-h2-openjpa.ddl -p persistence-h2.xml

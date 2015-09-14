@@ -22,7 +22,7 @@ public interface GenericRepository<E, I extends Serializable> extends GenericRea
      * @param entity
      * @return
      */
-    E store(E entity);
+    void store(E entity);
 
     /**
      * Persiste une liste de {@link Entity}.
@@ -64,7 +64,7 @@ public interface GenericRepository<E, I extends Serializable> extends GenericRea
      * @param entity
      * @return l'entité validée et persistée
      */
-    E validateAndStore(E entity);
+    void validateAndStore(E entity);
 
     /**
      * Valide puis persiste une liste de {@link Entity}. Renvoie une exception {@link DomainException} si une entité de

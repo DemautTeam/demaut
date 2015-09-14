@@ -5,19 +5,19 @@ import ch.vd.demaut.commons.fk.FunctionalKeyAbstract;
 public class DemandeurFK extends FunctionalKeyAbstract<Demandeur> {
 
     // ********************************************************* Fields
-    private NomEtPrenomDemandeur nomsEtPrenoms;
+    private Login login;
 
     // ********************************************************* Constructor
 
     public DemandeurFK(Demandeur demandeur) {
         super();
-        this.nomsEtPrenoms = demandeur.getNomsEtPrenoms();
+        this.login = demandeur.getLogin();
     }
 
     // ********************************************************* Getters
 
-    public NomEtPrenomDemandeur getNomsEtPrenoms() {
-        return nomsEtPrenoms;
-    }
+    public Login getLogin() {
+		return login;
+	}
 
 }

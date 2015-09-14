@@ -14,7 +14,7 @@ public interface DemandeAutorisationService {
 
     DemandeAutorisation afficherUneDemandeAutorisation(String demandeReference);
 
-    DemandeAutorisation sauverLaDemandeAutorisation(DemandeAutorisation demandeAutorisation);
+    void sauverLaDemandeAutorisation(DemandeAutorisation demandeAutorisation);
 
     Collection<Annexe> listerLesAnnexes(String demandeReference);
 

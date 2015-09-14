@@ -17,6 +17,8 @@ public class DemandeAutorisationFactory {
     }
 
     public DemandeAutorisation inititierDemandeAutorisation() {
-        return new DemandeAutorisation();
+        DemandeAutorisation demande = new DemandeAutorisation();
+        demande.generateReference();
+		return demande;
     }
 }

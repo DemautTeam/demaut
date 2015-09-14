@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm
+				 http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<!-- 
+	OpenJPA limitations / bugs :
+	- Not working well with access="FIELD"
+	- <enumerated>STRING not working well when used in a OneToMany
+	- OneToMany + EAGER not working
+	- OneToMany + LAZY => create null list if detached
+	 -->
+
+	<mapped-superclass
+		class="ch.vd.demaut.domain.dummy.EntityFunctionalKeyAware">
+		<attributes>
+			<id name="id">
+				<generated-value strategy="AUTO" />
+			</id>
+			<version name="version"></version>
+		</attributes>
+	</mapped-superclass>
+
+	<mapped-superclass class="ch.vd.demaut.commons.vo.BaseValueObjectWithId">
+		<attributes>
+			<id name="id">
+				<generated-value strategy="AUTO" />
+			</id>
+		</attributes>
+	</mapped-superclass>
+
+	<entity class="ch.vd.demaut.domain.annexes.Annexe">
+		<attributes>
+			<basic name="typeAnnexe">
+				<!-- Bug OpenJPA if in STRING -->  
+				<enumerated>ORDINAL</enumerated>
+			</basic>
+			<transient name="contenu" />
+			<transient name="nomFichier" />
+		</attributes>
+	</entity>
+
+	<entity class="ch.vd.demaut.domain.dummy.DummyDemandeAut">
+		<attributes>
+			<basic name="professionDeLaSante">
+				<enumerated>STRING</enumerated>
+			</basic>
+			<basic name="statutDemandeAutorisation">
+				<enumerated>STRING</enumerated>
+			</basic>
+			<many-to-one name="demandeur">
+			</many-to-one>
+			<!--  On ne peut pas utiliser EAGER : https://issues.apache.org/jira/browse/OPENJPA-1908 -->
+			<one-to-many name="annexes" fetch="LAZY">
+				<cascade>
+					<cascade-all/>
+				</cascade>		
+			</one-to-many>
+		</attributes>
+	</entity>
+
+	<entity class="ch.vd.demaut.domain.demandeurs.Demandeur">
+		<table name="DEMANDEUR" />
+		<attributes>
+			<embedded name="login"></embedded>
+			<transient name="nomsEtPrenoms" />
+		</attributes>
+	</entity>
+
+	<entity class="ch.vd.demaut.domain.dummy.DummyEntity">
+		<table name="DUMMY_ENTITY" />
+		<attributes>
+			<embedded name="dummyRef" />
+		</attributes>
+	</entity>
+
+	<entity class="ch.vd.demaut.domain.dummy.DummyDemande">
+		<table name="DUMMY_DEM" />
+		<inheritance strategy="SINGLE_TABLE" />
+		<attributes>
+			<embedded name="referenceDeDemande" />
+		</attributes>
+	</entity>
+
+
+	<embeddable class="ch.vd.demaut.domain.demandeurs.Login">
+		<attributes>
+			<basic name="value" />
+		</attributes>
+	</embeddable>
+
+	<embeddable class="ch.vd.demaut.domain.demandes.ReferenceDeDemande">
+		<attributes>
+			<basic name="reference" />
+		</attributes>
+	</embeddable>
+
+	<embeddable class="ch.vd.demaut.domain.dummy.DummyRef">
+		<attributes>
+			<basic name="ref" />
+		</attributes>
+	</embeddable>
+
+
+
+
+</entity-mappings>

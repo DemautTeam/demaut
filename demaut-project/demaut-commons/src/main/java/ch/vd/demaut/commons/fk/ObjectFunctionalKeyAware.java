@@ -15,9 +15,9 @@ public abstract class ObjectFunctionalKeyAware implements FunctionalKeyAware {
         if (o == null) {
             return false;
         }
-        if (getClass() != o.getClass()) {
-            return false;
-        }
+//        if (getClass() != o.getClass()) {
+//            return false;
+//        }
 
         return this.getFunctionalKey().equals(((ObjectFunctionalKeyAware) o).getFunctionalKey());
     }

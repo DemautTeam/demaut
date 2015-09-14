@@ -33,12 +33,7 @@ public class DemandeAutorisationRepositoryMock extends GenericFKARepositoryMock<
 
     @Override
     public DemandeAutorisation afficherUneDemandeAutorisation(String demandeReference) {
-        //when()
         return null; // TODO
     }
 
-    @Override
-    public DemandeAutorisation sauverLaDemandeAutorisation(DemandeAutorisation demandeAutorisation) {
-        return null; // TODO
-    }
 }

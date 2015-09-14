@@ -4,9 +4,6 @@ import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.BaseValueObjectWithId;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
 /**
  * Représente une Annexe associée à une demande {@link DemandeAutorisation}
  */
@@ -16,15 +13,10 @@ public class Annexe extends BaseValueObjectWithId {
     // ********************************************************* Static Fields
 
     // ********************************************************* Fields
-    @NotNull
     private TypeAnnexe typeAnnexe;
 
-    @NotNull
-    @Valid
     private ContenuAnnexe contenu;
 
-    @NotNull
-    @Valid
     private NomFichier nomFichier;
 
     // ********************************************************* Constructor

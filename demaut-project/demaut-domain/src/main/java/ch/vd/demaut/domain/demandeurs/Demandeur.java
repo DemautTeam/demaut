@@ -11,10 +11,18 @@ public class Demandeur extends EntityFunctionalKeyAware {
 
     private NomEtPrenomDemandeur nomsEtPrenoms;
 
-    // ********************************************************* Constructor
+    // ********************************************************* Constructors
+    protected Demandeur(){
+    }
+    
     public Demandeur(NomEtPrenomDemandeur nomsEtPrenoms) {
         super();
         this.nomsEtPrenoms = nomsEtPrenoms;
+    }
+    
+    public Demandeur(Login login) {
+        super();
+        this.login = login;
     }
 
     // ********************************************************* Getters

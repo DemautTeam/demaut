@@ -20,8 +20,7 @@ public class DemandeAutorisationServiceMock implements DemandeAutorisationServic
     }
 
     @Override
-    public DemandeAutorisation sauverLaDemandeAutorisation(DemandeAutorisation demandeAutorisation) {
-        return null; //TODO
+    public void sauverLaDemandeAutorisation(DemandeAutorisation demandeAutorisation) {
     }
 
     @Override

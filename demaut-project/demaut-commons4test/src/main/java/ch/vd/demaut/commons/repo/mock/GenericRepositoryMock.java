@@ -50,7 +50,7 @@ public abstract class GenericRepositoryMock<T extends Entity<ID>, ID extends Ser
      * {@link T} n'est pas persisté si elle existe déjà dans le repository.
      */
     @Override
-    public T store(T entity) {
+    public void store(T entity) {
         if (findBy(entity.getId()) == null) {
             ID nextID = getNextID();
             if (nextID != null) {
@@ -60,7 +60,6 @@ public abstract class GenericRepositoryMock<T extends Entity<ID>, ID extends Ser
             delete(entity);
         }
         entities.put(entity.getId(), entity);
-        return entity;
     }
 
     @Override
@@ -77,10 +76,10 @@ public abstract class GenericRepositoryMock<T extends Entity<ID>, ID extends Ser
      * @return L'entité persistée et null si elle n'est pas validée
      */
     @Override
-    public T validateAndStore(T entity) {
+    public void validateAndStore(T entity) {
         Set<ConstraintViolation<T>> constraintsViolation = validate(entity);
         if (constraintsViolation == null || constraintsViolation.size() == 0) {
-            return store(entity);
+            store(entity);
         } else {
             throw new ValidationEntityException();
         }

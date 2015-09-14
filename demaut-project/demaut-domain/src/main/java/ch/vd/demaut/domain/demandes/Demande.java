@@ -7,8 +7,21 @@ public abstract class Demande extends EntityFunctionalKeyAware {
     // ********************************************************* Fields
     protected ReferenceDeDemande referenceDeDemande;
 
+    // ********************************************************* Constructeur
+    
+    protected Demande() {
+    }
+
+    // ********************************************************* Business Methodes
+    
+    public void generateReference() {
+    	referenceDeDemande = new ReferenceDeDemande();
+    }
+    
+    
     // ********************************************************* Getters
     public ReferenceDeDemande getReferenceDeDemande() {
         return referenceDeDemande;
     }
+
 }

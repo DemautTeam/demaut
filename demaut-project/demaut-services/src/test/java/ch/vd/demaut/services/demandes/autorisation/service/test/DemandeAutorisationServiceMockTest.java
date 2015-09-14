@@ -38,7 +38,8 @@ public class DemandeAutorisationServiceMockTest extends TestCase {
     @Ignore
     @Test
     public void shouldSauverLaDemandeAutorisation() throws Exception {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.sauverLaDemandeAutorisation(new DemandeAutorisation(null, ProfessionDeLaSante.Medecin, null));
+    	DemandeAutorisation demandeAutorisation = new DemandeAutorisation(null, ProfessionDeLaSante.Medecin, null);
+        demandeAutorisationService.sauverLaDemandeAutorisation(demandeAutorisation);
         assertThat(demandeAutorisation).isNotNull();
     }
 }

@@ -34,18 +34,19 @@ public abstract class GenericRepositoryImpl<T, I extends Serializable> implement
     public void setEntityManager(final EntityManager entityManager) {
         this.entityManager = entityManager;
     }
-
+    
     @Override
     @Transactional(readOnly = true)
     public T findBy(I id) {
-        return this.getEntityManager().find(this.entityClass, id);
+        T entity = getEntityManager().find(this.entityClass, id);
+		return entity;
     }
 
     @Override
     @SuppressWarnings("all")
     @Transactional(readOnly = true)
     public List<T> findAll() {
-        Query typedQuery = this.getEntityManager()
+        Query typedQuery = getEntityManager()
                 .createQuery("select o from " + entityClass.getSimpleName() + " as o");
         return typedQuery.getResultList();
     }
@@ -53,7 +54,7 @@ public abstract class GenericRepositoryImpl<T, I extends Serializable> implement
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
     public List<T> findRange(int[] range) {
-        Query typedQuery = this.getEntityManager()
+        Query typedQuery = getEntityManager()
                 .createQuery("select o from " + entityClass.getSimpleName() + " as o");
         typedQuery.setMaxResults(range[1] - range[0]);
         typedQuery.setFirstResult(range[0]);
@@ -63,48 +64,47 @@ public abstract class GenericRepositoryImpl<T, I extends Serializable> implement
     @Override
     @Transactional(readOnly = true)
     public long countAll() {
-        Query typedQuery = this.getEntityManager()
+        Query typedQuery = getEntityManager()
                 .createQuery("select count(o) from " + entityClass.getSimpleName() + " o");
         return ((Long) typedQuery.getSingleResult()).intValue();
     }
 
     @Override
     @Transactional
-    public T store(T entity) {
-        this.getEntityManager().persist(entity);
-        return entity;
+    public void store(T entity) {
+        getEntityManager().persist(entity);
     }
 
     @Override
     @Transactional
     public void storeAll(Collection<? extends T> entities) {
-        this.getEntityManager().persist(entities);
+        getEntityManager().persist(entities);
     }
 
     @Override
     @Transactional
     public void delete(T entity) {
-        this.getEntityManager().remove(entity);
+        getEntityManager().remove(entity);
     }
 
     @Override
     @Transactional
     public void delete(I id) {
-        T entity = this.getEntityManager().find(this.entityClass, id);
+        T entity = getEntityManager().find(this.entityClass, id);
         if (entity != null) {
-            this.getEntityManager().remove(entity);
+            getEntityManager().remove(entity);
         }
     }
 
     @Override
     @Transactional
     public void deleteAll() {
-        Query typedQuery = this.getEntityManager()
+        Query typedQuery = getEntityManager()
                 .createQuery("select o from " + entityClass.getSimpleName() + " as o");
         @SuppressWarnings("unchecked")
         List<T> entities = typedQuery.getResultList();
         if (entities != null && !entities.isEmpty()) {
-            this.getEntityManager().remove(entities);
+            getEntityManager().remove(entities);
         }
     }
 
@@ -116,10 +116,10 @@ public abstract class GenericRepositoryImpl<T, I extends Serializable> implement
 
     @Override
     @Transactional
-    public T validateAndStore(T entity) {
+    public void validateAndStore(T entity) {
         Set<ConstraintViolation<T>> constraintsViolation = validate(entity);
         if (constraintsViolation == null || constraintsViolation.size() == 0) {
-            return store(entity);
+            store(entity);
         } else {
             throw new ValidationEntityException();
         }
