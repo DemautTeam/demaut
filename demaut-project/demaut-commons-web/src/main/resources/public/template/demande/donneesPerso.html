@@ -4,11 +4,8 @@
         <legend>Veuillez saisir vos Données Personnelles :</legend>
         <div>
             <ng-form name="donneesPerso.personalDataForm">
-                <div>
-                    <div ng-show="donneesPerso.personalDataForm.$pristine">
-                        Formulaire pristine
-                    </div>
-                    <ul ng-show="!donneesPerso.personalDataForm.$pristine">
+                <div ng-hide="donneesPerso.personalDataForm.$pristine || donneesPerso.personalDataForm.$valid">
+                    <ul class="error-message">
                         <li ng-show="donneesPerso.personalDataForm.nom.$touched && donneesPerso.personalDataForm.nom.$error.required">
                             Nom obligatoire !
                         </li>
