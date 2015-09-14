@@ -175,6 +175,11 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-rs-security-cors</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>javax.ws.rs</groupId>
             <artifactId>javax.ws.rs-api</artifactId>
             <scope>provided</scope>
@@ -309,6 +314,7 @@
                 <version>${maven.jaxb.plugin.version}</version>
                 <executions>
                     <execution>
+                        <id>tiers</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
@@ -320,6 +326,25 @@
                             <schemaExcludes>
                                 <include>*.xs</include>
                             </schemaExcludes>
+                            <disableXmlSecurity>true</disableXmlSecurity>
+                            <generateDirectory>${project.build.directory}/generated-sources/xjc1</generateDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>demaut</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <schemaDirectory>src/main/xsd</schemaDirectory>
+                            <schemaIncludes>
+                                <include>demaut-1-0.xsd</include>
+                            </schemaIncludes>
+                            <schemaExcludes>
+                                <include>*.xs</include>
+                            </schemaExcludes>
+                            <generatePackage>ch.vd.ses.referentiel.demaut_1_0</generatePackage>
+                            <generateDirectory>${project.build.directory}/generated-sources/xjc2</generateDirectory>
                             <disableXmlSecurity>true</disableXmlSecurity>
                         </configuration>
                     </execution>

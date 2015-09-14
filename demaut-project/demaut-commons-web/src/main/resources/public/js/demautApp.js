@@ -139,49 +139,46 @@ ngDemautApp
             }
         };
     }])
-    .controller('ProfessionSanteController', ['$scope', '$rootScope', '$routeParams', '$location', '$log', 'professionTest', function ($scope, $rootScope, $routeParams, $location, $log, professionTest) {
+    .controller('ProfessionSanteController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', 'professionTest', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log, professionTest) {
         $rootScope.contextMenu = "Profession Santé";
         $scope.indexStep = 2;
         this.name = "ProfessionSanteController";
         this.params = $routeParams;
         $scope.professionData = {};
-        $scope.professionData.professions = [
-            "Chiropraticien",
-            "Dieteticien",
-            "Droguiste",
-            "Ergotherapeute",
-            "Hygieniste dentaire",
-            "Infirmier",
-            "Logopediste orthophoniste",
-            "Masseur medical",
-            "Medecin",
-            "Medecin dentiste",
-            "Opticien",
-            "Orthoptiste",
-            "Osteopathe",
-            "Pharmacien",
-            "Physiotherapeute",
-            "Podologue",
-            "Psychotherapeute mon medecin",
-            "SageFemme",
-            "Technicien en analyses biomedicales",
-            "Technicien en radiologie medicale",
-            "Technicien en salle d'operation",
-            "Therapeute en psychomotricite"
-        ];
+        $scope.professionData.demandeReference = "toBeDefinedLater";
+        $scope.professionData.profession = null;
+        $scope.professionData.professions = [];
         $scope.professionData.professionsUni = [
+            "Liste locale",
             "Chiropraticien",
             "Medecin",
             "Medecin dentiste",
             "Pharmacien"
         ];
+
+        $http.get(urlPrefix + '/profession/professionsList').
+            success(function (data, status, headers, config) {
+                $scope.professionData.professions = angular.fromJson(data.response);
+            }).
+            error(function (data, status, headers, config) {
+                $rootScope.error ='Error downloading ../profession/professionsList';
+            });
+
+        $http.get(urlPrefix + '/profession/donnees/' + $scope.professionData.demandeReference).
+            success(function (data, status, headers, config) {
+                $scope.professionData.profession = angular.fromJson(data.response);
+            }).
+            error(function (data, status, headers, config) {
+                $rootScope.error ='Error downloading ../profession/donnees/' + $scope.professionData.demandeReference;
+            });
+
         $scope.previewStep = function(){
             $scope.indexStep -= 1;
             $location.path('/Demaut/demande/donneesPerso');
         };
         $scope.nextStep = function(){
             if ($scope.professionSante.professionDataForm.$valid &&
-                !(professionTest.isProfessionMedicaleUni($scope.professionData.profession, $scope.professionData.professionsUni) && ($scope.professionData.gln == null || $scope.professionData.gln == undefined))) {
+                !(professionTest.isProfessionMedicaleUni($scope.professionData.profession.libl, $scope.professionData.professionsUni) && ($scope.professionData.gln == null || $scope.professionData.gln == undefined))) {
                 $log.info('Formulaire valide !');
                 $scope.indexStep += 1;
                 $location.path('/Demaut/demande/donneesProf');
@@ -226,12 +223,12 @@ ngDemautApp
             "Casier judiciaire"
         ];
 
-        $http.get(urlPrefix + '/services/annexes/typesList/' + $scope.annexesData.profession).
+        $http.get(urlPrefix + '/annexes/typesList/' + $scope.annexesData.profession).
             success(function (data, status, headers, config) {
                 $scope.annexesData.annexeTypes = angular.fromJson(data.response);
             }).
             error(function (data, status, headers, config) {
-                $rootScope.error ='Error downloading ../services/annexes/typesList/' + $scope.annexesData.profession;
+                $rootScope.error ='Error downloading ../annexes/typesList/' + $scope.annexesData.profession;
             });
 
         $scope.annexesData.referenceFiles = [];
@@ -318,12 +315,12 @@ ngDemautApp
         };
 
         $scope.viewAnnexe = function (file, annexeType) {
-            $http.get(urlPrefix + '/services/annexes/afficher/' + $scope.annexesData.demandeReference + '/' + file.name.replace(/\s/g, ''), {responseType:'arraybuffer'}).
+            $http.get(urlPrefix + '/annexes/afficher/' + $scope.annexesData.demandeReference + '/' + file.name.replace(/\s/g, ''), {responseType:'arraybuffer'}).
                 success(function (data, status, headers, config) {
                     displayAnnexeFromBinary(data);
                 }).
                 error(function (data, status, headers, config) {
-                    alert('Error downloading ../services/annexes/afficher/' + file.name);
+                    alert('Error downloading ../annexes/afficher/' + file.name);
                 });
 
             function displayAnnexeFromBinary(file){
@@ -357,12 +354,12 @@ ngDemautApp
         };
 
         function doDeleteFile(file, annexeFileType) {
-            $http.get(urlPrefix + '/services/annexes/supprimer/' + $scope.annexesData.demandeReference + '/' + file.name.replace(/\s/g, '') + '/' + annexeFileType)
+            $http.get(urlPrefix + '/annexes/supprimer/' + $scope.annexesData.demandeReference + '/' + file.name.replace(/\s/g, '') + '/' + annexeFileType)
                 .success(function (data, status, headers, config) {
                     $rootScope.error = 'Une annexe a été supprimée avec succès: \n Status :' +  status;
                 })
                 .error(function (data, status, headers, config) {
-                    $rootScope.error = 'Error ' + urlPrefix + '/services/annexes/supprimer/ \n Status :' +  status;
+                    $rootScope.error = 'Error ' + urlPrefix + '/annexes/supprimer/ \n Status :' +  status;
                 });
         };
 
@@ -375,7 +372,7 @@ ngDemautApp
             formData.append("annexeFileSize", currentFetchedFile.size);
             formData.append("annexeFileType", currentFetchedFile.type);
             formData.append("annexeType", currentFetchedFile.typeAnnexe);
-            $http.post(urlPrefix + '/services/annexes/attacher', formData, {
+            $http.post(urlPrefix + '/annexes/attacher', formData, {
                 transformRequest: angular.identity,
                 headers: {'Content-Type': 'multipart/form-data'}
             })
@@ -383,7 +380,7 @@ ngDemautApp
                     $rootScope.error = 'Une annexe a été envoyée avec succès: \n Status :' +  status;
                 })
                 .error(function (data, status, headers, config) {
-                    $rootScope.error = 'Error Upload: [' + urlPrefix + '/services/annexes/attacher' +  status;
+                    $rootScope.error = 'Error Upload: [' + urlPrefix + '/annexes/attacher' +  status;
                 });
         };
     }])
@@ -404,7 +401,7 @@ ngDemautApp
 
 ngDemautApp
     .run(function($rootScope, $sce, $location, $http, urlMain) {
-        $http.get(urlMain + '/camel/main')
+        $http.get(urlMain + '/service/main')
             .success(function (data, status, headers, config) {
                 var fromJson = angular.fromJson(data.main);
                 if (fromJson != null && fromJson != undefined) {

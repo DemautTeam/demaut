@@ -4,6 +4,7 @@ import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.AnnexeMetadata;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
 import ch.vd.demaut.domain.demandes.autorisation.factory.DemandeAutorisationFactory;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
@@ -95,5 +96,11 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
             }
         }
         return false;
+    }
+
+    @Override
+    public ProfessionDeLaSante afficherDonneesProfession(String demandeReference) {
+        DemandeAutorisation demandeAutorisation = this.afficherUneDemandeAutorisation(demandeReference);
+        return demandeAutorisation != null ? demandeAutorisation.getProfessionDeLaSante() : null;
     }
 }

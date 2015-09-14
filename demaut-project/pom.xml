@@ -281,6 +281,13 @@
                 <groupId>org.apache.cxf</groupId>
                 <artifactId>cxf-rt-frontend-jaxrs</artifactId>
                 <version>${cxf.rt.version}</version>
+
+            </dependency>
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-rs-security-cors</artifactId>
+                <version>${cxf.rt.version}</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>javax.ws.rs</groupId>

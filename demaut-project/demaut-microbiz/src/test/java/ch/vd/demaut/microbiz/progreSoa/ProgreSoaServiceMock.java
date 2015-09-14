@@ -1,15 +1,11 @@
 package ch.vd.demaut.microbiz.progreSoa;
 
-import ch.vd.ses.referentiel.tiers_v01.Root;
 import org.apache.commons.io.IOUtils;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
 import java.io.FileInputStream;
-import java.io.StringWriter;
 
 @Path("/")
 public class ProgreSoaServiceMock {

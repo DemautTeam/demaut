@@ -81,9 +81,14 @@ public class DemandeAutorisationServiceMock implements DemandeAutorisationServic
         return true;
     }
 
+    @Override
+    public ProfessionDeLaSante afficherDonneesProfession(String demandeReference) {
+        when(INSTANCE.afficherDonneesProfession(demandeReference)).thenReturn(ProfessionDeLaSante.Medecin);
+        return null;
+    }
+
     private DemandeAutorisation mockDemandeAutorisation() {
         DemandeAutorisation demandeAutorisation = mock(DemandeAutorisation.class);
-        when(demandeAutorisation.getProfessionDeLaSante()).thenReturn(ProfessionDeLaSante.Medecin);
         when(demandeAutorisation.getReferenceDeDemande()).thenReturn(new ReferenceDeDemande());
         when(demandeAutorisation.getDateSoumissionDemande()).thenReturn(new DateSoumissionDemande(2015, 11, 11, 12, 15, 25));
         when(demandeAutorisation.getListeDesAnnexes()).thenReturn(listeDesAnnexes());
