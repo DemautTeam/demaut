@@ -65,7 +65,7 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
     @Etantdonné("^la taille maximale de fichier acceptée \"([^\"]*)\"$")
     public void la_taille_maximale_de_fichier_acceptée(Long tailleMaxEnMB) throws Throwable {
         long tailleMaxEnOctets = tailleMaxEnMB * 1024 * 1024;
-        assertThat(tailleMaxEnOctets).isEqualTo(AnnexeValidateur.getTailleMax());
+        assertThat(tailleMaxEnOctets).isEqualTo(AnnexeMetadataValidateur.getTailleMax());
     }
 
     @Etantdonné("^la liste des annexes initiale \"([^\"]*)\" attachées à la demande en cours$")

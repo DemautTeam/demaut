@@ -13,19 +13,12 @@ import javax.validation.constraints.NotNull;
 @ValueObject
 public class Annexe extends BaseValueObjectWithId {
 
-    // ********************************************************* Static Fields
-
-    // ********************************************************* Fields
     @NotNull
-    private TypeAnnexe typeAnnexe;
+    private byte[] contenuAnnexe;
 
     @NotNull
     @Valid
-    private ContenuAnnexe contenu;
-
-    @NotNull
-    @Valid
-    private NomFichier nomFichier;
+    private AnnexeMetadata annexeMetadata;
 
     // ********************************************************* Constructor
 
@@ -34,30 +27,28 @@ public class Annexe extends BaseValueObjectWithId {
 
     public Annexe(TypeAnnexe typeAnnexe, String nomFichier, byte[] contenu) {
         super();
-        this.typeAnnexe = typeAnnexe;
-        this.nomFichier = new NomFichier(nomFichier);
-        this.contenu = new ContenuAnnexe(contenu);
+        this.contenuAnnexe = contenu;
+        this.annexeMetadata = new AnnexeMetadata(typeAnnexe, nomFichier, calculerTaille(contenu));
     }
 
     // ********************************************************* Getters
 
-    public TypeAnnexe getTypeAnnexe() {
-        return typeAnnexe;
+    public AnnexeMetadata getAnnexeMetadata() {
+        return annexeMetadata;
     }
 
-    public ContenuAnnexe getContenu() {
-        return contenu;
+    public byte[] getContenuAnnexe() {
+        return contenuAnnexe;
     }
-
-    public long getTaille() {
-        return contenu.getTaille();
-    }
-
-    public NomFichier getNomFichier() {
-        return nomFichier;
-    }
-
     // ********************************************************* Technical methods
+
+    private long calculerTaille(byte[] contenu) {
+        if (contenu == null) {
+            return 0L;
+        } else {
+            return contenu.length;
+        }
+    }
 
     // ********************************************************* Private Methods
 }

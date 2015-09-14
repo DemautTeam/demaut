@@ -21,13 +21,13 @@ ngDemautApp
             })
             .when('/Demaut/formulaire', {
                 templateUrl: 'template/formulaire.html',
-                controller: 'DemandeController',
+                controller: 'FormulaireController',
                 controllerAs: 'demande'
             })
-            .when('/Demaut/demande', {
-                templateUrl: 'template/demande/infoDemande.html',
-                controller: 'DemandeController',
-                controllerAs: 'demande'
+            .when('/Demaut/demande/professionSante', {
+                templateUrl: 'template/demande/professionSante.html',
+                controller: 'ProfessionSanteController',
+                controllerAs: 'professionSante'
             })
             .when('/Demaut/demande/donneesPerso', {
                 templateUrl: 'template/demande/donneesPerso.html',
@@ -93,10 +93,22 @@ ngDemautApp
                 }
             };
         });
+
+        /* Registers auth token interceptor, auth token is either passed by header (ex : an authenticated user token) */
+        //$httpProvider.interceptors.push(function ($q, $rootScope, $location) {
+        //    return {
+        //        'request': function(config) {
+        //            config.headers['X-iam-With'] = 'iamToken';
+        //            config.headers['X-Demaut-Reference'] = 'demautReference';
+        //            return config || $q.when(config);
+        //        }
+        //    };
+        //});
+
     }
     ])
     .controller('CockpitController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', 'urlPrefix', '$log', function ($scope, $rootScope, $routeParams, $http, $location, $interval, urlPrefix, $log) {
-        $rootScope.contextMenu = "cockpit";
+        $rootScope.contextMenu = "Cockpit";
         $scope.indexStep = 0;
         this.name = "CockpitController";
         this.params = $routeParams;
@@ -120,37 +132,76 @@ ngDemautApp
             if($scope.donneesPerso.personalDataForm.$valid) {
                 $log.info('Formulaire valide !');
                 $scope.indexStep += 1;
-                $location.path('/Demaut/demande');
+                $location.path('/Demaut/demande/professionSante');
             }
             else {
                 $log.info('Formulaire invalide !');
             }
         };
-
-
     }])
-    .controller('DemandeController', ['$scope', '$rootScope', '$routeParams', '$location', function ($scope, $rootScope, $routeParams, $location) {
-        $rootScope.contextMenu = "demande";
+    .controller('ProfessionSanteController', ['$scope', '$rootScope', '$routeParams', '$location', '$log', 'professionTest', function ($scope, $rootScope, $routeParams, $location, $log, professionTest) {
+        $rootScope.contextMenu = "Profession Santé";
         $scope.indexStep = 2;
-        this.name = "DemandeController";
+        this.name = "ProfessionSanteController";
         this.params = $routeParams;
+        $scope.professionData = {};
+        $scope.professionData.professions = [
+            "Chiropraticien",
+            "Dieteticien",
+            "Droguiste",
+            "Ergotherapeute",
+            "Hygieniste dentaire",
+            "Infirmier",
+            "Logopediste orthophoniste",
+            "Masseur medical",
+            "Medecin",
+            "Medecin dentiste",
+            "Opticien",
+            "Orthoptiste",
+            "Osteopathe",
+            "Pharmacien",
+            "Physiotherapeute",
+            "Podologue",
+            "Psychotherapeute mon medecin",
+            "SageFemme",
+            "Technicien en analyses biomedicales",
+            "Technicien en radiologie medicale",
+            "Technicien en salle d'operation",
+            "Therapeute en psychomotricite"
+        ];
+        $scope.professionData.professionsUni = [
+            "Chiropraticien",
+            "Medecin",
+            "Medecin dentiste",
+            "Pharmacien"
+        ];
         $scope.previewStep = function(){
             $scope.indexStep -= 1;
             $location.path('/Demaut/demande/donneesPerso');
         };
         $scope.nextStep = function(){
-            $scope.indexStep += 1;
-            $location.path('/Demaut/demande/donneesProf');
+            if ($scope.professionSante.professionDataForm.$valid &&
+                !(professionTest.isProfessionMedicaleUni($scope.professionData.profession, $scope.professionData.professionsUni) && ($scope.professionData.gln == null || $scope.professionData.gln == undefined))) {
+                $log.info('Formulaire valide !');
+                $scope.indexStep += 1;
+                $location.path('/Demaut/demande/donneesProf');
+            }
+            else {
+                $scope.professionSante.professionDataForm.gln.$valid = false;
+                $scope.professionSante.professionDataForm.gln.$invalid = true;
+                $scope.professionSante.professionDataForm.gln.$error = 'Code GLN indisponsable pour pour les professions médicales universitaires!';
+                $log.info('Formulaire invalide !');
+            }
         };
     }])
     .controller('DonneesProfController', ['$scope', '$rootScope', '$routeParams', '$location', function ($scope, $rootScope, $routeParams, $location) {
-        $rootScope.contextMenu = "DonneesProfessionnelle";
+        $rootScope.contextMenu = "Données Professionnelles";
         $scope.indexStep = 3;
         this.name = "DonneesProfController";
         this.params = $routeParams;
         $scope.previewStep = function(){
             $scope.indexStep -= 1;
-            $location.path('/Demaut/demande');
+            $location.path('/Demaut/demande/professionSante');
         };
         $scope.nextStep = function(){
             $scope.indexStep += 1;
@@ -158,12 +209,15 @@ ngDemautApp
         };
     }])
     .controller('AnnexesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix) {
-        $rootScope.contextMenu = "demande";
-        $scope.demandeReference = "toBeDefinedLater";
-        $scope.profession = "aSaisirEtape2";
+        $rootScope.contextMenu = "Annexes";
         $scope.indexStep = 4;
-        $scope.annexeFormats = ["application/pdf", "image/jpg", "image/jpeg", "image/png"];
-        $scope.annexeTypes = [
+        this.name = "AnnexesController";
+        this.params = $routeParams;
+        $scope.annexesData = {};
+        $scope.annexesData.demandeReference = "toBeDefinedLater";
+        $scope.annexesData.profession = "aSaisirEtape2";
+        $scope.annexesData.annexeFormats = ["application/pdf", "image/jpg", "image/jpeg", "image/png"];
+        $scope.annexesData.annexeTypes = [
             "Liste locale",
             "Curriculum vitae",
             "Diplôme (médecin)",
@@ -172,17 +226,15 @@ ngDemautApp
             "Casier judiciaire"
         ];
 
-        $http.get(urlPrefix + '/services/annexes/typesList/' + $scope.profession).
+        $http.get(urlPrefix + '/services/annexes/typesList/' + $scope.annexesData.profession).
             success(function (data, status, headers, config) {
-                $scope.annexeTypes = angular.fromJson(data.response);
+                $scope.annexesData.annexeTypes = angular.fromJson(data.response);
             }).
             error(function (data, status, headers, config) {
-                $rootScope.error ='Error downloading ../services/annexes/typesList/' + $scope.profession;
+                $rootScope.error ='Error downloading ../services/annexes/typesList/' + $scope.annexesData.profession;
             });
 
-        $scope.referenceFiles = [];
-        $scope.name = "AnnexeController";
-        $scope.params = $routeParams;
+        $scope.annexesData.referenceFiles = [];
         $scope.previewStep = function(){
             $scope.indexStep -= 1;
             $location.path('/Demaut/demande/donneesProf');
@@ -203,12 +255,13 @@ ngDemautApp
             // Check format for all files list
             function validateFileName(fileName) {
                 var forbiddenChars = /^(?!\.)[^\|\*\?\\:<>/$"]*[^\.\|\*\?\\:<>/$"]+$/
+                var forbiddenSpace = /^\s+$/
                 // Ne doit pas etre vide
                 // Ne doit pas commencer par .
                 // Ne doit pas contenir | * ? \ : < > $
                 // Ne doit pas finir avec .
                 // Ne doit pas excèder 255 chars
-                return fileName != null && fileName != undefined && forbiddenChars.test(fileName) && fileName.length <= 255;
+                return fileName != null && fileName != undefined && forbiddenChars.test(fileName) && forbiddenSpace.test(fileName) && fileName.length <= 255;
             }
 
             for (var indexI = 0; indexI < newFilesList.length; indexI++) {
@@ -219,7 +272,7 @@ ngDemautApp
                 var fileName = currentFile.name;
 
                 var isValidName = validateFileName(fileName);
-                var isValidFormat = $scope.annexeFormats.indexOf(fileType) != -1;
+                var isValidFormat = $scope.annexesData.annexeFormats.indexOf(fileType) != -1;
                 if (isValidName == false || isValidFormat == false || fileSize <= 0 || fileSize > 1024 * 1024 * fileThreshold) {
                     isValidList = false;
                     break;
@@ -228,10 +281,10 @@ ngDemautApp
 
             // Add new add files to existing lists
             if (isValidList) {
-                if ($scope.referenceFiles != null && $scope.referenceFiles != undefined &&
-                    $scope.referenceFiles[typeAnnexe] != null && $scope.referenceFiles[typeAnnexe] != undefined &&
-                    $scope.referenceFiles[typeAnnexe].length > 0) {
-                    var existAnnexesList = $scope.referenceFiles[typeAnnexe];
+                if ($scope.annexesData.referenceFiles != null && $scope.annexesData.referenceFiles != undefined &&
+                    $scope.annexesData.referenceFiles[typeAnnexe] != null && $scope.annexesData.referenceFiles[typeAnnexe] != undefined &&
+                    $scope.annexesData.referenceFiles[typeAnnexe].length > 0) {
+                    var existAnnexesList = $scope.annexesData.referenceFiles[typeAnnexe];
                     for (var indexJ = 0; indexJ < newFilesList.length; indexJ++) {
                         var currentNewFile = newFilesList[indexJ];
                         var isNewFileDejaVu = false;
@@ -243,29 +296,29 @@ ngDemautApp
                             }
                         }
                         if (isNewFileDejaVu == false) {
-                            $scope.referenceFiles[typeAnnexe].push(currentNewFile);
+                            $scope.annexesData.referenceFiles[typeAnnexe].push(currentNewFile);
                             doUploadFile(currentNewFile);
                         }
                     }
-                    $scope.files = $scope.referenceFiles;
+                    $scope.files = $scope.annexesData.referenceFiles;
                 } else {
-                    $scope.referenceFiles[typeAnnexe] = [];
+                    $scope.annexesData.referenceFiles[typeAnnexe] = [];
                     for (var indexH = 0; indexH < newFilesList.length; indexH++) {
                         var currentValidFile = newFilesList[indexH];
-                        $scope.referenceFiles[typeAnnexe].push(currentValidFile);
+                        $scope.annexesData.referenceFiles[typeAnnexe].push(currentValidFile);
                         doUploadFile(currentValidFile);
                     }
-                    $scope.files = $scope.referenceFiles;
+                    $scope.files = $scope.annexesData.referenceFiles;
                 }
             } else {
-                $scope.files = $scope.referenceFiles;
-                $rootScope.error = typeAnnexe + ' : une/plusieurs pièces ne respectent pas les règles de nommage ou ne correspondent pas aux formats supportés : \n' + $scope.annexeFormats;
+                $scope.files = $scope.annexesData.referenceFiles;
+                $rootScope.error = typeAnnexe + ' : une/plusieurs pièces ne respectent pas les règles de nommage ou ne correspondent pas aux formats supportés (pdf, image)';
             }
             $scope.$apply();
         };
 
         $scope.viewAnnexe = function (file, annexeType) {
-            $http.get(urlPrefix + '/services/annexes/afficher/' + $scope.demandeReference + '/' + file.name, {responseType:'arraybuffer'}).
+            $http.get(urlPrefix + '/services/annexes/afficher/' + $scope.annexesData.demandeReference + '/' + file.name.replace(/\s/g, ''), {responseType:'arraybuffer'}).
                 success(function (data, status, headers, config) {
                     displayAnnexeFromBinary(data);
                 }).
@@ -287,24 +340,24 @@ ngDemautApp
         };
 
         $scope.deleteAnnexe = function (file, annexeType) {
-            if ($scope.referenceFiles != null && $scope.referenceFiles != undefined &&
-                $scope.referenceFiles[annexeType] != null && $scope.referenceFiles[annexeType] != undefined &&
-                $scope.referenceFiles[annexeType].length > 0) {
+            if ($scope.annexesData.referenceFiles != null && $scope.annexesData.referenceFiles != undefined &&
+                $scope.annexesData.referenceFiles[annexeType] != null && $scope.annexesData.referenceFiles[annexeType] != undefined &&
+                $scope.annexesData.referenceFiles[annexeType].length > 0) {
 
-                for (var indexH = 0; indexH < $scope.referenceFiles[annexeType].length; indexH++) {
-                    var currentFetchedFile = $scope.referenceFiles[annexeType][indexH];
+                for (var indexH = 0; indexH < $scope.annexesData.referenceFiles[annexeType].length; indexH++) {
+                    var currentFetchedFile = $scope.annexesData.referenceFiles[annexeType][indexH];
                     if (file.name == currentFetchedFile.name) {
-                        $scope.referenceFiles[annexeType].splice(indexH, 1);
+                        $scope.annexesData.referenceFiles[annexeType].splice(indexH, 1);
                         doDeleteFile(currentFetchedFile, annexeType);
                         break;
                     }
                 }
             }
-            $scope.files = $scope.referenceFiles;
+            $scope.files = $scope.annexesData.referenceFiles;
         };
 
         function doDeleteFile(file, annexeFileType) {
-            $http.get(urlPrefix + '/services/annexes/supprimer/' + $scope.demandeReference + '/' + file.name + '/' + annexeFileType)
+            $http.get(urlPrefix + '/services/annexes/supprimer/' + $scope.annexesData.demandeReference + '/' + file.name.replace(/\s/g, '') + '/' + annexeFileType)
                 .success(function (data, status, headers, config) {
                     $rootScope.error = 'Une annexe a été supprimée avec succès: \n Status :' +  status;
                 })
@@ -316,9 +369,9 @@ ngDemautApp
         function doUploadFile(currentFetchedFile) {
             var formData = new FormData();
             formData.append('ajaxAction', 'upload');
-            formData.append("demandeReference", $scope.demandeReference);
+            formData.append("demandeReference", $scope.annexesData.demandeReference);
             formData.append("annexeFile", currentFetchedFile);
-            formData.append("annexeFileName", currentFetchedFile.name);
+            formData.append("annexeFileName", currentFetchedFile.name.replace(/\s/g, ''));
             formData.append("annexeFileSize", currentFetchedFile.size);
             formData.append("annexeFileType", currentFetchedFile.type);
             formData.append("annexeType", currentFetchedFile.typeAnnexe);
@@ -335,7 +388,7 @@ ngDemautApp
         };
     }])
     .controller('RecapitulatifController', ['$scope', '$rootScope', '$routeParams', '$location', function ($scope, $rootScope, $routeParams, $location) {
-        $rootScope.contextMenu = "demande";
+        $rootScope.contextMenu = "Recapitulatif";
         $scope.indexStep = 5;
         this.name = "RecapitulatifController";
         this.params = $routeParams;

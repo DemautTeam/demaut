@@ -304,36 +304,28 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>jaxb2-maven-plugin</artifactId>
-                <version>1.6</version>
+                <groupId>org.jvnet.jaxb2.maven2</groupId>
+                <artifactId>maven-jaxb2-plugin</artifactId>
+                <version>${maven.jaxb.plugin.version}</version>
                 <executions>
                     <execution>
-                        <id>xjc1</id>
                         <goals>
-                            <goal>xjc</goal>
+                            <goal>generate</goal>
                         </goals>
                         <configuration>
                             <schemaDirectory>src/main/xsd</schemaDirectory>
-                            <outputDirectory>target/classes</outputDirectory>
-                            <schemaFiles>consultePersonneRI.xsd,rechercherPersonnesRI.xsd</schemaFiles>
-                            <packageName>ch.vd.pee.progresoa.model</packageName>
-                            <clearOutputDir>true</clearOutputDir>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>xjc2</id>
-                        <goals>
-                            <goal>xjc</goal>
-                        </goals>
-                        <configuration>
-                            <schemaFiles>tiers-v01.xsd</schemaFiles>
-                            <clearOutputDir>false</clearOutputDir>
+                            <schemaIncludes>
+                                <include>tiers-v01.xsd</include>
+                            </schemaIncludes>
+                            <schemaExcludes>
+                                <include>*.xs</include>
+                            </schemaExcludes>
+                            <disableXmlSecurity>true</disableXmlSecurity>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-		</plugins>
+        </plugins>
 	</build>
 
 </project>

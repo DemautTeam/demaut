@@ -1,0 +1,50 @@
+<div ng-include="'template/include/include-steps.html'"></div>
+<div class="bs-wizard-info text-left">
+    <fieldset>
+        <legend>Veuillez indiquer la profession pour laquelle vous faîtes une demande :</legend>
+        <div>
+            <ng-form name="professionSante.professionDataForm">
+                <div class="row">
+                    <div class="col-md-4"><label for="profession">Profession demandée*</label></div>
+                    <div class="col-md-6">
+                        <select id="profession" name="profession" ng-model="professionData.profession" required>
+                            <option value="">Choisissez la profession...</option>
+                            <option ng-repeat="profession in professionData.professions" value="{{profession}}">{{profession}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <br/>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><label for="gln">Code GLN (EAN)</label></div>
+                    <div class="col-md-6">
+                        <input type="text" id="gln" name="gln" class="form-control {professionSante.professionDataForm.gln.$invalid : ng-invalid}"
+                               ng-model="professionData.gln" ng-model-options="{ updateOn: 'blur' }" ng placeholder="7601000000125">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <label></label>
+                        <span class="alert alert-warning" style="font-style: italic;padding:0px;position: absolute;right: 16px;">
+                            <span>Seulement pour les professions médicales universitaires</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <br/>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><label></label></div>
+                    <div class="col-md-8">
+                        <label>
+                            Si vous ne disposez pas d'un code GLN (EAN), veuillez vous adresser à l'Office fédéral de la santé publique
+                            <a href="http://www.retdata.ch" style="color: blue">www.retdata.ch</a>
+                        </label>
+                    </div>
+                </div>
+            </ng-form>
+        </div>
+    </fieldset>
+</div>
+<step-actions preview-step-fn="previewStep()" next-step-fn="nextStep()"/>
