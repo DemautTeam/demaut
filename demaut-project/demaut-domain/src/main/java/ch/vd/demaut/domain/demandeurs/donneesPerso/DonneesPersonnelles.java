@@ -11,6 +11,8 @@ public class DonneesPersonnelles extends BaseValueObject {
 
     final private Prenom prenom;
 
+    final private NomDeCelibataire nomDeCelibataire;
+
     final private Genre genre;
 
     final private DateDeNaissance dateDeNaissance;
@@ -29,10 +31,11 @@ public class DonneesPersonnelles extends BaseValueObject {
     // ********************************************************* Constructor
 
 
-    public DonneesPersonnelles(Nom nom, Prenom prenom, Genre genre, DateDeNaissance dateDeNaissance, Adresse adresse, Email email, NumeroTelephone telephonePrive, NumeroTelephone telephoneMobile, NumeroTelephone fax) {
+    public DonneesPersonnelles(Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Genre genre, DateDeNaissance dateDeNaissance, Adresse adresse, Email email, NumeroTelephone telephonePrive, NumeroTelephone telephoneMobile, NumeroTelephone fax) {
         super();
         this.nom = nom;
         this.prenom = prenom;
+        this.nomDeCelibataire = nomDeCelibataire;
         this.genre = genre;
         this.dateDeNaissance = dateDeNaissance;
         this.adresse = adresse;
