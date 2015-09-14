@@ -1,6 +1,6 @@
-input.ng-invalid {
-    border-color: red;
+input.ng-invalid.ng-untouched {
 }
 input.ng-invalid.ng-touched  {
     background-color: #FA787E;
+    border-color: #d9534f;
 }

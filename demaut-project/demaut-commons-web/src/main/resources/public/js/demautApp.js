@@ -121,10 +121,10 @@ ngDemautApp
         $scope.testSuisse = nationalityTest;//récupération du service de test des nationnalité
         $scope.personalData = {};
         $scope.isPermisRequired = function(){
-            return !nationalityTest.isSuisse($scope.personalData.nationality) && !$scope.personalData.permis;
+            return !nationalityTest.isSuisse($scope.personalData.nationalite) && !$scope.personalData.permis;
         };
         $scope.resetPermis = function(){
-            if(nationalityTest.isSuisse($scope.personalData.nationality)){
+            if(nationalityTest.isSuisse($scope.personalData.nationalite)){
                 $scope.personalData.permis = null;
             }
         }
