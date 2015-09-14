@@ -36,6 +36,15 @@
                         <li ng-show="donneesPerso.personalDataForm.email.$touched && donneesPerso.personalDataForm.email.$invalid">
                             Veuillez saisir un email valide !
                         </li>
+                        <li ng-show="donneesPerso.personalDataForm.dateDeNaissance.$touched && donneesPerso.personalDataForm.dateDeNaissance.$invalid">
+                            Veuillez saisir une date de naissance valide !
+                        </li>
+                        <li ng-show="donneesPerso.personalDataForm.nationalite.$touched && donneesPerso.personalDataForm.nationalite.$invalid">
+                            Veuillez saisir votre nationalité
+                        </li>
+                        <li ng-show="donneesPerso.personalDataForm.nationalite.$touched && !testSuisse.isSuisse(personalData.nationalite) && isPermisRequired()">
+                            Veuillez préciser votre permis
+                        </li>
                     </ul>
                 </div>
                 <div class="row">
