@@ -4,50 +4,90 @@
         <legend>Veuillez saisir vos Données Personnelles :</legend>
         <div>
             <ng-form name="donneesPerso.personalDataForm">
-                <div class="row">
-                    <div class="col-md-2"><label for="name">Nom*</label></div>
-                    <div class="col-md-10"><input type="text" id="name" class="form-control" required="required" ng-model="personalData.name"></div>
+                <div ng-hide="donneesPerso.personalDataForm.$pristine || donneesPerso.personalDataForm.$valid">
+                    <ul class="error-message">
+                        <li ng-show="donneesPerso.personalDataForm.nom.$touched && donneesPerso.personalDataForm.nom.$error.required">
+                            Nom obligatoire !
+                        </li>
+                        <li ng-show="donneesPerso.personalDataForm.prenom.$touched && donneesPerso.personalDataForm.prenom.$error.required">
+                            Prénom obligatoire !
+                        </li>
+                        <li ng-show="donneesPerso.personalDataForm.adressePersonnelle.$touched && donneesPerso.personalDataForm.adressePersonnelle.$error.required">
+                            Adresse privée obligatoire
+                        </li>
+                        <li ng-show="donneesPerso.personalDataForm.localite.$touched && donneesPerso.personalDataForm.localite.$error.required">
+                            La localité est obligatoire
+                        </li>
+                        <li ng-show="donneesPerso.personalDataForm.npa.$touched && donneesPerso.personalDataForm.npa.$invalid">
+                            Le NPA est invalide
+                        </li>
+                        <li ng-show="donneesPerso.personalDataForm.pays.$touched && donneesPerso.personalDataForm.pays.$error.required">
+                            Le pays est obligatoire
+                        </li>
+                        <li ng-show="(donneesPerso.personalDataForm.telephoneMobile.$touched || donneesPerso.personalDataForm.telephonePrive.$touched)  && (donneesPerso.personalDataForm.telephoneMobile.$valid || donneesPerso.personalDataForm.telephonePrive.$valid)">
+                            Veuillez saisir au moins un numéro de telephone.
+                        </li>
+                        <li ng-show="donneesPerso.personalDataForm.email.$touched && donneesPerso.personalDataForm.email.$invalid">
+                            Veuillez saisir un email valide !
+                        </li>
+                        <li ng-show="donneesPerso.personalDataForm.email.$touched && donneesPerso.personalDataForm.email.$invalid">
+                            Veuillez saisir un email valide !
+                        </li>
+                        <li ng-show="donneesPerso.personalDataForm.dateDeNaissance.$touched && donneesPerso.personalDataForm.dateDeNaissance.$invalid">
+                            Veuillez saisir une date de naissance valide !
+                        </li>
+                        <li ng-show="donneesPerso.personalDataForm.nationalite.$touched && donneesPerso.personalDataForm.nationalite.$invalid">
+                            Veuillez saisir votre nationalité
+                        </li>
+                        <li ng-show="donneesPerso.personalDataForm.nationalite.$touched && !testSuisse.isSuisse(personalData.nationalite) && isPermisRequired()">
+                            Veuillez préciser votre permis
+                        </li>
+                    </ul>
                 </div>
                 <div class="row">
-                    <div class="col-md-2"><label for="surname">Prénom(s)*</label></div>
-                    <div class="col-md-10"><input type="text" id="surname" class="form-control" required="required" ng-model="personalData.surname"></div>
+                    <div class="col-md-2"><label for="nom">Nom*</label></div>
+                    <div class="col-md-10"><input type="text" id="nom" name="nom" class="form-control" required="required" ng-model="personalData.nom"></div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2"><label for="maidenName">Nom de célibataire</label></div>
-                    <div class="col-md-10"><input type="text" id="maidenName" class="form-control" ng-model="personalData.maidenName"></div>
+                    <div class="col-md-2"><label for="prenom">Prénom(s)*</label></div>
+                    <div class="col-md-10"><input type="text" id="prenom" name="prenom" class="form-control" required="required" ng-model="personalData.prenom"></div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2"><label for="personalAddress">Adresse privée*</label></div>
-                    <div class="col-md-10"><input type="text" id="personalAddress" class="form-control" required="required" ng-model="personalData.personalAddress"></div>
+                    <div class="col-md-2"><label for="nomDeCelibataire">Nom de célibataire</label></div>
+                    <div class="col-md-10"><input type="text" id="nomDeCelibataire" name="nomDeCelibataire" class="form-control" ng-model="personalData.nomDeCelibataire"></div>
                 </div>
                 <div class="row">
-                    <label for="city" class="col-md-2">Localité*</label>
+                    <div class="col-md-2"><label for="adressePersonnelle">Adresse privée*</label></div>
+                    <div class="col-md-10"><input type="text" id="adressePersonnelle" name="adressePersonnelle" class="form-control" required="required" ng-model="personalData.adressePersonnelle"></div>
+                </div>
+                <div class="row">
+                    <label for="localite" class="col-md-2">Localité*</label>
                     <div class="col-md-2">
-                        <input type="text" id="city" class="form-control" required="required" ng-model="personalData.city">
+                        <input type="text" id="localite" name="localite" class="form-control" required="required" ng-model="personalData.localite">
                     </div>
-                    <label for="zipcode" class="col-md-2">
+                    <label for="npa" class="col-md-2">
                         NPA*
                     </label>
                     <div class="col-md-2">
-                        <input type="number" id="zipcode" class="form-control" required="required"  ng-model="personalData.zipCode">
+                        <input type="number" id="npa" name="npa" class="form-control" required="required"  ng-model="personalData.npa">
                     </div>
-                    <label for="country" class="col-md-2">
+                    <label for="pays" class="col-md-2">
                         Pays*
                     </label>
                     <div class="col-md-2">
-                        <input type="text" id="country" class="form-control" required="required" ng-model="personalData.country">
+                        <input type="text" id="pays" name="pays" class="form-control" required="required" ng-model="personalData.pays">
                     </div>
                 </div>
                 <div class="row">
-                    <label for="personalPhone" class="col-md-2">Téléphone privé<span ng-hide="donneesPerso.personalDataForm.mobilePhone.$valid">*</span></label>
+                    <label for="telephonePrive" class="col-md-2">Téléphone privé<span ng-hide="donneesPerso.personalDataForm.mobilePhone.$valid">*</span></label>
                     <div class="col-md-6">
-                        <input type="tel" ng-minlength="4" id="personalPhone" name="personalPhone" ng-required="!donneesPerso.personalDataForm.mobilePhone.$valid || donneesPerso.personalDataForm.$pristine"  class="form-control"  ng-model="personalData.personalPhone">
+                        <input type="tel" id="telephonePrive" name="telephonePrive" ng-required="!donneesPerso.personalDataForm.telephoneMobile.$valid || donneesPerso.personalDataForm.$pristine"  class="form-control"  ng-model="personalData.telephonePrive">
                     </div>
-                    <label for="mobilePhone" class="col-md-2">
+                    <label for="telephoneMobile" class="col-md-2">
                         Mobile<span ng-hide="donneesPerso.personalDataForm.personalPhone.$valid">*</span>
                     </label>
                     <div class="col-md-2">
-                        <input type="tel" ng-minlength="4" id="mobilePhone" ng-required="!donneesPerso.personalDataForm.personalPhone.$valid || donneesPerso.personalDataForm.$pristine" name="mobilePhone" class="form-control" ng-model="personalData.mobilePhone">
+                        <input type="tel" id="telephoneMobile" ng-required="!donneesPerso.personalDataForm.telephonePrive.$valid || donneesPerso.personalDataForm.$pristine" name="telephoneMobile" class="form-control" ng-model="personalData.telephoneMobile">
                     </div>
                 </div>
                 <div class="row">
@@ -66,33 +106,33 @@
                     <label class="col-md-2">Genre*</label>
                     <div class="col-md-3">
                         <label>
-                        <input type="radio" name="sexe" value="female" required="required" ng-model="personalData.gender" ng-required="!personalData.gender">
+                        <input type="radio" name="genre" value="feminin" ng-model="personalData.gender" ng-required="!personalData.genre">
                         Feminin
                         </label>
                     </div>
                     <div class="col-md-3">
                         <label>
-                        <input type="radio" name="sexe" value="male" required="required" ng-model="personalData.gender" ng-required="!personalData.gender">
+                        <input type="radio" name="genre" value="masculin" ng-model="personalData.gender" ng-required="!personalData.genre">
                         Masculin
                         </label>
                     </div>
-                    <label for="birthdate" class="col-md-2">
+                    <label for="dateDeNaissance" class="col-md-2">
                         Date de naissance*
                     </label>
                     <div class="col-md-2">
-                        <input type="date" id="birthdate" placeholder="jj/MM/aaaa" class="form-control" required="required" ng-model="personalData.birthDate">
+                        <input type="date" id="dateDeNaissance" name="dateDeNaissance" placeholder="jj/MM/aaaa" class="form-control" required="required" ng-model="personalData.dateDeNaissance">
                     </div>
                 </div>
                 <div class="row">
-                    <label for="nationality" class="col-md-2">Nationalité*</label>
-                    <div class="col-md-10"><input id="nationality" type="text" class="form-control" ng-model="personalData.nationality" required="required" ng-change="resetPermis()"></div>
+                    <label for="nationalite" class="col-md-2">Nationalité*</label>
+                    <div class="col-md-10"><input id="nationalite" name="nationalite" type="text" class="form-control" ng-model="personalData.nationalite" required="required" ng-change="resetPermis()"></div>
                 </div>
                 <div class="row">
                     <label class="col-md-2">Permis<span ng-hide="testSuisse.isSuisse(personalData.nationality)">*</span></label>
-                    <div class="col-md-2"><label><input type="radio" name="permis" value="B" ng-disabled="testSuisse.isSuisse(personalData.nationality)" ng-model="personalData.permis" ng-required="isPermisRequired()"/> B </label></div>
-                    <div class="col-md-2"><label><input type="radio" name="permis" value="C" ng-disabled="testSuisse.isSuisse(personalData.nationality)" ng-model="personalData.permis" ng-required="isPermisRequired()"/> C </label></div>
-                    <div class="col-md-2"><label><input type="radio" name="permis" value="demande en cours" ng-disabled="testSuisse.isSuisse(personalData.nationality)" ng-model="personalData.permis" ng-required="isPermisRequired()"/>Demande en cours</label></div>
-                    <div class="col-md-2"><label><input type="radio" name="permis" value="autre" ng-disabled="testSuisse.isSuisse(personalData.nationality)" ng-model="personalData.permis" ng-required="isPermisRequired()"/>Autre</label></div>
+                    <div class="col-md-2"><label><input type="radio" name="permis" value="B" ng-disabled="testSuisse.isSuisse(personalData.nationalite)" ng-model="personalData.permis" ng-required="isPermisRequired()"/> B </label></div>
+                    <div class="col-md-2"><label><input type="radio" name="permis" value="C" ng-disabled="testSuisse.isSuisse(personalData.nationalite)" ng-model="personalData.permis" ng-required="isPermisRequired()"/> C </label></div>
+                    <div class="col-md-2"><label><input type="radio" name="permis" value="demande en cours" ng-disabled="testSuisse.isSuisse(personalData.nationalite)" ng-model="personalData.permis" ng-required="isPermisRequired()"/>Demande en cours</label></div>
+                    <div class="col-md-2"><label><input type="radio" name="permis" value="autre" ng-disabled="testSuisse.isSuisse(personalData.nationalite)" ng-model="personalData.permis" ng-required="isPermisRequired()"/>Autre</label></div>
                     <div class="col-md-2"><input type="text" class="form-control" ng-required="(personalData.permis == 'autre')" ng-show="(personalData.permis == 'autre')" ng-model="personalData.permisOther"></div>
                 </div>
             </ng-form>
