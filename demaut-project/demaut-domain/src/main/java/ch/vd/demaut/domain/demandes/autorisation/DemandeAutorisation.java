@@ -11,6 +11,7 @@ import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.AnnexeMetadata;
 import ch.vd.demaut.domain.annexes.AnnexeValidateur;
 import ch.vd.demaut.domain.annexes.AnnexesObligatoires;
+import ch.vd.demaut.domain.annexes.ContenuAnnexe;
 import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
 import ch.vd.demaut.domain.annexes.NomFichier;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
@@ -18,7 +19,7 @@ import ch.vd.demaut.domain.config.ConfigDemaut;
 import ch.vd.demaut.domain.demandes.Demande;
 import ch.vd.demaut.domain.demandes.DemandeFK;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.demandeurs.Demandeur;
+import ch.vd.demaut.domain.utilisateurs.Login;
 
 @Aggregate
 public class DemandeAutorisation extends Demande {
@@ -26,7 +27,7 @@ public class DemandeAutorisation extends Demande {
     // ********************************************************* Fields
     private ProfessionDeLaSante professionDeLaSante;
 
-    private Demandeur demandeur;
+    private Login login;
 
     private StatutDemandeAutorisation statutDemandeAutorisation;
 
@@ -43,11 +44,11 @@ public class DemandeAutorisation extends Demande {
     }
 
     //Ne pas utiliser ce constructeur mais uniquement la Factory
-    DemandeAutorisation(Demandeur demandeur, ProfessionDeLaSante profession, ConfigDemaut config) {
+    DemandeAutorisation(Login login, ProfessionDeLaSante profession, ConfigDemaut config) {
         this();
         this.referenceDeDemande = new ReferenceDeDemande();
         this.statutDemandeAutorisation = StatutDemandeAutorisation.Brouillon;
-        this.demandeur = demandeur;
+        this.login = login;
         this.professionDeLaSante = profession;
         this.config = config;
     }
@@ -64,6 +65,10 @@ public class DemandeAutorisation extends Demande {
     public void validerEtAttacherAnnexe(Annexe annexeALier) {
         AnnexeValidateur.getInstance().valider(annexeALier);
         getListeDesAnnexes().ajouterAnnexe(annexeALier);
+    }
+    
+    public void supprimerUneAnnexeParNomFichier(NomFichier nomFichier) {
+    	getListeDesAnnexes().supprimerUneAnnexeParNomFichier(nomFichier);
     }
 
     /**
@@ -109,6 +114,12 @@ public class DemandeAutorisation extends Demande {
 	public AnnexeMetadata extraireAnnexeMetadata(NomFichier nomFichier) {
         return getListeDesAnnexes().extraireAnnexeMetadata(nomFichier);
     }
+	
+
+	public ContenuAnnexe extraireContenuAnnexe(NomFichier nomFichier) {
+		return getListeDesAnnexes().extraireContenu(nomFichier);
+	}
+
     
     // ********************************************************* Private Methods
 
@@ -121,8 +132,8 @@ public class DemandeAutorisation extends Demande {
     }
 
     @NotNull
-    public Demandeur getDemandeur() {
-        return demandeur;
+    public Login getLogin() {
+        return login;
     }
     
     @NotNull

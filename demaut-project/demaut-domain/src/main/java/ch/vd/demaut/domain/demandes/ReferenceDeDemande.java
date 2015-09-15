@@ -20,6 +20,10 @@ public class ReferenceDeDemande extends StringVO {
         super(UUID.randomUUID().toString());
     }
     
+    public ReferenceDeDemande(String reference) {
+    	super(reference);
+    }
+    
     // ********************************************************* Getters
     
 }

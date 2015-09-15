@@ -10,7 +10,9 @@ import java.util.List;
 @XmlSeeAlso({RefElement.class})
 public class RefRoot extends ArrayList<RefElement> {
 
-    private String type;
+	private static final long serialVersionUID = 2734520698926866969L;
+
+	private String type;
 
     private List<RefElement> refElements = new ArrayList<>();
 

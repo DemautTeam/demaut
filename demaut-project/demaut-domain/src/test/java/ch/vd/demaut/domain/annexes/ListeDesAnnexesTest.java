@@ -57,14 +57,16 @@ public class ListeDesAnnexesTest {
 
 	@Test
 	public void supprimerUneAnnexeViaNomDeFichier() {
-		listeDesAnnexes.supprimerUneAnnexeParNomFichier("certificat3.pdf");
+		NomFichier nomFichier = new NomFichier("certificat3.pdf");
+		listeDesAnnexes.supprimerUneAnnexeParNomFichier(nomFichier);
 		assertThat(listeDesAnnexes.listerAnnexes()).hasSize(3);
 	}
 
 	@Test
 	public void supprimerUneAnnexeViaNomDeFichierQuiNexistePas() {
 		try {
-			listeDesAnnexes.supprimerUneAnnexeParNomFichier("certificat5.pdf");
+			NomFichier nomFichier = new NomFichier("certificat5.pdf");
+			listeDesAnnexes.supprimerUneAnnexeParNomFichier(nomFichier);
 			failBecauseExceptionWasNotThrown(AnnexeNonValideException.class);
 		} catch (AnnexeIntrouvableException e) {
 		}

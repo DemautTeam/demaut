@@ -3,13 +3,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean id="demandeurRepository"
-		class="ch.vd.demaut.services.demandeurs.repo.mock.DemandeurRepositoryMock"
+	<bean id="utilisateurRepository"
+		class="ch.vd.demaut.data.utilisateurs.repo.impl.UtilisateurRepositoryJPA"
 		scope="cucumber-glue">
 	</bean>
 
 	<bean id="demandeAutorisationRepository"
-		class="ch.vd.demaut.data.demandes.autorisation.repo.DemandeAutorisationRepositoryImpl"
+		class="ch.vd.demaut.data.demandes.autorisation.repo.impl.DemandeAutorisationRepositoryJPA"
 		scope="cucumber-glue">
 	</bean>
 

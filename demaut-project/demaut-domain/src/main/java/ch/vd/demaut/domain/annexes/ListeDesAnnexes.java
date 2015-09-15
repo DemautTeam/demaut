@@ -61,13 +61,12 @@ public class ListeDesAnnexes {
         return CollectionUtils.select(listerAnnexesMetadata(), new BeanPropertyValueEqualsPredicate("typeAnnexe", typeAnnexe));
     }
 
-    public void supprimerUneAnnexeParNomFichier(final String nomFichierAnnexe) {
-    	Annexe annexeTrouvee = trouverAnnexeParNomFichier(nomFichierAnnexe);
+    public void supprimerUneAnnexeParNomFichier(NomFichier nomFichier) {
+    	Annexe annexeTrouvee = trouverAnnexeParNomFichier(nomFichier);
         annexes.remove(annexeTrouvee);
     }
     
-	public Annexe trouverAnnexeParNomFichier(final String annexeFileName) {
-		NomFichier nomFichier = new NomFichier(annexeFileName);
+	public Annexe trouverAnnexeParNomFichier(NomFichier nomFichier) {
         Object annexeTrouvee = CollectionUtils.find(annexes, new BeanPropertyValueEqualsPredicate("nomFichier", nomFichier));
         if (annexeTrouvee == null) {
         	throw new AnnexeIntrouvableException();
@@ -76,8 +75,13 @@ public class ListeDesAnnexes {
 	}
 
 	public AnnexeMetadata extraireAnnexeMetadata(NomFichier nomFichier) {
-		Annexe annexe = trouverAnnexeParNomFichier(nomFichier.getNomFichier());
+		Annexe annexe = trouverAnnexeParNomFichier(nomFichier);
 		return annexe.getAnnexeMetadata();
+	}
+	
+	public ContenuAnnexe extraireContenu(NomFichier nomFichier) {
+		Annexe annexe = trouverAnnexeParNomFichier(nomFichier);
+		return annexe.getContenu();
 	}
 
 }

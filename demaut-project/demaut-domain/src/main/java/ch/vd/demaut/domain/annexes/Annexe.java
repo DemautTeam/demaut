@@ -21,14 +21,20 @@ public class Annexe extends BaseValueObjectWithId {
 
     // ********************************************************* Constructor
 
+    //Only here for OpenJPA
     public Annexe() {
     }
 
+    //TODO: remove me
     public Annexe(TypeAnnexe typeAnnexe, String nomFichier, byte[] contenu) {
+        this(typeAnnexe, new NomFichier(nomFichier), new ContenuAnnexe(contenu));
+    }
+    
+    public Annexe(TypeAnnexe typeAnnexe, NomFichier nomFichier, ContenuAnnexe contenu) {
         super();
         this.typeAnnexe = typeAnnexe;
-        this.nomFichier = new NomFichier(nomFichier);
-        this.contenu = new ContenuAnnexe(contenu);
+        this.nomFichier = nomFichier;
+        this.contenu = contenu;
     }
 
     // ********************************************************* Getters

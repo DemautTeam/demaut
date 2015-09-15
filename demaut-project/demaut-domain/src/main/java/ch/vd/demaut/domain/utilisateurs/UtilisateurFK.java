@@ -1,17 +1,17 @@
-package ch.vd.demaut.domain.demandeurs;
+package ch.vd.demaut.domain.utilisateurs;
 
 import ch.vd.demaut.commons.fk.FunctionalKeyAbstract;
 
-public class DemandeurFK extends FunctionalKeyAbstract<Demandeur> {
+public class UtilisateurFK extends FunctionalKeyAbstract<Utilisateur> {
 
     // ********************************************************* Fields
     private Login login;
 
     // ********************************************************* Constructor
 
-    public DemandeurFK(Demandeur demandeur) {
+    public UtilisateurFK(Utilisateur utilisateur) {
         super();
-        this.login = demandeur.getLogin();
+        this.login = utilisateur.getLogin();
     }
 
     // ********************************************************* Getters

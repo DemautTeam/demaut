@@ -31,14 +31,14 @@
 		<module>demaut-commons4test</module>
 		<module>demaut-domain</module>
  		<module>demaut-bdd</module>
-<!--		<module>demaut-data-jpa</module> -->
-<!-- 		<module>demaut-data-mock</module> -->
-<!-- 		<module>demaut-services</module> -->
-<!-- 		<module>demaut-microbiz</module> -->
-<!-- 		<module>demaut-backoffice</module> -->
-<!-- 		<module>demaut-cyber</module> -->
-<!-- 		<module>demaut-commons-web</module> -->
-<!--		<module>demaut-dummy</module> -->
+		<module>demaut-data-jpa</module> 
+ 		<module>demaut-data-mock</module>
+ 		<module>demaut-services</module> 
+ 		<module>demaut-microbiz</module> 
+ 		<module>demaut-commons-web</module> 
+ 		<module>demaut-backoffice</module> 
+ 		<module>demaut-cyber</module> 
+		<module>demaut-dummy</module> 
 	</modules>
 
 	<prerequisites>

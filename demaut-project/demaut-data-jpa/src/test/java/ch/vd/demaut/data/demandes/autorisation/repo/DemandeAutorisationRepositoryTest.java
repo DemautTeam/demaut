@@ -21,9 +21,9 @@ import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
 import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
-import ch.vd.demaut.domain.demandeurs.Demandeur;
-import ch.vd.demaut.domain.demandeurs.DemandeurRepository;
-import ch.vd.demaut.domain.demandeurs.Login;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.domain.utilisateurs.Utilisateur;
+import ch.vd.demaut.domain.utilisateurs.UtilisateurRepository;
 
 @ContextConfiguration({ "classpath*:/data-jpa-test-context.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -35,7 +35,7 @@ public class DemandeAutorisationRepositoryTest {
 	private DemandeAutorisationRepository demandeAutorisationRepository;
 
 	@Inject
-	private DemandeurRepository demandeurRepository;
+	private UtilisateurRepository utilisateurRepository;
 
 	@Inject
 	private JpaTransactionManager transactionManagerDemaut;
@@ -48,9 +48,11 @@ public class DemandeAutorisationRepositoryTest {
 	public void setUp() throws Exception {
 
 		assertThat(demandeAutorisationRepository).isNotNull();
-		assertThat(demandeurRepository).isNotNull();
+		assertThat(utilisateurRepository).isNotNull();
 
 		assertThat(transactionManagerDemaut).isNotNull();
+		
+		demautFactory = DemandeAutorisationFactory.getInstance();
 	}
 
 	// ********************************************************* Tests
@@ -59,10 +61,10 @@ public class DemandeAutorisationRepositoryTest {
 	public void sauvegarderUneDemande() {
 		TransactionStatus transaction = beginTransaction();
 
-		Demandeur demandeur = créerDemandeur();
+		Utilisateur utilisateur = creerUtilisateur();
 
 		// Sauvegarder la demande
-		DemandeAutorisation d = demautFactory.inititierDemandeAutorisation(demandeur, ProfessionDeLaSante.Medecin, null);
+		DemandeAutorisation d = demautFactory.inititierDemandeAutorisation(utilisateur.getLogin(), ProfessionDeLaSante.Medecin, null);
 		assertThat(d.getId()).isNull();
 		demandeAutorisationRepository.store(d);
 		assertThat(d.getId()).isNotNull();
@@ -74,10 +76,10 @@ public class DemandeAutorisationRepositoryTest {
 	public void sauvegarderUneDemandeAvecAnnexes() {
 		TransactionStatus transaction = beginTransaction();
 
-		Demandeur demandeur = créerDemandeur();
+		Utilisateur utilisateur = creerUtilisateur();
 
 		// Sauvegarder la demande
-		DemandeAutorisation d = demautFactory.inititierDemandeAutorisation(demandeur, ProfessionDeLaSante.Medecin, null);
+		DemandeAutorisation d = demautFactory.inititierDemandeAutorisation(utilisateur.getLogin(), ProfessionDeLaSante.Medecin, null);
 		Annexe annexe = new Annexe(TypeAnnexe.CV, "test.pdf", new byte[1]);
 		d.validerEtAttacherAnnexe(annexe);
 		assertThat(d.getId()).isNull();
@@ -96,14 +98,14 @@ public class DemandeAutorisationRepositoryTest {
 
 	// ********************************************************* Methods privées
 
-	private Demandeur créerDemandeur() {
-		// Créer et sauvegarder un Demandeur
+	private Utilisateur creerUtilisateur() {
+		// Créer et sauvegarder un Utilisateur
 		Login login1 = new Login("login1");
-		Demandeur demandeur = new Demandeur(login1);
-		demandeurRepository.store(demandeur);
-		assertThat(demandeur.getId()).isNotNull();
-		demandeur = demandeurRepository.findBy(demandeur.getId());
-		return demandeur;
+		Utilisateur utilisateur = new Utilisateur(login1);
+		utilisateurRepository.store(utilisateur);
+		assertThat(utilisateur.getId()).isNotNull();
+		utilisateur = utilisateurRepository.findBy(utilisateur.getId());
+		return utilisateur;
 	}
 
 	private void commitTransaction(TransactionStatus transaction) {

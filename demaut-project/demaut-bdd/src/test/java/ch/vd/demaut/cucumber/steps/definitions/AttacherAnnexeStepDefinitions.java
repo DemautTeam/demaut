@@ -9,7 +9,7 @@ import java.util.Map;
 import ch.vd.demaut.commons.utils.FileMockHelper;
 import ch.vd.demaut.cucumber.converters.commons.AccepteOuRefuse;
 import ch.vd.demaut.cucumber.converters.commons.OuiNonConverter;
-import ch.vd.demaut.cucumber.converters.demandeurs.NomEtPrenomDemandeurConverter;
+import ch.vd.demaut.cucumber.converters.utilisateurs.LoginConverter;
 import ch.vd.demaut.cucumber.converteurs.annexes.ListeDesAnnexesConverter;
 import ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps;
 import ch.vd.demaut.domain.annexes.Annexe;
@@ -19,7 +19,7 @@ import ch.vd.demaut.domain.annexes.FormatFichierAccepte;
 import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
-import ch.vd.demaut.domain.demandeurs.NomEtPrenomDemandeur;
+import ch.vd.demaut.domain.utilisateurs.Login;
 import cucumber.api.DataTable;
 import cucumber.api.Transform;
 import cucumber.api.java.fr.Alors;
@@ -50,10 +50,10 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
 
     // ********************************************************* Given
 
-    @Etantdonné("^un demandeur identifié \"([^\"]*)\"$")
-    public void le_demandeur_professionnel(
-            @Transform(NomEtPrenomDemandeurConverter.class) NomEtPrenomDemandeur nomEtPrenom) throws Throwable {
-        demandeAutorisationSteps.initialiserDemandeur(nomEtPrenom);
+    @Etantdonné("^l´utilisateur identifié et connecté avec le login \"([^\"]*)\"$")
+    public void initialiser_utilisateur(
+            @Transform(LoginConverter.class) Login login) throws Throwable {
+        demandeAutorisationSteps.initialiserUtilisateur(login);
     }
 
     @Etantdonné("^une demande de type \"([^\"]*)\" en cours de saisie$")
@@ -103,15 +103,15 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
 
     // ********************************************************* When
 
-    @Lorsque("^le demandeur attache le fichier \"([^\"]*)\" de taille (\\d+)M de type \"([^\"]*)\"$")
-    public void le_demandeur_attache_le_fichier_certificat_exe(String nomFichier, Integer tailleFichierEnMB,
+    @Lorsque("^l´utilisateur attache le fichier \"([^\"]*)\" de taille (\\d+)M de type \"([^\"]*)\"$")
+    public void utilisateur_attache_le_fichier_certificat_exe(String nomFichier, Integer tailleFichierEnMB,
                                                                TypeAnnexe typeAnnexe) throws Throwable {
 
         creerEtAttacherAnnexe(nomFichier, tailleFichierEnMB, typeAnnexe);
     }
 
-    @Lorsque("^le demandeur attache les annexes de type \"([^\"]*)\"$")
-    public void le_demandeur_attache_les_annexes_de_type(String typesAnnexe) throws Throwable {
+    @Lorsque("^l´utilisateur attache les annexes de type \"([^\"]*)\"$")
+    public void utilisateur_attache_les_annexes_de_type(String typesAnnexe) throws Throwable {
         String[] typesAnnexeArray = typesAnnexe.split(",");
         for (String typeAnnexeStr : typesAnnexeArray) {
             TypeAnnexe typeAnnexe = TypeAnnexe.valueOf(typeAnnexeStr);

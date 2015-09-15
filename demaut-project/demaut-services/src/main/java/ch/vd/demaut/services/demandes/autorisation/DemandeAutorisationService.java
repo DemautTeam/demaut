@@ -1,28 +1,28 @@
 package ch.vd.demaut.services.demandes.autorisation;
 
-import ch.vd.demaut.domain.annexes.Annexe;
-import ch.vd.demaut.domain.annexes.AnnexeMetadata;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import org.springframework.stereotype.Service;
-
 import java.io.File;
 import java.util.Collection;
+
+import org.springframework.stereotype.Service;
+
+import ch.vd.demaut.domain.annexes.AnnexeMetadata;
+import ch.vd.demaut.domain.annexes.ContenuAnnexe;
+import ch.vd.demaut.domain.annexes.NomFichier;
+import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 
 @Service
 public interface DemandeAutorisationService {
 
-    DemandeAutorisation initialiserDemandeAutorisation();
+    DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande ref);
 
-    DemandeAutorisation afficherUneDemandeAutorisation(String demandeReference);
+    Collection<AnnexeMetadata> listerLesAnnexesMetadatas(ReferenceDeDemande ref);
 
-    void sauverLaDemandeAutorisation(DemandeAutorisation demandeAutorisation);
+    ContenuAnnexe recupererContenuAnnexe(ReferenceDeDemande ref, NomFichier nomFichier);
 
-    Collection<AnnexeMetadata> listerLesAnnexeMetadatas(String demandeReference);
+    void attacherUneAnnexe(ReferenceDeDemande ref, File file, NomFichier nomFichier, TypeAnnexe type);
 
-    Annexe afficherUneAnnexe(String demandeReference, String annexeFileName);
-
-    boolean attacherUneAnnexe(String demandeReference, File file, String annexeFileName, String annexeFileSize, String annexeFileType, String annexeType);
-
-    boolean supprimerUneAnnexe(String demandeReference, String annexeFileName, String annexeType);
+    void supprimerUneAnnexe(ReferenceDeDemande ref, NomFichier nomFichier);
 }
 

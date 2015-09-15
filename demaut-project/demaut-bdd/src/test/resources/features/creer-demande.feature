@@ -5,8 +5,8 @@ Fonctionnalité: Créer une demande
 
   Contexte:
   	Etant donné la date du jour: "15.07.2015 11:00"
-    Etant donné un demandeur identifié "DALTON, Joe"
+    Etant donné l´utilisateur identifié et connecté avec le login "joe.dalton@vd.ch"
 
   Scénario: Créer une demande à l état Brouillon
-    Lorsque que le demandeur initialise une demande de type "Medecin"
-    Alors le système Demaut crée la demande avec les caractéristiques [état: "Brouillon", demandeur: "DALTON, Joe", type: "Medecin"] 
+    Lorsque que l´utilisateur initialise une demande de type "Medecin"
+    Alors le système Demaut crée la demande avec les caractéristiques [état: "Brouillon", utilisateur: "joe.dalton@vd.ch", type: "Medecin"] 

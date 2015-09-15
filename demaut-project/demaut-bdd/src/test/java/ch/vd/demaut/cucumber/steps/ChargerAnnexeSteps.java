@@ -10,9 +10,8 @@ public class ChargerAnnexeSteps {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ChargerAnnexeSteps.class);
 
-    @Etantdonné("^le demandeur fait une nouvelle demande$")
-    public void le_demandeur_fait_une_nouvelle_demande() throws Throwable {
-        LOGGER.info("le_demandeur_fait_une_nouvelle_demande");
+    @Etantdonné("^l´utilisateur fait une nouvelle demande$")
+    public void lutilisateur_fait_une_nouvelle_demande() throws Throwable {
         System.out.format("Cukes: %n\n");
     }
 

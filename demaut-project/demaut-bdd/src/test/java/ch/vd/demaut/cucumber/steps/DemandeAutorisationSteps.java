@@ -19,9 +19,9 @@ import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
 import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
-import ch.vd.demaut.domain.demandeurs.Demandeur;
-import ch.vd.demaut.domain.demandeurs.DemandeurRepository;
-import ch.vd.demaut.domain.demandeurs.NomEtPrenomDemandeur;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.domain.utilisateurs.Utilisateur;
+import ch.vd.demaut.domain.utilisateurs.UtilisateurRepository;
 
 @Transactional
 public class DemandeAutorisationSteps {
@@ -34,14 +34,14 @@ public class DemandeAutorisationSteps {
     // ********************************************************* Fields
 
     //Beans Initialisés pas Spring Context
-    private DemandeurRepository demandeurRepository;
+    private UtilisateurRepository utilisateurRepository;
     private DemandeAutorisationRepository demandeAutorisationRepository;
     private ConfigDemaut configDemaut;
     private DemandeAutorisationFactory demautFactoy = DemandeAutorisationFactory.getInstance();
     
     ////////// Données temporaires pour les tests (non-thread safe)
     
-    private Demandeur demandeur;
+    private Utilisateur utilisateur;
     private DemandeAutorisation demandeEnCours;
     private AccepteOuRefuse actualAcceptationAnnexe;
 
@@ -52,15 +52,14 @@ public class DemandeAutorisationSteps {
         configDemaut.ajouterAnnexesObligatoires(profession, annexesObligatoires);
     }
 
-    public void initialiserDemandeur(NomEtPrenomDemandeur nomPrenomDemandeur) {
-        demandeur = new Demandeur(nomPrenomDemandeur);
-        demandeurRepository.store(demandeur);
-        LOGGER.debug("Le demandeur " + nomPrenomDemandeur + " a été ajouté au repository avec l'id technique:" + demandeur.getId());
+    public void initialiserUtilisateur(Login login) {
+        utilisateur = new Utilisateur(login);
+        utilisateurRepository.store(utilisateur);
+        LOGGER.debug("L'utilisateur " + login + " a été ajouté au repository avec l'id technique:" + utilisateur.getId());
     }
 
     public void initialiserDemandeEnCours(ProfessionDeLaSante profession) {
-    	Demandeur demandeur2 = demandeurRepository.findBy(demandeur.getId());
-        demandeEnCours = demautFactoy.inititierDemandeAutorisation(demandeur2, profession, configDemaut);
+        demandeEnCours = demautFactoy.inititierDemandeAutorisation(utilisateur.getLogin(), profession, configDemaut);
         demandeAutorisationRepository.store(demandeEnCours);
 
         LOGGER.debug("La demande autorisation " + demandeEnCours + " a été ajoutée au repository avec l'id technique:" + demandeEnCours.getId());
@@ -83,8 +82,8 @@ public class DemandeAutorisationSteps {
         return demandeEnCours;
     }
 
-    public Demandeur getDemandeur() {
-        return demandeur;
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
     }
 
     public void attacherUneAnnexe(Annexe annexe) {
@@ -135,8 +134,8 @@ public class DemandeAutorisationSteps {
     // ***************************** **************************** Technical
     // methods
 
-    public void setDemandeurRepository(DemandeurRepository demandeurRepository) {
-        this.demandeurRepository = demandeurRepository;
+    public void setUtilisateurRepository(UtilisateurRepository utilisateurRepository) {
+        this.utilisateurRepository = utilisateurRepository;
     }
 
     public void setDemandeAutorisationRepository(DemandeAutorisationRepository demandeAutorisationRepository) {
@@ -149,7 +148,7 @@ public class DemandeAutorisationSteps {
 
     public void clean() {
         demandeAutorisationRepository.deleteAll();
-        demandeurRepository.deleteAll();
+        utilisateurRepository.deleteAll();
     }
 
     // ***************************** **************************** Private

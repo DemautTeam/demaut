@@ -5,7 +5,7 @@
 
 	<bean id="demandeAutorisationSteps" class="ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps"
 		scope="cucumber-glue">
-		<property name="demandeurRepository" ref="demandeurRepository" />
+		<property name="utilisateurRepository" ref="utilisateurRepository" />
 		<property name="demandeAutorisationRepository" ref="demandeAutorisationRepository" />
 		<property name="configDemaut" ref="configDemaut" />
 	</bean>
