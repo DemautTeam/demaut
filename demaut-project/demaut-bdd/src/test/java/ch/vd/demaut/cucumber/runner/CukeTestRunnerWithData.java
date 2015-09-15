@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
         glue = {"ch.vd.demaut.cucumber.steps.definitions"}, //
         strict = false, //
         monochrome = true, //
-        tags = {"@creation-demande"},//
+        tags = {"@creation-demande,@annexes","~@ignoreme"},//
         plugin = {"pretty", //
                 "html:target/bdd-data-html", //
                 "json:target/bdd-data-json/demaut-report.json"}) //

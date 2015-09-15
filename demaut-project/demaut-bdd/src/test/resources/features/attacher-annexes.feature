@@ -52,7 +52,7 @@ Fonctionnalité: Attacher des annexes à la demande par le professionnel
   Plan du scénario: Attacher une annexe à une liste existante
     Etant donné une demande de type "Medecin" en cours de saisie
   	Etant donné la liste des annexes initiale <annexes_initiales> attachées à la demande en cours
-  	Lorsque l´utilisateur attache le fichier "certificat.pdf" de taille 2.5M de type "Certificat"
+  	Lorsque l´utilisateur attache le fichier "certificat.pdf" de taille 2M de type "Certificat"
   	Alors le système Demaut "accepte" d´attacher cette annexe
   	Alors les annexes attachées à la demande sont <annexes>
   	Exemples:
@@ -61,7 +61,7 @@ Fonctionnalité: Attacher des annexes à la demande par le professionnel
     	| "cv.pdf"               | "certificat.pdf,cv.pdf" 				|
     	| "cv.pdf,diplome.pdf"   | "certificat.pdf,cv.pdf,diplome.pdf"  |
   	
-  @type-demande
+  @type-demande @ignoreme
   Plan du scénario: Accepter ou refuser les annexes en fonction de leur type et du type de la demande en cours
     Etant donné une demande de type <type_demande> en cours de saisie
   	Lorsque l´utilisateur attache les annexes de type <types_annexe>
