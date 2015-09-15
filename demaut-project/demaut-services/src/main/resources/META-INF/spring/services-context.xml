@@ -11,7 +11,7 @@
 		http://www.springframework.org/schema/util/spring-util.xsd">
 
 	<bean id="demandeAutorisationRepository"
-		class="ch.vd.demaut.data.demandes.autorisation.repo.DemandeAutorisationRepositoryJPA" />
+		class="ch.vd.demaut.data.demandes.autorisation.repo.impl.DemandeAutorisationRepositoryJPA" />
 
 	<bean id="demandeAutorisationService"
 		class="ch.vd.demaut.services.demandes.autorisation.impl.DemandeAutorisationServiceJPA" />
