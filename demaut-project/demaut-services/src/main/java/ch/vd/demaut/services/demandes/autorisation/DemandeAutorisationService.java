@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import org.springframework.stereotype.Service;
 
+import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.AnnexeMetadata;
 import ch.vd.demaut.domain.annexes.ContenuAnnexe;
 import ch.vd.demaut.domain.annexes.NomFichier;
@@ -37,5 +38,8 @@ public interface DemandeAutorisationService {
 
 	void attacherUneAnnexe(ReferenceDeDemande ref, File file, NomFichier nomFichier, TypeAnnexe type);
 
+	void attacherUneAnnexe(ReferenceDeDemande ref, Annexe annexeALier);
+
 	void supprimerUneAnnexe(ReferenceDeDemande ref, NomFichier nomFichier);
+
 }

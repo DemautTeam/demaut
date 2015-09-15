@@ -1,22 +1,25 @@
 package ch.vd.demaut.microbiz.progreSoa;
 
-import ch.vd.ses.referentiel.demaut_1_0.RefListType;
-import ch.vd.ses.referentiel.demaut_1_0.RefRoot;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.StringWriter;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.StringWriter;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+
+import ch.vd.ses.referentiel.demaut_1_0.RefListType;
+import ch.vd.ses.referentiel.demaut_1_0.RefRoot;
 
 @RunWith(JUnit4.class)
 public class JaxbXmlTransformTest {
@@ -46,6 +49,7 @@ public class JaxbXmlTransformTest {
         assertNotNull(jaxbMarshaller);
     }
 
+    @Ignore
     @Test
     public void shouldValidMarshaller() throws Exception {
         RefRoot refRoot = new RefRoot();

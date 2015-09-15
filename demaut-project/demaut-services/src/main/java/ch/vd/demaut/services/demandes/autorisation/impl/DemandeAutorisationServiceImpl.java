@@ -43,6 +43,7 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
 		return nouvelleDemande;
 	}
 	
+	@Transactional(readOnly=true)
 	@Override
 	public DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande ref) {
 		return demandeAutorisationRepository.recupererDemandeParReference(ref);
@@ -56,6 +57,7 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
 	 *            String
 	 * @return Collection AnnexeMetadata
 	 */
+	@Transactional(readOnly=true)
 	@Override
 	public Collection<AnnexeMetadata> listerLesAnnexesMetadatas(ReferenceDeDemande ref) {
 		DemandeAutorisation demandeAutorisation = recupererDemandeParReference(ref);
@@ -73,6 +75,7 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
 	 *            String
 	 * @return Annexe
 	 */
+	@Transactional(readOnly=true)
 	@Override
 	public ContenuAnnexe recupererContenuAnnexe(ReferenceDeDemande ref, NomFichier nomFichier) {
 		DemandeAutorisation demandeAutorisation = recupererDemandeParReference(ref);
@@ -85,16 +88,23 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
 	@Transactional
 	@Override
 	public void attacherUneAnnexe(ReferenceDeDemande ref, File file, NomFichier nomFichier, TypeAnnexe type) {
-		DemandeAutorisation demandeAutorisation = recupererDemandeParReference(ref);
 		
 		ContenuAnnexe contenuAnnexe = buildContenuAnnexe(file);
 		
 		Annexe annexe = new Annexe(type, nomFichier, contenuAnnexe);
 		
-		demandeAutorisation.validerEtAttacherAnnexe(annexe);
+		attacherAnnexe(ref, annexe);
 		
 	}
 
+	@Transactional
+	@Override
+	public void attacherUneAnnexe(ReferenceDeDemande ref, Annexe annexe) {
+		attacherAnnexe(ref, annexe);
+	}
+	
+	
+	@Transactional
 	@Override
 	public void supprimerUneAnnexe(ReferenceDeDemande ref, NomFichier nomFichier) {
 		DemandeAutorisation demandeAutorisation = recupererDemandeParReference(ref);
@@ -138,5 +148,13 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
 		ContenuAnnexe contenuAnnexe = new ContenuAnnexe(contenu);
 		return contenuAnnexe;
 	}
+    
+	private void attacherAnnexe(ReferenceDeDemande ref, Annexe annexe) {
+		DemandeAutorisation demandeAutorisation = recupererDemandeParReference(ref);
+
+		demandeAutorisation.validerEtAttacherAnnexe(annexe);
+	}
+
+
 
 }

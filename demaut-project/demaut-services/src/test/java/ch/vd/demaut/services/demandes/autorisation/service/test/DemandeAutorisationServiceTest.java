@@ -17,6 +17,8 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.ContenuAnnexe;
@@ -47,6 +49,7 @@ public class DemandeAutorisationServiceTest extends TestCase {
     private Login login;
     private ProfessionDeLaSante profession;
     private DemandeAutorisation demandeEnCours;
+    private Annexe annexe;
 
     // ********************************************************* Setups
     @Before
@@ -60,6 +63,7 @@ public class DemandeAutorisationServiceTest extends TestCase {
         nomFichier = new NomFichier("Test_multipart.pdf");
         login = new Login("joe.dalton@ch.vd");
         profession = ProfessionDeLaSante.Medecin;
+        annexe = new Annexe(TypeAnnexe.Certificat, nomFichier, new ContenuAnnexe(byteArray));
     }
     
     // ********************************************************* Tests
@@ -71,11 +75,11 @@ public class DemandeAutorisationServiceTest extends TestCase {
     	assertThat(demandeEnCours.getReferenceDeDemande()).isNotNull();
     }
     
-    @Ignore
     @Test
+    @Transactional
     public void testerAttacherUneAnnexe() {
     	//Setup fixtures
-    	intialiserDemandeEnCours();
+    	intialiserDemandeEnCours(null);
     	
     	//Attache une annexe
     	demandeAutorisationService.attacherUneAnnexe(ref, file, nomFichier, TypeAnnexe.Certificat);
@@ -86,6 +90,26 @@ public class DemandeAutorisationServiceTest extends TestCase {
     	//Vérifie si annexe attachée
     	Collection<Annexe> annexes = demandeEnCours.listerLesAnnexes();
     	assertThat(annexes).hasSize(1);
+    }
+    
+
+    @Test
+    @Transactional
+    public void testerRecupererContenuAnnexe() {
+
+    	long tailleAnnexe = annexe.getTaille();
+    	
+    	//Setup fixtures
+    	intialiserDemandeEnCours(annexe);
+    	
+    	//Récupère demande en cours
+    	demandeEnCours = demandeAutorisationService.recupererDemandeParReference(ref);
+
+    	//Vérifie si annexe attachée
+    	ContenuAnnexe contenuAnnexe = demandeAutorisationService.recupererContenuAnnexe(ref, nomFichier);
+
+    	assertThat(contenuAnnexe).isNotNull();
+    	assertThat(contenuAnnexe.getTaille()).isEqualTo(tailleAnnexe);
     }
     
     @Ignore
@@ -118,11 +142,15 @@ public class DemandeAutorisationServiceTest extends TestCase {
         demandeAutorisationService.supprimerUneAnnexe(ref, nomFichier);
     }
     
-    // ********************************************************* Private methods
-    private void intialiserDemandeEnCours() {
+    // ********************************************************* Private methods for fixtures
+    
+    @Transactional(propagation= Propagation.REQUIRES_NEW)
+    private void intialiserDemandeEnCours(Annexe annexeALier) {
     	demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(login, profession);
     	ref = demandeEnCours.getReferenceDeDemande();
+    	if (annexeALier != null) {
+    		demandeAutorisationService.attacherUneAnnexe(ref, annexeALier);
+    	}
     }
-    
 
 }

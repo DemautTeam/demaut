@@ -46,7 +46,7 @@ public class PorgreSoaServiceTest {
         RefRoot refRoot = porgreSoaService.listeSOAFormationApprofondie();
         assertThat(refRoot).isNotNull();
         assertThat(refRoot.getRefList().getRefListType()).isNotEmpty();
-        assertThat(refRoot.getRefList().getRefListType().size()).isEqualTo(26);
+        assertThat(refRoot.getRefList().getRefListType().size()).isEqualTo(28);
     }
 
     @Test
