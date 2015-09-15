@@ -1,256 +1,258 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <refRoot>
     <type>D_POSTGRADE</type>
-    <refElement>
-        <id>344861105</id>
-        <libl>Allergologie et immunologie clinique /92</libl>
-    </refElement>
-    <refElement>
-        <id>344861106</id>
-        <libl>Anesthésiologie /2</libl>
-    </refElement>
-    <refElement>
-        <id>344861107</id>
-        <libl>Angiologie /119</libl>
-    </refElement>
-    <refElement>
-        <id>344861108</id>
-        <libl>Cardiologie /83</libl>
-    </refElement>
-    <refElement>
-        <id>344861109</id>
-        <libl>Chirurgie maxillo-faciale /57</libl>
-    </refElement>
-    <refElement>
-        <id>344861110</id>
-        <libl>Chirurgie /6</libl>
-    </refElement>
-    <refElement>
-        <id>344861111</id>
-        <libl>Chirurgie cardiaque et vasculaire thoracique /47</libl>
-    </refElement>
-    <refElement>
-        <id>344861112</id>
-        <libl>Chirurgie orthopédique /31</libl>
-    </refElement>
-    <refElement>
-        <id>344861113</id>
-        <libl>Chirurgie pédiatrique /18</libl>
-    </refElement>
-    <refElement>
-        <id>344861114</id>
-        <libl>Chirurgie plastique,reconstructive,esthétique /37</libl>
-    </refElement>
-    <refElement>
-        <id>344861115</id>
-        <libl>Dermatologie et vénéréologie /7</libl>
-    </refElement>
-    <refElement>
-        <id>344861116</id>
-        <libl>Endocrinologie / diabétologie /94</libl>
-    </refElement>
-    <refElement>
-        <id>344861117</id>
-        <libl>Gastroentérologie /85</libl>
-    </refElement>
-    <refElement>
-        <id>344861118</id>
-        <libl>Génétique médicale /75</libl>
-    </refElement>
-    <refElement>
-        <id>344861119</id>
-        <libl>Gynécologie et obstétrique /10</libl>
-    </refElement>
-    <refElement>
-        <id>344861120</id>
-        <libl>Hématologie /95</libl>
-    </refElement>
-    <refElement>
-        <id>344861121</id>
-        <libl>Infectiologie /74</libl>
-    </refElement>
-    <refElement>
-        <id>344861122</id>
-        <libl>Médecine du travail /93</libl>
-    </refElement>
-    <refElement>
-        <id>344861123</id>
-        <libl>Médecine générale /5</libl>
-    </refElement>
-    <refElement>
-        <id>344861124</id>
-        <libl>Médecine intensive /122</libl>
-    </refElement>
-    <refElement>
-        <id>344861125</id>
-        <libl>Médecine interne /13</libl>
-    </refElement>
-    <refElement>
-        <id>344861126</id>
-        <libl>Médecine légale /9</libl>
-    </refElement>
-    <refElement>
-        <id>344861127</id>
-        <libl>Médecine nucléaire /100</libl>
-    </refElement>
-    <refElement>
-        <id>344861128</id>
-        <libl>Médecine pharmaceutique /76</libl>
-    </refElement>
-    <refElement>
-        <id>344861129</id>
-        <libl>Médecine physique et réadaptation /36</libl>
-    </refElement>
-    <refElement>
-        <id>344861130</id>
-        <libl>Médecine tropicale et médecine de voyages /41</libl>
-    </refElement>
-    <refElement>
-        <id>344861131</id>
-        <libl>Néphrologie /98</libl>
-    </refElement>
-    <refElement>
-        <id>344861132</id>
-        <libl>Neurochirurgie /26</libl>
-    </refElement>
-    <refElement>
-        <id>344861133</id>
-        <libl>Neurologie /27</libl>
-    </refElement>
-    <refElement>
-        <id>344861134</id>
-        <libl>Oncologie médicale /96</libl>
-    </refElement>
-    <refElement>
-        <id>344861135</id>
-        <libl>Ophtalmologie /30</libl>
-    </refElement>
-    <refElement>
-        <id>344861136</id>
-        <libl>Oto-rhino-laryngologie /32</libl>
-    </refElement>
-    <refElement>
-        <id>344861137</id>
-        <libl>Pathologie /34</libl>
-    </refElement>
-    <refElement>
-        <id>344861138</id>
-        <libl>Pédiatrie /59</libl>
-    </refElement>
-    <refElement>
-        <id>344861139</id>
-        <libl>Pharmacologie et toxicologie cliniques /102</libl>
-    </refElement>
-    <refElement>
-        <id>344861140</id>
-        <libl>Pneumologie /99</libl>
-    </refElement>
-    <refElement>
-        <id>344861141</id>
-        <libl>Prévention et santé publique /38</libl>
-    </refElement>
-    <refElement>
-        <id>344861142</id>
-        <libl>Psychiatrie et psychothérapie /39</libl>
-    </refElement>
-    <refElement>
-        <id>344861143</id>
-        <libl>Psychiatrie et psycho. enfants et adolescents /19</libl>
-    </refElement>
-    <refElement>
-        <id>344861144</id>
-        <libl>Radio-oncologie / radiothérapie /103</libl>
-    </refElement>
-    <refElement>
-        <id>344861145</id>
-        <libl>Radiologie /101</libl>
-    </refElement>
-    <refElement>
-        <id>344861146</id>
-        <libl>Rhumatologie /126</libl>
-    </refElement>
-    <refElement>
-        <id>344861147</id>
-        <libl>Urologie /42</libl>
-    </refElement>
-    <refElement>
-        <id>344861148</id>
-        <libl>Psychiatrie, psychothérapie personne âgée /140</libl>
-    </refElement>
-    <refElement>
-        <id>344861149</id>
-        <libl>Chirurgie de la main /129</libl>
-    </refElement>
-    <refElement>
-        <id>344861150</id>
-        <libl>*pharmacologie clinique /20</libl>
-    </refElement>
-    <refElement>
-        <id>344861151</id>
-        <libl>*radiologie médicale - radiodiagnostic /22</libl>
-    </refElement>
-    <refElement>
-        <id>344861152</id>
-        <libl>*radiologie médicale - médecine nucléaire /23</libl>
-    </refElement>
-    <refElement>
-        <id>344861153</id>
-        <libl>*radiologie médicale - radio-oncologie /24</libl>
-    </refElement>
-    <refElement>
-        <id>344861154</id>
-        <libl>*neuroradiologie /28</libl>
-    </refElement>
-    <refElement>
-        <id>344861155</id>
-        <libl>*oncologie-hématologie /29</libl>
-    </refElement>
-    <refElement>
-        <id>344861156</id>
-        <libl>*neuropédiatrie /44</libl>
-    </refElement>
-    <refElement>
-        <id>344861157</id>
-        <libl>*cytologie gynécologique /49</libl>
-    </refElement>
-    <refElement>
-        <id>344861158</id>
-        <libl>*hématologie pédiatrique /60</libl>
-    </refElement>
-    <refElement>
-        <id>344861159</id>
-        <libl>*troubles du métabolisme /62</libl>
-    </refElement>
-    <refElement>
-        <id>344861160</id>
-        <libl>*radiologie médicale /66</libl>
-    </refElement>
-    <refElement>
-        <id>344861161</id>
-        <libl>*radiologie médicale spec. Médecine nucléaire /67</libl>
-    </refElement>
-    <refElement>
-        <id>344861162</id>
-        <libl>*radiologie médicale spec. radio-oncologie /68</libl>
-    </refElement>
-    <refElement>
-        <id>344861163</id>
-        <libl>*radiologie médicale spec. Radiodiagnostic /69</libl>
-    </refElement>
-    <refElement>
-        <id>344861164</id>
-        <libl>Médecin praticien /139</libl>
-    </refElement>
-    <refElement>
-        <id>344861165</id>
-        <libl>Médecin sans spécialisation /999</libl>
-    </refElement>
-    <refElement>
-        <id>372521847</id>
-        <libl>Médecine interne générale /4</libl>
-    </refElement>
-    <refElement>
-        <id>398712382</id>
-        <libl>Soins intensifs</libl>
-    </refElement>
+    <refList>
+        <refListType>
+            <id>344861105</id>
+            <libl>Allergologie et immunologie clinique /92</libl>
+        </refListType>
+        <refListType>
+            <id>344861106</id>
+            <libl>Anesthésiologie /2</libl>
+        </refListType>
+        <refListType>
+            <id>344861107</id>
+            <libl>Angiologie /119</libl>
+        </refListType>
+        <refListType>
+            <id>344861108</id>
+            <libl>Cardiologie /83</libl>
+        </refListType>
+        <refListType>
+            <id>344861109</id>
+            <libl>Chirurgie maxillo-faciale /57</libl>
+        </refListType>
+        <refListType>
+            <id>344861110</id>
+            <libl>Chirurgie /6</libl>
+        </refListType>
+        <refListType>
+            <id>344861111</id>
+            <libl>Chirurgie cardiaque et vasculaire thoracique /47</libl>
+        </refListType>
+        <refListType>
+            <id>344861112</id>
+            <libl>Chirurgie orthopédique /31</libl>
+        </refListType>
+        <refListType>
+            <id>344861113</id>
+            <libl>Chirurgie pédiatrique /18</libl>
+        </refListType>
+        <refListType>
+            <id>344861114</id>
+            <libl>Chirurgie plastique,reconstructive,esthétique /37</libl>
+        </refListType>
+        <refListType>
+            <id>344861115</id>
+            <libl>Dermatologie et vénéréologie /7</libl>
+        </refListType>
+        <refListType>
+            <id>344861116</id>
+            <libl>Endocrinologie / diabétologie /94</libl>
+        </refListType>
+        <refListType>
+            <id>344861117</id>
+            <libl>Gastroentérologie /85</libl>
+        </refListType>
+        <refListType>
+            <id>344861118</id>
+            <libl>Génétique médicale /75</libl>
+        </refListType>
+        <refListType>
+            <id>344861119</id>
+            <libl>Gynécologie et obstétrique /10</libl>
+        </refListType>
+        <refListType>
+            <id>344861120</id>
+            <libl>Hématologie /95</libl>
+        </refListType>
+        <refListType>
+            <id>344861121</id>
+            <libl>Infectiologie /74</libl>
+        </refListType>
+        <refListType>
+            <id>344861122</id>
+            <libl>Médecine du travail /93</libl>
+        </refListType>
+        <refListType>
+            <id>344861123</id>
+            <libl>Médecine générale /5</libl>
+        </refListType>
+        <refListType>
+            <id>344861124</id>
+            <libl>Médecine intensive /122</libl>
+        </refListType>
+        <refListType>
+            <id>344861125</id>
+            <libl>Médecine interne /13</libl>
+        </refListType>
+        <refListType>
+            <id>344861126</id>
+            <libl>Médecine légale /9</libl>
+        </refListType>
+        <refListType>
+            <id>344861127</id>
+            <libl>Médecine nucléaire /100</libl>
+        </refListType>
+        <refListType>
+            <id>344861128</id>
+            <libl>Médecine pharmaceutique /76</libl>
+        </refListType>
+        <refListType>
+            <id>344861129</id>
+            <libl>Médecine physique et réadaptation /36</libl>
+        </refListType>
+        <refListType>
+            <id>344861130</id>
+            <libl>Médecine tropicale et médecine de voyages /41</libl>
+        </refListType>
+        <refListType>
+            <id>344861131</id>
+            <libl>Néphrologie /98</libl>
+        </refListType>
+        <refListType>
+            <id>344861132</id>
+            <libl>Neurochirurgie /26</libl>
+        </refListType>
+        <refListType>
+            <id>344861133</id>
+            <libl>Neurologie /27</libl>
+        </refListType>
+        <refListType>
+            <id>344861134</id>
+            <libl>Oncologie médicale /96</libl>
+        </refListType>
+        <refListType>
+            <id>344861135</id>
+            <libl>Ophtalmologie /30</libl>
+        </refListType>
+        <refListType>
+            <id>344861136</id>
+            <libl>Oto-rhino-laryngologie /32</libl>
+        </refListType>
+        <refListType>
+            <id>344861137</id>
+            <libl>Pathologie /34</libl>
+        </refListType>
+        <refListType>
+            <id>344861138</id>
+            <libl>Pédiatrie /59</libl>
+        </refListType>
+        <refListType>
+            <id>344861139</id>
+            <libl>Pharmacologie et toxicologie cliniques /102</libl>
+        </refListType>
+        <refListType>
+            <id>344861140</id>
+            <libl>Pneumologie /99</libl>
+        </refListType>
+        <refListType>
+            <id>344861141</id>
+            <libl>Prévention et santé publique /38</libl>
+        </refListType>
+        <refListType>
+            <id>344861142</id>
+            <libl>Psychiatrie et psychothérapie /39</libl>
+        </refListType>
+        <refListType>
+            <id>344861143</id>
+            <libl>Psychiatrie et psycho. enfants et adolescents /19</libl>
+        </refListType>
+        <refListType>
+            <id>344861144</id>
+            <libl>Radio-oncologie / radiothérapie /103</libl>
+        </refListType>
+        <refListType>
+            <id>344861145</id>
+            <libl>Radiologie /101</libl>
+        </refListType>
+        <refListType>
+            <id>344861146</id>
+            <libl>Rhumatologie /126</libl>
+        </refListType>
+        <refListType>
+            <id>344861147</id>
+            <libl>Urologie /42</libl>
+        </refListType>
+        <refListType>
+            <id>344861148</id>
+            <libl>Psychiatrie, psychothérapie personne âgée /140</libl>
+        </refListType>
+        <refListType>
+            <id>344861149</id>
+            <libl>Chirurgie de la main /129</libl>
+        </refListType>
+        <refListType>
+            <id>344861150</id>
+            <libl>*pharmacologie clinique /20</libl>
+        </refListType>
+        <refListType>
+            <id>344861151</id>
+            <libl>*radiologie médicale - radiodiagnostic /22</libl>
+        </refListType>
+        <refListType>
+            <id>344861152</id>
+            <libl>*radiologie médicale - médecine nucléaire /23</libl>
+        </refListType>
+        <refListType>
+            <id>344861153</id>
+            <libl>*radiologie médicale - radio-oncologie /24</libl>
+        </refListType>
+        <refListType>
+            <id>344861154</id>
+            <libl>*neuroradiologie /28</libl>
+        </refListType>
+        <refListType>
+            <id>344861155</id>
+            <libl>*oncologie-hématologie /29</libl>
+        </refListType>
+        <refListType>
+            <id>344861156</id>
+            <libl>*neuropédiatrie /44</libl>
+        </refListType>
+        <refListType>
+            <id>344861157</id>
+            <libl>*cytologie gynécologique /49</libl>
+        </refListType>
+        <refListType>
+            <id>344861158</id>
+            <libl>*hématologie pédiatrique /60</libl>
+        </refListType>
+        <refListType>
+            <id>344861159</id>
+            <libl>*troubles du métabolisme /62</libl>
+        </refListType>
+        <refListType>
+            <id>344861160</id>
+            <libl>*radiologie médicale /66</libl>
+        </refListType>
+        <refListType>
+            <id>344861161</id>
+            <libl>*radiologie médicale spec. Médecine nucléaire /67</libl>
+        </refListType>
+        <refListType>
+            <id>344861162</id>
+            <libl>*radiologie médicale spec. radio-oncologie /68</libl>
+        </refListType>
+        <refListType>
+            <id>344861163</id>
+            <libl>*radiologie médicale spec. Radiodiagnostic /69</libl>
+        </refListType>
+        <refListType>
+            <id>344861164</id>
+            <libl>Médecin praticien /139</libl>
+        </refListType>
+        <refListType>
+            <id>344861165</id>
+            <libl>Médecin sans spécialisation /999</libl>
+        </refListType>
+        <refListType>
+            <id>372521847</id>
+            <libl>Médecine interne générale /4</libl>
+        </refListType>
+        <refListType>
+            <id>398712382</id>
+            <libl>Soins intensifs</libl>
+        </refListType>
+    </refList>
 </refRoot>

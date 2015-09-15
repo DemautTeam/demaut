@@ -1,32 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <refRoot>
     <type>AP_TITRE</type>
-    <refElement>
-        <id>50257445</id>
-        <libl>Indépendant</libl>
-    </refElement>
-    <refElement>
-        <id>50257447</id>
-        <libl>Dérogatoire</libl>
-    </refElement>
-    <refElement>
-        <id>50257449</id>
-        <libl>Temporaire</libl>
-    </refElement>
-    <refElement>
-        <id>50257451</id>
-        <libl>Particulière</libl>
-    </refElement>
-    <refElement>
-        <id>50257453</id>
-        <libl>Dépendant sous sa propre responsabilité prof.</libl>
-    </refElement>
-    <refElement>
-        <id>408400744</id>
-        <libl>Dépendant sous supervision</libl>
-    </refElement>
-    <refElement>
-        <id>414178943</id>
-        <libl>Dépendant</libl>
-    </refElement>
+    <refList>
+        <refListType>
+            <id>50257445</id>
+            <libl>Indépendant</libl>
+        </refListType>
+        <refListType>
+            <id>50257447</id>
+            <libl>Dérogatoire</libl>
+        </refListType>
+        <refListType>
+            <id>50257449</id>
+            <libl>Temporaire</libl>
+        </refListType>
+        <refListType>
+            <id>50257451</id>
+            <libl>Particulière</libl>
+        </refListType>
+        <refListType>
+            <id>50257453</id>
+            <libl>Dépendant sous sa propre responsabilité prof.</libl>
+        </refListType>
+        <refListType>
+            <id>408400744</id>
+            <libl>Dépendant sous supervision</libl>
+        </refListType>
+        <refListType>
+            <id>414178943</id>
+            <libl>Dépendant</libl>
+        </refListType>
+    </refList>
 </refRoot>

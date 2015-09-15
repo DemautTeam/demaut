@@ -7,12 +7,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/camel")
+@Path("/service")
 public interface MainRest {
 
     @GET
     @Path("/main")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response mainData();
+    Response mainData();
 }

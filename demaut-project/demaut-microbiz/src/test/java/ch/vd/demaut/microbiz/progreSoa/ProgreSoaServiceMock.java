@@ -1,6 +1,6 @@
 package ch.vd.demaut.microbiz.progreSoa;
 
-import java.io.FileInputStream;
+import org.apache.commons.io.IOUtils;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -9,8 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import org.apache.commons.io.IOUtils;
+import java.io.FileInputStream;
 
 @Path("/")
 public class ProgreSoaServiceMock {

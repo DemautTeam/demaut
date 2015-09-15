@@ -3,6 +3,7 @@ package ch.vd.demaut.microbiz.rest;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
@@ -15,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
+import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +24,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 
 import ch.vd.demaut.domain.annexes.AnnexeMetadata;
 import ch.vd.demaut.domain.annexes.ContenuAnnexe;
@@ -31,17 +31,21 @@ import ch.vd.demaut.domain.annexes.NomFichier;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.microbiz.progreSoa.PorgreSoaService;
-import ch.vd.demaut.microbiz.progreSoa.RefRoot;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
-import ch.vd.pee.microbiz.core.utils.Json;
+import ch.vd.ses.referentiel.demaut_1_0.RefListType;
 
+@CrossOriginResourceSharing(
+        allowOrigins = {"*"},
+        allowCredentials = true,
+        maxAge = 3600,
+        allowHeaders = {"Content-Type", "X-Requested-With"},
+        exposeHeaders = {"Access-Control-Allow-Origin"}
+)
 @Service
-@Path("/services")
+@Path("/annexes")
 public class AnnexeRestImpl implements AnnexeRest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AnnexeRestImpl.class);
-
-    private static final ObjectWriter viewWriter = new ObjectMapper().writer();
 
     @Autowired
     private DemandeAutorisationService demandeAutorisationService;
@@ -55,22 +59,21 @@ public class AnnexeRestImpl implements AnnexeRest {
 
     @Override
     @GET
-    @Path("/annexes/typesList/{profession}")
+    @Path("/typesList/{profession}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
     public Response listerLesTypesAnnexes(@PathParam("profession") String profession) throws Exception {
 
         LOGGER.info("listerLesTypesAnnexes " + profession);
 
-        RefRoot lesTypesAnnexes = porgreSoaService.listeSOATypesAnnexes();
-        
+        List<RefListType> lesTypesAnnexes = porgreSoaService.listeSOATypesAnnexes().getRefList().getRefListType();
         // TODO filtrer la liste selon profession (liste ordinaire VS simplifiée)
-        return Response.ok(Json.newObject().put("response", viewWriter.writeValueAsString(lesTypesAnnexes))).build();
+        return RestUtils.forgeResponseList(Response.Status.OK, lesTypesAnnexes);
     }
 
     @Override
     @GET
-    @Path("/annexes/lister/{demandeReference}")
+    @Path("/lister/{demandeReference}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
     public Response listerLesAnnexes(@PathParam("demandeReference") String ref) throws JsonProcessingException {
@@ -81,16 +84,16 @@ public class AnnexeRestImpl implements AnnexeRest {
         
         Collection<AnnexeMetadata> annexesMetadata = demandeAutorisationService.listerLesAnnexesMetadatas(referenceDeDemande);
         
-        return Response.ok(Json.newObject().put("response", viewWriter.writeValueAsString(annexesMetadata))).build();
+        return RestUtils.forgeResponseList(Response.Status.OK, annexesMetadata);
     }
 
     @Override
     @GET
-    @Path("/annexes/afficher/{demandeReference}/{annexeFileName}")
+    @Path("/afficher/{demandeReference}/{annexeFileName}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @RolesAllowed("USER")
     public Response afficherUneAnnexe(@PathParam("demandeReference") String demandeReference,
-                                      @PathParam("annexeFileName") String annexeFileName) {
+                                      @PathParam("annexeFileName") String annexeFileName) throws JsonProcessingException {
 
         LOGGER.info("afficherUneAnnexe " + annexeFileName);
 
@@ -99,19 +102,15 @@ public class AnnexeRestImpl implements AnnexeRest {
 
         ContenuAnnexe contenuAnnexe = demandeAutorisationService.recupererContenuAnnexe(ref, nomFichier);
         
-        Response response = buildStreamResponse(contenuAnnexe);
+        Response response = RestUtils.forgeResponseStream(Response.Status.OK, contenuAnnexe.getContenu());
         
         return response;
-        
-    }
 
-	private Response buildStreamResponse(ContenuAnnexe contenuAnnexe) {
-		return Response.ok(contenuAnnexe.getContenu(), MediaType.APPLICATION_OCTET_STREAM_TYPE).build();
-	}
+    }
 
     @Override
     @POST
-    @Path("/annexes/attacher")
+    @Path("/attacher")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
@@ -130,15 +129,14 @@ public class AnnexeRestImpl implements AnnexeRest {
         
         demandeAutorisationService.attacherUneAnnexe(ref, file, nomFichier, typeAnnexe);
         
-        Response response = buildResponseJsonTrue();
+        Response response = RestUtils.forgeResponseTrue();
         
         return response;
-        
     }
 
     @Override
     @GET
-    @Path("/annexes/supprimer/{demandeReference}/{annexeFileName}/{annexeType}")
+    @Path("/supprimer/{demandeReference}/{annexeFileName}/{annexeType}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
     public Response supprimerUneAnnexe(@PathParam("demandeReference") String demandeReference,
@@ -152,16 +150,9 @@ public class AnnexeRestImpl implements AnnexeRest {
 
         demandeAutorisationService.supprimerUneAnnexe(ref, nomFichier);
         
-        Response response = buildResponseJsonTrue();
+        Response response = RestUtils.forgeResponseTrue();
         
         return response;
     }
     
-	private Response buildResponseJsonTrue() throws JsonProcessingException {
-		Object json =  Json.newObject().put("response", viewWriter.writeValueAsString(true));
-        Response response = Response.ok(json).build();
-        return response;
-
-	}
-
 }

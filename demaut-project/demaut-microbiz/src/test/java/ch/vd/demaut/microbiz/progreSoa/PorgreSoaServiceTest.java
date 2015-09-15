@@ -1,5 +1,6 @@
 package ch.vd.demaut.microbiz.progreSoa;
 
+import ch.vd.ses.referentiel.demaut_1_0.RefRoot;
 import ch.vd.ses.referentiel.tiers_v01.ReportedOrganisationType;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -42,49 +43,49 @@ public class PorgreSoaServiceTest {
 
     @Test
     public void shouldListeSOAFormationApprofondie() throws Exception {
-        RefRoot refRoot = porgreSoaService.listeSOATypesAnnexes();
+        RefRoot refRoot = porgreSoaService.listeSOAFormationApprofondie();
         assertThat(refRoot).isNotNull();
-        assertThat(refRoot.getRefElements()).isNotEmpty();
-        assertThat(refRoot.getRefElements().size()).isEqualTo(26);
+        assertThat(refRoot.getRefList().getRefListType()).isNotEmpty();
+        assertThat(refRoot.getRefList().getRefListType().size()).isEqualTo(26);
     }
 
     @Test
     public void shouldListeSOAFormationComplementaire() throws Exception {
         RefRoot refRoot = porgreSoaService.listeSOAFormationComplementaire();
         assertThat(refRoot).isNotNull();
-        assertThat(refRoot.getRefElements()).isNotEmpty();
-        assertThat(refRoot.getRefElements().size()).isEqualTo(27);
+        assertThat(refRoot.getRefList().getRefListType()).isNotEmpty();
+        assertThat(refRoot.getRefList().getRefListType().size()).isEqualTo(27);
     }
 
     @Test
     public void shouldListeSOAFormationInitiale() throws Exception {
         RefRoot refRoot = porgreSoaService.listeSOAFormationInitiale();
         assertThat(refRoot).isNotNull();
-        assertThat(refRoot.getRefElements()).isNotEmpty();
-        assertThat(refRoot.getRefElements().size()).isEqualTo(102);
+        assertThat(refRoot.getRefList().getRefListType()).isNotEmpty();
+        assertThat(refRoot.getRefList().getRefListType().size()).isEqualTo(102);
     }
 
     @Test
     public void shouldListeSOADiplomesPostGrade() throws Exception {
         RefRoot refRoot = porgreSoaService.listeSOADiplomesPostGrade();
         assertThat(refRoot).isNotNull();
-        assertThat(refRoot.getRefElements()).isNotEmpty();
-        assertThat(refRoot.getRefElements().size()).isEqualTo(63);
+        assertThat(refRoot.getRefList().getRefListType()).isNotEmpty();
+        assertThat(refRoot.getRefList().getRefListType().size()).isEqualTo(63);
     }
 
     @Test
     public void shouldListeSOAProfession() throws Exception {
         RefRoot refRoot = porgreSoaService.listeSOAProfession();
         assertThat(refRoot).isNotNull();
-        assertThat(refRoot.getRefElements()).isNotEmpty();
-        assertThat(refRoot.getRefElements().size()).isEqualTo(41);
+        assertThat(refRoot.getRefList().getRefListType()).isNotEmpty();
+        assertThat(refRoot.getRefList().getRefListType().size()).isEqualTo(41);
     }
 
     @Test
     public void shouldListeSOATypesAnnexes() throws Exception {
         RefRoot refRoot = porgreSoaService.listeSOATypesAnnexes();
         assertThat(refRoot).isNotNull();
-        assertThat(refRoot.getRefElements()).isNotEmpty();
-        assertThat(refRoot.getRefElements().size()).isEqualTo(26);
+        assertThat(refRoot.getRefList().getRefListType()).isNotEmpty();
+        assertThat(refRoot.getRefList().getRefListType().size()).isEqualTo(26);
     }
 }

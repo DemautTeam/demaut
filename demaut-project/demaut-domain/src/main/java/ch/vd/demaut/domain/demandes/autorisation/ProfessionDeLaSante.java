@@ -23,4 +23,6 @@ public enum ProfessionDeLaSante {
     TechnicienEnRadiologieMedicale,
     TechnicienEnSalleDOperation,
     TherapeuteEnPsychomotricite;
+
+
 }

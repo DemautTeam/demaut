@@ -1,5 +1,7 @@
 package ch.vd.demaut.microbiz.progreSoa;
 
+import ch.vd.ses.referentiel.demaut_1_0.RefListType;
+import ch.vd.ses.referentiel.demaut_1_0.RefRoot;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,7 +39,6 @@ public class JaxbXmlTransformTest {
         }
     }
 
-
     @Before
     public void setUp() throws Exception {
         assertNotNull(fileInputStream);
@@ -48,13 +49,13 @@ public class JaxbXmlTransformTest {
     @Test
     public void shouldValidMarshaller() throws Exception {
         RefRoot refRoot = new RefRoot();
-        assertNotNull(refRoot.getRefElements());
+        assertNotNull(refRoot.getRefList());
         for (int index = 0; index < 10; index++) {
 
-            RefElement refElement = new RefElement();
+            RefListType refElement = new RefListType();
             refElement.setId(String.valueOf(index));
             refElement.setLibl("Label" + index);
-            refRoot.getRefElements().add(refElement);
+            refRoot.getRefList().getRefListType().add(refElement);
         }
         StringWriter stringWriter = new StringWriter();
         jaxbMarshaller.marshal(refRoot, stringWriter);
@@ -66,7 +67,7 @@ public class JaxbXmlTransformTest {
     public void shouldValidUnmarshaller() throws Exception {
         RefRoot refRoot = (RefRoot) jaxbUnmarshaller.unmarshal(fileInputStream);
         assertThat(refRoot).isNotNull();
-        assertThat(refRoot.getRefElements()).isNotEmpty();
-        assertThat(refRoot.getRefElements().size()).isEqualTo(26);
+        assertThat(refRoot.getRefList().getRefListType()).isNotEmpty();
+        assertThat(refRoot.getRefList().getRefListType().size()).isEqualTo(26);
     }
 }

@@ -144,7 +144,7 @@ public class DemandeAutorisation extends Demande {
     public ListeDesAnnexes getListeDesAnnexes() {
     	return new ListeDesAnnexes(annexes);
     }
-    
+
     // ********************************************************* Setters
     
     
@@ -153,4 +153,5 @@ public class DemandeAutorisation extends Demande {
     public DemandeFK getFunctionalKey() {
         return new DemandeFK(this);
     }
+
 }

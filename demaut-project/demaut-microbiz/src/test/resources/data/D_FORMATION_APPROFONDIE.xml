@@ -1,116 +1,118 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <refRoot>
     <type>D_FORMATION_APPROFONDIE</type>
-    <refElement>
-        <id>344861166</id>
-        <libl>Pneumologie pédiatrique /118</libl>
-    </refElement>
-    <refElement>
-        <id>344861167</id>
-        <libl>Cardiologie pédiatrique /114</libl>
-    </refElement>
-    <refElement>
-        <id>344861168</id>
-        <libl>Gastroentérologie pédiatrique /113</libl>
-    </refElement>
-    <refElement>
-        <id>344861169</id>
-        <libl>Neuroradiologie diagnostique /107</libl>
-    </refElement>
-    <refElement>
-        <id>344861170</id>
-        <libl>Neuroradiologie invasive /108</libl>
-    </refElement>
-    <refElement>
-        <id>344861171</id>
-        <libl>Radiologie pédiatrique /105</libl>
-    </refElement>
-    <refElement>
-        <id>344861172</id>
-        <libl>Urologie opératoire /127</libl>
-    </refElement>
-    <refElement>
-        <id>344861173</id>
-        <libl>Chirurgie générale et d'urgence /135</libl>
-    </refElement>
-    <refElement>
-        <id>344861174</id>
-        <libl>Chirurgie thoracique /138</libl>
-    </refElement>
-    <refElement>
-        <id>344861175</id>
-        <libl>Chirurgie vasculaire /137</libl>
-    </refElement>
-    <refElement>
-        <id>344861176</id>
-        <libl>Chirurgie viscérale /136</libl>
-    </refElement>
-    <refElement>
-        <id>344861177</id>
-        <libl>Oncologie-hématologie pédiatrique /117</libl>
-    </refElement>
-    <refElement>
-        <id>344861178</id>
-        <libl>Psychiatrie, psychothérapie personne âgée/140</libl>
-    </refElement>
-    <refElement>
-        <id>344861179</id>
-        <libl>Chirurgie de la main /129</libl>
-    </refElement>
-    <refElement>
-        <id>344861180</id>
-        <libl>Gériatrie /81</libl>
-    </refElement>
-    <refElement>
-        <id>344861181</id>
-        <libl>Reproduction et endocrinologie gynécologique /104</libl>
-    </refElement>
-    <refElement>
-        <id>344861182</id>
-        <libl>Obstétrique et médecine foeto-maternelle /121</libl>
-    </refElement>
-    <refElement>
-        <id>344861183</id>
-        <libl>Oncologie gynécologique /120</libl>
-    </refElement>
-    <refElement>
-        <id>344861184</id>
-        <libl>Néphrologie pédiatrique /115</libl>
-    </refElement>
-    <refElement>
-        <id>344861185</id>
-        <libl>Ophtalmochirurgie /72</libl>
-    </refElement>
-    <refElement>
-        <id>344861186</id>
-        <libl>Chirurgie cervico-faciale /12</libl>
-    </refElement>
-    <refElement>
-        <id>344861187</id>
-        <libl>Phoniatrie /35</libl>
-    </refElement>
-    <refElement>
-        <id>344861188</id>
-        <libl>Cytopathologie /125</libl>
-    </refElement>
-    <refElement>
-        <id>344861189</id>
-        <libl>Neuropathologie /124</libl>
-    </refElement>
-    <refElement>
-        <id>344861190</id>
-        <libl>Pathologie moléculaire /123</libl>
-    </refElement>
-    <refElement>
-        <id>344861191</id>
-        <libl>Endocrinologie-diabétologie pédiatrique /112</libl>
-    </refElement>
-    <refElement>
-        <id>344861192</id>
-        <libl>Néonatologie /73</libl>
-    </refElement>
-    <refElement>
-        <id>344861193</id>
-        <libl>Neuropédiatrie /116</libl>
-    </refElement>
+    <refList>
+        <refListType>
+            <id>344861166</id>
+            <libl>Pneumologie pédiatrique /118</libl>
+        </refListType>
+        <refListType>
+            <id>344861167</id>
+            <libl>Cardiologie pédiatrique /114</libl>
+        </refListType>
+        <refListType>
+            <id>344861168</id>
+            <libl>Gastroentérologie pédiatrique /113</libl>
+        </refListType>
+        <refListType>
+            <id>344861169</id>
+            <libl>Neuroradiologie diagnostique /107</libl>
+        </refListType>
+        <refListType>
+            <id>344861170</id>
+            <libl>Neuroradiologie invasive /108</libl>
+        </refListType>
+        <refListType>
+            <id>344861171</id>
+            <libl>Radiologie pédiatrique /105</libl>
+        </refListType>
+        <refListType>
+            <id>344861172</id>
+            <libl>Urologie opératoire /127</libl>
+        </refListType>
+        <refListType>
+            <id>344861173</id>
+            <libl>Chirurgie générale et d'urgence /135</libl>
+        </refListType>
+        <refListType>
+            <id>344861174</id>
+            <libl>Chirurgie thoracique /138</libl>
+        </refListType>
+        <refListType>
+            <id>344861175</id>
+            <libl>Chirurgie vasculaire /137</libl>
+        </refListType>
+        <refListType>
+            <id>344861176</id>
+            <libl>Chirurgie viscérale /136</libl>
+        </refListType>
+        <refListType>
+            <id>344861177</id>
+            <libl>Oncologie-hématologie pédiatrique /117</libl>
+        </refListType>
+        <refListType>
+            <id>344861178</id>
+            <libl>Psychiatrie, psychothérapie personne âgée/140</libl>
+        </refListType>
+        <refListType>
+            <id>344861179</id>
+            <libl>Chirurgie de la main /129</libl>
+        </refListType>
+        <refListType>
+            <id>344861180</id>
+            <libl>Gériatrie /81</libl>
+        </refListType>
+        <refListType>
+            <id>344861181</id>
+            <libl>Reproduction et endocrinologie gynécologique /104</libl>
+        </refListType>
+        <refListType>
+            <id>344861182</id>
+            <libl>Obstétrique et médecine foeto-maternelle /121</libl>
+        </refListType>
+        <refListType>
+            <id>344861183</id>
+            <libl>Oncologie gynécologique /120</libl>
+        </refListType>
+        <refListType>
+            <id>344861184</id>
+            <libl>Néphrologie pédiatrique /115</libl>
+        </refListType>
+        <refListType>
+            <id>344861185</id>
+            <libl>Ophtalmochirurgie /72</libl>
+        </refListType>
+        <refListType>
+            <id>344861186</id>
+            <libl>Chirurgie cervico-faciale /12</libl>
+        </refListType>
+        <refListType>
+            <id>344861187</id>
+            <libl>Phoniatrie /35</libl>
+        </refListType>
+        <refListType>
+            <id>344861188</id>
+            <libl>Cytopathologie /125</libl>
+        </refListType>
+        <refListType>
+            <id>344861189</id>
+            <libl>Neuropathologie /124</libl>
+        </refListType>
+        <refListType>
+            <id>344861190</id>
+            <libl>Pathologie moléculaire /123</libl>
+        </refListType>
+        <refListType>
+            <id>344861191</id>
+            <libl>Endocrinologie-diabétologie pédiatrique /112</libl>
+        </refListType>
+        <refListType>
+            <id>344861192</id>
+            <libl>Néonatologie /73</libl>
+        </refListType>
+        <refListType>
+            <id>344861193</id>
+            <libl>Neuropédiatrie /116</libl>
+        </refListType>
+    </refList>
 </refRoot>

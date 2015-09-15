@@ -77,7 +77,37 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
 		
 	}
 
-	private ContenuAnnexe buildContenuAnnexe(File file) {
+	@Override
+	public void supprimerUneAnnexe(ReferenceDeDemande ref, NomFichier nomFichier) {
+		DemandeAutorisation demandeAutorisation = recupererDemandeParReference(ref);
+		
+		demandeAutorisation.supprimerUneAnnexeParNomFichier(nomFichier);
+	}
+
+	/*
+    @Override
+    public ProfessionDeLaSante afficherDonneesProfession(String demandeReference) {
+        DemandeAutorisation demandeAutorisation = this.afficherUneDemandeAutorisation(demandeReference);
+        return demandeAutorisation != null ? demandeAutorisation.getProfessionDeLaSante() : null;
+    }
+
+    @Override
+    public String renseignerDonneesProfession(String demandeReference, String idProfession, String codeGln) {
+        if (!StringUtils.isEmpty(demandeReference) && this.afficherUneDemandeAutorisation(demandeReference) != null) {
+                // TODO setter la profession/codeGln si demandeAutorisation le permet
+                return demandeReference;
+        } else {
+            DemandeAutorisation demandeAutorisation = this.initialiserDemandeAutorisation(
+                    new Demandeur(
+                            new NomEtPrenomDemandeur(null, null),
+                            new DonneesProfessionnelles(new CodeGLN(codeGln))),
+                    ProfessionDeLaSante.valueOf(idProfession), null);
+            return demandeAutorisation.getReferenceDeDemande().getReference();
+        }
+    }
+    */
+
+    private ContenuAnnexe buildContenuAnnexe(File file) {
 		byte[] contenu;
 		try {
 			contenu = IOUtils.toByteArray(new FileInputStream(file));
@@ -91,10 +121,4 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
 		return contenuAnnexe;
 	}
 
-	@Override
-	public void supprimerUneAnnexe(ReferenceDeDemande ref, NomFichier nomFichier) {
-		DemandeAutorisation demandeAutorisation = recupererDemandeParReference(ref);
-		
-		demandeAutorisation.supprimerUneAnnexeParNomFichier(nomFichier);
-	}
 }
