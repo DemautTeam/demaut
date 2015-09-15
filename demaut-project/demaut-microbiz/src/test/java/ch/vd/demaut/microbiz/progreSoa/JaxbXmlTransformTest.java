@@ -1,5 +1,6 @@
 package ch.vd.demaut.microbiz.progreSoa;
 
+import ch.vd.ses.referentiel.demaut_1_0.RefList;
 import ch.vd.ses.referentiel.demaut_1_0.RefListType;
 import ch.vd.ses.referentiel.demaut_1_0.RefRoot;
 import org.junit.Before;
@@ -47,9 +48,12 @@ public class JaxbXmlTransformTest {
     }
 
     @Test
-    public void shouldValidMarshaller() throws Exception {
+    public void testValidMarshaller() throws Exception {
         RefRoot refRoot = new RefRoot();
+        refRoot.setRefList(new RefList());
         assertNotNull(refRoot.getRefList());
+        assertNotNull(refRoot.getRefList().getRefListType());
+
         for (int index = 0; index < 10; index++) {
 
             RefListType refElement = new RefListType();
@@ -64,7 +68,7 @@ public class JaxbXmlTransformTest {
     }
 
     @Test
-    public void shouldValidUnmarshaller() throws Exception {
+    public void testValidUnmarshaller() throws Exception {
         RefRoot refRoot = (RefRoot) jaxbUnmarshaller.unmarshal(fileInputStream);
         assertThat(refRoot).isNotNull();
         assertThat(refRoot.getRefList().getRefListType()).isNotEmpty();

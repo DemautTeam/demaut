@@ -1,5 +1,9 @@
 package ch.vd.demaut.microbiz.processor;
 
+import ch.vd.demaut.microbiz.rest.RestUtils;
+import ch.vd.pee.microbiz.core.rs.MicrobizHeaderConstants;
+import ch.vd.pee.microbiz.core.utils.Json;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
@@ -7,12 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
-import ch.vd.demaut.microbiz.rest.RestUtils;
-import ch.vd.pee.microbiz.core.rs.MicrobizHeaderConstants;
-import ch.vd.pee.microbiz.core.utils.Json;
 
 @Service
 public class MainProcessor implements Processor {

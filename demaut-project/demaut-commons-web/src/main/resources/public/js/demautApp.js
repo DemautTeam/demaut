@@ -173,6 +173,15 @@ ngDemautApp
             if ($scope.professionSante.professionDataForm.$valid &&
                 !(professionTest.isProfessionMedicaleUni($scope.professionData.profession, $scope.professionData.professionsUni) &&
                 ($scope.professionData.gln == null || $scope.professionData.gln == undefined))) {
+
+                $http.get(urlPrefix + '/profession/donnees/' + $scope.professionData.demandeReference + '/' + $scope.professionData.profession + '/' + $scope.professionData.gln).
+                    success(function (data, status, headers, config) {
+                        $scope.professionData.demandeReference = angular.fromJson(data.response);
+                    }).
+                    error(function (data, status, headers, config) {
+                        $rootScope.error = 'Error downloading ../profession/donnees/' + $scope.professionData.demandeReference;
+                    });
+
                 $log.info('Formulaire valide !');
                 $scope.indexStep += 1;
                 $location.path('/Demaut/demande/donneesProf');

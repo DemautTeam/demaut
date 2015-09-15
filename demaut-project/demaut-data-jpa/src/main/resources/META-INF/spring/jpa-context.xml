@@ -48,19 +48,14 @@
         </property>
     </bean>
 
-    <!-- TransactionManager for a single JPA EntityManagerFactory (alternative to JTA)  is required -->
+    <!-- TransactionManager is required -->
     <bean id="transactionManagerDemaut" class="org.springframework.orm.jpa.JpaTransactionManager">
-<!--         <property name="dataSource" ref="dataSource"/> -->
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
-    <!-- checks for annotated configured beans -->
-    <context:annotation-config/>
-
-	<!-- Scan for Repository/Service annotations -->
-    <context:component-scan base-package="ch.vd.demaut.data"/>
-
-	<!-- enable the configuration of transactional behavior based on annotations -->
     <tx:annotation-driven transaction-manager="transactionManagerDemaut"/>
+
+    <context:annotation-config/>
+    <context:component-scan base-package="ch.vd.demaut.data"/>
 
 </beans>

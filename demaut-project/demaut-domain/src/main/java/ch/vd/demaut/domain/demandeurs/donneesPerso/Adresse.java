@@ -15,7 +15,7 @@ public class Adresse extends BaseValueObject {
 
     private final Pays pays;
 
-    public Adresse(String voie, Localite localite, NPA npa, Pays pays){
+    public Adresse(String voie, Localite localite, NPA npa, Pays pays) {
         super();
         this.voie = voie;
         this.localite = localite;

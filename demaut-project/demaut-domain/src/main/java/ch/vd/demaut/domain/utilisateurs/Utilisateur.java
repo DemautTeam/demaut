@@ -10,9 +10,9 @@ public class Utilisateur extends EntityFunctionalKeyAware {
     private Login login;
 
     // ********************************************************* Constructors
-    protected Utilisateur(){
+    protected Utilisateur() {
     }
-    
+
     public Utilisateur(Login login) {
         super();
         this.login = login;

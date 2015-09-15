@@ -34,12 +34,12 @@ public abstract class GenericRepositoryImpl<T, I extends Serializable> implement
     public void setEntityManager(final EntityManager entityManager) {
         this.entityManager = entityManager;
     }
-    
+
     @Override
     @Transactional(readOnly = true)
     public T findBy(I id) {
         T entity = getEntityManager().find(this.entityClass, id);
-		return entity;
+        return entity;
     }
 
     @Override

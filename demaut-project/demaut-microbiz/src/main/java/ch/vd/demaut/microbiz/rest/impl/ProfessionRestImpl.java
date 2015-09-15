@@ -1,6 +1,23 @@
-package ch.vd.demaut.microbiz.rest;
+package ch.vd.demaut.microbiz.rest.impl;
 
-import java.util.List;
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandeurs.donneesProf.CodeGLN;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.microbiz.progreSoa.ProgreSoaService;
+import ch.vd.demaut.microbiz.rest.ProfessionRest;
+import ch.vd.demaut.microbiz.rest.RestUtils;
+import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
+import ch.vd.ses.referentiel.demaut_1_0.RefListType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
@@ -9,19 +26,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
-import ch.vd.demaut.microbiz.progreSoa.ProgreSoaService;
-import ch.vd.ses.referentiel.demaut_1_0.RefListType;
+import java.util.List;
 
 @CrossOriginResourceSharing(
         allowOrigins = {"*"},
@@ -36,13 +41,13 @@ public class ProfessionRestImpl implements ProfessionRest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProfessionRestImpl.class);
 
+    private static final ObjectWriter viewWriter = new ObjectMapper().writer();
+
+    @Autowired
+    private DonneesProfessionnellesService donneesProfessionnellesService;
+
     @Autowired
     private ProgreSoaService progreSoaService;
-
-    // TODO Processor Camel
-    @Value("${user}")
-    private String user;
-
 
     @Override
     @GET
@@ -68,7 +73,9 @@ public class ProfessionRestImpl implements ProfessionRest {
 
         LOGGER.info("afficherDonneesProfession " + demandeReference);
 
-        ProfessionDeLaSante professionDeLaSante = ProfessionDeLaSante.Medecin; // TODO demandeAutorisationService.afficherDonneesProfession(demandeReference);
+        ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);
+
+        ProfessionDeLaSante professionDeLaSante = donneesProfessionnellesService.afficherDonneesProfession(referenceDeDemande);
         List<RefListType> lesProfessionsDeLaSante = progreSoaService.listeSOAProfession().getRefList().getRefListType();
         return RestUtils.forgeResponseString(Response.Status.OK,
                 String.valueOf(CollectionUtils.find(lesProfessionsDeLaSante, new BeanPropertyValueEqualsPredicate("libl", professionDeLaSante.name()))));
@@ -82,15 +89,17 @@ public class ProfessionRestImpl implements ProfessionRest {
     public Response renseignerDonneesProfession(@PathParam("demandeReference") String demandeReference,
                                                 @PathParam("idProfession") String idProfession,
                                                 @PathParam("codeGln") String codeGln) throws Exception {
-        //ReferenceDeDemande ref = new ReferenceDeDemande(demandeReference);
-        
-        //TODO: Call the service
-//        String renseignerDonneesProfession = demandeAutorisationService.renseignerDonneesProfession(demandeReference, idProfession, codeGln);
-//        return !StringUtils.isEmpty(idProfession) && !StringUtils.isEmpty(renseignerDonneesProfession)
-//        		? RestUtils.forgeResponseString(Response.Status.OK, renseignerDonneesProfession)
-//        				: RestUtils.forgeResponseNoContent();
-        
-        return RestUtils.forgeResponseTrue();
 
+        LOGGER.info("afficherDonneesProfession " + demandeReference);
+
+        ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);
+        CodeGLN codeGLN = new CodeGLN(codeGln);
+        Login login = new Login("admin@admin");  // TODO get login
+
+        List<RefListType> lesProfessionsDeLaSante = progreSoaService.listeSOAProfession().getRefList().getRefListType();
+        ProfessionDeLaSante professionDeLaSante = (ProfessionDeLaSante) CollectionUtils.find(lesProfessionsDeLaSante, new BeanPropertyValueEqualsPredicate("id", idProfession));
+
+        ReferenceDeDemande renseignerDonneesProfession = donneesProfessionnellesService.renseignerDonneesProfession(login, referenceDeDemande, professionDeLaSante, codeGLN);
+        return RestUtils.forgeResponseString(Response.Status.OK, renseignerDonneesProfession.getValue());
     }
 }

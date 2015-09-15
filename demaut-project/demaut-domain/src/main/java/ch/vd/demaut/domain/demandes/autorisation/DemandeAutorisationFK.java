@@ -11,9 +11,9 @@ public class DemandeAutorisationFK extends FunctionalKeyAbstract<DemandeAutorisa
 
     // ********************************************************* Constructor
     public DemandeAutorisationFK(ReferenceDeDemande reference) {
-    	this.reference = reference;
+        this.reference = reference;
     }
-    
+
     public DemandeAutorisationFK(Demande demande) {
         this.reference = demande.getReferenceDeDemande();
     }

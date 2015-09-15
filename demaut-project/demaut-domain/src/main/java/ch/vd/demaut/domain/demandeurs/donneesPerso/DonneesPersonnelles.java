@@ -52,10 +52,10 @@ public class DonneesPersonnelles extends BaseValueObject {
     public Prenom getPrenom() {
         return prenom;
     }
-    
+
     public NomDeCelibataire getNomDeCelibataire() {
-		return nomDeCelibataire;
-	}
+        return nomDeCelibataire;
+    }
 
     public Genre getGenre() {
         return genre;

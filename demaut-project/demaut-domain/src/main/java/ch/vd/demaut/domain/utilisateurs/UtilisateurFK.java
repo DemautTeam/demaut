@@ -17,7 +17,7 @@ public class UtilisateurFK extends FunctionalKeyAbstract<Utilisateur> {
     // ********************************************************* Getters
 
     public Login getLogin() {
-		return login;
-	}
+        return login;
+    }
 
 }

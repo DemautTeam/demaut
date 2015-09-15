@@ -23,10 +23,6 @@ public class MainProcessor implements Processor {
     @Value("${demaut.backoffice.environment}")
     private String environment;
 
-    public void setEnvironment(String environment) {
-        this.environment = environment;
-    }
-
     @Override
     public void process(Exchange exchange) throws Exception {
 
@@ -44,5 +40,9 @@ public class MainProcessor implements Processor {
 
     public String getEnvironment() {
         return environment;
+    }
+
+    public void setEnvironment(String environment) {
+        this.environment = environment;
     }
 }

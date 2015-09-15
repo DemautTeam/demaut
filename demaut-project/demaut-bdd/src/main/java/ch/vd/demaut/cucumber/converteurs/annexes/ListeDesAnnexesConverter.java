@@ -1,11 +1,11 @@
 package ch.vd.demaut.cucumber.converteurs.annexes;
 
-import java.util.ArrayList;
-
 import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import cucumber.api.Transformer;
+
+import java.util.ArrayList;
 
 public class ListeDesAnnexesConverter extends Transformer<ListeDesAnnexes> {
 

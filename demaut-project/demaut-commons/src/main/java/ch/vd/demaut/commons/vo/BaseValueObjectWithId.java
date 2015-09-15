@@ -2,10 +2,10 @@ package ch.vd.demaut.commons.vo;
 
 public abstract class BaseValueObjectWithId extends BaseValueObject {
 
-	// ********************************************************* Fields
+    // ********************************************************* Fields
     protected Long id;
 
-	// ********************************************************* Getters
+    // ********************************************************* Getters
     public Long getId() {
         return id;
     }

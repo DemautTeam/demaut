@@ -52,7 +52,7 @@ public class EndpointTest {
     }
 
     @Test
-    public void shouldFetchAnnexes() throws Exception {
+    public void testFetchAnnexes() throws Exception {
         WebClient client = WebClient.create(webEndpoint + "/services/annexes/all", true);
         assertNotNull(client);
 
@@ -61,7 +61,7 @@ public class EndpointTest {
     }
 
     @Test
-    public void shouldStoreAnnexe() throws Exception {
+    public void testStoreAnnexe() throws Exception {
         WebClient client = WebClient.create(webEndpoint + "/services/annexe/store", true);
         assertNotNull(client);
         client.type(MediaType.MULTIPART_FORM_DATA_TYPE);

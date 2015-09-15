@@ -27,11 +27,11 @@
 
 	<import resource="classpath:META-INF/spring/jpa-context.xml"/>
 
-    <jdbc:initialize-database data-source="dataSource" ignore-failures="DROPS">
-<!--         <jdbc:script location="classpath:${jpa.drop.script}"/> -->
-<!--         <jdbc:script location="classpath:${jpa.create.script}"/> -->
-<!--         <jdbc:script location="classpath:${jpa.delete.script}"/> -->
-        <jdbc:script location="classpath:${jpa.insert.script}"/>
-    </jdbc:initialize-database>
+    <!--<jdbc:initialize-database data-source="dataSource" ignore-failures="DROPS">-->
+         <!--<jdbc:script location="classpath:${jpa.drop.script}"/> -->
+         <!--<jdbc:script location="classpath:${jpa.create.script}"/> -->
+         <!--<jdbc:script location="classpath:${jpa.delete.script}"/> -->
+        <!--<jdbc:script location="classpath:${jpa.insert.script}"/>-->
+    <!--</jdbc:initialize-database>-->
 
 </beans>

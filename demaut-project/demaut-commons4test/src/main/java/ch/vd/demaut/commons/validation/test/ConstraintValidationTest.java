@@ -27,45 +27,45 @@ public class ConstraintValidationTest extends AbstractValidationTest {
 
     @SuppressWarnings("all")
     @Test
-    public void should_add_expected_constraint_violation() {
+    public void testaddexpectedconstraintviolation() {
         this.addExpectedConstraintViolation(message);
         assertThat(this.simpleConstraintViolationsExpected).isNotEmpty();
     }
 
     @SuppressWarnings("all")
     @Test
-    public void should_add_expected_constraint_violation_with_property() {
+    public void testaddexpectedconstraintviolationwithproperty() {
         this.addExpectedConstraintViolation(newTestProperty, message);
         assertThat(this.simpleConstraintViolationsExpected).isNotEmpty();
     }
 
     @SuppressWarnings("all")
     @Test
-    public void should_validate() {
+    public void testvalidate() {
         this.validate(object);
     }
 
     @SuppressWarnings("all")
     @Test
-    public void should_validate_with_msg() {
+    public void testvalidatewithmsg() {
         this.validateWithMsg(object);
     }
 
     @SuppressWarnings("all")
     @Test
-    public void should_validate_propert() {
+    public void testvalidatepropert() {
         this.validateProperty(object, newTestProperty);
     }
 
     @SuppressWarnings("all")
     @Test
-    public void should_validate_property_with_msg() {
+    public void testvalidatepropertywithmsg() {
         this.validatePropertyWithMsg(object, newTestProperty);
     }
 
     @SuppressWarnings("all")
     @Test
-    public void should_test_all_constraint_violations() {
+    public void testtestallconstraintviolations() {
         this.addExpectedConstraintViolation(newTestProperty, message);
         assertThat(this.simpleConstraintViolationsExpected).isNotEmpty();
 

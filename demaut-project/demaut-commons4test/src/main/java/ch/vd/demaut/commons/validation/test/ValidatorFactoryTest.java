@@ -22,17 +22,17 @@ public class ValidatorFactoryTest extends TestCase {
     }
 
     @Test
-    public void should_get_instance_factory() {
+    public void testgetinstancefactory() {
         assertThat(validatorFactory).isNotNull();
     }
 
     @Test
-    public void should_get_instance_factory_validator() {
+    public void testgetinstancefactoryvalidator() {
         assertThat(validatorFactory.getValidator()).isNotNull();
     }
 
     @Test
-    public void should_get_instance_constraint_factory() {
+    public void testgetinstanceconstraintfactory() {
         assertThat(validatorFactory.getConstraintValidatorFactory()).isNotNull();
     }
 }

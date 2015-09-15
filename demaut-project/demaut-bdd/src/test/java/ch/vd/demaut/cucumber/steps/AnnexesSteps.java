@@ -8,6 +8,9 @@ public class AnnexesSteps {
 
     // ********************************************************* Instanciation
 
+    private AnnexesSteps() {
+    }
+
     /**
      * Récupère l'instance de la classe en cours. A utiliser dans les "BeforeScenario".
      *
@@ -28,9 +31,6 @@ public class AnnexesSteps {
             INSTANCE.clean();
             INSTANCE = null;
         }
-    }
-
-    private AnnexesSteps() {
     }
 
     public void clean() {

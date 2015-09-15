@@ -1,12 +1,12 @@
 package ch.vd.demaut.domain.annexes;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
 import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Représente une liste d'annexes
@@ -18,12 +18,12 @@ public class ListeDesAnnexes {
     private List<Annexe> annexes;
 
     // ********************************************************* Constructor
-    
-    public ListeDesAnnexes(List<Annexe> annexes2) {
-    	this.annexes = annexes2;
-	}
 
-	// ********************************************************* Business
+    public ListeDesAnnexes(List<Annexe> annexes2) {
+        this.annexes = annexes2;
+    }
+
+    // ********************************************************* Business
     // methods
     public void ajouterAnnexe(Annexe annexe) {
         annexes.add(annexe);
@@ -62,26 +62,26 @@ public class ListeDesAnnexes {
     }
 
     public void supprimerUneAnnexeParNomFichier(NomFichier nomFichier) {
-    	Annexe annexeTrouvee = trouverAnnexeParNomFichier(nomFichier);
+        Annexe annexeTrouvee = trouverAnnexeParNomFichier(nomFichier);
         annexes.remove(annexeTrouvee);
     }
-    
-	public Annexe trouverAnnexeParNomFichier(NomFichier nomFichier) {
+
+    public Annexe trouverAnnexeParNomFichier(NomFichier nomFichier) {
         Object annexeTrouvee = CollectionUtils.find(annexes, new BeanPropertyValueEqualsPredicate("nomFichier", nomFichier));
         if (annexeTrouvee == null) {
-        	throw new AnnexeIntrouvableException();
+            throw new AnnexeIntrouvableException();
         }
-		return (Annexe)annexeTrouvee;
-	}
+        return (Annexe) annexeTrouvee;
+    }
 
-	public AnnexeMetadata extraireAnnexeMetadata(NomFichier nomFichier) {
-		Annexe annexe = trouverAnnexeParNomFichier(nomFichier);
-		return annexe.getAnnexeMetadata();
-	}
-	
-	public ContenuAnnexe extraireContenu(NomFichier nomFichier) {
-		Annexe annexe = trouverAnnexeParNomFichier(nomFichier);
-		return annexe.getContenu();
-	}
+    public AnnexeMetadata extraireAnnexeMetadata(NomFichier nomFichier) {
+        Annexe annexe = trouverAnnexeParNomFichier(nomFichier);
+        return annexe.getAnnexeMetadata();
+    }
+
+    public ContenuAnnexe extraireContenu(NomFichier nomFichier) {
+        Annexe annexe = trouverAnnexeParNomFichier(nomFichier);
+        return annexe.getContenu();
+    }
 
 }

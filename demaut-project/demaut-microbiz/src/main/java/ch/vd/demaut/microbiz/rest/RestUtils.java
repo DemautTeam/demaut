@@ -11,7 +11,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import java.util.Collection;
 
-
 public final class RestUtils {
 
     private static final ObjectWriter viewWriter = new ObjectMapper().writer();
@@ -41,11 +40,11 @@ public final class RestUtils {
                 .status(status.getStatusCode())
                 .build();
     }
-    
+
+    @SuppressWarnings("unchecked")
     public static Response forgeResponseTrue() throws JsonProcessingException {
-		Response response = RestUtils.forgeResponseString(Response.Status.OK, String.valueOf(true));
-        return response;
-	}
+        return RestUtils.forgeResponseString(Response.Status.OK, String.valueOf(true));
+    }
 
     public static Response forgeResponseStream(Response.Status status, byte[] object) throws JsonProcessingException {
         ResponseBuilder responseBuilder = Response.status(status.getStatusCode());

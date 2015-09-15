@@ -29,7 +29,7 @@ public class Annexe extends BaseValueObjectWithId {
     public Annexe(TypeAnnexe typeAnnexe, String nomFichier, byte[] contenu) {
         this(typeAnnexe, new NomFichier(nomFichier), new ContenuAnnexe(contenu));
     }
-    
+
     public Annexe(TypeAnnexe typeAnnexe, NomFichier nomFichier, ContenuAnnexe contenu) {
         super();
         this.typeAnnexe = typeAnnexe;
@@ -54,9 +54,9 @@ public class Annexe extends BaseValueObjectWithId {
     public NomFichier getNomFichier() {
         return nomFichier;
     }
-    
+
     public AnnexeMetadata getAnnexeMetadata() {
-    	return new AnnexeMetadata(typeAnnexe, nomFichier.getNomFichier(), getTaille());
+        return new AnnexeMetadata(typeAnnexe, nomFichier.getNomFichier(), getTaille());
     }
 
     // ********************************************************* Technical methods

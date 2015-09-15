@@ -6,23 +6,23 @@ import ch.vd.demaut.commons.vo.BaseValueObject;
 @ValueObject
 public class Login extends BaseValueObject {
 
-	// ********************************************************* Fields
-	private String value;
-	
+    // ********************************************************* Fields
+    private String value;
+
     // ********************************************************* Constructor
 
-	//Pour OpenJPA
-	protected Login(){
+    //Pour OpenJPA
+    protected Login() {
     }
-    
+
     public Login(String value) {
-    	super();
+        super();
         this.value = value;
     }
 
     // ********************************************************* Getters
 
     public String getValue() {
-    	return value;
+        return value;
     }
 }

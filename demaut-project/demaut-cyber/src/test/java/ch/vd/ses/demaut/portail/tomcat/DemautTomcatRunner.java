@@ -12,8 +12,8 @@ public class DemautTomcatRunner {
     private static final String projectDir = appDir;
 
     public static void main(String[] args) {
-        final String confDir = appDir+"/demaut/config";
-        final String dataDir = projectDir+"/app/demaut";
+        final String confDir = appDir + "/demaut/config";
+        final String dataDir = projectDir + "/app/demaut";
 
         // Mis par le CEI dans Tomcat
         System.setProperty("ch.vd.appDir", appDir);

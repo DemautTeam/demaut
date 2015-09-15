@@ -7,7 +7,7 @@ import ch.vd.demaut.commons.vo.StringVO;
  */
 public class Pays extends StringVO {
 
-    public Pays(String value){
+    public Pays(String value) {
         super(value);
     }
 

@@ -16,19 +16,19 @@ public class FunctionalKeyTransformer implements Transformer {
     public static final Transformer INSTANCE = new FunctionalKeyTransformer();
 
     /**
+     * Constructor
+     */
+    private FunctionalKeyTransformer() {
+        super();
+    }
+
+    /**
      * Factory returning the singleton instance.
      *
      * @return the singleton instance
      */
     public static Transformer getInstance() {
         return INSTANCE;
-    }
-
-    /**
-     * Constructor
-     */
-    private FunctionalKeyTransformer() {
-        super();
     }
 
     @Override
