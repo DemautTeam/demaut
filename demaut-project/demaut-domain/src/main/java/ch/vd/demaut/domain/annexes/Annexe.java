@@ -48,6 +48,10 @@ public class Annexe extends BaseValueObjectWithId {
     public NomFichier getNomFichier() {
         return nomFichier;
     }
+    
+    public AnnexeMetadata getAnnexeMetadata() {
+    	return new AnnexeMetadata(typeAnnexe, nomFichier.getNomFichier(), getTaille());
+    }
 
     // ********************************************************* Technical methods
 

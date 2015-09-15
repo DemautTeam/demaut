@@ -1,9 +1,9 @@
 package ch.vd.demaut.domain.demandeurs;
 
-import ch.vd.demaut.commons.annotations.Aggregate;
+import ch.vd.demaut.commons.annotations.Entity;
 import ch.vd.demaut.commons.entities.EntityFunctionalKeyAware;
 
-@Aggregate
+@Entity
 public class Demandeur extends EntityFunctionalKeyAware {
 
     // ********************************************************* Fields

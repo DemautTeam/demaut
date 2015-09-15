@@ -303,7 +303,29 @@
                     <!--</execution>-->
                 </executions>
             </plugin>
-		</plugins>
+            <plugin>
+                <groupId>org.jvnet.jaxb2.maven2</groupId>
+                <artifactId>maven-jaxb2-plugin</artifactId>
+                <version>${maven.jaxb.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <schemaDirectory>src/main/xsd</schemaDirectory>
+                            <schemaIncludes>
+                                <include>tiers-v01.xsd</include>
+                            </schemaIncludes>
+                            <schemaExcludes>
+                                <include>*.xs</include>
+                            </schemaExcludes>
+                            <disableXmlSecurity>true</disableXmlSecurity>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
 	</build>
 
 </project>

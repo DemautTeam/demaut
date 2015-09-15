@@ -3,22 +3,27 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean id="demandeAutorisationSteps"
-		  class="ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps"
-		  scope="cucumber-glue">
-		<property name="demandeurRepository" ref="demandeurRepository"/>
-		<property name="demandeAutorisationRepository" ref="demandeAutorisationRepository"/>
-		<property name="configDemaut" ref="configDemaut"/>
-	</bean>
-
-	<bean class="ch.vd.demaut.cucumber.steps.definitions.CreationDemandeStepDefinitions"
-		  scope="cucumber-glue">
-		<property name="demandeAutorisationSteps" ref="demandeAutorisationSteps"/>
-	</bean>
-
-	<bean class="ch.vd.demaut.cucumber.steps.definitions.AttacherAnnexeStepDefinitions"
+	<bean id="demandeAutorisationSteps" class="ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps"
 		scope="cucumber-glue">
-		<property name="demandeAutorisationSteps" ref="demandeAutorisationSteps"/>
+		<property name="demandeurRepository" ref="demandeurRepository" />
+		<property name="demandeAutorisationRepository" ref="demandeAutorisationRepository" />
+		<property name="configDemaut" ref="configDemaut" />
+	</bean>
+
+	<bean
+		class="ch.vd.demaut.cucumber.steps.definitions.CreationDemandeStepDefinitions"
+		scope="cucumber-glue">
+		<property name="demandeAutorisationSteps" ref="demandeAutorisationSteps" />
+	</bean>
+
+	<bean
+		class="ch.vd.demaut.cucumber.steps.definitions.AttacherAnnexeStepDefinitions"
+		scope="cucumber-glue">
+		<property name="demandeAutorisationSteps" ref="demandeAutorisationSteps" />
+	</bean>
+
+	<bean id="configDemaut" class="ch.vd.demaut.domain.config.mock.ConfigDemautMock"
+		scope="cucumber-glue">
 	</bean>
 
 </beans>

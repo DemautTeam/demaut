@@ -1,13 +1,13 @@
-package ch.vd.demaut.domain.demandes.autorisation.donneesPerso;
+package ch.vd.demaut.domain.demandeurs.donneesPerso;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.StringVO;
 
 @ValueObject
-public class Nom extends StringVO {
+public class Prenom extends StringVO {
 
     // ********************************************************* Constructor
-    public Nom(String value) {
+    public Prenom(String value) {
         super(value);
     }
 }

@@ -1,7 +1,7 @@
-<div ng-include="'template/demande/include-steps.html'"></div>
+<div ng-include="'template/include/include-steps.html'"></div>
 <div class="bs-wizard-info text-left">
     Soumission page<br />
     Soumission controller: {{soumission.name}}<br />
     Soumission params: {{soumission.params}}<br />
 </div>
-<div ng-include="'template/demande/include-actions.html'"></div>
+<step-actions preview-step-fn="previewStep()"/>

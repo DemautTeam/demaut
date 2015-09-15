@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<refRoot>
+    <type>D_FORMATION_INITIALE</type>
+    <refElement>
+        <id>344861006</id>
+        <libl>Dipl. fédéral de médecin /1</libl>
+    </refElement>
+    <refElement>
+        <id>344861007</id>
+        <libl>Dipl. fédéral de médecin-dentiste /2</libl>
+    </refElement>
+    <refElement>
+        <id>344861008</id>
+        <libl>Dipl. fédéral de pharmacien /3</libl>
+    </refElement>
+    <refElement>
+        <id>344861009</id>
+        <libl>Dipl. fédéral d'opticien /4</libl>
+    </refElement>
+    <refElement>
+        <id>344861010</id>
+        <libl>Dipl. fédéral de droguiste /5</libl>
+    </refElement>
+    <refElement>
+        <id>344861011</id>
+        <libl>CFC d'opticien /6</libl>
+    </refElement>
+    <refElement>
+        <id>344861012</id>
+        <libl>CFC de droguiste /7</libl>
+    </refElement>
+    <refElement>
+        <id>344861013</id>
+        <libl>CFR d'un diplôme étranger de médecin /8</libl>
+    </refElement>
+    <refElement>
+        <id>344861014</id>
+        <libl>CFR de formation postgrade de médecin /9</libl>
+    </refElement>
+    <refElement>
+        <id>344861015</id>
+        <libl>CFR d'un diplôme étranger de pharmacien /10</libl>
+    </refElement>
+    <refElement>
+        <id>344861016</id>
+        <libl>CFR d'un diplôme étranger de médecin-dentiste /11</libl>
+    </refElement>
+    <refElement>
+        <id>344861017</id>
+        <libl>Form. reconnue, médecin /12</libl>
+    </refElement>
+    <refElement>
+        <id>344861018</id>
+        <libl>Form. reconnue, médecin-dentiste /13</libl>
+    </refElement>
+    <refElement>
+        <id>344861019</id>
+        <libl>Form. reconnue, pharmacien /14</libl>
+    </refElement>
+    <refElement>
+        <id>344861020</id>
+        <libl>Form. reconnue, opticien /15</libl>
+    </refElement>
+    <refElement>
+        <id>344861021</id>
+        <libl>Form. reconnue, opticien diplômé /16</libl>
+    </refElement>
+    <refElement>
+        <id>344861022</id>
+        <libl>Dipl. de médecin de l'UE /17</libl>
+    </refElement>
+    <refElement>
+        <id>344861023</id>
+        <libl>Dipl. de médecin de l'AELE /18</libl>
+    </refElement>
+    <refElement>
+        <id>344861024</id>
+        <libl>Form. reconnue, droguiste diplômé /19</libl>
+    </refElement>
+    <refElement>
+        <id>344861025</id>
+        <libl>Dipl. de pédicure /20</libl>
+    </refElement>
+    <refElement>
+        <id>344861026</id>
+        <libl>Dipl. de podologue /21</libl>
+    </refElement>
+    <refElement>
+        <id>344861027</id>
+        <libl>Dipl. d'hygiéniste dentaire /22</libl>
+    </refElement>
+    <refElement>
+        <id>344861028</id>
+        <libl>Dipl. de chiropraticien /23</libl>
+    </refElement>
+    <refElement>
+        <id>344861029</id>
+        <libl>Dipl. CDS de chiropraticien /24</libl>
+    </refElement>
+    <refElement>
+        <id>344861030</id>
+        <libl>Dipl. de physiothérapeute /25</libl>
+    </refElement>
+    <refElement>
+        <id>344861031</id>
+        <libl>Form. reconnue, droguiste /26</libl>
+    </refElement>
+    <refElement>
+        <id>344861032</id>
+        <libl>Form. reconnue, diététicien /27</libl>
+    </refElement>
+    <refElement>
+        <id>344861033</id>
+        <libl>Form. reconnue, ergothérapeute /28</libl>
+    </refElement>
+    <refElement>
+        <id>344861034</id>
+        <libl>CRS, infirmière en hygiène mat. et pédiatrie /29</libl>
+    </refElement>
+    <refElement>
+        <id>344861035</id>
+        <libl>CRS, infirmière en psychiatrie /30</libl>
+    </refElement>
+    <refElement>
+        <id>344861036</id>
+        <libl>CRS, podologue à Berne /31</libl>
+    </refElement>
+    <refElement>
+        <id>344861037</id>
+        <libl>Dipl. universitaire suisse de médecin /32</libl>
+    </refElement>
+    <refElement>
+        <id>344861038</id>
+        <libl>Dipl. universitaire suisse de médecin-dentiste /33</libl>
+    </refElement>
+    <refElement>
+        <id>344861039</id>
+        <libl>Dipl. universitaire suisse de pharmacien /34</libl>
+    </refElement>
+    <refElement>
+        <id>344861040</id>
+        <libl>Form. reconnue, pharmacien-assistant /35</libl>
+    </refElement>
+    <refElement>
+        <id>344861041</id>
+        <libl>Form. reconnue, psychomotricien /36</libl>
+    </refElement>
+    <refElement>
+        <id>344861042</id>
+        <libl>Form. en analyses de laboratoire FAMH /37</libl>
+    </refElement>
+    <refElement>
+        <id>344861043</id>
+        <libl>Form. universitaire en sciences naturelles /38</libl>
+    </refElement>
+    <refElement>
+        <id>344861044</id>
+        <libl>Form. reconnue, physiothérapeute /39</libl>
+    </refElement>
+    <refElement>
+        <id>344861045</id>
+        <libl>Form. reconnue, infirmier en soins généraux /40</libl>
+    </refElement>
+    <refElement>
+        <id>344861046</id>
+        <libl>Form. reconnue, sage-femme /41</libl>
+    </refElement>
+    <refElement>
+        <id>344861047</id>
+        <libl>Form. reconnue, inf. en hyg. mat. et pédiatrie /42</libl>
+    </refElement>
+    <refElement>
+        <id>344861048</id>
+        <libl>Form. reconnue, infirmier en psychiatrie /43</libl>
+    </refElement>
+    <refElement>
+        <id>344861049</id>
+        <libl>Form. reconnue, pédicure /44</libl>
+    </refElement>
+    <refElement>
+        <id>344861050</id>
+        <libl>Form. reconnue, infirmier niveau I /45</libl>
+    </refElement>
+    <refElement>
+        <id>344861051</id>
+        <libl>Dipl. de médecin-dentiste de l'UE /52</libl>
+    </refElement>
+    <refElement>
+        <id>344861052</id>
+        <libl>Dipl. de médecin-dentiste de l'AELE /53</libl>
+    </refElement>
+    <refElement>
+        <id>344861053</id>
+        <libl>Dipl. de pharmacien de l'UE /63</libl>
+    </refElement>
+    <refElement>
+        <id>344861054</id>
+        <libl>Dipl. de pharmacien de l'AELE /64</libl>
+    </refElement>
+    <refElement>
+        <id>344861055</id>
+        <libl>Dipl. infirmier en soins généraux /68</libl>
+    </refElement>
+    <refElement>
+        <id>344861056</id>
+        <libl>Dipl. infirmier niveau I /69</libl>
+    </refElement>
+    <refElement>
+        <id>344861057</id>
+        <libl>Dipl. infirmier niveau II /70</libl>
+    </refElement>
+    <refElement>
+        <id>344861058</id>
+        <libl>Dipl. infirmier en hygiène mat. et pédiatrie /71</libl>
+    </refElement>
+    <refElement>
+        <id>344861059</id>
+        <libl>Dipl. infirmier en psychiatrie /72</libl>
+    </refElement>
+    <refElement>
+        <id>344861060</id>
+        <libl>Form. reconnue, psychologue /76</libl>
+    </refElement>
+    <refElement>
+        <id>344861061</id>
+        <libl>Form. reconnue par la CIREO /78</libl>
+    </refElement>
+    <refElement>
+        <id>344861062</id>
+        <libl>Form. partiellement reconnue par la CIREO /79</libl>
+    </refElement>
+    <refElement>
+        <id>344861063</id>
+        <libl>Form. reconnue, logopédiste-orthophoniste /80</libl>
+    </refElement>
+    <refElement>
+        <id>344861064</id>
+        <libl>PV examen fédéral de médecin /81</libl>
+    </refElement>
+    <refElement>
+        <id>344861065</id>
+        <libl>PV examen fédéral de médecin-dentiste /82</libl>
+    </refElement>
+    <refElement>
+        <id>344861066</id>
+        <libl>Attestat. examen fédéral de médecin étrangers /83</libl>
+    </refElement>
+    <refElement>
+        <id>344861067</id>
+        <libl>CRS, sage-femme /84</libl>
+    </refElement>
+    <refElement>
+        <id>344861068</id>
+        <libl>CRS, physiothérapeute /85</libl>
+    </refElement>
+    <refElement>
+        <id>344861069</id>
+        <libl>CRS, infirmier en soins généraux /86</libl>
+    </refElement>
+    <refElement>
+        <id>344861070</id>
+        <libl>CRS, hygiéniste dentaire /87</libl>
+    </refElement>
+    <refElement>
+        <id>344861071</id>
+        <libl>CRS, ergothérapeute /88</libl>
+    </refElement>
+    <refElement>
+        <id>344861072</id>
+        <libl>CRS, diététicienne /89</libl>
+    </refElement>
+    <refElement>
+        <id>344861073</id>
+        <libl>CRS, infirmière niveau I /90</libl>
+    </refElement>
+    <refElement>
+        <id>344861074</id>
+        <libl>CRS, infirmière niveau II /91</libl>
+    </refElement>
+    <refElement>
+        <id>344861075</id>
+        <libl>Equivalence OFFT, opticien /92</libl>
+    </refElement>
+    <refElement>
+        <id>344861076</id>
+        <libl>Equivalence OFFT, opticien diplômé /93</libl>
+    </refElement>
+    <refElement>
+        <id>344861077</id>
+        <libl>Equivalence OFFT, droguiste /94</libl>
+    </refElement>
+    <refElement>
+        <id>344861078</id>
+        <libl>Equivalence OFFT, droguiste diplômé /95</libl>
+    </refElement>
+    <refElement>
+        <id>344861079</id>
+        <libl>Dipl. de sage-femme /97</libl>
+    </refElement>
+    <refElement>
+        <id>344861080</id>
+        <libl>AP autre canton, médecin /98</libl>
+    </refElement>
+    <refElement>
+        <id>344861081</id>
+        <libl>AP autre canton, médecin-dentiste /99</libl>
+    </refElement>
+    <refElement>
+        <id>344861082</id>
+        <libl>AP autre canton, pharmacien /100</libl>
+    </refElement>
+    <refElement>
+        <id>344861083</id>
+        <libl>AP autre canton, opticien diplômé /101</libl>
+    </refElement>
+    <refElement>
+        <id>344861084</id>
+        <libl>AP autre canton, opticien /102</libl>
+    </refElement>
+    <refElement>
+        <id>344861085</id>
+        <libl>AP autre canton, droguiste diplômé /103</libl>
+    </refElement>
+    <refElement>
+        <id>344861086</id>
+        <libl>AP autre canton, droguiste /104</libl>
+    </refElement>
+    <refElement>
+        <id>344861087</id>
+        <libl>AP autre canton, infirmière /105</libl>
+    </refElement>
+    <refElement>
+        <id>344861088</id>
+        <libl>AP autre canton, podologue /106</libl>
+    </refElement>
+    <refElement>
+        <id>344861089</id>
+        <libl>AP autre canton, logopédiste-orthophoniste /107</libl>
+    </refElement>
+    <refElement>
+        <id>344861090</id>
+        <libl>AP autre canton, sage-femme /108</libl>
+    </refElement>
+    <refElement>
+        <id>344861091</id>
+        <libl>AP autre canton, physiothérapeute /109</libl>
+    </refElement>
+    <refElement>
+        <id>344861092</id>
+        <libl>AP autre canton, hygiéniste dentaire /110</libl>
+    </refElement>
+    <refElement>
+        <id>344861093</id>
+        <libl>AP autre canton, ostéopathe /111</libl>
+    </refElement>
+    <refElement>
+        <id>344861094</id>
+        <libl>AP autre canton, ergothérapeute /112</libl>
+    </refElement>
+    <refElement>
+        <id>344861095</id>
+        <libl>AP autre canton, psychothérapeute non-médecin /113</libl>
+    </refElement>
+    <refElement>
+        <id>344861096</id>
+        <libl>AP autre canton, diététicienne /114</libl>
+    </refElement>
+    <refElement>
+        <id>344861097</id>
+        <libl>AP autre canton, psychomotricien /115</libl>
+    </refElement>
+    <refElement>
+        <id>344861098</id>
+        <libl>Form. reconnue, psychothérapeute non médecin /77</libl>
+    </refElement>
+    <refElement>
+        <id>344861099</id>
+        <libl>Dipl. d'ambulancier IAS /202</libl>
+    </refElement>
+    <refElement>
+        <id>344861100</id>
+        <libl>Form. reconnue, ostéopathe /46</libl>
+    </refElement>
+    <refElement>
+        <id>344861101</id>
+        <libl>CRS, infirmière diplômée /47</libl>
+    </refElement>
+    <refElement>
+        <id>344861102</id>
+        <libl>Dipl. d'ambulancier ES /200</libl>
+    </refElement>
+    <refElement>
+        <id>344861103</id>
+        <libl>Certificat de technicien ambulancier /201</libl>
+    </refElement>
+    <refElement>
+        <id>344861104</id>
+        <libl>Dipl. de médecin du Liechtenstein /55</libl>
+    </refElement>
+    <refElement>
+        <id>370326172</id>
+        <libl>Brevet fédéral de technicien ambulancier /203</libl>
+    </refElement>
+    <refElement>
+        <id>372310896</id>
+        <libl>CRS, ambulancier /204</libl>
+    </refElement>
+    <refElement>
+        <id>398727182</id>
+        <libl>Dipl. infirmier HES</libl>
+    </refElement>
+</refRoot>

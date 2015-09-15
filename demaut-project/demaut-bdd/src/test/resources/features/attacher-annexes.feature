@@ -9,7 +9,7 @@ Fonctionnalité: Attacher des annexes à la demande par le professionnel
     	| jpg  |
     	| jpeg |
     	| png  |
-    Etant donné la taille maximale de fichier acceptée "10M"
+    Etant donné la taille maximale de fichier acceptée "3"MB
     Etant donné les annexes obligatoires par type de demande:
     	| Type de demande 	| Types d´annexe obligatoires 	|
 		| Medecin 		    | Certificat,Diplome 		| 
@@ -21,7 +21,7 @@ Fonctionnalité: Attacher des annexes à la demande par le professionnel
   @format-fichier
   Plan du scénario: Accepter ou refuser les annexes en fonction du format de fichier 
     Etant donné une demande de type "Medecin" en cours de saisie
-  	Lorsque le demandeur attache le fichier <nom_fichier> de taille 5M de type "Certificat"
+  	Lorsque le demandeur attache le fichier <nom_fichier> de taille 2M de type "Certificat"
   	Alors le système Demaut <action> d´attacher cette annexe
   	Exemples:
     	| nom_fichier       | action    |
@@ -43,16 +43,16 @@ Fonctionnalité: Attacher des annexes à la demande par le professionnel
   	Exemples:
     	| taille_fichier  | action    |
     	| 0               | "refuse"  |
-    	| 5               | "accepte" |
-    	| 10              | "accepte" |
-    	| 11              | "refuse"  |
+    	| 2               | "accepte" |
+    	| 3               | "accepte" |
+    	| 4               | "refuse"  |
     	| 200             | "refuse"  |
     	
   @atacher-annexe
   Plan du scénario: Attacher une annexe à une liste existante
     Etant donné une demande de type "Medecin" en cours de saisie
   	Etant donné la liste des annexes initiale <annexes_initiales> attachées à la demande en cours
-  	Lorsque le demandeur attache le fichier "certificat.pdf" de taille 5M de type "Certificat"
+  	Lorsque le demandeur attache le fichier "certificat.pdf" de taille 2.5M de type "Certificat"
   	Alors le système Demaut "accepte" d´attacher cette annexe
   	Alors les annexes attachées à la demande sont <annexes>
   	Exemples:

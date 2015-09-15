@@ -8,9 +8,11 @@ import javax.validation.constraints.NotNull;
 
 import ch.vd.demaut.commons.annotations.Aggregate;
 import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.domain.annexes.AnnexeMetadata;
 import ch.vd.demaut.domain.annexes.AnnexeValidateur;
 import ch.vd.demaut.domain.annexes.AnnexesObligatoires;
 import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
+import ch.vd.demaut.domain.annexes.NomFichier;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.config.ConfigDemaut;
 import ch.vd.demaut.domain.demandes.Demande;
@@ -33,13 +35,15 @@ public class DemandeAutorisation extends Demande {
     private transient ConfigDemaut config;
 
     // ********************************************************* Constructor
-    //TODO: Remove me...but needs to refactor test and tests jpa
-    public DemandeAutorisation() {
+
+    //Used for OpenJPA only
+    protected DemandeAutorisation() {
     	super();
     	this.annexes = new ArrayList<Annexe>();
     }
 
-    public DemandeAutorisation(Demandeur demandeur, ProfessionDeLaSante profession, ConfigDemaut config) {
+    //Ne pas utiliser ce constructeur mais uniquement la Factory
+    DemandeAutorisation(Demandeur demandeur, ProfessionDeLaSante profession, ConfigDemaut config) {
         this();
         this.referenceDeDemande = new ReferenceDeDemande();
         this.statutDemandeAutorisation = StatutDemandeAutorisation.Brouillon;
@@ -94,7 +98,20 @@ public class DemandeAutorisation extends Demande {
     	return getListeDesAnnexes().listerAnnexes();
     }
 
+
+    /**
+     * Renvoie la liste des annexeMetadatas
+     */
+    public Collection<AnnexeMetadata> listerLesAnnexeMetadatas() {
+        return getListeDesAnnexes().listerAnnexesMetadata();
+    }
+
+	public AnnexeMetadata extraireAnnexeMetadata(NomFichier nomFichier) {
+        return getListeDesAnnexes().extraireAnnexeMetadata(nomFichier);
+    }
+    
     // ********************************************************* Private Methods
+
 
     // ********************************************************* Getters
 
@@ -125,5 +142,4 @@ public class DemandeAutorisation extends Demande {
     public DemandeFK getFunctionalKey() {
         return new DemandeFK(this);
     }
-
 }

@@ -13,9 +13,4 @@
 		scope="cucumber-glue">
 	</bean>
 
-	<bean id="configDemaut"
-		class="ch.vd.demaut.domain.config.mock.ConfigDemautMock"
-		scope="cucumber-glue">
-	</bean>
-
 </beans>

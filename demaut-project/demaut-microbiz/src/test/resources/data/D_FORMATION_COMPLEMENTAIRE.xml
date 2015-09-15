@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<refRoot>
+    <type>D_FORMATION_COMPLEMENTAIRE</type>
+    <refElement>
+        <id>344861194</id>
+        <libl>Acupuncture - MTC /77</libl>
+    </refElement>
+    <refElement>
+        <id>344861195</id>
+        <libl>Electroencéphalographie /86</libl>
+    </refElement>
+    <refElement>
+        <id>344861196</id>
+        <libl>Electroneuromyographie /87</libl>
+    </refElement>
+    <refElement>
+        <id>344861197</id>
+        <libl>Homéopathie /78</libl>
+    </refElement>
+    <refElement>
+        <id>344861198</id>
+        <libl>Maladies cérébrovasculaires /110</libl>
+    </refElement>
+    <refElement>
+        <id>344861199</id>
+        <libl>Médecine d'urgence /89</libl>
+    </refElement>
+    <refElement>
+        <id>344861200</id>
+        <libl>Médecine de plongée /109</libl>
+    </refElement>
+    <refElement>
+        <id>344861201</id>
+        <libl>Médecine d'orientation anthroposophique /84</libl>
+    </refElement>
+    <refElement>
+        <id>344861202</id>
+        <libl>Médecine du sport /80</libl>
+    </refElement>
+    <refElement>
+        <id>344861203</id>
+        <libl>Médecine manuelle /79</libl>
+    </refElement>
+    <refElement>
+        <id>344861204</id>
+        <libl>Médecine psychosomatique et psychosociale /90</libl>
+    </refElement>
+    <refElement>
+        <id>344861205</id>
+        <libl>Hypnose médicale /88</libl>
+    </refElement>
+    <refElement>
+        <id>344861206</id>
+        <libl>Laserthérapie peau et muqueuses orificielles /111</libl>
+    </refElement>
+    <refElement>
+        <id>344861207</id>
+        <libl>Médecin-conseil /210</libl>
+    </refElement>
+    <refElement>
+        <id>344861208</id>
+        <libl>Phlébologie /128</libl>
+    </refElement>
+    <refElement>
+        <id>344861209</id>
+        <libl>Pratique du laboratoire au cabinet médical /130</libl>
+    </refElement>
+    <refElement>
+        <id>344861210</id>
+        <libl>Ex., trait. radiol. à fortes doses en angio. /132</libl>
+    </refElement>
+    <refElement>
+        <id>344861211</id>
+        <libl>Ex. radiol. fortes doses en gynécol. et obst. /133</libl>
+    </refElement>
+    <refElement>
+        <id>344861212</id>
+        <libl>Ex. radiol. fortes doses en cardiologie /134</libl>
+    </refElement>
+    <refElement>
+        <id>344861213</id>
+        <libl>Examens radiologiques à fortes doses /131</libl>
+    </refElement>
+    <refElement>
+        <id>344861214</id>
+        <libl>Sonographie de la hanche /70</libl>
+    </refElement>
+    <refElement>
+        <id>344861215</id>
+        <libl>Thérapie neurale /97</libl>
+    </refElement>
+    <refElement>
+        <id>344861216</id>
+        <libl>Ultrasonographie de l'abdomen /91</libl>
+    </refElement>
+    <refElement>
+        <id>344861217</id>
+        <libl>Ultrasonographie prénatale /71</libl>
+    </refElement>
+    <refElement>
+        <id>344861218</id>
+        <libl>Psychothérapie déléguée /151</libl>
+    </refElement>
+    <refElement>
+        <id>344861219</id>
+        <libl>Gastroscopie /149</libl>
+    </refElement>
+    <refElement>
+        <id>344861220</id>
+        <libl>Cholangio-pancréatographie endoscopique rétro /150</libl>
+    </refElement>
+</refRoot>

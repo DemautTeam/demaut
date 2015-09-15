@@ -1,0 +1,15 @@
+<div class="modal-footer">
+
+    <button ng-show="showPreview" class="btn btn-primary submit-btn" type="submit" aria-label="Précédent" ng-click="previewStepFn()">
+        <span class="glyphicon glyphicon-backward"></span>
+        Précédent
+    </button>
+    <button class="btn btn-primary submit-btn" type="submit" aria-label="Abondonner" ng-click="abondonnerDemande()">
+        <span class="glyphicon glyphicon-remove"></span>
+        Abandonner la Demande
+    </button>
+    <button ng-show="showNext" class="btn btn-primary submit-btn pull-right" type="submit" aria-label="Suivant" ng-click="nextStepFn()">
+        <span class="glyphicon glyphicon-forward"></span>
+        Suivant
+    </button>
+</div>

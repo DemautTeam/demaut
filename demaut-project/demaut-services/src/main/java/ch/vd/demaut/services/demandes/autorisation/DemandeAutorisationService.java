@@ -1,6 +1,7 @@
 package ch.vd.demaut.services.demandes.autorisation;
 
 import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.domain.annexes.AnnexeMetadata;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ public interface DemandeAutorisationService {
 
     void sauverLaDemandeAutorisation(DemandeAutorisation demandeAutorisation);
 
-    Collection<Annexe> listerLesAnnexes(String demandeReference);
+    Collection<AnnexeMetadata> listerLesAnnexeMetadatas(String demandeReference);
 
     Annexe afficherUneAnnexe(String demandeReference, String annexeFileName);
 

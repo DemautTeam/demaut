@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		   targetNamespace="http://www.vd.ch/ses/referentiel/tiers-v01"
+		   xmlns:tiers="http://www.vd.ch/ses/referentiel/tiers-v01"
+		   xmlns:eCH-0097="http://www.ech.ch/xmlns/eCH-0097/1"
+		   xmlns:eCH-0044="http://www.ech.ch/xmlns/eCH-0044-f/4"
+		   xmlns:eCH-0010="http://www.ech.ch/xmlns/eCH-0010-f/5"
+		   elementFormDefault="qualified"
+		   attributeFormDefault="unqualified"
+		   version="01">
+
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0010-f/5"
+			   schemaLocation="eCH-0010-5-1f.xsd" />
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0044-f/4"
+		schemaLocation="eCH-0044-4-1f.xsd" />
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0097/1"
+		schemaLocation="eCH-0097-1-0.xsd" />
+
+	<xs:complexType name="reportedPersonType">
+		<xs:sequence>
+			<xs:element name="personIdentification" type="tiers:personIdentificationType" />
+			<xs:element name="adress" type="tiers:addressInformationType" minOccurs="1" maxOccurs="unbounded" />
+			<xs:element name="properties" type="tiers:personProperties" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="personIdentificationType">
+		<xs:sequence>
+			<xs:element name="vn" type="eCH-0044:vnType" />
+			<xs:element name="gln" type="tiers:glnType" />
+			<xs:element name="officialName" type="eCH-0044:baseNameType" />
+			<xs:element name="firstName" type="eCH-0044:baseNameType" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="personProperties">
+		<xs:sequence>
+			<xs:element name="specialisation" type="xs:string"  minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="profession" type="xs:string" />
+			<xs:element name="statut" type="xs:string" />
+			<xs:element name="personId" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="glnType">
+		<xs:restriction base="xs:unsignedLong">
+			<xs:minInclusive value="0000000000000" />
+			<xs:maxInclusive value="9999999999999" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="reportedOrganisationType">
+		<xs:sequence>
+			<xs:element name="organisationIdentification" type="eCH-0097:uidStructureType" />
+			<xs:element name="organisation" type="eCH-0097:organisationNameType" />
+			<xs:element name="adress" type="tiers:addressInformationType" minOccurs="1" maxOccurs="unbounded" />
+			<xs:element name="properties" type="tiers:organisationProperties" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="organisationProperties">
+		<xs:sequence>
+			<xs:element name="typeEtab" type="xs:string" />
+			<xs:element name="secteur" type="xs:string" />
+			<xs:element name="organisationId" type="xs:string" />
+            <xs:element name="mission" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="addressInformationType">
+		<xs:sequence>
+			<xs:element name="addressLine1" type="eCH-0010:addressLineType" />
+			<xs:element name="addressLine2" type="eCH-0010:addressLineType" />
+			<xs:element name="town" type="eCH-0010:townType" />
+			<xs:element name="zipCode" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="root">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element name="physicalPerson" type="tiers:reportedPersonType" minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="moralPerson" type="tiers:reportedOrganisationType" minOccurs="0" maxOccurs="unbounded" />
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

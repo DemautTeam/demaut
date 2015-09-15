@@ -34,8 +34,7 @@
 		</cxf:providers>
 	</cxf:server>
 
-	<bean id="JacksonJaxbJsonProvider"
-		class="ch.vd.demaut.microbiz.provider.CustomeJacksonJaxbJsonProvider"/>
+	<bean id="JacksonJaxbJsonProvider" class="ch.vd.demaut.microbiz.provider.CustomeJacksonJaxbJsonProvider"/>
 
 	<bean id="authenticationFilter" class="ch.vd.demaut.microbiz.filter.CustomAuthenticationFilter">
 		<property name="contextName" value="karaf"/>

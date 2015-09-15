@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm
 				 http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
 
-	<!-- - OpenJPA limitations / bugs : - Not working well with access="FIELD" 
+	<!-- - OpenJPA limitations / bugs : - Not working well with access="PROPERTY" 
 		- <enumerated>STRING not working well when used in a OneToMany - OneToMany 
 		+ EAGER not working - OneToMany + LAZY => create null list - Wrong warnings 
 		from OpenJPA "non-er - Access property ne marche pas 
@@ -35,18 +35,7 @@
 			</id>
 		</attributes>
 	</mapped-superclass>
-
-	<!-- <entity class="ch.vd.demaut.domain.annexes.Annexe"> -->
-	<!-- <attributes> -->
-	<!-- <basic name="typeAnnexe"> -->
-	<!-- Bug OpenJPA if in STRING -->
-	<!-- <enumerated>ORDINAL</enumerated> -->
-	<!-- </basic> -->
-	<!-- <transient name="contenu" /> -->
-	<!-- <transient name="nomFichier" /> -->
-	<!-- </attributes> -->
-	<!-- </entity> -->
-
+	
 	<entity class="ch.vd.demaut.domain.demandes.Demande">
 		<table name="DEMANDE" />
 		<inheritance strategy="SINGLE_TABLE" />
@@ -101,17 +90,15 @@
 		</attributes>
 	</embeddable>
 
-	<embeddable class="ch.vd.demaut.domain.demandes.ReferenceDeDemande">
+	<embeddable class="ch.vd.demaut.commons.vo.StringVO">
 		<attributes>
-			<basic name="reference" />
+			<basic name="value"/>
 		</attributes>
 	</embeddable>
-
-	<!-- <embeddable class="ch.vd.demaut.domain.annexes.ListeDesAnnexes"> -->
-	<!-- <attributes> -->
-	<!-- <element-collection name="annexes" /> -->
-	<!-- </attributes> -->
-	<!-- </embeddable> -->
-
+	
+	<embeddable class="ch.vd.demaut.domain.demandes.ReferenceDeDemande">
+		<attributes>
+		</attributes>
+	</embeddable>
 
 </entity-mappings>

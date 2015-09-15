@@ -30,15 +30,15 @@
 		<module>demaut-commons</module>
 		<module>demaut-commons4test</module>
 		<module>demaut-domain</module>
-		<module>demaut-data-jpa</module>
+ 		<module>demaut-bdd</module>
+<!--		<module>demaut-data-jpa</module> -->
 <!-- 		<module>demaut-data-mock</module> -->
 <!-- 		<module>demaut-services</module> -->
-<!-- 		<module>demaut-bdd</module> -->
 <!-- 		<module>demaut-microbiz</module> -->
 <!-- 		<module>demaut-backoffice</module> -->
 <!-- 		<module>demaut-cyber</module> -->
 <!-- 		<module>demaut-commons-web</module> -->
-		<module>demaut-dummy</module>
+<!--		<module>demaut-dummy</module> -->
 	</modules>
 
 	<prerequisites>
@@ -71,6 +71,7 @@
 		<maven.war.plugin.version>2.3</maven.war.plugin.version>
 		<maven.google.replacer.plugin>1.5.3</maven.google.replacer.plugin>
 		<maven.failsafe.plugin.version>2.18.1</maven.failsafe.plugin.version>
+        <maven.jaxb.plugin.version>0.12.3</maven.jaxb.plugin.version>
 
 		<!-- Beans Validation -->
 		<javax.validation.version>1.1.0.Final</javax.validation.version>

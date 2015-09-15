@@ -1,5 +1,13 @@
 package ch.vd.demaut.cucumber.steps;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Collection;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
+
 import ch.vd.demaut.cucumber.converters.commons.AccepteOuRefuse;
 import ch.vd.demaut.cucumber.steps.definitions.AttacherAnnexeStepDefinitions;
 import ch.vd.demaut.domain.annexes.Annexe;
@@ -8,19 +16,14 @@ import ch.vd.demaut.domain.annexes.AnnexesObligatoires;
 import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
 import ch.vd.demaut.domain.config.ConfigDemaut;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
 import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.demandeurs.Demandeur;
 import ch.vd.demaut.domain.demandeurs.DemandeurRepository;
 import ch.vd.demaut.domain.demandeurs.NomEtPrenomDemandeur;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.util.Collection;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-
+@Transactional
 public class DemandeAutorisationSteps {
 
     // ********************************************************* Static fields
@@ -34,8 +37,10 @@ public class DemandeAutorisationSteps {
     private DemandeurRepository demandeurRepository;
     private DemandeAutorisationRepository demandeAutorisationRepository;
     private ConfigDemaut configDemaut;
-    //////////
-
+    private DemandeAutorisationFactory demautFactoy = DemandeAutorisationFactory.getInstance();
+    
+    ////////// Données temporaires pour les tests (non-thread safe)
+    
     private Demandeur demandeur;
     private DemandeAutorisation demandeEnCours;
     private AccepteOuRefuse actualAcceptationAnnexe;
@@ -54,7 +59,8 @@ public class DemandeAutorisationSteps {
     }
 
     public void initialiserDemandeEnCours(ProfessionDeLaSante profession) {
-        demandeEnCours = new DemandeAutorisation(demandeur, profession, configDemaut);
+    	Demandeur demandeur2 = demandeurRepository.findBy(demandeur.getId());
+        demandeEnCours = demautFactoy.inititierDemandeAutorisation(demandeur2, profession, configDemaut);
         demandeAutorisationRepository.store(demandeEnCours);
 
         LOGGER.debug("La demande autorisation " + demandeEnCours + " a été ajoutée au repository avec l'id technique:" + demandeEnCours.getId());
@@ -63,7 +69,7 @@ public class DemandeAutorisationSteps {
     public void ajouterAnnexesADemandeEnCours(ListeDesAnnexes listeDesAnnexesInitiales) {
         Collection<Annexe> annexesInit = listeDesAnnexesInitiales.listerAnnexes();
         for (Annexe annexe : annexesInit) {
-            demandeEnCours.attacherUneAnnexe(annexe);
+            demandeEnCours.validerEtAttacherAnnexe(annexe);
         }
         assertThat(demandeEnCours.listerLesAnnexes()).hasSameSizeAs(annexesInit);
     }
@@ -83,7 +89,7 @@ public class DemandeAutorisationSteps {
 
     public void attacherUneAnnexe(Annexe annexe) {
         try {
-            getDemandeEnCours().attacherUneAnnexe(annexe);
+            getDemandeEnCours().validerEtAttacherAnnexe(annexe);
             accepteAnnexe();
         } catch (AnnexeNonValideException e) {
             refuseAnnexe();
@@ -149,7 +155,8 @@ public class DemandeAutorisationSteps {
     // ***************************** **************************** Private
     // methods
 
-    private DemandeAutorisationSteps() {
+    //public for Spring
+    public DemandeAutorisationSteps() {
     }
 
 
