@@ -14,5 +14,5 @@ public interface MainRest {
     @Path("/main")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response mainData();
+    Response mainData();
 }

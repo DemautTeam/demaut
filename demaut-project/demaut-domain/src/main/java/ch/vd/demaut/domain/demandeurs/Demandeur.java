@@ -2,6 +2,7 @@ package ch.vd.demaut.domain.demandeurs;
 
 import ch.vd.demaut.commons.annotations.Aggregate;
 import ch.vd.demaut.commons.entities.EntityFunctionalKeyAware;
+import ch.vd.demaut.domain.demandeurs.donneesProf.DonneesProfessionnelles;
 
 @Aggregate
 public class Demandeur extends EntityFunctionalKeyAware {
@@ -11,10 +12,13 @@ public class Demandeur extends EntityFunctionalKeyAware {
 
     private NomEtPrenomDemandeur nomsEtPrenoms;
 
+    private DonneesProfessionnelles donneesProfessionnelles;
+
     // ********************************************************* Constructor
-    public Demandeur(NomEtPrenomDemandeur nomsEtPrenoms) {
+    public Demandeur(NomEtPrenomDemandeur nomsEtPrenoms, DonneesProfessionnelles donneesProfessionnelles) {
         super();
         this.nomsEtPrenoms = nomsEtPrenoms;
+        this.donneesProfessionnelles = donneesProfessionnelles;
     }
 
     // ********************************************************* Getters
@@ -24,6 +28,10 @@ public class Demandeur extends EntityFunctionalKeyAware {
 
     public Login getLogin() {
         return login;
+    }
+
+    public DonneesProfessionnelles getDonneesProfessionnelles() {
+        return donneesProfessionnelles;
     }
 
     // ********************************************************* Technical Methods

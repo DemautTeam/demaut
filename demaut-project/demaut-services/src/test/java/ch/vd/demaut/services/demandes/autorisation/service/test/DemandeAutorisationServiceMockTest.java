@@ -29,7 +29,7 @@ public class DemandeAutorisationServiceMockTest extends TestCase {
 
     @Test
     public void shouldInitialiserDemandeAutorisation() throws Exception {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.initialiserDemandeAutorisation();
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.initialiserDemandeAutorisation(null, ProfessionDeLaSante.Medecin, null);
         assertThat(demandeAutorisation).isNotNull();
     }
 

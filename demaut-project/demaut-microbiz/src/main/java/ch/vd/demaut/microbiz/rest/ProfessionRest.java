@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -25,5 +26,13 @@ public interface ProfessionRest {
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @RolesAllowed("USER")
     Response afficherDonneesProfession(String demandeReference) throws Exception;
+
+    @GET
+    @Path("/donnees/{demandeReference}/{idProfession}/{codeGln}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("USER")
+    Response renseignerDonneesProfession(@PathParam("demandeReference") String demandeReference,
+                                         @PathParam("idProfession") String idProfession,
+                                         @PathParam("codeGln") String codeGln) throws Exception;
 
 }

@@ -1,10 +1,13 @@
 package ch.vd.demaut.microbiz.processor;
 
+import ch.vd.demaut.microbiz.rest.RestUtils;
 import ch.vd.pee.microbiz.core.rs.MicrobizHeaderConstants;
 import ch.vd.pee.microbiz.core.utils.Json;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.camel.Exchange;
+import org.apache.camel.Message;
 import org.apache.camel.Processor;
+import org.apache.cxf.rs.security.cors.CorsHeaderConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,10 +26,6 @@ public class MainProcessor implements Processor {
     @Value("${demaut.microbiz.environment}")
     private String environment;
 
-    public void setEnvironment(String environment) {
-        this.environment = environment;
-    }
-
     @Override
     public void process(Exchange exchange) throws Exception {
 
@@ -39,10 +38,16 @@ public class MainProcessor implements Processor {
                 .put(BUILD_VERSION_KEY, exchange.getIn().getHeader(MicrobizHeaderConstants.COMPONENT_VERSION_AND_DATE, String.class))
                 .put(VERSION_KEY, exchange.getIn().getHeader(MicrobizHeaderConstants.COMPONENT_VERSION, String.class));
 
-        exchange.getOut().setBody(response);
+        Message exchangeOut = exchange.getOut();
+        exchangeOut.setBody(response);
+        RestUtils.forgeExchangeHeaders(exchangeOut);
     }
 
     public String getEnvironment() {
         return environment;
+    }
+
+    public void setEnvironment(String environment) {
+        this.environment = environment;
     }
 }

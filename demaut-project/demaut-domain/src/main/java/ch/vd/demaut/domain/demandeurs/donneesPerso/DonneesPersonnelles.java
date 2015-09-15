@@ -30,7 +30,6 @@ public class DonneesPersonnelles extends BaseValueObject {
 
     // ********************************************************* Constructor
 
-
     public DonneesPersonnelles(Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Genre genre, DateDeNaissance dateDeNaissance, Adresse adresse, Email email, NumeroTelephone telephonePrive, NumeroTelephone telephoneMobile, NumeroTelephone fax) {
         super();
         this.nom = nom;

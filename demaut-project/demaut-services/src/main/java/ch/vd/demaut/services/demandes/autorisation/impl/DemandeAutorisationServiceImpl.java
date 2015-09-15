@@ -3,15 +3,21 @@ package ch.vd.demaut.services.demandes.autorisation.impl;
 import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.AnnexeMetadata;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.domain.config.ConfigDemaut;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
 import ch.vd.demaut.domain.demandes.autorisation.factory.DemandeAutorisationFactory;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
+import ch.vd.demaut.domain.demandeurs.Demandeur;
+import ch.vd.demaut.domain.demandeurs.NomEtPrenomDemandeur;
+import ch.vd.demaut.domain.demandeurs.donneesProf.CodeGLN;
+import ch.vd.demaut.domain.demandeurs.donneesProf.DonneesProfessionnelles;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,8 +35,8 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
     private DemandeAutorisationFactory demandeAutorisationFactory = DemandeAutorisationFactory.getInstance();
 
     @Override
-    public DemandeAutorisation initialiserDemandeAutorisation() {
-        return demandeAutorisationFactory.inititierDemandeAutorisation();
+    public DemandeAutorisation initialiserDemandeAutorisation(Demandeur demandeur, ProfessionDeLaSante profession, ConfigDemaut config) {
+        return demandeAutorisationFactory.inititierDemandeAutorisation(demandeur, profession, config);
     }
 
     @Override
@@ -70,18 +76,13 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
     }
 
     @Override
-    public boolean attacherUneAnnexe(String demandeReference, File file, String annexeFileName, String annexeFileSize, String annexeFileType, String annexeType) {
+    public boolean attacherUneAnnexe(String demandeReference, File file, String annexeFileName, String annexeFileSize, String annexeFileType, String annexeType) throws IOException {
         DemandeAutorisation demandeAutorisation = this.afficherUneDemandeAutorisation(demandeReference);
         if (demandeAutorisation != null) {
-            try {
-                Annexe annexe = new Annexe(TypeAnnexe.valueOf(annexeType), annexeFileName, IOUtils.toByteArray(new FileInputStream(file)));
-                demandeAutorisation.attacherUneAnnexe(annexe);
-                sauverLaDemandeAutorisation(demandeAutorisation);
-                return true;
-            } catch (IOException e) {
-                LOGGER.error("Exception attacherUneAnnexe " + e.getMessage());
-                return false;
-            }
+            Annexe annexe = new Annexe(TypeAnnexe.valueOf(annexeType), annexeFileName, IOUtils.toByteArray(new FileInputStream(file)));
+            demandeAutorisation.attacherUneAnnexe(annexe);
+            sauverLaDemandeAutorisation(demandeAutorisation);
+            return true;
         }
         return false;
     }
@@ -102,5 +103,20 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
     public ProfessionDeLaSante afficherDonneesProfession(String demandeReference) {
         DemandeAutorisation demandeAutorisation = this.afficherUneDemandeAutorisation(demandeReference);
         return demandeAutorisation != null ? demandeAutorisation.getProfessionDeLaSante() : null;
+    }
+
+    @Override
+    public String renseignerDonneesProfession(String demandeReference, String idProfession, String codeGln) {
+        if (!StringUtils.isEmpty(demandeReference) && this.afficherUneDemandeAutorisation(demandeReference) != null) {
+                // TODO setter la profession/codeGln si demandeAutorisation le permet
+                return demandeReference;
+        } else {
+            DemandeAutorisation demandeAutorisation = this.initialiserDemandeAutorisation(
+                    new Demandeur(
+                            new NomEtPrenomDemandeur(null, null),
+                            new DonneesProfessionnelles(new CodeGLN(codeGln))),
+                    ProfessionDeLaSante.valueOf(idProfession), null);
+            return demandeAutorisation.getReferenceDeDemande().getReference();
+        }
     }
 }

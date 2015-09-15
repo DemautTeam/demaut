@@ -17,30 +17,30 @@
                     </tr>
                     </thead>
                     <tr ng-repeat="annexeType in annexesData.annexeTypes">
-                        <td>{{annexeType}}</td>
+                        <td>{{annexeType.libl}}</td>
                         <td>
                             <ul style="width:350px;overflow:hidden;">
-                                <li ng-repeat="file in files[annexeType] | filter: { typeAnnexe: annexeType }">
+                                <li ng-repeat="file in files[annexeType.id] | filter: { typeAnnexe: annexeType.id }">
                                     {{file.name}}
                                 </li>
                             </ul>
                         </td>
                         <td>
-                            <div ng-repeat="file in files[annexeType] | filter: { typeAnnexe: annexeType }">
+                            <div ng-repeat="file in files[annexeType.id] | filter: { typeAnnexe: annexeType.id }">
                                 {{file.type}}
                             </div>
                         </td>
                         <td>
-                            <div ng-repeat="file in files[annexeType] | filter: { typeAnnexe: annexeType }">
+                            <div ng-repeat="file in files[annexeType.id] | filter: { typeAnnexe: annexeType.id }">
                                 {{file.size/1024/1024 | number:3}}MB
                             </div>
                         </td>
                         <td>
-                            <div ng-repeat="file in files[annexeType] | filter: { typeAnnexe: annexeType }" style="width:40px;">
-                                <a href="" ng-click="viewAnnexe(file, annexeType)" class="btn btn-xs btn-default">
+                            <div ng-repeat="file in files[annexeType.id] | filter: { typeAnnexe: annexeType.id }" style="width:40px;">
+                                <a href="" ng-click="viewAnnexe(file, annexeType.id)" class="btn btn-xs btn-default">
                                     <span class="glyphicon glyphicon-eye-open"></span>
                                 </a>
-                                <a href="" ng-click="deleteAnnexe(file, annexeType)" class="btn btn-xs btn-default">
+                                <a href="" ng-click="deleteAnnexe(file, annexeType.id)" class="btn btn-xs btn-default">
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </a>
                             </div>
@@ -48,9 +48,10 @@
                         <td>
                             <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
                             <i class="glyphicon glyphicon-plus"></i>
-                            <input type="file" name="{{annexeType}}" multiple ng-disabled="disabled"
+                                <!-- Warning : No binding support for File Upload control -->
+                            <input type="file" name="{{annexeType.id}}" multiple ng-disabled="disabled"
                                    accept="image/jpg,image/png,image/jpeg,application/pdf" style="width:200px;"
-                                   onchange="angular.element(this).scope().filesChanged(this);this.name=null;">
+                                   onchange="angular.element(this).scope().filesChanged(this)">
                     </span>
                         </td>
                     </tr>

@@ -1,4 +1,4 @@
-package ch.vd.demaut.domain.demandes.autorisation.donneesProf;
+package ch.vd.demaut.domain.demandeurs.donneesProf;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.StringVO;

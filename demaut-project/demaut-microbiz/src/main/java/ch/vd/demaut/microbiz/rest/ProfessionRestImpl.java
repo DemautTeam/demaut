@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.cxf.common.util.StringUtils;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,5 +79,19 @@ public class ProfessionRestImpl implements ProfessionRest {
         List<RefListType> lesProfessionsDeLaSante = porgreSoaService.listeSOAProfession().getRefList().getRefListType();
         return RestUtils.forgeResponseString(Response.Status.OK,
                 String.valueOf(CollectionUtils.find(lesProfessionsDeLaSante, new BeanPropertyValueEqualsPredicate("libl", professionDeLaSante.name()))));
+    }
+
+    @Override
+    @GET
+    @Path("/donnees/{demandeReference}/{idProfession}/{codeGln}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("USER")
+    public Response renseignerDonneesProfession(@PathParam("demandeReference") String demandeReference,
+                                                @PathParam("idProfession") String idProfession,
+                                                @PathParam("codeGln") String codeGln) throws Exception {
+        String renseignerDonneesProfession = this.demandeAutorisationService.renseignerDonneesProfession(demandeReference, idProfession, codeGln);
+        return !StringUtils.isEmpty(idProfession) && !StringUtils.isEmpty(renseignerDonneesProfession)
+                ? RestUtils.forgeResponseString(Response.Status.OK, renseignerDonneesProfession)
+                : RestUtils.forgeResponseNoContent();
     }
 }

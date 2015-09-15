@@ -4,6 +4,7 @@ import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.AnnexeMetadata;
 import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.domain.config.ConfigDemaut;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DateSoumissionDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
@@ -11,6 +12,8 @@ import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.demandeurs.Demandeur;
 import ch.vd.demaut.domain.demandeurs.NomEtPrenomDemandeur;
+import ch.vd.demaut.domain.demandeurs.donneesProf.CodeGLN;
+import ch.vd.demaut.domain.demandeurs.donneesProf.DonneesProfessionnelles;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import ch.vd.demaut.services.demandes.autorisation.repo.mock.DemandeAutorisationRepositoryMock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +37,7 @@ public class DemandeAutorisationServiceMock implements DemandeAutorisationServic
     }
 
     @Override
-    public DemandeAutorisation initialiserDemandeAutorisation() {
+    public DemandeAutorisation initialiserDemandeAutorisation(Demandeur demandeur, ProfessionDeLaSante profession, ConfigDemaut config) {
         DemandeAutorisation demandeAutorisation = mockDemandeAutorisation();
         when(demandeAutorisation.getId()).thenReturn(0L);
         when(demandeAutorisation.getVersion()).thenReturn(0);
@@ -87,12 +90,19 @@ public class DemandeAutorisationServiceMock implements DemandeAutorisationServic
         return null;
     }
 
+    @Override
+    public String renseignerDonneesProfession(String demandeReference, String idProfession, String codeGln) {
+        when(INSTANCE.renseignerDonneesProfession(demandeReference, idProfession, codeGln)).thenReturn(demandeReference);
+        return null;
+    }
+
     private DemandeAutorisation mockDemandeAutorisation() {
         DemandeAutorisation demandeAutorisation = mock(DemandeAutorisation.class);
         when(demandeAutorisation.getReferenceDeDemande()).thenReturn(new ReferenceDeDemande());
         when(demandeAutorisation.getDateSoumissionDemande()).thenReturn(new DateSoumissionDemande(2015, 11, 11, 12, 15, 25));
         when(demandeAutorisation.getListeDesAnnexes()).thenReturn(listeDesAnnexes());
-        when(demandeAutorisation.getDemandeur()).thenReturn(new Demandeur(new NomEtPrenomDemandeur("Hello", "World")));
+        when(demandeAutorisation.getDemandeur()).thenReturn(
+                new Demandeur(new NomEtPrenomDemandeur("Hello", "World"), new DonneesProfessionnelles(new CodeGLN("7601000000125"))));
         return demandeAutorisation;
     }
 

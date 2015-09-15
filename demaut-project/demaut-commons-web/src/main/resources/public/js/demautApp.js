@@ -145,32 +145,25 @@ ngDemautApp
         this.name = "ProfessionSanteController";
         this.params = $routeParams;
         $scope.professionData = {};
-        $scope.professionData.demandeReference = "toBeDefinedLater";
+        $scope.professionData.demandeReference = null;
         $scope.professionData.profession = null;
         $scope.professionData.professions = [];
         $scope.professionData.professionsUni = [
-            "Liste locale",
-            "Chiropraticien",
-            "Medecin",
-            "Medecin dentiste",
-            "Pharmacien"
+            "53843599", // Chiropraticien
+            "53843613", // Médecin
+            "53843615", // Médecin-dentiste
+            "53843622"  // Pharmacien
         ];
 
-        $http.get(urlPrefix + '/profession/professionsList').
-            success(function (data, status, headers, config) {
-                $scope.professionData.professions = angular.fromJson(data.response);
-            }).
-            error(function (data, status, headers, config) {
-                $rootScope.error ='Error downloading ../profession/professionsList';
-            });
-
-        $http.get(urlPrefix + '/profession/donnees/' + $scope.professionData.demandeReference).
-            success(function (data, status, headers, config) {
-                $scope.professionData.profession = angular.fromJson(data.response);
-            }).
-            error(function (data, status, headers, config) {
-                $rootScope.error ='Error downloading ../profession/donnees/' + $scope.professionData.demandeReference;
-            });
+        if ($scope.professionData.professions == null || $scope.professionData.professions == undefined || $scope.professionData.professions.length == 0) {
+            $http.get(urlPrefix + '/profession/professionsList').
+                success(function (data, status, headers, config) {
+                    $scope.professionData.professions = angular.fromJson(data.response);
+                }).
+                error(function (data, status, headers, config) {
+                    $rootScope.error = 'Error downloading ../profession/professionsList';
+                });
+        }
 
         $scope.previewStep = function(){
             $scope.indexStep -= 1;
@@ -178,7 +171,8 @@ ngDemautApp
         };
         $scope.nextStep = function(){
             if ($scope.professionSante.professionDataForm.$valid &&
-                !(professionTest.isProfessionMedicaleUni($scope.professionData.profession.libl, $scope.professionData.professionsUni) && ($scope.professionData.gln == null || $scope.professionData.gln == undefined))) {
+                !(professionTest.isProfessionMedicaleUni($scope.professionData.profession, $scope.professionData.professionsUni) &&
+                ($scope.professionData.gln == null || $scope.professionData.gln == undefined))) {
                 $log.info('Formulaire valide !');
                 $scope.indexStep += 1;
                 $location.path('/Demaut/demande/donneesProf');
@@ -187,6 +181,7 @@ ngDemautApp
                 $scope.professionSante.professionDataForm.gln.$valid = false;
                 $scope.professionSante.professionDataForm.gln.$invalid = true;
                 $scope.professionSante.professionDataForm.gln.$error = 'Code GLN indisponsable pour pour les professions médicales universitaires!';
+                angular.element("#gln").focus();
                 $log.info('Formulaire invalide !');
             }
         };
@@ -205,7 +200,7 @@ ngDemautApp
             $location.path('/Demaut/demande/annexes');
         };
     }])
-    .controller('AnnexesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix) {
+    .controller('AnnexesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log) {
         $rootScope.contextMenu = "Annexes";
         $scope.indexStep = 4;
         this.name = "AnnexesController";
@@ -214,24 +209,19 @@ ngDemautApp
         $scope.annexesData.demandeReference = "toBeDefinedLater";
         $scope.annexesData.profession = "aSaisirEtape2";
         $scope.annexesData.annexeFormats = ["application/pdf", "image/jpg", "image/jpeg", "image/png"];
-        $scope.annexesData.annexeTypes = [
-            "Liste locale",
-            "Curriculum vitae",
-            "Diplôme (médecin)",
-            "Titre (pédiatre)",
-            "Certificats de Travail",
-            "Casier judiciaire"
-        ];
-
-        $http.get(urlPrefix + '/annexes/typesList/' + $scope.annexesData.profession).
-            success(function (data, status, headers, config) {
-                $scope.annexesData.annexeTypes = angular.fromJson(data.response);
-            }).
-            error(function (data, status, headers, config) {
-                $rootScope.error ='Error downloading ../annexes/typesList/' + $scope.annexesData.profession;
-            });
-
+        $scope.annexesData.annexeTypes = [];
         $scope.annexesData.referenceFiles = [];
+
+        if ($scope.annexesData.annexeTypes == null || $scope.annexesData.annexeTypes.length == 0) {
+            $http.get(urlPrefix + '/annexes/typesList/' + $scope.annexesData.profession).
+                success(function (data, status, headers, config) {
+                    $scope.annexesData.annexeTypes = angular.fromJson(data.response);
+                }).
+                error(function (data, status, headers, config) {
+                    $rootScope.error ='Error downloading ../annexes/typesList/' + $scope.annexesData.profession;
+                });
+        }
+
         $scope.previewStep = function(){
             $scope.indexStep -= 1;
             $location.path('/Demaut/demande/donneesProf');
@@ -252,13 +242,12 @@ ngDemautApp
             // Check format for all files list
             function validateFileName(fileName) {
                 var forbiddenChars = /^(?!\.)[^\|\*\?\\:<>/$"]*[^\.\|\*\?\\:<>/$"]+$/
-                var forbiddenSpace = /^\s+$/
                 // Ne doit pas etre vide
                 // Ne doit pas commencer par .
                 // Ne doit pas contenir | * ? \ : < > $
                 // Ne doit pas finir avec .
                 // Ne doit pas excèder 255 chars
-                return fileName != null && fileName != undefined && forbiddenChars.test(fileName) && forbiddenSpace.test(fileName) && fileName.length <= 255;
+                return fileName != null && fileName != undefined && forbiddenChars.test(fileName) && fileName.length <= 255;
             }
 
             for (var indexI = 0; indexI < newFilesList.length; indexI++) {
@@ -298,6 +287,7 @@ ngDemautApp
                         }
                     }
                     $scope.files = $scope.annexesData.referenceFiles;
+                    $log.info('Document(s) valide(s) !');
                 } else {
                     $scope.annexesData.referenceFiles[typeAnnexe] = [];
                     for (var indexH = 0; indexH < newFilesList.length; indexH++) {
@@ -306,10 +296,12 @@ ngDemautApp
                         doUploadFile(currentValidFile);
                     }
                     $scope.files = $scope.annexesData.referenceFiles;
+                    $log.info('Document(s) valide(s) !');
                 }
             } else {
                 $scope.files = $scope.annexesData.referenceFiles;
                 $rootScope.error = typeAnnexe + ' : une/plusieurs pièces ne respectent pas les règles de nommage ou ne correspondent pas aux formats supportés (pdf, image)';
+                $log.info('Document(s) invalide(s) !');
             }
             $scope.$apply();
         };

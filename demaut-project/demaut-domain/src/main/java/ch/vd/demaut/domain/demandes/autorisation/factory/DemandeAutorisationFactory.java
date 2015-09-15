@@ -2,7 +2,10 @@ package ch.vd.demaut.domain.demandes.autorisation.factory;
 
 
 import ch.vd.demaut.commons.annotations.Factory;
+import ch.vd.demaut.domain.config.ConfigDemaut;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandeurs.Demandeur;
 
 @Factory
 public class DemandeAutorisationFactory {
@@ -16,7 +19,7 @@ public class DemandeAutorisationFactory {
         return INSTANCE;
     }
 
-    public DemandeAutorisation inititierDemandeAutorisation() {
-        return new DemandeAutorisation();
+    public DemandeAutorisation inititierDemandeAutorisation(Demandeur demandeur, ProfessionDeLaSante profession, ConfigDemaut config) {
+        return new DemandeAutorisation(demandeur, profession, config);
     }
 }
