@@ -1,6 +1,7 @@
 .view-animate-container {
     position:relative;
     background:white;
+    min-height: 500px;
 }
 
 .view-animate {
