@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
-import ch.vd.demaut.microbiz.progreSoa.PorgreSoaService;
+import ch.vd.demaut.microbiz.progreSoa.ProgreSoaService;
 import ch.vd.ses.referentiel.demaut_1_0.RefListType;
 
 @CrossOriginResourceSharing(
@@ -37,7 +37,7 @@ public class ProfessionRestImpl implements ProfessionRest {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProfessionRestImpl.class);
 
     @Autowired
-    private PorgreSoaService porgreSoaService;
+    private ProgreSoaService progreSoaService;
 
     // TODO Processor Camel
     @Value("${user}")
@@ -54,7 +54,7 @@ public class ProfessionRestImpl implements ProfessionRest {
         LOGGER.info("listerLesProfessionsDeLaSante");
 
         // TODO mettre en cache la liste des professions
-        List<RefListType> lesProfessionsDeLaSante = porgreSoaService.listeSOAProfession().getRefList().getRefListType();
+        List<RefListType> lesProfessionsDeLaSante = progreSoaService.listeSOAProfession().getRefList().getRefListType();
         // TODO filtrer la liste selon Universitaire ou non
         return RestUtils.forgeResponseList(Response.Status.OK, lesProfessionsDeLaSante);
     }
@@ -69,7 +69,7 @@ public class ProfessionRestImpl implements ProfessionRest {
         LOGGER.info("afficherDonneesProfession " + demandeReference);
 
         ProfessionDeLaSante professionDeLaSante = ProfessionDeLaSante.Medecin; // TODO demandeAutorisationService.afficherDonneesProfession(demandeReference);
-        List<RefListType> lesProfessionsDeLaSante = porgreSoaService.listeSOAProfession().getRefList().getRefListType();
+        List<RefListType> lesProfessionsDeLaSante = progreSoaService.listeSOAProfession().getRefList().getRefListType();
         return RestUtils.forgeResponseString(Response.Status.OK,
                 String.valueOf(CollectionUtils.find(lesProfessionsDeLaSante, new BeanPropertyValueEqualsPredicate("libl", professionDeLaSante.name()))));
     }

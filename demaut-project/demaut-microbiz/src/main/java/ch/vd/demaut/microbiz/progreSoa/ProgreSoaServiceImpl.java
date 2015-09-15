@@ -18,14 +18,14 @@ import java.io.InputStream;
 import java.util.List;
 
 @Service
-public class PorgreSoaServiceImpl implements PorgreSoaService {
+public class ProgreSoaServiceImpl implements ProgreSoaService {
 
     private Client client = ClientBuilder.newClient();
 
     private String progreSOAUrl;
 
     @Autowired
-    public PorgreSoaServiceImpl(@Value("${demaut.microbiz.progre.soa.url}") String progreSOAUrl) {
+    public ProgreSoaServiceImpl(@Value("${demaut.microbiz.progre.soa.url}") String progreSOAUrl) {
         this.progreSOAUrl = progreSOAUrl;
     }
 

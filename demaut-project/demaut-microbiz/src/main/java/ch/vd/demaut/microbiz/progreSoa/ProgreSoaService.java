@@ -5,7 +5,7 @@ import ch.vd.ses.referentiel.tiers_v01.ReportedOrganisationType;
 
 import java.util.List;
 
-public interface PorgreSoaService {
+public interface ProgreSoaService {
 
     List<ReportedOrganisationType> rechercheSOATierById(String organisationId) throws Exception;
 
