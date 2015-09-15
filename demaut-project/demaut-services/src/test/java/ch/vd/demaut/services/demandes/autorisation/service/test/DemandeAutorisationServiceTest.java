@@ -24,7 +24,6 @@ import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import junit.framework.TestCase;
 
-@Ignore("Waiting for OpenJPA bug fix")
 @ContextConfiguration({"classpath*:/servicesTest-context.xml"})
 @ActiveProfiles({"data"})
 @RunWith(SpringJUnit4ClassRunner.class)
