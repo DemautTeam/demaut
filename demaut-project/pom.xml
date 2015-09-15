@@ -38,7 +38,6 @@
  		<module>demaut-commons-web</module> 
  		<module>demaut-backoffice</module> 
  		<module>demaut-cyber</module> 
-		<module>demaut-dummy</module> 
 	</modules>
 
 	<prerequisites>
