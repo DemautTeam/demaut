@@ -43,7 +43,7 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
 		if (resultList.size() > 1) {
         	throw new EntityNotUniqueException();
         }
-        if (resultList.size() == 1) {
+        if (resultList.size() == 0) {
         	throw new EntityNotFoundException();
         }
 	}

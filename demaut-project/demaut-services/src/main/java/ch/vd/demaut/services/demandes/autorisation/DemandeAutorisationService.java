@@ -11,18 +11,31 @@ import ch.vd.demaut.domain.annexes.NomFichier;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.utilisateurs.Login;
 
 @Service
 public interface DemandeAutorisationService {
 
-    DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande ref);
+	/**
+	 * Crée et persiste une {@link DemandeAutorisation}. Génère aussi la
+	 * {@link ReferenceDeDemande}
+	 * 
+	 * @param login
+	 *            {@link Login} de l'utilisateur associé à cette nouvelle
+	 *            demande
+	 * @param profession
+	 *            {@link ProfessionDeLaSante} de la Demande
+	 */
+	DemandeAutorisation initialiserDemandeAutorisation(Login login, ProfessionDeLaSante profession);
 
-    Collection<AnnexeMetadata> listerLesAnnexesMetadatas(ReferenceDeDemande ref);
+	DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande ref);
 
-    ContenuAnnexe recupererContenuAnnexe(ReferenceDeDemande ref, NomFichier nomFichier);
+	Collection<AnnexeMetadata> listerLesAnnexesMetadatas(ReferenceDeDemande ref);
 
-    void attacherUneAnnexe(ReferenceDeDemande ref, File file, NomFichier nomFichier, TypeAnnexe type);
+	ContenuAnnexe recupererContenuAnnexe(ReferenceDeDemande ref, NomFichier nomFichier);
 
-    void supprimerUneAnnexe(ReferenceDeDemande ref, NomFichier nomFichier);
+	void attacherUneAnnexe(ReferenceDeDemande ref, File file, NomFichier nomFichier, TypeAnnexe type);
+
+	void supprimerUneAnnexe(ReferenceDeDemande ref, NomFichier nomFichier);
 }
-

@@ -13,8 +13,11 @@
 	<bean id="demandeAutorisationRepository"
 		class="ch.vd.demaut.data.demandes.autorisation.repo.impl.DemandeAutorisationRepositoryJPA" />
 
+	<bean id="demandeAutorisationFactory"
+		class="ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory" />
+
 	<bean id="demandeAutorisationService"
-		class="ch.vd.demaut.services.demandes.autorisation.impl.DemandeAutorisationServiceJPA" />
+		class="ch.vd.demaut.services.demandes.autorisation.impl.DemandeAutorisationServiceImpl" />
 
 	<context:annotation-config />
 

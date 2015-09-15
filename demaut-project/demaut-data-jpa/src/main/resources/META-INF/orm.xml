@@ -79,7 +79,7 @@
 		<attributes>
 			<basic name="typeAnnexe">
 				<!-- Bug OpenJPA if in STRING -->
-				<enumerated>STRING</enumerated>
+				<enumerated>ORDINAL</enumerated>
 			</basic>
 			<transient name="contenu" />
 			<transient name="nomFichier" />
