@@ -2,13 +2,10 @@ package ch.vd.demaut.commons.validation.test;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings("rawtypes")
-@RunWith(JUnit4.class)
 public class ConstraintValidationTest extends AbstractValidationTest {
 
     private String newTestProperty = "NewTestProperty";
