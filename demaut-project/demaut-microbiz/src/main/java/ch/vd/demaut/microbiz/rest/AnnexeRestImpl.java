@@ -30,7 +30,7 @@ import ch.vd.demaut.domain.annexes.ContenuAnnexe;
 import ch.vd.demaut.domain.annexes.NomFichier;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.microbiz.progreSoa.PorgreSoaService;
+import ch.vd.demaut.microbiz.progreSoa.ProgreSoaService;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import ch.vd.ses.referentiel.demaut_1_0.RefListType;
 
@@ -51,7 +51,7 @@ public class AnnexeRestImpl implements AnnexeRest {
     private DemandeAutorisationService demandeAutorisationService;
 
     @Autowired
-    private PorgreSoaService porgreSoaService;
+    private ProgreSoaService progreSoaService;
 
     // TODO Processor Camel
     @Value("${user}")
@@ -66,7 +66,7 @@ public class AnnexeRestImpl implements AnnexeRest {
 
         LOGGER.info("listerLesTypesAnnexes " + profession);
 
-        List<RefListType> lesTypesAnnexes = porgreSoaService.listeSOATypesAnnexes().getRefList().getRefListType();
+        List<RefListType> lesTypesAnnexes = progreSoaService.listeSOATypesAnnexes().getRefList().getRefListType();
         // TODO filtrer la liste selon profession (liste ordinaire VS simplifiée)
         return RestUtils.forgeResponseList(Response.Status.OK, lesTypesAnnexes);
     }
