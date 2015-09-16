@@ -6,7 +6,7 @@ public class StartWebappMain {
 
     private static ClassPathXmlApplicationContext xmlApplicationContext;
 
-	public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         xmlApplicationContext = new ClassPathXmlApplicationContext("/microbizTest-context.xml");
         xmlApplicationContext.registerShutdownHook();
     }

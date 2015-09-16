@@ -1,29 +1,4 @@
-package ch.vd.demaut.microbiz.rest;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.List;
-
-import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
-import org.apache.cxf.jaxrs.ext.multipart.Multipart;
-import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
+package ch.vd.demaut.microbiz.rest.impl;
 
 import ch.vd.demaut.domain.annexes.AnnexeMetadata;
 import ch.vd.demaut.domain.annexes.ContenuAnnexe;
@@ -31,8 +6,26 @@ import ch.vd.demaut.domain.annexes.NomFichier;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.microbiz.progreSoa.ProgreSoaService;
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
+import ch.vd.demaut.microbiz.rest.AnnexeRest;
+import ch.vd.demaut.microbiz.rest.RestUtils;
+import ch.vd.demaut.services.annexes.AnnexesService;
 import ch.vd.ses.referentiel.demaut_1_0.RefListType;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import org.apache.cxf.jaxrs.ext.multipart.Multipart;
+import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
 
 @CrossOriginResourceSharing(
         allowOrigins = {"*"},
@@ -48,23 +41,19 @@ public class AnnexeRestImpl implements AnnexeRest {
     private static final Logger LOGGER = LoggerFactory.getLogger(AnnexeRestImpl.class);
 
     @Autowired
-    private DemandeAutorisationService demandeAutorisationService;
+    private AnnexesService annexesService;
 
     @Autowired
     private ProgreSoaService progreSoaService;
-
-    // TODO Processor Camel
-    @Value("${user}")
-    private String user;
 
     @Override
     @GET
     @Path("/typesList/{profession}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response listerLesTypesAnnexes(@PathParam("profession") String profession) throws Exception {
+    public Response listerLesTypesAnnexes(@PathParam("profession") String professionId) throws Exception {
 
-        LOGGER.info("listerLesTypesAnnexes " + profession);
+        LOGGER.info("listerLesTypesAnnexes " + professionId);
 
         List<RefListType> lesTypesAnnexes = progreSoaService.listeSOATypesAnnexes().getRefList().getRefListType();
         // TODO filtrer la liste selon profession (liste ordinaire VS simplifiée)
@@ -76,13 +65,13 @@ public class AnnexeRestImpl implements AnnexeRest {
     @Path("/lister/{demandeReference}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response listerLesAnnexes(@PathParam("demandeReference") String ref) throws JsonProcessingException {
+    public Response listerLesAnnexes(@PathParam("demandeReference") String demandeReference) throws JsonProcessingException {
 
-        LOGGER.info("listerLesAnnexes " + ref);
-        
-        ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(ref);
-        
-        Collection<AnnexeMetadata> annexesMetadata = demandeAutorisationService.listerLesAnnexesMetadatas(referenceDeDemande);
+        LOGGER.info("listerLesAnnexes " + demandeReference);
+
+        ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);
+
+        Collection<AnnexeMetadata> annexesMetadata = annexesService.listerLesAnnexeMetadatas(referenceDeDemande);
         
         return RestUtils.forgeResponseList(Response.Status.OK, annexesMetadata);
     }
@@ -97,15 +86,14 @@ public class AnnexeRestImpl implements AnnexeRest {
 
         LOGGER.info("afficherUneAnnexe " + annexeFileName);
 
-        ReferenceDeDemande ref = new ReferenceDeDemande(demandeReference);
+        ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);
         NomFichier nomFichier = new NomFichier(annexeFileName);
 
-        ContenuAnnexe contenuAnnexe = demandeAutorisationService.recupererContenuAnnexe(ref, nomFichier);
-        
-        Response response = RestUtils.forgeResponseStream(Response.Status.OK, contenuAnnexe.getContenu());
-        
-        return response;
+        ContenuAnnexe contenuAnnexe = annexesService.recupererContenuAnnexe(referenceDeDemande, nomFichier);
 
+        Response response = RestUtils.forgeResponseStream(Response.Status.OK, contenuAnnexe.getContenu());
+
+		return response;
     }
 
     @Override
@@ -122,16 +110,14 @@ public class AnnexeRestImpl implements AnnexeRest {
                                       @Multipart("annexeType") String annexeType) throws IOException {
 
         LOGGER.info("attacherUneAnnexe " + annexeFileName);
-        
+
         ReferenceDeDemande ref = new ReferenceDeDemande(demandeReference);
         NomFichier nomFichier = new NomFichier(annexeFileName);
         TypeAnnexe typeAnnexe = TypeAnnexe.valueOf(annexeType);
-        
-        demandeAutorisationService.attacherUneAnnexe(ref, file, nomFichier, typeAnnexe);
-        
-        Response response = RestUtils.forgeResponseTrue();
-        
-        return response;
+
+        annexesService.attacherUneAnnexe(ref, file, nomFichier, typeAnnexe);
+
+        return RestUtils.forgeResponseTrue();
     }
 
     @Override
@@ -148,11 +134,8 @@ public class AnnexeRestImpl implements AnnexeRest {
         ReferenceDeDemande ref = new ReferenceDeDemande(demandeReference);
         NomFichier nomFichier = new NomFichier(annexeFileName);
 
-        demandeAutorisationService.supprimerUneAnnexe(ref, nomFichier);
-        
-        Response response = RestUtils.forgeResponseTrue();
-        
-        return response;
+        annexesService.supprimerUneAnnexe(ref, nomFichier);
+
+        return RestUtils.forgeResponseTrue();
     }
-    
 }

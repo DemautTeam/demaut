@@ -36,7 +36,7 @@
 		</cxf:providers>
 	</cxf:server>
 
-	<bean id="corsFilter" class="org.apache.cxf.rs.security.cors.CrossOriginResourceSharingFilter"/>
+    <bean id="corsFilter" class="org.apache.cxf.rs.security.cors.CrossOriginResourceSharingFilter"/>
 
 	<bean id="customeJacksonJaxbJsonProvider" class="ch.vd.demaut.microbiz.provider.CustomeJacksonJaxbJsonProvider"/>
 

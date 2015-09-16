@@ -1,15 +1,14 @@
 package ch.vd.demaut.domain.annexes;
 
-import static org.assertj.core.api.Assertions.fail;
-import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
-
+import ch.vd.demaut.commons.utils.FileMockHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import ch.vd.demaut.commons.utils.FileMockHelper;
+import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 
 @RunWith(JUnit4.class)
 public class AnnexeValidateurTest {

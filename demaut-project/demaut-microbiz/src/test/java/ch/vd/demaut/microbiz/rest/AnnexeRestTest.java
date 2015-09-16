@@ -21,7 +21,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
 
+@Ignore("Senario Data")
 @ContextConfiguration({"classpath*:microbizTest-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -42,28 +44,28 @@ public class AnnexeRestTest {
 
     @Ignore
     @Test
-    public void shouldListerLesTypesAnnexes() throws Exception {
-        Response response = annexeRest.listerLesTypesAnnexes("profession");
+    public void testListerLesTypesAnnexes() throws Exception {
+        Response response = annexeRest.listerLesTypesAnnexes(ProfessionDeLaSante.Medecin.name());
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
     @Ignore
     @Test
-    public void shouldListerLesAnnexes() throws Exception {
-        Response response = annexeRest.listerLesAnnexes("demandeReference");
+    public void testListerLesAnnexes() throws Exception {
+        Response response = annexeRest.listerLesAnnexes("7dc53df5-703e-49b3-8670-b1c468f47f1f");
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
     @Ignore
     @Test
-    public void shouldAfficherUneAnnexe() throws Exception {
-        Response response = annexeRest.afficherUneAnnexe("demandeReference", "Test_multipart.pdf");
+    public void testAfficherUneAnnexe() throws Exception {
+        Response response = annexeRest.afficherUneAnnexe("7dc53df5-703e-49b3-8670-b1c468f47f1f", "Test_multipart.pdf");
         assertNotNull(response);
     }
 
     @Ignore
     @Test
-    public void shouldAttacherUneAnnexe() throws Exception {
+    public void testAttacherUneAnnexe() throws Exception {
         File fileMultipart = new File("target/Test_multipart.cfg");
         FileUtils.writeByteArrayToFile(fileMultipart, byteArray);
         Response response = annexeRest.attacherUneAnnexe("demandeReference", fileMultipart, "Test_multipart.pdf", String.valueOf(byteArray.length), "application/cfg", TypeAnnexe.Certificat.name());
@@ -72,7 +74,7 @@ public class AnnexeRestTest {
 
     @Ignore
     @Test
-    public void shouldSupprimerAnnexe() throws Exception {
+    public void testSupprimerAnnexe() throws Exception {
         Response response = annexeRest.supprimerUneAnnexe("demandeReference", "Test_multipart.pdf", TypeAnnexe.Certificat.name());
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }

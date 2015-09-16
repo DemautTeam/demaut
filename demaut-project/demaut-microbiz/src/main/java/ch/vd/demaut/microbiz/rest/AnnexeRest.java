@@ -16,7 +16,7 @@ public interface AnnexeRest {
     @Path("/typesList/{profession}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    Response listerLesTypesAnnexes(String profession) throws Exception;
+    Response listerLesTypesAnnexes(String professionId) throws Exception;
 
     @GET
     @Path("/lister/{demandeReference}")

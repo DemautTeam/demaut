@@ -20,6 +20,6 @@ public class DemandeAutorisationFactory {
     public DemandeAutorisation inititierDemandeAutorisation(Login login, ProfessionDeLaSante profession, ConfigDemaut config) {
         DemandeAutorisation demande = new DemandeAutorisation(login, profession, config);
         demande.generateReference();
-		return demande;
+        return demande;
     }
 }

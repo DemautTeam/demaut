@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:util="http://www.springframework.org/schema/util"
-	xsi:schemaLocation="
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context
@@ -10,17 +11,17 @@
 		http://www.springframework.org/schema/util
 		http://www.springframework.org/schema/util/spring-util.xsd">
 
-	<bean id="demandeAutorisationRepository"
-		class="ch.vd.demaut.data.demandes.autorisation.repo.impl.DemandeAutorisationRepositoryJPA" />
+    <bean id="demandeAutorisationRepository" class="ch.vd.demaut.data.demandes.autorisation.repo.impl.DemandeAutorisationRepositoryJPA"/>
 
-	<bean id="demandeAutorisationFactory"
-		class="ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory" />
+    <bean id="demandeAutorisationFactory" class="ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory" />
 
-	<bean id="demandeAutorisationService"
-		class="ch.vd.demaut.services.demandes.autorisation.impl.DemandeAutorisationServiceImpl" />
+    <bean id="demandeAutorisationService" class="ch.vd.demaut.services.demandes.autorisation.impl.DemandeAutorisationServiceImpl"/>
 
-	<context:annotation-config />
+    <bean id="annexesService" class="ch.vd.demaut.services.annexes.impl.AnnexesServiceImpl"/>
 
-	<context:component-scan base-package="ch.vd.demaut" />
+    <bean id="donneesProfessionnellesService" class="ch.vd.demaut.services.demandeurs.donneesProf.impl.DonneesProfessionnellesServiceImpl"/>
+
+    <context:annotation-config/>
+    <context:component-scan base-package="ch.vd.demaut"/>
 
 </beans>

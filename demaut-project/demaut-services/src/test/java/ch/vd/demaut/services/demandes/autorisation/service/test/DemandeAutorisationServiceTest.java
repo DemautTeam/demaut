@@ -28,6 +28,7 @@ import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
 import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.services.annexes.AnnexesService;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import junit.framework.TestCase;
 
@@ -40,6 +41,9 @@ public class DemandeAutorisationServiceTest extends TestCase {
     @Inject
     private DemandeAutorisationService demandeAutorisationService;
 
+    @Inject
+    private AnnexesService annexeService;
+    
     // ********************************************************* Fixtures
     private byte[] byteArray;
     private File file;
@@ -75,6 +79,7 @@ public class DemandeAutorisationServiceTest extends TestCase {
     	assertThat(demandeEnCours.getReferenceDeDemande()).isNotNull();
     }
     
+    
     @Test
     @Transactional
     public void testerAttacherUneAnnexe() {
@@ -82,7 +87,7 @@ public class DemandeAutorisationServiceTest extends TestCase {
     	intialiserDemandeEnCours(null);
     	
     	//Attache une annexe
-    	demandeAutorisationService.attacherUneAnnexe(ref, file, nomFichier, TypeAnnexe.Certificat);
+    	annexeService.attacherUneAnnexe(ref, file, nomFichier, TypeAnnexe.Certificat);
     	
     	//Récupère demande en cours
     	demandeEnCours = demandeAutorisationService.recupererDemandeParReference(ref);
@@ -106,7 +111,7 @@ public class DemandeAutorisationServiceTest extends TestCase {
     	demandeEnCours = demandeAutorisationService.recupererDemandeParReference(ref);
 
     	//Vérifie si annexe attachée
-    	ContenuAnnexe contenuAnnexe = demandeAutorisationService.recupererContenuAnnexe(ref, nomFichier);
+    	ContenuAnnexe contenuAnnexe = annexeService.recupererContenuAnnexe(ref, nomFichier);
 
     	assertThat(contenuAnnexe).isNotNull();
     	assertThat(contenuAnnexe.getTaille()).isEqualTo(tailleAnnexe);
@@ -117,14 +122,14 @@ public class DemandeAutorisationServiceTest extends TestCase {
     public void shouldListerLesAnnexes() throws Exception {
         File fileMultipart = new File("target/Test_multipart.cfg");
         FileUtils.writeByteArrayToFile(fileMultipart, byteArray);
-        Collection<?> listerLesAnnexes = demandeAutorisationService.listerLesAnnexesMetadatas(ref);
+        Collection<?> listerLesAnnexes = annexeService.listerLesAnnexeMetadatas(ref);
         assertThat(listerLesAnnexes).isNotEmpty();
     }
 
     @Ignore
     @Test
     public void shouldAfficherUneAnnexe() throws Exception {
-        ContenuAnnexe contenuAnnexe = demandeAutorisationService.recupererContenuAnnexe(ref, nomFichier);
+        ContenuAnnexe contenuAnnexe = annexeService.recupererContenuAnnexe(ref, nomFichier);
         assertThat(contenuAnnexe).isNotNull();
     }
 
@@ -133,13 +138,13 @@ public class DemandeAutorisationServiceTest extends TestCase {
     public void shouldAttacherUneAnnexe() throws Exception {
         File file = new File("target/Test_multipart.cfg");
         FileUtils.writeByteArrayToFile(file, byteArray);
-        demandeAutorisationService.attacherUneAnnexe(ref, file, nomFichier, TypeAnnexe.Certificat);
+        annexeService.attacherUneAnnexe(ref, file, nomFichier, TypeAnnexe.Certificat);
     }
 
     @Ignore
     @Test
     public void shouldSupprimerAnnexe() throws Exception {
-        demandeAutorisationService.supprimerUneAnnexe(ref, nomFichier);
+    	annexeService.supprimerUneAnnexe(ref, nomFichier);
     }
     
     // ********************************************************* Private methods for fixtures
@@ -149,7 +154,7 @@ public class DemandeAutorisationServiceTest extends TestCase {
     	demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(login, profession);
     	ref = demandeEnCours.getReferenceDeDemande();
     	if (annexeALier != null) {
-    		demandeAutorisationService.attacherUneAnnexe(ref, annexeALier);
+    		annexeService.attacherUneAnnexe(ref, annexeALier);
     	}
     }
 

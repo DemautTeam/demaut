@@ -12,11 +12,6 @@
 		http://www.springframework.org/schema/util
 		http://www.springframework.org/schema/util/spring-util.xsd">
 
-	<beans profile="mock">
-		<bean id="demandeAutorisationRepository"
-			class="ch.vd.demaut.data.demandes.autorisation.repo.impl.DemandeAutorisationRepositoryJava" />
-	</beans>
-
 	<beans profile="data">
 		<bean id="props"
 			class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -27,17 +22,9 @@
 			</property>
 		</bean>
 
-		<import resource="classpath:META-INF/spring/jpa-context.xml" />
+		<import resource="classpath:META-INF/spring/jpa-context.xml"/>
 
-		<import resource="classpath:META-INF/spring/services-context.xml" />
-
-		<jdbc:initialize-database data-source="dataSource"
-			ignore-failures="DROPS">
-			<jdbc:script location="classpath:${jpa.drop.script}" />
-			<jdbc:script location="classpath:${jpa.create.script}" />
-			<jdbc:script location="classpath:${jpa.delete.script}" />
-			<jdbc:script location="classpath:${jpa.insert.script}" />
-		</jdbc:initialize-database>
+		<import resource="classpath:META-INF/spring/services-context.xml"/>
 
 	</beans>
 

@@ -7,7 +7,7 @@ import ch.vd.demaut.commons.vo.StringVO;
  */
 public class Localite extends StringVO {
 
-    public Localite(String value){
+    public Localite(String value) {
         super(value);
     }
 

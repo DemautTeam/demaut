@@ -9,7 +9,7 @@ import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 @Repository
 public interface DemandeAutorisationRepository extends GenericRepository<DemandeAutorisation, Long>, GenericReadRepository<DemandeAutorisation, Long> {
 
-    DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande ref);
+    DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande referenceDeDemande);
 
 }
 

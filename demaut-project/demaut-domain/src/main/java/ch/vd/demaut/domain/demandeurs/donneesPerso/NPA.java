@@ -8,7 +8,7 @@ import ch.vd.demaut.commons.vo.BaseValueObject;
 public class NPA extends BaseValueObject {
     final private Short value;
 
-    public NPA(short value){
+    public NPA(short value) {
         super();
         this.value = value;
     }

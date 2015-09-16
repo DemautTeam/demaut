@@ -1,12 +1,11 @@
 package ch.vd.demaut.domain.annexes;
 
-import java.util.Set;
-import java.util.regex.Pattern;
+import ch.vd.demaut.commons.validation.ValidatorFactoryDefault;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-
-import ch.vd.demaut.commons.validation.ValidatorFactoryDefault;
+import java.util.Set;
+import java.util.regex.Pattern;
 
 public class AnnexeValidateur {
 
@@ -16,12 +15,14 @@ public class AnnexeValidateur {
 	static private final int tailleNomFichierMax = 255; // en octets
 
 	// ********************************************************* Singleton
-	/** Singleton predicate instance */
+	/**
+	 * Singleton predicate instance
+	 */
 	public static final AnnexeValidateur INSTANCE = new AnnexeValidateur();
 
 	/**
 	 * Factory returning the singleton instance.
-	 * 
+	 *
 	 * @return the singleton instance
 	 */
 	public static AnnexeValidateur getInstance() {
@@ -29,9 +30,7 @@ public class AnnexeValidateur {
 	}
 
 	// ********************************************************* Fields
-
 	private Validator validator;
-
 	private Set<ConstraintViolation<Annexe>> constraintViolationsResult;
 
 	// ********************************************************* Constructeur
@@ -53,6 +52,7 @@ public class AnnexeValidateur {
 	public static int getTailleNomFichierMax() {
 		return tailleNomFichierMax;
 	}
+
 	/**
 	 * Vérifie que l'annexe est valide. Si non valide, renvoie une
 	 * {@link AnnexeNonValideException}
@@ -81,17 +81,17 @@ public class AnnexeValidateur {
 	public void validerTaille(Annexe annexe) {
 		ContenuAnnexe contenu = annexe.getContenu();
 		long taille = contenu.getTaille();
-		
+
 		if (taille < getTailleMin()) {
 			throw new AnnexeNonValideException();
 		}
-		
+
 		if (taille > getTailleMax()) {
 			throw new AnnexeNonValideException();
 		}
 	}
 
-	//TODO: Validateur de NomFichier qui doit être appelé par ce validateur
+	// TODO: Validateur de NomFichier qui doit être appelé par ce validateur
 	private void validerNomFichier(Annexe annexe) {
 
 		NomFichier nomFichier = annexe.getNomFichier();
@@ -102,7 +102,7 @@ public class AnnexeValidateur {
 
 		String nomSansExtension = nomFichier.extraireNomSansExtension();
 		valideNomFichierSansExtension(nomSansExtension);
-		
+
 	}
 
 	private void valideTailleNomFichier(NomFichier nomFichier) {
@@ -114,7 +114,6 @@ public class AnnexeValidateur {
 		}
 	}
 
-
 	private void valideExtension(String extension) {
 		for (FormatFichierAccepte formatAccepte : FormatFichierAccepte.values()) {
 			if (formatAccepte.toString().equalsIgnoreCase(extension)) {
@@ -123,7 +122,7 @@ public class AnnexeValidateur {
 		}
 		throw new AnnexeNonValideException();
 	}
-	
+
 	/**
 	 * Ne doit pas etre vide Ne doit pas commencer par . Ne doit pas contenir |
 	 * * ? \ : < > $ Ne doit pas finir avec .

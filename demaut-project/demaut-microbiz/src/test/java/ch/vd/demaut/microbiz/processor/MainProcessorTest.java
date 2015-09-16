@@ -20,10 +20,9 @@ import static org.junit.Assert.assertNotNull;
 public class MainProcessorTest {
 
     @Autowired
-    private MainProcessor mainProcessor;
-
-    @Autowired
     protected CamelContext camelContext;
+    @Autowired
+    private MainProcessor mainProcessor;
 
     @Before
     public void setUp() throws Exception {
@@ -32,7 +31,7 @@ public class MainProcessorTest {
     }
 
     @Test
-    public void shouldProcessExchange() throws Exception {
+    public void testProcessExchange() throws Exception {
         Exchange exchange = new DefaultExchange(camelContext);
         assertNotNull(exchange);
 

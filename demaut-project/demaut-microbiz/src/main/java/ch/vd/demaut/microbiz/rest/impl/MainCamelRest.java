@@ -1,4 +1,4 @@
-package ch.vd.demaut.microbiz.rest;
+package ch.vd.demaut.microbiz.rest.impl;
 
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.springframework.stereotype.Service;

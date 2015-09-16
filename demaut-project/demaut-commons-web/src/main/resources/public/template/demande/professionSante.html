@@ -18,8 +18,8 @@
                 <div class="row">
                     <div class="col-md-4"><label for="gln">Code GLN (EAN)</label></div>
                     <div class="col-md-6">
-                        <input type="text" id="gln" name="gln" class="form-control {professionSante.professionDataForm.gln.$invalid : ng-invalid}"
-                               ng-model="professionData.gln" ng-model-options="{ updateOn: 'blur' }" ng placeholder="7601000000125">
+                        <input type="number" id="gln" name="gln" class="form-control {professionSante.professionDataForm.gln.$invalid : ng-invalid}"
+                               ng-minlength="0" ng-maxlength="13" ng-model="professionData.gln" ng-model-options="{ updateOn: 'blur' }" placeholder="7601000000125">
                     </div>
                 </div>
                 <div class="row">

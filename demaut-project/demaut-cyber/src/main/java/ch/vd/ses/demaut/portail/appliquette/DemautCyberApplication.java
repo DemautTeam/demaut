@@ -1,10 +1,6 @@
 package ch.vd.ses.demaut.portail.appliquette;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.ws.rs.Path;
-
+import config.SecurityConfig;
 import org.apache.cxf.bus.spring.SpringBus;
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
@@ -19,21 +15,19 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.annotation.Order;
 
-import config.SecurityConfig;
+import javax.ws.rs.Path;
+import java.util.LinkedList;
+import java.util.List;
 
 @Configuration
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 @EnableAutoConfiguration
 @ComponentScan
 @ImportResource({"classpath:META-INF/cxf/cxf.xml"})
-@Import({ SecurityConfig.class })
+@Import({SecurityConfig.class})
 public class DemautCyberApplication extends SpringBootServletInitializer {
 
     @Autowired
