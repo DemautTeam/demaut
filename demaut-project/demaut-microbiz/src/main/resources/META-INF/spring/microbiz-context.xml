@@ -38,7 +38,7 @@
 
     <bean id="corsFilter" class="org.apache.cxf.rs.security.cors.CrossOriginResourceSharingFilter"/>
 
-	<bean id="customeJacksonJaxbJsonProvider" class="ch.vd.demaut.microbiz.provider.CustomeJacksonJaxbJsonProvider"/>
+	<bean id="customeJacksonJaxbJsonProvider" class="ch.vd.demaut.microbiz.provider.CustomJacksonJaxbJsonProvider"/>
 
 	<bean id="authenticationFilter" class="ch.vd.demaut.microbiz.filter.CustomAuthenticationFilter">
 		<property name="contextName" value="karaf"/>
