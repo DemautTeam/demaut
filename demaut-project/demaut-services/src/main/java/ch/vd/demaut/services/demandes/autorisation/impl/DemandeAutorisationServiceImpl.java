@@ -35,7 +35,6 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
         return demandeAutorisation;
     }
 
-
     @Override
     public DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande referenceDeDemande) {
         return demandeAutorisationRepository.recupererDemandeParReference(referenceDeDemande);
