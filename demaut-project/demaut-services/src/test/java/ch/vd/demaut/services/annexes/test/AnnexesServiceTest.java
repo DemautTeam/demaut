@@ -60,7 +60,7 @@ public class AnnexesServiceTest {
 
     @Test
     public void testAfficherUneAnnexe() throws Exception {
-        ContenuAnnexe contenuAnnexe = annexesService.afficherUneAnnexe(referenceDeDemande, nomFichier);
+        ContenuAnnexe contenuAnnexe = annexesService.recupererContenuAnnexe(referenceDeDemande, nomFichier);
         assertThat(contenuAnnexe).isNotNull();
     }
 
@@ -68,13 +68,11 @@ public class AnnexesServiceTest {
     public void testAttacherUneAnnexe() throws Exception {
         File fileMultipart = new File("target/Test_multipart.cfg");
         FileUtils.writeByteArrayToFile(fileMultipart, byteArray);
-        boolean response = annexesService.attacherUneAnnexe(referenceDeDemande, fileMultipart, nomFichier, typeAnnexe);
-        assertThat(response).isTrue();
+        annexesService.attacherUneAnnexe(referenceDeDemande, fileMultipart, nomFichier, typeAnnexe);
     }
 
     @Test
     public void testSupprimerAnnexe() throws Exception {
-        boolean response = annexesService.supprimerUneAnnexe(referenceDeDemande, nomFichier, typeAnnexe);
-        assertThat(response).isTrue();
+        annexesService.supprimerUneAnnexe(referenceDeDemande, nomFichier);
     }
 }

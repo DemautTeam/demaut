@@ -4,8 +4,6 @@ import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.BaseValueObjectWithId;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 
-import javax.validation.Valid;
-
 /**
  * Représente une Annexe associée à une demande {@link DemandeAutorisation}
  */
@@ -53,7 +51,6 @@ public class Annexe extends BaseValueObjectWithId {
         return contenu.getTaille();
     }
 
-    @Valid
     public NomFichier getNomFichier() {
         return nomFichier;
     }

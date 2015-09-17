@@ -11,6 +11,8 @@ public interface ProgreSoaService {
 
     List<ReportedOrganisationType> rechercheSOATierByNom(String organisationNom) throws Exception;
 
+    RefRoot listeSOAAPTitre() throws Exception;
+
     RefRoot listeSOAFormationApprofondie() throws Exception;
 
     RefRoot listeSOAFormationComplementaire() throws Exception;

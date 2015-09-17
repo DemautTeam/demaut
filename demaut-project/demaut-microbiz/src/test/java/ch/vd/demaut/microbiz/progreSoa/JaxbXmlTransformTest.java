@@ -4,6 +4,7 @@ import ch.vd.ses.referentiel.demaut_1_0.RefList;
 import ch.vd.ses.referentiel.demaut_1_0.RefListType;
 import ch.vd.ses.referentiel.demaut_1_0.RefRoot;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -47,6 +48,7 @@ public class JaxbXmlTransformTest {
         assertNotNull(jaxbMarshaller);
     }
 
+    @Ignore
     @Test
     public void testValidMarshaller() throws Exception {
         RefRoot refRoot = new RefRoot();

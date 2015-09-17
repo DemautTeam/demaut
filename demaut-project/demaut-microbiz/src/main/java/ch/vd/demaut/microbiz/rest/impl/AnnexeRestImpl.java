@@ -11,8 +11,6 @@ import ch.vd.demaut.microbiz.rest.RestUtils;
 import ch.vd.demaut.services.annexes.AnnexesService;
 import ch.vd.ses.referentiel.demaut_1_0.RefListType;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
@@ -41,8 +39,6 @@ import java.util.List;
 public class AnnexeRestImpl implements AnnexeRest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AnnexeRestImpl.class);
-
-    private static final ObjectWriter viewWriter = new ObjectMapper().writer();
 
     @Autowired
     private AnnexesService annexesService;
@@ -92,7 +88,7 @@ public class AnnexeRestImpl implements AnnexeRest {
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);
         NomFichier nomFichier = new NomFichier(annexeFileName);
 
-        ContenuAnnexe contenuAnnexe = annexesService.afficherUneAnnexe(referenceDeDemande, nomFichier);
+        ContenuAnnexe contenuAnnexe = annexesService.recupererContenuAnnexe(referenceDeDemande, nomFichier);
         return RestUtils.forgeResponseStream(Response.Status.OK, contenuAnnexe.getContenu());
     }
 
@@ -111,11 +107,11 @@ public class AnnexeRestImpl implements AnnexeRest {
 
         LOGGER.info("attacherUneAnnexe " + annexeFileName);
 
-        ReferenceDeDemande ref = new ReferenceDeDemande(demandeReference);
+        ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);
         NomFichier nomFichier = new NomFichier(annexeFileName);
         TypeAnnexe typeAnnexe = TypeAnnexe.valueOf(annexeType);
 
-        annexesService.attacherUneAnnexe(ref, file, nomFichier, typeAnnexe);
+        annexesService.attacherUneAnnexe(referenceDeDemande, file, nomFichier, typeAnnexe);
         return RestUtils.forgeResponseTrue();
     }
 
@@ -130,11 +126,12 @@ public class AnnexeRestImpl implements AnnexeRest {
 
         LOGGER.info("supprimerUneAnnexe " + annexeFileName);
 
-        ReferenceDeDemande ref = new ReferenceDeDemande(demandeReference);
+        ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);
         NomFichier nomFichier = new NomFichier(annexeFileName);
         TypeAnnexe typeAnnexe = TypeAnnexe.valueOf(annexeType);
 
-        annexesService.supprimerUneAnnexe(ref, nomFichier, typeAnnexe);
+        annexesService.supprimerUneAnnexe(referenceDeDemande, nomFichier);
+
         return RestUtils.forgeResponseTrue();
     }
 }

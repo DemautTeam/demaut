@@ -6,7 +6,7 @@ import ch.vd.demaut.data.GenericRepositoryImpl;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.TypedQuery;
@@ -15,22 +15,27 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-@Service
-public class DemandeAutorisationRepositoryImpl extends GenericRepositoryImpl<DemandeAutorisation, Long>
+@Repository
+public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<DemandeAutorisation, Long>
         implements DemandeAutorisationRepository {
 
-    public DemandeAutorisationRepositoryImpl() {
+    public DemandeAutorisationRepositoryJPA() {
         super(DemandeAutorisation.class);
     }
 
     @SuppressWarnings("all")
     @Transactional(readOnly = true)
-    public DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande referenceDeDemande) {
-        TypedQuery<DemandeAutorisation> typedQuery = createQuery(referenceDeDemande);
+    public DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande ref) {
+
+        TypedQuery<DemandeAutorisation> typedQuery = createQuery(ref);
+
         List<DemandeAutorisation> resultList = typedQuery.getResultList();
+
         validateResultList(resultList);
+
         return resultList.get(0);
     }
+
 
     private void validateResultList(List<DemandeAutorisation> resultList) {
         if (resultList.size() > 1) {
@@ -41,12 +46,12 @@ public class DemandeAutorisationRepositoryImpl extends GenericRepositoryImpl<Dem
         }
     }
 
-    @SuppressWarnings("all")
-    private TypedQuery<DemandeAutorisation> createQuery(ReferenceDeDemande referenceDeDemande) {
+    private TypedQuery<DemandeAutorisation> createQuery(ReferenceDeDemande ref) {
         final CriteriaBuilder builder = this.getEntityManager().getCriteriaBuilder();
         final CriteriaQuery<DemandeAutorisation> criteriaQuery = builder.createQuery(DemandeAutorisation.class);
         Root<DemandeAutorisation> autorisationRoot = criteriaQuery.from(DemandeAutorisation.class);
-        criteriaQuery.where(builder.equal(autorisationRoot.get("referenceDeDemande"), referenceDeDemande));
-        return this.getEntityManager().createQuery(criteriaQuery);
+        criteriaQuery.where(builder.equal(autorisationRoot.get("referenceDeDemande"), ref));
+        TypedQuery<DemandeAutorisation> typedQuery = this.getEntityManager().createQuery(criteriaQuery);
+        return typedQuery;
     }
 }

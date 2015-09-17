@@ -19,11 +19,9 @@ public class AnnexeValidateur {
 
     // ********************************************************* Singleton
     static private final int tailleNomFichierMax = 255; // en octets
-    private Validator validator;
-
     // ********************************************************* Fields
+    private Validator validator;
     private Set<ConstraintViolation<Annexe>> constraintViolationsResult;
-
     AnnexeValidateur() {
         validator = ValidatorFactoryDefault.getValidator();
     }
@@ -91,7 +89,7 @@ public class AnnexeValidateur {
         }
     }
 
-    //TODO: Validateur de NomFichier qui doit être appelé par ce validateur
+    // TODO: Validateur de NomFichier qui doit être appelé par ce validateur
     private void validerNomFichier(Annexe annexe) {
 
         NomFichier nomFichier = annexe.getNomFichier();
@@ -113,7 +111,6 @@ public class AnnexeValidateur {
             throw new AnnexeNonValideException();
         }
     }
-
 
     private void valideExtension(String extension) {
         for (FormatFichierAccepte formatAccepte : FormatFichierAccepte.values()) {

@@ -42,6 +42,14 @@ public class PorgreSoaServiceTest {
     }
 
     @Test
+    public void testListeSOAAPTitre() throws Exception {
+        RefRoot refRoot = progreSoaService.listeSOAAPTitre();
+        assertThat(refRoot).isNotNull();
+        assertThat(refRoot.getRefList().getRefListType()).isNotEmpty();
+        assertThat(refRoot.getRefList().getRefListType().size()).isEqualTo(7);
+    }
+
+    @Test
     public void testListeSOAFormationApprofondie() throws Exception {
         RefRoot refRoot = progreSoaService.listeSOAFormationApprofondie();
         assertThat(refRoot).isNotNull();

@@ -10,5 +10,6 @@ public interface DemandeAutorisationService {
     DemandeAutorisation initialiserDemandeAutorisation(Login login, ProfessionDeLaSante professionDeLaSante);
 
     DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande referenceDeDemande);
+
 }
 

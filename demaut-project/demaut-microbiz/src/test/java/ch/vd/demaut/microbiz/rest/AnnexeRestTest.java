@@ -40,24 +40,28 @@ public class AnnexeRestTest {
         assertNotNull(annexeRest);
     }
 
+    @Ignore
     @Test
     public void testListerLesTypesAnnexes() throws Exception {
         Response response = annexeRest.listerLesTypesAnnexes(ProfessionDeLaSante.Medecin.name());
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
+    @Ignore
     @Test
     public void testListerLesAnnexes() throws Exception {
         Response response = annexeRest.listerLesAnnexes("7dc53df5-703e-49b3-8670-b1c468f47f1f");
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
+    @Ignore
     @Test
     public void testAfficherUneAnnexe() throws Exception {
         Response response = annexeRest.afficherUneAnnexe("7dc53df5-703e-49b3-8670-b1c468f47f1f", "Test_multipart.pdf");
         assertNotNull(response);
     }
 
+    @Ignore
     @Test
     public void testAttacherUneAnnexe() throws Exception {
         File fileMultipart = new File("target/Test_multipart.cfg");
@@ -66,6 +70,7 @@ public class AnnexeRestTest {
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
+    @Ignore
     @Test
     public void testSupprimerAnnexe() throws Exception {
         Response response = annexeRest.supprimerUneAnnexe("demandeReference", "Test_multipart.pdf", TypeAnnexe.Certificat.name());

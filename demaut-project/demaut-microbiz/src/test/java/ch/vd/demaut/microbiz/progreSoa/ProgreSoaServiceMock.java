@@ -16,7 +16,7 @@ public class ProgreSoaServiceMock {
     @Path("tiers/${id}")
     @Produces(MediaType.APPLICATION_XML)
     @SuppressWarnings("unchecked")
-    public Response rechercheSOATierById(@PathParam("id") String id) throws Exception {
+    public Response rechercheSOATierById(@PathParam("id") String organisationId) throws Exception {
         FileInputStream fileInputStream = new FileInputStream("src/test/resources/data/tiers_323902038.xml");
         return Response.ok(IOUtils.toString(fileInputStream)).build();
     }
@@ -25,7 +25,7 @@ public class ProgreSoaServiceMock {
     @Path("tiers")
     @Produces(MediaType.APPLICATION_XML)
     @SuppressWarnings("unchecked")
-    public Response rechercheSOATierByNom(@QueryParam("nom") String nom) throws Exception {
+    public Response rechercheSOATierByNom(@QueryParam("nom") String organisationNom) throws Exception {
         FileInputStream fileInputStream = new FileInputStream("src/test/resources/data/tiers_clinique.xml");
         return Response.ok(IOUtils.toString(fileInputStream)).build();
     }
