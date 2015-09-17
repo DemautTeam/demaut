@@ -37,17 +37,13 @@ public class DemandeAutorisationSteps {
     private DemandeAutorisationFactory demautFactoy = DemandeAutorisationFactory.getInstance();
 
     ////////// Données temporaires pour les tests (non-thread safe)
-
+    //FIXME utiliser l'objet ThredLocal ?
     private Utilisateur utilisateur;
     private DemandeAutorisation demandeEnCours;
     private AccepteOuRefuse actualAcceptationAnnexe;
 
 
     // ********************************************************* Methods
-
-    //public for Spring
-    public DemandeAutorisationSteps() {
-    }
 
     public void ajouterAnnexesObligatoires(ProfessionDeLaSante profession, AnnexesObligatoires annexesObligatoires) {
         configDemaut.ajouterAnnexesObligatoires(profession, annexesObligatoires);
