@@ -3,22 +3,31 @@ package ch.vd.demaut.domain.demandeurs.donneesPerso;
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.BaseValueObject;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 @ValueObject
 public class DonneesPersonnelles extends BaseValueObject {
 
     // ********************************************************* Fields
+    @Valid
     final private Nom nom;
 
+    @Valid
     final private Prenom prenom;
 
     final private NomDeCelibataire nomDeCelibataire;
 
+    @NotNull
     final private Genre genre;
 
+    @Valid
     final private DateDeNaissance dateDeNaissance;
 
+    @Valid
     final private Adresse adresse;
 
+    @Valid
     final private Email email;
 
     final private NumeroTelephone telephonePrive;

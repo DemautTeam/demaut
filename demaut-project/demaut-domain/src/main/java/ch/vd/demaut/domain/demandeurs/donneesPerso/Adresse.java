@@ -2,22 +2,32 @@ package ch.vd.demaut.domain.demandeurs.donneesPerso;
 
 import ch.vd.demaut.commons.vo.BaseValueObject;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by mourad on 14.09.15.
  */
 public class Adresse extends BaseValueObject {
 
+    @NotNull
     private final String voie;
 
+    private final String complement;
+
+    @Valid
     private final NPA npa;
 
+    @Valid
     private final Localite localite;
 
+    @Valid
     private final Pays pays;
 
-    public Adresse(String voie, Localite localite, NPA npa, Pays pays) {
+    public Adresse(String voie, String complement, Localite localite, NPA npa, Pays pays) {
         super();
         this.voie = voie;
+        this.complement = complement;
         this.localite = localite;
         this.npa = npa;
         this.pays = pays;
