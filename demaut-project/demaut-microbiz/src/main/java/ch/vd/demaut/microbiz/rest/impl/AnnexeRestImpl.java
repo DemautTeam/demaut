@@ -72,7 +72,6 @@ public class AnnexeRestImpl implements AnnexeRest {
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);
 
         Collection<AnnexeMetadata> annexesMetadata = annexesService.listerLesAnnexeMetadatas(referenceDeDemande);
-        
         return RestUtils.forgeResponseList(Response.Status.OK, annexesMetadata);
     }
 
@@ -90,10 +89,7 @@ public class AnnexeRestImpl implements AnnexeRest {
         NomFichier nomFichier = new NomFichier(annexeFileName);
 
         ContenuAnnexe contenuAnnexe = annexesService.recupererContenuAnnexe(referenceDeDemande, nomFichier);
-
-        Response response = RestUtils.forgeResponseStream(Response.Status.OK, contenuAnnexe.getContenu());
-
-		return response;
+        return RestUtils.forgeResponseStream(Response.Status.OK, contenuAnnexe.getContenu());
     }
 
     @Override
@@ -111,12 +107,11 @@ public class AnnexeRestImpl implements AnnexeRest {
 
         LOGGER.info("attacherUneAnnexe " + annexeFileName);
 
-        ReferenceDeDemande ref = new ReferenceDeDemande(demandeReference);
+        ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);
         NomFichier nomFichier = new NomFichier(annexeFileName);
         TypeAnnexe typeAnnexe = TypeAnnexe.valueOf(annexeType);
 
-        annexesService.attacherUneAnnexe(ref, file, nomFichier, typeAnnexe);
-
+        annexesService.attacherUneAnnexe(referenceDeDemande, file, nomFichier, typeAnnexe);
         return RestUtils.forgeResponseTrue();
     }
 
@@ -131,10 +126,11 @@ public class AnnexeRestImpl implements AnnexeRest {
 
         LOGGER.info("supprimerUneAnnexe " + annexeFileName);
 
-        ReferenceDeDemande ref = new ReferenceDeDemande(demandeReference);
+        ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);
         NomFichier nomFichier = new NomFichier(annexeFileName);
+        TypeAnnexe typeAnnexe = TypeAnnexe.valueOf(annexeType);
 
-        annexesService.supprimerUneAnnexe(ref, nomFichier);
+        annexesService.supprimerUneAnnexe(referenceDeDemande, nomFichier);
 
         return RestUtils.forgeResponseTrue();
     }

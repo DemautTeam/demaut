@@ -48,7 +48,7 @@ Fonctionnalité: Attacher des annexes à la demande par le professionnel
     	| 4               | "refuse"  |
     	| 200             | "refuse"  |
     	
-  @atacher-annexe
+  @attacher-annexe
   Plan du scénario: Attacher une annexe à une liste existante
     Etant donné une demande de type "Medecin" en cours de saisie
   	Etant donné la liste des annexes initiale <annexes_initiales> attachées à la demande en cours

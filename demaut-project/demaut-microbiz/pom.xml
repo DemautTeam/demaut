@@ -328,6 +328,9 @@
                             </schemaExcludes>
                             <disableXmlSecurity>true</disableXmlSecurity>
                             <generateDirectory>${project.build.directory}/generated-sources/xjc1</generateDirectory>
+                            <!--<bindingIncludes>-->
+                                <!--<bindingInclude>src/main/xsd/jaxb-bindings-tiers.xjb</bindingInclude>-->
+                            <!--</bindingIncludes>-->
                         </configuration>
                     </execution>
                     <execution>
@@ -346,6 +349,9 @@
                             <generatePackage>ch.vd.ses.referentiel.demaut_1_0</generatePackage>
                             <generateDirectory>${project.build.directory}/generated-sources/xjc2</generateDirectory>
                             <disableXmlSecurity>true</disableXmlSecurity>
+                            <!--<bindingIncludes>-->
+                                <!--<bindingInclude>src/main/xsd/jaxb-bindings-demaut1.xjb</bindingInclude>-->
+                            <!--</bindingIncludes>-->
                         </configuration>
                     </execution>
                 </executions>
