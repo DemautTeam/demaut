@@ -22,7 +22,8 @@ public class AnnexeValidateur {
     // ********************************************************* Fields
     private Validator validator;
     private Set<ConstraintViolation<Annexe>> constraintViolationsResult;
-    AnnexeValidateur() {
+
+    private AnnexeValidateur() {
         validator = ValidatorFactoryDefault.getValidator();
     }
 

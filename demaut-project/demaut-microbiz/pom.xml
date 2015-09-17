@@ -194,6 +194,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Testing -->
@@ -274,15 +275,16 @@
                             *
                         </Import-Package>
                         <Private-Package>ch.vd.demaut.microbiz</Private-Package>
-                        <Distributable>true</Distributable>
+                        <Distributable>false</Distributable>
                         <Include-Resource>target/classes,target/lib</Include-Resource>
                         <DynamicImport-Package>*</DynamicImport-Package>
                         <!--
                           embed compile/runtime dependencies using path that matches the copied dependency folder
                         -->
                         <!--<Embed-Dependency>*;scope=!provided;inline=true</Embed-Dependency>-->
-                        <Embed-Dependency>*;scope=compile|runtime|!provided;inline=true</Embed-Dependency>
+                        <Embed-Dependency>*;scope=compile|runtime|!provided;inline=false</Embed-Dependency>
                         <Embed-StripGroup>true</Embed-StripGroup>
+                        <Embed-Directory>lib</Embed-Directory>
                     </instructions>
                     <supportedProjectTypes>
                         <supportedProjectType>jar</supportedProjectType>
