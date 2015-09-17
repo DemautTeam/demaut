@@ -10,9 +10,11 @@
 		</encoder>
 	</appender>
 
-	<logger name="ch.vd.demaut" level="DEBUG" additivity="false">
-		<appender-ref ref="STDOUT"/>
-	</logger>
+	<logger name="ch.vd.demaut" level="WARN"/>
+	
+	<logger name="openjpa" level="DEBUG"/>
+	
+	<logger name="org.springframework" level="WARN"/>
 
 	<root level="INFO">
 		<appender-ref ref="STDOUT"/>

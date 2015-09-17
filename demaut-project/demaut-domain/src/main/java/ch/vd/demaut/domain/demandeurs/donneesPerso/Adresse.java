@@ -7,35 +7,35 @@ import ch.vd.demaut.commons.vo.BaseValueObject;
  */
 public class Adresse extends BaseValueObject {
 
-    private final String voie;
+	private final String voie;
 
-    private final NPA npa;
+	private final NPA npa;
 
-    private final Localite localite;
+	private final Localite localite;
 
-    private final Pays pays;
+	private final Pays pays;
 
-    public Adresse(String voie, Localite localite, NPA npa, Pays pays) {
-        super();
-        this.voie = voie;
-        this.localite = localite;
-        this.npa = npa;
-        this.pays = pays;
-    }
+	public Adresse(String voie, Localite localite, NPA npa, Pays pays) {
+		super();
+		this.voie = voie;
+		this.localite = localite;
+		this.npa = npa;
+		this.pays = pays;
+	}
 
-    public String getVoie() {
-        return voie;
-    }
+	public String getVoie() {
+		return voie;
+	}
 
-    public Localite getLocalite() {
-        return localite;
-    }
+	public Localite getLocalite() {
+		return localite;
+	}
 
-    public NPA getNpa() {
-        return npa;
-    }
+	public NPA getNpa() {
+		return npa;
+	}
 
-    public Pays getPays() {
-        return pays;
-    }
+	public Pays getPays() {
+		return pays;
+	}
 }

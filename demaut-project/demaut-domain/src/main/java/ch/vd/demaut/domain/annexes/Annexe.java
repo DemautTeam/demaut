@@ -4,65 +4,63 @@ import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.BaseValueObjectWithId;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 
-import javax.validation.Valid;
-
 /**
  * Représente une Annexe associée à une demande {@link DemandeAutorisation}
  */
 @ValueObject
 public class Annexe extends BaseValueObjectWithId {
 
-    // ********************************************************* Static Fields
+	// ********************************************************* Static Fields
 
-    // ********************************************************* Fields
-    private TypeAnnexe typeAnnexe;
+	// ********************************************************* Fields
+	private TypeAnnexe typeAnnexe;
 
-    private ContenuAnnexe contenu;
+	private ContenuAnnexe contenu;
 
-    private NomFichier nomFichier;
+	private NomFichier nomFichier;
 
-    // ********************************************************* Constructor
+	// ********************************************************* Constructor
 
-    //Only here for OpenJPA
-    public Annexe() {
-    }
+	// Only here for OpenJPA
+	public Annexe() {
+	}
 
-    //TODO: remove me
-    public Annexe(TypeAnnexe typeAnnexe, String nomFichier, byte[] contenu) {
-        this(typeAnnexe, new NomFichier(nomFichier), new ContenuAnnexe(contenu));
-    }
+	// TODO: remove me
+	public Annexe(TypeAnnexe typeAnnexe, String nomFichier, byte[] contenu) {
+		this(typeAnnexe, new NomFichier(nomFichier), new ContenuAnnexe(contenu));
+	}
 
-    public Annexe(TypeAnnexe typeAnnexe, NomFichier nomFichier, ContenuAnnexe contenu) {
-        super();
-        this.typeAnnexe = typeAnnexe;
-        this.nomFichier = nomFichier;
-        this.contenu = contenu;
-    }
+	public Annexe(TypeAnnexe typeAnnexe, NomFichier nomFichier, ContenuAnnexe contenu) {
+		super();
+		this.typeAnnexe = typeAnnexe;
+		this.nomFichier = nomFichier;
+		this.contenu = contenu;
+	}
 
-    // ********************************************************* Getters
+	// ********************************************************* Getters
 
-    public TypeAnnexe getTypeAnnexe() {
-        return typeAnnexe;
-    }
+	public TypeAnnexe getTypeAnnexe() {
+		return typeAnnexe;
+	}
 
-    public ContenuAnnexe getContenu() {
-        return contenu;
-    }
+	public ContenuAnnexe getContenu() {
+		return contenu;
+	}
 
-    public long getTaille() {
-        return contenu.getTaille();
-    }
+	public long getTaille() {
+		return contenu.getTaille();
+	}
 
-    @Valid
-    public NomFichier getNomFichier() {
-        return nomFichier;
-    }
+	public NomFichier getNomFichier() {
+		return nomFichier;
+	}
 
-    public AnnexeMetadata getAnnexeMetadata() {
-        return new AnnexeMetadata(typeAnnexe, nomFichier.getNomFichier(), getTaille());
-    }
+	public AnnexeMetadata getAnnexeMetadata() {
+		return new AnnexeMetadata(typeAnnexe, nomFichier.getNomFichier(), getTaille());
+	}
 
-    // ********************************************************* Technical methods
+	// ********************************************************* Technical
+	// methods
 
-    // ********************************************************* Private Methods
+	// ********************************************************* Private Methods
 }

@@ -13,6 +13,6 @@ import org.junit.runner.RunWith;
         plugin = {"pretty", //
                 "html:target/bdd-mock-html",//
                 "json:target/bdd-mock-json/demaut-report.json"})//
-public class CukeTestRunnerWithMock {
+public class CukeTestRunnerWithJavaRepo {
 
 }

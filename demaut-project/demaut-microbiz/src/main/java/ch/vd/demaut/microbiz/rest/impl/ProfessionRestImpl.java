@@ -9,8 +9,6 @@ import ch.vd.demaut.microbiz.rest.ProfessionRest;
 import ch.vd.demaut.microbiz.rest.RestUtils;
 import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
 import ch.vd.ses.referentiel.demaut_1_0.RefListType;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
@@ -40,8 +38,6 @@ import java.util.List;
 public class ProfessionRestImpl implements ProfessionRest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProfessionRestImpl.class);
-
-    private static final ObjectWriter viewWriter = new ObjectMapper().writer();
 
     @Autowired
     private DonneesProfessionnellesService donneesProfessionnellesService;
