@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context docBase="${ch.vd.projectDir}/applications/demaut/deployment/prestation-demaut.war" 
+<Context docBase="${ch.vd.projectDir}/applications/demaut/deployment/demaut-cyber.war" 
 	 workDir="${catalina.base}/work/demaut" 
          allowLinking="true" unpackWAR="true"
          path="/prestation-demaut">
