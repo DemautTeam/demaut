@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:demaud-0001="http://www.vd.ch/xmlns/demaut-0001/1"
+			targetNamespace="http://www.vd.ch/xmlns/demaut-0001/1"
+			elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+
+	<xs:annotation>
+		<xs:documentation xml:lang="fr">Créer par DSI :04.09.2015</xs:documentation>
+	</xs:annotation>
+
+	<xs:element name="refRoot">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="type" type="xs:string" />
+				<xs:element name="vcList" type="demaud-0001:vcListType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="vcListType">
+		<xs:sequence>
+			<xs:element name="vc" type="demaud-0001:vcType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="vcType">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" />
+			<xs:element name="libl" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

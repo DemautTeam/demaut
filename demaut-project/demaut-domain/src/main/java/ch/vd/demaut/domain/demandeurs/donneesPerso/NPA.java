@@ -1,9 +1,7 @@
 package ch.vd.demaut.domain.demandeurs.donneesPerso;
 
-import ch.vd.demaut.commons.vo.BaseValueObject;
 import ch.vd.demaut.commons.vo.StringVO;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -11,7 +9,7 @@ import javax.validation.constraints.Size;
  */
 public class NPA extends StringVO {
 
-    public NPA(String value){
+    public NPA(String value) {
         super(value);
     }
 

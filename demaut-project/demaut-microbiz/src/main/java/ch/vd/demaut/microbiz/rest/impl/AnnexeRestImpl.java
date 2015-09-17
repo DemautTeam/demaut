@@ -9,7 +9,7 @@ import ch.vd.demaut.microbiz.progreSoa.ProgreSoaService;
 import ch.vd.demaut.microbiz.rest.AnnexeRest;
 import ch.vd.demaut.microbiz.rest.RestUtils;
 import ch.vd.demaut.services.annexes.AnnexesService;
-import ch.vd.ses.referentiel.demaut_1_0.RefListType;
+import ch.vd.ses.referentiel.demaut_1_0.VcType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
@@ -55,7 +55,7 @@ public class AnnexeRestImpl implements AnnexeRest {
 
         LOGGER.info("listerLesTypesAnnexes " + professionId);
 
-        List<RefListType> lesTypesAnnexes = progreSoaService.listeSOATypesAnnexes().getRefList().getRefListType();
+        List<VcType> lesTypesAnnexes = progreSoaService.listeSOATypesAnnexes().getVcList().getVc();
         // TODO filtrer la liste selon profession (liste ordinaire VS simplifiée)
         return RestUtils.forgeResponseList(Response.Status.OK, lesTypesAnnexes);
     }

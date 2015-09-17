@@ -8,7 +8,7 @@ import ch.vd.demaut.microbiz.progreSoa.ProgreSoaService;
 import ch.vd.demaut.microbiz.rest.ProfessionRest;
 import ch.vd.demaut.microbiz.rest.RestUtils;
 import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
-import ch.vd.ses.referentiel.demaut_1_0.RefListType;
+import ch.vd.ses.referentiel.demaut_1_0.VcType;
 import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
@@ -55,7 +55,7 @@ public class ProfessionRestImpl implements ProfessionRest {
         LOGGER.info("listerLesProfessionsDeLaSante");
 
         // TODO mettre en cache la liste des professions
-        List<RefListType> lesProfessionsDeLaSante = progreSoaService.listeSOAProfession().getRefList().getRefListType();
+        List<VcType> lesProfessionsDeLaSante = progreSoaService.listeSOAProfession().getVcList().getVc();
         // TODO filtrer la liste selon Universitaire ou non
         return RestUtils.forgeResponseList(Response.Status.OK, lesProfessionsDeLaSante);
     }
@@ -72,7 +72,7 @@ public class ProfessionRestImpl implements ProfessionRest {
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);
 
         ProfessionDeLaSante professionDeLaSante = donneesProfessionnellesService.afficherDonneesProfession(referenceDeDemande);
-        List<RefListType> lesProfessionsDeLaSante = progreSoaService.listeSOAProfession().getRefList().getRefListType();
+        List<VcType> lesProfessionsDeLaSante = progreSoaService.listeSOAProfession().getVcList().getVc();
         return RestUtils.forgeResponseString(Response.Status.OK,
                 String.valueOf(CollectionUtils.find(lesProfessionsDeLaSante, new BeanPropertyValueEqualsPredicate("libl", professionDeLaSante.name()))));
     }
@@ -92,7 +92,7 @@ public class ProfessionRestImpl implements ProfessionRest {
         CodeGLN codeGLN = new CodeGLN(codeGln);
         Login login = new Login("admin@admin");  // TODO get login
 
-        List<RefListType> lesProfessionsDeLaSante = progreSoaService.listeSOAProfession().getRefList().getRefListType();
+        List<VcType> lesProfessionsDeLaSante = progreSoaService.listeSOAProfession().getVcList().getVc();
         ProfessionDeLaSante professionDeLaSante = (ProfessionDeLaSante) CollectionUtils.find(lesProfessionsDeLaSante, new BeanPropertyValueEqualsPredicate("id", idProfession));
 
         ReferenceDeDemande renseignerDonneesProfession = donneesProfessionnellesService.renseignerDonneesProfession(login, referenceDeDemande, professionDeLaSante, codeGLN);

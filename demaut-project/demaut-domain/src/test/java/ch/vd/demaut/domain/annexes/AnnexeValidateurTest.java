@@ -53,7 +53,7 @@ public class AnnexeValidateurTest {
         try {
             validateur.valider(annexe);
         } catch (AnnexeNonValideException e) {
-            fail("Failed because exception AnnexeNonValideException was thrown",e);
+            fail("Failed because exception AnnexeNonValideException was thrown", e);
         }
     }
 

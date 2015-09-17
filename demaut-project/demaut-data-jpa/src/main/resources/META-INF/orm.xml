@@ -103,6 +103,9 @@
 	
 	<embeddable class="ch.vd.demaut.domain.demandes.ReferenceDeDemande">
 		<attributes>
+			<basic name="value">
+                <column name="referenceDeDemande"/>
+			</basic>
 		</attributes>
 	</embeddable>
 

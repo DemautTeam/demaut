@@ -71,7 +71,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -79,6 +78,7 @@
 			<version>${springcloud.version}</version>
 		</dependency>
 
+		<!-- CXF -->
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-frontend-jaxrs</artifactId>
@@ -86,33 +86,29 @@
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-rs-extension-providers</artifactId>
-			<version>3.0.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-rs-extension-search</artifactId>
-			<version>3.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-jaxrs</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>javax.ws.rs</groupId>
 			<artifactId>javax.ws.rs-api</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-jaxrs</artifactId>
-			<version>1.9.0</version>
-		</dependency>
+
+		<!-- IAM -->
 		<dependency>
 			<groupId>ch.vd.shared</groupId>
 			<artifactId>shared-iam-core</artifactId>
-			<version>${shared-iam.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.vd.shared</groupId>
 			<artifactId>shared-iam-web</artifactId>
-			<version>${shared-iam.version}</version>
 		</dependency>
-
 
 		<!-- Testing -->
 		<dependency>
@@ -124,6 +120,7 @@
 			<groupId>ch.vd.shared</groupId>
 			<artifactId>shared-testing</artifactId>
 			<version>${shared-testing.version}</version>
+			<scope>test</scope>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.poi</groupId>

@@ -16,18 +16,19 @@
 	<dependencies>
 
 		<!-- Demaut -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>demaut-commons</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>demaut-domain</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 
 		<!-- Demaut test -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>demaut-commons4test</artifactId>
-			<version>${project.version}</version>
-			<scope>test</scope>
 		</dependency>
 
 		<!-- Spring -->
@@ -83,6 +84,28 @@
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
 		</dependency>
+
+        <!-- validation -->
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>javax.el-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.el</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator-cdi</artifactId>
+        </dependency>
 
 		<!-- Testing -->
 		<dependency>

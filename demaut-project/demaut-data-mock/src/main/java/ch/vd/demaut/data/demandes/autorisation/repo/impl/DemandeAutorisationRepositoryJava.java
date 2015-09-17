@@ -6,8 +6,6 @@ import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFK;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 
-import static org.mockito.Mockito.mock;
-
 /**
  * Mock du {@link DemandeAutorisationRepository}
  */
@@ -23,8 +21,7 @@ public class DemandeAutorisationRepositoryJava extends
 
     @Override
     public DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande ref) {
-        DemandeAutorisation demandeAutorisation = getByFK(new DemandeAutorisationFK(ref));
-        return demandeAutorisation;
+        return getByFK(new DemandeAutorisationFK(ref));
     }
 
 }

@@ -13,15 +13,21 @@
 	<packaging>jar</packaging>
 	
 	<dependencies>
+        <!-- Demaut -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>demaut-commons</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>ch.vd.demaut</groupId>
 			<artifactId>demaut-domain</artifactId>
-			<version>${project.version}</version>
 		</dependency>
+
+        <!-- Demaut test -->
 		<dependency>
 			<groupId>ch.vd.demaut</groupId>
 			<artifactId>demaut-commons4test</artifactId>
-			<version>${project.version}</version>
+            <scope>provided</scope>
 		</dependency>
 
 		<!-- Testing -->

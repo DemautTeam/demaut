@@ -8,8 +8,4 @@
         <xjc:serializable uid="1" />
     </jaxb:globalBindings>
 
-    <!--<jaxb:schemaBindings>-->
-        <!--<jaxb:package name="ch.vd.ses.referentiel.tiers_v01" />-->
-    <!--</jaxb:schemaBindings>-->
-
 </jaxb:bindings>

@@ -15,7 +15,7 @@ public class Nom extends StringVO {
     }
 
     @NotNull
-    @Size( min = 1, max = 255 )
+    @Size(min = 1, max = 255)
     @Override
     public String getValue() {
         return super.getValue();
