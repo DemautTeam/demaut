@@ -16,15 +16,6 @@ public class DemandeAutorisationRepositoryJava extends
 
     private static Long idSequence = 0L;
 
-    private static DemandeAutorisationRepositoryJava INSTANCE = null;
-
-    public synchronized static DemandeAutorisationRepository getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = mock(DemandeAutorisationRepositoryJava.class);
-        }
-        return INSTANCE;
-    }
-
     @Override
     protected Long getNextID() {
         return ++idSequence;

@@ -13,4 +13,8 @@
 		scope="cucumber-glue">
 	</bean>
 
+	<bean id="demandeAutorisationFactory"
+		  class="ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory"
+		  scope="cucumber-glue"/>
+
 </beans>

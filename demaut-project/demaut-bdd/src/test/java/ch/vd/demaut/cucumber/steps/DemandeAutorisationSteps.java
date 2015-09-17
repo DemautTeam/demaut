@@ -34,10 +34,10 @@ public class DemandeAutorisationSteps {
     private UtilisateurRepository utilisateurRepository;
     private DemandeAutorisationRepository demandeAutorisationRepository;
     private ConfigDemaut configDemaut;
-    private DemandeAutorisationFactory demautFactoy = DemandeAutorisationFactory.getInstance();
+    private DemandeAutorisationFactory demandeAutorisationFactory;
 
     ////////// Données temporaires pour les tests (non-thread safe)
-    //FIXME utiliser l'objet ThredLocal ?
+    //FIXME utiliser l'objet ThreadLocal ?
     private Utilisateur utilisateur;
     private DemandeAutorisation demandeEnCours;
     private AccepteOuRefuse actualAcceptationAnnexe;
@@ -56,7 +56,7 @@ public class DemandeAutorisationSteps {
     }
 
     public void initialiserDemandeEnCours(ProfessionDeLaSante profession) {
-        demandeEnCours = demautFactoy.initierDemandeAutorisation(utilisateur.getLogin(), profession, configDemaut);
+        demandeEnCours = demandeAutorisationFactory.initierDemandeAutorisation(utilisateur.getLogin(), profession, configDemaut);
         demandeAutorisationRepository.store(demandeEnCours);
 
         LOGGER.debug("La demande autorisation " + demandeEnCours + " a été ajoutée au repository avec l'id technique:" + demandeEnCours.getId());
@@ -114,6 +114,10 @@ public class DemandeAutorisationSteps {
 
     public void setDemandeAutorisationRepository(DemandeAutorisationRepository demandeAutorisationRepository) {
         this.demandeAutorisationRepository = demandeAutorisationRepository;
+    }
+
+    public void setDemandeAutorisationFactory(DemandeAutorisationFactory demandeAutorisationFactory) {
+        this.demandeAutorisationFactory = demandeAutorisationFactory;
     }
 
     public void setConfigDemaut(ConfigDemaut configDemaut) {
