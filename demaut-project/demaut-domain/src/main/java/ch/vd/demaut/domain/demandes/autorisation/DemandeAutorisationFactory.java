@@ -17,7 +17,7 @@ public class DemandeAutorisationFactory {
         return INSTANCE;
     }
 
-    public DemandeAutorisation inititierDemandeAutorisation(Login login, ProfessionDeLaSante profession, ConfigDemaut config) {
+    public DemandeAutorisation initierDemandeAutorisation(Login login, ProfessionDeLaSante profession, ConfigDemaut config) {
         DemandeAutorisation demande = new DemandeAutorisation(login, profession, config);
         demande.generateReference();
         return demande;

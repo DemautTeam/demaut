@@ -30,7 +30,7 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
     @Transactional
     @Override
     public DemandeAutorisation initialiserDemandeAutorisation(Login login, ProfessionDeLaSante professionDeLaSante) {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationFactory.inititierDemandeAutorisation(login, professionDeLaSante, null);
+        DemandeAutorisation demandeAutorisation = demandeAutorisationFactory.initierDemandeAutorisation(login, professionDeLaSante, null);
         demandeAutorisationRepository.store(demandeAutorisation);
         return demandeAutorisation;
     }

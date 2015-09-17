@@ -28,7 +28,6 @@ public class DemandeAutorisationSteps {
     // ********************************************************* Static fields
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AttacherAnnexeStepDefinitions.class);
-    private static DemandeAutorisationSteps INSTANCE = null;
 
     // ********************************************************* Fields
     //Beans Initialisés pas Spring Context
@@ -50,29 +49,6 @@ public class DemandeAutorisationSteps {
     public DemandeAutorisationSteps() {
     }
 
-    /**
-     * Récupère l'instance de la classe en cours. A utiliser dans les
-     * "BeforeScenario".
-     *
-     * @return
-     */
-    public static final DemandeAutorisationSteps getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new DemandeAutorisationSteps();
-        }
-        return INSTANCE;
-    }
-
-    /**
-     * Nettoye l'instance de la classe. A utiliser dans les "AfterScenario".
-     */
-    public static final void disposeInstance() {
-        if (INSTANCE != null) {
-            INSTANCE.clean();
-            INSTANCE = null;
-        }
-    }
-
     public void ajouterAnnexesObligatoires(ProfessionDeLaSante profession, AnnexesObligatoires annexesObligatoires) {
         configDemaut.ajouterAnnexesObligatoires(profession, annexesObligatoires);
     }
@@ -84,7 +60,7 @@ public class DemandeAutorisationSteps {
     }
 
     public void initialiserDemandeEnCours(ProfessionDeLaSante profession) {
-        demandeEnCours = demautFactoy.inititierDemandeAutorisation(utilisateur.getLogin(), profession, configDemaut);
+        demandeEnCours = demautFactoy.initierDemandeAutorisation(utilisateur.getLogin(), profession, configDemaut);
         demandeAutorisationRepository.store(demandeEnCours);
 
         LOGGER.debug("La demande autorisation " + demandeEnCours + " a été ajoutée au repository avec l'id technique:" + demandeEnCours.getId());

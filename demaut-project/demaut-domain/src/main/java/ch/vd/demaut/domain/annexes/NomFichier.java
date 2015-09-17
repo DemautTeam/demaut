@@ -3,6 +3,7 @@ package ch.vd.demaut.domain.annexes;
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.BaseValueObject;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -12,7 +13,6 @@ import javax.validation.constraints.NotNull;
 public class NomFichier extends BaseValueObject {
 
     // ********************************************************* Fields
-    @NotNull
     private String nomFichier;
 
     // ********************************************************* Constructor
@@ -27,6 +27,8 @@ public class NomFichier extends BaseValueObject {
 
     // ********************************************************* Getter
 
+    @NotNull
+    @Max(value = 255)
     public String getNomFichier() {
         return nomFichier;
     }
