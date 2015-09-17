@@ -48,6 +48,9 @@ public class ProgreSoaServiceImpl implements ProgreSoaService {
     }
 
     @Override
+    public RefRoot listeSOAAPTitre() throws Exception {
+        return processQuery("AP_TITRE");
+    }
     public RefRoot listeSOAFormationApprofondie() throws Exception {
         return processQuery("D_FORMATION_APPROFONDIE");
     }
