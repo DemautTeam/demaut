@@ -1,7 +1,5 @@
 package ch.vd.demaut.services.demandes.autorisation.impl;
 
-import ch.vd.demaut.domain.annexes.AnnexeNonValideException;
-import ch.vd.demaut.domain.annexes.ContenuAnnexe;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
@@ -9,13 +7,9 @@ import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
-import org.apache.commons.io.IOUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 
 public class DemandeAutorisationServiceImpl implements DemandeAutorisationService {
 
@@ -36,17 +30,6 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
     @Override
     public DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande referenceDeDemande) {
         return demandeAutorisationRepository.recupererDemandeParReference(referenceDeDemande);
-    }
-
-    @SuppressWarnings("unchecked")
-    private ContenuAnnexe buildContenuAnnexe(File file) {
-        byte[] contenu;
-        try {
-            contenu = IOUtils.toByteArray(new FileInputStream(file));
-        } catch (IOException e) {
-            throw new AnnexeNonValideException();
-        }
-        return new ContenuAnnexe(contenu);
     }
 
 }
