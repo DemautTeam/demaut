@@ -64,7 +64,7 @@ public class DemandeAutorisationRepositoryTest {
         Utilisateur utilisateur = creerUtilisateur();
 
         // Sauvegarder la demande
-        DemandeAutorisation d = demautFactory.inititierDemandeAutorisation(utilisateur.getLogin(), ProfessionDeLaSante.Medecin, null);
+        DemandeAutorisation d = demautFactory.initierDemandeAutorisation(utilisateur.getLogin(), ProfessionDeLaSante.Medecin, null);
         assertThat(d.getId()).isNull();
         demandeAutorisationRepository.store(d);
         assertThat(d.getId()).isNotNull();
@@ -79,7 +79,7 @@ public class DemandeAutorisationRepositoryTest {
         Utilisateur utilisateur = creerUtilisateur();
 
         // Sauvegarder la demande
-        DemandeAutorisation d = demautFactory.inititierDemandeAutorisation(utilisateur.getLogin(), ProfessionDeLaSante.Medecin, null);
+        DemandeAutorisation d = demautFactory.initierDemandeAutorisation(utilisateur.getLogin(), ProfessionDeLaSante.Medecin, null);
         Annexe annexe = new Annexe(TypeAnnexe.CV, "test.pdf", new byte[1]);
         d.validerEtAttacherAnnexe(annexe);
         assertThat(d.getId()).isNull();
