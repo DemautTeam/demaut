@@ -13,6 +13,10 @@
 		scope="cucumber-glue">
 	</bean>
 
+	<bean id="demandeAutorisationFactory"
+		  class="ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory"
+		  scope="cucumber-glue"/>
+
 	<bean id="props"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">

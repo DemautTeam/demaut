@@ -7,6 +7,7 @@
 		scope="cucumber-glue">
 		<property name="utilisateurRepository" ref="utilisateurRepository" />
 		<property name="demandeAutorisationRepository" ref="demandeAutorisationRepository" />
+        <property name="demandeAutorisationFactory" ref="demandeAutorisationFactory" />
 		<property name="configDemaut" ref="configDemaut" />
 	</bean>
 

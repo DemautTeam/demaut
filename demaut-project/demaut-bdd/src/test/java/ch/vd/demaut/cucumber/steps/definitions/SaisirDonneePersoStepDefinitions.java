@@ -1,5 +1,6 @@
 package ch.vd.demaut.cucumber.steps.definitions;
 
+import ch.vd.demaut.cucumber.steps.DonneesPersonnellesSteps;
 import cucumber.api.java.fr.Alors;
 import cucumber.api.java.fr.Lorsque;
 
@@ -9,7 +10,7 @@ import cucumber.api.java.fr.Lorsque;
 public class SaisirDonneePersoStepDefinitions extends StepDefinitions {
 
     // ********************************************************* Fields
-
+    private DonneesPersonnellesSteps donneesPersonnellesSteps;
 
     // ********************************************************* Technical
     // methods
