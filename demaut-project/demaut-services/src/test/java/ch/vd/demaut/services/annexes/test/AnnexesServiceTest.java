@@ -1,11 +1,10 @@
 package ch.vd.demaut.services.annexes.test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.Collection;
-
+import ch.vd.demaut.domain.annexes.ContenuAnnexe;
+import ch.vd.demaut.domain.annexes.NomFichier;
+import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.services.annexes.AnnexesService;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
@@ -17,11 +16,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import ch.vd.demaut.domain.annexes.ContenuAnnexe;
-import ch.vd.demaut.domain.annexes.NomFichier;
-import ch.vd.demaut.domain.annexes.TypeAnnexe;
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.services.annexes.AnnexesService;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Collection;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Ignore("Waiting for OpenJPA bug fix")
 @ContextConfiguration({"classpath*:/servicesTest-context.xml"})

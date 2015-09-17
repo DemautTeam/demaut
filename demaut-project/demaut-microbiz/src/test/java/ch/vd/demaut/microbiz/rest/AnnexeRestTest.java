@@ -1,13 +1,7 @@
 package ch.vd.demaut.microbiz.rest;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-import java.io.FileInputStream;
-
-import javax.ws.rs.core.Response;
-
+import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
@@ -20,8 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import ch.vd.demaut.domain.annexes.TypeAnnexe;
-import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import javax.ws.rs.core.Response;
+import java.io.File;
+import java.io.FileInputStream;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @Ignore("Senario Data")
 @ContextConfiguration({"classpath*:microbizTest-context.xml"})
