@@ -97,8 +97,9 @@
 		<jackson.mapper.asl.version>1.9.13</jackson.mapper.asl.version>
 		<tika.core.version>1.7</tika.core.version>
 		<commons.io.version>1.3.2</commons.io.version>
+        <javax.inject>1</javax.inject>
 
-		<!-- ServiceMix -->
+        <!-- ServiceMix -->
 		<camel.version>2.14.1</camel.version>
 		<felix.version>2.0.1</felix.version>
 		<camel.microbiz.version>2.0.0</camel.microbiz.version>
@@ -115,7 +116,6 @@
 		<demaut.microbiz.priv.packag.name>ch.vd.ses.demaut.microbiz</demaut.microbiz.priv.packag.name>
 
 		<!-- Spring -->
-		<javax.inject>1</javax.inject>
 		<spring.version>3.2.11.RELEASE</spring.version>
 		<spring.security.version>3.2.7.RELEASE</spring.security.version>
 
@@ -135,6 +135,7 @@
 		<mockito.version>1.10.19</mockito.version>
 		<assertj.version>2.1.0</assertj.version>
 		<com.h2.version>1.4.186</com.h2.version>
+        <serp.version>1.15.1</serp.version>
     </properties>
 
 	<dependencies>
@@ -474,6 +475,12 @@
                 <groupId>commons-dbcp</groupId>
                 <artifactId>commons-dbcp</artifactId>
                 <version>${commons.dbcp.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>net.sourceforge.serp</groupId>
+                <artifactId>serp</artifactId>
+                <version>${serp.version}</version>
                 <scope>provided</scope>
             </dependency>
 

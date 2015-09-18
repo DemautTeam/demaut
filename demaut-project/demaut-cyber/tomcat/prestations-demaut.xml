@@ -13,7 +13,7 @@
     <!-- IPFILTER rpbeintra1,rpbeintra2 -->
     <!--
            <Valve className="org.apache.catalina.valves.RemoteAddrValve"
-                    allow="10.120.195.36|10.120.195.37" />
+                    allow="10.120.195.36|10.120.195.37"/>
                     -->
 
 </Context>
