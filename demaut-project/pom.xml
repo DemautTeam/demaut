@@ -124,7 +124,7 @@
         <spring.boot.starter.version>1.2.5.RELEASE</spring.boot.starter.version>
 
 		<!-- Persistence -->
-		<openjpa.version>2.4.0</openjpa.version>
+		<openjpa.version>2.3.0</openjpa.version>
 		<geronimo.jpa.spec.version>1.1.1</geronimo.jpa.spec.version>
 		<eclipse.persistence.version>2.1.0</eclipse.persistence.version>
 		<commons.dbcp.version>1.4</commons.dbcp.version>
@@ -152,11 +152,16 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>${logback.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+		<!--<dependency>-->
+			<!--<groupId>ch.qos.logback</groupId>-->
+			<!--<artifactId>logback-classic</artifactId>-->
+			<!--<version>${logback.version}</version>-->
+		<!--</dependency>-->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>

@@ -118,8 +118,6 @@ public class DemandeAutorisationServiceTest extends TestCase {
     @Ignore
     @Test
     public void shouldListerLesAnnexes() throws Exception {
-        File fileMultipart = new File("target/Test_multipart.cfg");
-        FileUtils.writeByteArrayToFile(fileMultipart, byteArray);
         Collection<?> listerLesAnnexes = annexeService.listerLesAnnexeMetadatas(referenceDeDemande);
         assertThat(listerLesAnnexes).isNotEmpty();
     }
