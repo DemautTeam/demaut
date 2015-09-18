@@ -340,8 +340,9 @@
                             <schemaExcludes>
                                 <include>*.xs</include>
                             </schemaExcludes>
-                            <disableXmlSecurity>true</disableXmlSecurity>
+                            <!-- DO NOT USE generatePackage HERE ! -->
                             <generateDirectory>${project.build.directory}/generated-sources/xjc1</generateDirectory>
+                            <disableXmlSecurity>true</disableXmlSecurity>
                         </configuration>
                     </execution>
                     <execution>
@@ -358,30 +359,35 @@
                             <schemaExcludes>
                                 <include>*.xs</include>
                             </schemaExcludes>
+                            <!-- SHOULD KEEP generatePackage HERE ! -->
                             <generatePackage>ch.vd.ses.referentiel.demaut_1_0</generatePackage>
                             <generateDirectory>${project.build.directory}/generated-sources/xjc2</generateDirectory>
                             <disableXmlSecurity>true</disableXmlSecurity>
                         </configuration>
                     </execution>
-                    <!--<execution>-->
-                        <!--<id>demaut-v2.1.0</id>-->
-                        <!--<goals>-->
-                            <!--<goal>generate</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<forceRegenerate>true</forceRegenerate>-->
-                            <!--<schemaDirectory>src/main/xsd</schemaDirectory>-->
-                            <!--<schemaIncludes>-->
-                                <!--<include>demaut-0002-1-0.xsd</include>-->
-                            <!--</schemaIncludes>-->
-                            <!--<schemaExcludes>-->
-                                <!--<include>*.xs</include>-->
-                            <!--</schemaExcludes>-->
-                            <!--<generatePackage>ch.vd.ses.referentiel.demaut_2_0</generatePackage>-->
-                            <!--<generateDirectory>${project.build.directory}/generated-sources/xjc3</generateDirectory>-->
-                            <!--<disableXmlSecurity>true</disableXmlSecurity>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
+                    <execution>
+                        <id>demaut-v2.1.0</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <forceRegenerate>true</forceRegenerate>
+                            <schemaDirectory>src/main/xsd</schemaDirectory>
+                            <schemaIncludes>
+                                <include>demaut-0002-1-0.xsd</include>
+                            </schemaIncludes>
+                            <schemaExcludes>
+                                <exclude>eCH-0044-4-1.xsd</exclude>
+                                <exclude>eCH-0044-4-1f.xsd</exclude>
+                                <exclude>eCH-0010-3-1.xsd</exclude>
+                                <exclude>eCH-0010-5-1.xsd</exclude>
+                                <exclude>eCH-0010-5-1f.xsd</exclude>
+                            </schemaExcludes>
+                            <!-- DO NOT USE generatePackage HERE ! -->
+                            <generateDirectory>${project.build.directory}/generated-sources/xjc3</generateDirectory>
+                            <disableXmlSecurity>true</disableXmlSecurity>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>
