@@ -58,14 +58,12 @@ public class DemandeAutorisationServiceTest extends TestCase {
     public void setUp() throws Exception {
         assertThat(demandeAutorisationService).isNotNull();
 
-        byteArray = IOUtils.toByteArray(new FileInputStream("src/test/resources/demautServicesTest.cfg"));
-        file = new File("src/test/resources/demautServicesTest.cfg");
         assertNotNull(byteArray);
 
         nomFichier = new NomFichier("Test_multipart.pdf");
         login = new Login("joe.dalton@ch.vd");
         profession = ProfessionDeLaSante.Medecin;
-        annexe = new Annexe(TypeAnnexe.Certificat, nomFichier, new ContenuAnnexe(byteArray));
+
     }
 
     // ********************************************************* Tests
@@ -113,36 +111,6 @@ public class DemandeAutorisationServiceTest extends TestCase {
 
         assertThat(contenuAnnexe).isNotNull();
         assertThat(contenuAnnexe.getTaille()).isEqualTo(tailleAnnexe);
-    }
-
-    @Ignore
-    @Test
-    public void shouldListerLesAnnexes() throws Exception {
-        File fileMultipart = new File("target/Test_multipart.cfg");
-        FileUtils.writeByteArrayToFile(fileMultipart, byteArray);
-        Collection<?> listerLesAnnexes = annexeService.listerLesAnnexeMetadatas(referenceDeDemande);
-        assertThat(listerLesAnnexes).isNotEmpty();
-    }
-
-    @Ignore
-    @Test
-    public void shouldAfficherUneAnnexe() throws Exception {
-        ContenuAnnexe contenuAnnexe = annexeService.recupererContenuAnnexe(referenceDeDemande, nomFichier);
-        assertThat(contenuAnnexe).isNotNull();
-    }
-
-    @Ignore
-    @Test
-    public void shouldAttacherUneAnnexe() throws Exception {
-        File file = new File("target/Test_multipart.cfg");
-        FileUtils.writeByteArrayToFile(file, byteArray);
-        annexeService.attacherUneAnnexe(referenceDeDemande, file, nomFichier, TypeAnnexe.Certificat);
-    }
-
-    @Ignore
-    @Test
-    public void shouldSupprimerAnnexe() throws Exception {
-        annexeService.supprimerUneAnnexe(referenceDeDemande, nomFichier);
     }
 
     // ********************************************************* Private methods for fixtures
