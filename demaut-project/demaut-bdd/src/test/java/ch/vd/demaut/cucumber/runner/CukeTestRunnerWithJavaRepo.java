@@ -3,7 +3,8 @@ package ch.vd.demaut.cucumber.runner;
 import cucumber.api.CucumberOptions;
 import org.junit.runner.RunWith;
 
-@RunWith(CucumberMockProfile.class)
+
+@RunWith(CucumberJavaProfile.class)
 @CucumberOptions(//
         features = "classpath:features", // ou classpath:**/*.feature
         glue = {"ch.vd.demaut.cucumber.steps.definitions"}, //
