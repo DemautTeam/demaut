@@ -3,11 +3,13 @@ package ch.vd.demaut.domain.annexes;
 import ch.vd.demaut.commons.utils.FileMockHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 
+@Ignore
 public class AnnexeValidateurTest {
 
     private AnnexeValidateur validateur;

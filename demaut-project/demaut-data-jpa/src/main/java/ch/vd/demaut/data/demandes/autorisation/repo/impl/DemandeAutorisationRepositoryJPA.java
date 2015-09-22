@@ -29,15 +29,11 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
 
         TypedQuery<DemandeAutorisation> typedQuery = createQuery(ref);
 
-        List<DemandeAutorisation> resultList = typedQuery.getResultList();
-
-        validateResultList(resultList);
-
-        return resultList.get(0);
+        return typedQuery.getSingleResult();
     }
 
 
-    private void validateResultList(List<DemandeAutorisation> resultList) {
+    private void validateUniqueResult(List<DemandeAutorisation> resultList) {
         if (resultList.size() > 1) {
             throw new EntityNotUniqueException();
         }
@@ -50,7 +46,7 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
         final CriteriaBuilder builder = this.getEntityManager().getCriteriaBuilder();
         final CriteriaQuery<DemandeAutorisation> criteriaQuery = builder.createQuery(DemandeAutorisation.class);
         Root<DemandeAutorisation> autorisationRoot = criteriaQuery.from(DemandeAutorisation.class);
-        criteriaQuery.where(builder.equal(autorisationRoot.get("referenceDeDemande"), ref));
+        criteriaQuery.where(builder.equal(autorisationRoot.get("referenceDeDemande"), ref.getValue()));
         TypedQuery<DemandeAutorisation> typedQuery = this.getEntityManager().createQuery(criteriaQuery);
         return typedQuery;
     }
