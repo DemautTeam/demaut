@@ -81,10 +81,28 @@
 				<!-- Bug OpenJPA if in STRING -->
 				<enumerated>ORDINAL</enumerated>
 			</basic>
-			<transient name="contenu"/>
-			<transient name="nomFichier"/>
+			<embedded name="nomFichier"/>
+			<embedded name="contenu"/>
 		</attributes>
 	</entity>
+
+	<embeddable class="ch.vd.demaut.domain.annexes.NomFichier">
+		<attributes>
+			<basic name="nomFichier" access="PROPERTY">
+				<column name="nom_fichier" column-definition="varchar" length="254"/>
+			</basic>
+		</attributes>
+	</embeddable>
+
+	<embeddable class="ch.vd.demaut.domain.annexes.ContenuAnnexe">
+		<attributes>
+			<basic name="contenu" access="PROPERTY">
+				<column name="contenu"/>
+				<lob/>
+			</basic>
+			<basic name="taille" access="PROPERTY"/>
+		</attributes>
+	</embeddable>
 
 	<embeddable class="ch.vd.demaut.domain.utilisateurs.Login">
 		<attributes>
