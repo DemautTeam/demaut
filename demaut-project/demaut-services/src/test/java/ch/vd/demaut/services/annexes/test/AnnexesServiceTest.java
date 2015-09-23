@@ -4,19 +4,16 @@ import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.ContenuAnnexe;
 import ch.vd.demaut.domain.annexes.NomFichier;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.annexes.AnnexesService;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -47,7 +44,6 @@ public class AnnexesServiceTest {
     private File file;
 
     private NomFichier nomFichier;
-    private TypeAnnexe typeAnnexe;
     private DemandeAutorisation demandeEnCours;
     private Annexe annexe;
 
@@ -60,7 +56,6 @@ public class AnnexesServiceTest {
         file = new File("src/test/resources/demautServicesTest.cfg");
 
         nomFichier = new NomFichier("Test_multipart.pdf");
-        typeAnnexe = TypeAnnexe.Certificat;
         annexe = new Annexe(TypeAnnexe.Certificat, nomFichier, new ContenuAnnexe(byteArray));
 
         login = new Login("joe.dalton@ch.vd");

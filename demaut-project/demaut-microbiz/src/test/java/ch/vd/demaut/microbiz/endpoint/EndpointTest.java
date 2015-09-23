@@ -53,7 +53,7 @@ public class EndpointTest {
 
     @Test
     public void testFetchAnnexes() throws Exception {
-        WebClient client = WebClient.create(webEndpoint + "/services/annexes/all", true);
+        WebClient client = WebClient.create(webEndpoint + "/annexes/all", true);
         assertNotNull(client);
 
         Response response = client.get();

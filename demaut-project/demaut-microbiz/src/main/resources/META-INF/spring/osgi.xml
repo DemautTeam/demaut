@@ -13,7 +13,4 @@
         <prop key="demaut.microbiz.security.active">true</prop>
     </osgix:cm-properties>
 
-    <!--<osgi:reference id="connectionFactory" interface="javax.jms.ConnectionFactory"/>-->
-    <!--<osgi:reference id="esbStore" interface="ch.vd.technical.esb.store.EsbStore"/>-->
-
 </beans>

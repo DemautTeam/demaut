@@ -15,10 +15,10 @@ import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -40,10 +40,10 @@ public class AnnexeRestImpl implements AnnexeRest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AnnexeRestImpl.class);
 
-    @Autowired
+    @Inject
     private AnnexesService annexesService;
 
-    @Autowired
+    @Inject
     private ProgreSoaService progreSoaService;
 
     @Override

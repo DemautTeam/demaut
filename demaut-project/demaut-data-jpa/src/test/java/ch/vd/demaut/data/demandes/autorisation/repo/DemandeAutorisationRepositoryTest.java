@@ -10,7 +10,6 @@ import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.domain.utilisateurs.Utilisateur;
 import ch.vd.demaut.domain.utilisateurs.UtilisateurRepository;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -24,7 +23,7 @@ import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Ignore
+
 @ContextConfiguration({"classpath*:/data-jpa-test-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class DemandeAutorisationRepositoryTest {

@@ -1,17 +1,23 @@
 package ch.vd.demaut.microbiz.rest;
 
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -21,12 +27,24 @@ import static org.junit.Assert.assertTrue;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ProfessionRestImplTest {
 
-    @Autowired
+    @Inject
     private ProfessionRest professionRest;
+
+    @Inject
+    private DemandeAutorisationService demandeAutorisationService;
+
+    private ReferenceDeDemande referenceDeDemande;
 
     @Before
     public void setUp() throws Exception {
+        Login login = new Login("joe.dalton@ch.vd");
+        ProfessionDeLaSante profession = ProfessionDeLaSante.Medecin;
+
         assertNotNull(professionRest);
+        assertThat(demandeAutorisationService).isNotNull();
+
+        DemandeAutorisation demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(login, profession);
+        referenceDeDemande = demandeEnCours.getReferenceDeDemande();
     }
 
     @Test
@@ -37,13 +55,13 @@ public class ProfessionRestImplTest {
 
     @Test
     public void testAfficherDonneesProfession() throws Exception {
-        Response response = professionRest.afficherDonneesProfession("7dc53df5-703e-49b3-8670-b1c468f47f1f");
+        Response response = professionRest.afficherDonneesProfession(referenceDeDemande.getValue());
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
     @Test
     public void testRenseignerDonneesProfession() throws Exception {
-        Response response = professionRest.renseignerDonneesProfession("7dc53df5-703e-49b3-8670-b1c468f47f1f", "53843599", "7601000000125");
+        Response response = professionRest.renseignerDonneesProfession(referenceDeDemande.getValue(), "53843599", "7601000000125");
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 }
