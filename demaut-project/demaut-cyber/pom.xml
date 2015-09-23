@@ -1,249 +1,277 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<parent>
-		<groupId>ch.vd.demaut</groupId>
-		<artifactId>demaut</artifactId>
-		<version>0.1.0-SNAPSHOT</version>
-	</parent>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>ch.vd.demaut</groupId>
+        <artifactId>demaut</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
 
-	<modelVersion>4.0.0</modelVersion>
-	<artifactId>demaut-cyber</artifactId>
-	<name>Demaut-cyber</name>
-	<description>Demaut Portail Module</description>
-	<packaging>war</packaging>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>demaut-cyber</artifactId>
+    <name>Demaut-cyber</name>
+    <description>Demaut Portail Module</description>
+    <packaging>war</packaging>
 
-	<properties>
+    <properties>
 
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
 
-		<!-- librairies DSI -->
-		<shared-base.version>6.1.0</shared-base.version>
-		<shared-hibernate.version>5.3.0</shared-hibernate.version>
-		<shared-iam.version>2.8.0</shared-iam.version>
-		<shared-testing.version>5.2.0</shared-testing.version>
-		<esbclient.version>4.1</esbclient.version>
-		<prestations-common.version>1.0.0-SNAPSHOT</prestations-common.version>
-		<portail-legacy-theme.version>15P3.B.0-SNAPSHOT</portail-legacy-theme.version>
+        <!-- librairies DSI -->
+        <shared-base.version>6.1.0</shared-base.version>
+        <shared-hibernate.version>5.3.0</shared-hibernate.version>
+        <shared-iam.version>2.8.0</shared-iam.version>
+        <shared-testing.version>5.2.0</shared-testing.version>
+        <esbclient.version>4.1</esbclient.version>
+        <prestations-common.version>1.0.0-SNAPSHOT</prestations-common.version>
+        <portail-legacy-theme.version>15P3.B.0-SNAPSHOT</portail-legacy-theme.version>
 
-		<!-- Override de la version de Spring du projet pour Spring-boot -->
-		<spring.framework.version>4.1.7.RELEASE</spring.framework.version>
+        <!-- Override de la version de Spring du projet pour Spring-boot -->
+        <spring.framework.version>4.1.7.RELEASE</spring.framework.version>
 
-		<!-- Others -->
-		<activemq.version>5.10.0</activemq.version>
-		<springloaded.version>1.2.3.RELEASE</springloaded.version>
-		<springcloud.version>1.0.1.RELEASE</springcloud.version>
-		<oracle.version>12.1.0.2.0</oracle.version>
+        <!-- Others -->
+        <activemq.version>5.10.0</activemq.version>
+        <springloaded.version>1.2.3.RELEASE</springloaded.version>
+        <springcloud.version>1.0.1.RELEASE</springcloud.version>
+        <oracle.version>12.1.0.2.0</oracle.version>
 
-		<buildnumber-maven-plugin.version>1.3</buildnumber-maven-plugin.version>
+        <buildnumber-maven-plugin.version>1.3</buildnumber-maven-plugin.version>
 
-		<assembly.finalName>${project.artifactId}-${project.version}</assembly.finalName>
-		<assembly.appName>demaut</assembly.appName>
+        <assembly.finalName>${project.artifactId}-${project.version}</assembly.finalName>
+        <assembly.appName>demaut</assembly.appName>
 
-	</properties>
+    </properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>ch.vd.portail</groupId>
-			<artifactId>portail-legacy-theme</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>ch.vd.portail</groupId>
+            <artifactId>portail-legacy-theme</artifactId>
             <version>${portail-legacy-theme.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>ch.vd.cyber</groupId>
-			<artifactId>prestations-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.vd.cyber</groupId>
+            <artifactId>prestations-common</artifactId>
             <version>${prestations-common.version}</version>
-		</dependency>
+        </dependency>
 
-		<!-- Spring 4 est necessaire à Spring-boot -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>${spring.framework.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${spring.framework.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context-support</artifactId>
-			<version>${spring.framework.version}</version>
-			<scope>compile</scope>
-		</dependency>
+        <!-- Spring 4 est necessaire à Spring-boot -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.framework.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.framework.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.framework.version}</version>
+            <scope>compile</scope>
+        </dependency>
 
-		<!-- Spring Boot -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-security</artifactId>
-			<version>${springcloud.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+        </dependency>
 
-		<!-- CXF -->
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-frontend-jaxrs</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-rs-extension-providers</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-rs-extension-search</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-jaxrs</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.ws.rs</groupId>
-			<artifactId>javax.ws.rs-api</artifactId>
-			<scope>compile</scope>
-		</dependency>
 
-		<!-- IAM -->
-		<dependency>
-			<groupId>ch.vd.shared</groupId>
-			<artifactId>shared-iam-core</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>ch.vd.shared</groupId>
-			<artifactId>shared-iam-web</artifactId>
-			<scope>compile</scope>
-		</dependency>
+        <!-- Spring Boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-security</artifactId>
+            <version>${springcloud.version}</version>
+        </dependency>
 
-		<!-- Testing -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>ch.vd.shared</groupId>
-			<artifactId>shared-testing</artifactId>
-			<version>${shared-testing.version}</version>
-			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.poi</groupId>
-					<artifactId>poi</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>ch.vd.shared</groupId>
-					<artifactId>shared-hibernate</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.hibernate</groupId>
-					<artifactId>hibernate-core</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-tx</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-orm</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-jdbc</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>oracle.jdbc</groupId>
-					<artifactId>ojdbc7</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-	</dependencies>
-	<profiles>
-	<profile>
-		<!-- pour le déploiement en demo et dev -->
-		<id>env.demo</id>
-		<activation>
-			<activeByDefault>true</activeByDefault>
-		</activation>
-		<properties>
-			<assembly.env>CO</assembly.env>
-		</properties>
-	</profile>
-	</profiles>
+        <!-- CXF -->
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-rs-extension-providers</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-rs-extension-search</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-jaxrs</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>javax.ws.rs-api</artifactId>
+            <scope>compile</scope>
+        </dependency>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.7</version>
-				<executions>
-					<execution>
-						<id>copy-resources</id>
-						<!-- here the phase you need -->
-						<phase>validate</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${basedir}/target/classes</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${basedir}/../demaut-commons-web/src/main/resources</directory>
-									<filtering>false</filtering>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-						<configuration>
-							<descriptors>
-								<descriptor>assembly/assembly.xml</descriptor>
-							</descriptors>
-							<appendAssemblyId>false</appendAssemblyId>
-							<tarLongFileMode>posix</tarLongFileMode>
-							<finalName>${assembly.finalName}</finalName>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
+        <!-- IAM -->
+        <dependency>
+            <groupId>ch.vd.shared</groupId>
+            <artifactId>shared-iam-core</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.vd.shared</groupId>
+            <artifactId>shared-iam-web</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Testing -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.vd.shared</groupId>
+            <artifactId>shared-testing</artifactId>
+            <version>${shared-testing.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.poi</groupId>
+                    <artifactId>poi</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>ch.vd.shared</groupId>
+                    <artifactId>shared-hibernate</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-tx</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-orm</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-jdbc</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>oracle.jdbc</groupId>
+                    <artifactId>ojdbc7</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+    <profiles>
+        <profile>
+            <!-- pour le déploiement en demo et dev -->
+            <id>env.demo</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <assembly.env>CO</assembly.env>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.7</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <!-- here the phase you need -->
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/classes</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/../demaut-commons-web/src/main/resources</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>assembly/assembly.xml</descriptor>
+                            </descriptors>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <tarLongFileMode>posix</tarLongFileMode>
+                            <finalName>${assembly.finalName}</finalName>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--<plugin>
+                <groupId>com.samaxes.maven</groupId>
+                <artifactId>minify-maven-plugin</artifactId>
+                <version>1.7.4</version>
+                <executions>
+                    <execution>
+                        <id>default-minify</id>
+                        <configuration>
+                            <charset>UTF-8</charset>
+                            <jsSourceDir>static/js</jsSourceDir>
+                            <jsSourceFiles>
+                                <jsSourceFile>demautCyberApp.js</jsSourceFile>
+                            </jsSourceFiles>
+                            <jsFinalFile>demautCyberApp.min.js</jsFinalFile>
+                            <jsEngine>CLOSURE</jsEngine>
+                        </configuration>
+                        <goals>
+                            <goal>minify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>-->
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>buildnumber-maven-plugin</artifactId>
                 <version>${buildnumber-maven-plugin.version}</version>
@@ -262,37 +290,38 @@
                     </items>
                 </configuration>
             </plugin>
-			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-					<url>http://localhost:8020/manager/text</url>
-					<server>tomcat-local</server>
-					<path>/demaut-cyber</path>
-					<username>admin</username>
-					<password>admin</password>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <url>http://localhost:8020/manager/text</url>
+                    <server>tomcat-local</server>
+                    <path>/demaut-cyber</path>
+                    <username>admin</username>
+                    <password>admin</password>
+                </configuration>
+            </plugin>
 
-		</plugins>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<excludes>
-					<exclude>version.txt</exclude>
-				</excludes>
-				<filtering>false</filtering>
-			</resource>
-			<resource>
-				<directory>src/main/resources</directory>
-				<includes>
-					<include>version.txt</include>
-				</includes>
-				<filtering>true</filtering>
-			</resource>
-		</resources>
 
-	</build>
+        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>version.txt</exclude>
+                </excludes>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>version.txt</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+    </build>
 
 </project>
