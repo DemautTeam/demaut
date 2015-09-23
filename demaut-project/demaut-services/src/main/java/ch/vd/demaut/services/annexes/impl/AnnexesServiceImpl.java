@@ -34,7 +34,7 @@ public class AnnexesServiceImpl implements AnnexesService {
     @Transactional(readOnly = true)
     @Override
     public Collection<AnnexeMetadata> listerLesAnnexeMetadatas(ReferenceDeDemande referenceDeDemande) {
-        DemandeAutorisation demandeAutorisation = recupererDemnandeParRef(referenceDeDemande);
+        DemandeAutorisation demandeAutorisation = recupererDemandeParRef(referenceDeDemande);
         return demandeAutorisation.listerLesAnnexeMetadatas();
     }
 
@@ -49,7 +49,7 @@ public class AnnexesServiceImpl implements AnnexesService {
     @Transactional(readOnly = true)
     @Override
     public ContenuAnnexe recupererContenuAnnexe(ReferenceDeDemande referenceDeDemande, NomFichier nomFichier) {
-        DemandeAutorisation demandeAutorisation = recupererDemnandeParRef(referenceDeDemande);
+        DemandeAutorisation demandeAutorisation = recupererDemandeParRef(referenceDeDemande);
         return demandeAutorisation.extraireContenuAnnexe(nomFichier);
     }
 
@@ -71,12 +71,12 @@ public class AnnexesServiceImpl implements AnnexesService {
     @Transactional
     @Override
     public void supprimerUneAnnexe(ReferenceDeDemande referenceDeDemande, NomFichier nomFichier) {
-        DemandeAutorisation demandeAutorisation = recupererDemnandeParRef(referenceDeDemande);
+        DemandeAutorisation demandeAutorisation = recupererDemandeParRef(referenceDeDemande);
         demandeAutorisation.supprimerUneAnnexeParNomFichier(nomFichier);
     }
 
     private void attacherAnnexe(ReferenceDeDemande ref, Annexe annexe) {
-        DemandeAutorisation demandeAutorisation = recupererDemnandeParRef(ref);
+        DemandeAutorisation demandeAutorisation = recupererDemandeParRef(ref);
         demandeAutorisation.validerEtAttacherAnnexe(annexe);
     }
 
@@ -92,7 +92,7 @@ public class AnnexesServiceImpl implements AnnexesService {
         return new ContenuAnnexe(contenu);
     }
 
-    private DemandeAutorisation recupererDemnandeParRef(ReferenceDeDemande referenceDeDemande) {
+    private DemandeAutorisation recupererDemandeParRef(ReferenceDeDemande referenceDeDemande) {
         return demandeAutorisationService.recupererDemandeParReference(referenceDeDemande);
     }
 }

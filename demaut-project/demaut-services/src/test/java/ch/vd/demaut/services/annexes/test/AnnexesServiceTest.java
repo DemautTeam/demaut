@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -27,7 +28,6 @@ import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Ignore
 @ContextConfiguration({"classpath*:/servicesTest-context.xml"})
 @ActiveProfiles({"data"})
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -61,7 +61,7 @@ public class AnnexesServiceTest {
         login = new Login("joe.dalton@ch.vd");
         profession = ProfessionDeLaSante.Medecin;
 
-        intialiserDemandeEnCours(null);
+        intialiserDemandeEnCours(annexe);
 
         assertThat(annexesService).isNotNull();
         assertThat(byteArray).isNotNull();
@@ -71,14 +71,15 @@ public class AnnexesServiceTest {
     }
 
     @Test
-    @Transactional
     public void testListerLesAnnexesMetadata() throws Exception {
         Collection<?> listerLesAnnexes = annexesService.listerLesAnnexeMetadatas(demandeEnCours.getReferenceDeDemande());
         assertThat(listerLesAnnexes).isNotEmpty();
     }
 
+    //FIXME Il y a un problème dans la délimitation de la transaction !
     @Test
     @Transactional
+    @Rollback(value = false)
     public void testerAttacherUneAnnexe() {
         //Setup fixtures
 
@@ -90,18 +91,15 @@ public class AnnexesServiceTest {
 
         //Vérifie si annexe attachée
         Collection<Annexe> annexes = demandeEnCours.listerLesAnnexes();
-        assertThat(annexes).hasSize(1);
+        //Attention la demande possède déjà une annexe
+        assertThat(annexes).hasSize(2);
     }
 
 
     @Test
-    @Transactional
     public void testerRecupererContenuAnnexe() {
 
         long tailleAnnexe = annexe.getTaille();
-
-        //Setup fixtures
-        intialiserDemandeEnCours(annexe);
 
         //Récupère demande en cours
         demandeEnCours = demandeAutorisationService.recupererDemandeParReference(demandeEnCours.getReferenceDeDemande());
@@ -115,7 +113,7 @@ public class AnnexesServiceTest {
 
     // ********************************************************* Private methods for fixtures
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRED)
     private void intialiserDemandeEnCours(Annexe annexeALier) {
         demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(login, profession);
         if (annexeALier != null) {
