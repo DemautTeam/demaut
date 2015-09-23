@@ -20,8 +20,10 @@ import org.springframework.stereotype.Service;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
@@ -51,11 +53,13 @@ public class AnnexeRestImpl implements AnnexeRest {
     @Path("/typesList/{profession}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response listerLesTypesAnnexes(@PathParam("profession") String professionId) throws Exception {
+    public Response listerLesTypesAnnexes(@Context UriInfo uriInfo,
+                                          @PathParam("profession") String professionId) throws Exception {
 
         LOGGER.info("listerLesTypesAnnexes " + professionId);
 
-        List<VcType> lesTypesAnnexes = progreSoaService.listeSOATypesAnnexes().getVcList().getVc();
+        String path = uriInfo != null ? uriInfo.getBaseUri().toString() : null;
+        List<VcType> lesTypesAnnexes = progreSoaService.listeSOATypesAnnexes(path).getVcList().getVc();
         // TODO filtrer la liste selon profession (liste ordinaire VS simplifiée)
         return RestUtils.forgeResponseList(Response.Status.OK, lesTypesAnnexes);
     }
@@ -65,7 +69,8 @@ public class AnnexeRestImpl implements AnnexeRest {
     @Path("/lister/{demandeReference}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response listerLesAnnexes(@PathParam("demandeReference") String demandeReference) throws JsonProcessingException {
+    public Response listerLesAnnexes(@Context UriInfo uriInfo,
+                                     @PathParam("demandeReference") String demandeReference) throws JsonProcessingException {
 
         LOGGER.info("listerLesAnnexes " + demandeReference);
 
@@ -80,7 +85,8 @@ public class AnnexeRestImpl implements AnnexeRest {
     @Path("/afficher/{demandeReference}/{annexeFileName}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @RolesAllowed("USER")
-    public Response afficherUneAnnexe(@PathParam("demandeReference") String demandeReference,
+    public Response afficherUneAnnexe(@Context UriInfo uriInfo,
+                                      @PathParam("demandeReference") String demandeReference,
                                       @PathParam("annexeFileName") String annexeFileName) throws JsonProcessingException {
 
         LOGGER.info("afficherUneAnnexe " + annexeFileName);
@@ -98,7 +104,8 @@ public class AnnexeRestImpl implements AnnexeRest {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response attacherUneAnnexe(@Multipart("demandeReference") String demandeReference,
+    public Response attacherUneAnnexe(@Context UriInfo uriInfo,
+                                      @Multipart("demandeReference") String demandeReference,
                                       @Multipart("annexeFile") File file,
                                       @Multipart("annexeFileName") String annexeFileName,
                                       @Multipart("annexeFileSize") String annexeFileSize,
@@ -120,7 +127,8 @@ public class AnnexeRestImpl implements AnnexeRest {
     @Path("/supprimer/{demandeReference}/{annexeFileName}/{annexeType}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response supprimerUneAnnexe(@PathParam("demandeReference") String demandeReference,
+    public Response supprimerUneAnnexe(@Context UriInfo uriInfo,
+                                       @PathParam("demandeReference") String demandeReference,
                                        @PathParam("annexeFileName") String annexeFileName,
                                        @PathParam("annexeType") String annexeType) throws JsonProcessingException {
 

@@ -42,19 +42,19 @@ public class AnnexeRestTest {
 
     @Test
     public void testListerLesTypesAnnexes() throws Exception {
-        Response response = annexeRest.listerLesTypesAnnexes(ProfessionDeLaSante.Medecin.name());
+        Response response = annexeRest.listerLesTypesAnnexes(null, ProfessionDeLaSante.Medecin.name());
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
     @Test
     public void testListerLesAnnexes() throws Exception {
-        Response response = annexeRest.listerLesAnnexes("7dc53df5-703e-49b3-8670-b1c468f47f1f");
+        Response response = annexeRest.listerLesAnnexes(null, "7dc53df5-703e-49b3-8670-b1c468f47f1f");
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
     @Test
     public void testAfficherUneAnnexe() throws Exception {
-        Response response = annexeRest.afficherUneAnnexe("7dc53df5-703e-49b3-8670-b1c468f47f1f", "Test_multipart.pdf");
+        Response response = annexeRest.afficherUneAnnexe(null, "7dc53df5-703e-49b3-8670-b1c468f47f1f", "Test_multipart.pdf");
         assertNotNull(response);
     }
 
@@ -62,13 +62,13 @@ public class AnnexeRestTest {
     public void testAttacherUneAnnexe() throws Exception {
         File fileMultipart = new File("target/Test_multipart.cfg");
         FileUtils.writeByteArrayToFile(fileMultipart, byteArray);
-        Response response = annexeRest.attacherUneAnnexe("demandeReference", fileMultipart, "Test_multipart.pdf", String.valueOf(byteArray.length), "application/cfg", TypeAnnexe.Certificat.name());
+        Response response = annexeRest.attacherUneAnnexe(null, "demandeReference", fileMultipart, "Test_multipart.pdf", String.valueOf(byteArray.length), "application/cfg", TypeAnnexe.Certificat.name());
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
     @Test
     public void testSupprimerAnnexe() throws Exception {
-        Response response = annexeRest.supprimerUneAnnexe("demandeReference", "Test_multipart.pdf", TypeAnnexe.Certificat.name());
+        Response response = annexeRest.supprimerUneAnnexe(null, "demandeReference", "Test_multipart.pdf", TypeAnnexe.Certificat.name());
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 }

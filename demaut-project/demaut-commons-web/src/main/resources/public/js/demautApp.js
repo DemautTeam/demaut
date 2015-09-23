@@ -1,9 +1,8 @@
 var ngDemautApp = angular.module('ngDemautApp', ['ngSanitize', 'ngRoute', 'ngAnimate', 'commonsModule']);
 
-/*Necessaire si les services ne sont pas dans la même arborescence que la page html*/
-// TODO Dev à corrigert URL Prefix et Main : ngDemautApp.constant('urlPrefix', '/outils/demautMicrobiz-api');
-ngDemautApp.constant('urlPrefix', 'http://localhost:8083/outils/demautMicrobiz-api');
-ngDemautApp.constant('urlMain', 'http://localhost:8083/demautMicrobiz');
+/* Necessaire si les services ne sont pas dans la même arborescence que la page html */
+// TODO Dev à corrigert URL Prefix : ngDemautApp.constant('urlPrefix', '/outils/demautMicrobiz');
+ngDemautApp.constant('urlPrefix', 'http://localhost:8083/outils/demautMicrobiz');
 
 ngDemautApp
     .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
@@ -401,20 +400,7 @@ ngDemautApp
     }]);
 
 ngDemautApp
-    .run(function($rootScope, $sce, $location, $http, urlMain) {
-        $http.get(urlMain + '/service/main')
-            .success(function (data, status, headers, config) {
-                var fromJson = angular.fromJson(data.main);
-                if (fromJson != null && fromJson != undefined) {
-                    $rootScope.environment = fromJson.environment != null && fromJson.environment != undefined ? fromJson.environment : null;
-                    $rootScope.user = fromJson.user != null && fromJson.user != undefined ? fromJson.user : null;
-                    $rootScope.buildVersion = fromJson.buildVersion != null && fromJson.buildVersion != undefined ? fromJson.buildVersion : null;
-                    $rootScope.project = fromJson.project != null && fromJson.project != undefined ? fromJson.project : null;
-                }
-            })
-            .error(function (data, status, headers, config) {
-                $rootScope.error = 'Error ' + urlMain + '/camel/main \n Status :' +  status;
-            });
+    .run(function($rootScope, $sce, $location, $http, urlPrefix) {
 
         $rootScope.$on('$viewContentLoaded', function() {
         });
