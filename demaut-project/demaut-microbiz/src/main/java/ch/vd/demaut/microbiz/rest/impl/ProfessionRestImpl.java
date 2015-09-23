@@ -14,10 +14,10 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -39,10 +39,10 @@ public class ProfessionRestImpl implements ProfessionRest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProfessionRestImpl.class);
 
-    @Autowired
+    @Inject
     private DonneesProfessionnellesService donneesProfessionnellesService;
 
-    @Autowired
+    @Inject
     private ProgreSoaService progreSoaService;
 
     @Override

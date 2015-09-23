@@ -23,6 +23,7 @@ import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+
 @ContextConfiguration({"classpath*:/data-jpa-test-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class DemandeAutorisationRepositoryTest {

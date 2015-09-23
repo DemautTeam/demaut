@@ -21,12 +21,6 @@
 
 	<util:properties id="props" location="demautMicrobizTest.cfg"/>
 
-	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-		<property name="brokerURL" value="vm://localhost?broker.persistent=false"/>
-	</bean>
-
-	<bean id="esbStore" class="ch.vd.technical.esb.store.EsbStoreMock"/>
-
 	<bean id="iamInteceptor" class="ch.vd.demaut.microbiz.rest.IamBypassInterceptor"/>
 
 	<bean id="microbizResourceResolver" class="ch.vd.pee.microbiz.core.web.FSResourceResolver">

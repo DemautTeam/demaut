@@ -165,6 +165,9 @@
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-transports-http-jetty</artifactId>
+            <exclusions>
+
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
@@ -173,6 +176,7 @@
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-rs-security-cors</artifactId>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>javax.ws.rs</groupId>
@@ -217,11 +221,64 @@
             <artifactId>serp</artifactId>
         </dependency>
 
+        <!-- validation -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
         <!-- Utilities -->
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
-            <scope>runtime</scope>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.commonsj</groupId>
+                    <artifactId>commons-collections</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.joda</groupId>
+            <artifactId>joda-convert</artifactId>
+        </dependency>
+
+        <!-- LOGGING -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${jcl.over.slf4j.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- Testing -->
@@ -291,33 +348,18 @@
                     <instructions>
                         <Bundle-SymbolicName>ch.vd.demaut.microbiz.${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
-                        <Import-Package>javax.jms,
-                            javax.persistence,javax.persistence.spi,javax.persistence.criteria,javax.persistence.metamodel,
-                            javax.annotation,oracle.jdbc.driver,javax.sql,
-                            !org.codehaus.groovy.control,!org.codehaus.groovy.control.customizers,!org.codehaus.groovy.reflection,
-                            !org.codehaus.groovy.runtime,!org.codehaus.groovy.runtime.callsite,!org.codehaus.groovy.runtime.typehandling,
-                            !org.codehaus.groovy.runtime.wrappers,!org.codehaus.groovy.transform,!groovy.lang,
-                            !javax.enterprise.context,!javax.enterprise.context.spi,!javax.enterprise.event,
-                            !javax.enterprise.inject,!javax.enterprise.inject.spi,!javax.enterprise.util,
-                            !javax.interceptor,!javax.mail,!javax.mail.internet,!javax.management,!javax.naming,!javax.net,
-                            !javax.net.ssl,!javax.validation;version,!javax.validation.bootstrap,!javax.validation.constraints,
-                            !javax.validation.executable,!javax.validation.metadata,
-                            *
-                        </Import-Package>
+                        <Import-Package>*,!org.joda.time,!org.joda.convert,!javax.validation,!javax.validation.bootstrap,!javax.validation.constraints,!org.apache.commons.beanutils,!org.apache.commons.collections4,!org.apache.commons.lang3,!org.apache.commons.lang3.builder,!org.codehaus.groovy.control,!org.codehaus.groovy.control.customizers,!org.codehaus.groovy.reflection,!org.codehaus.groovy.runtime,!org.codehaus.groovy.runtime.callsite,!org.codehaus.groovy.runtime.typehandling,!org.codehaus.groovy.runtime.wrappers,!org.codehaus.groovy.transform,!groovy.lang,!javax.enterprise.context,!javax.enterprise.context.spi,!javax.enterprise.event,!javax.enterprise.inject,!javax.enterprise.inject.spi,!javax.enterprise.util,!javax.interceptor,!javax.mail,!javax.mail.internet,!javax.management,!javax.naming,!javax.net,!javax.net.ssl,!org.apache.cxf.jaxrs.security,!com.sun.msv.grammar,!com.sun.msv.grammar.trex,!com.sun.msv.grammar.xmlschema,!com.sun.msv.reader,!com.sun.msv.reader.trex.ng,!com.sun.msv.reader.util,!com.sun.msv.reader.xmlschema,!com.sun.msv.util,!com.sun.msv.verifier,!com.sun.msv.verifier.regexp,!com.sun.msv.verifier.regexp.xmlschema,!com.sun.xml.bind.marshaller,!com.sun.xml.fastinfoset.stax,!net.sf.cglib.proxy,!org.slf4j.impl,!org.apache.log,!org.apache.log4j,!org.apache.log4j.spi,!org.apache.xml.resolver,!org.apache.xml.resolver.helpers,!org.apache.xml.resolver.tools,!org.hibernate.validator,!org.hibernate.validator.internal.engine,!org.hibernate.validator.internal.util,!org.hibernate.validator.internal.util.classhierarchy,!org.hibernate.validator.internal.util.logging,!org.hibernate.validator.internal.util.privilegedactions,!org.joda.convert,!org.objectweb.asm,!org.osgi.framework,!org.osgi.service.blueprint.container,!org.osgi.service.blueprint.reflect,!org.osgi.service.cm,!org.osgi.util.tracker,!org.relaxng.datatype,!org.springframework.aop,!org.springframework.aop.framework,!org.springframework.aop.support,!org.springframework.beans,!org.springframework.beans.factory,!org.springframework.beans.factory.annotation,!org.springframework.beans.factory.config,!org.springframework.beans.factory.support,!org.springframework.beans.factory.wiring,!org.springframework.beans.factory.xml,!org.springframework.context,!org.springframework.context.event,!org.springframework.context.support,!org.springframework.core,!org.springframework.core.io,!org.springframework.core.io.support,!org.springframework.core.type,!org.springframework.core.type.classreading,!org.springframework.jms.connection,!org.springframework.stereotype,!org.springframework.transaction.annotation,!org.springframework.util,!sun.reflect,!ch.qos.logback.core,!ch.qos.logback.core,!ch.qos.logback.core.boolex,!ch.qos.logback.core.db,!ch.qos.logback.core.encoder,!ch.qos.logback.core.filter,!ch.qos.logback.core.helpers,!ch.qos.logback.core.html,!ch.qos.logback.core.joran,!ch.qos.logback.core.joran.action,!ch.qos.logback.core.joran.conditional,!ch.qos.logback.core.joran.event,!ch.qos.logback.core.joran.spi,!ch.qos.logback.core.joran.util,!ch.qos.logback.core.net,!ch.qos.logback.core.net.server,!ch.qos.logback.core.net.ssl,!ch.qos.logback.core.pattern,!ch.qos.logback.core.pattern.color,!ch.qos.logback.core.pattern.parser,!ch.qos.logback.core.sift,!ch.qos.logback.core.spi,!ch.qos.logback.core.status,!ch.qos.logback.core.util,!org.codehaus.commons.compiler,!org.codehaus.janino,!version</Import-Package>
                         <Private-Package>ch.vd.demaut.microbiz</Private-Package>
                         <Distributable>false</Distributable>
                         <Include-Resource>target/classes</Include-Resource>
                         <DynamicImport-Package>*</DynamicImport-Package>
-                        <!--
-                          embed compile/runtime dependencies using path that matches the copied dependency folder
-                        -->
-                        <Embed-Dependency>*;scope=compile|runtime|!provided;inline=false</Embed-Dependency>
-                        <Embed-Transitive>true</Embed-Transitive>
+                        <Embed-Dependency>*;scope=compile|runtime|!provided|!test;inline=false</Embed-Dependency>
+                        <Embed-Transitive>false</Embed-Transitive>
                         <Embed-StripGroup>true</Embed-StripGroup>
                         <Embed-Directory>lib</Embed-Directory>
+                        <Bundle-Version>${pom.version}</Bundle-Version>
                     </instructions>
                     <supportedProjectTypes>
-                        <supportedProjectType>jar</supportedProjectType>
                         <supportedProjectType>bundle</supportedProjectType>
                     </supportedProjectTypes>
                 </configuration>
