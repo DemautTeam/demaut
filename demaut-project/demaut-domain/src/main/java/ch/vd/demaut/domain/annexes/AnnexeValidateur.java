@@ -1,5 +1,6 @@
 package ch.vd.demaut.domain.annexes;
 
+import ch.vd.demaut.commons.validation.DataValidateur;
 import ch.vd.demaut.commons.validation.ValidatorFactoryDefault;
 
 import javax.validation.ConstraintViolation;
@@ -7,7 +8,7 @@ import javax.validation.Validator;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-public class AnnexeValidateur {
+public class AnnexeValidateur implements DataValidateur<Annexe> {
 
     /**
      * Singleton predicate instance
@@ -55,6 +56,7 @@ public class AnnexeValidateur {
      * Vérifie que l'annexe est valide. Si non valide, renvoie une
      * {@link AnnexeNonValideException}
      */
+    @Override
     public void valider(Annexe annexe) {
 
         // 1. Valide la structure d'une annexe
