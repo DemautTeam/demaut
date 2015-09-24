@@ -1,7 +1,13 @@
 package ch.vd.demaut.domain.demandes;
 
+import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.fk.FunctionalKeyAbstract;
 
+/**
+ * Représente une clé fonctionnelle d'une demande
+ *
+ */
+@ValueObject
 public class DemandeFK extends FunctionalKeyAbstract<Demande> {
 
     // ********************************************************* Fields

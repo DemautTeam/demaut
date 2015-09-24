@@ -5,7 +5,7 @@ import ch.vd.demaut.domain.utilisateurs.Utilisateur;
 import ch.vd.demaut.domain.utilisateurs.UtilisateurRepository;
 
 /**
- * Mock du {@link DemandeurRepository}
+ * Mock du {@link UtilisateurRepository}
  */
 public class UtilisateurRepositoryJava extends GenericRepositoryMock<Utilisateur, Long>
         implements UtilisateurRepository {

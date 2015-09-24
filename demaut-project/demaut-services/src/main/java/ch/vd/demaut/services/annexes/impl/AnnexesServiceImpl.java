@@ -34,8 +34,8 @@ public class AnnexesServiceImpl implements AnnexesService {
 	
 	
 	/**
-	 * L'annexe retournée de préférence ne devrait PAS contenir le contunu
-	 * stream pour la consultation front
+	 * Renvoie la liste des {@link AnnexeMetadata} pour une demande identifiée
+	 * par une {@link ReferenceDeDemande}
 	 *
 	 * @param demandeReference
 	 *            String
@@ -50,8 +50,8 @@ public class AnnexesServiceImpl implements AnnexesService {
 	}
 
 	/**
-	 * L'annexe retournée DOIT absolument contenir le contunu stream pour la
-	 * consultation front
+	 * Renvoie le {@link ContenuAnnexe} d'une {@link Annexe} en fonction de la
+	 * {@link DemandeAutorisation} et de son {@link NomFichier}
 	 *
 	 * @param demandeReference
 	 *            String
@@ -69,6 +69,9 @@ public class AnnexesServiceImpl implements AnnexesService {
 		return contenu;
 	}
 
+	/**
+	 * Attache une {@link Annexe} à une {@link DemandeAutorisation}
+	 */
 	@Transactional
 	@Override
 	public void attacherUneAnnexe(ReferenceDeDemande ref, File file, NomFichier nomFichier, TypeAnnexe type) {
@@ -81,6 +84,9 @@ public class AnnexesServiceImpl implements AnnexesService {
 
 	}
 
+	/**
+	 * Attache une {@link Annexe} à une {@link DemandeAutorisation}
+	 */
 	@Transactional
 	@Override
 	public void attacherUneAnnexe(ReferenceDeDemande ref, Annexe annexe) {
@@ -109,7 +115,7 @@ public class AnnexesServiceImpl implements AnnexesService {
 		try {
 			contenu = IOUtils.toByteArray(new FileInputStream(file));
 		} catch (FileNotFoundException e) {
-			// TODO: faire une exeception plus explicite
+			// TODO: Faire une exception plus explicite
 			throw new AnnexeNonValideException();
 		} catch (IOException e) {
 			throw new AnnexeNonValideException();

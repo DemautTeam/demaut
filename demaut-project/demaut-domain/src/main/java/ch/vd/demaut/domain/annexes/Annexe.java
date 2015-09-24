@@ -5,7 +5,8 @@ import ch.vd.demaut.commons.vo.BaseValueObjectWithId;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 
 /**
- * Représente une Annexe associée à une demande {@link DemandeAutorisation}
+ * Représente une Annexe associée à une demande {@link DemandeAutorisation} <br>
+ * Une annexe est une pièce jointe (un document) avec des données complémentaires
  */
 @ValueObject
 public class Annexe extends BaseValueObjectWithId {

@@ -3,6 +3,9 @@ package ch.vd.demaut.cucumber.runner;
 import cucumber.api.CucumberOptions;
 import org.junit.runner.RunWith;
 
+/**
+ * Permet d'exécuter les scénarios Cucumber en mode JPA
+ */
 @RunWith(CucumberDataProfile.class)
 @CucumberOptions(
         features = "classpath:features", // ou classpath:**/*.feature

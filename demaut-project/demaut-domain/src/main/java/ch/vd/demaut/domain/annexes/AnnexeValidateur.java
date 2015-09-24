@@ -91,7 +91,8 @@ public class AnnexeValidateur {
 		}
 	}
 
-	// TODO: Validateur de NomFichier qui doit être appelé par ce validateur
+	// TODO: Créer une classe NomFichierValidateur qui valide les invariants
+	// d'un NomFichier et l'utiliser dans ce validateur
 	private void validerNomFichier(Annexe annexe) {
 
 		NomFichier nomFichier = annexe.getNomFichier();
