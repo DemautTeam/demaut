@@ -9,7 +9,7 @@ Fonctionnalité: Supprimer des annexes à la demande par le professionnel
 
   @supprimer-annexe
   Plan du scénario: Réussir à supprimer une annexe en fonction du nom de fichier
-    Etant donné une demande de type "Medecin" en cours de saisie l´utilisateur
+    Etant donné une demande de profession "Medecin" en cours de saisie l´utilisateur
 	Etant donné les annexes <nom_fichier> déja saisies par l'utilisateur:
 	  | Type d'annexe 	    | Nom du fichier            |
 	  | Certificat 			| certificat.pdf 		    |

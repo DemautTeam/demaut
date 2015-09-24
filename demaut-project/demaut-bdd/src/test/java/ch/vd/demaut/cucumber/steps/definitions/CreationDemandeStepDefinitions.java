@@ -31,8 +31,8 @@ public class CreationDemandeStepDefinitions extends StepDefinitions {
     // ********************************************************* Given
 
     // ********************************************************* When
-    @Lorsque("^l´utilisateur initialise une demande de type \"([^\"]*)\"$")
-    public void que_lutilisateur_initialise_une_demande_de_type(ProfessionDeLaSante profession) throws Throwable {
+    @Lorsque("^l´utilisateur initialise une demande de profession \"([^\"]*)\"$")
+    public void que_lutilisateur_initialise_une_demande_de_profession(ProfessionDeLaSante profession) throws Throwable {
         demandeAutorisationSteps.initialiserDemandeEnCours(profession);
     }
 

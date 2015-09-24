@@ -36,7 +36,7 @@ public class SupprimerAnnexesStepDefinitions {
 
     // ********************************************************* Before
 
-    @Etantdonné("^une demande de type \"([^\"]*)\" en cours de saisie par l´utilisateur$")
+    @Etantdonné("^une demande de profession \"([^\"]*)\" en cours de saisie par l´utilisateur$")
     public void initialiserLaDemandeEnCours(ProfessionDeLaSante profession) throws Throwable {
         annexesSteps.getDemandeAutorisationSteps().initialiserDemandeEnCours(profession);
     }

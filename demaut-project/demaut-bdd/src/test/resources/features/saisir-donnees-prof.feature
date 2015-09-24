@@ -10,7 +10,7 @@ Fonctionnalité: Saisir les données professionnelles de la demande
 
   @saisir-profession
   Plan du scénario: Saisir la profession du demandeur
-    Etant donné aucune demande de type "Medecin" en cours de saisie à l´état "Brouillon"
+    Etant donné aucune demande de profession "Medecin" en cours de saisie à l´état "Brouillon"
     Etant donné un demandeur de profession "Medecin"
     Lorsque que l´utilisateur initialise une demande de profession "Medecin"
     Alors le système Demaut crée la demande avec les données professionnelles
@@ -19,7 +19,7 @@ Fonctionnalité: Saisir les données professionnelles de la demande
 
   @saisir-gln
   Plan du scénario: Saisir le code gln du demandeur
-    Etant donné une demande de type "Medecin" en cours de saisie à l´état "Brouillon"
+    Etant donné une demande de profession "Medecin" en cours de saisie à l´état "Brouillon"
     Lorsque que l´utilisateur saisit son code <gln> de "13" catactères
     Alors le système Demaut <action> les données professionnelles
   Exemples:

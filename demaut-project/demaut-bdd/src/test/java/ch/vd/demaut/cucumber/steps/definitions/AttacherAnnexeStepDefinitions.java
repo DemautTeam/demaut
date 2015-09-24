@@ -51,7 +51,7 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
         annexesSteps.getDemandeAutorisationSteps().initialiserUtilisateur(login);
     }
 
-    @Etantdonné("^une demande de type \"([^\"]*)\" en cours de saisie$")
+    @Etantdonné("^une demande de profession \"([^\"]*)\" en cours de saisie$")
     public void initialiserUneDemandeEnCours(ProfessionDeLaSante profession) throws Throwable {
         annexesSteps.getDemandeAutorisationSteps().initialiserDemandeEnCours(profession);
     }
