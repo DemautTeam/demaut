@@ -1,16 +1,13 @@
 package ch.vd.demaut.microbiz.provider;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.FactoryBean;
-
 import javax.ws.rs.core.MediaType;
 
-public class CustomJacksonJaxbJsonProvider implements FactoryBean<JacksonJaxbJsonProvider> {
+import org.springframework.beans.factory.FactoryBean;
 
-    private final Logger logger = LoggerFactory.getLogger(CustomJacksonJaxbJsonProvider.class);
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
+
+public class CustomJacksonJaxbJsonProvider implements FactoryBean<JacksonJaxbJsonProvider> {
 
     @Override
     public JacksonJaxbJsonProvider getObject() throws Exception {

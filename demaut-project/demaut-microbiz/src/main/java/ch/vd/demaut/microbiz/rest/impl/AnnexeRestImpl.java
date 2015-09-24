@@ -136,7 +136,6 @@ public class AnnexeRestImpl implements AnnexeRest {
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);
         NomFichier nomFichier = new NomFichier(annexeFileName);
-        TypeAnnexe typeAnnexe = TypeAnnexe.valueOf(annexeType);
 
         annexesService.supprimerUneAnnexe(referenceDeDemande, nomFichier);
 

@@ -10,6 +10,7 @@ import cucumber.api.java.fr.Lorsque;
 public class SaisirDonneePersoStepDefinitions extends StepDefinitions {
 
     // ********************************************************* Fields
+    @SuppressWarnings("unused")
     private DonneesPersonnellesSteps donneesPersonnellesSteps;
 
     // ********************************************************* Technical
