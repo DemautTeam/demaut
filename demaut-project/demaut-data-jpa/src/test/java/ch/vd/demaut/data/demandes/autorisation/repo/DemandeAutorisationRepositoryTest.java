@@ -81,7 +81,8 @@ public class DemandeAutorisationRepositoryTest {
 
         // Sauvegarder la demande
         DemandeAutorisation demandeAutorisation = demautFactory.initierDemandeAutorisation(utilisateur.getLogin(), ProfessionDeLaSante.Medecin, null);
-        Annexe annexe = new Annexe(TypeAnnexe.CV, "test.pdf", new byte[1]);
+        byte[] contenu = "AnnexeContenu".getBytes();
+        Annexe annexe = new Annexe(TypeAnnexe.CV, "test.pdf", contenu);
         demandeAutorisation.validerEtAttacherAnnexe(annexe);
         assertThat(demandeAutorisation.getId()).isNull();
         demandeAutorisationRepository.store(demandeAutorisation);
@@ -92,7 +93,11 @@ public class DemandeAutorisationRepositoryTest {
         // Recuperer la demande
         DemandeAutorisation memeDemande = demandeAutorisationRepository.findBy(demandeAutorisation.getId());
         assertThat(memeDemande).isEqualTo(demandeAutorisation);
+        
+        //Tester les annexes
         assertThat(memeDemande.listerLesAnnexes()).isNotEmpty();
+        Annexe premiereAnnexe = memeDemande.listerLesAnnexes().iterator().next();
+        assertThat(premiereAnnexe.getContenu().getContenu()).isEqualTo(contenu);
 
         commitTransaction(transaction);
     }

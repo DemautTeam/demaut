@@ -1,8 +1,5 @@
 package ch.vd.demaut.commons.validation;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.validation.Configuration;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -14,8 +11,6 @@ import javax.validation.ValidatorFactory;
  * Warning validator is a singleton.
  */
 public class ValidatorFactoryDefault {
-
-    private static final Logger log = LoggerFactory.getLogger(ValidatorFactoryDefault.class);
 
     private static Configuration<?> config = null;
     private static ValidatorFactory INSTANCE = null;
