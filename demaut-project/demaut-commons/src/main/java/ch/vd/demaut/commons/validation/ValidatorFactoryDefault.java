@@ -10,6 +10,8 @@ import javax.validation.ValidatorFactory;
 
 /**
  * Factory to create a JavaBean validator
+ *
+ * Warning validator is a singleton.
  */
 public class ValidatorFactoryDefault {
 
