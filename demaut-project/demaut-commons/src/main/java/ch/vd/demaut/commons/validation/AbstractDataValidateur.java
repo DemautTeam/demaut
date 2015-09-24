@@ -11,7 +11,7 @@ public abstract class AbstractDataValidateur<T> implements DataValidateur<T> {
 
     private final Validator validator;
 
-    protected AbstractDataValidateur(){
+    public AbstractDataValidateur(){
         validator = ValidatorFactoryDefault.getValidator();
     }
 

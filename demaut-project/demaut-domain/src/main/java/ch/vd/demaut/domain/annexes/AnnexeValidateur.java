@@ -1,5 +1,6 @@
 package ch.vd.demaut.domain.annexes;
 
+import ch.vd.demaut.commons.validation.AbstractDataValidateur;
 import ch.vd.demaut.commons.validation.DataValidateur;
 import ch.vd.demaut.commons.validation.ValidatorFactoryDefault;
 
@@ -8,7 +9,7 @@ import javax.validation.Validator;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-public class AnnexeValidateur implements DataValidateur<Annexe> {
+public class AnnexeValidateur extends AbstractDataValidateur<Annexe> {
 
     // ********************************************************* Static fields
     static private final int tailleMin = 1; // en octets
@@ -17,13 +18,8 @@ public class AnnexeValidateur implements DataValidateur<Annexe> {
     // ********************************************************* Singleton
     static private final int tailleNomFichierMax = 255; // en octets
     // ********************************************************* Fields
-    private final Validator validator;
 
     // ********************************************************* Constructeur
-
-    public AnnexeValidateur() {
-        validator = ValidatorFactoryDefault.getValidator();
-    }
 
 
 
@@ -60,7 +56,7 @@ public class AnnexeValidateur implements DataValidateur<Annexe> {
     }
 
     public void validerStructure(Annexe annexe) {
-        Set<ConstraintViolation<Annexe>> constraintViolationsResult = validator.validate(annexe);
+        Set<ConstraintViolation<Annexe>> constraintViolationsResult = validateData(annexe);
 
         if (constraintViolationsResult.size() > 0) {
             throw new AnnexeNonValideException();
