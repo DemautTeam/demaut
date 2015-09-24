@@ -19,22 +19,15 @@ public class ValidatorFactoryDefault {
     private static ValidatorFactory INSTANCE = null;
     private static Validator validator = null;
 
-    public synchronized static Configuration<?> getConfig() {
-        if (config == null) {
-            config = Validation.byDefaultProvider().configure();
-            log.debug("Validation Provider configured successfully");
-        }
-        return config;
-    }
-
-    public synchronized static ValidatorFactory getInstance() {
+    private synchronized static ValidatorFactory getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = getConfig().buildValidatorFactory();
+            config = Validation.byDefaultProvider().configure();
+            INSTANCE = config.buildValidatorFactory();
         }
         return INSTANCE;
     }
 
-    public synchronized static Validator getValidator() {
+    public static Validator getValidator() {
         if (validator == null) {
             validator = getInstance().getValidator();
         }

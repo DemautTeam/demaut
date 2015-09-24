@@ -21,7 +21,6 @@ public class AnnexeValidateur {
     static private final int tailleNomFichierMax = 255; // en octets
     // ********************************************************* Fields
     private Validator validator;
-    private Set<ConstraintViolation<Annexe>> constraintViolationsResult;
 
     private AnnexeValidateur() {
         validator = ValidatorFactoryDefault.getValidator();
@@ -70,7 +69,7 @@ public class AnnexeValidateur {
     }
 
     public void validerStructure(Annexe annexe) {
-        constraintViolationsResult = validator.validate(annexe);
+        Set<ConstraintViolation<Annexe>> constraintViolationsResult = validator.validate(annexe);
 
         if (constraintViolationsResult.size() > 0) {
             throw new AnnexeNonValideException();

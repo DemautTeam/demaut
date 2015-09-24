@@ -6,6 +6,7 @@ import ch.vd.demaut.domain.config.ConfigDemaut;
 import ch.vd.demaut.domain.demandes.Demande;
 import ch.vd.demaut.domain.demandes.DemandeFK;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnelles;
 import ch.vd.demaut.domain.utilisateurs.Login;
 
 import javax.validation.constraints.NotNull;
@@ -22,6 +23,8 @@ public class DemandeAutorisation extends Demande {
     private Login login;
 
     private StatutDemandeAutorisation statutDemandeAutorisation;
+
+    private DonneesPersonnelles donneesPersonnelles;
 
     private List<Annexe> annexes;
 
@@ -137,6 +140,10 @@ public class DemandeAutorisation extends Demande {
         return new ListeDesAnnexes(annexes);
     }
 
+    public DonneesPersonnelles getDonneesPersonnelles() {
+        return donneesPersonnelles;
+    }
+
     // ********************************************************* Setters
 
 
@@ -145,5 +152,7 @@ public class DemandeAutorisation extends Demande {
     public DemandeFK getFunctionalKey() {
         return new DemandeFK(this);
     }
+
+
 
 }
