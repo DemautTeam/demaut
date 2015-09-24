@@ -89,6 +89,7 @@
 	<embeddable class="ch.vd.demaut.domain.annexes.NomFichier">
 		<attributes>
 			<basic name="nomFichier" access="PROPERTY">
+				<!-- column-definition nécessaire pour aue openJpa crée un varchar et non un tinyblob ! -->
 				<column name="nom_fichier" column-definition="varchar" length="254"/>
 			</basic>
 		</attributes>
