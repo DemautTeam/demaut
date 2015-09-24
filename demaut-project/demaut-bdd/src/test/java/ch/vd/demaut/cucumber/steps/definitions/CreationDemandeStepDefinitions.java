@@ -43,7 +43,7 @@ public class CreationDemandeStepDefinitions extends StepDefinitions {
             StatutDemandeAutorisation statut,
             @Transform(LoginConverter.class) Login login,
             ProfessionDeLaSante profession) throws Throwable {
-        //TODO: Vérifier statut et login
+        //TODO: Vérifier état et utilisateur (et pas que profession)
         demandeAutorisationSteps.verifieDemandeCree(profession);
     }
 }

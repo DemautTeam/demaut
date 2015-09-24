@@ -18,17 +18,20 @@ import java.util.Collection;
 @Service("annexesService")
 public class AnnexesServiceImpl implements AnnexesService {
 
-    // ********************************************************* Services injectes
+    // ********************************************************* Services
+    // injectes
     @Inject
     private DemandeAutorisationService demandeAutorisationService;
 
-    // ********************************************************* Implémentation Services
+    // ********************************************************* Implémentation
+    // Services
 
     /**
      * L'annexe retournée de préférence ne devrait PAS contenir le contunu
      * stream pour la consultation front
      *
-     * @param referenceDeDemande ReferenceDeDemande
+     * @param referenceDeDemande
+     *            ReferenceDeDemande
      * @return Collection AnnexeMetadata
      */
     @Transactional(readOnly = true)
@@ -42,8 +45,10 @@ public class AnnexesServiceImpl implements AnnexesService {
      * L'annexe retournée DOIT absolument contenir le contunu stream pour la
      * consultation front
      *
-     * @param referenceDeDemande ReferenceDeDemande
-     * @param nomFichier         NomFichier
+     * @param referenceDeDemande
+     *            ReferenceDeDemande
+     * @param nomFichier
+     *            NomFichier
      * @return Annexe
      */
     @Transactional(readOnly = true)
@@ -55,7 +60,8 @@ public class AnnexesServiceImpl implements AnnexesService {
 
     @Transactional
     @Override
-    public void attacherUneAnnexe(ReferenceDeDemande referenceDeDemande, File file, NomFichier nomFichier, TypeAnnexe type) {
+    public void attacherUneAnnexe(ReferenceDeDemande referenceDeDemande, File file, NomFichier nomFichier,
+            TypeAnnexe type) {
         ContenuAnnexe contenuAnnexe = buildContenuAnnexe(file);
         Annexe annexe = new Annexe(type, nomFichier, contenuAnnexe);
         attacherAnnexe(referenceDeDemande, annexe);
@@ -66,7 +72,6 @@ public class AnnexesServiceImpl implements AnnexesService {
     public void attacherUneAnnexe(ReferenceDeDemande referenceDeDemande, Annexe annexe) {
         attacherAnnexe(referenceDeDemande, annexe);
     }
-
 
     @Transactional
     @Override
@@ -80,7 +85,8 @@ public class AnnexesServiceImpl implements AnnexesService {
         demandeAutorisation.validerEtAttacherAnnexe(annexe);
     }
 
-    // ********************************************************* Methodes privees
+    // ********************************************************* Methodes
+    // privees
 
     private ContenuAnnexe buildContenuAnnexe(File file) {
         byte[] contenu;

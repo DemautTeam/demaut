@@ -9,5 +9,5 @@ public class AnnexeNonValideException extends DomainException {
 
     private static final long serialVersionUID = 2276585885787963698L;
 
-    //TODO : Ajouter message
+    //TODO : Ajouter message associé à cette exception et testé unitairement
 }

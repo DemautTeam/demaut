@@ -48,4 +48,8 @@ public class Adresse extends BaseValueObject {
     public Pays getPays() {
         return pays;
     }
+    
+    public String getComplement() {
+        return complement;
+    }
 }

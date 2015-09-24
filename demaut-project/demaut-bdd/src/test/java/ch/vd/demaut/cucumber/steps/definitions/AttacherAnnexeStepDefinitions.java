@@ -137,7 +137,7 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
         Collection<Annexe> annexesDeLaDemande = annexesSteps.getDemandeAutorisationSteps().getDemandeEnCours().listerLesAnnexes();
         Collection<Annexe> annexesAttendues = listeDesAnnexesAttendues.listerAnnexes();
         assertThat(annexesDeLaDemande).hasSameSizeAs(annexesAttendues);
-        // TODO : vérifier les noms de fichier
+        // TODO : Vérifier que les noms de fichier attachés sont ceux qui sont attendus
     }
 
     @Alors("^toutes les annexes obligatoires sont validés: \"([^\"]*)\"$")

@@ -1,5 +1,9 @@
 package ch.vd.demaut.services.demandes.autorisation.impl;
 
+import javax.inject.Inject;
+
+import org.springframework.transaction.annotation.Transactional;
+
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
@@ -7,9 +11,6 @@ import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.inject.Inject;
 
 public class DemandeAutorisationServiceImpl implements DemandeAutorisationService {
 
@@ -22,7 +23,8 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
     @Transactional
     @Override
     public DemandeAutorisation initialiserDemandeAutorisation(Login login, ProfessionDeLaSante profession) {
-        DemandeAutorisation nouvelleDemande = demandeAutorisationFactory.initierDemandeAutorisation(login, profession, null);
+        DemandeAutorisation nouvelleDemande = demandeAutorisationFactory.initierDemandeAutorisation(login, profession,
+                null);
         demandeAutorisationRepository.store(nouvelleDemande);
         return nouvelleDemande;
     }
