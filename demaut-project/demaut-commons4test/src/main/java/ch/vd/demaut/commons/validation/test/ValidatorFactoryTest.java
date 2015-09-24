@@ -1,18 +1,14 @@
 package ch.vd.demaut.commons.validation.test;
 
 import ch.vd.demaut.commons.validation.ValidatorFactoryDefault;
-import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
 import javax.validation.ValidatorFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(JUnit4.class)
-public class ValidatorFactoryTest extends TestCase {
+public class ValidatorFactoryTest {
 
     private ValidatorFactory validatorFactory;
 

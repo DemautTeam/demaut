@@ -3,11 +3,8 @@ package ch.vd.demaut.commons.validation.test;
 import ch.vd.demaut.commons.validation.ValidatorFactoryDefault;
 import ch.vd.demaut.commons.validation.constraints.SimpleConstraintViolation;
 import ch.vd.demaut.commons.validation.constraints.SimpleConstraintViolationWithMsg;
-import junit.framework.TestCase;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,8 +13,7 @@ import javax.validation.Validator;
 import java.util.HashSet;
 import java.util.Set;
 
-@RunWith(JUnit4.class)
-abstract public class AbstractValidationTest<T> extends TestCase {
+abstract public class AbstractValidationTest<T> {
 
     private static final Logger log = LoggerFactory.getLogger(AbstractValidationTest.class);
 
@@ -26,7 +22,6 @@ abstract public class AbstractValidationTest<T> extends TestCase {
     protected Set<SimpleConstraintViolation<T>> simpleConstraintViolationsResult = null;
     protected Set<SimpleConstraintViolation<T>> simpleConstraintViolationsExpected = null;
 
-    @Override
     @Before
     public void setUp() {
         validator = ValidatorFactoryDefault.getValidator();
