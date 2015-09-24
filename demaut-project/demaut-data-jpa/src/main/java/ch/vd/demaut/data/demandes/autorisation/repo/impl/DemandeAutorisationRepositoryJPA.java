@@ -31,6 +31,7 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
         final CriteriaBuilder builder = this.getEntityManager().getCriteriaBuilder();
         final CriteriaQuery<DemandeAutorisation> criteriaQuery = builder.createQuery(DemandeAutorisation.class);
         Root<DemandeAutorisation> autorisationRoot = criteriaQuery.from(DemandeAutorisation.class);
+        //TODO utiliser le type directement (bug openJPA ?)
         criteriaQuery.where(builder.equal(autorisationRoot.get("referenceDeDemande").get("value"), ref.getValue()));
         TypedQuery<DemandeAutorisation> typedQuery = this.getEntityManager().createQuery(criteriaQuery);
         return typedQuery;
