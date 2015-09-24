@@ -32,7 +32,7 @@ public class ProgreSoaServiceMock {
     }
 
     @GET
-    @Path(ProgreSoaServiceImpl.DEMAUT_TIERS_PATH + "/AP_TITRE")
+    @Path(ProgreSoaServiceImpl.DEMAUT_REF_PATH + "/AP_TITRE")
     @Produces(MediaType.APPLICATION_XML)
     @SuppressWarnings("unchecked")
     public Response listeSOATypesActivites() throws Exception {
@@ -41,7 +41,7 @@ public class ProgreSoaServiceMock {
     }
 
     @GET
-    @Path(ProgreSoaServiceImpl.DEMAUT_TIERS_PATH + "/D_FORMATION_APPROFONDIE")
+    @Path(ProgreSoaServiceImpl.DEMAUT_REF_PATH + "/D_FORMATION_APPROFONDIE")
     @Produces(MediaType.APPLICATION_XML)
     @SuppressWarnings("unchecked")
     public Response listeSOAFormationApprofondie() throws Exception {
@@ -50,7 +50,7 @@ public class ProgreSoaServiceMock {
     }
 
     @GET
-    @Path(ProgreSoaServiceImpl.DEMAUT_TIERS_PATH + "/D_FORMATION_COMPLEMENTAIRE")
+    @Path(ProgreSoaServiceImpl.DEMAUT_REF_PATH + "/D_FORMATION_COMPLEMENTAIRE")
     @Produces(MediaType.APPLICATION_XML)
     @SuppressWarnings("unchecked")
     public Response listeSOAFormationComplementaire() throws Exception {
@@ -59,7 +59,7 @@ public class ProgreSoaServiceMock {
     }
 
     @GET
-    @Path(ProgreSoaServiceImpl.DEMAUT_TIERS_PATH + "/D_FORMATION_INITIALE")
+    @Path(ProgreSoaServiceImpl.DEMAUT_REF_PATH + "/D_FORMATION_INITIALE")
     @Produces(MediaType.APPLICATION_XML)
     @SuppressWarnings("unchecked")
     public Response listeSOAFormationInitiale() throws Exception {
@@ -68,7 +68,7 @@ public class ProgreSoaServiceMock {
     }
 
     @GET
-    @Path(ProgreSoaServiceImpl.DEMAUT_TIERS_PATH + "/D_POSTGRADE")
+    @Path(ProgreSoaServiceImpl.DEMAUT_REF_PATH + "/D_POSTGRADE")
     @Produces(MediaType.APPLICATION_XML)
     @SuppressWarnings("unchecked")
     public Response listeSOADiplomesPostGrade() throws Exception {
@@ -77,7 +77,7 @@ public class ProgreSoaServiceMock {
     }
 
     @GET
-    @Path(ProgreSoaServiceImpl.DEMAUT_TIERS_PATH + "/PROFESSION")
+    @Path(ProgreSoaServiceImpl.DEMAUT_REF_PATH + "/PROFESSION")
     @Produces(MediaType.APPLICATION_XML)
     @SuppressWarnings("unchecked")
     public Response listeSOAProfession() throws Exception {
@@ -86,7 +86,7 @@ public class ProgreSoaServiceMock {
     }
 
     @GET
-    @Path(ProgreSoaServiceImpl.DEMAUT_TIERS_PATH + "/TYPE_PIECE")
+    @Path(ProgreSoaServiceImpl.DEMAUT_REF_PATH + "/TYPE_PIECE")
     @Produces(MediaType.APPLICATION_XML)
     @SuppressWarnings("unchecked")
     public Response listeSOATypesAnnexes() throws Exception {

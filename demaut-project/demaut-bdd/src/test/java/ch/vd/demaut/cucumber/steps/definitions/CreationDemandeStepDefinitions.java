@@ -10,7 +10,7 @@ import cucumber.api.java.fr.Alors;
 import cucumber.api.java.fr.Lorsque;
 
 /**
- * Step definitions pour la fonctionnalité "Attacher des annexes"
+ * Step definitions pour la fonctionnalité "Creation d'une Demande"
  */
 public class CreationDemandeStepDefinitions extends StepDefinitions {
 
@@ -31,7 +31,7 @@ public class CreationDemandeStepDefinitions extends StepDefinitions {
     // ********************************************************* Given
 
     // ********************************************************* When
-    @Lorsque("^que l´utilisateur initialise une demande de type \"([^\"]*)\"$")
+    @Lorsque("^l´utilisateur initialise une demande de type \"([^\"]*)\"$")
     public void que_lutilisateur_initialise_une_demande_de_type(ProfessionDeLaSante profession) throws Throwable {
         demandeAutorisationSteps.initialiserDemandeEnCours(profession);
     }

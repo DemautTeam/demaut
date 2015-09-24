@@ -29,11 +29,4 @@
 
     <bean id="demandeAutorisationFactory" class="ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory"/>
 
-    <!--<jdbc:initialize-database data-source="dataSource" ignore-failures="DROPS">-->
-         <!--<jdbc:script location="classpath:${jpa.drop.script}"/> -->
-         <!--<jdbc:script location="classpath:${jpa.create.script}"/> -->
-         <!--<jdbc:script location="classpath:${jpa.delete.script}"/> -->
-        <!--<jdbc:script location="classpath:${jpa.insert.script}"/>-->
-    <!--</jdbc:initialize-database>-->
-
 </beans>

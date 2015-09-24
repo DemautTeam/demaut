@@ -11,6 +11,11 @@
 		<property name="configDemaut" ref="configDemaut"/>
 	</bean>
 
+	<bean id="annexesSteps" class="ch.vd.demaut.cucumber.steps.AnnexesSteps"
+		  scope="cucumber-glue">
+		<property name="demandeAutorisationSteps" ref="demandeAutorisationSteps"/>
+	</bean>
+
 	<bean
 		class="ch.vd.demaut.cucumber.steps.definitions.CreationDemandeStepDefinitions"
 		scope="cucumber-glue">
@@ -20,7 +25,7 @@
 	<bean
 		class="ch.vd.demaut.cucumber.steps.definitions.AttacherAnnexeStepDefinitions"
 		scope="cucumber-glue">
-		<property name="demandeAutorisationSteps" ref="demandeAutorisationSteps"/>
+		<property name="annexesSteps" ref="annexesSteps"/>
 	</bean>
 
 	<bean id="configDemaut" class="ch.vd.demaut.domain.config.mock.ConfigDemautMock"
