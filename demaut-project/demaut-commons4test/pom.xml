@@ -17,9 +17,10 @@
         <dependency>
             <groupId>ch.vd.demaut</groupId>
             <artifactId>demaut-commons</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
-  <!-- hibernate -->
+        <!-- hibernate -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
@@ -29,7 +30,7 @@
             <artifactId>hibernate-validator-cdi</artifactId>
         </dependency>
 
-  <!-- Testing -->
+        <!-- Testing -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

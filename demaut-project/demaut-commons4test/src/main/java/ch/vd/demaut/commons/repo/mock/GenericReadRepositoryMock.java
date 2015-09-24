@@ -32,5 +32,4 @@ public abstract class GenericReadRepositoryMock<T extends Entity<ID>, ID extends
     public long countAll() {
         return findAll().size();
     }
-
 }

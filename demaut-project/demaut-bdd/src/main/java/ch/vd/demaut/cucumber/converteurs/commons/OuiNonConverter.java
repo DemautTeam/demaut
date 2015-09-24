@@ -1,4 +1,4 @@
-package ch.vd.demaut.cucumber.converters.commons;
+package ch.vd.demaut.cucumber.converteurs.commons;
 
 import cucumber.api.Transformer;
 

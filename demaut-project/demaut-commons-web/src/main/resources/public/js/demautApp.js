@@ -83,7 +83,7 @@ ngDemautApp
                         $location.path("/Demaut/aide");
                     } else {
                         // TODO resolve errors
-                         $rootScope.error = method + ' on ' + url + ' failed with status ' + status + '<br>' +
+                        $rootScope.error = method + ' on ' + url + ' failed with status ' + status + '<br>' +
                             (data != null && data != undefined ? data.substring(data.indexOf('<body>') + 6, data.indexOf('</body>')) : "data empty!");
                         angular.element("#errorModal").modal('toggle');
                         angular.element("#errorModal").modal('show');
@@ -119,16 +119,19 @@ ngDemautApp
         this.params = $routeParams;
         $scope.testSuisse = nationalityTest;//récupération du service de test des nationnalité
         $scope.personalData = {};
-        $scope.isPermisRequired = function(){
+
+        $scope.isPermisRequired = function () {
             return !nationalityTest.isSuisse($scope.personalData.nationalite) && !$scope.personalData.permis;
         };
-        $scope.resetPermis = function(){
-            if(nationalityTest.isSuisse($scope.personalData.nationalite)){
+
+        $scope.resetPermis = function () {
+            if (nationalityTest.isSuisse($scope.personalData.nationalite)) {
                 $scope.personalData.permis = null;
             }
-        }
-        $scope.nextStep = function(){
-            if($scope.donneesPerso.personalDataForm.$valid) {
+        };
+
+        $scope.nextStep = function () {
+            if ($scope.donneesPerso.personalDataForm.$valid) {
                 $log.info('Formulaire valide !');
                 $scope.indexStep += 1;
                 $location.path('/Demaut/demande/professionSante');
@@ -164,7 +167,7 @@ ngDemautApp
                 });
         }
 
-        $scope.previewStep = function(){
+        $scope.previewStep = function () {
             $scope.indexStep -= 1;
             $location.path('/Demaut/demande/donneesPerso');
         };
@@ -199,13 +202,32 @@ ngDemautApp
         $scope.indexStep = 3;
         this.name = "DonneesProfController";
         this.params = $routeParams;
-        $scope.previewStep = function(){
+        $scope.professionnalData = {};
+        $scope.professionnalData.activities = null;
+
+        $scope.previewStep = function () {
             $scope.indexStep -= 1;
             $location.path('/Demaut/demande/professionSante');
         };
-        $scope.nextStep = function(){
+
+        $scope.nextStep = function () {
             $scope.indexStep += 1;
             $location.path('/Demaut/demande/annexes');
+        };
+
+        $scope.addAnotherData = function () {
+            var activite = [
+                {"intitule": $scope.professionnalData.intitule},
+                {"adresseProfessionnelle": $scope.professionnalData.adresseProfessionnelle},
+                {"localite": $scope.professionnalData.localite},
+                {"dateDObtention": $scope.professionnalData.dateDObtention}
+            ];
+
+            $scope.professionnalData.activities[intitule].push(activite);
+            $scope.professionnalData.intitule = null;
+            $scope.professionnalData.adresseProfessionnelle = null;
+            $scope.professionnalData.localite = null;
+            $scope.professionnalData.dateDObtention = null;
         };
     }])
     .controller('AnnexesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log) {

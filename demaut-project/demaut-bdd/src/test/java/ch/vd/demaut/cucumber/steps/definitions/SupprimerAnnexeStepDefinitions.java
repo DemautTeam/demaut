@@ -1,13 +1,12 @@
 package ch.vd.demaut.cucumber.steps.definitions;
 
 import ch.vd.demaut.commons.utils.FileMockHelper;
-import ch.vd.demaut.cucumber.converters.commons.AccepteOuRefuse;
+import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
 import ch.vd.demaut.cucumber.steps.AnnexesSteps;
 import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.java.fr.Alors;
 import cucumber.api.java.fr.Etantdonné;
 import cucumber.api.java.fr.Lorsque;
@@ -18,7 +17,7 @@ import java.util.Map;
 /**
  * Step definitions pour la fonctionnalité "Supprimer des Annexes"
  */
-public class SupprimerAnnexesStepDefinitions {
+public class SupprimerAnnexeStepDefinitions {
 
     // ********************************************************* Fields
 
@@ -53,8 +52,6 @@ public class SupprimerAnnexesStepDefinitions {
             Annexe annexe = new Annexe(typeAnnexe, nomFichier, contenuFichier);
             annexesSteps.attacherUneAnnexe(annexe);
         }
-        // Express the Regexp above with the code you wish you had
-        throw new PendingException();
     }
 
     @Lorsque("^l´utilisateur supprime le fichier \"([^\"]*)\" de type \"([^\"]*)\"$")

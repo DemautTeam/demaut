@@ -1,10 +1,10 @@
 package ch.vd.demaut.cucumber.steps.definitions;
 
 import ch.vd.demaut.commons.utils.FileMockHelper;
-import ch.vd.demaut.cucumber.converters.commons.AccepteOuRefuse;
-import ch.vd.demaut.cucumber.converters.commons.OuiNonConverter;
-import ch.vd.demaut.cucumber.converters.utilisateurs.LoginConverter;
 import ch.vd.demaut.cucumber.converteurs.annexes.ListeDesAnnexesConverter;
+import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
+import ch.vd.demaut.cucumber.converteurs.commons.OuiNonConverter;
+import ch.vd.demaut.cucumber.converteurs.utilisateurs.LoginConverter;
 import ch.vd.demaut.cucumber.steps.AnnexesSteps;
 import ch.vd.demaut.domain.annexes.*;
 import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
@@ -57,7 +57,7 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
     }
 
     @Etantdonné("^les formats de fichier acceptés:$")
-    public void que_les_formats_de_fichier_acceptés(DataTable dataTable) throws Throwable {
+    public void les_formats_de_fichier_acceptés(DataTable dataTable) throws Throwable {
         List<FormatFichierAccepte> formatsAcceptes = dataTable.asList(FormatFichierAccepte.class);
         assertThat(formatsAcceptes).containsExactly(FormatFichierAccepte.values());
     }
