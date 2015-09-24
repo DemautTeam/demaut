@@ -1,4 +1,4 @@
-package ch.vd.demaut.domain.demandeurs.donneesPerso;
+package ch.vd.demaut.domain.demandeur.donneesPerso;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.StringVO;

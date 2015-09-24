@@ -1,4 +1,4 @@
-package ch.vd.demaut.domain.demandeurs.donneesPerso;
+package ch.vd.demaut.domain.demandeur.donneesPerso;
 
 /**
  * Created by mourad on 14.09.15.
