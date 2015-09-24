@@ -20,7 +20,7 @@ public class AnnexeValidateurTest {
 
     @Before
     public void setUp() {
-        validateur = AnnexeValidateur.getInstance();
+        validateur = new AnnexeValidateur();
     }
 
     @Test

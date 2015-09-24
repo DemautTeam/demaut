@@ -10,10 +10,6 @@ import java.util.regex.Pattern;
 
 public class AnnexeValidateur implements DataValidateur<Annexe> {
 
-    /**
-     * Singleton predicate instance
-     */
-    public static final AnnexeValidateur INSTANCE = new AnnexeValidateur();
     // ********************************************************* Static fields
     static private final int tailleMin = 1; // en octets
     static private final int tailleMax = 3 * 1024 * 1024; // en octets
@@ -21,22 +17,15 @@ public class AnnexeValidateur implements DataValidateur<Annexe> {
     // ********************************************************* Singleton
     static private final int tailleNomFichierMax = 255; // en octets
     // ********************************************************* Fields
-    private Validator validator;
-
-    private AnnexeValidateur() {
-        validator = ValidatorFactoryDefault.getValidator();
-    }
+    private final Validator validator;
 
     // ********************************************************* Constructeur
 
-    /**
-     * Factory returning the singleton instance.
-     *
-     * @return the singleton instance
-     */
-    public static AnnexeValidateur getInstance() {
-        return INSTANCE;
+    public AnnexeValidateur() {
+        validator = ValidatorFactoryDefault.getValidator();
     }
+
+
 
     // ********************************************************* Méthodes métier
 

@@ -58,7 +58,7 @@ public class DemandeAutorisation extends Demande {
      * @param annexeALier
      */
     public void validerEtAttacherAnnexe(Annexe annexeALier) {
-        AnnexeValidateur.getInstance().valider(annexeALier);
+        (new AnnexeValidateur()).valider(annexeALier);
         getListeDesAnnexes().ajouterAnnexe(annexeALier);
     }
 
