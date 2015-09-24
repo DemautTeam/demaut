@@ -2,17 +2,18 @@ package ch.vd.demaut.services.demandeurs.donneesProf.test;
 
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
-import ch.vd.demaut.domain.demandeurs.donneesProf.CodeGLN;
+import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import javax.inject.Inject;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class DonneesProfessionnellesServiceTest {
 
-    @Autowired
+    @Inject
     private DonneesProfessionnellesService donneesProfessionnellesService;
 
     private ReferenceDeDemande referenceDeDemande;

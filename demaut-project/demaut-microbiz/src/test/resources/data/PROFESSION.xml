@@ -1,170 +1,170 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<refRoot>
+<refRoot xmlns="http://www.vd.ch/xmlns/demaut-0001/1">
     <type>PROFESSION</type>
-    <refList>
-        <refListType>
+    <vcList>
+        <vc>
             <id>53843595</id>
             <libl>Assistant-chiropraticien</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843597</id>
             <libl>Assistant-pharmacien</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843598</id>
             <libl>Assistant-psychothérapeute non médecin</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843599</id>
             <libl>Chiropraticien</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843600</id>
             <libl>Diététicien</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843601</id>
             <libl>Droguiste</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843602</id>
             <libl>Droguiste diplômé</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843603</id>
             <libl>Ergothérapeute</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843605</id>
             <libl>Hygiéniste dentaire</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843606</id>
             <libl>Infirmière en hygiène maternelle et en pédiatrie</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843607</id>
             <libl>Infirmier assistant</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843608</id>
             <libl>Infirmier en psychiatrie</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843609</id>
             <libl>Infirmier en soins généraux</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843610</id>
             <libl>Infirmier niveau I</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843611</id>
             <libl>Infirmier niveau II</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843612</id>
             <libl>Logopédiste-orthophoniste</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843613</id>
             <libl>Médecin</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843615</id>
             <libl>Médecin-dentiste</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843616</id>
             <libl>Masseur médical</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843618</id>
             <libl>Masseur-kinésithérapeute</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843619</id>
             <libl>Opticien</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843620</id>
             <libl>Opticien diplômé</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843621</id>
             <libl>Ostéopathe</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843622</id>
             <libl>Pharmacien</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843624</id>
             <libl>Physiothérapeute</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843625</id>
             <libl>Podologue</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843626</id>
             <libl>Psychothérapeute non médecin</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843627</id>
             <libl>Sage-femme</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843628</id>
             <libl>Technicien en radiologie médicale</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843629</id>
             <libl>Technicien en radiologie médicale (radiothérapie u</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843630</id>
             <libl>Technicien en radiologie médicale-radiodiagnostic</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843632</id>
             <libl>Thérapeute de la psychomotricité</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843633</id>
             <libl>Non professionnel de la santé</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>53843634</id>
             <libl>Technicien en radiologie médicale (médecine nucléa</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>99984100</id>
             <libl>Infirmier diplômé</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>322876503</id>
             <libl>Technicien ambulancier</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>322876504</id>
             <libl>Etudiant en médecine</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>322878465</id>
             <libl>Ambulancier CFM ou CCA</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>322878466</id>
             <libl>Auxiliaire de transport</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>322878467</id>
             <libl>Secouriste BLS/AED</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>366782733</id>
             <libl>Ambulancier diplômé</libl>
-        </refListType>
-    </refList>
+        </vc>
+    </vcList>
 </refRoot>

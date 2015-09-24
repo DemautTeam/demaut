@@ -2,7 +2,7 @@ package ch.vd.demaut.services.demandeurs.donneesProf.mock;
 
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
-import ch.vd.demaut.domain.demandeurs.donneesProf.CodeGLN;
+import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
 

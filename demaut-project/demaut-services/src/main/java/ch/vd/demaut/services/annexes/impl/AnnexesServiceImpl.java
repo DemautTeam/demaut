@@ -1,131 +1,104 @@
 package ch.vd.demaut.services.annexes.impl;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Collection;
-
-import javax.inject.Inject;
-
-import org.apache.commons.io.IOUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import ch.vd.demaut.domain.annexes.Annexe;
-import ch.vd.demaut.domain.annexes.AnnexeMetadata;
-import ch.vd.demaut.domain.annexes.AnnexeNonValideException;
-import ch.vd.demaut.domain.annexes.ContenuAnnexe;
-import ch.vd.demaut.domain.annexes.NomFichier;
-import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.domain.annexes.*;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.services.annexes.AnnexesService;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
+import org.apache.commons.io.IOUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.inject.Inject;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Collection;
 
 @Service("annexesService")
 public class AnnexesServiceImpl implements AnnexesService {
 
-	// ********************************************************* Services injectes
-	@Inject
-	private DemandeAutorisationService demandeAutorisationService;
+    // ********************************************************* Services
+    // injectes
+    @Inject
+    private DemandeAutorisationService demandeAutorisationService;
 
-	// ********************************************************* Implémentation Services
-	
-	
-	/**
-	 * Renvoie la liste des {@link AnnexeMetadata} pour une demande identifiée
-	 * par une {@link ReferenceDeDemande}
-	 *
-	 * @param demandeReference
-	 *            String
-	 * @return Collection AnnexeMetadata
-	 */
-	@Transactional(readOnly = true)
-	@Override
-	public Collection<AnnexeMetadata> listerLesAnnexeMetadatas(ReferenceDeDemande ref) {
-		DemandeAutorisation demandeAutorisation = recupererDemnandeParRef(ref);
-		Collection<AnnexeMetadata> annexesMetadatas = demandeAutorisation.listerLesAnnexeMetadatas();
-		return annexesMetadatas;
-	}
+    // ********************************************************* Implémentation
+    // Services
 
-	/**
-	 * Renvoie le {@link ContenuAnnexe} d'une {@link Annexe} en fonction de la
-	 * {@link DemandeAutorisation} et de son {@link NomFichier}
-	 *
-	 * @param demandeReference
-	 *            String
-	 * @param annexeFileName
-	 *            String
-	 * @return Annexe
-	 */
-	@Transactional(readOnly = true)
-	@Override
-	public ContenuAnnexe recupererContenuAnnexe(ReferenceDeDemande ref, NomFichier nomFichier) {
-		DemandeAutorisation demandeAutorisation = recupererDemnandeParRef(ref);
+    /**
+     * L'annexe retournée de préférence ne devrait PAS contenir le contunu
+     * stream pour la consultation front
+     *
+     * @param referenceDeDemande
+     *            ReferenceDeDemande
+     * @return Collection AnnexeMetadata
+     */
+    @Transactional(readOnly = true)
+    @Override
+    public Collection<AnnexeMetadata> listerLesAnnexeMetadatas(ReferenceDeDemande referenceDeDemande) {
+        DemandeAutorisation demandeAutorisation = recupererDemandeParRef(referenceDeDemande);
+        return demandeAutorisation.listerLesAnnexeMetadatas();
+    }
 
-		ContenuAnnexe contenu = demandeAutorisation.extraireContenuAnnexe(nomFichier);
+    /**
+     * L'annexe retournée DOIT absolument contenir le contunu stream pour la
+     * consultation front
+     *
+     * @param referenceDeDemande
+     *            ReferenceDeDemande
+     * @param nomFichier
+     *            NomFichier
+     * @return Annexe
+     */
+    @Transactional(readOnly = true)
+    @Override
+    public ContenuAnnexe recupererContenuAnnexe(ReferenceDeDemande referenceDeDemande, NomFichier nomFichier) {
+        DemandeAutorisation demandeAutorisation = recupererDemandeParRef(referenceDeDemande);
+        return demandeAutorisation.extraireContenuAnnexe(nomFichier);
+    }
 
-		return contenu;
-	}
+    @Transactional
+    @Override
+    public void attacherUneAnnexe(ReferenceDeDemande referenceDeDemande, File file, NomFichier nomFichier,
+            TypeAnnexe type) {
+        ContenuAnnexe contenuAnnexe = buildContenuAnnexe(file);
+        Annexe annexe = new Annexe(type, nomFichier, contenuAnnexe);
+        attacherAnnexe(referenceDeDemande, annexe);
+    }
 
-	/**
-	 * Attache une {@link Annexe} à une {@link DemandeAutorisation}
-	 */
-	@Transactional
-	@Override
-	public void attacherUneAnnexe(ReferenceDeDemande ref, File file, NomFichier nomFichier, TypeAnnexe type) {
+    @Transactional
+    @Override
+    public void attacherUneAnnexe(ReferenceDeDemande referenceDeDemande, Annexe annexe) {
+        attacherAnnexe(referenceDeDemande, annexe);
+    }
 
-		ContenuAnnexe contenuAnnexe = buildContenuAnnexe(file);
+    @Transactional
+    @Override
+    public void supprimerUneAnnexe(ReferenceDeDemande referenceDeDemande, NomFichier nomFichier) {
+        DemandeAutorisation demandeAutorisation = recupererDemandeParRef(referenceDeDemande);
+        demandeAutorisation.supprimerUneAnnexeParNomFichier(nomFichier);
+    }
 
-		Annexe annexe = new Annexe(type, nomFichier, contenuAnnexe);
+    private void attacherAnnexe(ReferenceDeDemande ref, Annexe annexe) {
+        DemandeAutorisation demandeAutorisation = recupererDemandeParRef(ref);
+        demandeAutorisation.validerEtAttacherAnnexe(annexe);
+    }
 
-		attacherAnnexe(ref, annexe);
+    // ********************************************************* Methodes
+    // privees
 
-	}
+    private ContenuAnnexe buildContenuAnnexe(File file) {
+        byte[] contenu;
+        try {
+            contenu = IOUtils.toByteArray(new FileInputStream(file));
+        } catch (IOException e) {
+            throw new AnnexeNonValideException();
+        }
+        return new ContenuAnnexe(contenu);
+    }
 
-	/**
-	 * Attache une {@link Annexe} à une {@link DemandeAutorisation}
-	 */
-	@Transactional
-	@Override
-	public void attacherUneAnnexe(ReferenceDeDemande ref, Annexe annexe) {
-		attacherAnnexe(ref, annexe);
-	}
-	
-
-	@Transactional
-	@Override
-	public void supprimerUneAnnexe(ReferenceDeDemande ref, NomFichier nomFichier) {
-		DemandeAutorisation demandeAutorisation = recupererDemnandeParRef(ref);
-
-		demandeAutorisation.supprimerUneAnnexeParNomFichier(nomFichier);
-	}
-
-	private void attacherAnnexe(ReferenceDeDemande ref, Annexe annexe) {
-		DemandeAutorisation demandeAutorisation = recupererDemnandeParRef(ref);
-
-		demandeAutorisation.validerEtAttacherAnnexe(annexe);
-	}
-
-	// ********************************************************* Methodes privees
-
-	private ContenuAnnexe buildContenuAnnexe(File file) {
-		byte[] contenu;
-		try {
-			contenu = IOUtils.toByteArray(new FileInputStream(file));
-		} catch (FileNotFoundException e) {
-			// TODO: Faire une exception plus explicite
-			throw new AnnexeNonValideException();
-		} catch (IOException e) {
-			throw new AnnexeNonValideException();
-		}
-		ContenuAnnexe contenuAnnexe = new ContenuAnnexe(contenu);
-		return contenuAnnexe;
-	}
-
-	private DemandeAutorisation recupererDemnandeParRef(ReferenceDeDemande ref) {
-		return demandeAutorisationService.recupererDemandeParReference(ref);
-	}
-
+    private DemandeAutorisation recupererDemandeParRef(ReferenceDeDemande referenceDeDemande) {
+        return demandeAutorisationService.recupererDemandeParReference(referenceDeDemande);
+    }
 }

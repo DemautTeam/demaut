@@ -10,7 +10,6 @@ import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.domain.utilisateurs.Utilisateur;
 import ch.vd.demaut.domain.utilisateurs.UtilisateurRepository;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -24,7 +23,7 @@ import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Ignore
+
 @ContextConfiguration({"classpath*:/data-jpa-test-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class DemandeAutorisationRepositoryTest {
@@ -40,6 +39,7 @@ public class DemandeAutorisationRepositoryTest {
     @Inject
     private JpaTransactionManager transactionManagerDemaut;
 
+    @Inject
     private DemandeAutorisationFactory demautFactory;
 
 
@@ -52,7 +52,8 @@ public class DemandeAutorisationRepositoryTest {
 
         assertThat(transactionManagerDemaut).isNotNull();
 
-        demautFactory = DemandeAutorisationFactory.getInstance();
+        assertThat(demautFactory).isNotNull();
+
     }
 
     // ********************************************************* Tests
@@ -64,10 +65,10 @@ public class DemandeAutorisationRepositoryTest {
         Utilisateur utilisateur = creerUtilisateur();
 
         // Sauvegarder la demande
-        DemandeAutorisation d = demautFactory.inititierDemandeAutorisation(utilisateur.getLogin(), ProfessionDeLaSante.Medecin, null);
-        assertThat(d.getId()).isNull();
-        demandeAutorisationRepository.store(d);
-        assertThat(d.getId()).isNotNull();
+        DemandeAutorisation demandeAutorisation = demautFactory.initierDemandeAutorisation(utilisateur.getLogin(), ProfessionDeLaSante.Medecin, null);
+        assertThat(demandeAutorisation.getId()).isNull();
+        demandeAutorisationRepository.store(demandeAutorisation);
+        assertThat(demandeAutorisation.getId()).isNotNull();
 
         commitTransaction(transaction);
     }
@@ -79,18 +80,18 @@ public class DemandeAutorisationRepositoryTest {
         Utilisateur utilisateur = creerUtilisateur();
 
         // Sauvegarder la demande
-        DemandeAutorisation d = demautFactory.inititierDemandeAutorisation(utilisateur.getLogin(), ProfessionDeLaSante.Medecin, null);
+        DemandeAutorisation demandeAutorisation = demautFactory.initierDemandeAutorisation(utilisateur.getLogin(), ProfessionDeLaSante.Medecin, null);
         Annexe annexe = new Annexe(TypeAnnexe.CV, "test.pdf", new byte[1]);
-        d.validerEtAttacherAnnexe(annexe);
-        assertThat(d.getId()).isNull();
-        demandeAutorisationRepository.store(d);
-        assertThat(d.getId()).isNotNull();
-        Collection<Annexe> annexes = d.listerLesAnnexes();
+        demandeAutorisation.validerEtAttacherAnnexe(annexe);
+        assertThat(demandeAutorisation.getId()).isNull();
+        demandeAutorisationRepository.store(demandeAutorisation);
+        assertThat(demandeAutorisation.getId()).isNotNull();
+        Collection<Annexe> annexes = demandeAutorisation.listerLesAnnexes();
         assertThat(annexes).isNotEmpty();
 
         // Recuperer la demande
-        DemandeAutorisation memeDemande = demandeAutorisationRepository.findBy(d.getId());
-        assertThat(memeDemande).isEqualTo(d);
+        DemandeAutorisation memeDemande = demandeAutorisationRepository.findBy(demandeAutorisation.getId());
+        assertThat(memeDemande).isEqualTo(demandeAutorisation);
         assertThat(memeDemande.listerLesAnnexes()).isNotEmpty();
 
         commitTransaction(transaction);
@@ -117,8 +118,7 @@ public class DemandeAutorisationRepositoryTest {
         // http://elnur.pro/programmatic-transaction-management-in-tests-with-spring/
         // http://stackoverflow.com/questions/6864574/openjpa-lazy-fetching-does-not-work
         DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
-        TransactionStatus transaction = transactionManagerDemaut.getTransaction(definition);
-        return transaction;
+        return transactionManagerDemaut.getTransaction(definition);
     }
 
 }

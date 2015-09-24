@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 /**
  * Permet d'exécuter les scénarios Cucumber en mode Mock
  */
-@RunWith(CucumberMockProfile.class)
+@RunWith(CucumberJavaProfile.class)
 @CucumberOptions(//
         features = "classpath:features", // ou classpath:**/*.feature
         glue = {"ch.vd.demaut.cucumber.steps.definitions"}, //

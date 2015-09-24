@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<refRoot>
+<refRoot xmlns="http://www.vd.ch/xmlns/demaut-0001/1">
     <type>AP_TITRE</type>
-    <refList>
-        <refListType>
+    <vcList>
+        <vc>
             <id>50257445</id>
             <libl>Indépendant</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>50257447</id>
             <libl>Dérogatoire</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>50257449</id>
             <libl>Temporaire</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>50257451</id>
             <libl>Particulière</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>50257453</id>
             <libl>Dépendant sous sa propre responsabilité prof.</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>408400744</id>
             <libl>Dépendant sous supervision</libl>
-        </refListType>
-        <refListType>
+        </vc>
+        <vc>
             <id>414178943</id>
             <libl>Dépendant</libl>
-        </refListType>
-    </refList>
+        </vc>
+    </vcList>
 </refRoot>

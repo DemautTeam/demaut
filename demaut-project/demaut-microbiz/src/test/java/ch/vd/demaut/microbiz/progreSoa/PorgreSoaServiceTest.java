@@ -7,10 +7,10 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.inject.Inject;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNotNull;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class PorgreSoaServiceTest {
 
-    @Autowired
+    @Inject
     private ProgreSoaService progreSoaService;
 
     @Before
@@ -31,61 +31,69 @@ public class PorgreSoaServiceTest {
 
     @Test
     public void testRechercheSOATierById() throws Exception {
-        List<ReportedOrganisationType> reportedOrganisationTypes = progreSoaService.rechercheSOATierById("323902038");
+        List<ReportedOrganisationType> reportedOrganisationTypes = progreSoaService.rechercheSOATierById(null, "323902038");
         assertThat(reportedOrganisationTypes).isNotNull();
     }
 
     @Test
     public void testRechercheSOATierByNom() throws Exception {
-        List<ReportedOrganisationType> reportedOrganisationTypes = progreSoaService.rechercheSOATierByNom("Clinique");
+        List<ReportedOrganisationType> reportedOrganisationTypes = progreSoaService.rechercheSOATierByNom(null, "Clinique");
         assertThat(reportedOrganisationTypes).isNotNull();
     }
 
     @Test
-    public void testListeSOAFormationApprofondie() throws Exception {
-        RefRoot refRoot = progreSoaService.listeSOAFormationApprofondie();
+    public void testListeSOAAPTitre() throws Exception {
+        RefRoot refRoot = progreSoaService.listeSOAAPTitre(null);
         assertThat(refRoot).isNotNull();
-        assertThat(refRoot.getRefList().getRefListType()).isNotEmpty();
-        assertThat(refRoot.getRefList().getRefListType().size()).isEqualTo(28);
+        assertThat(refRoot.getVcList().getVc()).isNotEmpty();
+        assertThat(refRoot.getVcList().getVc().size()).isEqualTo(7);
+    }
+
+    @Test
+    public void testListeSOAFormationApprofondie() throws Exception {
+        RefRoot refRoot = progreSoaService.listeSOAFormationApprofondie(null);
+        assertThat(refRoot).isNotNull();
+        assertThat(refRoot.getVcList().getVc()).isNotEmpty();
+        assertThat(refRoot.getVcList().getVc().size()).isEqualTo(28);
     }
 
     @Test
     public void testListeSOAFormationComplementaire() throws Exception {
-        RefRoot refRoot = progreSoaService.listeSOAFormationComplementaire();
+        RefRoot refRoot = progreSoaService.listeSOAFormationComplementaire(null);
         assertThat(refRoot).isNotNull();
-        assertThat(refRoot.getRefList().getRefListType()).isNotEmpty();
-        assertThat(refRoot.getRefList().getRefListType().size()).isEqualTo(27);
+        assertThat(refRoot.getVcList().getVc()).isNotEmpty();
+        assertThat(refRoot.getVcList().getVc().size()).isEqualTo(27);
     }
 
     @Test
     public void testListeSOAFormationInitiale() throws Exception {
-        RefRoot refRoot = progreSoaService.listeSOAFormationInitiale();
+        RefRoot refRoot = progreSoaService.listeSOAFormationInitiale(null);
         assertThat(refRoot).isNotNull();
-        assertThat(refRoot.getRefList().getRefListType()).isNotEmpty();
-        assertThat(refRoot.getRefList().getRefListType().size()).isEqualTo(102);
+        assertThat(refRoot.getVcList().getVc()).isNotEmpty();
+        assertThat(refRoot.getVcList().getVc().size()).isEqualTo(102);
     }
 
     @Test
     public void testListeSOADiplomesPostGrade() throws Exception {
-        RefRoot refRoot = progreSoaService.listeSOADiplomesPostGrade();
+        RefRoot refRoot = progreSoaService.listeSOADiplomesPostGrade(null);
         assertThat(refRoot).isNotNull();
-        assertThat(refRoot.getRefList().getRefListType()).isNotEmpty();
-        assertThat(refRoot.getRefList().getRefListType().size()).isEqualTo(63);
+        assertThat(refRoot.getVcList().getVc()).isNotEmpty();
+        assertThat(refRoot.getVcList().getVc().size()).isEqualTo(63);
     }
 
     @Test
     public void testListeSOAProfession() throws Exception {
-        RefRoot refRoot = progreSoaService.listeSOAProfession();
+        RefRoot refRoot = progreSoaService.listeSOAProfession(null);
         assertThat(refRoot).isNotNull();
-        assertThat(refRoot.getRefList().getRefListType()).isNotEmpty();
-        assertThat(refRoot.getRefList().getRefListType().size()).isEqualTo(41);
+        assertThat(refRoot.getVcList().getVc()).isNotEmpty();
+        assertThat(refRoot.getVcList().getVc().size()).isEqualTo(41);
     }
 
     @Test
     public void testListeSOATypesAnnexes() throws Exception {
-        RefRoot refRoot = progreSoaService.listeSOATypesAnnexes();
+        RefRoot refRoot = progreSoaService.listeSOATypesAnnexes(null);
         assertThat(refRoot).isNotNull();
-        assertThat(refRoot.getRefList().getRefListType()).isNotEmpty();
-        assertThat(refRoot.getRefList().getRefListType().size()).isEqualTo(26);
+        assertThat(refRoot.getVcList().getVc()).isNotEmpty();
+        assertThat(refRoot.getVcList().getVc().size()).isEqualTo(26);
     }
 }

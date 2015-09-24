@@ -21,12 +21,6 @@
 
 	<util:properties id="props" location="demautMicrobizTest.cfg"/>
 
-	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-		<property name="brokerURL" value="vm://localhost?broker.persistent=false"/>
-	</bean>
-
-	<bean id="esbStore" class="ch.vd.technical.esb.store.EsbStoreMock"/>
-
 	<bean id="iamInteceptor" class="ch.vd.demaut.microbiz.rest.IamBypassInterceptor"/>
 
 	<bean id="microbizResourceResolver" class="ch.vd.pee.microbiz.core.web.FSResourceResolver">
@@ -35,17 +29,10 @@
 
 	<import resource="classpath:META-INF/spring/microbiz-context.xml"/>
 
-	<cxf:server address="${demaut.microbiz.progre.soa.url}">
+	<cxf:server address="${demaut.microbiz.progre.soa.endpoint}">
 		<cxf:serviceBeans>
 			<ref local="progreSoaServiceMock"/>
 		</cxf:serviceBeans>
 	</cxf:server>
-
-	<!--<jdbc:initialize-database data-source="dataSource" ignore-failures="DROPS">-->
-		<!--<jdbc:script location="classpath:${jpa.drop.script}"/>-->
-		<!--<jdbc:script location="classpath:${jpa.create.script}"/>-->
-		<!--<jdbc:script location="classpath:${jpa.delete.script}"/>-->
-		<!--<jdbc:script location="classpath:${jpa.insert.script}"/>-->
-	<!--</jdbc:initialize-database>-->
 
 </beans>

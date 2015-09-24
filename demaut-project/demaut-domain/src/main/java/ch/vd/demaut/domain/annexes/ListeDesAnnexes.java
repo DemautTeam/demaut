@@ -4,6 +4,7 @@ import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -35,6 +36,9 @@ public class ListeDesAnnexes {
      * Renvoie la liste des annexes
      */
     public List<Annexe> listerAnnexes() {
+        if(annexes == null){
+            return Collections.unmodifiableList(new ArrayList<Annexe>());
+        }
         return Collections.unmodifiableList(annexes);
     }
 

@@ -22,7 +22,7 @@
 		class="ch.vd.demaut.commons.entities.EntityFunctionalKeyAware">
 		<attributes>
 			<id name="id">
-				<generated-value strategy="AUTO" />
+				<generated-value strategy="AUTO"/>
 			</id>
 			<version name="version"></version>
 		</attributes>
@@ -31,16 +31,16 @@
 	<mapped-superclass class="ch.vd.demaut.commons.vo.BaseValueObjectWithId">
 		<attributes>
 			<id name="id">
-				<generated-value strategy="AUTO" />
+				<generated-value strategy="AUTO"/>
 			</id>
 		</attributes>
 	</mapped-superclass>
 	
 	<entity class="ch.vd.demaut.domain.demandes.Demande">
-		<table name="DEMANDE" />
-		<inheritance strategy="SINGLE_TABLE" />
+		<table name="DEMANDE"/>
+		<inheritance strategy="SINGLE_TABLE"/>
 		<attributes>
-			<embedded name="referenceDeDemande" />
+			<embedded name="referenceDeDemande"/>
 		</attributes>
 	</entity>
 
@@ -69,7 +69,7 @@
 	</entity>
 
 	<entity class="ch.vd.demaut.domain.utilisateurs.Utilisateur">
-		<table name="UTILISATEUR" />
+		<table name="UTILISATEUR"/>
 		<attributes>
 			<embedded name="login"/>
 		</attributes>
@@ -81,10 +81,29 @@
 				<!-- Bug OpenJPA if in STRING -->
 				<enumerated>ORDINAL</enumerated>
 			</basic>
-			<transient name="contenu" />
-			<transient name="nomFichier" />
+			<embedded name="nomFichier"/>
+			<embedded name="contenu"/>
 		</attributes>
 	</entity>
+
+	<embeddable class="ch.vd.demaut.domain.annexes.NomFichier">
+		<attributes>
+			<basic name="nomFichier" access="PROPERTY">
+				<!-- column-definition nécessaire pour aue openJpa crée un varchar et non un tinyblob ! -->
+				<column name="nom_fichier" column-definition="varchar" length="254"/>
+			</basic>
+		</attributes>
+	</embeddable>
+
+	<embeddable class="ch.vd.demaut.domain.annexes.ContenuAnnexe">
+		<attributes>
+			<basic name="contenu" access="PROPERTY">
+				<column name="contenu"/>
+				<lob/>
+			</basic>
+			<basic name="taille" access="PROPERTY"/>
+		</attributes>
+	</embeddable>
 
 	<embeddable class="ch.vd.demaut.domain.utilisateurs.Login">
 		<attributes>
@@ -103,6 +122,9 @@
 	
 	<embeddable class="ch.vd.demaut.domain.demandes.ReferenceDeDemande">
 		<attributes>
+			<basic name="value">
+                <column name="referenceDeDemande"/>
+			</basic>
 		</attributes>
 	</embeddable>
 

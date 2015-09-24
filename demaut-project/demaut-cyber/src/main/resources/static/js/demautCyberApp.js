@@ -5,6 +5,6 @@ var ngDemautCyber = angular.module('ngDemautCyber', ['ngDemautApp', 'portail']);
 ngDemautCyber.directive('demautContainer', ['$route', function ($route) {
     return {
         restrict: 'E',
-        templateUrl: prestationContext + '/html/demaut.html'
+        templateUrl: 'html/demaut.html'
     };
 }]);

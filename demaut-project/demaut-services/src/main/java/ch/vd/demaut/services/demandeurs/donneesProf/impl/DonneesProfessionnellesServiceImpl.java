@@ -3,17 +3,18 @@ package ch.vd.demaut.services.demandeurs.donneesProf.impl;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
-import ch.vd.demaut.domain.demandeurs.donneesProf.CodeGLN;
+import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.inject.Inject;
 
 @Service("donneesProfessionnellesService")
 public class DonneesProfessionnellesServiceImpl implements DonneesProfessionnellesService {
 
-    @Autowired
+    @Inject
     private DemandeAutorisationService demandeAutorisationService;
 
     @Override

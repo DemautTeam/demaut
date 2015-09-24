@@ -15,32 +15,43 @@
 	<dependencies>
 
 		<!-- Demaut -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>demaut-commons</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>demaut-domain</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>demaut-data-jpa</artifactId>
+            <scope>compile</scope>
+        </dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>demaut-services</artifactId>
-			<version>${project.version}</version>
+            <scope>compile</scope>
 		</dependency>
 
         <!-- Demaut test -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>demaut-commons4test</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
         </dependency>
 
 		<!-- Microbiz -->
 		<dependency>
 			<groupId>ch.vd.pee.microbiz</groupId>
 			<artifactId>camel-microbiz</artifactId>
-			<scope>provided</scope>
 		</dependency>
 
         <!-- ESB -->
         <dependency>
             <groupId>ch.vd.technical.esb</groupId>
             <artifactId>esb-client</artifactId>
-            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework</groupId>
@@ -68,7 +79,6 @@
             <groupId>ch.vd.technical.esb</groupId>
             <artifactId>esb-client</artifactId>
             <classifier>tests</classifier>
-            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework</groupId>
@@ -97,42 +107,34 @@
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-core</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-spring</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-jetty</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-jms</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-ftp</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-cxf</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-http4</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-jpa</artifactId>
-            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.geronimo.specs</groupId>
@@ -143,51 +145,46 @@
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-bindy</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.tika</groupId>
             <artifactId>tika-core</artifactId>
-            <scope>provided</scope>
         </dependency>
 
         <!-- ActiveMQ-->
         <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-pool</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-kahadb-store</artifactId>
-            <scope>provided</scope>
         </dependency>
 
         <!-- CXF -->
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-transports-http-jetty</artifactId>
-            <scope>provided</scope>
+            <exclusions>
+
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-jaxrs</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-rs-security-cors</artifactId>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>javax.ws.rs</groupId>
             <artifactId>javax.ws.rs-api</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.jaxrs</groupId>
             <artifactId>jackson-jaxrs-json-provider</artifactId>
-            <scope>provided</scope>
         </dependency>
 
         <!-- Spring -->
@@ -196,42 +193,125 @@
             <artifactId>spring-context</artifactId>
         </dependency>
 
+        <!-- Persistence -->
+        <dependency>
+            <groupId>org.apache.openjpa</groupId>
+            <artifactId>openjpa</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>javax.persistence</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.sourceforge.serp</groupId>
+            <artifactId>serp</artifactId>
+        </dependency>
+
+        <!-- validation -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Utilities -->
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.commonsj</groupId>
+                    <artifactId>commons-collections</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.joda</groupId>
+            <artifactId>joda-convert</artifactId>
+        </dependency>
+
+        <!-- LOGGING -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${jcl.over.slf4j.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Testing -->
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-test</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-test-spring</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>test</scope>
         </dependency>
 
 	</dependencies>
 
 	<build>
-		<plugins>
+        <finalName>${project.artifactId}-microbiz-nondistributable-${project.version}</finalName>
+        <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
@@ -268,24 +348,18 @@
                     <instructions>
                         <Bundle-SymbolicName>ch.vd.demaut.microbiz.${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
-                        <Import-Package>javax.jms,
-                            javax.persistence,javax.persistence.spi,javax.persistence.criteria,javax.persistence.metamodel,
-                            javax.annotation,oracle.jdbc.driver,javax.sql,
-                            *
-                        </Import-Package>
+                        <Import-Package>*,!org.joda.time,!org.joda.convert,!javax.validation,!javax.validation.bootstrap,!javax.validation.constraints,!org.apache.commons.beanutils,!org.apache.commons.collections4,!org.apache.commons.lang3,!org.apache.commons.lang3.builder,!org.codehaus.groovy.control,!org.codehaus.groovy.control.customizers,!org.codehaus.groovy.reflection,!org.codehaus.groovy.runtime,!org.codehaus.groovy.runtime.callsite,!org.codehaus.groovy.runtime.typehandling,!org.codehaus.groovy.runtime.wrappers,!org.codehaus.groovy.transform,!groovy.lang,!javax.enterprise.context,!javax.enterprise.context.spi,!javax.enterprise.event,!javax.enterprise.inject,!javax.enterprise.inject.spi,!javax.enterprise.util,!javax.interceptor,!javax.mail,!javax.mail.internet,!javax.management,!javax.naming,!javax.net,!javax.net.ssl,!org.apache.cxf.jaxrs.security,!com.sun.msv.grammar,!com.sun.msv.grammar.trex,!com.sun.msv.grammar.xmlschema,!com.sun.msv.reader,!com.sun.msv.reader.trex.ng,!com.sun.msv.reader.util,!com.sun.msv.reader.xmlschema,!com.sun.msv.util,!com.sun.msv.verifier,!com.sun.msv.verifier.regexp,!com.sun.msv.verifier.regexp.xmlschema,!com.sun.xml.bind.marshaller,!com.sun.xml.fastinfoset.stax,!net.sf.cglib.proxy,!org.slf4j.impl,!org.apache.log,!org.apache.log4j,!org.apache.log4j.spi,!org.apache.xml.resolver,!org.apache.xml.resolver.helpers,!org.apache.xml.resolver.tools,!org.hibernate.validator,!org.hibernate.validator.internal.engine,!org.hibernate.validator.internal.util,!org.hibernate.validator.internal.util.classhierarchy,!org.hibernate.validator.internal.util.logging,!org.hibernate.validator.internal.util.privilegedactions,!org.joda.convert,!org.objectweb.asm,!org.osgi.framework,!org.osgi.service.blueprint.container,!org.osgi.service.blueprint.reflect,!org.osgi.service.cm,!org.osgi.util.tracker,!org.relaxng.datatype,!org.springframework.aop,!org.springframework.aop.framework,!org.springframework.aop.support,!org.springframework.beans,!org.springframework.beans.factory,!org.springframework.beans.factory.annotation,!org.springframework.beans.factory.config,!org.springframework.beans.factory.support,!org.springframework.beans.factory.wiring,!org.springframework.beans.factory.xml,!org.springframework.context,!org.springframework.context.event,!org.springframework.context.support,!org.springframework.core,!org.springframework.core.io,!org.springframework.core.io.support,!org.springframework.core.type,!org.springframework.core.type.classreading,!org.springframework.jms.connection,!org.springframework.stereotype,!org.springframework.transaction.annotation,!org.springframework.util,!sun.reflect,!ch.qos.logback.core,!ch.qos.logback.core,!ch.qos.logback.core.boolex,!ch.qos.logback.core.db,!ch.qos.logback.core.encoder,!ch.qos.logback.core.filter,!ch.qos.logback.core.helpers,!ch.qos.logback.core.html,!ch.qos.logback.core.joran,!ch.qos.logback.core.joran.action,!ch.qos.logback.core.joran.conditional,!ch.qos.logback.core.joran.event,!ch.qos.logback.core.joran.spi,!ch.qos.logback.core.joran.util,!ch.qos.logback.core.net,!ch.qos.logback.core.net.server,!ch.qos.logback.core.net.ssl,!ch.qos.logback.core.pattern,!ch.qos.logback.core.pattern.color,!ch.qos.logback.core.pattern.parser,!ch.qos.logback.core.sift,!ch.qos.logback.core.spi,!ch.qos.logback.core.status,!ch.qos.logback.core.util,!org.codehaus.commons.compiler,!org.codehaus.janino,!version</Import-Package>
                         <Private-Package>ch.vd.demaut.microbiz</Private-Package>
-                        <Distributable>true</Distributable>
-                        <Include-Resource>target/classes,target/lib</Include-Resource>
+                        <Distributable>false</Distributable>
+                        <Include-Resource>target/classes</Include-Resource>
                         <DynamicImport-Package>*</DynamicImport-Package>
-                        <!--
-                          embed compile/runtime dependencies using path that matches the copied dependency folder
-                        -->
-                        <!--<Embed-Dependency>*;scope=!provided;inline=true</Embed-Dependency>-->
-                        <Embed-Dependency>*;scope=compile|runtime|!provided;inline=true</Embed-Dependency>
+                        <Embed-Dependency>*;scope=compile|runtime|!provided|!test;inline=false</Embed-Dependency>
+                        <Embed-Transitive>false</Embed-Transitive>
                         <Embed-StripGroup>true</Embed-StripGroup>
+                        <Embed-Directory>lib</Embed-Directory>
+                        <Bundle-Version>${pom.version}</Bundle-Version>
                     </instructions>
                     <supportedProjectTypes>
-                        <supportedProjectType>jar</supportedProjectType>
                         <supportedProjectType>bundle</supportedProjectType>
                     </supportedProjectTypes>
                 </configuration>
@@ -299,13 +373,6 @@
                             <wrapImportPackage>;</wrapImportPackage>
                         </configuration>
                     </execution>
-                    <!--<execution>-->
-                        <!--<id>bundle-manifest</id>-->
-                        <!--<phase>process-classes</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>manifest</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
                 </executions>
             </plugin>
             <plugin>
@@ -314,11 +381,12 @@
                 <version>${maven.jaxb.plugin.version}</version>
                 <executions>
                     <execution>
-                        <id>tiers</id>
+                        <id>tiers-v01</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
                         <configuration>
+                            <forceRegenerate>true</forceRegenerate>
                             <schemaDirectory>src/main/xsd</schemaDirectory>
                             <schemaIncludes>
                                 <include>tiers-v01.xsd</include>
@@ -326,25 +394,51 @@
                             <schemaExcludes>
                                 <include>*.xs</include>
                             </schemaExcludes>
-                            <disableXmlSecurity>true</disableXmlSecurity>
+                            <!-- DO NOT USE generatePackage HERE ! -->
                             <generateDirectory>${project.build.directory}/generated-sources/xjc1</generateDirectory>
+                            <disableXmlSecurity>true</disableXmlSecurity>
                         </configuration>
                     </execution>
                     <execution>
-                        <id>demaut</id>
+                        <id>demaut-v1.1.0</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
                         <configuration>
+                            <forceRegenerate>true</forceRegenerate>
                             <schemaDirectory>src/main/xsd</schemaDirectory>
                             <schemaIncludes>
-                                <include>demaut-1-0.xsd</include>
+                                <include>demaut-0001-1-0.xsd</include>
                             </schemaIncludes>
                             <schemaExcludes>
                                 <include>*.xs</include>
                             </schemaExcludes>
+                            <!-- SHOULD KEEP generatePackage HERE ! -->
                             <generatePackage>ch.vd.ses.referentiel.demaut_1_0</generatePackage>
                             <generateDirectory>${project.build.directory}/generated-sources/xjc2</generateDirectory>
+                            <disableXmlSecurity>true</disableXmlSecurity>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>demaut-v2.1.0</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <forceRegenerate>true</forceRegenerate>
+                            <schemaDirectory>src/main/xsd</schemaDirectory>
+                            <schemaIncludes>
+                                <include>demaut-0002-1-0.xsd</include>
+                            </schemaIncludes>
+                            <schemaExcludes>
+                                <exclude>eCH-0044-4-1.xsd</exclude>
+                                <exclude>eCH-0044-4-1f.xsd</exclude>
+                                <exclude>eCH-0010-3-1.xsd</exclude>
+                                <exclude>eCH-0010-5-1.xsd</exclude>
+                                <exclude>eCH-0010-5-1f.xsd</exclude>
+                            </schemaExcludes>
+                            <!-- DO NOT USE generatePackage HERE ! -->
+                            <generateDirectory>${project.build.directory}/generated-sources/xjc3</generateDirectory>
                             <disableXmlSecurity>true</disableXmlSecurity>
                         </configuration>
                     </execution>

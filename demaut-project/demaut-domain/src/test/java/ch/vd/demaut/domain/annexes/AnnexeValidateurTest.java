@@ -4,13 +4,10 @@ import ch.vd.demaut.commons.utils.FileMockHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
 import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 
-@RunWith(JUnit4.class)
 public class AnnexeValidateurTest {
 
     private AnnexeValidateur validateur;
@@ -22,7 +19,7 @@ public class AnnexeValidateurTest {
     private String nomFichierInvalideNommage3 = "test*" + nomFichierValide;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         validateur = AnnexeValidateur.getInstance();
     }
 
@@ -56,7 +53,7 @@ public class AnnexeValidateurTest {
         try {
             validateur.valider(annexe);
         } catch (AnnexeNonValideException e) {
-            fail("Failed because exception AnnexeNonValideException was thrown");
+            fail("Failed because exception AnnexeNonValideException was thrown", e);
         }
     }
 
@@ -65,6 +62,7 @@ public class AnnexeValidateurTest {
             validateur.valider(annexe);
             failBecauseExceptionWasNotThrown(AnnexeNonValideException.class);
         } catch (AnnexeNonValideException e) {
+
         }
     }
 

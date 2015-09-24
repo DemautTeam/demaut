@@ -13,3 +13,4 @@
 **/.name
 **/.springBeans
 **/.sonartmp
+**/appDir/CO/app/*

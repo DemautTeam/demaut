@@ -8,5 +8,5 @@ Fonctionnalité: Créer une demande
     Etant donné l´utilisateur identifié et connecté avec le login "joe.dalton@vd.ch"
 
   Scénario: Créer une demande à l état Brouillon
-    Lorsque que l´utilisateur initialise une demande de type "Medecin"
+    Lorsque l´utilisateur initialise une demande de profession "Medecin"
     Alors le système Demaut crée la demande avec les caractéristiques [état: "Brouillon", utilisateur: "joe.dalton@vd.ch", type: "Medecin"] 

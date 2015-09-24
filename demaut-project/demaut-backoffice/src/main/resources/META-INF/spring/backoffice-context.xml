@@ -20,7 +20,7 @@
 		http://cxf.apache.org/jaxrs
 		http://cxf.apache.org/schemas/jaxrs.xsd">
 
-	<ctx:property-placeholder properties-ref="props" />
+	<ctx:property-placeholder properties-ref="props"/>
 
 	<ctx:component-scan base-package="ch.vd.demaut.backoffice"/>
 
@@ -71,34 +71,34 @@
 	</camel:camelContext>
 
 	<bean id="ack" class="ch.vd.technical.esb.camel.AckEsbMessageProcessor">
-		<property name="application" value="demautBackoffice" />
-		<property name="domain" value="socle" />
+		<property name="application" value="demautBackoffice"/>
+		<property name="domain" value="socle"/>
 	</bean>
 
 	<bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory"
 		init-method="start" destroy-method="stop">
-		<property name="connectionFactory" ref="connectionFactory" />
-		<property name="maxConnections" value="10" />
+		<property name="connectionFactory" ref="connectionFactory"/>
+		<property name="maxConnections" value="10"/>
 	</bean>
 
 	<bean id="transactionManager"
 		class="org.springframework.jms.connection.JmsTransactionManager">
-		<property name="connectionFactory" ref="pooledConnectionFactory" />
+		<property name="connectionFactory" ref="pooledConnectionFactory"/>
 	</bean>
 
 	<bean id="required" class="org.apache.camel.spring.spi.SpringTransactionPolicy">
-		<property name="transactionManager" ref="transactionManager" />
+		<property name="transactionManager" ref="transactionManager"/>
 	</bean>
 
 	<bean id="jmsConfiguration" class="org.apache.camel.component.jms.JmsConfiguration">
-		<property name="connectionFactory" ref="pooledConnectionFactory" />
-		<property name="transactionManager" ref="transactionManager" />
-		<property name="transacted" value="true" />
-		<property name="cacheLevelName" value="CACHE_CONSUMER" />
+		<property name="connectionFactory" ref="pooledConnectionFactory"/>
+		<property name="transactionManager" ref="transactionManager"/>
+		<property name="transacted" value="true"/>
+		<property name="cacheLevelName" value="CACHE_CONSUMER"/>
 	</bean>
 
 	<bean id="activemq" class="org.apache.camel.component.jms.JmsComponent">
-		<property name="configuration" ref="jmsConfiguration" />
+		<property name="configuration" ref="jmsConfiguration"/>
 	</bean>
 
 </beans>

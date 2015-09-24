@@ -20,7 +20,7 @@ Fonctionnalité: Attacher des annexes à la demande par le professionnel
 
   @format-fichier
   Plan du scénario: Accepter ou refuser les annexes en fonction du format de fichier 
-    Etant donné une demande de type "Medecin" en cours de saisie
+    Etant donné une demande de profession "Medecin" en cours de saisie
   	Lorsque l´utilisateur attache le fichier <nom_fichier> de taille 2M de type "Certificat"
   	Alors le système Demaut <action> d´attacher cette annexe
   	Exemples:
@@ -37,7 +37,7 @@ Fonctionnalité: Attacher des annexes à la demande par le professionnel
 
   @taille-fichier
   Plan du scénario: Accepter ou refuser les annexes en fonction de la taille du fichier 
-    Etant donné une demande de type "Medecin" en cours de saisie
+    Etant donné une demande de profession "Medecin" en cours de saisie
   	Lorsque l´utilisateur attache le fichier "certificat.pdf" de taille <taille_fichier>M de type "Certificat"
   	Alors le système Demaut <action> d´attacher cette annexe
   	Exemples:
@@ -48,9 +48,9 @@ Fonctionnalité: Attacher des annexes à la demande par le professionnel
     	| 4               | "refuse"  |
     	| 200             | "refuse"  |
     	
-  @atacher-annexe
+  @attacher-annexe
   Plan du scénario: Attacher une annexe à une liste existante
-    Etant donné une demande de type "Medecin" en cours de saisie
+    Etant donné une demande de profession "Medecin" en cours de saisie
   	Etant donné la liste des annexes initiale <annexes_initiales> attachées à la demande en cours
   	Lorsque l´utilisateur attache le fichier "certificat.pdf" de taille 2M de type "Certificat"
   	Alors le système Demaut "accepte" d´attacher cette annexe
@@ -63,7 +63,7 @@ Fonctionnalité: Attacher des annexes à la demande par le professionnel
   	
   @type-demande @ignoreme
   Plan du scénario: Accepter ou refuser les annexes en fonction de leur type et du type de la demande en cours
-    Etant donné une demande de type <type_demande> en cours de saisie
+    Etant donné une demande de profession <type_demande> en cours de saisie
   	Lorsque l´utilisateur attache les annexes de type <types_annexe>
   	Alors toutes les annexes obligatoires sont validés: <annexes_complet>
    	Exemples:

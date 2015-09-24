@@ -19,7 +19,7 @@ echo Lister config : $configContent
 
 projectFolderName=demaut-cyber
 projectConfigName=application
-tomcatConfigName=prestations-demaut.xml
+tomcatConfigName=demaut-cyber.xml
 projectBasedir=${WORKSPACE}/demaut-project/$projectFolderName
 
 # deploy to smx4
@@ -74,7 +74,7 @@ echo "waiting 5s....."
 sleep 5
 echo "deploying new bundle  in $remoteServer:$remoteDeploy"
 ls $projectBasedir/target/$component-*.war
-scp $sshOptions $projectBasedir/target/$component-*.war $remoteServer:$remoteDeploy
+scp $sshOptions $projectBasedir/target/$component-*.war $remoteServer:$remoteDeploy/$component.war
 echo "waiting 5s....."
 sleep 5
 echo "Start du container MicroBiz..."

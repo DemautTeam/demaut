@@ -1,26 +1,23 @@
 package ch.vd.demaut.microbiz.progreSoa;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.StringWriter;
+import ch.vd.ses.referentiel.demaut_1_0.RefRoot;
+import ch.vd.ses.referentiel.demaut_1_0.VcListType;
+import ch.vd.ses.referentiel.demaut_1_0.VcType;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.StringWriter;
 
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-
-import ch.vd.ses.referentiel.demaut_1_0.RefList;
-import ch.vd.ses.referentiel.demaut_1_0.RefListType;
-import ch.vd.ses.referentiel.demaut_1_0.RefRoot;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(JUnit4.class)
 public class JaxbXmlTransformTest {
@@ -50,20 +47,19 @@ public class JaxbXmlTransformTest {
         assertNotNull(jaxbMarshaller);
     }
 
-    @Ignore
     @Test
     public void testValidMarshaller() throws Exception {
         RefRoot refRoot = new RefRoot();
-        refRoot.setRefList(new RefList());
-        assertNotNull(refRoot.getRefList());
-        assertNotNull(refRoot.getRefList().getRefListType());
+        refRoot.setVcList(new VcListType());
+        assertNotNull(refRoot.getVcList());
+        assertNotNull(refRoot.getVcList().getVc());
 
         for (int index = 0; index < 10; index++) {
 
-            RefListType refElement = new RefListType();
-            refElement.setId(String.valueOf(index));
-            refElement.setLibl("Label" + index);
-            refRoot.getRefList().getRefListType().add(refElement);
+            VcType vcType = new VcType();
+            vcType.setId((long) index);
+            vcType.setLibl("Label" + index);
+            refRoot.getVcList().getVc().add(vcType);
         }
         StringWriter stringWriter = new StringWriter();
         jaxbMarshaller.marshal(refRoot, stringWriter);
@@ -75,7 +71,7 @@ public class JaxbXmlTransformTest {
     public void testValidUnmarshaller() throws Exception {
         RefRoot refRoot = (RefRoot) jaxbUnmarshaller.unmarshal(fileInputStream);
         assertThat(refRoot).isNotNull();
-        assertThat(refRoot.getRefList().getRefListType()).isNotEmpty();
-        assertThat(refRoot.getRefList().getRefListType().size()).isEqualTo(26);
+        assertThat(refRoot.getVcList().getVc()).isNotEmpty();
+        assertThat(refRoot.getVcList().getVc().size()).isEqualTo(26);
     }
 }

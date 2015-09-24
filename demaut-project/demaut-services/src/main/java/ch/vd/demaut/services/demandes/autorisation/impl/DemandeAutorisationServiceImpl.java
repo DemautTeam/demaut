@@ -14,26 +14,24 @@ import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 
 public class DemandeAutorisationServiceImpl implements DemandeAutorisationService {
 
-	@Inject
-	private DemandeAutorisationRepository demandeAutorisationRepository;
-	
-	@Inject
-	private DemandeAutorisationFactory demandeAutorisationFactory;
+    @Inject
+    private DemandeAutorisationRepository demandeAutorisationRepository;
 
-	@Transactional
-	@Override
-	public DemandeAutorisation initialiserDemandeAutorisation(Login login, ProfessionDeLaSante profession) {
-		DemandeAutorisation nouvelleDemande = demandeAutorisationFactory.inititierDemandeAutorisation(login, profession, null);
-		
-		demandeAutorisationRepository.store(nouvelleDemande);
-				
-		return nouvelleDemande;
-	}
-	
-	@Transactional(readOnly=true)
-	@Override
-	public DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande ref) {
-		return demandeAutorisationRepository.recupererDemandeParReference(ref);
-	}
+    @Inject
+    private DemandeAutorisationFactory demandeAutorisationFactory;
 
+    @Transactional
+    @Override
+    public DemandeAutorisation initialiserDemandeAutorisation(Login login, ProfessionDeLaSante profession) {
+        DemandeAutorisation nouvelleDemande = demandeAutorisationFactory.initierDemandeAutorisation(login, profession,
+                null);
+        demandeAutorisationRepository.store(nouvelleDemande);
+        return nouvelleDemande;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande referenceDeDemande) {
+        return demandeAutorisationRepository.recupererDemandeParReference(referenceDeDemande);
+    }
 }

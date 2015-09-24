@@ -7,19 +7,21 @@ import java.util.List;
 
 public interface ProgreSoaService {
 
-    List<ReportedOrganisationType> rechercheSOATierById(String organisationId) throws Exception;
+    List<ReportedOrganisationType> rechercheSOATierById(String baseUri, String organisationId) throws Exception;
 
-    List<ReportedOrganisationType> rechercheSOATierByNom(String organisationNom) throws Exception;
+    List<ReportedOrganisationType> rechercheSOATierByNom(String baseUri, String organisationNom) throws Exception;
 
-    RefRoot listeSOAFormationApprofondie() throws Exception;
+    RefRoot listeSOAAPTitre(String baseUri) throws Exception;
 
-    RefRoot listeSOAFormationComplementaire() throws Exception;
+    RefRoot listeSOAFormationApprofondie(String baseUri) throws Exception;
 
-    RefRoot listeSOAFormationInitiale() throws Exception;
+    RefRoot listeSOAFormationComplementaire(String baseUri) throws Exception;
 
-    RefRoot listeSOADiplomesPostGrade() throws Exception;
+    RefRoot listeSOAFormationInitiale(String baseUri) throws Exception;
 
-    RefRoot listeSOAProfession() throws Exception;
+    RefRoot listeSOADiplomesPostGrade(String baseUri) throws Exception;
 
-    RefRoot listeSOATypesAnnexes() throws Exception;
+    RefRoot listeSOAProfession(String baseUri) throws Exception;
+
+    RefRoot listeSOATypesAnnexes(String baseUri) throws Exception;
 }

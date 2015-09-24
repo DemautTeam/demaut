@@ -41,6 +41,7 @@ public final class RestUtils {
                 .build();
     }
 
+    @SuppressWarnings("unchecked")
     public static Response forgeResponseTrue() throws JsonProcessingException {
         return RestUtils.forgeResponseString(Response.Status.OK, String.valueOf(true));
     }
