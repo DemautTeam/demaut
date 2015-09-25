@@ -2,12 +2,13 @@ package ch.vd.demaut.domain.demandeur.donneesPerso;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.BaseValueObject;
+import ch.vd.demaut.commons.vo.BaseValueObjectWithId;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @ValueObject
-public class DonneesPersonnelles extends BaseValueObject {
+public class DonneesPersonnelles extends BaseValueObjectWithId {
 
     // ********************************************************* Fields
     @Valid
@@ -38,6 +39,21 @@ public class DonneesPersonnelles extends BaseValueObject {
 
 
     // ********************************************************* Constructor
+
+    //Used for OpenJPA only
+    protected DonneesPersonnelles() {
+        super();
+        this.nom = null;
+        this.prenom = null;
+        this.nomDeCelibataire = null;
+        this.genre = null;
+        this.dateDeNaissance = null;
+        this.adresse = null;
+        this.email = null;
+        this.telephonePrive = null;
+        this.telephoneMobile = null;
+        this.fax = null;
+    }
 
     public DonneesPersonnelles(Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Genre genre, DateDeNaissance dateDeNaissance, Adresse adresse, Email email, NumeroTelephone telephonePrive, NumeroTelephone telephoneMobile, NumeroTelephone fax) {
         super();
