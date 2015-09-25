@@ -12,8 +12,8 @@ Fonctionnalité: Attacher des annexes à la demande par le professionnel
     Etant donné la taille maximale de fichier acceptée "3"MB
     Etant donné les annexes obligatoires par type de demande:
     	| Type de demande 	| Types d´annexe obligatoires 	|
-		| Medecin 		    | Certificat,Diplome 		| 
-		| Dieteticien 	    | Certificat               	| 
+		| Medecin 		    | CertificatDeTravail,Diplome 		| 
+		| Dieteticien 	    | CertificatDeTravail               	| 
     
   	Etant donné la date du jour: "15.07.2015 11:00"
     Etant donné l´utilisateur identifié et connecté avec le login "joe.dalton@vd.ch"
@@ -21,7 +21,7 @@ Fonctionnalité: Attacher des annexes à la demande par le professionnel
   @format-fichier
   Plan du scénario: Accepter ou refuser les annexes en fonction du format de fichier 
     Etant donné une demande de profession "Medecin" en cours de saisie
-  	Lorsque l´utilisateur attache le fichier <nom_fichier> de taille 2M de type "Certificat"
+  	Lorsque l´utilisateur attache le fichier <nom_fichier> de taille 2M de type "CertificatDeTravail"
   	Alors le système Demaut <action> d´attacher cette annexe
   	Exemples:
     	| nom_fichier       | action    |
@@ -38,7 +38,7 @@ Fonctionnalité: Attacher des annexes à la demande par le professionnel
   @taille-fichier
   Plan du scénario: Accepter ou refuser les annexes en fonction de la taille du fichier 
     Etant donné une demande de profession "Medecin" en cours de saisie
-  	Lorsque l´utilisateur attache le fichier "certificat.pdf" de taille <taille_fichier>M de type "Certificat"
+  	Lorsque l´utilisateur attache le fichier "certificat.pdf" de taille <taille_fichier>M de type "CertificatDeTravail"
   	Alors le système Demaut <action> d´attacher cette annexe
   	Exemples:
     	| taille_fichier  | action    |
@@ -52,7 +52,7 @@ Fonctionnalité: Attacher des annexes à la demande par le professionnel
   Plan du scénario: Attacher une annexe à une liste existante
     Etant donné une demande de profession "Medecin" en cours de saisie
   	Etant donné la liste des annexes initiale <annexes_initiales> attachées à la demande en cours
-  	Lorsque l´utilisateur attache le fichier "certificat.pdf" de taille 2M de type "Certificat"
+  	Lorsque l´utilisateur attache le fichier "certificat.pdf" de taille 2M de type "CertificatDeTravail"
   	Alors le système Demaut "accepte" d´attacher cette annexe
   	Alors les annexes attachées à la demande sont <annexes>
   	Exemples:

@@ -24,15 +24,15 @@ public class ListeDesAnnexesTest {
     public void setUp() throws Exception {
         List<Annexe> annexes = new ArrayList<Annexe>();
         listeDesAnnexes = new ListeDesAnnexes(annexes);
-        listeDesAnnexes.ajouterAnnexe(new Annexe(TypeAnnexe.Certificat, "certificat1.pdf", null));
-        listeDesAnnexes.ajouterAnnexe(new Annexe(TypeAnnexe.Certificat, "certificat2.pdf", null));
-        listeDesAnnexes.ajouterAnnexe(new Annexe(TypeAnnexe.Certificat, "certificat3.pdf", null));
+        listeDesAnnexes.ajouterAnnexe(new Annexe(TypeAnnexe.CertificatDeTravail, "certificat1.pdf", null));
+        listeDesAnnexes.ajouterAnnexe(new Annexe(TypeAnnexe.CertificatDeTravail, "certificat2.pdf", null));
+        listeDesAnnexes.ajouterAnnexe(new Annexe(TypeAnnexe.CertificatDeTravail, "certificat3.pdf", null));
         listeDesAnnexes.ajouterAnnexe(new Annexe(TypeAnnexe.CV, "cv.pdf", null));
     }
 
     @Test
     public void testerExtraireAnnexesDeTypeAvecPlusieursAnnexes() {
-        Collection<Annexe> annexes = listeDesAnnexes.extraireAnnexesDeType(TypeAnnexe.Certificat);
+        Collection<Annexe> annexes = listeDesAnnexes.extraireAnnexesDeType(TypeAnnexe.CertificatDeTravail);
         assertThat(annexes).hasSize(3);
     }
 
@@ -45,7 +45,7 @@ public class ListeDesAnnexesTest {
     @Test
     public void testerExtraireAnnexeMetadatasDeTypeAvecPlusieursAnnexes() {
         Collection<AnnexeMetadata> annexeMetadatas = listeDesAnnexes
-                .extraireAnnexesMetadatasDeType(TypeAnnexe.Certificat);
+                .extraireAnnexesMetadatasDeType(TypeAnnexe.CertificatDeTravail);
         assertThat(annexeMetadatas).hasSize(3);
     }
 

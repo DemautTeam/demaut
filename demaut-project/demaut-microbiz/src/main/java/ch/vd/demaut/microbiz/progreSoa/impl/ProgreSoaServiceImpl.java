@@ -49,7 +49,8 @@ public class ProgreSoaServiceImpl implements ProgreSoaService {
     }
 
     @Override
-    public List<ReportedOrganisationType> rechercheSOATierByNom(String baseUri, String organisationNom) throws Exception {
+    public List<ReportedOrganisationType> rechercheSOATierByNom(String baseUri, String organisationNom)
+            throws Exception {
         String forgeProgreSOAUrl = this.forgeProgreSOAUrl(baseUri);
         if (!StringUtils.isEmpty(forgeProgreSOAUrl)) {
             WebTarget target = client.target(forgeProgreSOAUrl);

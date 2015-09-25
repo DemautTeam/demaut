@@ -57,7 +57,7 @@ public class AnnexesServiceTest {
         file = new File("src/test/resources/demautServicesTest.cfg");
 
         nomFichier = new NomFichier("Test_multipart.pdf");
-        annexe = new Annexe(TypeAnnexe.Certificat, nomFichier, new ContenuAnnexe(byteArray));
+        annexe = new Annexe(TypeAnnexe.CV, nomFichier, new ContenuAnnexe(byteArray));
 
         login = new Login("joe.dalton@ch.vd");
         profession = ProfessionDeLaSante.Medecin;
@@ -85,7 +85,7 @@ public class AnnexesServiceTest {
         //Setup fixtures
 
         //Attache une annexe
-        annexesService.attacherUneAnnexe(demandeEnCours.getReferenceDeDemande(), file, nomFichier, TypeAnnexe.Certificat);
+        annexesService.attacherUneAnnexe(demandeEnCours.getReferenceDeDemande(), file, nomFichier, TypeAnnexe.CV);
 
         //Récupère demande en cours
         demandeEnCours = demandeAutorisationService.recupererDemandeParReference(demandeEnCours.getReferenceDeDemande());

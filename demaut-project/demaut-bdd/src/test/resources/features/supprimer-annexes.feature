@@ -12,7 +12,7 @@ Fonctionnalité: Supprimer des annexes à la demande par le professionnel
     Etant donné une demande de profession "Medecin" en cours de saisie l´utilisateur
 	Etant donné les annexes <nom_fichier> déja saisies par l'utilisateur:
 	  | Type d'annexe 	    | Nom du fichier            |
-	  | Certificat 			| certificat.pdf 		    |
+	  | CertificatDeTravail 			| certificat.pdf 		    |
 	  | Diplome 	        | diplome.jpg               |
   	Lorsque l´utilisateur supprime le fichier <nom_fichier> de type "Certificat"
   	Alors le système Demaut <action> de supprimer cette annexe

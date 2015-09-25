@@ -62,13 +62,13 @@ public class AnnexeRestTest {
     public void testAttacherUneAnnexe() throws Exception {
         File fileMultipart = new File("target/Test_multipart.cfg");
         FileUtils.writeByteArrayToFile(fileMultipart, byteArray);
-        Response response = annexeRest.attacherUneAnnexe(null, "demandeReference", fileMultipart, "Test_multipart.pdf", String.valueOf(byteArray.length), "application/cfg", TypeAnnexe.Certificat.name());
+        Response response = annexeRest.attacherUneAnnexe(null, "demandeReference", fileMultipart, "Test_multipart.pdf", String.valueOf(byteArray.length), "application/cfg", TypeAnnexe.CV.name());
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
     @Test
     public void testSupprimerAnnexe() throws Exception {
-        Response response = annexeRest.supprimerUneAnnexe(null, "demandeReference", "Test_multipart.pdf", TypeAnnexe.Certificat.name());
+        Response response = annexeRest.supprimerUneAnnexe(null, "demandeReference", "Test_multipart.pdf", TypeAnnexe.CV.name());
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 }
