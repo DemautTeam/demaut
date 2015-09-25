@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Created by mourad on 25.09.15.
  */
-public class DonnesPersonnellesValidationTest extends AbstractValidationTest {
+public class DonneesPersonnellesValidationTest extends AbstractValidationTest {
 
     private DonneesPersonnelles donneesPersonnellesValides;
     private DonneesPersonnelles donneesPersonnellesInvalideNom;
