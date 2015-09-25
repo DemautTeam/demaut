@@ -1,6 +1,7 @@
 package ch.vd.demaut.domain.demandeur.donneesPerso;
 
 import ch.vd.demaut.commons.vo.BaseValueObject;
+import ch.vd.demaut.domain.demandeur.Pays;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
