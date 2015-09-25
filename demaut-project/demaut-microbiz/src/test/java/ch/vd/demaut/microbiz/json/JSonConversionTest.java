@@ -31,8 +31,7 @@ public class JSonConversionTest {
         
         String jsonStr = viewWriter.writeValueAsString(type);
         
-        assertThat(jsonStr).isEqualTo("{\"id\":50283749,\"libl\":CV}");
-        
+        assertThat(jsonStr).isEqualTo("{\"name\":\"CV\",\"id\":50283749,\"libl\":\"CV\"}");
         
     }
 
