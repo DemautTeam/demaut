@@ -1,5 +1,10 @@
 package ch.vd.demaut.microbiz.json;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -8,9 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
 import ch.vd.demaut.microbiz.rest.RestUtils;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class JSonConversionTest {
 
@@ -34,5 +38,23 @@ public class JSonConversionTest {
         assertThat(jsonStr).isEqualTo("{\"name\":\"CV\",\"id\":50283749,\"libl\":\"CV\"}");
         
     }
+    
+    @Test
+    public void testConversionProfession() throws JsonProcessingException {
+        
+        ObjectMapper objMapper = RestUtils.buildJSonObjectMapper();
+        
+        List<ProfessionDeLaSante> professions = new ArrayList<ProfessionDeLaSante>();
+        professions.add(ProfessionDeLaSante.Chiropraticien);
+        professions.add(ProfessionDeLaSante.Dieteticien);
+        
+        ObjectWriter viewWriter = objMapper.writer();
+        
+        String jsonStr = viewWriter.writeValueAsString(professions);
+        
+        assertThat(jsonStr).isEqualTo("[{\"name\":\"Chiropraticien\",\"id\":53843599,\"libl\":\"Chiropraticien\"},{\"name\":\"Dieteticien\",\"id\":53843600,\"libl\":\"Diététicien\"}]");
+        
+    }
+    
 
 }

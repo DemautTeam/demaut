@@ -32,17 +32,17 @@ public enum TypeAnnexeProgres {
     FormationSSMUS(304890956, "Formation SSMUS"),
     Cahierdescharges(304890962, "Cahier des charges");
     
-    private TypePieceProgresID progresId;
+    private RefProgresID progresId;
     
     private String libelle;
 
     private TypeAnnexeProgres(Integer id, String libelle) {
-        this.progresId = new  TypePieceProgresID(id);
+        this.progresId = new  RefProgresID(id);
         
         this.libelle = libelle;
     }
     
-    public TypePieceProgresID getProgresId() {
+    public RefProgresID getProgresId() {
         return progresId;
     }
     

@@ -53,9 +53,11 @@ public class DemandeAutorisationSteps {
         LOGGER.debug("La demande autorisation " + demandeEnCours + " a été ajoutée au repository avec l'id technique:" + demandeEnCours.getId());
     }
 
-    public void verifieDemandeCree(ProfessionDeLaSante profession) {
+    public void verifieDemandeCree(ProfessionDeLaSante profession, StatutDemandeAutorisation statut, Login login) {
         demandeAutorisationRepository.findBy(demandeEnCours.getId());
         assertThat(demandeEnCours.getProfessionDeLaSante()).isEqualTo(profession);
+        assertThat(demandeEnCours.getLogin()).isEqualTo(login);
+        assertThat(demandeEnCours.getStatutDemandeAutorisation()).isEqualTo(statut);
     }
 
     public void verifieAucuneDemandeEnCours(ProfessionDeLaSante profession, StatutDemandeAutorisation statut) {

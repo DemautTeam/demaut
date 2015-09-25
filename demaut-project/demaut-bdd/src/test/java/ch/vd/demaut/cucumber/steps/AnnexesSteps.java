@@ -1,14 +1,15 @@
 package ch.vd.demaut.cucumber.steps;
 
-import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
-import ch.vd.demaut.domain.annexes.Annexe;
-import ch.vd.demaut.domain.annexes.AnnexeNonValideException;
-import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
-import ch.vd.demaut.domain.annexes.NomFichier;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
+import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.domain.annexes.AnnexeIntrouvableException;
+import ch.vd.demaut.domain.annexes.AnnexeNonValideException;
+import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
+import ch.vd.demaut.domain.annexes.NomFichier;
 
 public class AnnexesSteps {
 
@@ -20,7 +21,8 @@ public class AnnexesSteps {
 
     private AccepteOuRefuse actualAcceptationAnnexe;
 
-    // ********************************************************* Technical methods
+    // ********************************************************* Technical
+    // methods
 
     public DemandeAutorisationSteps getDemandeAutorisationSteps() {
         return demandeAutorisationSteps;
@@ -49,11 +51,15 @@ public class AnnexesSteps {
         }
     }
 
-
     public void supprimerAnnexe(String nomDuFichier, String typeAnnexe) {
         NomFichier nomFichier = new NomFichier(nomDuFichier);
-        demandeAutorisationSteps.getDemandeEnCours().supprimerUneAnnexeParNomFichier(nomFichier);
-        accepteAnnexe();
+        try {
+            demandeAutorisationSteps.getDemandeEnCours().supprimerUneAnnexeParNomFichier(nomFichier);
+            accepteAnnexe();
+        } catch (AnnexeIntrouvableException e) {
+            refuseAnnexe();
+        }
+
     }
 
     // ***************************** **************************** Technical

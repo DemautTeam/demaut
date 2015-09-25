@@ -6,15 +6,15 @@ import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.BaseValueObject;
 
 /**
- * ID d'un {@link TypeAnnexe} dans Progres
+ * ID d'une reference dans Progres
  *
  */
 @ValueObject
-public class TypePieceProgresID extends BaseValueObject {
+public class RefProgresID extends BaseValueObject {
 
     private Integer id;
     
-    public TypePieceProgresID(Integer id) {
+    public RefProgresID(Integer id) {
         this.id = id;
     }
     
