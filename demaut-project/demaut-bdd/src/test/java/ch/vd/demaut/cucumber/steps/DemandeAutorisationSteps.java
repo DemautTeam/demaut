@@ -1,20 +1,20 @@
 package ch.vd.demaut.cucumber.steps;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.transaction.annotation.Transactional;
-
 import ch.vd.demaut.domain.annexes.AnnexesObligatoires;
 import ch.vd.demaut.domain.config.ConfigDemaut;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
 import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandes.autorisation.StatutDemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.domain.utilisateurs.Utilisateur;
 import ch.vd.demaut.domain.utilisateurs.UtilisateurRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Transactional
 public class DemandeAutorisationSteps {
@@ -24,7 +24,6 @@ public class DemandeAutorisationSteps {
     private static final Logger LOGGER = LoggerFactory.getLogger(DemandeAutorisationSteps.class);
 
     // ********************************************************* Fields
-    //Beans Initialisés pas Spring Context
     private UtilisateurRepository utilisateurRepository;
     private DemandeAutorisationRepository demandeAutorisationRepository;
     private ConfigDemaut configDemaut;
@@ -59,6 +58,10 @@ public class DemandeAutorisationSteps {
         assertThat(demandeEnCours.getProfessionDeLaSante()).isEqualTo(profession);
     }
 
+    public void verifieAucuneDemandeEnCours(ProfessionDeLaSante profession, StatutDemandeAutorisation statut) {
+        demandeAutorisationRepository.recupererDemandeParProfessionStatut(utilisateur.getLogin(), profession, statut);
+    }
+
     public DemandeAutorisation getDemandeEnCours() {
         return demandeEnCours;
     }
@@ -85,8 +88,7 @@ public class DemandeAutorisationSteps {
         this.configDemaut = configDemaut;
     }
 
-    // ***************************** **************************** Private
-    // methods
+    // ***************************** **************************** Private methods
 
     public void clean() {
         demandeAutorisationRepository.deleteAll();

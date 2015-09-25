@@ -1,14 +1,11 @@
 package ch.vd.demaut.domain.demandeur.donneesPerso;
 
-import ch.vd.demaut.commons.validation.AbstractDataValidateur;
-import ch.vd.demaut.commons.validation.DataValidateur;
-import ch.vd.demaut.commons.validation.ValidatorFactoryDefault;
-import ch.vd.demaut.domain.annexes.*;
+import java.util.Set;
 
 import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
-import java.util.Set;
-import java.util.regex.Pattern;
+
+import ch.vd.demaut.commons.validation.AbstractDataValidateur;
+import ch.vd.demaut.domain.annexes.AnnexeNonValideException;
 
 public class DonneesPersonnellesValidateur extends AbstractDataValidateur<DonneesPersonnelles> {
 

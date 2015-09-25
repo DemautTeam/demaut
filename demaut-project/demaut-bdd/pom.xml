@@ -14,7 +14,7 @@
 
     <dependencies>
 
-		<!-- Demaut -->
+        <!-- Demaut -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>demaut-commons</artifactId>
@@ -42,7 +42,7 @@
             <artifactId>demaut-data-mock</artifactId>
         </dependency>
 
-		<!-- Spring -->
+        <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
@@ -57,7 +57,7 @@
             <scope>test</scope>
         </dependency>
 
-		<!-- Cucumber -->
+        <!-- Cucumber -->
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-java</artifactId>
@@ -74,7 +74,7 @@
             <version>${cucumber.version}</version>
         </dependency>
 
-		<!-- Persistence -->
+        <!-- Persistence -->
         <dependency>
             <groupId>org.apache.openjpa</groupId>
             <artifactId>openjpa</artifactId>
@@ -98,7 +98,7 @@
             <artifactId>commons-dbcp</artifactId>
         </dependency>
 
-		<!-- Validation -->
+        <!-- Validation -->
         <dependency>
             <groupId>javax.el</groupId>
             <artifactId>javax.el-api</artifactId>
