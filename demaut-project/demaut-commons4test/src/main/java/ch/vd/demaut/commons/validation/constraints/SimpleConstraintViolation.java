@@ -20,6 +20,14 @@ public class SimpleConstraintViolation<T> extends BaseValueObject {
         this(constraintViolation.getPropertyPath().toString());
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if(o instanceof SimpleConstraintViolation){
+            return ((SimpleConstraintViolation) o).getPropertyName().equals(this.propertyName);
+        }
+        return false;
+    }
+
     /**
      * @return the propertyName
      */
