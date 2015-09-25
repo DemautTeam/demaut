@@ -40,7 +40,7 @@ public class SupprimerAnnexeStepDefinitions {
         annexesSteps.getDemandeAutorisationSteps().initialiserDemandeEnCours(profession);
     }
 
-    @Etantdonné("^les annexes déja saisies par l'utilisateur:$")
+    @Etantdonné("^les annexes déja saisies par l´utilisateur:$")
     public void les_annexes_déja_saisies_par_l_utilisateur(DataTable dataTable) throws Throwable {
         List<Map<String, String>> mappingTypesNomFichiersAnnexesSaisies = dataTable.asMaps(String.class, String.class);
         for (Map<String, String> mappingUnTypeNomFichierAnnexesSaisies : mappingTypesNomFichiersAnnexesSaisies) {
