@@ -14,6 +14,7 @@ public class Nom extends StringVO {
         super(value);
     }
 
+    // ********************************************************* Getters
     @NotNull
     @Size(min = 1, max = 255)
     @Override

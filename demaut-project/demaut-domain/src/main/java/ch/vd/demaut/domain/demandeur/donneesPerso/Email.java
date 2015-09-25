@@ -15,7 +15,7 @@ public class Email extends StringVO {
     }
 
     @NotNull
-    @Pattern(regexp = "^[_a-z0-9-]+(\\\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\\\.[a-z0-9-]+)+$")
+    @Pattern(regexp = "^[_a-z0-9-\\.]+@[a-z0-9-]+\\.[a-z]+$")
     @Override
     public String getValue() {
         return super.getValue();
