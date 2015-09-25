@@ -4,7 +4,7 @@
 Fonctionnalité: Créer une demande
 
   Contexte:
-  	Etant donné la date du jour: "15.07.2015 11:00"
+    Etant donné la date du jour: "15.07.2015 11:00"
     Etant donné l´utilisateur identifié et connecté avec le login "joe.dalton@vd.ch"
 
   Scénario: Créer une demande à l état Brouillon

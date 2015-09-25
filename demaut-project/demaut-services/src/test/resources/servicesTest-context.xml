@@ -12,20 +12,20 @@
 		http://www.springframework.org/schema/util
 		http://www.springframework.org/schema/util/spring-util.xsd">
 
-	<beans profile="data">
-		<bean id="props"
-			class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-			<property name="locations">
-				<list>
-					<value>classpath:demautServicesTest.cfg</value>
-				</list>
-			</property>
-		</bean>
+    <beans profile="data">
+        <bean id="props"
+              class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+            <property name="locations">
+                <list>
+                    <value>classpath:demautServicesTest.cfg</value>
+                </list>
+            </property>
+        </bean>
 
-		<import resource="classpath:META-INF/spring/jpa-context.xml"/>
+        <import resource="classpath:META-INF/spring/jpa-context.xml"/>
 
-		<import resource="classpath:META-INF/spring/services-context.xml"/>
+        <import resource="classpath:META-INF/spring/services-context.xml"/>
 
-	</beans>
+    </beans>
 
 </beans>

@@ -6,15 +6,15 @@
 		<version>0.1.0-SNAPSHOT</version>
 	</parent>
 
-	<modelVersion>4.0.0</modelVersion>
-	<artifactId>demaut-microbiz</artifactId>
-	<name>Demaut-microbiz</name>
-	<description>Demaut Microbiz Module</description>
-	<packaging>bundle</packaging>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>demaut-microbiz</artifactId>
+    <name>Demaut-microbiz</name>
+    <description>Demaut Microbiz Module</description>
+    <packaging>bundle</packaging>
 
-	<dependencies>
+    <dependencies>
 
-		<!-- Demaut -->
+        <!-- Demaut -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>demaut-commons</artifactId>
@@ -30,11 +30,11 @@
             <artifactId>demaut-data-jpa</artifactId>
             <scope>compile</scope>
         </dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>demaut-services</artifactId>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>demaut-services</artifactId>
             <scope>compile</scope>
-		</dependency>
+        </dependency>
 
         <!-- Demaut test -->
         <dependency>
@@ -42,11 +42,11 @@
             <artifactId>demaut-commons4test</artifactId>
         </dependency>
 
-		<!-- Microbiz -->
-		<dependency>
-			<groupId>ch.vd.pee.microbiz</groupId>
-			<artifactId>camel-microbiz</artifactId>
-		</dependency>
+        <!-- Microbiz -->
+        <dependency>
+            <groupId>ch.vd.pee.microbiz</groupId>
+            <artifactId>camel-microbiz</artifactId>
+        </dependency>
 
         <!-- ESB -->
         <dependency>
@@ -307,9 +307,9 @@
             <artifactId>h2</artifactId>
         </dependency>
 
-	</dependencies>
+    </dependencies>
 
-	<build>
+    <build>
         <finalName>${project.artifactId}-microbiz-nondistributable-${project.version}</finalName>
         <plugins>
             <plugin>
@@ -339,7 +339,7 @@
                     </execution>
                 </executions>
             </plugin>
-			<!-- see plugin doc : http://felix.apache.org/site/apache-felix-maven-bundle-plugin-bnd.html -->
+            <!-- see plugin doc : http://felix.apache.org/site/apache-felix-maven-bundle-plugin-bnd.html -->
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
@@ -445,6 +445,6 @@
                 </executions>
             </plugin>
         </plugins>
-	</build>
+    </build>
 
 </project>

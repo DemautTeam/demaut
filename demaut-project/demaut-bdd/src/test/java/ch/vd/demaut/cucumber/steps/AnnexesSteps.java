@@ -1,28 +1,26 @@
 package ch.vd.demaut.cucumber.steps;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Collection;
-
-import ch.vd.demaut.cucumber.converters.commons.AccepteOuRefuse;
+import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
 import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.AnnexeNonValideException;
 import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
 import ch.vd.demaut.domain.annexes.NomFichier;
+
+import java.util.Collection;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class AnnexesSteps {
 
     // ********************************************************* Static fields
 
     // ********************************************************* Fields
-    //Beans Initialisés pas Spring Context
 
     private DemandeAutorisationSteps demandeAutorisationSteps;
 
     private AccepteOuRefuse actualAcceptationAnnexe;
 
-    // ********************************************************* Technical
-    // methods
+    // ********************************************************* Technical methods
 
     public DemandeAutorisationSteps getDemandeAutorisationSteps() {
         return demandeAutorisationSteps;

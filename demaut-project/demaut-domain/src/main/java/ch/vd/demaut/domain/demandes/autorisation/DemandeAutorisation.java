@@ -6,6 +6,7 @@ import ch.vd.demaut.domain.config.ConfigDemaut;
 import ch.vd.demaut.domain.demandes.Demande;
 import ch.vd.demaut.domain.demandes.DemandeFK;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
 import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnelles;
 import ch.vd.demaut.domain.utilisateurs.Login;
 
@@ -29,6 +30,8 @@ public class DemandeAutorisation extends Demande {
     private List<Annexe> annexes;
 
     private transient ConfigDemaut config;
+
+    private transient DonneesProfessionnelles donneesProfessionnelles;
 
     // ********************************************************* Constructor
 
@@ -140,7 +143,11 @@ public class DemandeAutorisation extends Demande {
         return new ListeDesAnnexes(annexes);
     }
 
-    public DonneesPersonnelles getDonneesPersonnelles() {
+    public DonneesProfessionnelles getDonneesProfessionnelles() {
+        return donneesProfessionnelles;
+    }
+	
+	    public DonneesPersonnelles getDonneesPersonnelles() {
         return donneesPersonnelles;
     }
 
@@ -152,7 +159,5 @@ public class DemandeAutorisation extends Demande {
     public DemandeFK getFunctionalKey() {
         return new DemandeFK(this);
     }
-
-
 
 }

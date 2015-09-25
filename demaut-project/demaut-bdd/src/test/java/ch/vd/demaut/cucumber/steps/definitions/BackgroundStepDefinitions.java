@@ -1,7 +1,7 @@
 package ch.vd.demaut.cucumber.steps.definitions;
 
 import ch.vd.demaut.cucumber.DateEtHeureCourant;
-import ch.vd.demaut.cucumber.converters.commons.DateTimeConverter;
+import ch.vd.demaut.cucumber.converteurs.commons.DateTimeConverter;
 import cucumber.api.Transform;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;

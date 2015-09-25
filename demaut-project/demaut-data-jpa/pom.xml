@@ -15,7 +15,7 @@
 
     <dependencies>
 
-		<!-- Demaut -->
+        <!-- Demaut -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>demaut-commons</artifactId>
@@ -25,13 +25,13 @@
             <artifactId>demaut-domain</artifactId>
         </dependency>
 
-		<!-- Demaut test -->
+        <!-- Demaut test -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>demaut-commons4test</artifactId>
         </dependency>
 
-		<!-- Spring -->
+        <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
@@ -57,7 +57,7 @@
             <artifactId>spring-tx</artifactId>
         </dependency>
 
-		<!-- Persistence -->
+        <!-- Persistence -->
         <dependency>
             <groupId>org.apache.openjpa</groupId>
             <artifactId>openjpa</artifactId>
@@ -109,7 +109,7 @@
             <artifactId>javax.inject</artifactId>
         </dependency>
 
-		<!-- Testing -->
+        <!-- Testing -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>

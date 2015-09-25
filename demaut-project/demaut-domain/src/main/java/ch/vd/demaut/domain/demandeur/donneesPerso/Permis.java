@@ -11,9 +11,13 @@ public class Permis extends BaseValueObject {
     final private AutrePermis autrePermis;
 
     public Permis(TypePermis typePermis, AutrePermis autrePermis) {
-        super();
         this.typePermis = typePermis;
         this.autrePermis = autrePermis;
+    }
+
+    public Permis(TypePermis typePermis){
+        this.typePermis = typePermis;
+        this.autrePermis = new AutrePermis("");
     }
 
     public TypePermis getTypePermis() {

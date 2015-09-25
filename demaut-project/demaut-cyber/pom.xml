@@ -56,7 +56,14 @@
             <version>${prestations-common.version}</version>
         </dependency>
 
-        <!-- Spring 4 est necessaire à Spring-boot -->
+        <!-- @@@@@@@@@ Spring 4 est necessaire à Spring-boot @@@@@@@@@@@
+        toutes les versions sont surchargées par spring.framework.version
+
+        *************************************************************************************************
+        *********************** NE PAS SUPPRIMER LES VERSIONS DES PACKAGES ! ****************************
+        *************************************************************************************************
+
+        -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>

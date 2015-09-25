@@ -4,128 +4,127 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm
 				 http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
 
-	<!-- - OpenJPA limitations / bugs : - Not working well with access="PROPERTY" 
-		- <enumerated>STRING not working well when used in a OneToMany - OneToMany 
-		+ EAGER not working - OneToMany + LAZY => create null list - Wrong warnings 
-		from OpenJPA "non-er - Access property ne marche pas 
-		- Enumarated as STRING does not work in many-2-one
-		
-		-->
+    <!-- - OpenJPA limitations / bugs : - Not working well with access="PROPERTY"
+        - <enumerated>STRING not working well when used in a OneToMany - OneToMany
+        + EAGER not working - OneToMany + LAZY => create null list - Wrong warnings
+        from OpenJPA "non-er - Access property ne marche pas
+        - Enumarated as STRING does not work in many-2-one
 
-	<persistence-unit-metadata>
-		<persistence-unit-defaults>
-			<access>FIELD</access>
-		</persistence-unit-defaults>
-	</persistence-unit-metadata>
+        -->
 
-	<mapped-superclass
-		class="ch.vd.demaut.commons.entities.EntityFunctionalKeyAware">
-		<attributes>
-			<id name="id">
-				<generated-value strategy="AUTO"/>
-			</id>
-			<version name="version"></version>
-		</attributes>
-	</mapped-superclass>
+    <persistence-unit-metadata>
+        <persistence-unit-defaults>
+            <access>FIELD</access>
+        </persistence-unit-defaults>
+    </persistence-unit-metadata>
 
-	<mapped-superclass class="ch.vd.demaut.commons.vo.BaseValueObjectWithId">
-		<attributes>
-			<id name="id">
-				<generated-value strategy="AUTO"/>
-			</id>
-		</attributes>
-	</mapped-superclass>
-	
-	<entity class="ch.vd.demaut.domain.demandes.Demande">
-		<table name="DEMANDE"/>
-		<inheritance strategy="SINGLE_TABLE"/>
-		<attributes>
-			<embedded name="referenceDeDemande"/>
-		</attributes>
-	</entity>
+    <mapped-superclass
+            class="ch.vd.demaut.commons.entities.EntityFunctionalKeyAware">
+        <attributes>
+            <id name="id">
+                <generated-value strategy="AUTO"/>
+            </id>
+            <version name="version"></version>
+        </attributes>
+    </mapped-superclass>
 
-	<entity class="ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation">
-		<attributes>
-			<basic name="professionDeLaSante">
-				<enumerated>STRING</enumerated>
-			</basic>
-			<basic name="statutDemandeAutorisation">
-				<enumerated>STRING</enumerated>
-			</basic>
-			<!-- <transient name="annexes"/> -->
-			<!-- On ne peut pas utiliser EAGER : https://issues.apache.org/jira/browse/OPENJPA-1908 -->
-			<one-to-many name="annexes" fetch="LAZY">
-				<join-column/>
-				<cascade>
-					<cascade-all />
-				</cascade>
-			</one-to-many>
-			<embedded name="login">
-<!-- 				<attribute-override name="value"> -->
-<!-- 					<column name="login"/> -->
-<!-- 				</attribute-override> -->
-			</embedded>
-		</attributes>
-	</entity>
+    <mapped-superclass class="ch.vd.demaut.commons.vo.BaseValueObjectWithId">
+        <attributes>
+            <id name="id">
+                <generated-value strategy="AUTO"/>
+            </id>
+        </attributes>
+    </mapped-superclass>
 
-	<entity class="ch.vd.demaut.domain.utilisateurs.Utilisateur">
-		<table name="UTILISATEUR"/>
-		<attributes>
-			<embedded name="login"/>
-		</attributes>
-	</entity>
+    <entity class="ch.vd.demaut.domain.demandes.Demande">
+        <table name="DEMANDE"/>
+        <inheritance strategy="SINGLE_TABLE"/>
+        <attributes>
+            <embedded name="referenceDeDemande"/>
+        </attributes>
+    </entity>
 
-	<entity class="ch.vd.demaut.domain.annexes.Annexe">
-		<attributes>
-			<basic name="typeAnnexe">
-				<!-- Bug OpenJPA if in STRING -->
-				<enumerated>ORDINAL</enumerated>
-			</basic>
-			<embedded name="nomFichier"/>
-			<embedded name="contenu"/>
-		</attributes>
-	</entity>
+    <entity class="ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation">
+        <attributes>
+            <basic name="professionDeLaSante">
+                <enumerated>STRING</enumerated>
+            </basic>
+            <basic name="statutDemandeAutorisation">
+                <enumerated>STRING</enumerated>
+            </basic>
+            <!-- <transient name="annexes"/> -->
+            <!-- On ne peut pas utiliser EAGER : https://issues.apache.org/jira/browse/OPENJPA-1908 -->
+            <one-to-many name="annexes" fetch="LAZY">
+                <join-column/>
+                <cascade>
+                    <cascade-all/>
+                </cascade>
+            </one-to-many>
+            <embedded name="login">
+                <!-- 				<attribute-override name="value"> -->
+                <!-- 					<column name="login"/> -->
+                <!-- 				</attribute-override> -->
+            </embedded>
+        </attributes>
+    </entity>
 
-	<embeddable class="ch.vd.demaut.domain.annexes.NomFichier">
-		<attributes>
-			<basic name="nomFichier" access="PROPERTY">
-				<!-- column-definition nécessaire pour aue openJpa crée un varchar et non un tinyblob ! -->
-				<column name="nom_fichier" column-definition="varchar" length="254"/>
-			</basic>
-		</attributes>
-	</embeddable>
+    <entity class="ch.vd.demaut.domain.utilisateurs.Utilisateur">
+        <table name="UTILISATEUR"/>
+        <attributes>
+            <embedded name="login"/>
+        </attributes>
+    </entity>
 
-	<embeddable class="ch.vd.demaut.domain.annexes.ContenuAnnexe">
-		<attributes>
-			<basic name="contenu" access="PROPERTY">
-				<column name="contenu"/>
-				<lob/>
-			</basic>
-			<basic name="taille" access="PROPERTY"/>
-		</attributes>
-	</embeddable>
+    <entity class="ch.vd.demaut.domain.annexes.Annexe">
+        <attributes>
+            <basic name="typeAnnexe">
+                <!-- Bug OpenJPA if in STRING -->
+                <enumerated>ORDINAL</enumerated>
+            </basic>
+            <embedded name="nomFichier"/>
+            <embedded name="contenu"/>
+        </attributes>
+    </entity>
 
-	<embeddable class="ch.vd.demaut.domain.utilisateurs.Login">
-		<attributes>
-			<basic name="value" access="PROPERTY">
-				<column name="login"/>
-			</basic>
-		</attributes>
-	</embeddable>
+    <embeddable class="ch.vd.demaut.domain.annexes.NomFichier">
+        <attributes>
+            <basic name="nomFichier" access="PROPERTY">
+                <column name="nom_fichier" column-definition="varchar" length="254"/>
+            </basic>
+        </attributes>
+    </embeddable>
 
-<!-- Cannot inherit for embeddable type. See http://stackoverflow.com/questions/29278249 -->
-<!-- 	<embeddable class="ch.vd.demaut.commons.vo.StringVO"> -->
-<!-- 		<attributes> -->
-<!-- 			<basic name="value"/> -->
-<!-- 		</attributes> -->
-<!-- 	</embeddable> -->
-	
-	<embeddable class="ch.vd.demaut.domain.demandes.ReferenceDeDemande">
-		<attributes>
-			<basic name="value">
+    <embeddable class="ch.vd.demaut.domain.annexes.ContenuAnnexe">
+        <attributes>
+            <basic name="contenu" access="PROPERTY">
+                <column name="contenu"/>
+                <lob/>
+            </basic>
+            <basic name="taille" access="PROPERTY"/>
+        </attributes>
+    </embeddable>
+
+    <embeddable class="ch.vd.demaut.domain.utilisateurs.Login">
+        <attributes>
+            <basic name="value" access="PROPERTY">
+                <column name="login"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+    <!-- Cannot inherit for embeddable type. See http://stackoverflow.com/questions/29278249 -->
+    <!-- 	<embeddable class="ch.vd.demaut.commons.vo.StringVO"> -->
+    <!-- 		<attributes> -->
+    <!-- 			<basic name="value"/> -->
+    <!-- 		</attributes> -->
+    <!-- 	</embeddable> -->
+
+    <embeddable class="ch.vd.demaut.domain.demandes.ReferenceDeDemande">
+        <attributes>
+            <basic name="value">
                 <column name="referenceDeDemande"/>
-			</basic>
-		</attributes>
-	</embeddable>
+            </basic>
+        </attributes>
+    </embeddable>
 
 </entity-mappings>

@@ -13,12 +13,13 @@ public class SaisirDonneePersoStepDefinitions extends StepDefinitions {
     @SuppressWarnings("unused")
     private DonneesPersonnellesSteps donneesPersonnellesSteps;
 
-    // ********************************************************* Technical
-    // methods
+    // ********************************************************* Technical methods
+
 
     // ********************************************************* Before
 
     // ********************************************************* Given
+
 
     // ********************************************************* When
 
@@ -33,4 +34,6 @@ public class SaisirDonneePersoStepDefinitions extends StepDefinitions {
     public void le_système_Demaut_les_données_personnelles(String arg1) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
     }
+
+
 }

@@ -3,7 +3,10 @@ package ch.vd.demaut.data.demandes.autorisation.repo.impl;
 import ch.vd.demaut.data.GenericRepositoryImpl;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandes.autorisation.StatutDemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
+import ch.vd.demaut.domain.utilisateurs.Login;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,20 +23,25 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
         super(DemandeAutorisation.class);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande ref) {
-
-        TypedQuery<DemandeAutorisation> typedQuery = createQuery(ref);
+        TypedQuery<DemandeAutorisation> typedQuery = createQueryParReference(ref);
         return typedQuery.getSingleResult();
     }
 
-    private TypedQuery<DemandeAutorisation> createQuery(ReferenceDeDemande ref) {
+    @Override
+    @Transactional(readOnly = true)
+    public DemandeAutorisation recupererDemandeParProfessionStatut(Login login, ProfessionDeLaSante profession, StatutDemandeAutorisation statut) {
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    private TypedQuery<DemandeAutorisation> createQueryParReference(ReferenceDeDemande ref) {
         final CriteriaBuilder builder = this.getEntityManager().getCriteriaBuilder();
         final CriteriaQuery<DemandeAutorisation> criteriaQuery = builder.createQuery(DemandeAutorisation.class);
         Root<DemandeAutorisation> autorisationRoot = criteriaQuery.from(DemandeAutorisation.class);
-        //TODO utiliser le type directement (bug openJPA ?)
         criteriaQuery.where(builder.equal(autorisationRoot.get("referenceDeDemande").get("value"), ref.getValue()));
-        TypedQuery<DemandeAutorisation> typedQuery = this.getEntityManager().createQuery(criteriaQuery);
-        return typedQuery;
+        return this.getEntityManager().createQuery(criteriaQuery);
     }
 }

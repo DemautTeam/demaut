@@ -4,7 +4,10 @@ import ch.vd.demaut.commons.repo.mock.GenericFKARepositoryMock;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFK;
+import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandes.autorisation.StatutDemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
+import ch.vd.demaut.domain.utilisateurs.Login;
 
 /**
  * Mock du {@link DemandeAutorisationRepository}
@@ -20,8 +23,13 @@ public class DemandeAutorisationRepositoryJava extends
     }
 
     @Override
-    public DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande ref) {
-        return getByFK(new DemandeAutorisationFK(ref));
+    public DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande referenceDeDemande) {
+        return getByFK(new DemandeAutorisationFK(referenceDeDemande));
+    }
+
+    @Override
+    public DemandeAutorisation recupererDemandeParProfessionStatut(Login login, ProfessionDeLaSante profession, StatutDemandeAutorisation statut) {
+        return null;
     }
 
 }

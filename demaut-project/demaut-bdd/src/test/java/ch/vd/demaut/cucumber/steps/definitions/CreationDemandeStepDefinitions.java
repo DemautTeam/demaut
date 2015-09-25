@@ -1,6 +1,6 @@
 package ch.vd.demaut.cucumber.steps.definitions;
 
-import ch.vd.demaut.cucumber.converters.utilisateurs.LoginConverter;
+import ch.vd.demaut.cucumber.converteurs.utilisateurs.LoginConverter;
 import ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps;
 import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
 import ch.vd.demaut.domain.demandes.autorisation.StatutDemandeAutorisation;
@@ -32,7 +32,7 @@ public class CreationDemandeStepDefinitions extends StepDefinitions {
 
     // ********************************************************* When
     @Lorsque("^l´utilisateur initialise une demande de profession \"([^\"]*)\"$")
-    public void que_lutilisateur_initialise_une_demande_de_profession(ProfessionDeLaSante profession) throws Throwable {
+    public void lutilisateur_initialise_une_demande_de_profession(ProfessionDeLaSante profession) throws Throwable {
         demandeAutorisationSteps.initialiserDemandeEnCours(profession);
     }
 
