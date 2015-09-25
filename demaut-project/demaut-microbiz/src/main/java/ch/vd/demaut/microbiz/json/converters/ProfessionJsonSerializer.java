@@ -5,13 +5,14 @@ import java.io.IOException;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
 import ch.vd.demaut.microbiz.commons.json.EnumJsonSerializer;
 
-public class TypeAnnexeJsonSerializer extends EnumJsonSerializer<TypeAnnexe> {
+//TODO: Factoriser avec TypeAnnexeJsonSerializer
+public class ProfessionJsonSerializer extends EnumJsonSerializer<ProfessionDeLaSante> {
 
     @Override
-    protected void writeToJsonGenerator(TypeAnnexe value, JsonGenerator jgen)
+    protected void writeToJsonGenerator(ProfessionDeLaSante value, JsonGenerator jgen)
             throws IOException, JsonProcessingException {
         jgen.writeFieldName("name");
         jgen.writeString(value.name());
@@ -22,8 +23,8 @@ public class TypeAnnexeJsonSerializer extends EnumJsonSerializer<TypeAnnexe> {
     }
 
     @Override
-    public Class<TypeAnnexe> handledType() {
-        return TypeAnnexe.class;
+    public Class<ProfessionDeLaSante> handledType() {
+        return ProfessionDeLaSante.class;
     }
     
 }

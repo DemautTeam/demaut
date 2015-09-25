@@ -21,17 +21,17 @@ public enum TypeAnnexe {
     PieceIdentite(-3, "Piece Identité"),
     AutorisationPratiquer(-4, "Autorisation(s) de pratiquer");
     
-    private TypePieceProgresID progresId;
+    private RefProgresID progresId;
     
     private String libl;
 
     private TypeAnnexe(Integer id, String libelle) {
-        this.progresId = new  TypePieceProgresID(id);
+        this.progresId = new  RefProgresID(id);
         
         this.libl = libelle;
     }
     
-    public TypePieceProgresID getProgresId() {
+    public RefProgresID getProgresId() {
         return progresId;
     }
     
@@ -41,7 +41,7 @@ public enum TypeAnnexe {
     
     static public TypeAnnexe getTypeById(Integer id2) {
         for (TypeAnnexe type : TypeAnnexe.values()) {
-            if (type.getProgresId().equals(new TypePieceProgresID(id2))) {
+            if (type.getProgresId().equals(new RefProgresID(id2))) {
                 return type;
             }
         }

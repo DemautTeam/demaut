@@ -38,11 +38,6 @@ ngDemautApp
                 controller: 'DonneesProfController',
                 controllerAs: 'donneesProf'
             })
-            .when('/Demaut/demande/donneesProf', {
-                templateUrl: 'template/demande/donneesProf.html',
-                controller: 'DonneesProfController',
-                controllerAs: 'donneesProf'
-            })
             .when('/Demaut/demande/annexes', {
                 templateUrl: 'template/demande/annexes.html',
                 controller: 'AnnexesController',
@@ -112,6 +107,50 @@ ngDemautApp
         this.name = "CockpitController";
         this.params = $routeParams;
     }])
+    .controller('ProfessionSanteController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', 'professionTest', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log, professionTest) {
+        $rootScope.contextMenu = "Profession Santé";
+        $scope.indexStep = 2;
+        this.name = "ProfessionSanteController";
+        this.params = $routeParams;
+        $scope.professionData = {};
+        $scope.professionData.demandeReference = null;
+        $scope.professionData.profession = null;
+        $scope.professionData.professions = [];
+
+        //Récupère liste des professions
+        //TODO: créer une methode isProfessionsListInitialized + Ne pas appeler le service a chaque fois (à initialiser au départ)
+        if ($scope.professionData.professions.length == 0) {
+            $http.get(urlPrefix + '/profession/professionsList').
+                success(function (data, status, headers, config) {
+                    $scope.professionData.professions = angular.fromJson(data.response);
+                }).
+                error(function (data, status, headers, config) {
+                    $rootScope.error = 'Error downloading ../profession/professionsList';
+                });
+        }
+
+        //Etape suivante
+        $scope.nextStep = function(){
+            if ($scope.professionSante.professionDataForm.$valid) {
+                $http.get(urlPrefix + '/profession/donnees/' + $scope.professionData.demandeReference + '/' + $scope.professionData.profession + '/' + $scope.professionData.gln).
+                    success(function (data, status, headers, config) {
+                        $scope.professionData.demandeReference = angular.fromJson(data.response);
+                    }).
+                    error(function (data, status, headers, config) {
+                        $rootScope.error = 'Error downloading ../profession/donnees/' + $scope.professionData.demandeReference;
+                    });
+                
+                $scope.indexStep += 1;
+                $location.path('/Demaut/demande/donneesProf');
+            }
+            else {
+                $scope.professionSante.professionDataForm.gln.$valid = false;
+                $scope.professionSante.professionDataForm.gln.$invalid = true;
+                angular.element("#gln").focus();
+                $log.info('Formulaire invalide !');
+            }
+        };
+    }])
     .controller('DonneesPersoController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', 'urlPrefix', '$log', 'nationalityTest', function ($scope, $rootScope, $routeParams, $http, $location, $interval, urlPrefix, $log, nationalityTest) {
         $rootScope.contextMenu = "Données Personnelles";
         $scope.indexStep = 1;
@@ -129,70 +168,17 @@ ngDemautApp
                 $scope.personalData.permis = null;
             }
         };
-
+        $scope.backStep = function () {
+            $scope.indexStep -= 1;
+            $location.path('/Demaut/demande/professionSante');
+        };
         $scope.nextStep = function () {
             if ($scope.donneesPerso.personalDataForm.$valid) {
-                $log.info('Formulaire valide !');
-                $scope.indexStep += 1;
-                $location.path('/Demaut/demande/professionSante');
-            }
-            else {
-                $log.info('Formulaire invalide !');
-            }
-        };
-    }])
-    .controller('ProfessionSanteController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', 'professionTest', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log, professionTest) {
-        $rootScope.contextMenu = "Profession Santé";
-        $scope.indexStep = 2;
-        this.name = "ProfessionSanteController";
-        this.params = $routeParams;
-        $scope.professionData = {};
-        $scope.professionData.demandeReference = null;
-        $scope.professionData.profession = null;
-        $scope.professionData.professions = [];
-        $scope.professionData.professionsUni = [
-            "53843599", // Chiropraticien
-            "53843613", // Médecin
-            "53843615", // Médecin-dentiste
-            "53843622"  // Pharmacien
-        ];
-
-        if ($scope.professionData.professions == null || $scope.professionData.professions == undefined || $scope.professionData.professions.length == 0) {
-            $http.get(urlPrefix + '/profession/professionsList').
-                success(function (data, status, headers, config) {
-                    $scope.professionData.professions = angular.fromJson(data.response);
-                }).
-                error(function (data, status, headers, config) {
-                    $rootScope.error = 'Error downloading ../profession/professionsList';
-                });
-        }
-
-        $scope.previewStep = function () {
-            $scope.indexStep -= 1;
-            $location.path('/Demaut/demande/donneesPerso');
-        };
-        $scope.nextStep = function(){
-            if ($scope.professionSante.professionDataForm.$valid &&
-                !(professionTest.isProfessionMedicaleUni($scope.professionData.profession, $scope.professionData.professionsUni) &&
-                ($scope.professionData.gln == null || $scope.professionData.gln == undefined))) {
-
-                $http.get(urlPrefix + '/profession/donnees/' + $scope.professionData.demandeReference + '/' + $scope.professionData.profession + '/' + $scope.professionData.gln).
-                    success(function (data, status, headers, config) {
-                        $scope.professionData.demandeReference = angular.fromJson(data.response);
-                    }).
-                    error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error downloading ../profession/donnees/' + $scope.professionData.demandeReference;
-                    });
-
                 $log.info('Formulaire valide !');
                 $scope.indexStep += 1;
                 $location.path('/Demaut/demande/donneesProf');
             }
             else {
-                $scope.professionSante.professionDataForm.gln.$valid = false;
-                $scope.professionSante.professionDataForm.gln.$invalid = true;
-                $scope.professionSante.professionDataForm.gln.$error = 'Code GLN indisponsable pour pour les professions médicales universitaires!';
-                angular.element("#gln").focus();
                 $log.info('Formulaire invalide !');
             }
         };
@@ -205,7 +191,7 @@ ngDemautApp
         $scope.professionnalData = {};
         $scope.professionnalData.activities = null;
 
-        $scope.previewStep = function () {
+        $scope.backStep = function () {
             $scope.indexStep -= 1;
             $location.path('/Demaut/demande/professionSante');
         };
@@ -252,7 +238,7 @@ ngDemautApp
                 });
         }
 
-        $scope.previewStep = function(){
+        $scope.backStep = function(){
             $scope.indexStep -= 1;
             $location.path('/Demaut/demande/donneesProf');
         };
@@ -411,7 +397,7 @@ ngDemautApp
         $scope.indexStep = 5;
         this.name = "RecapitulatifController";
         this.params = $routeParams;
-        $scope.previewStep = function(){
+        $scope.backStep = function(){
             $scope.indexStep -= 1;
             $location.path('/Demaut/demande/annexes');
         };

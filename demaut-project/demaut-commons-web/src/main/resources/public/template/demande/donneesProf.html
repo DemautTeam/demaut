@@ -52,7 +52,7 @@
             </ng-form>
         </div>
         <div class="modal-footer">
-            <button ng-show="showPreview" class="btn btn-primary submit-btn" type="submit" aria-label="Nouvelle"
+            <button ng-show="showBack" class="btn btn-primary submit-btn" type="submit" aria-label="Nouvelle"
                     ng-click="addAnotherData()">
                 <span class="glyphicon glyphicon-plus"></span>
                 Ajouter une autre
@@ -92,4 +92,4 @@
         </div>
     </fieldset>
 </div>
-<step-actions preview-step-fn="previewStep()" next-step-fn="nextStep()"/>
+<step-actions back-step-fn="backStep()" next-step-fn="nextStep()"/>

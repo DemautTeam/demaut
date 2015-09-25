@@ -16,11 +16,11 @@ commonsModule.service('professionTest', ['$log', function ($log) {
 commonsModule.directive('stepActions', function () {
     return {
         restrict: 'E',
-        scope: {previewStepFn: '&', nextStepFn: '&', cancelAction: '&'},
+        scope: {backStepFn: '&', nextStepFn: '&', cancelAction: '&'},
         templateUrl: 'template/directive/step-actions.html',
         link: function (scope, element, attrs) {
             scope.showNext = element.attr('next-step-fn');
-            scope.showPreview = element.attr('preview-step-fn');
+            scope.showBack = element.attr('back-step-fn');
         }
     };
 });

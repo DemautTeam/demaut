@@ -9,9 +9,4 @@ abstract public class EnumJsonSerializer<T> extends BaseJsonSerializer<T> {
         super();
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public Class<T> handledType() {
-        return (Class<T>) Enum.class;
-    }
 }

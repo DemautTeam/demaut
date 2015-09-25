@@ -15,35 +15,8 @@
                 <div class="row">
                     <br/>
                 </div>
-                <div class="row">
-                    <div class="col-md-4"><label for="gln">Code GLN (EAN)</label></div>
-                    <div class="col-md-6">
-                        <input type="number" id="gln" name="gln" class="form-control {professionSante.professionDataForm.gln.$invalid : ng-invalid}"
-                               ng-minlength="0" ng-maxlength="13" ng-model="professionData.gln" ng-model-options="{ updateOn: 'blur' }" placeholder="7601000000125">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-10">
-                        <label></label>
-                        <span class="alert alert-warning" style="font-style: italic;padding:0px;position: absolute;right: 16px;">
-                            <span>Seulement pour les professions médicales universitaires</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="row">
-                    <br/>
-                </div>
-                <div class="row">
-                    <div class="col-md-4"><label></label></div>
-                    <div class="col-md-8">
-                        <label>
-                            Si vous ne disposez pas d'un code GLN (EAN), veuillez vous adresser à l'Office fédéral de la santé publique
-                            <a href="http://www.retdata.ch" style="color: blue">www.retdata.ch</a>
-                        </label>
-                    </div>
-                </div>
             </ng-form>
         </div>
     </fieldset>
 </div>
-<step-actions preview-step-fn="previewStep()" next-step-fn="nextStep()"/>
+<step-actions back-step-fn="backStep()" next-step-fn="nextStep()"/>

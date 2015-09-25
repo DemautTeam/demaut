@@ -1,20 +1,7 @@
 package ch.vd.demaut.microbiz.rest.impl;
 
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
-import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
-import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.microbiz.progreSoa.ProgreSoaService;
-import ch.vd.demaut.microbiz.rest.ProfessionRest;
-import ch.vd.demaut.microbiz.rest.RestUtils;
-import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
-import ch.vd.ses.referentiel.demaut_1_0.VcType;
-import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
@@ -26,7 +13,23 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import java.util.List;
+
+import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.microbiz.progreSoa.ProgreSoaService;
+import ch.vd.demaut.microbiz.rest.ProfessionRest;
+import ch.vd.demaut.microbiz.rest.RestUtils;
+import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
+import ch.vd.ses.referentiel.demaut_1_0.VcType;
 
 @CrossOriginResourceSharing(allowOrigins = { "*" }, allowCredentials = true, maxAge = 3600, allowHeaders = {
         "Content-Type", "X-Requested-With" }, exposeHeaders = { "Access-Control-Allow-Origin" })
@@ -51,13 +54,39 @@ public class ProfessionRestImpl implements ProfessionRest {
 
         LOGGER.info("listerLesProfessionsDeLaSante");
 
+        // Altrenative:
+        List<ProfessionDeLaSante> professions = buildListeProfessionsSansProgresSOA();
+
+        // Altrenative SOA:
+        //List<VcType> typesAnnexe = buildListeProfessionsAvecProgresSOA(uriInfo);
+        // TODO filtrer la liste selon Universitaire ou non
+        return RestUtils.forgeResponseList(professions);
+    }
+
+    /**
+     * Méthode qui renvoie la liste des professions sans passer par le WS
+     * ProgresSOA
+     */
+    private List<ProfessionDeLaSante> buildListeProfessionsSansProgresSOA() {
+        return Arrays.asList(ProfessionDeLaSante.values());
+    }
+
+    /**
+     * Cette méthode sera peut-etre utilisé suivant les futures décisions prises
+     * TODO: Quoiqu'il en soit virer progreSoaService du projet microbiz et le
+     * mettre dans Service (qui correspond a la facade REST)
+     * 
+     * @throws Exception
+     */
+    @SuppressWarnings("unused")
+    private List<VcType> buildListeProfessionsAvecProgresSOA(UriInfo uriInfo) throws Exception {
         // TODO mettre en cache la liste des professions
         String path = uriInfo != null ? uriInfo.getBaseUri().getPath() : null;
         List<VcType> lesProfessionsDeLaSante = progreSoaService.listeSOAProfession(path).getVcList().getVc();
-        // TODO filtrer la liste selon Universitaire ou non
-        return RestUtils.forgeResponseList(lesProfessionsDeLaSante);
+        return lesProfessionsDeLaSante;
     }
 
+    
     @Override
     @GET
     @Path("/donnees/{demandeReference}")
@@ -78,6 +107,7 @@ public class ProfessionRestImpl implements ProfessionRest {
                 new BeanPropertyValueEqualsPredicate("libl", professionDeLaSante.name()))));
     }
 
+    
     @Override
     @GET
     @Path("/donnees/{demandeReference}/{idProfession}/{codeGln}")

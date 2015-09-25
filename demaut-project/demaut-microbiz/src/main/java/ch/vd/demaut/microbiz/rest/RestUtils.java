@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import ch.vd.demaut.microbiz.json.converters.ProfessionJsonSerializer;
 import ch.vd.demaut.microbiz.json.converters.TypeAnnexeJsonSerializer;
 import ch.vd.pee.microbiz.core.utils.Json;
 
@@ -83,6 +84,7 @@ public final class RestUtils {
         ObjectMapper objMapper = new ObjectMapper();
         SimpleModule module = new SimpleModule("EnumModule");
         module.addSerializer(new TypeAnnexeJsonSerializer());
+        module.addSerializer(new ProfessionJsonSerializer());
         objMapper.registerModule(module);
         
         return objMapper;
