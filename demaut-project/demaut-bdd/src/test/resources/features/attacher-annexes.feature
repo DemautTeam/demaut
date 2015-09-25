@@ -51,7 +51,7 @@ Fonctionnalité: Attacher des annexes à la demande par le professionnel
   Plan du scénario: Attacher une annexe à une liste existante
     Etant donné une demande de profession "Medecin" en cours de saisie
     Etant donné la liste des annexes initiale <annexes_initiales> attachées à la demande en cours
-    Lorsque l´utilisateur attache le fichier "certificat.pdf" de taille 2M de type "Certificat"
+    Lorsque l´utilisateur attache le fichier "certificat.pdf" de taille 2M de type "CertificatDeTravail"
     Alors le système Demaut "accepte" d´attacher cette annexe
     Alors les annexes attachées à la demande sont <annexes>
     Exemples:
