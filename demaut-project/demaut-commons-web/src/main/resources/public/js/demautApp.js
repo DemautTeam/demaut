@@ -134,7 +134,9 @@ ngDemautApp
             if ($scope.professionSante.professionDataForm.$valid) {
                 $http.get(urlPrefix + '/demande/initialiser/' + $scope.professionData.profession).
                     success(function (data, status, headers, config) {
-                    	$scope.$storage.refDemande = angular.fromJson(data.response);
+                    	var refDemande = angular.fromJson(data.response);
+                    	//TODO : Ajouter le error handling if refDemande null ou undefined 
+                    	$scope.$storage.refDemande = refDemande.value;
                         $log.info('Reference de la nouvelle demande :' + $scope.$storage.refDemande);
                     }).
                     error(function (data, status, headers, config) {
@@ -265,7 +267,6 @@ ngDemautApp
         this.params = $routeParams;
         $scope.annexesData = {};
         $scope.$storage = $sessionStorage;
-        $scope.annexesData.demandeReference = $sessionStorage.refDemande;
         $scope.annexesData.annexeFormats = ["application/pdf", "image/jpg", "image/jpeg", "image/png"];
         $scope.annexesData.annexeTypes = [];
         $scope.annexesData.referenceFiles = [];
@@ -369,7 +370,7 @@ ngDemautApp
         };
 
         $scope.viewAnnexe = function (file, annexeType) {
-            $http.get(urlPrefix + '/annexes/afficher/' + $scope.annexesData.demandeReference + '/' + file.name.replace(/\s/g, ''), {responseType:'arraybuffer'}).
+            $http.get(urlPrefix + '/annexes/afficher/' + $scope.$storage.refDemande + '/' + file.name.replace(/\s/g, ''), {responseType:'arraybuffer'}).
                 success(function (data, status, headers, config) {
                     displayAnnexeFromBinary(data);
                 }).
@@ -408,7 +409,7 @@ ngDemautApp
         };
 
         function doDeleteFile(file, annexeFileType) {
-            $http.get(urlPrefix + '/annexes/supprimer/' + $scope.annexesData.demandeReference + '/' + file.name.replace(/\s/g, '') + '/' + annexeFileType)
+            $http.get(urlPrefix + '/annexes/supprimer/' + $scope.$storage.refDemande + '/' + file.name.replace(/\s/g, '') + '/' + annexeFileType)
                 .success(function (data, status, headers, config) {
                     $rootScope.error = 'Une annexe a été supprimée avec succès: \n Status :' +  status;
                 })
@@ -420,7 +421,7 @@ ngDemautApp
         function doUploadFile(currentFetchedFile) {
             var formData = new FormData();
             formData.append('ajaxAction', 'upload');
-            formData.append("demandeReference", $scope.annexesData.demandeReference);
+            formData.append("demandeReference", $scope.$storage.refDemande);
             formData.append("annexeFile", currentFetchedFile);
             formData.append("annexeFileName", currentFetchedFile.name.replace(/\s/g, ''));
             formData.append("annexeFileSize", currentFetchedFile.size);
