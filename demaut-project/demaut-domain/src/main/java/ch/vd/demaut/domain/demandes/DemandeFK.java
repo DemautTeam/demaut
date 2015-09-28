@@ -5,7 +5,6 @@ import ch.vd.demaut.commons.fk.FunctionalKeyAbstract;
 
 /**
  * Représente une clé fonctionnelle d'une demande
- *
  */
 @ValueObject
 public class DemandeFK extends FunctionalKeyAbstract<Demande> {

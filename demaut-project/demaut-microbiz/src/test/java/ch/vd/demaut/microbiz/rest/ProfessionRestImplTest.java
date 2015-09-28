@@ -7,7 +7,6 @@ import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -21,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-@Ignore("Senario Data")
 @ContextConfiguration({"classpath*:microbizTest-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -55,13 +53,13 @@ public class ProfessionRestImplTest {
 
     @Test
     public void testAfficherDonneesProfession() throws Exception {
-        Response response = professionRest.afficherDonneesPro(null, referenceDeDemande.getValue());
+        Response response = professionRest.afficherDonneesProfession(null, referenceDeDemande.getValue());
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
     @Test
     public void testRenseignerDonneesProfession() throws Exception {
-        Response response = professionRest.renseignerDonneesPro(null, referenceDeDemande.getValue(), "53843599", "7601000000125");
+        Response response = professionRest.renseignerDonneesProfession(null, referenceDeDemande.getValue(), "53843599", "7601000000125");
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 }

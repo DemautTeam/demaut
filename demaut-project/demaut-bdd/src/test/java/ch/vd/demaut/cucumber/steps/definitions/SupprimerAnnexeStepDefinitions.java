@@ -49,7 +49,7 @@ public class SupprimerAnnexeStepDefinitions {
             TypeAnnexe typeAnnexe = TypeAnnexe.valueOf(typeDeLAnnexe);
             String nomFichier = mappingUnTypeNomFichierAnnexesSaisies.get("Nom du fichier");
             byte[] contenuFichier = FileMockHelper.buildContenuFichier(2);
-            Annexe annexe = new Annexe(typeAnnexe, nomFichier, contenuFichier);
+            Annexe annexe = new Annexe(typeAnnexe, nomFichier, contenuFichier, "01.01.2015 11:00");
             annexesSteps.attacherUneAnnexe(annexe);
         }
     }

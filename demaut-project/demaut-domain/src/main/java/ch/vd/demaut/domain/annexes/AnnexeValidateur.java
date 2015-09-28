@@ -1,11 +1,10 @@
 package ch.vd.demaut.domain.annexes;
 
-import java.util.Set;
-import java.util.regex.Pattern;
+import ch.vd.demaut.commons.validation.AbstractDataValidateur;
 
 import javax.validation.ConstraintViolation;
-
-import ch.vd.demaut.commons.validation.AbstractDataValidateur;
+import java.util.Set;
+import java.util.regex.Pattern;
 
 public class AnnexeValidateur extends AbstractDataValidateur<Annexe> {
 
@@ -18,7 +17,6 @@ public class AnnexeValidateur extends AbstractDataValidateur<Annexe> {
     // ********************************************************* Fields
 
     // ********************************************************* Constructeur
-
 
 
     // ********************************************************* Méthodes métier

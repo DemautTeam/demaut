@@ -1,0 +1,101 @@
+<div ng-include="'template/include/include-steps.html'"></div>
+<div class="bs-wizard-info text-left">
+    <fieldset>
+        <legend>Veuillez saisir vos titres et formations :</legend>
+        <div>
+            <ng-form name="donneesDiplome.diplomeDataForm">
+                <div class="row">
+                    <div class="col-md-2"><label for="typeDiplome">Type de diplôme*</label></div>
+                    <div class="col-md-10">
+                        <select id="typeDiplome" name="typeDiplome" ng-model="diplomeData.typeDiplome" ng-change="fetchListeFormations()" required>
+                            <option ng-repeat="typeDiplome in diplomeData.typeDiplomes" value="{{typeDiplome.id}}">{{typeDiplome.libl}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <br/>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"><label for="typeFormation">Titre de la formation*</label></div>
+                    <div class="col-md-10">
+                        <select id="typeFormation" name="typeFormation" ng-model="diplomeData.typeFormation" required>
+                            <option ng-repeat="typeFormation in diplomeData.typeFormations" value="{{typeFormation.id}}">{{typeFormation.libl}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <br/>
+                </div>
+                <div class="row">
+                    <label for="dateObtention" class="col-md-2">Date d'obtention*</label>
+                    <div class="col-md-4">
+                        <input type="date" id="dateObtention" name="dateObtention" placeholder="jj/MM/aaaa"
+                               class="form-control" required="required" ng-model="diplomeData.dateObtention">
+                    </div>
+                    <label for="paysObtention" class="col-md-2">Pays d'obtention*</label>
+                    <div class="col-md-2">
+                        <select id="paysObtention" name="paysObtention" ng-model="diplomeData.paysObtention" required>
+                            <option ng-repeat="pays in diplomeData.paysList" value="{{pays.id}}">{{pays.libl}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <br/>
+                </div>
+                <div class="row">
+                    <label for="dateReconnaissance" class="col-md-2">Date de reconnaissance</label>
+                    <div class="col-md-4">
+                        <input type="date" id="dateReconnaissance" name="dateReconnaissance" placeholder="jj/MM/aaaa"
+                               class="form-control" required="required" ng-model="diplomeData.dateReconnaissance">
+                    </div>
+                </div>
+            </ng-form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary submit-btn" type="submit" aria-label="Nouvelle" ng-click="addAnotherDiplome()">
+                <span class="glyphicon glyphicon-plus"></span>
+                Ajouter une formation
+            </button>
+        </div>
+        <div ng-show="diplomeData.diplomes">
+            <legend>Formations et titres :</legend>
+            <div style="overflow: auto;height: 460px;">
+                <table class="table table-striped">
+                    <thead>
+                    <tr bgcolor="#99CC00">
+                        <th>Type de diplôme</th>
+                        <th>Titre de la formation</th>
+                        <th>Date d'optention</th>
+                        <th>Pays d'optention</th>
+                        <th>Date de reconnaissance</th>
+                    </tr>
+                    </thead>
+                    <tr ng-repeat="diplome in diplomeData.diplomes">
+                        <td>{{diplome.typeDiplome.libl}}</td>
+                        <td>
+                            {{diplome.typeFormation.libl}}
+                        </td>
+                        <td>
+                            {{diplome.dateObtention}}
+                        </td>
+                        <td>
+                            {{diplome.paysObtention}}
+                        </td>
+                        <td>
+                            {{diplome.dateReconnaissance}}
+                        </td>
+                        <td>
+                            <a href="" ng-click="editActivite(diplome)" class="btn btn-xs btn-default">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                            <a href="" ng-click="deleteActivite(diplome)" class="btn btn-xs btn-default">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </fieldset>
+</div>
+<step-actions preview-step-fn="previewStep()" next-step-fn="nextStep()"/>

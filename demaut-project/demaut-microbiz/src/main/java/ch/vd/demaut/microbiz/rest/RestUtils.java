@@ -1,22 +1,18 @@
 package ch.vd.demaut.microbiz.rest;
 
-import java.util.Collection;
-
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
-
-import org.apache.camel.Message;
-import org.apache.cxf.rs.security.cors.CorsHeaderConstants;
-
+import ch.vd.demaut.microbiz.json.converters.TypeProgresJsonSerializer;
+import ch.vd.pee.microbiz.core.utils.Json;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.apache.camel.Message;
+import org.apache.cxf.rs.security.cors.CorsHeaderConstants;
 
-import ch.vd.demaut.microbiz.json.converters.ProfessionJsonSerializer;
-import ch.vd.demaut.microbiz.json.converters.TypeAnnexeJsonSerializer;
-import ch.vd.pee.microbiz.core.utils.Json;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
+import java.util.Collection;
 
 public final class RestUtils {
 
@@ -59,31 +55,27 @@ public final class RestUtils {
     }
 
     private static Response forgeResponseAsString(Object value) throws JsonProcessingException {
-        
+
         ObjectNode json = buildJSon(value);
 
         ResponseBuilder responseBuilder = getResponseBuildeOK();
-        
-        Response response = buildHeaders(responseBuilder).entity(json).build();
-        
-        return response;
+
+        return buildHeaders(responseBuilder).entity(json).build();
     }
 
     private static ObjectNode buildJSon(Object value) throws JsonProcessingException {
         ObjectMapper objMapper = buildJSonObjectMapper();
         ObjectWriter writer = objMapper.writer();
         String jsonStr = writer.writeValueAsString(value);
-        ObjectNode json = Json.newObject().put("response", jsonStr);
-        return json;
+        return Json.newObject().put("response", jsonStr);
     }
 
     public static ObjectMapper buildJSonObjectMapper() {
         ObjectMapper objMapper = new ObjectMapper();
         SimpleModule module = new SimpleModule("EnumModule");
-        module.addSerializer(new TypeAnnexeJsonSerializer());
-        module.addSerializer(new ProfessionJsonSerializer());
+        module.addSerializer(new TypeProgresJsonSerializer());
         objMapper.registerModule(module);
-        
+
         return objMapper;
     }
 

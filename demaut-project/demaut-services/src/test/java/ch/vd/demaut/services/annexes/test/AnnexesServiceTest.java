@@ -1,14 +1,13 @@
 package ch.vd.demaut.services.annexes.test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.Collection;
-
-import javax.inject.Inject;
-
+import ch.vd.demaut.domain.annexes.*;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.services.annexes.AnnexesService;
+import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import org.apache.commons.io.IOUtils;
+import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,15 +18,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.vd.demaut.domain.annexes.Annexe;
-import ch.vd.demaut.domain.annexes.ContenuAnnexe;
-import ch.vd.demaut.domain.annexes.NomFichier;
-import ch.vd.demaut.domain.annexes.TypeAnnexe;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.services.annexes.AnnexesService;
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
+import javax.inject.Inject;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Collection;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ContextConfiguration({"classpath*:/servicesTest-context.xml"})
 @ActiveProfiles({"data"})
@@ -57,7 +53,7 @@ public class AnnexesServiceTest {
         file = new File("src/test/resources/demautServicesTest.cfg");
 
         nomFichier = new NomFichier("Test_multipart.pdf");
-        annexe = new Annexe(TypeAnnexe.CV, nomFichier, new ContenuAnnexe(byteArray));
+        annexe = new Annexe(TypeAnnexe.CV, nomFichier, new ContenuAnnexe(byteArray), new DateCreation(new LocalDate()));
 
         login = new Login("joe.dalton@ch.vd");
         profession = Profession.Medecin;
@@ -68,7 +64,6 @@ public class AnnexesServiceTest {
         assertThat(byteArray).isNotNull();
         assertThat(demandeEnCours.getReferenceDeDemande()).isNotNull();
         assertThat(nomFichier).isNotNull();
-
     }
 
     @Test

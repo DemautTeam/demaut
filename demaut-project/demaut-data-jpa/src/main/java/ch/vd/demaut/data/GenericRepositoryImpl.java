@@ -99,8 +99,7 @@ public abstract class GenericRepositoryImpl<T, I extends Serializable> implement
     @Override
     @Transactional
     public void deleteAll() {
-        Query typedQuery = getEntityManager()
-                .createQuery("select o from " + entityClass.getSimpleName() + " as o");
+        Query typedQuery = getEntityManager().createQuery("select o from " + entityClass.getSimpleName() + " as o");
         @SuppressWarnings("unchecked")
         List<T> entities = typedQuery.getResultList();
         if (entities != null && !entities.isEmpty()) {

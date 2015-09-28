@@ -6,6 +6,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class TitreFormation extends StringVO {
+
+    public TitreFormation() {
+    }
+
     public TitreFormation(String value) {
         super(value);
     }

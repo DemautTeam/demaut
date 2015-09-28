@@ -119,7 +119,7 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
 
         byte[] contenuFichier = FileMockHelper.buildContenuFichier(tailleFichier);
 
-        Annexe annexe = new Annexe(typeAnnexe, nomFichier, contenuFichier);
+        Annexe annexe = new Annexe(typeAnnexe, nomFichier, contenuFichier, "01.01.2015 11:00");
 
         annexesSteps.attacherUneAnnexe(annexe);
     }

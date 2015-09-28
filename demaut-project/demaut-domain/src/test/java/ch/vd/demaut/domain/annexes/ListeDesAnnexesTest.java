@@ -7,7 +7,6 @@ import org.junit.runners.JUnit4;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
@@ -22,12 +21,12 @@ public class ListeDesAnnexesTest {
 
     @Before
     public void setUp() throws Exception {
-        List<Annexe> annexes = new ArrayList<Annexe>();
-        listeDesAnnexes = new ListeDesAnnexes(annexes);
-        listeDesAnnexes.ajouterAnnexe(new Annexe(TypeAnnexe.CertificatDeTravail, "certificat1.pdf", null));
-        listeDesAnnexes.ajouterAnnexe(new Annexe(TypeAnnexe.CertificatDeTravail, "certificat2.pdf", null));
-        listeDesAnnexes.ajouterAnnexe(new Annexe(TypeAnnexe.CertificatDeTravail, "certificat3.pdf", null));
-        listeDesAnnexes.ajouterAnnexe(new Annexe(TypeAnnexe.CV, "cv.pdf", null));
+        listeDesAnnexes = new ListeDesAnnexes(new ArrayList<Annexe>());
+        String dateCreation = "01.01.2015 11:00";
+        listeDesAnnexes.ajouterAnnexe(new Annexe(TypeAnnexe.CertificatDeTravail, "certificat1.pdf", null, dateCreation));
+        listeDesAnnexes.ajouterAnnexe(new Annexe(TypeAnnexe.CertificatDeTravail, "certificat2.pdf", null, dateCreation));
+        listeDesAnnexes.ajouterAnnexe(new Annexe(TypeAnnexe.CertificatDeTravail, "certificat3.pdf", null, dateCreation));
+        listeDesAnnexes.ajouterAnnexe(new Annexe(TypeAnnexe.CV, "cv.pdf", null, dateCreation));
     }
 
     @Test
@@ -44,8 +43,7 @@ public class ListeDesAnnexesTest {
 
     @Test
     public void testerExtraireAnnexeMetadatasDeTypeAvecPlusieursAnnexes() {
-        Collection<AnnexeMetadata> annexeMetadatas = listeDesAnnexes
-                .extraireAnnexesMetadatasDeType(TypeAnnexe.CertificatDeTravail);
+        Collection<AnnexeMetadata> annexeMetadatas = listeDesAnnexes.extraireAnnexesMetadatasDeType(TypeAnnexe.CertificatDeTravail);
         assertThat(annexeMetadatas).hasSize(3);
     }
 
@@ -57,16 +55,14 @@ public class ListeDesAnnexesTest {
 
     @Test
     public void supprimerUneAnnexeViaNomDeFichier() {
-        NomFichier nomFichier = new NomFichier("certificat3.pdf");
-        listeDesAnnexes.supprimerUneAnnexeParNomFichier(nomFichier);
+        listeDesAnnexes.supprimerUneAnnexeParNomFichier(new NomFichier("certificat3.pdf"));
         assertThat(listeDesAnnexes.listerAnnexes()).hasSize(3);
     }
 
     @Test
     public void supprimerUneAnnexeViaNomDeFichierQuiNexistePas() {
         try {
-            NomFichier nomFichier = new NomFichier("certificat5.pdf");
-            listeDesAnnexes.supprimerUneAnnexeParNomFichier(nomFichier);
+            listeDesAnnexes.supprimerUneAnnexeParNomFichier(new NomFichier("certificat5.pdf"));
             failBecauseExceptionWasNotThrown(AnnexeNonValideException.class);
         } catch (AnnexeIntrouvableException e) {
         }

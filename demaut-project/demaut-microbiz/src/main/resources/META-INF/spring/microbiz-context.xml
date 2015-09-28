@@ -28,6 +28,7 @@
         <cxf:serviceBeans>
             <ref local="annexeRestImpl"/>
             <ref local="professionRestImpl"/>
+            <ref local="diplomeRestImpl"/>
         </cxf:serviceBeans>
         <cxf:providers>
             <ref local="customeJacksonJaxbJsonProvider"/>

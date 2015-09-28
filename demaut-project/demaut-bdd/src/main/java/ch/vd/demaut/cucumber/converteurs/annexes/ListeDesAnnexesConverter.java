@@ -16,8 +16,7 @@ public class ListeDesAnnexesConverter extends Transformer<ListeDesAnnexes> {
         ListeDesAnnexes listeDesAnnexes = new ListeDesAnnexes(new ArrayList<Annexe>());
         for (String nomFichierStr : nomFichiers) {
             if (!StringUtils.isEmpty(nomFichierStr)) {
-                //TODO : Ne pas hardcoder le type d'annexe
-                Annexe annexe = new Annexe(TypeAnnexe.CV, nomFichierStr, new byte[1]);
+                Annexe annexe = new Annexe(TypeAnnexe.CV, nomFichierStr, new byte[1], "01.01.2015 11:00");
                 listeDesAnnexes.ajouterAnnexe(annexe);
             }
         }

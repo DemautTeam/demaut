@@ -3,6 +3,8 @@ package ch.vd.demaut.domain.annexes;
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.BaseValueObjectWithId;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
 
 /**
  * Représente une Annexe associée à une demande {@link DemandeAutorisation} <br>
@@ -20,22 +22,25 @@ public class Annexe extends BaseValueObjectWithId {
 
     private NomFichier nomFichier;
 
+    private DateCreation dateCreation;
+
     // ********************************************************* Constructor
 
     //Only here for OpenJPA
     public Annexe() {
     }
 
-    //TODO: remove me
-    public Annexe(TypeAnnexe typeAnnexe, String nomFichier, byte[] contenu) {
-        this(typeAnnexe, new NomFichier(nomFichier), new ContenuAnnexe(contenu));
+    public Annexe(TypeAnnexe typeAnnexe, String nomFichier, byte[] contenu, String dateCreation) {
+        this(typeAnnexe, new NomFichier(nomFichier), new ContenuAnnexe(contenu),
+                new DateCreation(LocalDate.parse(dateCreation, DateTimeFormat.forPattern("dd.MM.yyyy hh:mm"))));
     }
 
-    public Annexe(TypeAnnexe typeAnnexe, NomFichier nomFichier, ContenuAnnexe contenu) {
+    public Annexe(TypeAnnexe typeAnnexe, NomFichier nomFichier, ContenuAnnexe contenu, DateCreation dateCreation) {
         super();
         this.typeAnnexe = typeAnnexe;
         this.nomFichier = nomFichier;
         this.contenu = contenu;
+        this.dateCreation = dateCreation;
     }
 
     // ********************************************************* Getters
@@ -54,6 +59,10 @@ public class Annexe extends BaseValueObjectWithId {
 
     public NomFichier getNomFichier() {
         return nomFichier;
+    }
+
+    public DateCreation getDateCreation() {
+        return dateCreation;
     }
 
     public AnnexeMetadata getAnnexeMetadata() {

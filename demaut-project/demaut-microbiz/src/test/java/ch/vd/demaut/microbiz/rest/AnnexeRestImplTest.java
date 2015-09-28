@@ -1,7 +1,12 @@
 package ch.vd.demaut.microbiz.rest;
 
+import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
@@ -21,14 +26,19 @@ import java.io.FileInputStream;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-@Ignore("Senario Data")
+@Ignore("Unable to instantiate Configuration ValidationException")
 @ContextConfiguration({"classpath*:microbizTest-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class AnnexeRestTest {
+public class AnnexeRestImplTest {
 
     @Inject
     private AnnexeRest annexeRest;
+
+    @Inject
+    private DemandeAutorisationService demandeAutorisationService;
+
+    private ReferenceDeDemande referenceDeDemande;
 
     private byte[] byteArray;
 
@@ -36,8 +46,17 @@ public class AnnexeRestTest {
     public void setUp() throws Exception {
         byteArray = IOUtils.toByteArray(new FileInputStream("src/test/resources/demautMicrobizTest.cfg"));
 
+        Login login = new Login("joe.dalton@ch.vd");
+        Profession profession = Profession.Medecin;
+
         assertNotNull(byteArray);
         assertNotNull(annexeRest);
+
+        DemandeAutorisation demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(login, profession);
+        referenceDeDemande = demandeEnCours.getReferenceDeDemande();
+        assertNotNull(referenceDeDemande);
+        Annexe annexe = new Annexe(TypeAnnexe.CV, "Test_multipart.pdf", byteArray, "01.01.2015 11:00");
+        demandeEnCours.validerEtAttacherAnnexe(annexe);
     }
 
     @Test
@@ -48,13 +67,13 @@ public class AnnexeRestTest {
 
     @Test
     public void testListerLesAnnexes() throws Exception {
-        Response response = annexeRest.listerLesAnnexes(null, "7dc53df5-703e-49b3-8670-b1c468f47f1f");
+        Response response = annexeRest.listerLesAnnexes(null, referenceDeDemande.getValue());
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
     @Test
-    public void testAfficherUneAnnexe() throws Exception {
-        Response response = annexeRest.afficherUneAnnexe(null, "7dc53df5-703e-49b3-8670-b1c468f47f1f", "Test_multipart.pdf");
+    public void testAfficherUneAnnexeInvalid() throws Exception {
+        Response response = annexeRest.afficherUneAnnexe(null, referenceDeDemande.getValue(), "Test_multipart.pdf");
         assertNotNull(response);
     }
 
@@ -62,13 +81,14 @@ public class AnnexeRestTest {
     public void testAttacherUneAnnexe() throws Exception {
         File fileMultipart = new File("target/Test_multipart.cfg");
         FileUtils.writeByteArrayToFile(fileMultipart, byteArray);
-        Response response = annexeRest.attacherUneAnnexe(null, "demandeReference", fileMultipart, "Test_multipart.pdf", String.valueOf(byteArray.length), "application/cfg", TypeAnnexe.CV.name());
+        Response response = annexeRest.attacherUneAnnexe(null, referenceDeDemande.getValue(), fileMultipart, "Test_multipart.pdf",
+                String.valueOf(byteArray.length), "application/cfg", String.valueOf(TypeAnnexe.CV.getRefProgresID().getId()));
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
     @Test
     public void testSupprimerAnnexe() throws Exception {
-        Response response = annexeRest.supprimerUneAnnexe(null, "demandeReference", "Test_multipart.pdf", TypeAnnexe.CV.name());
+        Response response = annexeRest.supprimerUneAnnexe(null, referenceDeDemande.getValue(), "Test_multipart.pdf", String.valueOf(TypeAnnexe.CV.getRefProgresID().getId()));
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 }

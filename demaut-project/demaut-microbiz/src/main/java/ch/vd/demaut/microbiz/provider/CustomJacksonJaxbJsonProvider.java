@@ -1,11 +1,10 @@
 package ch.vd.demaut.microbiz.provider;
 
-import javax.ws.rs.core.MediaType;
-
-import org.springframework.beans.factory.FactoryBean;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
+import org.springframework.beans.factory.FactoryBean;
+
+import javax.ws.rs.core.MediaType;
 
 public class CustomJacksonJaxbJsonProvider implements FactoryBean<JacksonJaxbJsonProvider> {
 

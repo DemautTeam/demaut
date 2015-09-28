@@ -6,9 +6,6 @@ import ch.vd.demaut.domain.demandeur.Pays;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-/**
- * Created by mourad on 14.09.15.
- */
 public class Adresse extends BaseValueObject {
 
     @NotNull
@@ -49,7 +46,7 @@ public class Adresse extends BaseValueObject {
     public Pays getPays() {
         return pays;
     }
-    
+
     public String getComplement() {
         return complement;
     }

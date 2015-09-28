@@ -10,5 +10,4 @@ public class DateTimeConverter extends Transformer<DateTime> {
         String pattern = "dd.MM.yy hh:mm";
         return DateTime.parse(jourEtHeure, DateTimeFormat.forPattern(pattern));
     }
-
 }

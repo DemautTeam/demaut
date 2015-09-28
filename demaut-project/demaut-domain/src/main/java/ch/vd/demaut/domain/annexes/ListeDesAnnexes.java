@@ -36,7 +36,7 @@ public class ListeDesAnnexes {
      * Renvoie la liste des annexes
      */
     public List<Annexe> listerAnnexes() {
-        if(annexes == null){
+        if (annexes == null) {
             return Collections.unmodifiableList(new ArrayList<Annexe>());
         }
         return Collections.unmodifiableList(annexes);

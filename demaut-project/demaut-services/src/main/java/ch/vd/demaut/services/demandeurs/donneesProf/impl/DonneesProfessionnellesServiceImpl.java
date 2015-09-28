@@ -4,6 +4,8 @@ import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
+import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
+import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnellesNotFoundException;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
@@ -24,6 +26,16 @@ public class DonneesProfessionnellesServiceImpl implements DonneesProfessionnell
     }
 
     @Override
+    public DonneesProfessionnelles recupererDonneesProfessionnellesParReferenceDemande(ReferenceDeDemande referenceDeDemande) {
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererDemandeParReference(referenceDeDemande);
+        if (demandeAutorisation != null) {
+            return demandeAutorisation.getDonneesProfessionnelles();
+        } else {
+            throw new DonneesProfessionnellesNotFoundException();
+        }
+    }
+
+    @Override
     public ReferenceDeDemande renseignerDonneesProfession(Login login, ReferenceDeDemande referenceDeDemande, Profession profession, CodeGLN codeGLN) {
         DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererDemandeParReference(referenceDeDemande);
         if (demandeAutorisation != null) {
@@ -35,4 +47,5 @@ public class DonneesProfessionnellesServiceImpl implements DonneesProfessionnell
             return nouvelleDemande.getReferenceDeDemande();
         }
     }
+
 }

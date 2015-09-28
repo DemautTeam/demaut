@@ -6,8 +6,9 @@ import ch.vd.demaut.domain.config.ConfigDemaut;
 import ch.vd.demaut.domain.demandes.Demande;
 import ch.vd.demaut.domain.demandes.DemandeFK;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
 import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnelles;
+import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
+import ch.vd.demaut.domain.demandeur.donneesProf.DonnessProfessionnellesValidateur;
 import ch.vd.demaut.domain.utilisateurs.Login;
 
 import javax.validation.constraints.NotNull;
@@ -31,7 +32,7 @@ public class DemandeAutorisation extends Demande {
 
     private transient ConfigDemaut config;
 
-    private transient DonneesProfessionnelles donneesProfessionnelles;
+    private DonneesProfessionnelles donneesProfessionnelles;
 
     // ********************************************************* Constructor
 
@@ -51,17 +52,15 @@ public class DemandeAutorisation extends Demande {
         this.config = config;
     }
 
-
-    // ********************************************************* Business
-    // Methods
+    // ********************************************************* Business Methods
 
     /**
      * Attache une annexe à la demande.
      *
-     * @param annexeALier
+     * @param annexeALier Annexe
      */
     public void validerEtAttacherAnnexe(Annexe annexeALier) {
-        (new AnnexeValidateur()).valider(annexeALier);
+        new AnnexeValidateur().valider(annexeALier);
         getListeDesAnnexes().ajouterAnnexe(annexeALier);
     }
 
@@ -80,7 +79,7 @@ public class DemandeAutorisation extends Demande {
     /**
      * Détermine si tous les annexes obligatoires sont remplis
      *
-     * @return
+     * @return boolean
      */
     public boolean annexesObligatoiresCompletes() {
         AnnexesObligatoires annexesObligatoires = extraireAnnexesObligatoiresConfigures();
@@ -113,11 +112,14 @@ public class DemandeAutorisation extends Demande {
         return getListeDesAnnexes().extraireAnnexeMetadata(nomFichier);
     }
 
-
     public ContenuAnnexe extraireContenuAnnexe(NomFichier nomFichier) {
         return getListeDesAnnexes().extraireContenu(nomFichier);
     }
 
+    public void validerEtAjouterDonneesProfessionnelles(DonneesProfessionnelles donneesProfessionnelles) {
+        new DonnessProfessionnellesValidateur().valider(donneesProfessionnelles);
+        this.donneesProfessionnelles = donneesProfessionnelles;
+    }
 
     // ********************************************************* Private Methods
 
@@ -146,13 +148,12 @@ public class DemandeAutorisation extends Demande {
     public DonneesProfessionnelles getDonneesProfessionnelles() {
         return donneesProfessionnelles;
     }
-	
-	    public DonneesPersonnelles getDonneesPersonnelles() {
+
+    public DonneesPersonnelles getDonneesPersonnelles() {
         return donneesPersonnelles;
     }
 
     // ********************************************************* Setters
-
 
     // ********************************************************* Technical methods
     @Override

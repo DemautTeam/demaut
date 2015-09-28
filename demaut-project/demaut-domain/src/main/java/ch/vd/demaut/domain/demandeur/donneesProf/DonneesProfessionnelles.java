@@ -1,20 +1,30 @@
 package ch.vd.demaut.domain.demandeur.donneesProf;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
-import ch.vd.demaut.commons.vo.BaseValueObject;
+import ch.vd.demaut.commons.vo.BaseValueObjectWithId;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ListeDesDiplomes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @ValueObject
-public class DonneesProfessionnelles extends BaseValueObject {
+public class DonneesProfessionnelles extends BaseValueObjectWithId {
 
     final private CodeGLN codeGLN;
 
-    final private ListeDesDiplomes listeDesDiplomes;
+    final private List<Diplome> diplomes;
 
-    public DonneesProfessionnelles(CodeGLN codeGLN, ListeDesDiplomes listeDesDiplomes) {
+    //Used for OpenJPA only
+    protected DonneesProfessionnelles() {
+        super();
+        this.codeGLN = null;
+        this.diplomes = new ArrayList<>();
+    }
+
+    public DonneesProfessionnelles(CodeGLN codeGLN, List<Diplome> diplomes) {
         this.codeGLN = codeGLN;
-        this.listeDesDiplomes = listeDesDiplomes;
+        this.diplomes = diplomes;
     }
 
     public void validerEtAjouterDiplome(Diplome diplomeAAjouter) {
@@ -26,6 +36,6 @@ public class DonneesProfessionnelles extends BaseValueObject {
     }
 
     public ListeDesDiplomes getListeDesDiplomes() {
-        return listeDesDiplomes;
+        return new ListeDesDiplomes(diplomes);
     }
 }

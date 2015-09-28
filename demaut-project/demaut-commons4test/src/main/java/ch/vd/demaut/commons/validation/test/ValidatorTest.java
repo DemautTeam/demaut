@@ -1,13 +1,12 @@
 package ch.vd.demaut.commons.validation.test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import javax.validation.Validator;
-
+import ch.vd.demaut.commons.validation.ValidatorFactoryDefault;
 import org.junit.Before;
 import org.junit.Test;
 
-import ch.vd.demaut.commons.validation.ValidatorFactoryDefault;
+import javax.validation.Validator;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ValidatorTest {
 

@@ -7,19 +7,23 @@ import javax.validation.Valid;
 public class Diplome extends BaseValueObjectWithId {
 
     @Valid
-    final private TypeDiplomeAccepte typeDiplomeAccepte;
+    private TypeDiplomeAccepte typeDiplomeAccepte;
 
     @Valid
-    final private TitreFormation titreFormation;
+    private TitreFormation titreFormation;
 
     @Valid
-    final private DateObtention dateObtention;
+    private DateObtention dateObtention;
 
     @Valid
-    final private PaysObtention paysObtention;
+    private PaysObtention paysObtention;
 
     @Valid
-    final private DateReconnaissance dateReconnaissance;
+    private DateReconnaissance dateReconnaissance;
+
+    //Only here for OpenJPA
+    public Diplome() {
+    }
 
     public Diplome(TypeDiplomeAccepte typeDiplomeAccepte, TitreFormation titreFormation, DateObtention dateObtention, PaysObtention paysObtention, DateReconnaissance dateReconnaissance) {
         this.typeDiplomeAccepte = typeDiplomeAccepte;

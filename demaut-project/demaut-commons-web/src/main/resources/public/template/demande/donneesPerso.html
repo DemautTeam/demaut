@@ -5,44 +5,72 @@
         <div>
             <ng-form name="donneesPerso.personalDataForm">
                 <div ng-hide="donneesPerso.personalDataForm.$pristine || donneesPerso.personalDataForm.$valid">
-                    <ul class="error-message">
-                        <li ng-show="donneesPerso.personalDataForm.nom.$touched && donneesPerso.personalDataForm.nom.$error.required">
-                            Nom obligatoire !
-                        </li>
-                        <li ng-show="donneesPerso.personalDataForm.prenom.$touched && donneesPerso.personalDataForm.prenom.$error.required">
-                            Prénom obligatoire !
-                        </li>
-                        <li ng-show="donneesPerso.personalDataForm.adressePersonnelle.$touched && donneesPerso.personalDataForm.adressePersonnelle.$error.required">
-                            Adresse privée obligatoire
-                        </li>
-                        <li ng-show="donneesPerso.personalDataForm.localite.$touched && donneesPerso.personalDataForm.localite.$error.required">
-                            La localité est obligatoire
-                        </li>
-                        <li ng-show="donneesPerso.personalDataForm.npa.$touched && donneesPerso.personalDataForm.npa.$invalid">
-                            Le NPA est invalide
-                        </li>
-                        <li ng-show="donneesPerso.personalDataForm.pays.$touched && donneesPerso.personalDataForm.pays.$error.required">
-                            Le pays est obligatoire
-                        </li>
-                        <li ng-show="(donneesPerso.personalDataForm.telephoneMobile.$touched || donneesPerso.personalDataForm.telephonePrive.$touched)  && (donneesPerso.personalDataForm.telephoneMobile.$valid || donneesPerso.personalDataForm.telephonePrive.$valid)">
-                            Veuillez saisir au moins un numéro de telephone.
-                        </li>
-                        <li ng-show="donneesPerso.personalDataForm.email.$touched && donneesPerso.personalDataForm.email.$invalid">
-                            Veuillez saisir un email valide !
-                        </li>
-                        <li ng-show="donneesPerso.personalDataForm.email.$touched && donneesPerso.personalDataForm.email.$invalid">
-                            Veuillez saisir un email valide !
-                        </li>
-                        <li ng-show="donneesPerso.personalDataForm.dateDeNaissance.$touched && donneesPerso.personalDataForm.dateDeNaissance.$invalid">
-                            Veuillez saisir une date de naissance valide !
-                        </li>
-                        <li ng-show="donneesPerso.personalDataForm.nationalite.$touched && donneesPerso.personalDataForm.nationalite.$invalid">
-                            Veuillez saisir votre nationalité
-                        </li>
-                        <li ng-show="donneesPerso.personalDataForm.nationalite.$touched && !testSuisse.isSuisse(personalData.nationalite) && isPermisRequired()">
-                            Veuillez préciser votre permis
-                        </li>
-                    </ul>
+                    <div id="Nom_obligatoire" class="alert alert-danger" ng-show="donneesPerso.personalDataForm.nom.$touched && donneesPerso.personalDataForm.nom.$error.required">
+                        <button type="button" class="close" data-target="#Nom_obligatoire" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
+                        </button>
+                        Veuillez saisir votre nom !
+                    </div>
+                    <div id="Prenom_obligatoire" class="alert alert-danger" ng-show="donneesPerso.personalDataForm.prenom.$touched && donneesPerso.personalDataForm.prenom.$error.required">
+                        <button type="button" class="close" data-target="#Prenom_obligatoire" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
+                        </button>
+                        Veuillez saisir votre prénom !
+                    </div>
+                    <div id="Adresse_obligatoire" class="alert alert-danger" ng-show="donneesPerso.personalDataForm.adressePersonnelle.$touched && donneesPerso.personalDataForm.adressePersonnelle.$error.required">
+                        <button type="button" class="close" data-target="#Adresse_obligatoire" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
+                        </button>
+                        Veuillez saisir votre adresse privée !
+                    </div>
+                    <div id="Localite_obligatoire" class="alert alert-danger" ng-show="donneesPerso.personalDataForm.localite.$touched && donneesPerso.personalDataForm.localite.$error.required">
+                        <button type="button" class="close" data-target="#Localite_obligatoire" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
+                        </button>
+                        Veuillez saisir la localité de votre adresse privée !
+                    </div>
+                    <div id="NPA_valide" class="alert alert-danger" ng-show="donneesPerso.personalDataForm.npa.$touched && donneesPerso.personalDataForm.npa.$invalid">
+                        <button type="button" class="close" data-target="#NPA_valide" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
+                        </button>
+                        Veuillez saisir un NPA est valide !
+                    </div>
+                    <div id="Pays_obligatoire" class="alert alert-danger" ng-show="donneesPerso.personalDataForm.pays.$touched && donneesPerso.personalDataForm.pays.$error.required">
+                        <button type="button" class="close" data-target="#Pays_obligatoire" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
+                        </button>
+                        Veuillez saisir le pays de votre adresse privée !
+                    </div>
+                    <div id="Telephone_obligatoire" class="alert alert-danger" ng-show="(donneesPerso.personalDataForm.telephoneMobile.$touched || donneesPerso.personalDataForm.telephonePrive.$touched)  && (donneesPerso.personalDataForm.telephoneMobile.$valid || donneesPerso.personalDataForm.telephonePrive.$valid)">
+                        <button type="button" class="close" data-target="#Telephone_obligatoire" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
+                        </button>
+                        Veuillez saisir au moins un numéro de telephone !
+                    </div>
+                    <div id="Email_valide" class="alert alert-danger" ng-show="donneesPerso.personalDataForm.email.$touched && donneesPerso.personalDataForm.email.$invalid">
+                        <button type="button" class="close" data-target="#Email_valide" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
+                        </button>
+                        Veuillez saisir un email valide !
+                    </div>
+                    <div id="Naissance_valide" class="alert alert-danger" ng-show="donneesPerso.personalDataForm.dateDeNaissance.$touched && donneesPerso.personalDataForm.dateDeNaissance.$invalid">
+                        <button type="button" class="close" data-target="#Naissance_valide" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
+                        </button>
+                        Veuillez saisir une date de naissance valide !
+                    </div>
+                    <div id="Nationalite_obligatoire" class="alert alert-danger" ng-show="donneesPerso.personalDataForm.nationalite.$touched && donneesPerso.personalDataForm.nationalite.$invalid">
+                        <button type="button" class="close" data-target="#Nationalite_obligatoire" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
+                        </button>
+                        Veuillez saisir votre nationalité !
+                    </div>
+                    <div id="Permis_obligatoire" class="alert alert-danger" ng-show="donneesPerso.personalDataForm.nationalite.$touched && !testSuisse.isSuisse(personalData.nationalite) && isPermisRequired()">
+                        <button type="button" class="close" data-target="#Permis_obligatoire" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
+                        </button>
+                        Veuillez préciser votre permis de séjour !
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-2"><label for="nom">Nom*</label></div>
