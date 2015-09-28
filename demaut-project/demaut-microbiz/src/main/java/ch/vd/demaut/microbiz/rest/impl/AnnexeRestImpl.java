@@ -33,7 +33,6 @@ import ch.vd.demaut.domain.annexes.NomFichier;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.microbiz.progreSoa.ProgreSoaService;
-import ch.vd.demaut.microbiz.rest.AnnexeRest;
 import ch.vd.demaut.microbiz.rest.RestUtils;
 import ch.vd.demaut.services.annexes.AnnexesService;
 import ch.vd.ses.referentiel.demaut_1_0.VcType;
@@ -42,7 +41,7 @@ import ch.vd.ses.referentiel.demaut_1_0.VcType;
         "Content-Type", "X-Requested-With" }, exposeHeaders = { "Access-Control-Allow-Origin" })
 @Service
 @Path("/annexes")
-public class AnnexeRestImpl implements AnnexeRest {
+public class AnnexeRestImpl {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AnnexeRestImpl.class);
 
@@ -52,20 +51,21 @@ public class AnnexeRestImpl implements AnnexeRest {
     @Inject
     private ProgreSoaService progreSoaService;
 
-    @Override
     @GET
-    @Path("/typesList/{profession}")
+    @Path("/typesList")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response listerLesTypesAnnexes(@Context UriInfo uriInfo, @PathParam("profession") String professionId)
+    public Response listerLesTypesAnnexe()
             throws Exception {
 
-        LOGGER.info("listerLesTypesAnnexes " + professionId);
+        LOGGER.info(">>> listerLesTypesAnnexe");
 
         // Altrenative:
         List<TypeAnnexe> typesAnnexe = buildListeTypesAnnexesSansProgresSOA();
+        
         // Autre altrenative:
         //List<VcType> typesAnnexe = buildListeTypesAnnexesAvecProgresSOA(uriInfo);
+        
         return RestUtils.forgeResponseList(typesAnnexe);
     }
 
@@ -91,7 +91,6 @@ public class AnnexeRestImpl implements AnnexeRest {
         return lesTypesAnnexes;
     }
 
-    @Override
     @GET
     @Path("/lister/{demandeReference}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -99,15 +98,15 @@ public class AnnexeRestImpl implements AnnexeRest {
     public Response listerLesAnnexes(@Context UriInfo uriInfo, @PathParam("demandeReference") String demandeReference)
             throws JsonProcessingException {
 
-        LOGGER.info("listerLesAnnexes " + demandeReference);
+        LOGGER.info("listerLesAnnexes pour la demandeRef: " + demandeReference);
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);
 
         Collection<AnnexeMetadata> annexesMetadata = annexesService.listerLesAnnexeMetadatas(referenceDeDemande);
+        
         return RestUtils.forgeResponseList(annexesMetadata);
     }
 
-    @Override
     @GET
     @Path("/afficher/{demandeReference}/{annexeFileName}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
@@ -124,7 +123,6 @@ public class AnnexeRestImpl implements AnnexeRest {
         return RestUtils.forgeResponseStream(contenuAnnexe.getContenu());
     }
 
-    @Override
     @POST
     @Path("/attacher")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -146,7 +144,6 @@ public class AnnexeRestImpl implements AnnexeRest {
         return RestUtils.forgeResponseTrue();
     }
 
-    @Override
     @GET
     @Path("/supprimer/{demandeReference}/{annexeFileName}/{annexeType}")
     @Produces(MediaType.APPLICATION_JSON)

@@ -1,4 +1,4 @@
-var ngDemautApp = angular.module('ngDemautApp', ['ngSanitize', 'ngRoute', 'ngAnimate', 'commonsModule']);
+var ngDemautApp = angular.module('ngDemautApp', ['ngSanitize', 'ngRoute', 'ngAnimate', 'commonsModule','ngStorage']);
 
 /* Necessaire si les services ne sont pas dans la même arborescence que la page html */
 // TODO Dev à corrigert URL Prefix : ngDemautApp.constant('urlPrefix', '/outils/demautMicrobiz');
@@ -43,7 +43,7 @@ ngDemautApp
                 controller: 'AnnexesController',
                 controllerAs: 'annexes'
             })
-            .when('/Demaut/demande/recapitulation', {
+            .when('/Demaut/demande/recapitulatif', {
                 templateUrl: 'template/demande/recapitulatif.html',
                 controller: 'RecapitulatifController',
                 controllerAs: 'recapitulatif'
@@ -107,15 +107,15 @@ ngDemautApp
         this.name = "CockpitController";
         this.params = $routeParams;
     }])
-    .controller('ProfessionSanteController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', 'professionTest', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log, professionTest) {
+    .controller('ProfessionSanteController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', 'professionTest', '$sessionStorage', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log, professionTest, $sessionStorage) {
         $rootScope.contextMenu = "Profession Santé";
         $scope.indexStep = 2;
         this.name = "ProfessionSanteController";
         this.params = $routeParams;
         $scope.professionData = {};
-        $scope.professionData.demandeReference = null;
         $scope.professionData.profession = null;
         $scope.professionData.professions = [];
+        $scope.$storage = $sessionStorage;
 
         //Récupère liste des professions
         //TODO: créer une methode isProfessionsListInitialized + Ne pas appeler le service a chaque fois (à initialiser au départ)
@@ -132,21 +132,20 @@ ngDemautApp
         //Etape suivante
         $scope.nextStep = function(){
             if ($scope.professionSante.professionDataForm.$valid) {
-                $http.get(urlPrefix + '/profession/donnees/' + $scope.professionData.demandeReference + '/' + $scope.professionData.profession + '/' + $scope.professionData.gln).
+                $http.get(urlPrefix + '/demande/initialiser/' + $scope.professionData.profession).
                     success(function (data, status, headers, config) {
-                        $scope.professionData.demandeReference = angular.fromJson(data.response);
+                    	$storage.refDemande = angular.fromJson(data.response);
+                        $log.info('Reference de la nouvelle demande :' + $storage.refDemande);
                     }).
                     error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error downloading ../profession/donnees/' + $scope.professionData.demandeReference;
+                    	delete $scope.$storage.refDemande = null;
+                        $rootScope.error = 'Error from response /demande/initialiser/';
                     });
-                
+                //Go to next page
                 $scope.indexStep += 1;
                 $location.path('/Demaut/demande/donneesProf');
             }
             else {
-                $scope.professionSante.professionDataForm.gln.$valid = false;
-                $scope.professionSante.professionDataForm.gln.$invalid = true;
-                angular.element("#gln").focus();
                 $log.info('Formulaire invalide !');
             }
         };
@@ -216,25 +215,29 @@ ngDemautApp
             $scope.professionnalData.dateDObtention = null;
         };
     }])
-    .controller('AnnexesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log) {
+    .controller('AnnexesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', '$sessionStorage', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log, $sessionStorage) {
         $rootScope.contextMenu = "Annexes";
         $scope.indexStep = 4;
         this.name = "AnnexesController";
         this.params = $routeParams;
         $scope.annexesData = {};
-        $scope.annexesData.demandeReference = "toBeDefinedLater";
-        $scope.annexesData.profession = "aSaisirEtape2";
+        $scope.$storage = $sessionStorage;
+        $scope.annexesData.demandeReference = $sessionStorage.refDemande;
         $scope.annexesData.annexeFormats = ["application/pdf", "image/jpg", "image/jpeg", "image/png"];
         $scope.annexesData.annexeTypes = [];
         $scope.annexesData.referenceFiles = [];
 
+        if ($storage.refDemande == undefined) {
+        	console.log("Pas de Reference de demande");
+        }
+
         if ($scope.annexesData.annexeTypes == null || $scope.annexesData.annexeTypes.length == 0) {
-            $http.get(urlPrefix + '/annexes/typesList/' + $scope.annexesData.profession).
+            $http.get(urlPrefix + '/annexes/typesList').
                 success(function (data, status, headers, config) {
                     $scope.annexesData.annexeTypes = angular.fromJson(data.response);
                 }).
                 error(function (data, status, headers, config) {
-                    $rootScope.error ='Error downloading ../annexes/typesList/' + $scope.annexesData.profession;
+                    $rootScope.error ='Error downloading ../annexes/typesList';
                 });
         }
 
@@ -244,7 +247,7 @@ ngDemautApp
         };
         $scope.nextStep = function(){
             $scope.indexStep += 1;
-            $location.path('/Demaut/demande/recapitulation');
+            $location.path('/Demaut/demande/recapitulatif');
         };
 
         $scope.filesChanged = function (targetFiles) {

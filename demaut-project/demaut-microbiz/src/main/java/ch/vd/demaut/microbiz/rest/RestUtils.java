@@ -38,6 +38,10 @@ public final class RestUtils {
         return forgeResponseAsString(object);
     }
 
+    public static Response forgeResponseObject(Object object) throws JsonProcessingException {
+        return forgeResponseAsString(object);
+    }
+
     public static Response forgeResponseTrue() throws JsonProcessingException {
         return forgeResponseAsString(Boolean.TRUE);
     }
@@ -59,13 +63,13 @@ public final class RestUtils {
     }
 
     private static Response forgeResponseAsString(Object value) throws JsonProcessingException {
-        
+
         ObjectNode json = buildJSon(value);
 
         ResponseBuilder responseBuilder = getResponseBuildeOK();
-        
+
         Response response = buildHeaders(responseBuilder).entity(json).build();
-        
+
         return response;
     }
 
@@ -83,7 +87,7 @@ public final class RestUtils {
         module.addSerializer(new TypeAnnexeJsonSerializer());
         module.addSerializer(new ProfessionJsonSerializer());
         objMapper.registerModule(module);
-        
+
         return objMapper;
     }
 

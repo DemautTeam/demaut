@@ -1,7 +1,13 @@
 package ch.vd.demaut.microbiz.rest;
 
-import ch.vd.demaut.domain.annexes.TypeAnnexe;
-import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+import java.io.FileInputStream;
+
+import javax.ws.rs.core.Response;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
@@ -13,22 +19,16 @@ import org.junit.runners.MethodSorters;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.inject.Inject;
-import javax.ws.rs.core.Response;
-import java.io.File;
-import java.io.FileInputStream;
+import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.microbiz.rest.impl.AnnexeRestImpl;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-@Ignore("Senario Data")
+@Ignore("Scenario Data")
 @ContextConfiguration({"classpath*:microbizTest-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AnnexeRestTest {
 
-    @Inject
-    private AnnexeRest annexeRest;
+    private AnnexeRestImpl annexeRest;
 
     private byte[] byteArray;
 
@@ -42,13 +42,7 @@ public class AnnexeRestTest {
 
     @Test
     public void testListerLesTypesAnnexes() throws Exception {
-        Response response = annexeRest.listerLesTypesAnnexes(null, Profession.Medecin.name());
-        assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
-    }
-
-    @Test
-    public void testListerLesAnnexes() throws Exception {
-        Response response = annexeRest.listerLesAnnexes(null, "7dc53df5-703e-49b3-8670-b1c468f47f1f");
+        Response response = annexeRest.listerLesTypesAnnexe();
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 

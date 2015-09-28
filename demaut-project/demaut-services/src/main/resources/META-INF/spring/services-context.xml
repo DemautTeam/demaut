@@ -17,11 +17,16 @@
 
     <bean id="demandeAutorisationService" class="ch.vd.demaut.services.demandes.autorisation.impl.DemandeAutorisationServiceImpl"/>
 
+    <bean id="utilisateurService" class="ch.vd.demaut.services.utilisateurs.impl.UtilisateurServiceImpl"/>
+
     <bean id="annexesService" class="ch.vd.demaut.services.annexes.impl.AnnexesServiceImpl"/>
 
     <bean id="donneesProfessionnellesService" class="ch.vd.demaut.services.demandeurs.donneesProf.impl.DonneesProfessionnellesServiceImpl"/>
+    
+    <bean id="utilisateurService" class="ch.vd.demaut.services.utilisateurs.impl.UtilisateurServiceImpl"/>
 
     <context:annotation-config/>
+    
     <context:component-scan base-package="ch.vd.demaut"/>
 
 </beans>

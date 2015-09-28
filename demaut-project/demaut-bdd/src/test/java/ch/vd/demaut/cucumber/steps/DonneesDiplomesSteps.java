@@ -1,8 +1,5 @@
 package ch.vd.demaut.cucumber.steps;
 
-import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.domain.demandes.autorisation.StatutDemandeAutorisation;
-
 public class DonneesDiplomesSteps {
 
     // ********************************************************* Static fields
@@ -20,10 +17,6 @@ public class DonneesDiplomesSteps {
 
     public void setDemandeAutorisationSteps(DemandeAutorisationSteps demandeAutorisationSteps) {
         this.demandeAutorisationSteps = demandeAutorisationSteps;
-    }
-
-    public void verifieAucuneDemandeEnCours(Profession profession, StatutDemandeAutorisation statut) {
-        demandeAutorisationSteps.verifieAucuneDemandeEnCours(profession, statut);
     }
 
     public DonneesProfessionnellesSteps getDonneesProfessionnellesSteps() {

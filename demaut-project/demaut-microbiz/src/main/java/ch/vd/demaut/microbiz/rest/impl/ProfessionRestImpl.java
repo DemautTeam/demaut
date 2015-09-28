@@ -24,9 +24,7 @@ import org.springframework.stereotype.Service;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
-import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.microbiz.progreSoa.ProgreSoaService;
-import ch.vd.demaut.microbiz.rest.ProfessionRest;
 import ch.vd.demaut.microbiz.rest.RestUtils;
 import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
 import ch.vd.ses.referentiel.demaut_1_0.VcType;
@@ -35,7 +33,7 @@ import ch.vd.ses.referentiel.demaut_1_0.VcType;
         "Content-Type", "X-Requested-With" }, exposeHeaders = { "Access-Control-Allow-Origin" })
 @Service("professionRestImpl")
 @Path("/profession")
-public class ProfessionRestImpl implements ProfessionRest {
+public class ProfessionRestImpl {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProfessionRestImpl.class);
 
@@ -44,8 +42,7 @@ public class ProfessionRestImpl implements ProfessionRest {
 
     @Inject
     private ProgreSoaService progreSoaService;
-
-    @Override
+    
     @GET
     @Path("/professionsList")
     @Produces(MediaType.APPLICATION_JSON)
@@ -87,7 +84,6 @@ public class ProfessionRestImpl implements ProfessionRest {
         return lesProfessionsDeLaSante;
     }
 
-    @Override
     @GET
     @Path("/donnees/{demandeReference}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -106,7 +102,6 @@ public class ProfessionRestImpl implements ProfessionRest {
                 new BeanPropertyValueEqualsPredicate("libl", profession.name()))));
     }
 
-    @Override
     @GET
     @Path("/donnees/{demandeReference}/{idProfession}/{codeGln}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -119,15 +114,14 @@ public class ProfessionRestImpl implements ProfessionRest {
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);
         CodeGLN codeGLN = new CodeGLN(codeGln);
-        Login login = new Login("admin@admin"); // TODO get login
-
+        
         String path = uriInfo != null ? uriInfo.getBaseUri().getPath() : null;
         List<VcType> lesProfessions = progreSoaService.listeSOAProfession(path).getVcList().getVc();
         Profession profession = (Profession) CollectionUtils.find(lesProfessions,
                 new BeanPropertyValueEqualsPredicate("id", idProfession));
 
         ReferenceDeDemande renseignerDonneesProfession = donneesProfessionnellesService
-                .renseignerDonneesProfession(login, referenceDeDemande, profession, codeGLN);
+                .renseignerDonneesProfession(referenceDeDemande, profession, codeGLN);
         return RestUtils.forgeResponseString(renseignerDonneesProfession.getValue());
     }
 }

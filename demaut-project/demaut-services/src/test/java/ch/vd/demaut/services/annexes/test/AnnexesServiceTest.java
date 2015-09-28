@@ -25,7 +25,6 @@ import ch.vd.demaut.domain.annexes.NomFichier;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.annexes.AnnexesService;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 
@@ -48,7 +47,6 @@ public class AnnexesServiceTest {
     private DemandeAutorisation demandeEnCours;
     private Annexe annexe;
 
-    private Login login;
     private Profession profession;
 
     @Before
@@ -59,7 +57,6 @@ public class AnnexesServiceTest {
         nomFichier = new NomFichier("Test_multipart.pdf");
         annexe = new Annexe(TypeAnnexe.CV, nomFichier, new ContenuAnnexe(byteArray));
 
-        login = new Login("joe.dalton@ch.vd");
         profession = Profession.Medecin;
 
         intialiserDemandeEnCours(annexe);
@@ -116,7 +113,7 @@ public class AnnexesServiceTest {
 
     @Transactional(propagation = Propagation.REQUIRED)
     private void intialiserDemandeEnCours(Annexe annexeALier) {
-        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(login, profession);
+        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession);
         if (annexeALier != null) {
             annexesService.attacherUneAnnexe(demandeEnCours.getReferenceDeDemande(), annexeALier);
         }

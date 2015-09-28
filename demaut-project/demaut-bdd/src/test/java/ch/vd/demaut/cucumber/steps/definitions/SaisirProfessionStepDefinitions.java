@@ -35,7 +35,7 @@ public class SaisirProfessionStepDefinitions extends StepDefinitions {
 
     @Etantdonné("^aucune demande de profession \"([^\"]*)\" en cours de saisie à l´état \"([^\"]*)\"$")
     public void aucune_demande_de_profession_en_cours_de_saisie_à_l_état(Profession profession, StatutDemandeAutorisation statut) throws Throwable {
-        donneesProfessionnellesSteps.verifieAucuneDemandeEnCours(profession, statut);
+        //TODO Decider si a virer ou pas?
     }
 
     @Etantdonné("^un demandeur de profession \"([^\"]*)\"$")

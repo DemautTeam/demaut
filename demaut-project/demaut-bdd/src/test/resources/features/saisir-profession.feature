@@ -1,6 +1,6 @@
 #language: fr
 
-@donnees-prof
+@donnees-prof @ignoreme
 Fonctionnalité: Saisir les données professionnelles de la demande
 
   Contexte:

@@ -1,10 +1,9 @@
 package ch.vd.demaut.services.demandeurs.donneesProf.test;
 
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
-import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import javax.inject.Inject;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -13,9 +12,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.inject.Inject;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
 
 @Ignore("TODO implement DonneesProfessionnellesServiceMock")
 @ContextConfiguration({"classpath*:/servicesTest-context.xml"})
@@ -51,7 +52,7 @@ public class DonneesProfessionnellesServiceTest {
 
     @Test
     public void testRenseignerDonneesProfession() throws Exception {
-        ReferenceDeDemande demandeReference = donneesProfessionnellesService.renseignerDonneesProfession(login, referenceDeDemande, profession, new CodeGLN("7601000000125"));
+        ReferenceDeDemande demandeReference = donneesProfessionnellesService.renseignerDonneesProfession(referenceDeDemande, profession, new CodeGLN("7601000000125"));
         assertThat(demandeReference).isNotNull();
     }
 }

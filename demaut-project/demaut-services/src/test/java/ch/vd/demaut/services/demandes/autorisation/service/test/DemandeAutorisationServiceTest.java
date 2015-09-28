@@ -1,11 +1,9 @@
 package ch.vd.demaut.services.demandes.autorisation.service.test;
 
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
-import junit.framework.TestCase;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import javax.inject.Inject;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,9 +12,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.inject.Inject;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
+import junit.framework.TestCase;
 
 @ContextConfiguration({"classpath*:/servicesTest-context.xml"})
 @ActiveProfiles({"data"})
@@ -29,13 +29,11 @@ public class DemandeAutorisationServiceTest extends TestCase {
 
     private Profession profession;
     private DemandeAutorisation demandeEnCours;
-    private Login login;
 
 
     // ********************************************************* Setups
     @Before
     public void setUp() throws Exception {
-        login = new Login("joe.dalton@ch.vd");
         profession = Profession.Medecin;
 
         assertThat(demandeAutorisationService).isNotNull();
@@ -46,7 +44,7 @@ public class DemandeAutorisationServiceTest extends TestCase {
     @Test
     @Transactional
     public void testerInitialiserDemandeAutorisation() {
-        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(login, profession);
+        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession);
         assertThat(demandeEnCours).isNotNull();
         assertThat(demandeEnCours.getId()).isGreaterThan(0L);
         assertThat(demandeEnCours.getReferenceDeDemande()).isNotNull();
@@ -56,7 +54,7 @@ public class DemandeAutorisationServiceTest extends TestCase {
     @Transactional
     public void testerRecupererDemandeParReference() {
         //Setup fixtures
-        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(login, profession);
+        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession);
         ReferenceDeDemande referenceDeDemande = demandeEnCours.getReferenceDeDemande();
 
         //Récupère demande en cours

@@ -1,10 +1,12 @@
 package ch.vd.demaut.microbiz.rest;
 
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import javax.inject.Inject;
+import javax.ws.rs.core.Response;
+
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
@@ -14,12 +16,11 @@ import org.junit.runners.MethodSorters;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.inject.Inject;
-import javax.ws.rs.core.Response;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.microbiz.rest.impl.ProfessionRestImpl;
+import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 
 @Ignore("Senario Data")
 @ContextConfiguration({"classpath*:microbizTest-context.xml"})
@@ -27,8 +28,7 @@ import static org.junit.Assert.assertTrue;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ProfessionRestImplTest {
 
-    @Inject
-    private ProfessionRest professionRest;
+    private ProfessionRestImpl professionRest;
 
     @Inject
     private DemandeAutorisationService demandeAutorisationService;
@@ -37,13 +37,12 @@ public class ProfessionRestImplTest {
 
     @Before
     public void setUp() throws Exception {
-        Login login = new Login("joe.dalton@ch.vd");
         Profession profession = Profession.Medecin;
 
         assertNotNull(professionRest);
         assertThat(demandeAutorisationService).isNotNull();
 
-        DemandeAutorisation demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(login, profession);
+        DemandeAutorisation demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession);
         referenceDeDemande = demandeEnCours.getReferenceDeDemande();
     }
 

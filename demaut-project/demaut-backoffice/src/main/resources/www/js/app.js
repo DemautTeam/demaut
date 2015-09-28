@@ -40,20 +40,15 @@ ngApp
                 controller: 'DonneesProfController',
                 controllerAs: 'donneesProf'
             })
-            .when('/Demaut/demande/donneesProf', {
-                templateUrl: 'template/demande/donneesProf.html',
-                controller: 'DonneesProfController',
-                controllerAs: 'donneesProf'
-            })
             .when('/Demaut/demande/annexes', {
                 templateUrl: 'template/demande/annexes.html',
                 controller: 'AnnexesController',
                 controllerAs: 'annexes'
             })
-            .when('/Demaut/demande/recapitulation', {
+            .when('/Demaut/demande/recapitulatif', {
                 templateUrl: 'template/demande/recapitulatif.html',
-                controller: 'RecapitulationController',
-                controllerAs: 'recapitulation'
+                controller: 'RecapitulatifController',
+                controllerAs: 'recapitulatif'
             })
             .when('/Demaut/demande/soumission', {
                 templateUrl: 'template/demande/soumission.html',

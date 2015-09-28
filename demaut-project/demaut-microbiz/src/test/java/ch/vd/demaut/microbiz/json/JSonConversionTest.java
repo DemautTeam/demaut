@@ -13,48 +13,55 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.microbiz.rest.RestUtils;
 
 public class JSonConversionTest {
 
+    private ObjectMapper objMapper;
+    
     @Before
     public void setUp() throws Exception {
+        objMapper = RestUtils.buildJSonObjectMapper();
     }
 
     @Test
     public void testConversionTypeAnnexe() throws JsonProcessingException {
-        
-        ObjectMapper objMapper = RestUtils.buildJSonObjectMapper();
-        
+        //Fixture
         TypeAnnexe type = TypeAnnexe.CV;
         
-        assertThat(type.toString()).isEqualTo("CV");
-        
-        ObjectWriter viewWriter = objMapper.writer();
-        
-        String jsonStr = viewWriter.writeValueAsString(type);
-        
-        assertThat(jsonStr).isEqualTo("{\"name\":\"CV\",\"id\":50283749,\"libl\":\"CV\"}");
+        //Process transform & Assert
+        assertJsonStr(type, "{\"name\":\"CV\",\"id\":50283749,\"libl\":\"CV\"}");
         
     }
     
     @Test
     public void testConversionProfession() throws JsonProcessingException {
         
-        ObjectMapper objMapper = RestUtils.buildJSonObjectMapper();
-        
+        //Fixture
         List<Profession> professions = new ArrayList<Profession>();
         professions.add(Profession.Chiropraticien);
         professions.add(Profession.Dieteticien);
         
-        ObjectWriter viewWriter = objMapper.writer();
-        
-        String jsonStr = viewWriter.writeValueAsString(professions);
-        
-        assertThat(jsonStr).isEqualTo("[{\"name\":\"Chiropraticien\",\"id\":53843599,\"libl\":\"Chiropraticien\"},{\"name\":\"Dieteticien\",\"id\":53843600,\"libl\":\"Diététicien\"}]");
+        //Process transform & Assert
+        assertJsonStr(professions, "[{\"name\":\"Chiropraticien\",\"id\":53843599,\"libl\":\"Chiropraticien\"},{\"name\":\"Dieteticien\",\"id\":53843600,\"libl\":\"Diététicien\"}]");
         
     }
     
+    @Test
+    public void testConversionReferenceDemande() throws JsonProcessingException {
+        //Fixture
+        ReferenceDeDemande ref = new ReferenceDeDemande("1234");
+        
+        //Process transform & Assert
+        assertJsonStr(ref, "{\"value\":\"1234\"}");
+    }
+    
 
+    private void assertJsonStr(Object object, String jsonStrExpected) throws JsonProcessingException {
+        ObjectWriter viewWriter = objMapper.writer();
+        String jsonStrActual = viewWriter.writeValueAsString(object);
+        assertThat(jsonStrActual).isEqualTo(jsonStrExpected);
+    }
 }

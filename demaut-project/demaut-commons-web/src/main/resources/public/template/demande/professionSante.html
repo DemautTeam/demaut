@@ -5,7 +5,7 @@
         <div>
             <ng-form name="professionSante.professionDataForm">
                 <div class="row">
-                    <div class="col-md-4"><label for="profession">Profession demandée*</label></div>
+                    <div class="col-md-4"><label for="profession">Profession demandée</label></div>
                     <div class="col-md-6">
                         <select id="profession" name="profession" ng-model="professionData.profession" required>
                             <option ng-repeat="profession in professionData.professions" value="{{profession.id}}">{{profession.libl}}</option>
@@ -19,4 +19,4 @@
         </div>
     </fieldset>
 </div>
-<step-actions back-step-fn="backStep()" next-step-fn="nextStep()"/>
+<step-actions next-step-fn="nextStep()"/>

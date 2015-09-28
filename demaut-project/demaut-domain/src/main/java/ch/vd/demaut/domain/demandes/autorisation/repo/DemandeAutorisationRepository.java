@@ -1,19 +1,38 @@
 package ch.vd.demaut.domain.demandes.autorisation.repo;
 
 import ch.vd.demaut.commons.annotations.Repository;
+import ch.vd.demaut.commons.exceptions.EntityNotFoundException;
 import ch.vd.demaut.commons.repo.GenericReadRepository;
 import ch.vd.demaut.commons.repo.GenericRepository;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.domain.demandes.autorisation.StatutDemandeAutorisation;
-import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.domain.utilisateurs.Utilisateur;
 
+/**
+ * Repository des {@link DemandeAutorisation}
+ *
+ */
 @Repository
-public interface DemandeAutorisationRepository extends GenericRepository<DemandeAutorisation, Long>, GenericReadRepository<DemandeAutorisation, Long> {
+public interface DemandeAutorisationRepository
+        extends GenericRepository<DemandeAutorisation, Long>, GenericReadRepository<DemandeAutorisation, Long> {
 
+    /**
+     * Récupère une demande par référence de demande <br>
+     * Lève une exception si pas trouvée
+     * 
+     * @param referenceDeDemande
+     * @return La demande récupérée
+     * @throws EntityNotFoundException
+     */
     DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande referenceDeDemande);
 
-    DemandeAutorisation recupererDemandeParProfessionStatut(Login login, Profession profession, StatutDemandeAutorisation statut);
+    /**
+     * Renvoie une demande dans l'état Brouillon associée à un Utilisateur. <br>
+     * Renvoie null si elle n'est pas trouvée
+     * 
+     * @param utilisateur
+     * @return Une Demande autorisation dans l'état Brouillon et associée à
+     *         l'utilisateur
+     */
+    DemandeAutorisation trouverDemandeEnCoursDeSaisieDunUtilisateur(Utilisateur utilisateur);
 }
-

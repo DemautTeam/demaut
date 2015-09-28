@@ -60,10 +60,6 @@ public class DemandeAutorisationSteps {
         assertThat(demandeEnCours.getStatutDemandeAutorisation()).isEqualTo(statut);
     }
 
-    public void verifieAucuneDemandeEnCours(Profession profession, StatutDemandeAutorisation statut) {
-        demandeAutorisationRepository.recupererDemandeParProfessionStatut(utilisateur.getLogin(), profession, statut);
-    }
-
     public DemandeAutorisation getDemandeEnCours() {
         return demandeEnCours;
     }
