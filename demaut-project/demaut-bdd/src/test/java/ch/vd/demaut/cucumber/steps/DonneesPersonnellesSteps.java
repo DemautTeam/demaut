@@ -1,10 +1,9 @@
 package ch.vd.demaut.cucumber.steps;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnelles;
 import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnellesValidateur;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @SuppressWarnings("unused")
 //TOD: Remove this suppress warnings once implemented

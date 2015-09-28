@@ -1,15 +1,11 @@
 package ch.vd.demaut.cucumber.steps;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
+import ch.vd.demaut.domain.annexes.*;
 
 import java.util.Collection;
 
-import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
-import ch.vd.demaut.domain.annexes.Annexe;
-import ch.vd.demaut.domain.annexes.AnnexeIntrouvableException;
-import ch.vd.demaut.domain.annexes.AnnexeNonValideException;
-import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
-import ch.vd.demaut.domain.annexes.NomFichier;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class AnnexesSteps {
 

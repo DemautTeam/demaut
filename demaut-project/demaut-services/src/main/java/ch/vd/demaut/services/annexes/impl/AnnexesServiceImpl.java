@@ -6,6 +6,7 @@ import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.services.annexes.AnnexesService;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import org.apache.commons.io.IOUtils;
+import org.joda.time.LocalDate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,8 +31,7 @@ public class AnnexesServiceImpl implements AnnexesService {
      * L'annexe retournée de préférence ne devrait PAS contenir le contunu
      * stream pour la consultation front
      *
-     * @param referenceDeDemande
-     *            ReferenceDeDemande
+     * @param referenceDeDemande ReferenceDeDemande
      * @return Collection AnnexeMetadata
      */
     @Transactional(readOnly = true)
@@ -45,10 +45,8 @@ public class AnnexesServiceImpl implements AnnexesService {
      * L'annexe retournée DOIT absolument contenir le contunu stream pour la
      * consultation front
      *
-     * @param referenceDeDemande
-     *            ReferenceDeDemande
-     * @param nomFichier
-     *            NomFichier
+     * @param referenceDeDemande ReferenceDeDemande
+     * @param nomFichier         NomFichier
      * @return Annexe
      */
     @Transactional(readOnly = true)
@@ -61,9 +59,9 @@ public class AnnexesServiceImpl implements AnnexesService {
     @Transactional
     @Override
     public void attacherUneAnnexe(ReferenceDeDemande referenceDeDemande, File file, NomFichier nomFichier,
-            TypeAnnexe type) {
+                                  TypeAnnexe type) {
         ContenuAnnexe contenuAnnexe = buildContenuAnnexe(file);
-        Annexe annexe = new Annexe(type, nomFichier, contenuAnnexe);
+        Annexe annexe = new Annexe(type, nomFichier, contenuAnnexe, new DateCreation(new LocalDate()));
         attacherAnnexe(referenceDeDemande, annexe);
     }
 

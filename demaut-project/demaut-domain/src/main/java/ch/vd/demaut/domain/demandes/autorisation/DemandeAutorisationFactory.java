@@ -7,7 +7,6 @@ import ch.vd.demaut.domain.utilisateurs.Login;
 
 /**
  * Factory d'une {@link DemandeAutorisation}
- *
  */
 @Factory
 public class DemandeAutorisationFactory {

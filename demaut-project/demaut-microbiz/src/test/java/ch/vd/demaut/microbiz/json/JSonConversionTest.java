@@ -35,7 +35,7 @@ public class JSonConversionTest {
         assertJsonStr(type, "{\"name\":\"CV\",\"id\":50283749,\"libl\":\"CV\"}");
         
     }
-    
+
     @Test
     public void testConversionProfession() throws JsonProcessingException {
         
@@ -57,7 +57,7 @@ public class JSonConversionTest {
         //Process transform & Assert
         assertJsonStr(ref, "{\"value\":\"1234\"}");
     }
-    
+
 
     private void assertJsonStr(Object object, String jsonStrExpected) throws JsonProcessingException {
         ObjectWriter viewWriter = objMapper.writer();

@@ -33,10 +33,10 @@ ngDemautApp
                 controller: 'DonneesPersoController',
                 controllerAs: 'donneesPerso'
             })
-            .when('/Demaut/demande/donneesProf', {
-                templateUrl: 'template/demande/donneesProf.html',
-                controller: 'DonneesProfController',
-                controllerAs: 'donneesProf'
+            .when('/Demaut/demande/donneesDiplomes', {
+                templateUrl: 'template/demande/donneesDiplomes.html',
+                controller: 'DonneesDiplomesController',
+                controllerAs: 'donneesDiplomes'
             })
             .when('/Demaut/demande/annexes', {
                 templateUrl: 'template/demande/annexes.html',
@@ -167,9 +167,16 @@ ngDemautApp
                 $scope.personalData.permis = null;
             }
         };
+
         $scope.backStep = function () {
-            $scope.indexStep -= 1;
-            $location.path('/Demaut/demande/professionSante');
+            if ($scope.donneesPerso.personalDataForm.$valid) {
+                $log.info('Formulaire valide !');
+                $scope.indexStep += 1;
+                $location.path('/Demaut/demande/professionSante');
+            }
+            else {
+                $log.info('Formulaire invalide !');
+            }
         };
         $scope.nextStep = function () {
             if ($scope.donneesPerso.personalDataForm.$valid) {
@@ -182,15 +189,49 @@ ngDemautApp
             }
         };
     }])
-    .controller('DonneesProfController', ['$scope', '$rootScope', '$routeParams', '$location', function ($scope, $rootScope, $routeParams, $location) {
-        $rootScope.contextMenu = "Données Professionnelles";
+    .controller('DonneesDiplomesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log) {
+        $rootScope.contextMenu = "Données Diplômes";
         $scope.indexStep = 3;
-        this.name = "DonneesProfController";
+        this.name = "DonneesDiplomes";
         this.params = $routeParams;
-        $scope.professionnalData = {};
-        $scope.professionnalData.activities = null;
+        $scope.diplomeData = {};
+        $scope.diplomeData.typeDiplomes = [];
+        $scope.diplomeData.typeFormations = [];
+        $scope.diplomeData.paysList = [];
+        $scope.diplomeData.diplomes = null;
+        $scope.diplomeData.diplome = null;
 
-        $scope.backStep = function () {
+        if ($scope.diplomeData.typeDiplomes == null || $scope.diplomeData.typeDiplomes == undefined || $scope.diplomeData.typeDiplomes.length == 0) {
+            $http.get(urlPrefix + '/diplomes/typeDiplomesList').
+                success(function (data, status, headers, config) {
+                    $scope.diplomeData.typeDiplomes = angular.fromJson(data.response);
+                }).
+                error(function (data, status, headers, config) {
+                    $rootScope.error = 'Error downloading ../diplomes/typeDiplomesList';
+                });
+        }
+
+        if ($scope.diplomeData.paysList == null || $scope.diplomeData.paysList == undefined || $scope.diplomeData.paysList.length == 0) {
+            $http.get(urlPrefix + '/diplomes/paysList').
+                success(function (data, status, headers, config) {
+                    $scope.diplomeData.paysList = angular.fromJson(data.response);
+                }).
+                error(function (data, status, headers, config) {
+                    $rootScope.error = 'Error downloading ../diplomes/paysList';
+                });
+        }
+
+        $scope.fetchListeFormations = function(){
+            $http.get(urlPrefix + '/diplomes/typeFormationsList/' + $scope.diplomeData.typeDiplome).
+                success(function (data, status, headers, config) {
+                    $scope.diplomeData.typeFormations = angular.fromJson(data.response);
+                }).
+                error(function (data, status, headers, config) {
+                    $rootScope.error = 'Error downloading ../diplomes/typeFormationsList/' + $scope.diplomeData.typeDiplome;
+                });
+        };
+
+        $scope.previewStep = function(){
             $scope.indexStep -= 1;
             $location.path('/Demaut/demande/professionSante');
         };
@@ -200,19 +241,21 @@ ngDemautApp
             $location.path('/Demaut/demande/annexes');
         };
 
-        $scope.addAnotherData = function () {
-            var activite = [
-                {"intitule": $scope.professionnalData.intitule},
-                {"adresseProfessionnelle": $scope.professionnalData.adresseProfessionnelle},
-                {"localite": $scope.professionnalData.localite},
-                {"dateDObtention": $scope.professionnalData.dateDObtention}
+        $scope.addAnotherDiplome = function(){
+            var diplome = [
+                {"key": $scope.diplomeData.typeDiplome.id + $scope.diplomeData.typeFormation.id + $scope.diplomeData.dateObtention},
+                {"typeDiplome": $scope.diplomeData.typeDiplome},
+                {"typeFormation": $scope.diplomeData.typeFormation},
+                {"dateObtention": $scope.diplomeData.dateObtention},
+                {"paysObtention": $scope.diplomeData.paysObtention},
+                {"dateReconnaissance": $scope.diplomeData.dateReconnaissance}
             ];
-
-            $scope.professionnalData.activities[intitule].push(activite);
-            $scope.professionnalData.intitule = null;
-            $scope.professionnalData.adresseProfessionnelle = null;
-            $scope.professionnalData.localite = null;
-            $scope.professionnalData.dateDObtention = null;
+            $scope.diplomeData.diplomes.push(diplome);
+            $scope.diplomeData.typeDiplome = null;
+            $scope.diplomeData.typeFormation = null;
+            $scope.diplomeData.dateObtention = null;
+            $scope.diplomeData.paysObtention = null;
+            $scope.diplomeData.dateReconnaissance = null;
         };
     }])
     .controller('AnnexesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', '$sessionStorage', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log, $sessionStorage) {

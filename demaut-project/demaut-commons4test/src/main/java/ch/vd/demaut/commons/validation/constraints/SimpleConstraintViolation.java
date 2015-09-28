@@ -22,7 +22,7 @@ public class SimpleConstraintViolation<T> extends BaseValueObject {
 
     @Override
     public boolean equals(Object o) {
-        if(o instanceof SimpleConstraintViolation){
+        if (o instanceof SimpleConstraintViolation) {
             return ((SimpleConstraintViolation<?>) o).getPropertyName().equals(this.propertyName);
         }
         return false;

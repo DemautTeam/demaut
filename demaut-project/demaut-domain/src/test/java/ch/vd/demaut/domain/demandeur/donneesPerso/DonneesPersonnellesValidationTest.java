@@ -6,9 +6,6 @@ import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * Created by mourad on 25.09.15.
- */
 public class DonneesPersonnellesValidationTest extends AbstractValidationTest<DonneesPersonnelles> {
 
     private DonneesPersonnelles donneesPersonnellesValides;
@@ -29,14 +26,14 @@ public class DonneesPersonnellesValidationTest extends AbstractValidationTest<Do
     private NumeroTelephone numeroFax;
 
     @Before
-    public void init(){
+    public void init() {
         nomValide = new Nom("Doe");
         nomInvalide = new Nom(null);
         prenomValide = new Prenom("John");
         localiteValide = new Localite("Lausanne");
         npaValide = new NPA("1000");
-        pays = new Pays("Suisse");
-        adresseValide = new Adresse("","", localiteValide, npaValide, pays);
+        pays = Pays.Suisse;
+        adresseValide = new Adresse("", "", localiteValide, npaValide, pays);
         emailValide = new Email("john.doe@nobody.com");
         genreValide = Genre.Feminin;
         dateDeNaissance = new DateDeNaissance(LocalDate.now());
@@ -44,25 +41,22 @@ public class DonneesPersonnellesValidationTest extends AbstractValidationTest<Do
         numeroMobile = new NumeroTelephone("07625225123");
         numeroFax = new NumeroTelephone("023456789");
 
-        donneesPersonnellesValides = new DonneesPersonnelles(nomValide,prenomValide,null,genreValide, dateDeNaissance, adresseValide, emailValide, numeroTelephone, numeroMobile, numeroFax );
-        donneesPersonnellesInvalideNom = new DonneesPersonnelles(nomInvalide,prenomValide,null,genreValide, dateDeNaissance, adresseValide, emailValide, numeroTelephone, numeroMobile, numeroFax );
-
+        donneesPersonnellesValides = new DonneesPersonnelles(nomValide, prenomValide, null, genreValide, dateDeNaissance, adresseValide, emailValide, numeroTelephone, numeroMobile, numeroFax);
+        donneesPersonnellesInvalideNom = new DonneesPersonnelles(nomInvalide, prenomValide, null, genreValide, dateDeNaissance, adresseValide, emailValide, numeroTelephone, numeroMobile, numeroFax);
     }
 
     @Test
-    public void testDonneesPersonnellesValide(){
+    public void testDonneesPersonnellesValide() {
         validateWithMsg(donneesPersonnellesValides);
         testAllConstraintViolations();
     }
 
     @Test
-    public void testDonneesPersonnellesNomInvalide(){
+    public void testDonneesPersonnellesNomInvalide() {
         validateWithMsg(donneesPersonnellesInvalideNom);
         addExpectedConstraintViolation("nom.value");
         testSomeConstraintViolations();
     }
-
-
 
 
 }

@@ -6,9 +6,6 @@ import ch.vd.demaut.commons.vo.StringVO;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-/**
- * Created by mourad on 14.09.15.
- */
 @ValueObject
 public class Localite extends StringVO {
 

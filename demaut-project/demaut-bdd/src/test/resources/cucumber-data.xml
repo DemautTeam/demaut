@@ -9,7 +9,7 @@
     </bean>
 
     <bean id="demandeAutorisationRepository"
-          class="ch.vd.demaut.data.demandes.autorisation.repo.impl.DemandeAutorisationRepositoryJava"
+          class="ch.vd.demaut.data.demandes.autorisation.repo.impl.DemandeAutorisationRepositoryJPA"
           scope="cucumber-glue">
     </bean>
 

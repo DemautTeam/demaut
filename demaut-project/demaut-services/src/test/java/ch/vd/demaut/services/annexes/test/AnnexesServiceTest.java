@@ -9,6 +9,7 @@ import java.util.Collection;
 import javax.inject.Inject;
 
 import org.apache.commons.io.IOUtils;
+import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.ContenuAnnexe;
+import ch.vd.demaut.domain.annexes.DateCreation;
 import ch.vd.demaut.domain.annexes.NomFichier;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
@@ -55,7 +57,7 @@ public class AnnexesServiceTest {
         file = new File("src/test/resources/demautServicesTest.cfg");
 
         nomFichier = new NomFichier("Test_multipart.pdf");
-        annexe = new Annexe(TypeAnnexe.CV, nomFichier, new ContenuAnnexe(byteArray));
+        annexe = new Annexe(TypeAnnexe.CV, nomFichier, new ContenuAnnexe(byteArray), new DateCreation(new LocalDate()));
 
         profession = Profession.Medecin;
 
@@ -65,7 +67,6 @@ public class AnnexesServiceTest {
         assertThat(byteArray).isNotNull();
         assertThat(demandeEnCours.getReferenceDeDemande()).isNotNull();
         assertThat(nomFichier).isNotNull();
-
     }
 
     @Test

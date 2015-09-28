@@ -1,10 +1,10 @@
 package ch.vd.demaut.domain.demandes.autorisation;
 
-import ch.vd.demaut.domain.annexes.TypeAnnexe;
-import ch.vd.demaut.domain.annexes.RefProgresID;
-import ch.vd.demaut.domain.exception.TypeAnnexeNotFoundException;
+import ch.vd.demaut.domain.config.RefProgresID;
+import ch.vd.demaut.domain.config.TypeProgres;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TypeDiplomeNotFoundException;
 
-public enum Profession {
+public enum Profession implements TypeProgres {
     Chiropraticien(53843599, "Chiropraticien"),//
     Dieteticien(53843600, "Diététicien"),//
     Droguiste(53843601, "Droguiste"),//
@@ -27,31 +27,31 @@ public enum Profession {
     TechnicienEnRadiologieMedicale(53843628, "Technicien en radiologie médicale"),//
     TechnicienEnSalleDOperation(-4, "Technicien en salle d'opération"),//
     TherapeuteEnPsychomotricite(53843632, "Thérapeute de la psychomotricité");
-    
-    private RefProgresID progresId;
-    
+
+    private RefProgresID refProgresID;
+
     private String libl;
 
     private Profession(Integer id, String libelle) {
-        this.progresId = new  RefProgresID(id);
-        
+        this.refProgresID = new RefProgresID(id);
+
         this.libl = libelle;
     }
-    
-    public RefProgresID getProgresId() {
-        return progresId;
-    }
-    
-    public String getLibl() {
-        return libl;
-    }
-    
-    static public TypeAnnexe getTypeById(Integer id2) {
-        for (TypeAnnexe type : TypeAnnexe.values()) {
-            if (type.getProgresId().equals(new RefProgresID(id2))) {
+
+    static public Profession getTypeById(Integer id2) {
+        for (Profession type : Profession.values()) {
+            if (type.getRefProgresID().equals(new RefProgresID(id2))) {
                 return type;
             }
         }
-        throw new TypeAnnexeNotFoundException();
+        throw new TypeDiplomeNotFoundException();
+    }
+
+    public RefProgresID getRefProgresID() {
+        return refProgresID;
+    }
+
+    public String getLibl() {
+        return libl;
     }
 }

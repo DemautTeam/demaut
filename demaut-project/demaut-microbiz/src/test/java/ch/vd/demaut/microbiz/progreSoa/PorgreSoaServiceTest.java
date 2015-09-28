@@ -51,7 +51,7 @@ public class PorgreSoaServiceTest {
 
     @Test
     public void testListeSOAFormationApprofondie() throws Exception {
-        RefRoot refRoot = progreSoaService.listeSOAFormationApprofondie(null);
+        RefRoot refRoot = progreSoaService.listeSOADiplomesFormationApprofondie(null);
         assertThat(refRoot).isNotNull();
         assertThat(refRoot.getVcList().getVc()).isNotEmpty();
         assertThat(refRoot.getVcList().getVc().size()).isEqualTo(28);
@@ -59,7 +59,7 @@ public class PorgreSoaServiceTest {
 
     @Test
     public void testListeSOAFormationComplementaire() throws Exception {
-        RefRoot refRoot = progreSoaService.listeSOAFormationComplementaire(null);
+        RefRoot refRoot = progreSoaService.listeSOADiplomesFormationComplementaire(null);
         assertThat(refRoot).isNotNull();
         assertThat(refRoot.getVcList().getVc()).isNotEmpty();
         assertThat(refRoot.getVcList().getVc().size()).isEqualTo(27);
@@ -67,7 +67,7 @@ public class PorgreSoaServiceTest {
 
     @Test
     public void testListeSOAFormationInitiale() throws Exception {
-        RefRoot refRoot = progreSoaService.listeSOAFormationInitiale(null);
+        RefRoot refRoot = progreSoaService.listeSOADiplomesFormationInitiale(null);
         assertThat(refRoot).isNotNull();
         assertThat(refRoot.getVcList().getVc()).isNotEmpty();
         assertThat(refRoot.getVcList().getVc().size()).isEqualTo(102);
@@ -75,7 +75,7 @@ public class PorgreSoaServiceTest {
 
     @Test
     public void testListeSOADiplomesPostGrade() throws Exception {
-        RefRoot refRoot = progreSoaService.listeSOADiplomesPostGrade(null);
+        RefRoot refRoot = progreSoaService.listeSOADiplomesFormationPostGrade(null);
         assertThat(refRoot).isNotNull();
         assertThat(refRoot.getVcList().getVc()).isNotEmpty();
         assertThat(refRoot.getVcList().getVc().size()).isEqualTo(63);

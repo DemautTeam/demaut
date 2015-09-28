@@ -13,13 +13,13 @@ public interface ProgreSoaService {
 
     RefRoot listeSOAAPTitre(String baseUri) throws Exception;
 
-    RefRoot listeSOAFormationApprofondie(String baseUri) throws Exception;
+    RefRoot listeSOADiplomesFormationApprofondie(String baseUri) throws Exception;
 
-    RefRoot listeSOAFormationComplementaire(String baseUri) throws Exception;
+    RefRoot listeSOADiplomesFormationComplementaire(String baseUri) throws Exception;
 
-    RefRoot listeSOAFormationInitiale(String baseUri) throws Exception;
+    RefRoot listeSOADiplomesFormationInitiale(String baseUri) throws Exception;
 
-    RefRoot listeSOADiplomesPostGrade(String baseUri) throws Exception;
+    RefRoot listeSOADiplomesFormationPostGrade(String baseUri) throws Exception;
 
     RefRoot listeSOAProfession(String baseUri) throws Exception;
 

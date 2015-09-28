@@ -1,10 +1,12 @@
 package ch.vd.demaut.domain.annexes;
 
+import ch.vd.demaut.domain.config.RefProgresID;
+import ch.vd.demaut.domain.config.TypeProgres;
+
 /**
  * Représente le type d'une annexe venant de ProgreSOA
- *
  */
-public enum TypeAnnexeProgres {
+public enum TypeAnnexeProgres implements TypeProgres {
     DiplomeOuCertificat(50283740, "Diplôme ou certificat"),
     CertificatDeTravail(50283742, "Certificat de travail"),
     ExtraitCasierJudiciaire(50283744, "Extrait de casier judiciaire"),
@@ -31,23 +33,22 @@ public enum TypeAnnexeProgres {
     FormationCEFOCA(304890954, "Formation CEFOCA"),
     FormationSSMUS(304890956, "Formation SSMUS"),
     Cahierdescharges(304890962, "Cahier des charges");
-    
-    private RefProgresID progresId;
-    
-    private String libelle;
 
-    private TypeAnnexeProgres(Integer id, String libelle) {
-        this.progresId = new  RefProgresID(id);
-        
-        this.libelle = libelle;
+    private RefProgresID progresId;
+
+    private String libl;
+
+    private TypeAnnexeProgres(Integer id, String libl) {
+        this.progresId = new RefProgresID(id);
+        this.libl = libl;
     }
-    
-    public RefProgresID getProgresId() {
+
+    public RefProgresID getRefProgresID() {
         return progresId;
     }
-    
-    public String getLibelle() {
-        return libelle;
+
+    public String getLibl() {
+        return libl;
     }
-    
+
 }

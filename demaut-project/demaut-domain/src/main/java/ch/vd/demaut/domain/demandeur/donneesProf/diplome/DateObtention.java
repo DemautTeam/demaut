@@ -1,24 +1,34 @@
 package ch.vd.demaut.domain.demandeur.donneesProf.diplome;
 
-import ch.vd.demaut.commons.vo.LocalDateVO;
+import ch.vd.demaut.commons.vo.BaseValueObject;
 import org.joda.time.LocalDate;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
-public class DateObtention extends LocalDateVO {
+public class DateObtention extends BaseValueObject {
 
-    // ********************************************************* Fields
+    @NotNull
+    private LocalDate value;
+
+    // ********************************************************* Constructors
+
+    public DateObtention() {
+    }
+
     public DateObtention(LocalDate value) {
-        super(value);
+        this.value = value;
+    }
+
+    public DateObtention(int annee, int mois, int jourDuMois) {
+        this.value = new LocalDate(annee, mois, jourDuMois);
     }
 
     // ********************************************************* Business Methods
 
     @NotNull
     @Past
-    @Override
-    public LocalDate getLocalDate() {
-        return super.getLocalDate();
+    public LocalDate getValue() {
+        return value;
     }
 }

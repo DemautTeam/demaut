@@ -4,9 +4,6 @@ import ch.vd.demaut.commons.vo.StringVO;
 
 import javax.validation.constraints.Size;
 
-/**
- * Created by mourad on 14.09.15.
- */
 public class NPA extends StringVO {
 
     public NPA(String value) {

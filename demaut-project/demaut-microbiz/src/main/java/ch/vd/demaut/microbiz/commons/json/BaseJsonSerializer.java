@@ -1,21 +1,20 @@
 package ch.vd.demaut.microbiz.commons.json;
 
-import java.io.IOException;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
+import java.io.IOException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
 /**
- * 
  * Classe abstraite qui implémente {@link JsonSerializer} et fournit les implémentations par défaut de
  * {@link #handledType()} et {@link #serialize(Object, JsonGenerator, SerializerProvider)}
  * 
  * La plupart des JsonSerializer doivent hériter de cette classe
- * 
+ *
  * @param <T>
  */
 abstract public class BaseJsonSerializer<T> extends JsonSerializer<T> {

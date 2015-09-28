@@ -1,32 +1,5 @@
 package ch.vd.demaut.microbiz.rest.impl;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-
-import javax.annotation.security.RolesAllowed;
-import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-
-import org.apache.cxf.jaxrs.ext.multipart.Multipart;
-import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-
 import ch.vd.demaut.domain.annexes.AnnexeMetadata;
 import ch.vd.demaut.domain.annexes.ContenuAnnexe;
 import ch.vd.demaut.domain.annexes.NomFichier;
@@ -36,10 +9,29 @@ import ch.vd.demaut.microbiz.progreSoa.ProgreSoaService;
 import ch.vd.demaut.microbiz.rest.RestUtils;
 import ch.vd.demaut.services.annexes.AnnexesService;
 import ch.vd.ses.referentiel.demaut_1_0.VcType;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import org.apache.cxf.jaxrs.ext.multipart.Multipart;
+import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
-@CrossOriginResourceSharing(allowOrigins = { "*" }, allowCredentials = true, maxAge = 3600, allowHeaders = {
-        "Content-Type", "X-Requested-With" }, exposeHeaders = { "Access-Control-Allow-Origin" })
-@Service
+import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+@CrossOriginResourceSharing(allowOrigins = {"*"}, allowCredentials = true, maxAge = 3600, allowHeaders = {
+        "Content-Type", "X-Requested-With"}, exposeHeaders = {"Access-Control-Allow-Origin"})
+@Service("annexeRestImpl")
 @Path("/annexes")
 public class AnnexeRestImpl {
 
@@ -81,14 +73,13 @@ public class AnnexeRestImpl {
      * Cette méthode sera peut-etre utilisé suivant les futures décisions prises
      * TODO: Quoiqu'il en soit virer progreSoaService du projet microbiz et le
      * mettre dans Service (qui correspond a la facade REST)
-     * 
+     *
      * @throws Exception
      */
     @SuppressWarnings("unused")
     private List<VcType> buildListeTypesAnnexesAvecProgresSOA(UriInfo uriInfo) throws Exception {
         String path = uriInfo != null ? uriInfo.getBaseUri().toString() : null;
-        List<VcType> lesTypesAnnexes = progreSoaService.listeSOATypesAnnexes(path).getVcList().getVc();
-        return lesTypesAnnexes;
+        return progreSoaService.listeSOATypesAnnexes(path).getVcList().getVc();
     }
 
     @GET
@@ -112,7 +103,7 @@ public class AnnexeRestImpl {
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @RolesAllowed("USER")
     public Response afficherUneAnnexe(@Context UriInfo uriInfo, @PathParam("demandeReference") String demandeReference,
-            @PathParam("annexeFileName") String annexeFileName) throws JsonProcessingException {
+                                      @PathParam("annexeFileName") String annexeFileName) throws JsonProcessingException {
 
         LOGGER.info("afficherUneAnnexe " + annexeFileName);
 
@@ -129,9 +120,9 @@ public class AnnexeRestImpl {
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
     public Response attacherUneAnnexe(@Context UriInfo uriInfo, @Multipart("demandeReference") String demandeReference,
-            @Multipart("annexeFile") File file, @Multipart("annexeFileName") String annexeFileName,
-            @Multipart("annexeFileSize") String annexeFileSize, @Multipart("annexeFileType") String annexeFileType,
-            @Multipart("annexeType") String annexeTypeIdStr) throws IOException {
+                                      @Multipart("annexeFile") File file, @Multipart("annexeFileName") String annexeFileName,
+                                      @Multipart("annexeFileSize") String annexeFileSize, @Multipart("annexeFileType") String annexeFileType,
+                                      @Multipart("annexeType") String annexeTypeIdStr) throws IOException {
 
         LOGGER.info("attacherUneAnnexe " + annexeFileName);
 
@@ -149,8 +140,8 @@ public class AnnexeRestImpl {
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
     public Response supprimerUneAnnexe(@Context UriInfo uriInfo, @PathParam("demandeReference") String demandeReference,
-            @PathParam("annexeFileName") String annexeFileName, @PathParam("annexeType") String annexeType)
-                    throws JsonProcessingException {
+                                       @PathParam("annexeFileName") String annexeFileName, @PathParam("annexeType") String annexeType)
+            throws JsonProcessingException {
 
         LOGGER.info("supprimerUneAnnexe " + annexeFileName);
 
@@ -158,7 +149,6 @@ public class AnnexeRestImpl {
         NomFichier nomFichier = new NomFichier(annexeFileName);
 
         annexesService.supprimerUneAnnexe(referenceDeDemande, nomFichier);
-
         return RestUtils.forgeResponseTrue();
     }
 }

@@ -49,8 +49,7 @@ public class ProgreSoaServiceImpl implements ProgreSoaService {
     }
 
     @Override
-    public List<ReportedOrganisationType> rechercheSOATierByNom(String baseUri, String organisationNom)
-            throws Exception {
+    public List<ReportedOrganisationType> rechercheSOATierByNom(String baseUri, String organisationNom) throws Exception {
         String forgeProgreSOAUrl = this.forgeProgreSOAUrl(baseUri);
         if (!StringUtils.isEmpty(forgeProgreSOAUrl)) {
             WebTarget target = client.target(forgeProgreSOAUrl);
@@ -66,22 +65,22 @@ public class ProgreSoaServiceImpl implements ProgreSoaService {
         return processQuery(baseUri, "AP_TITRE");
     }
 
-    public RefRoot listeSOAFormationApprofondie(String baseUri) throws Exception {
+    public RefRoot listeSOADiplomesFormationApprofondie(String baseUri) throws Exception {
         return processQuery(baseUri, "D_FORMATION_APPROFONDIE");
     }
 
     @Override
-    public RefRoot listeSOAFormationComplementaire(String baseUri) throws Exception {
+    public RefRoot listeSOADiplomesFormationComplementaire(String baseUri) throws Exception {
         return processQuery(baseUri, "D_FORMATION_COMPLEMENTAIRE");
     }
 
     @Override
-    public RefRoot listeSOAFormationInitiale(String baseUri) throws Exception {
+    public RefRoot listeSOADiplomesFormationInitiale(String baseUri) throws Exception {
         return processQuery(baseUri, "D_FORMATION_INITIALE");
     }
 
     @Override
-    public RefRoot listeSOADiplomesPostGrade(String baseUri) throws Exception {
+    public RefRoot listeSOADiplomesFormationPostGrade(String baseUri) throws Exception {
         return processQuery(baseUri, "D_POSTGRADE");
     }
 
