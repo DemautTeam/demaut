@@ -134,16 +134,16 @@ ngDemautApp
             if ($scope.professionSante.professionDataForm.$valid) {
                 $http.get(urlPrefix + '/demande/initialiser/' + $scope.professionData.profession).
                     success(function (data, status, headers, config) {
-                    	$storage.refDemande = angular.fromJson(data.response);
-                        $log.info('Reference de la nouvelle demande :' + $storage.refDemande);
+                    	$scope.$storage.refDemande = angular.fromJson(data.response);
+                        $log.info('Reference de la nouvelle demande :' + $scope.$storage.refDemande);
                     }).
                     error(function (data, status, headers, config) {
-                    	delete $scope.$storage.refDemande = null;
+                    	delete $scope.$storage.refDemande;
                         $rootScope.error = 'Error from response /demande/initialiser/';
                     });
                 //Go to next page
                 $scope.indexStep += 1;
-                $location.path('/Demaut/demande/donneesProf');
+                $location.path('/Demaut/demande/donneesPerso');
             }
             else {
                 $log.info('Formulaire invalide !');
@@ -182,7 +182,7 @@ ngDemautApp
             if ($scope.donneesPerso.personalDataForm.$valid) {
                 $log.info('Formulaire valide !');
                 $scope.indexStep += 1;
-                $location.path('/Demaut/demande/donneesProf');
+                $location.path('/Demaut/demande/donneesDiplomes');
             }
             else {
                 $log.info('Formulaire invalide !');
@@ -270,7 +270,7 @@ ngDemautApp
         $scope.annexesData.annexeTypes = [];
         $scope.annexesData.referenceFiles = [];
 
-        if ($storage.refDemande == undefined) {
+        if ($scope.$storage.refDemande == undefined) {
         	console.log("Pas de Reference de demande");
         }
 
@@ -286,7 +286,7 @@ ngDemautApp
 
         $scope.backStep = function(){
             $scope.indexStep -= 1;
-            $location.path('/Demaut/demande/donneesProf');
+            $location.path('/Demaut/demande/donneesDiplomes');
         };
         $scope.nextStep = function(){
             $scope.indexStep += 1;
