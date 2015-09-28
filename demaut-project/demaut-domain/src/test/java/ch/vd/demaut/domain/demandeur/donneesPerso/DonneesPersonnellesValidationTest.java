@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Created by mourad on 25.09.15.
  */
-public class DonneesPersonnellesValidationTest extends AbstractValidationTest {
+public class DonneesPersonnellesValidationTest extends AbstractValidationTest<DonneesPersonnelles> {
 
     private DonneesPersonnelles donneesPersonnellesValides;
     private DonneesPersonnelles donneesPersonnellesInvalideNom;
@@ -23,8 +23,6 @@ public class DonneesPersonnellesValidationTest extends AbstractValidationTest {
     private Adresse adresseValide;
     private Email emailValide;
     private Genre genreValide;
-    private Nationalite nationalite;
-    private Permis permis;
     private DateDeNaissance dateDeNaissance;
     private NumeroTelephone numeroTelephone;
     private NumeroTelephone numeroMobile;
@@ -41,8 +39,6 @@ public class DonneesPersonnellesValidationTest extends AbstractValidationTest {
         adresseValide = new Adresse("","", localiteValide, npaValide, pays);
         emailValide = new Email("john.doe@nobody.com");
         genreValide = Genre.Feminin;
-        nationalite = new Nationalite("Suisse");
-        permis = new Permis(TypePermis.Aucun);
         dateDeNaissance = new DateDeNaissance(LocalDate.now());
         numeroTelephone = new NumeroTelephone("022222222");
         numeroMobile = new NumeroTelephone("07625225123");

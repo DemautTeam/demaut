@@ -1,11 +1,10 @@
 package ch.vd.demaut.domain.demandeur.donneesPerso;
 
-import ch.vd.demaut.commons.annotations.ValueObject;
-import ch.vd.demaut.commons.vo.BaseValueObject;
-import ch.vd.demaut.commons.vo.BaseValueObjectWithId;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
+import ch.vd.demaut.commons.annotations.ValueObject;
+import ch.vd.demaut.commons.vo.BaseValueObjectWithId;
 
 @ValueObject
 public class DonneesPersonnelles extends BaseValueObjectWithId {

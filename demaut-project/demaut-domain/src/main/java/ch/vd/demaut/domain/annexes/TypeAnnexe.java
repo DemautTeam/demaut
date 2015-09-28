@@ -1,7 +1,5 @@
 package ch.vd.demaut.domain.annexes;
 
-import org.apache.commons.collections.CollectionUtils;
-
 import ch.vd.demaut.domain.exception.TypeAnnexeNotFoundException;
 
 /**

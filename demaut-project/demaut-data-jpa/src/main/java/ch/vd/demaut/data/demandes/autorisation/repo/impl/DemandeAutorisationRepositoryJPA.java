@@ -36,7 +36,6 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
         return null;
     }
 
-    @SuppressWarnings("unchecked")
     private TypedQuery<DemandeAutorisation> createQueryParReference(ReferenceDeDemande ref) {
         final CriteriaBuilder builder = this.getEntityManager().getCriteriaBuilder();
         final CriteriaQuery<DemandeAutorisation> criteriaQuery = builder.createQuery(DemandeAutorisation.class);

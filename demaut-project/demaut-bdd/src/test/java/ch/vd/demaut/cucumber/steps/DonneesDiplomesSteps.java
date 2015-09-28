@@ -2,13 +2,10 @@ package ch.vd.demaut.cucumber.steps;
 
 import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
 import ch.vd.demaut.domain.demandes.autorisation.StatutDemandeAutorisation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class DonneesDiplomesSteps {
 
     // ********************************************************* Static fields
-    private static final Logger LOGGER = LoggerFactory.getLogger(DonneesDiplomesSteps.class);
 
     // ********************************************************* Fields
     private DemandeAutorisationSteps demandeAutorisationSteps;

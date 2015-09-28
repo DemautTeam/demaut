@@ -1,21 +1,25 @@
 package ch.vd.demaut.cucumber.steps;
 
+import java.util.List;
+
+import org.joda.time.LocalDate;
+import org.springframework.util.StringUtils;
+
 import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
 import ch.vd.demaut.cucumber.converteurs.commons.LocalDateConverter;
 import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
 import ch.vd.demaut.domain.demandes.autorisation.StatutDemandeAutorisation;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.*;
-import org.joda.time.LocalDate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
-
-import java.util.List;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateObtention;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateReconnaissance;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ListeDesFormations;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.PaysObtention;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormation;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TypeDiplomeAccepte;
 
 public class DonneesProfessionnellesSteps {
 
     // ********************************************************* Static fields
-    private static final Logger LOGGER = LoggerFactory.getLogger(DonneesProfessionnellesSteps.class);
 
     // ********************************************************* Fields
     private DemandeAutorisationSteps demandeAutorisationSteps;
