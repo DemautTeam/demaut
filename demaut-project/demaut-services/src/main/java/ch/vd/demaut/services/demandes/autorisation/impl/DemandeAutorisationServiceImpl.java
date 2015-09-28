@@ -3,7 +3,7 @@ package ch.vd.demaut.services.demandes.autorisation.impl;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
-import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
@@ -21,7 +21,7 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
 
     @Transactional
     @Override
-    public DemandeAutorisation initialiserDemandeAutorisation(Login login, ProfessionDeLaSante profession) {
+    public DemandeAutorisation initialiserDemandeAutorisation(Login login, Profession profession) {
         DemandeAutorisation nouvelleDemande = demandeAutorisationFactory.initierDemandeAutorisation(login, profession, null);
         demandeAutorisationRepository.store(nouvelleDemande);
         return nouvelleDemande;

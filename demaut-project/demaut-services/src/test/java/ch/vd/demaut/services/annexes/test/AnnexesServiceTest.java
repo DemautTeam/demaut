@@ -24,7 +24,7 @@ import ch.vd.demaut.domain.annexes.ContenuAnnexe;
 import ch.vd.demaut.domain.annexes.NomFichier;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.annexes.AnnexesService;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
@@ -49,7 +49,7 @@ public class AnnexesServiceTest {
     private Annexe annexe;
 
     private Login login;
-    private ProfessionDeLaSante profession;
+    private Profession profession;
 
     @Before
     public void setUp() throws Exception {
@@ -60,7 +60,7 @@ public class AnnexesServiceTest {
         annexe = new Annexe(TypeAnnexe.CV, nomFichier, new ContenuAnnexe(byteArray));
 
         login = new Login("joe.dalton@ch.vd");
-        profession = ProfessionDeLaSante.Medecin;
+        profession = Profession.Medecin;
 
         intialiserDemandeEnCours(annexe);
 

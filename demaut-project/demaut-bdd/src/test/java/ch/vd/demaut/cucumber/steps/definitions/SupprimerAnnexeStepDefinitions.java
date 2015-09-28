@@ -5,7 +5,7 @@ import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
 import ch.vd.demaut.cucumber.steps.AnnexesSteps;
 import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
-import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import cucumber.api.DataTable;
 import cucumber.api.java.fr.Alors;
 import cucumber.api.java.fr.Etantdonné;
@@ -36,7 +36,7 @@ public class SupprimerAnnexeStepDefinitions {
     // ********************************************************* Before
 
     @Etantdonné("^une demande de profession \"([^\"]*)\" en cours de saisie par l´utilisateur$")
-    public void initialiserLaDemandeEnCours(ProfessionDeLaSante profession) throws Throwable {
+    public void initialiserLaDemandeEnCours(Profession profession) throws Throwable {
         annexesSteps.getDemandeAutorisationSteps().initialiserDemandeEnCours(profession);
     }
 

@@ -2,7 +2,7 @@ package ch.vd.demaut.microbiz.rest;
 
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import org.junit.Before;
@@ -38,7 +38,7 @@ public class ProfessionRestImplTest {
     @Before
     public void setUp() throws Exception {
         Login login = new Login("joe.dalton@ch.vd");
-        ProfessionDeLaSante profession = ProfessionDeLaSante.Medecin;
+        Profession profession = Profession.Medecin;
 
         assertNotNull(professionRest);
         assertThat(demandeAutorisationService).isNotNull();

@@ -2,7 +2,7 @@ package ch.vd.demaut.domain.config.mock;
 
 import ch.vd.demaut.domain.annexes.AnnexesObligatoires;
 import ch.vd.demaut.domain.config.ConfigDemaut;
-import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
 
 /**
  * Implémentation Mock de ConfigDemaut
@@ -16,12 +16,12 @@ public class ConfigDemautMock implements ConfigDemaut {
     }
 
     @Override
-    public AnnexesObligatoires getAnnexesObligatoires(ProfessionDeLaSante profession) {
+    public AnnexesObligatoires getAnnexesObligatoires(Profession profession) {
         return configAnnexesObligatoires.getAnnexesObligatoires(profession);
     }
 
     @Override
-    public void ajouterAnnexesObligatoires(ProfessionDeLaSante profession, AnnexesObligatoires annexesObligatoires) {
+    public void ajouterAnnexesObligatoires(Profession profession, AnnexesObligatoires annexesObligatoires) {
         configAnnexesObligatoires.ajouterAnnexesObligatoires(profession, annexesObligatoires);
     }
 

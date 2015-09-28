@@ -4,7 +4,7 @@ import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.annexes.RefProgresID;
 import ch.vd.demaut.domain.exception.TypeAnnexeNotFoundException;
 
-public enum ProfessionDeLaSante {
+public enum Profession {
     Chiropraticien(53843599, "Chiropraticien"),//
     Dieteticien(53843600, "Diététicien"),//
     Droguiste(53843601, "Droguiste"),//
@@ -32,7 +32,7 @@ public enum ProfessionDeLaSante {
     
     private String libl;
 
-    private ProfessionDeLaSante(Integer id, String libelle) {
+    private Profession(Integer id, String libelle) {
         this.progresId = new  RefProgresID(id);
         
         this.libl = libelle;

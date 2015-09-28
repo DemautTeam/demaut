@@ -2,7 +2,7 @@ package ch.vd.demaut.services.demandeurs.donneesProf.impl;
 
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
@@ -18,19 +18,19 @@ public class DonneesProfessionnellesServiceImpl implements DonneesProfessionnell
     private DemandeAutorisationService demandeAutorisationService;
 
     @Override
-    public ProfessionDeLaSante afficherDonneesProfession(ReferenceDeDemande referenceDeDemande) {
+    public Profession afficherDonneesProfession(ReferenceDeDemande referenceDeDemande) {
         DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererDemandeParReference(referenceDeDemande);
-        return demandeAutorisation != null ? demandeAutorisation.getProfessionDeLaSante() : null;
+        return demandeAutorisation != null ? demandeAutorisation.getProfession() : null;
     }
 
     @Override
-    public ReferenceDeDemande renseignerDonneesProfession(Login login, ReferenceDeDemande referenceDeDemande, ProfessionDeLaSante professionDeLaSante, CodeGLN codeGLN) {
+    public ReferenceDeDemande renseignerDonneesProfession(Login login, ReferenceDeDemande referenceDeDemande, Profession profession, CodeGLN codeGLN) {
         DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererDemandeParReference(referenceDeDemande);
         if (demandeAutorisation != null) {
             // TODO setter la profession/codeGln si demandeAutorisation le permet
             return demandeAutorisation.getReferenceDeDemande();
         } else {
-            DemandeAutorisation nouvelleDemande = demandeAutorisationService.initialiserDemandeAutorisation(login, professionDeLaSante);
+            DemandeAutorisation nouvelleDemande = demandeAutorisationService.initialiserDemandeAutorisation(login, profession);
             // TODO setter codeGln dans demandeAutorisation
             return nouvelleDemande.getReferenceDeDemande();
         }

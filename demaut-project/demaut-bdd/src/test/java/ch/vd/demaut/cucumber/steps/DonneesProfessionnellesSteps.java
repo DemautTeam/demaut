@@ -7,7 +7,7 @@ import org.springframework.util.StringUtils;
 
 import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
 import ch.vd.demaut.cucumber.converteurs.commons.LocalDateConverter;
-import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandes.autorisation.StatutDemandeAutorisation;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateObtention;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateReconnaissance;
@@ -47,7 +47,7 @@ public class DonneesProfessionnellesSteps {
         this.demandeAutorisationSteps = demandeAutorisationSteps;
     }
 
-    public void verifieAucuneDemandeEnCours(ProfessionDeLaSante profession, StatutDemandeAutorisation statut) {
+    public void verifieAucuneDemandeEnCours(Profession profession, StatutDemandeAutorisation statut) {
         demandeAutorisationSteps.verifieAucuneDemandeEnCours(profession, statut);
     }
 

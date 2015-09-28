@@ -1,6 +1,6 @@
 package ch.vd.demaut.cucumber.steps;
 
-import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandes.autorisation.StatutDemandeAutorisation;
 
 public class DonneesDiplomesSteps {
@@ -22,7 +22,7 @@ public class DonneesDiplomesSteps {
         this.demandeAutorisationSteps = demandeAutorisationSteps;
     }
 
-    public void verifieAucuneDemandeEnCours(ProfessionDeLaSante profession, StatutDemandeAutorisation statut) {
+    public void verifieAucuneDemandeEnCours(Profession profession, StatutDemandeAutorisation statut) {
         demandeAutorisationSteps.verifieAucuneDemandeEnCours(profession, statut);
     }
 

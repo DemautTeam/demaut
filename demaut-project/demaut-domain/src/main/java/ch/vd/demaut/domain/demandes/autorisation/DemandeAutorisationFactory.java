@@ -12,7 +12,7 @@ import ch.vd.demaut.domain.utilisateurs.Login;
 @Factory
 public class DemandeAutorisationFactory {
 
-    public DemandeAutorisation initierDemandeAutorisation(Login login, ProfessionDeLaSante profession, ConfigDemaut config) {
+    public DemandeAutorisation initierDemandeAutorisation(Login login, Profession profession, ConfigDemaut config) {
         DemandeAutorisation demande = new DemandeAutorisation(login, profession, config);
         demande.generateReference();
         return demande;

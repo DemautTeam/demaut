@@ -1,7 +1,7 @@
 package ch.vd.demaut.services.demandeurs.donneesProf.test;
 
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
@@ -27,14 +27,14 @@ public class DonneesProfessionnellesServiceTest {
     private DonneesProfessionnellesService donneesProfessionnellesService;
 
     private ReferenceDeDemande referenceDeDemande;
-    private ProfessionDeLaSante profession;
+    private Profession profession;
     private Login login;
 
 
     @Before
     public void setUp() throws Exception {
         referenceDeDemande = new ReferenceDeDemande("7dc53df5-703e-49b3-8670-b1c468f47f1f");
-        profession = ProfessionDeLaSante.Medecin;
+        profession = Profession.Medecin;
         login = new Login("admin@admin");
 
         assertThat(referenceDeDemande).isNotNull();
@@ -45,8 +45,8 @@ public class DonneesProfessionnellesServiceTest {
 
     @Test
     public void testAfficherDonneesProfession() throws Exception {
-        ProfessionDeLaSante professionDeLaSante = donneesProfessionnellesService.afficherDonneesProfession(referenceDeDemande);
-        assertThat(professionDeLaSante).isNotNull();
+        Profession profession = donneesProfessionnellesService.afficherDonneesProfession(referenceDeDemande);
+        assertThat(profession).isNotNull();
     }
 
     @Test

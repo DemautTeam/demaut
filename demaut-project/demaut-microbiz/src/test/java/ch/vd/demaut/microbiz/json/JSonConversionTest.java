@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
-import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.microbiz.rest.RestUtils;
 
 public class JSonConversionTest {
@@ -44,9 +44,9 @@ public class JSonConversionTest {
         
         ObjectMapper objMapper = RestUtils.buildJSonObjectMapper();
         
-        List<ProfessionDeLaSante> professions = new ArrayList<ProfessionDeLaSante>();
-        professions.add(ProfessionDeLaSante.Chiropraticien);
-        professions.add(ProfessionDeLaSante.Dieteticien);
+        List<Profession> professions = new ArrayList<Profession>();
+        professions.add(Profession.Chiropraticien);
+        professions.add(Profession.Dieteticien);
         
         ObjectWriter viewWriter = objMapper.writer();
         

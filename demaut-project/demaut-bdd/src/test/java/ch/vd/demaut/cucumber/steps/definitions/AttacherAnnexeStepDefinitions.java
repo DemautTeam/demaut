@@ -7,7 +7,7 @@ import ch.vd.demaut.cucumber.converteurs.commons.OuiNonConverter;
 import ch.vd.demaut.cucumber.converteurs.utilisateurs.LoginConverter;
 import ch.vd.demaut.cucumber.steps.AnnexesSteps;
 import ch.vd.demaut.domain.annexes.*;
-import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import cucumber.api.DataTable;
 import cucumber.api.Transform;
@@ -52,7 +52,7 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
     }
 
     @Etantdonné("^une demande de profession \"([^\"]*)\" en cours de saisie$")
-    public void initialiserUneDemandeEnCours(ProfessionDeLaSante profession) throws Throwable {
+    public void initialiserUneDemandeEnCours(Profession profession) throws Throwable {
         annexesSteps.getDemandeAutorisationSteps().initialiserDemandeEnCours(profession);
     }
 
@@ -80,7 +80,7 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
         for (Map<String, String> mappingUneProfessionAvecTypesAnnexeObligatoires : mappingProfessionsAvecTypesAnnexeObligatoires) {
 
             String professionStr = mappingUneProfessionAvecTypesAnnexeObligatoires.get("Type de demande");
-            ProfessionDeLaSante profession = ProfessionDeLaSante.valueOf(professionStr);
+            Profession profession = Profession.valueOf(professionStr);
 
             String annexesObligatoiresStr = mappingUneProfessionAvecTypesAnnexeObligatoires.get("Types d´annexe obligatoires");
             String[] annexesObligatoiresArray = annexesObligatoiresStr.split(",");

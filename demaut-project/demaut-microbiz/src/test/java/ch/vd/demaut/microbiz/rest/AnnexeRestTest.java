@@ -1,7 +1,7 @@
 package ch.vd.demaut.microbiz.rest;
 
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
-import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
@@ -42,7 +42,7 @@ public class AnnexeRestTest {
 
     @Test
     public void testListerLesTypesAnnexes() throws Exception {
-        Response response = annexeRest.listerLesTypesAnnexes(null, ProfessionDeLaSante.Medecin.name());
+        Response response = annexeRest.listerLesTypesAnnexes(null, Profession.Medecin.name());
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 

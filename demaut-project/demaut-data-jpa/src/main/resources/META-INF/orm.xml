@@ -46,7 +46,7 @@
 
     <entity class="ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation">
         <attributes>
-            <basic name="professionDeLaSante">
+            <basic name="profession">
                 <enumerated>STRING</enumerated>
             </basic>
             <basic name="statutDemandeAutorisation">

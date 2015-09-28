@@ -2,7 +2,7 @@ package ch.vd.demaut.services.demandes.autorisation.service.test;
 
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import junit.framework.TestCase;
@@ -27,7 +27,7 @@ public class DemandeAutorisationServiceTest extends TestCase {
     @Inject
     private DemandeAutorisationService demandeAutorisationService;
 
-    private ProfessionDeLaSante profession;
+    private Profession profession;
     private DemandeAutorisation demandeEnCours;
     private Login login;
 
@@ -36,7 +36,7 @@ public class DemandeAutorisationServiceTest extends TestCase {
     @Before
     public void setUp() throws Exception {
         login = new Login("joe.dalton@ch.vd");
-        profession = ProfessionDeLaSante.Medecin;
+        profession = Profession.Medecin;
 
         assertThat(demandeAutorisationService).isNotNull();
     }

@@ -3,7 +3,7 @@ package ch.vd.demaut.cucumber.steps.definitions;
 import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
 import ch.vd.demaut.cucumber.steps.DonneesProfessionnellesSteps;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandes.autorisation.StatutDemandeAutorisation;
 import cucumber.api.java.fr.Alors;
 import cucumber.api.java.fr.Etantdonné;
@@ -34,7 +34,7 @@ public class SaisirProfessionStepDefinitions extends StepDefinitions {
     // ********************************************************* Given
 
     @Etantdonné("^aucune demande de profession \"([^\"]*)\" en cours de saisie à l´état \"([^\"]*)\"$")
-    public void aucune_demande_de_profession_en_cours_de_saisie_à_l_état(ProfessionDeLaSante profession, StatutDemandeAutorisation statut) throws Throwable {
+    public void aucune_demande_de_profession_en_cours_de_saisie_à_l_état(Profession profession, StatutDemandeAutorisation statut) throws Throwable {
         donneesProfessionnellesSteps.verifieAucuneDemandeEnCours(profession, statut);
     }
 
@@ -44,7 +44,7 @@ public class SaisirProfessionStepDefinitions extends StepDefinitions {
     }
 
     @Etantdonné("^une demande de profession \"([^\"]*)\" en cours de saisie à l´état \"([^\"]*)\"$")
-    public void une_demande_de_profession_en_cours_de_saisie_à_l_état(ProfessionDeLaSante profession, StatutDemandeAutorisation etat) throws Throwable {
+    public void une_demande_de_profession_en_cours_de_saisie_à_l_état(Profession profession, StatutDemandeAutorisation etat) throws Throwable {
         donneesProfessionnellesSteps.getDemandeAutorisationSteps().initialiserDemandeEnCours(profession);
         DemandeAutorisation demandeEnCours = donneesProfessionnellesSteps.getDemandeAutorisationSteps().getDemandeEnCours();
         assertThat(demandeEnCours).isNotNull();

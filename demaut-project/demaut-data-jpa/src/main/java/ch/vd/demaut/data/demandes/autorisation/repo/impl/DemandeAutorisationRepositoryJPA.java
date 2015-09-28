@@ -3,7 +3,7 @@ package ch.vd.demaut.data.demandes.autorisation.repo.impl;
 import ch.vd.demaut.data.GenericRepositoryImpl;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandes.autorisation.StatutDemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.utilisateurs.Login;
@@ -32,7 +32,7 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
 
     @Override
     @Transactional(readOnly = true)
-    public DemandeAutorisation recupererDemandeParProfessionStatut(Login login, ProfessionDeLaSante profession, StatutDemandeAutorisation statut) {
+    public DemandeAutorisation recupererDemandeParProfessionStatut(Login login, Profession profession, StatutDemandeAutorisation statut) {
         return null;
     }
 

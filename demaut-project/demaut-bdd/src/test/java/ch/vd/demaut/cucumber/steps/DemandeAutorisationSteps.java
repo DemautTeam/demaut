@@ -4,7 +4,7 @@ import ch.vd.demaut.domain.annexes.AnnexesObligatoires;
 import ch.vd.demaut.domain.config.ConfigDemaut;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
-import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandes.autorisation.StatutDemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.utilisateurs.Login;
@@ -36,7 +36,7 @@ public class DemandeAutorisationSteps {
 
     // ********************************************************* Methods
 
-    public void ajouterAnnexesObligatoires(ProfessionDeLaSante profession, AnnexesObligatoires annexesObligatoires) {
+    public void ajouterAnnexesObligatoires(Profession profession, AnnexesObligatoires annexesObligatoires) {
         configDemaut.ajouterAnnexesObligatoires(profession, annexesObligatoires);
     }
 
@@ -46,21 +46,21 @@ public class DemandeAutorisationSteps {
         LOGGER.debug("L'utilisateur " + login + " a été ajouté au repository avec l'id technique:" + utilisateur.getId());
     }
 
-    public void initialiserDemandeEnCours(ProfessionDeLaSante profession) {
+    public void initialiserDemandeEnCours(Profession profession) {
         demandeEnCours = demandeAutorisationFactory.initierDemandeAutorisation(utilisateur.getLogin(), profession, configDemaut);
         demandeAutorisationRepository.store(demandeEnCours);
 
         LOGGER.debug("La demande autorisation " + demandeEnCours + " a été ajoutée au repository avec l'id technique:" + demandeEnCours.getId());
     }
 
-    public void verifieDemandeCree(ProfessionDeLaSante profession, StatutDemandeAutorisation statut, Login login) {
+    public void verifieDemandeCree(Profession profession, StatutDemandeAutorisation statut, Login login) {
         demandeAutorisationRepository.findBy(demandeEnCours.getId());
-        assertThat(demandeEnCours.getProfessionDeLaSante()).isEqualTo(profession);
+        assertThat(demandeEnCours.getProfession()).isEqualTo(profession);
         assertThat(demandeEnCours.getLogin()).isEqualTo(login);
         assertThat(demandeEnCours.getStatutDemandeAutorisation()).isEqualTo(statut);
     }
 
-    public void verifieAucuneDemandeEnCours(ProfessionDeLaSante profession, StatutDemandeAutorisation statut) {
+    public void verifieAucuneDemandeEnCours(Profession profession, StatutDemandeAutorisation statut) {
         demandeAutorisationRepository.recupererDemandeParProfessionStatut(utilisateur.getLogin(), profession, statut);
     }
 

@@ -4,7 +4,7 @@ import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
-import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.domain.utilisateurs.Utilisateur;
@@ -65,7 +65,7 @@ public class DemandeAutorisationRepositoryTest {
         Utilisateur utilisateur = creerUtilisateur();
 
         // Sauvegarder la demande
-        DemandeAutorisation demandeAutorisation = demautFactory.initierDemandeAutorisation(utilisateur.getLogin(), ProfessionDeLaSante.Medecin, null);
+        DemandeAutorisation demandeAutorisation = demautFactory.initierDemandeAutorisation(utilisateur.getLogin(), Profession.Medecin, null);
         assertThat(demandeAutorisation.getId()).isNull();
         demandeAutorisationRepository.store(demandeAutorisation);
         assertThat(demandeAutorisation.getId()).isNotNull();
@@ -80,7 +80,7 @@ public class DemandeAutorisationRepositoryTest {
         Utilisateur utilisateur = creerUtilisateur();
 
         // Sauvegarder la demande
-        DemandeAutorisation demandeAutorisation = demautFactory.initierDemandeAutorisation(utilisateur.getLogin(), ProfessionDeLaSante.Medecin, null);
+        DemandeAutorisation demandeAutorisation = demautFactory.initierDemandeAutorisation(utilisateur.getLogin(), Profession.Medecin, null);
         byte[] contenu = "AnnexeContenu".getBytes();
         Annexe annexe = new Annexe(TypeAnnexe.CV, "test.pdf", contenu);
         demandeAutorisation.validerEtAttacherAnnexe(annexe);

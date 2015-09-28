@@ -19,7 +19,7 @@ import java.util.List;
 public class DemandeAutorisation extends Demande {
 
     // ********************************************************* Fields
-    private ProfessionDeLaSante professionDeLaSante;
+    private Profession profession;
 
     private Login login;
 
@@ -42,12 +42,12 @@ public class DemandeAutorisation extends Demande {
     }
 
     //Ne pas utiliser ce constructeur mais uniquement la Factory
-    public DemandeAutorisation(Login login, ProfessionDeLaSante profession, ConfigDemaut config) {
+    public DemandeAutorisation(Login login, Profession profession, ConfigDemaut config) {
         this();
         this.referenceDeDemande = new ReferenceDeDemande();
         this.statutDemandeAutorisation = StatutDemandeAutorisation.Brouillon;
         this.login = login;
-        this.professionDeLaSante = profession;
+        this.profession = profession;
         this.config = config;
     }
 
@@ -74,7 +74,7 @@ public class DemandeAutorisation extends Demande {
      * complétude de cette demande
      */
     public AnnexesObligatoires extraireAnnexesObligatoiresConfigures() {
-        return config.getAnnexesObligatoires(professionDeLaSante);
+        return config.getAnnexesObligatoires(profession);
     }
 
     /**
@@ -125,8 +125,8 @@ public class DemandeAutorisation extends Demande {
     // ********************************************************* Getters
 
     @NotNull
-    public ProfessionDeLaSante getProfessionDeLaSante() {
-        return professionDeLaSante;
+    public Profession getProfession() {
+        return profession;
     }
 
     @NotNull

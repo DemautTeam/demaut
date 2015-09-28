@@ -1,7 +1,7 @@
 package ch.vd.demaut.domain.config.mock;
 
 import ch.vd.demaut.domain.annexes.AnnexesObligatoires;
-import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,13 +11,13 @@ import java.util.Map;
  */
 public class ConfigAnnexesObligatoires {
 
-    private Map<ProfessionDeLaSante, AnnexesObligatoires> config = new HashMap<ProfessionDeLaSante, AnnexesObligatoires>();
+    private Map<Profession, AnnexesObligatoires> config = new HashMap<Profession, AnnexesObligatoires>();
 
-    public AnnexesObligatoires getAnnexesObligatoires(ProfessionDeLaSante profession) {
+    public AnnexesObligatoires getAnnexesObligatoires(Profession profession) {
         return config.get(profession);
     }
 
-    public void ajouterAnnexesObligatoires(ProfessionDeLaSante profession, AnnexesObligatoires annexesObligatoires) {
+    public void ajouterAnnexesObligatoires(Profession profession, AnnexesObligatoires annexesObligatoires) {
         config.put(profession, annexesObligatoires);
     }
 

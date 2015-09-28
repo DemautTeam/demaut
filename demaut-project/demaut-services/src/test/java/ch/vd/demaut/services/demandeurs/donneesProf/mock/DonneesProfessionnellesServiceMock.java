@@ -1,7 +1,7 @@
 package ch.vd.demaut.services.demandeurs.donneesProf.mock;
 
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.demandes.autorisation.ProfessionDeLaSante;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
@@ -20,13 +20,13 @@ public class DonneesProfessionnellesServiceMock implements DonneesProfessionnell
     }
 
     @Override
-    public ProfessionDeLaSante afficherDonneesProfession(ReferenceDeDemande referenceDeDemande) {
+    public Profession afficherDonneesProfession(ReferenceDeDemande referenceDeDemande) {
         // TODO
         return null;
     }
 
     @Override
-    public ReferenceDeDemande renseignerDonneesProfession(Login login, ReferenceDeDemande referenceDeDemande, ProfessionDeLaSante professionDeLaSante, CodeGLN codeGLN) {
+    public ReferenceDeDemande renseignerDonneesProfession(Login login, ReferenceDeDemande referenceDeDemande, Profession profession, CodeGLN codeGLN) {
         // TODO
         return null;
     }
