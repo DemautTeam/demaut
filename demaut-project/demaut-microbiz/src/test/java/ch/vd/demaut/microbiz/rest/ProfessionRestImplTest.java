@@ -55,13 +55,13 @@ public class ProfessionRestImplTest {
 
     @Test
     public void testAfficherDonneesProfession() throws Exception {
-        Response response = professionRest.afficherDonneesProfession(null, referenceDeDemande.getValue());
+        Response response = professionRest.afficherDonneesPro(null, referenceDeDemande.getValue());
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
     @Test
     public void testRenseignerDonneesProfession() throws Exception {
-        Response response = professionRest.renseignerDonneesProfession(null, referenceDeDemande.getValue(), "53843599", "7601000000125");
+        Response response = professionRest.renseignerDonneesPro(null, referenceDeDemande.getValue(), "53843599", "7601000000125");
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 }

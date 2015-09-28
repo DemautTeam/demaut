@@ -58,7 +58,8 @@ public class ProfessionRestImpl implements ProfessionRest {
         List<Profession> professions = buildListeProfessionsSansProgresSOA();
 
         // Altrenative SOA:
-        //List<VcType> typesAnnexe = buildListeProfessionsAvecProgresSOA(uriInfo);
+        // List<VcType> typesAnnexe =
+        // buildListeProfessionsAvecProgresSOA(uriInfo);
         // TODO filtrer la liste selon Universitaire ou non
         return RestUtils.forgeResponseList(professions);
     }
@@ -86,20 +87,18 @@ public class ProfessionRestImpl implements ProfessionRest {
         return lesProfessionsDeLaSante;
     }
 
-    
     @Override
     @GET
     @Path("/donnees/{demandeReference}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response afficherDonneesProfession(@Context UriInfo uriInfo,
-            @PathParam("demandeReference") String demandeReference) throws Exception {
+    public Response afficherDonneesPro(@Context UriInfo uriInfo, @PathParam("demandeReference") String demandeReference)
+            throws Exception {
 
         LOGGER.info("afficherDonneesProfession " + demandeReference);
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);
-        Profession profession = donneesProfessionnellesService
-                .afficherDonneesProfession(referenceDeDemande);
+        Profession profession = donneesProfessionnellesService.afficherDonneesProfession(referenceDeDemande);
 
         String path = uriInfo != null ? uriInfo.getBaseUri().getPath() : null;
         List<VcType> lesProfessionsDeLaSante = progreSoaService.listeSOAProfession(path).getVcList().getVc();
@@ -107,13 +106,12 @@ public class ProfessionRestImpl implements ProfessionRest {
                 new BeanPropertyValueEqualsPredicate("libl", profession.name()))));
     }
 
-    
     @Override
     @GET
     @Path("/donnees/{demandeReference}/{idProfession}/{codeGln}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response renseignerDonneesProfession(@Context UriInfo uriInfo,
+    public Response renseignerDonneesPro(@Context UriInfo uriInfo,
             @PathParam("demandeReference") String demandeReference, @PathParam("idProfession") String idProfession,
             @PathParam("codeGln") String codeGln) throws Exception {
 

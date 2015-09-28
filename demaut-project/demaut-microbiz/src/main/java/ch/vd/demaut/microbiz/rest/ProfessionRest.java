@@ -21,12 +21,12 @@ public interface ProfessionRest {
     @Path("/donnees/{demandeReference}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @RolesAllowed("USER")
-    Response afficherDonneesProfession(UriInfo uriInfo, String demandeReference) throws Exception;
+    Response afficherDonneesPro(UriInfo uriInfo, String demandeReference) throws Exception;
 
     @GET
     @Path("/donnees/{demandeReference}/{idProfession}/{codeGln}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    Response renseignerDonneesProfession(UriInfo uriInfo, String demandeReference, String idProfession, String codeGln) throws Exception;
+    Response renseignerDonneesPro(UriInfo uriInfo, String demandeReference, String idProfession, String codeGln) throws Exception;
 
 }
