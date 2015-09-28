@@ -20,6 +20,6 @@ MAIN=ch.vd.ses.demaut.portail.tomcat.DemautTomcatRunner
 cd $DEMAUT_CYBER
 if [ $# -eq 1 ]
 	then
-		mvn clean install
+		mvn clean install -DskipTests
 fi
 java -cp $CLASSPATH $MAIN
