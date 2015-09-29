@@ -1,7 +1,7 @@
 package ch.vd.demaut.domain.demandeur.donneesPerso;
 
 import ch.vd.demaut.commons.validation.AbstractDataValidateur;
-import ch.vd.demaut.domain.annexes.AnnexeNonValideException;
+import ch.vd.demaut.domain.exception.AnnexeNonValideException;
 
 import javax.validation.ConstraintViolation;
 import java.util.Set;

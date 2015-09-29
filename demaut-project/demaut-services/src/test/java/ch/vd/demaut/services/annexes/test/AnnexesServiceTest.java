@@ -1,10 +1,14 @@
 package ch.vd.demaut.services.annexes.test;
 
-import ch.vd.demaut.domain.annexes.*;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.services.annexes.AnnexesService;
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Collection;
+
+import javax.inject.Inject;
+
 import org.apache.commons.io.IOUtils;
 import org.joda.time.LocalDate;
 import org.junit.Before;
@@ -17,12 +21,17 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.inject.Inject;
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.Collection;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.domain.annexes.AnnexeFK;
+import ch.vd.demaut.domain.annexes.ContenuAnnexe;
+import ch.vd.demaut.domain.annexes.DateCreation;
+import ch.vd.demaut.domain.annexes.NomFichier;
+import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.domain.exception.AnnexeNonUniqueException;
+import ch.vd.demaut.services.annexes.AnnexesService;
+import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 
 @ContextConfiguration({"classpath*:/servicesTest-context.xml"})
 @ActiveProfiles({"data"})
@@ -77,7 +86,7 @@ public class AnnexesServiceTest {
         //Setup fixtures
 
         //Attache une annexe
-        annexesService.attacherUneAnnexe(demandeEnCours.getReferenceDeDemande(), file, nomFichier, TypeAnnexe.CV);
+        annexesService.attacherUneAnnexe(demandeEnCours.getReferenceDeDemande(), file, nomFichier, TypeAnnexe.AttestationBonneConduite);
 
         //Récupère demande en cours
         demandeEnCours = demandeAutorisationService.recupererDemandeParReference(demandeEnCours.getReferenceDeDemande());
@@ -88,6 +97,19 @@ public class AnnexesServiceTest {
         assertThat(annexes).hasSize(2);
     }
 
+    //FIXME Il y a un problème dans la délimitation de la transaction !
+    @Test
+    @Transactional
+    @Rollback(value = true)
+    public void testerAttacherAnnexeNonUnique() {
+        try {
+            //Attache une annexe
+            annexesService.attacherUneAnnexe(demandeEnCours.getReferenceDeDemande(), file, nomFichier, TypeAnnexe.CV);
+            failBecauseExceptionWasNotThrown(AnnexeNonUniqueException.class);
+        } catch (AnnexeNonUniqueException e) {
+
+        }
+    }
 
     @Test
     public void testerRecupererContenuAnnexe() {
@@ -98,7 +120,8 @@ public class AnnexesServiceTest {
         demandeEnCours = demandeAutorisationService.recupererDemandeParReference(demandeEnCours.getReferenceDeDemande());
 
         //Vérifie si annexe attachée
-        ContenuAnnexe contenuAnnexe = annexesService.recupererContenuAnnexe(demandeEnCours.getReferenceDeDemande(), nomFichier);
+        AnnexeFK annexeFK = new AnnexeFK(nomFichier, TypeAnnexe.CV);
+        ContenuAnnexe contenuAnnexe = annexesService.recupererContenuAnnexe(demandeEnCours.getReferenceDeDemande(), annexeFK);
 
         assertThat(contenuAnnexe).isNotNull();
         assertThat(contenuAnnexe.getTaille()).isEqualTo(tailleAnnexe);

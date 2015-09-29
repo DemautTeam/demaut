@@ -8,20 +8,26 @@ import ch.vd.demaut.commons.fk.FunctionalKeyAbstract;
  */
 public class AnnexeFK extends FunctionalKeyAbstract<Annexe> {
 
-    private TypeAnnexe typeAnnexe;
-
     private NomFichier nomFichier;
 
+    private TypeAnnexe typeAnnexe;
+
     public AnnexeFK(Annexe annexe) {
-        this.typeAnnexe = annexe.getTypeAnnexe();
         this.nomFichier = annexe.getNomFichier();
+        this.typeAnnexe = annexe.getTypeAnnexe();
     }
 
-    public TypeAnnexe getTypeAnnexe() {
-        return typeAnnexe;
+    public AnnexeFK(NomFichier nomFichier, TypeAnnexe typeAnnexe) {
+        this.nomFichier = nomFichier;
+        this.typeAnnexe = typeAnnexe;
     }
 
     public NomFichier getNomFichier() {
         return nomFichier;
     }
+    
+    public TypeAnnexe getTypeAnnexe() {
+        return typeAnnexe;
+    }
+
 }

@@ -28,7 +28,7 @@ Fonctionnalité: Gestion des annexes liées à la demande
       | Diplome             | diplome.jpg    |
       | Equivalence         | equivalence.pdf|
 
-  @attacher-annexe @ignoreme
+  @attacher-annexe
   Scénario: Refuser d´attacher une annexe de même type et de même nom de fichier
     Lorsque l´utilisateur attache le fichier "pieceID.pdf" de taille 1M de type "PieceIdentite"
     Alors le système Demaut "refuse" d´attacher cette annexe
@@ -36,7 +36,7 @@ Fonctionnalité: Gestion des annexes liées à la demande
   @supprimer-annexe
   Scénario: Supprimer une annexe en fonction du nom de fichier et son type
     Lorsque l´utilisateur supprime le fichier "pieceID.pdf" de type "PieceIdentite"
-    Alors le système Demaut <action> de supprimer cette annexe
+    Alors le système Demaut "accepte" de supprimer cette annexe
     Alors les annexes attachées à la demande "12345" sont:
       | Type d´annexe       | Nom du fichier |
       | Diplome             | diplome.jpg    |

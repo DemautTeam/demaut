@@ -27,7 +27,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @Ignore("Unable to instantiate Configuration ValidationException")
-@ContextConfiguration({"classpath*:microbizTest-context.xml"})
+@ContextConfiguration({ "classpath*:microbizTest-context.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AnnexeRestImplTest {
@@ -71,7 +71,8 @@ public class AnnexeRestImplTest {
 
     @Test
     public void testAfficherUneAnnexeInvalid() throws Exception {
-        Response response = annexeRest.afficherUneAnnexe(null, referenceDeDemande.getValue(), "Test_multipart.pdf");
+        Response response = annexeRest.afficherUneAnnexe(null, referenceDeDemande.getValue(), "Test_multipart.pdf",
+                "-1");
         assertNotNull(response);
     }
 
@@ -79,14 +80,16 @@ public class AnnexeRestImplTest {
     public void testAttacherUneAnnexe() throws Exception {
         File fileMultipart = new File("target/Test_multipart.cfg");
         FileUtils.writeByteArrayToFile(fileMultipart, byteArray);
-        Response response = annexeRest.attacherUneAnnexe(null, referenceDeDemande.getValue(), fileMultipart, "Test_multipart.pdf",
-                String.valueOf(byteArray.length), "application/cfg", String.valueOf(TypeAnnexe.CV.getRefProgresID().getId()));
+        Response response = annexeRest.attacherUneAnnexe(null, referenceDeDemande.getValue(), fileMultipart,
+                "Test_multipart.pdf", String.valueOf(byteArray.length), "application/cfg",
+                String.valueOf(TypeAnnexe.CV.getRefProgresID().getId()));
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
     @Test
     public void testSupprimerAnnexe() throws Exception {
-        Response response = annexeRest.supprimerUneAnnexe(null, referenceDeDemande.getValue(), "Test_multipart.pdf", String.valueOf(TypeAnnexe.CV.getRefProgresID().getId()));
+        Response response = annexeRest.supprimerUneAnnexe(null, referenceDeDemande.getValue(), "Test_multipart.pdf",
+                String.valueOf(TypeAnnexe.CV.getRefProgresID().getId()));
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 }

@@ -4,13 +4,16 @@ import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import ch.vd.demaut.domain.exception.AnnexeIntrouvableException;
+import ch.vd.demaut.domain.exception.AnnexeNonUniqueException;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * Représente une liste d'annexes
+ * Représente une liste d'annexes uniques
  */
 
 public class ListeDesAnnexes {
@@ -30,11 +33,25 @@ public class ListeDesAnnexes {
 
     // ********************************************************* Business
     // methods
+    /** 
+     * Ajoute une annexe à la liste d'annexes<br>
+     * Renvoie une exception si l'annnexe n'est pas unique
+     * @param annexe
+     */
     public void ajouterAnnexe(Annexe annexe) {
+        validerAnnexeUnique(annexe);
         annexes.add(annexe);
     }
 
-    // ********************************************************* Getters
+    /**
+     * Suprimer une annexe. <br>
+     * Renvoie exception si annexe pas trouvée
+     * @param annexeFK
+     */
+    public void supprimerUneAnnexe(AnnexeFK annexeFK) {
+        Annexe annexeTrouvee = trouverAnnexe(annexeFK);
+        annexes.remove(annexeTrouvee);
+    }
 
     /**
      * Renvoie la liste des annexes
@@ -69,27 +86,26 @@ public class ListeDesAnnexes {
         return CollectionUtils.select(listerAnnexesMetadata(), new BeanPropertyValueEqualsPredicate("typeAnnexe", typeAnnexe));
     }
 
-    public void supprimerUneAnnexeParNomFichier(NomFichier nomFichier) {
-        Annexe annexeTrouvee = trouverAnnexeParNomFichier(nomFichier);
-        annexes.remove(annexeTrouvee);
-    }
-
-    public Annexe trouverAnnexeParNomFichier(NomFichier nomFichier) {
-        Object annexeTrouvee = CollectionUtils.find(annexes, new BeanPropertyValueEqualsPredicate("nomFichier", nomFichier));
+    public Annexe trouverAnnexe(AnnexeFK annexeFK) {
+        Object annexeTrouvee = CollectionUtils.find(annexes, new BeanPropertyValueEqualsPredicate("functionalKey", annexeFK));
         if (annexeTrouvee == null) {
             throw new AnnexeIntrouvableException();
         }
         return (Annexe) annexeTrouvee;
     }
 
-    public AnnexeMetadata extraireAnnexeMetadata(NomFichier nomFichier) {
-        Annexe annexe = trouverAnnexeParNomFichier(nomFichier);
-        return annexe.getAnnexeMetadata();
-    }
-
-    public ContenuAnnexe extraireContenu(NomFichier nomFichier) {
-        Annexe annexe = trouverAnnexeParNomFichier(nomFichier);
+    public ContenuAnnexe extraireContenu(AnnexeFK annexeFK) {
+        Annexe annexe = trouverAnnexe(annexeFK);
         return annexe.getContenu();
     }
+
+    // ******************************************************* Methodes privees
+
+    private void validerAnnexeUnique(Annexe annexe) {
+        if (annexes.contains(annexe)) {
+            throw new AnnexeNonUniqueException();
+        };
+    }
+
 
 }

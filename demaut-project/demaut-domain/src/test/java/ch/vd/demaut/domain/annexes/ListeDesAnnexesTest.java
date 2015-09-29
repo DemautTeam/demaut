@@ -5,6 +5,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import ch.vd.demaut.domain.exception.AnnexeIntrouvableException;
+import ch.vd.demaut.domain.exception.AnnexeNonValideException;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -55,14 +58,16 @@ public class ListeDesAnnexesTest {
 
     @Test
     public void supprimerUneAnnexeViaNomDeFichier() {
-        listeDesAnnexes.supprimerUneAnnexeParNomFichier(new NomFichier("certificat3.pdf"));
+        AnnexeFK annexeFK = new AnnexeFK(new NomFichier("certificat3.pdf"), TypeAnnexe.CertificatDeTravail);
+        listeDesAnnexes.supprimerUneAnnexe(annexeFK);
         assertThat(listeDesAnnexes.listerAnnexes()).hasSize(3);
     }
 
     @Test
     public void supprimerUneAnnexeViaNomDeFichierQuiNexistePas() {
         try {
-            listeDesAnnexes.supprimerUneAnnexeParNomFichier(new NomFichier("certificat5.pdf"));
+            AnnexeFK annexeFK = new AnnexeFK(new NomFichier("certificat5.pdf"), TypeAnnexe.CertificatDeTravail);
+            listeDesAnnexes.supprimerUneAnnexe(annexeFK);
             failBecauseExceptionWasNotThrown(AnnexeNonValideException.class);
         } catch (AnnexeIntrouvableException e) {
         }

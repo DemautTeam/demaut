@@ -10,12 +10,12 @@ public interface AnnexesService {
 
     Collection<AnnexeMetadata> listerLesAnnexeMetadatas(ReferenceDeDemande referenceDeDemande);
 
-    ContenuAnnexe recupererContenuAnnexe(ReferenceDeDemande referenceDeDemande, NomFichier nomFichier);
+    ContenuAnnexe recupererContenuAnnexe(ReferenceDeDemande referenceDeDemande, AnnexeFK annexeFK);
 
     void attacherUneAnnexe(ReferenceDeDemande referenceDeDemande, File file, NomFichier nomFichier, TypeAnnexe type);
 
     void attacherUneAnnexe(ReferenceDeDemande referenceDeDemande, Annexe annexeALier);
 
-    void supprimerUneAnnexe(ReferenceDeDemande referenceDeDemande, NomFichier nomFichier);
+    void supprimerUneAnnexe(ReferenceDeDemande referenceDeDemande, AnnexeFK annexeFK);
 
 }

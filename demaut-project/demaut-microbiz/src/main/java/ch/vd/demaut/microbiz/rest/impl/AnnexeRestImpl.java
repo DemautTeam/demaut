@@ -1,5 +1,6 @@
 package ch.vd.demaut.microbiz.rest.impl;
 
+import ch.vd.demaut.domain.annexes.AnnexeFK;
 import ch.vd.demaut.domain.annexes.AnnexeMetadata;
 import ch.vd.demaut.domain.annexes.ContenuAnnexe;
 import ch.vd.demaut.domain.annexes.NomFichier;
@@ -29,8 +30,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-@CrossOriginResourceSharing(allowOrigins = {"*"}, allowCredentials = true, maxAge = 3600, allowHeaders = {
-        "Content-Type", "X-Requested-With"}, exposeHeaders = {"Access-Control-Allow-Origin"})
+@CrossOriginResourceSharing(allowOrigins = { "*" }, allowCredentials = true, maxAge = 3600, allowHeaders = {
+        "Content-Type", "X-Requested-With" }, exposeHeaders = { "Access-Control-Allow-Origin" })
 @Service("annexeRestImpl")
 @Path("/annexes")
 public class AnnexeRestImpl {
@@ -47,8 +48,7 @@ public class AnnexeRestImpl {
     @Path("/typesList")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response listerLesTypesAnnexe()
-            throws Exception {
+    public Response listerLesTypesAnnexe() throws Exception {
 
         LOGGER.info("listerLesTypesAnnexes");
 
@@ -56,7 +56,8 @@ public class AnnexeRestImpl {
         List<TypeAnnexe> typesAnnexe = buildListeTypesAnnexesSansProgresSOA();
 
         // Autre altrenative:
-        //List<VcType> typesAnnexe = buildListeTypesAnnexesAvecProgresSOA(uriInfo);
+        // List<VcType> typesAnnexe =
+        // buildListeTypesAnnexesAvecProgresSOA(uriInfo);
 
         return RestUtils.forgeResponseList(typesAnnexe);
     }
@@ -99,18 +100,20 @@ public class AnnexeRestImpl {
     }
 
     @GET
-    @Path("/afficher/{demandeReference}/{annexeFileName}")
+    @Path("/afficher/{demandeReference}/{annexeFileName}/{annexeType}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @RolesAllowed("USER")
     public Response afficherUneAnnexe(@Context UriInfo uriInfo, @PathParam("demandeReference") String demandeReference,
-                                      @PathParam("annexeFileName") String annexeFileName) throws JsonProcessingException {
+            @PathParam("annexeFileName") String annexeFileName, @Multipart("annexeType") String annexeTypeIdStr)
+                    throws JsonProcessingException {
 
         LOGGER.info("afficherUneAnnexe " + annexeFileName);
 
+        //TODO: factoriser dans une methode privée
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);
-        NomFichier nomFichier = new NomFichier(annexeFileName);
-
-        ContenuAnnexe contenuAnnexe = annexesService.recupererContenuAnnexe(referenceDeDemande, nomFichier);
+        AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
+        
+        ContenuAnnexe contenuAnnexe = annexesService.recupererContenuAnnexe(referenceDeDemande, annexeFK );
         return RestUtils.forgeResponseStream(contenuAnnexe.getContenu());
     }
 
@@ -120,18 +123,17 @@ public class AnnexeRestImpl {
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
     public Response attacherUneAnnexe(@Context UriInfo uriInfo, @Multipart("demandeReference") String demandeReference,
-                                      @Multipart("annexeFile") File file, @Multipart("annexeFileName") String annexeFileName,
-                                      @Multipart("annexeFileSize") String annexeFileSize, @Multipart("annexeFileType") String annexeFileType,
-                                      @Multipart("annexeType") String annexeTypeIdStr) throws IOException {
+            @Multipart("annexeFile") File file, @Multipart("annexeFileName") String annexeFileName,
+            @Multipart("annexeFileSize") String annexeFileSize, @Multipart("annexeFileType") String annexeFileType,
+            @Multipart("annexeType") String annexeTypeIdStr) throws IOException {
 
         LOGGER.info("attacherUneAnnexe " + annexeFileName);
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);
-        NomFichier nomFichier = new NomFichier(annexeFileName);
-        Integer annexeTypeId = Integer.valueOf(annexeTypeIdStr);
-        TypeAnnexe typeAnnexe = TypeAnnexe.getTypeById(annexeTypeId);
+        AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
 
-        annexesService.attacherUneAnnexe(referenceDeDemande, file, nomFichier, typeAnnexe);
+        annexesService.attacherUneAnnexe(referenceDeDemande, file, annexeFK.getNomFichier(), annexeFK.getTypeAnnexe());
+        
         return RestUtils.forgeResponseTrue();
     }
 
@@ -140,15 +142,25 @@ public class AnnexeRestImpl {
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
     public Response supprimerUneAnnexe(@Context UriInfo uriInfo, @PathParam("demandeReference") String demandeReference,
-                                       @PathParam("annexeFileName") String annexeFileName, @PathParam("annexeType") String annexeType)
-            throws JsonProcessingException {
+            @PathParam("annexeFileName") String annexeFileName, @PathParam("annexeType") String annexeTypeIdStr)
+                    throws JsonProcessingException {
 
         LOGGER.info("supprimerUneAnnexe " + annexeFileName);
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);
-        NomFichier nomFichier = new NomFichier(annexeFileName);
+        AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
 
-        annexesService.supprimerUneAnnexe(referenceDeDemande, nomFichier);
+        annexesService.supprimerUneAnnexe(referenceDeDemande, annexeFK);
+        
         return RestUtils.forgeResponseTrue();
     }
+
+    private AnnexeFK buildAnnexeFK(String annexeFileName, String annexeTypeIdStr) {
+        NomFichier nomFichier = new NomFichier(annexeFileName);
+        Integer annexeTypeId = Integer.valueOf(annexeTypeIdStr);
+        TypeAnnexe typeAnnexe = TypeAnnexe.getTypeById(annexeTypeId);
+        AnnexeFK annexeFK = new AnnexeFK(nomFichier, typeAnnexe);
+        return annexeFK;
+    }
+
 }

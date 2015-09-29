@@ -3,6 +3,7 @@ package ch.vd.demaut.services.annexes.impl;
 import ch.vd.demaut.domain.annexes.*;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.exception.AnnexeNonValideException;
 import ch.vd.demaut.services.annexes.AnnexesService;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import org.apache.commons.io.IOUtils;
@@ -51,9 +52,9 @@ public class AnnexesServiceImpl implements AnnexesService {
      */
     @Transactional(readOnly = true)
     @Override
-    public ContenuAnnexe recupererContenuAnnexe(ReferenceDeDemande referenceDeDemande, NomFichier nomFichier) {
+    public ContenuAnnexe recupererContenuAnnexe(ReferenceDeDemande referenceDeDemande, AnnexeFK annexeFK) {
         DemandeAutorisation demandeAutorisation = recupererDemandeParRef(referenceDeDemande);
-        return demandeAutorisation.extraireContenuAnnexe(nomFichier);
+        return demandeAutorisation.extraireContenuAnnexe(annexeFK);
     }
 
     @Transactional
@@ -73,9 +74,9 @@ public class AnnexesServiceImpl implements AnnexesService {
 
     @Transactional
     @Override
-    public void supprimerUneAnnexe(ReferenceDeDemande referenceDeDemande, NomFichier nomFichier) {
+    public void supprimerUneAnnexe(ReferenceDeDemande referenceDeDemande, AnnexeFK annexeFK) {
         DemandeAutorisation demandeAutorisation = recupererDemandeParRef(referenceDeDemande);
-        demandeAutorisation.supprimerUneAnnexeParNomFichier(nomFichier);
+        demandeAutorisation.supprimerUneAnnexe(annexeFK);
     }
 
     private void attacherAnnexe(ReferenceDeDemande ref, Annexe annexe) {

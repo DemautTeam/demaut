@@ -463,7 +463,7 @@ ngDemautApp
         };
 
         $scope.viewAnnexe = function (file, annexeType) {
-            $http.get(urlPrefix + '/annexes/afficher/' + $scope.$storage.refDemande + '/' + file.name.replace(/\s/g, ''), {responseType:'arraybuffer'}).
+            $http.get(urlPrefix + '/annexes/afficher/' + $scope.$storage.refDemande + '/' + file.name.replace(/\s/g, '') + '/' + annexeType, {responseType:'arraybuffer'}).
                 success(function (data, status, headers, config) {
                     displayAnnexeFromBinary(data);
                 }).
@@ -502,8 +502,8 @@ ngDemautApp
             $scope.files = $scope.annexesData.referenceFiles;
         };
 
-        function doDeleteFile(file, annexeFileType) {
-            $http.get(urlPrefix + '/annexes/supprimer/' + $scope.$storage.refDemande + '/' + file.name.replace(/\s/g, '') + '/' + annexeFileType)
+        function doDeleteFile(file, annexeType) {
+            $http.get(urlPrefix + '/annexes/supprimer/' + $scope.$storage.refDemande + '/' + file.name.replace(/\s/g, '') + '/' + annexeType)
                 .success(function (data, status, headers, config) {
                     $rootScope.error = 'Une annexe a été supprimée avec succès: \n Status :' +  status;
                 })

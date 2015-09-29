@@ -8,11 +8,11 @@ import javax.validation.constraints.NotNull;
 
 import ch.vd.demaut.commons.annotations.Aggregate;
 import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.domain.annexes.AnnexeFK;
 import ch.vd.demaut.domain.annexes.AnnexeMetadata;
 import ch.vd.demaut.domain.annexes.AnnexeValidateur;
 import ch.vd.demaut.domain.annexes.ContenuAnnexe;
 import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
-import ch.vd.demaut.domain.annexes.NomFichier;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.Demande;
 import ch.vd.demaut.domain.demandes.DemandeFK;
@@ -73,8 +73,8 @@ public class DemandeAutorisation extends Demande {
         getListeDesAnnexes().ajouterAnnexe(annexeALier);
     }
 
-    public void supprimerUneAnnexeParNomFichier(NomFichier nomFichier) {
-        getListeDesAnnexes().supprimerUneAnnexeParNomFichier(nomFichier);
+    public void supprimerUneAnnexe(AnnexeFK annexeFK) {
+        getListeDesAnnexes().supprimerUneAnnexe(annexeFK);
     }
 
     public Collection<Annexe> extraireAnnexesDeType(TypeAnnexe typeAnnexe) {
@@ -92,12 +92,8 @@ public class DemandeAutorisation extends Demande {
         return getListeDesAnnexes().listerAnnexesMetadata();
     }
 
-    public AnnexeMetadata extraireAnnexeMetadata(NomFichier nomFichier) {
-        return getListeDesAnnexes().extraireAnnexeMetadata(nomFichier);
-    }
-
-    public ContenuAnnexe extraireContenuAnnexe(NomFichier nomFichier) {
-        return getListeDesAnnexes().extraireContenu(nomFichier);
+    public ContenuAnnexe extraireContenuAnnexe(AnnexeFK annexeFK) {
+        return getListeDesAnnexes().extraireContenu(annexeFK);
     }
 
     public void validerDonneesProfessionnelles() {

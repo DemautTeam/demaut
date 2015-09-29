@@ -1,6 +1,8 @@
 package ch.vd.demaut.domain.annexes;
 
 import ch.vd.demaut.commons.utils.FileMockHelper;
+import ch.vd.demaut.domain.exception.AnnexeNonValideException;
+
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
