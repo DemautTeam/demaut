@@ -6,7 +6,7 @@
 
     <!-- - OpenJPA limitations / bugs : - Not working well with access="PROPERTY"
         - <enumerated>STRING not working well when used in a OneToMany - OneToMany
-        + EAGER not working - OneToMany + LAZY => create null list - Wrong warnings
+        + EAGER not working - OneToMany + LAZY => create null list (voir explication https://issues.apache.org/jira/browse/OPENJPA-2483) - Wrong warnings
         from OpenJPA "non-er - Access property ne marche pas
         - Enumarated as STRING does not work in many-2-one
 
