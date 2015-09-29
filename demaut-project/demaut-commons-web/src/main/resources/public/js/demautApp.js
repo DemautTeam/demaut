@@ -1,4 +1,4 @@
-var ngDemautApp = angular.module('ngDemautApp', ['ngSanitize', 'ngRoute', 'ngAnimate', 'commonsModule','ngStorage']);
+var ngDemautApp = angular.module('ngDemautApp', ['ngSanitize', 'ngRoute', 'ngAnimate', 'commonsModule','ngStorage', ]);
 
 /* Necessaire si les services ne sont pas dans la même arborescence que la page html */
 // TODO Dev à corrigert URL Prefix : ngDemautApp.constant('urlPrefix', '/outils/demautMicrobiz');
@@ -112,10 +112,10 @@ ngDemautApp
         $scope.indexStep = 2;
         this.name = "ProfessionSanteController";
         this.params = $routeParams;
+        $scope.$storage = $sessionStorage;
         $scope.professionData = {};
         $scope.professionData.profession = null;
         $scope.professionData.professions = [];
-        $scope.$storage = $sessionStorage;
 
         //Récupère liste des professions
         //TODO: créer une methode isProfessionsListInitialized + Ne pas appeler le service a chaque fois (à initialiser au départ)
@@ -152,7 +152,7 @@ ngDemautApp
             }
         };
     }])
-    .controller('DonneesPersoController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', 'urlPrefix', '$log', 'nationalityTest', function ($scope, $rootScope, $routeParams, $http, $location, $interval, urlPrefix, $log, nationalityTest) {
+    .controller('DonneesPersoController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', 'urlPrefix', '$log', 'nationalityTest', '$sessionStorage', function ($scope, $rootScope, $routeParams, $http, $location, $interval, urlPrefix, $log, nationalityTest, $sessionStorage) {
         $rootScope.contextMenu = "Données Personnelles";
         $scope.indexStep = 1;
         this.name = "DonneesPersoController";
@@ -191,17 +191,17 @@ ngDemautApp
             }
         };
     }])
-    .controller('DonneesDiplomesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log) {
+    .controller('DonneesDiplomesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', '$sessionStorage', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log, $sessionStorage) {
         $rootScope.contextMenu = "Données Diplômes";
         $scope.indexStep = 3;
         this.name = "DonneesDiplomes";
         this.params = $routeParams;
+        $scope.$storage = $sessionStorage;
         $scope.diplomeData = {};
         $scope.diplomeData.typeDiplomes = [];
         $scope.diplomeData.typeFormations = [];
         $scope.diplomeData.paysList = [];
-        $scope.diplomeData.diplomes = null;
-        $scope.diplomeData.diplome = null;
+        $scope.diplomeData.diplomes = [];
 
         if ($scope.diplomeData.typeDiplomes == null || $scope.diplomeData.typeDiplomes == undefined || $scope.diplomeData.typeDiplomes.length == 0) {
             $http.get(urlPrefix + '/diplomes/typeDiplomesList').
@@ -224,12 +224,12 @@ ngDemautApp
         }
 
         $scope.fetchListeFormations = function(){
-            $http.get(urlPrefix + '/diplomes/typeFormationsList/' + $scope.diplomeData.typeDiplome).
+            $http.get(urlPrefix + '/diplomes/typeFormationsList/' + $scope.diplomeData.typeDiplomeId).
                 success(function (data, status, headers, config) {
                     $scope.diplomeData.typeFormations = angular.fromJson(data.response);
                 }).
                 error(function (data, status, headers, config) {
-                    $rootScope.error = 'Error downloading ../diplomes/typeFormationsList/' + $scope.diplomeData.typeDiplome;
+                    $rootScope.error = 'Error downloading ../diplomes/typeFormationsList/' + $scope.diplomeData.typeDiplomeId;
                 });
         };
 
@@ -244,20 +244,110 @@ ngDemautApp
         };
 
         $scope.addAnotherDiplome = function(){
-            var diplome = [
-                {"key": $scope.diplomeData.typeDiplome.id + $scope.diplomeData.typeFormation.id + $scope.diplomeData.dateObtention},
-                {"typeDiplome": $scope.diplomeData.typeDiplome},
-                {"typeFormation": $scope.diplomeData.typeFormation},
-                {"dateObtention": $scope.diplomeData.dateObtention},
-                {"paysObtention": $scope.diplomeData.paysObtention},
-                {"dateReconnaissance": $scope.diplomeData.dateReconnaissance}
-            ];
-            $scope.diplomeData.diplomes.push(diplome);
-            $scope.diplomeData.typeDiplome = null;
-            $scope.diplomeData.typeFormation = null;
-            $scope.diplomeData.dateObtention = null;
-            $scope.diplomeData.paysObtention = null;
-            $scope.diplomeData.dateReconnaissance = null;
+            var isValidTypeDiplome = $scope.diplomeData.typeDiplomeId != null && $scope.diplomeData.typeDiplomeId != undefined;
+            var isValidTypeFormation = $scope.diplomeData.typeFormationId != null && $scope.diplomeData.typeFormationId != undefined;
+            var isValidDateObtention = $scope.diplomeData.dateObtention != null && $scope.diplomeData.dateObtention != undefined && $scope.diplomeData.dateObtention != '';
+            var isValidPaysObtention = $scope.diplomeData.paysObtentionId != null && $scope.diplomeData.paysObtentionId != undefined;
+
+            if (isValidTypeDiplome && isValidTypeFormation && isValidDateObtention && isValidPaysObtention) {
+                var dateObtentionString = $scope.diplomeData.dateObtention;
+                var diplomeKey = $scope.diplomeData.typeDiplomeId + '#' + $scope.diplomeData.typeFormationId + '#' + dateObtentionString;
+                var typeDiplomeObj = null;
+                var typeFormationObj = null;
+                var paysObtentionObj = null;
+                for (var indexI = 0; indexI < $scope.diplomeData.typeDiplomes.length; indexI++) {
+                    if ($scope.diplomeData.typeDiplomes[indexI].id == $scope.diplomeData.typeDiplomeId) {
+                        typeDiplomeObj = $scope.diplomeData.typeDiplomes[indexI];
+                        break;
+                    }
+                }
+                for (var indexJ = 0; indexJ < $scope.diplomeData.typeFormations.length; indexJ++) {
+                    if ($scope.diplomeData.typeFormations[indexJ].id == $scope.diplomeData.typeFormationId) {
+                        typeFormationObj = $scope.diplomeData.typeFormations[indexJ];
+                        break;
+                    }
+                }
+                for (var indexK = 0; indexK < $scope.diplomeData.paysList.length; indexK++) {
+                    if ($scope.diplomeData.paysList[indexK].id == $scope.diplomeData.paysObtentionId) {
+                        paysObtentionObj = $scope.diplomeData.paysList[indexK];
+                        break;
+                    }
+                }
+                var diplome = [
+                    {   keyDiplome: diplomeKey,
+                        typeDiplome: typeDiplomeObj,
+                        typeFormation: typeFormationObj,
+                        dateObtention: $scope.diplomeData.dateObtention,
+                        paysObtention: paysObtentionObj,
+                        dateReconnaissance: $scope.diplomeData.dateReconnaissance
+                    }
+                ];
+
+                // TODO attendre la reponse server avant de faire le push
+                $scope.diplomeData.diplomes.push(diplome);
+                doCreateDiplome(diplome)
+                $scope.diplomeData.typeDiplomeId = null;
+                $scope.diplomeData.typeFormationId = null;
+                $scope.diplomeData.dateObtention = null;
+                $scope.diplomeData.paysObtentionId = null;
+                $scope.diplomeData.dateReconnaissance = null;
+            }
+        };
+
+        $scope.editDiplome = function(targetDiplome){
+            for (var indexI = 0; indexI < $scope.diplomeData.diplomes.length; indexI++) {
+                if ($scope.diplomeData.diplomes[indexI].keyDiplome == targetDiplome[0].keyDiplome) {
+                    $scope.diplomeData.typeDiplomeId = targetDiplome[0].typeDiplome;
+                    $scope.diplomeData.typeFormationId = targetDiplome[0].typeFormation;
+                    $scope.diplomeData.dateObtention = targetDiplome[0].dateObtention;
+                    $scope.diplomeData.paysObtentionId = targetDiplome[0].paysObtention;
+                    $scope.diplomeData.dateReconnaissance = targetDiplome[0].dateReconnaissance;
+                    // TODO attendre la reponse server avant de faire le splice
+                    $scope.diplomeData.diplomes.splice(indexI, 1);
+                    doDeleteDiplome(targetDiplome);
+                    break;
+                }
+            }
+        };
+
+        $scope.deleteDiplome = function(targetDiplome){
+            for (var indexI = 0; indexI < $scope.diplomeData.diplomes.length; indexI++) {
+                if ($scope.diplomeData.diplomes[indexI].keyDiplome == targetDiplome[0].keyDiplome) {
+                    // TODO attendre la reponse server avant de faire le splice
+                    $scope.diplomeData.diplomes.splice(indexI, 1);
+                    doDeleteDiplome(targetDiplome);
+                    break;
+                }
+            }
+        };
+
+        function doCreateDiplome(targetDiplome) {
+            $http.get(urlPrefix + '/diplomes/ajouter/' + $scope.$storage.refDemande, {
+                    params: {
+                        keyDiplome: targetDiplome[0].keyDiplome,
+                        typeDiplome: targetDiplome[0].typeDiplome.id,
+                        typeFormation: targetDiplome[0].typeFormation.id,
+                        dateObtention: targetDiplome[0].dateObtention,
+                        paysObtention: targetDiplome[0].paysObtention.id,
+                        dateReconnaissance: targetDiplome[0].dateReconnaissance == null || targetDiplome[0].dateReconnaissance == undefined || targetDiplome[0].dateReconnaissance == '' ? '-' : targetDiplome[0].dateReconnaissance
+                    }
+                })
+                .success(function (data, status, headers, config) {
+                    $rootScope.error = 'Un diplôme a été supprimé avec succès: \n Status :' +  status;
+                })
+                .error(function (data, status, headers, config) {
+                    $rootScope.error = 'Error ' + urlPrefix + '/diplomes/ajouter/ \n Status :' +  status;
+                });
+        };
+
+        function doDeleteDiplome(targetDiplome) {
+            $http.get(urlPrefix + '/diplomes/supprimer/' + $scope.$storage.refDemande + '/' + targetDiplome[0].keyDiplome)
+                .success(function (data, status, headers, config) {
+                    $rootScope.error = 'Un diplôme a été supprimé avec succès: \n Status :' +  status;
+                })
+                .error(function (data, status, headers, config) {
+                    $rootScope.error = 'Error ' + urlPrefix + '/diplomes/supprimer/ \n Status :' +  status;
+                });
         };
     }])
     .controller('AnnexesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', '$sessionStorage', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log, $sessionStorage) {
@@ -265,6 +355,7 @@ ngDemautApp
         $scope.indexStep = 4;
         this.name = "AnnexesController";
         this.params = $routeParams;
+        $scope.$storage = $sessionStorage;
         $scope.annexesData = {};
         $scope.$storage = $sessionStorage;
         $scope.annexesData.annexeFormats = ["application/pdf", "image/jpg", "image/jpeg", "image/png"];
@@ -346,6 +437,7 @@ ngDemautApp
                         }
                         if (isNewFileDejaVu == false) {
                             $scope.annexesData.referenceFiles[typeAnnexe].push(currentNewFile);
+                            // TODO attendre la reponse server avant de faire le push
                             doUploadFile(currentNewFile);
                         }
                     }
@@ -355,6 +447,7 @@ ngDemautApp
                     $scope.annexesData.referenceFiles[typeAnnexe] = [];
                     for (var indexH = 0; indexH < newFilesList.length; indexH++) {
                         var currentValidFile = newFilesList[indexH];
+                        // TODO attendre la reponse server avant de faire le push
                         $scope.annexesData.referenceFiles[typeAnnexe].push(currentValidFile);
                         doUploadFile(currentValidFile);
                     }
@@ -399,6 +492,7 @@ ngDemautApp
                 for (var indexH = 0; indexH < $scope.annexesData.referenceFiles[annexeType].length; indexH++) {
                     var currentFetchedFile = $scope.annexesData.referenceFiles[annexeType][indexH];
                     if (file.name == currentFetchedFile.name) {
+                        // TODO attendre la reponse server avant de faire le splice
                         $scope.annexesData.referenceFiles[annexeType].splice(indexH, 1);
                         doDeleteFile(currentFetchedFile, annexeType);
                         break;
@@ -439,11 +533,12 @@ ngDemautApp
                 });
         };
     }])
-    .controller('RecapitulatifController', ['$scope', '$rootScope', '$routeParams', '$location', function ($scope, $rootScope, $routeParams, $location) {
+    .controller('RecapitulatifController', ['$scope', '$rootScope', '$routeParams', '$location', 'urlPrefix', '$log', '$sessionStorage', function ($scope, $rootScope, $routeParams, $location, urlPrefix, $log, $sessionStorage) {
         $rootScope.contextMenu = "Recapitulatif";
         $scope.indexStep = 5;
         this.name = "RecapitulatifController";
         this.params = $routeParams;
+        $scope.$storage = $sessionStorage;
         $scope.backStep = function(){
             $scope.indexStep -= 1;
             $location.path('/Demaut/demande/annexes');

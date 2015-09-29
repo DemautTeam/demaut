@@ -10,7 +10,8 @@ public enum TitreFormationInitialeProgres implements TypeProgres {
     DiplFederalDePharmacien(344861008, "Dipl. fédéral de pharmacien /3"),
     DiplFederalDOpticien(344861009, "Dipl. fédéral d'opticien /4"),
     DiplFederalDeDroguiste(344861010, "Dipl. fédéral de droguiste /5"),
-    CFCDOpticien(344861011, "CFC d'opticien /6");
+    CFCDOpticien(344861011, "CFC d'opticien /6"),
+    CFRDUnDiplomeEtrangerDeMedecin(344861013, "CFR d'un diplôme étranger de médecin");
     // TODO completer la liste
 
     private RefProgresID refProgresID;
@@ -22,8 +23,8 @@ public enum TitreFormationInitialeProgres implements TypeProgres {
         this.libl = libl;
     }
 
-    static public TitreFormationApprofondieProgres getTypeById(Integer id2) {
-        for (TitreFormationApprofondieProgres type : TitreFormationApprofondieProgres.values()) {
+    static public TitreFormationInitialeProgres getTypeById(Integer id2) {
+        for (TitreFormationInitialeProgres type : TitreFormationInitialeProgres.values()) {
             if (type.getRefProgresID().equals(new RefProgresID(id2))) {
                 return type;
             }

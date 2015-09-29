@@ -1,10 +1,5 @@
 package ch.vd.demaut.cucumber.steps;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import ch.vd.demaut.domain.annexes.AnnexesObligatoires;
 import ch.vd.demaut.domain.config.ConfigDemaut;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
@@ -16,6 +11,10 @@ import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationReposit
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.domain.utilisateurs.Utilisateur;
 import ch.vd.demaut.domain.utilisateurs.UtilisateurRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class DemandeAutorisationSteps {
 
@@ -71,7 +70,7 @@ public class DemandeAutorisationSteps {
         return demande;
     }
 
-    
+
     public Utilisateur getUtilisateur() {
         return utilisateur;
     }

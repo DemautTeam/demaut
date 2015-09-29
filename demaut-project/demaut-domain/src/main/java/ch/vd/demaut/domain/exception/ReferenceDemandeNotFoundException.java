@@ -5,7 +5,6 @@ import ch.vd.demaut.commons.exceptions.DomainException;
 
 /**
  * Exception levée lorsuq'une référence de demande n'est pas trouvée
- *
  */
 public class ReferenceDemandeNotFoundException extends DomainException {
 

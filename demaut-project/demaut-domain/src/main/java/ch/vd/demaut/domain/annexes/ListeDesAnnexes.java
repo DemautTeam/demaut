@@ -23,7 +23,7 @@ public class ListeDesAnnexes {
     public ListeDesAnnexes() {
         this.annexes = new ArrayList<Annexe>();
     }
-    
+
     public ListeDesAnnexes(List<Annexe> annexes2) {
         this.annexes = annexes2;
     }

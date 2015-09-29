@@ -1,7 +1,7 @@
 package ch.vd.demaut.commons.utils;
 
 /**
- Mock de TransactionManagerWrapper
+ * Mock de TransactionManagerWrapper
  **/
 public class MockedTransactionManagerWrapper implements TransactionManagerWrapper {
 

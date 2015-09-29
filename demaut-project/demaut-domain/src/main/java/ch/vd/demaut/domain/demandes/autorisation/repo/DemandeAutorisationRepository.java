@@ -10,7 +10,6 @@ import ch.vd.demaut.domain.utilisateurs.Utilisateur;
 
 /**
  * Repository des {@link DemandeAutorisation}
- *
  */
 @Repository
 public interface DemandeAutorisationRepository
@@ -19,7 +18,7 @@ public interface DemandeAutorisationRepository
     /**
      * Récupère une demande par référence de demande <br>
      * Lève une exception si pas trouvée
-     * 
+     *
      * @param referenceDeDemande
      * @return La demande récupérée
      * @throws EntityNotFoundException
@@ -29,10 +28,10 @@ public interface DemandeAutorisationRepository
     /**
      * Renvoie une demande dans l'état Brouillon associée à un Utilisateur. <br>
      * Renvoie null si elle n'est pas trouvée
-     * 
+     *
      * @param utilisateur
      * @return Une Demande autorisation dans l'état Brouillon et associée à
-     *         l'utilisateur
+     * l'utilisateur
      */
     DemandeAutorisation trouverDemandeEnCoursDeSaisieDunUtilisateur(Utilisateur utilisateur);
 }

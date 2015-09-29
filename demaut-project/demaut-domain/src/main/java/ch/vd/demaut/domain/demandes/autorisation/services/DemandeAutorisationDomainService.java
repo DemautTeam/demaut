@@ -16,7 +16,7 @@ public class DemandeAutorisationDomainService {
     private DemandeAutorisationFactory factory;
 
     private DemandeAutorisationRepository demandeAutorisationRepository;
-    
+
     private UtilisateurService utilisateurService;
 
     public DemandeAutorisationDomainService(DemandeAutorisationFactory factory, DemandeAutorisationRepository repo) {
@@ -30,7 +30,7 @@ public class DemandeAutorisationDomainService {
         demandeAutorisationRepository.store(nouvelleDemande);
         return nouvelleDemande;
     }
-    
+
     public DemandeAutorisationRepository getDemandeAutorisationRepository() {
         return demandeAutorisationRepository;
     }

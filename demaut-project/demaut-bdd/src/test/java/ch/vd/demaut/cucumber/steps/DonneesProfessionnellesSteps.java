@@ -1,19 +1,14 @@
 package ch.vd.demaut.cucumber.steps;
 
-import java.util.List;
-
+import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
+import ch.vd.demaut.cucumber.converteurs.commons.LocalDateConverter;
+import ch.vd.demaut.domain.demandeur.Pays;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.*;
 import org.joda.time.LocalDate;
 import org.springframework.util.StringUtils;
 
-import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
-import ch.vd.demaut.cucumber.converteurs.commons.LocalDateConverter;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateObtention;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateReconnaissance;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ListeDesFormations;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.PaysObtention;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormation;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TypeDiplomeAccepte;
+import java.util.List;
+import java.util.UUID;
 
 public class DonneesProfessionnellesSteps {
 
@@ -142,8 +137,9 @@ public class DonneesProfessionnellesSteps {
     }
 
     public void initialiserDiplomeEnCours() {
-        paysObtention = new PaysObtention("Tunisie");
-        this.diplomeEnCours = new Diplome(typeDiplomeSelectionne, titreFormation, dateObtention, paysObtention, dateReconnaissance);
+        paysObtention = new PaysObtention(Pays.Allemagne.name());
+        this.diplomeEnCours = new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), typeDiplomeSelectionne, titreFormation,
+                dateObtention, paysObtention, dateReconnaissance);
     }
 
     public void validerEtAjouterDiplome() {

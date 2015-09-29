@@ -4,8 +4,9 @@ public interface UtilisateurService {
 
     /**
      * Récupère l'utilisateur courant (i.e. connecté et identifié)
+     *
      * @return
-     * @throws AucunUtilisateurCourantException 
+     * @throws AucunUtilisateurCourantException
      */
     Utilisateur recupererUtilisateurCourant();
 }

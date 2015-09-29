@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col-md-2"><label for="typeDiplome">Type de diplôme*</label></div>
                     <div class="col-md-10">
-                        <select id="typeDiplome" name="typeDiplome" ng-model="diplomeData.typeDiplome" ng-change="fetchListeFormations()" required>
+                        <select id="typeDiplome" name="typeDiplome" ng-model="diplomeData.typeDiplomeId" ng-change="fetchListeFormations()" required>
                             <option ng-repeat="typeDiplome in diplomeData.typeDiplomes" value="{{typeDiplome.id}}">{{typeDiplome.libl}}</option>
                         </select>
                     </div>
@@ -18,7 +18,7 @@
                 <div class="row">
                     <div class="col-md-2"><label for="typeFormation">Titre de la formation*</label></div>
                     <div class="col-md-10">
-                        <select id="typeFormation" name="typeFormation" ng-model="diplomeData.typeFormation" required>
+                        <select id="typeFormation" name="typeFormation" ng-model="diplomeData.typeFormationId" required>
                             <option ng-repeat="typeFormation in diplomeData.typeFormations" value="{{typeFormation.id}}">{{typeFormation.libl}}</option>
                         </select>
                     </div>
@@ -29,12 +29,12 @@
                 <div class="row">
                     <label for="dateObtention" class="col-md-2">Date d'obtention*</label>
                     <div class="col-md-4">
-                        <input type="date" id="dateObtention" name="dateObtention" placeholder="jj/MM/aaaa"
+                        <input type="text" id="dateObtention" name="dateObtention" placeholder="jj-mm-aaaa"
                                class="form-control" required="required" ng-model="diplomeData.dateObtention">
                     </div>
                     <label for="paysObtention" class="col-md-2">Pays d'obtention*</label>
                     <div class="col-md-2">
-                        <select id="paysObtention" name="paysObtention" ng-model="diplomeData.paysObtention" required>
+                        <select id="paysObtention" name="paysObtention" ng-model="diplomeData.paysObtentionId" required>
                             <option ng-repeat="pays in diplomeData.paysList" value="{{pays.id}}">{{pays.libl}}</option>
                         </select>
                     </div>
@@ -45,7 +45,7 @@
                 <div class="row">
                     <label for="dateReconnaissance" class="col-md-2">Date de reconnaissance</label>
                     <div class="col-md-4">
-                        <input type="date" id="dateReconnaissance" name="dateReconnaissance" placeholder="jj/MM/aaaa"
+                        <input type="text" id="dateReconnaissance" name="dateReconnaissance" placeholder="jj-mm-aaaa"
                                class="form-control" required="required" ng-model="diplomeData.dateReconnaissance">
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                 Ajouter une formation
             </button>
         </div>
-        <div ng-show="diplomeData.diplomes">
+        <div ng-show="diplomeData.diplomes.length > 0">
             <legend>Formations et titres :</legend>
             <div style="overflow: auto;height: 460px;">
                 <table class="table table-striped">
@@ -65,30 +65,31 @@
                     <tr bgcolor="#99CC00">
                         <th>Type de diplôme</th>
                         <th>Titre de la formation</th>
-                        <th>Date d'optention</th>
-                        <th>Pays d'optention</th>
+                        <th>Date d'obtention</th>
+                        <th>Pays d'obtention</th>
                         <th>Date de reconnaissance</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tr ng-repeat="diplome in diplomeData.diplomes">
-                        <td>{{diplome.typeDiplome.libl}}</td>
+                        <td>{{diplome[0].typeDiplome.libl}}</td>
                         <td>
-                            {{diplome.typeFormation.libl}}
+                            {{diplome[0].typeFormation.libl}}
                         </td>
                         <td>
-                            {{diplome.dateObtention}}
+                            {{diplome[0].dateObtention}}
                         </td>
                         <td>
-                            {{diplome.paysObtention}}
+                            {{diplome[0].paysObtention.libl}}
                         </td>
                         <td>
-                            {{diplome.dateReconnaissance}}
+                            {{diplome[0].dateReconnaissance}}
                         </td>
                         <td>
-                            <a href="" ng-click="editActivite(diplome)" class="btn btn-xs btn-default">
+                            <a href="" ng-click="editDiplome(diplome)" class="btn btn-xs btn-default">
                                 <span class="glyphicon glyphicon-edit"></span>
                             </a>
-                            <a href="" ng-click="deleteActivite(diplome)" class="btn btn-xs btn-default">
+                            <a href="" ng-click="deleteDiplome(diplome)" class="btn btn-xs btn-default">
                                 <span class="glyphicon glyphicon-trash"></span>
                             </a>
                         </td>

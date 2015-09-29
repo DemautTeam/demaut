@@ -18,7 +18,7 @@ public class LocalDateConverterTest {
 
     @Test
     public void testValid() {
-        LocalDate localDate = (LocalDate) localDateConverter.fromString("15.07.2015");
+        LocalDate localDate = (LocalDate) localDateConverter.fromString("15-07-2015");
         assertThat(localDate.getYear()).isEqualTo(2015);
         assertThat(localDate.getMonthOfYear()).isEqualTo(7);
         assertThat(localDate.getDayOfMonth()).isEqualTo(15);
@@ -26,7 +26,7 @@ public class LocalDateConverterTest {
 
     @Test(expected = org.joda.time.IllegalFieldValueException.class)
     public void testInvalid() {
-        LocalDate localDate = (LocalDate) localDateConverter.fromString("32.07.2015");
+        LocalDate localDate = (LocalDate) localDateConverter.fromString("32-07-2015");
         assertThat(localDate.getYear()).isEqualTo(2015);
     }
 }

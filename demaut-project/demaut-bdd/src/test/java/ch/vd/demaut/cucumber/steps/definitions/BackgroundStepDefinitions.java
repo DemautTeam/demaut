@@ -1,9 +1,5 @@
 package ch.vd.demaut.cucumber.steps.definitions;
 
-import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import ch.vd.demaut.commons.utils.TransactionManagerWrapper;
 import ch.vd.demaut.cucumber.DateEtHeureCourant;
 import ch.vd.demaut.cucumber.converteurs.commons.DateTimeConverter;
@@ -11,6 +7,9 @@ import cucumber.api.Transform;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.fr.Etantdonné;
+import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Step definitions pour les Backgrounds utilisé dans plusieurs features
@@ -57,7 +56,7 @@ public class BackgroundStepDefinitions extends StepDefinitions {
     }
 
     // ********************************************************* Technical
-    
+
     public void setTransactionManagerWrapper(TransactionManagerWrapper transactionManagerWrapper) {
         this.transactionManagerWrapper = transactionManagerWrapper;
     }

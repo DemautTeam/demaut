@@ -50,14 +50,14 @@ public class AnnexeRestImpl {
     public Response listerLesTypesAnnexe()
             throws Exception {
 
-        LOGGER.info(">>> listerLesTypesAnnexe");
+        LOGGER.info("listerLesTypesAnnexes");
 
         // Altrenative:
         List<TypeAnnexe> typesAnnexe = buildListeTypesAnnexesSansProgresSOA();
-        
+
         // Autre altrenative:
         //List<VcType> typesAnnexe = buildListeTypesAnnexesAvecProgresSOA(uriInfo);
-        
+
         return RestUtils.forgeResponseList(typesAnnexe);
     }
 
@@ -94,7 +94,7 @@ public class AnnexeRestImpl {
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);
 
         Collection<AnnexeMetadata> annexesMetadata = annexesService.listerLesAnnexeMetadatas(referenceDeDemande);
-        
+
         return RestUtils.forgeResponseList(annexesMetadata);
     }
 

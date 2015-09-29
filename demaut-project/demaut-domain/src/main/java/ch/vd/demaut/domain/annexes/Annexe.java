@@ -1,11 +1,10 @@
 package ch.vd.demaut.domain.annexes;
 
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
-
 import ch.vd.demaut.commons.annotations.Entity;
 import ch.vd.demaut.commons.entities.EntityFunctionalKeyAware;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
 
 /**
  * Représente une Annexe associée à une demande {@link DemandeAutorisation} <br>

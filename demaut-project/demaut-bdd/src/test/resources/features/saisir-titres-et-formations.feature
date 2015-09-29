@@ -4,7 +4,7 @@
 Fonctionnalité: Saisir les données professionnelles de la demande
 
   Contexte:
-    Etant donné la date du jour: "15.07.2015 11:00"
+    Etant donné la date du jour: "15-07-2015 11:00"
     Etant donné l´utilisateur identifié et connecté avec le login "joe.dalton@vd.ch"
     Etant donné une demande de profession "Medecin" en cours de saisie à l´état "Brouillon"
     Etant donné les types de diplômes acceptés non vide:

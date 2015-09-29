@@ -18,7 +18,7 @@ public class DateTimeConverterTest {
 
     @Test
     public void testValid() {
-        DateTime dateTime = (DateTime) dateTimeConverter.fromString("15.07.2015 10:20");
+        DateTime dateTime = (DateTime) dateTimeConverter.fromString("15-07-2015 10:20");
         assertThat(dateTime.getYear()).isEqualTo(2015);
         assertThat(dateTime.getMonthOfYear()).isEqualTo(7);
         assertThat(dateTime.getDayOfMonth()).isEqualTo(15);
@@ -28,7 +28,7 @@ public class DateTimeConverterTest {
 
     @Test(expected = org.joda.time.IllegalFieldValueException.class)
     public void testInvalid() {
-        DateTime dateTime = (DateTime) dateTimeConverter.fromString("32.07.2015 10:20");
+        DateTime dateTime = (DateTime) dateTimeConverter.fromString("32-07-2015 10:20");
         assertThat(dateTime.getYear()).isEqualTo(2015);
     }
 }

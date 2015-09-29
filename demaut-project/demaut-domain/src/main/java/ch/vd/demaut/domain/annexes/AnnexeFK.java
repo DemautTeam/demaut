@@ -5,7 +5,6 @@ import ch.vd.demaut.commons.fk.FunctionalKeyAbstract;
 /**
  * Clé fonctionnelle d'une {@link Annexe} basée sur {@link TypeAnnexe} et
  * {@link NomFichier}
- *
  */
 public class AnnexeFK extends FunctionalKeyAbstract<Annexe> {
 

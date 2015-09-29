@@ -1,11 +1,5 @@
 package ch.vd.demaut.cucumber.steps.definitions;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
 import ch.vd.demaut.commons.utils.FileMockHelper;
 import ch.vd.demaut.cucumber.converteurs.annexes.ListeDesAnnexesConverter;
 import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
@@ -13,11 +7,7 @@ import ch.vd.demaut.cucumber.converteurs.demandes.ReferenceDeDemandeConverter;
 import ch.vd.demaut.cucumber.converteurs.utilisateurs.LoginConverter;
 import ch.vd.demaut.cucumber.steps.AnnexesSteps;
 import ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps;
-import ch.vd.demaut.domain.annexes.Annexe;
-import ch.vd.demaut.domain.annexes.AnnexeValidateur;
-import ch.vd.demaut.domain.annexes.FormatFichierAccepte;
-import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
-import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.domain.annexes.*;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
@@ -27,6 +17,12 @@ import cucumber.api.Transform;
 import cucumber.api.java.fr.Alors;
 import cucumber.api.java.fr.Etantdonné;
 import cucumber.api.java.fr.Lorsque;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Step definitions pour la fonctionnalité "@annexes"
@@ -69,7 +65,7 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
 
     @Etantdonné("^une demande de profession \"([^\"]*)\" en cours de saisie ayant la référence \"([^\"]*)\"$")
     public void initialiserUneDemandeEnCours(Profession profession,
-            @Transform(ReferenceDeDemandeConverter.class) ReferenceDeDemande refDemande) throws Throwable {
+                                             @Transform(ReferenceDeDemandeConverter.class) ReferenceDeDemande refDemande) throws Throwable {
         getDemandeAutorisationSteps().initialiserDemandeEnCours(profession);
         getDemandeAutorisationSteps().enregistrerReferenceDemandeEnCours(refDemande);
         getAnnexesSteps().initialiserDemandeEnCours(getDemandeAutorisationSteps().getDemandeEnCours());
@@ -98,13 +94,13 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
         ListeDesAnnexes annexesSaisies = buildListeAnnexes(dataTable);
         getAnnexesSteps().ajouterAnnexesADemandeEnCours(annexesSaisies);
     }
-    
+
 
     // ********************************************************* When
 
     @Lorsque("^l´utilisateur attache le fichier \"([^\"]*)\" de taille (\\d+)M de type \"([^\"]*)\"$")
     public void utilisateur_attache_le_fichier_certificat_exe(String nomFichier, Integer tailleFichierEnMB,
-            TypeAnnexe typeAnnexe) throws Throwable {
+                                                              TypeAnnexe typeAnnexe) throws Throwable {
 
         creerEtAttacherAnnexe(nomFichier, tailleFichierEnMB, typeAnnexe);
     }
@@ -146,9 +142,9 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
     }
 
     private ListeDesAnnexes buildListeAnnexes(DataTable dataTable) {
-        
+
         ListeDesAnnexes annexes = new ListeDesAnnexes();
-        
+
         List<Map<String, String>> mappingTypesNomFichiersAnnexesSaisies = dataTable.asMaps(String.class, String.class);
         for (Map<String, String> mappingUnTypeNomFichierAnnexesSaisies : mappingTypesNomFichiersAnnexesSaisies) {
             String typeDeLAnnexe = mappingUnTypeNomFichierAnnexesSaisies.get("Type d´annexe");
@@ -158,7 +154,7 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
             Annexe annexe = new Annexe(typeAnnexe, nomFichier, contenuFichier, "01.01.2015 11:00");
             annexes.ajouterAnnexe(annexe);
         }
-        
+
         return annexes;
     }
 

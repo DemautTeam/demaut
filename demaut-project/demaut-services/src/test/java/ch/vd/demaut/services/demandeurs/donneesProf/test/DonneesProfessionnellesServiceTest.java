@@ -1,9 +1,14 @@
 package ch.vd.demaut.services.demandeurs.donneesProf.test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import javax.inject.Inject;
-
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.domain.demandeur.Pays;
+import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.*;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
+import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,20 +19,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
-import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateObtention;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateReconnaissance;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.PaysObtention;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormation;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TypeDiplomeAccepte;
-import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
-import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
+import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ContextConfiguration({"classpath*:/servicesTest-context.xml"})
 @ActiveProfiles({"data"})
@@ -68,35 +64,41 @@ public class DonneesProfessionnellesServiceTest {
     }
 
     @Test
-    public void testRenseignerDonneesProfession() throws Exception {
-        ReferenceDeDemande demandeReference = donneesProfessionnellesService.renseignerDonneesProfession(referenceDeDemande, profession, new CodeGLN("7601000000125"));
-        assertThat(demandeReference).isNotNull();
-    }
-
-    @Test
     @Transactional
-    public void testAjouterListeDeDiplomes() {
+    public void testHasListeDeDiplomes() {
         DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService.recupererDonneesProfessionnellesParReferenceDemande(referenceDeDemande);
+        creerListeDiplomes(donneesProfessionnelles);
         assertThat(donneesProfessionnelles).isNotNull();
         assertThat(donneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(3);
     }
 
-    private void creerListeDiplomes(DonneesProfessionnelles donneesProfessionnelles) {
-        Diplome diplome;
+    @Test
+    @Transactional
+    public void testAjouterUnDiplomes() {
+        donneesProfessionnellesService.ajouterUnDiplome(referenceDeDemande,
+                new ReferenceDeDiplome(UUID.randomUUID().toString()),
+                TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
+                new TitreFormation(TitreFormationApprofondieProgres.ChirurgieDeLaMain.name()),
+                new DateObtention(new LocalDate()), new PaysObtention(Pays.AfriqueDuSud.name()), null);
 
-        diplome = new Diplome(TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
-                new TitreFormation("Pneumologie pédiatrique /118"), new DateObtention(new LocalDate()),
-                new PaysObtention("Suisse"), null);
-        donneesProfessionnelles.validerEtAjouterDiplome(diplome);
-        
-        diplome = new Diplome(TypeDiplomeAccepte.D_FORMATION_INITIALE,
-                new TitreFormation("CFR d'un diplôme étranger de médecin /8"), new DateObtention(new LocalDate()),
-                new PaysObtention("Tunisie"), new DateReconnaissance(new LocalDate()));
-        donneesProfessionnelles.validerEtAjouterDiplome(diplome);
-        
-        diplome = new Diplome(TypeDiplomeAccepte.D_POSTGRADE, new TitreFormation("Cardiologie /83"),
-                new DateObtention(new LocalDate()), new PaysObtention("Suisse"), null);
-        donneesProfessionnelles.validerEtAjouterDiplome(diplome);
+        DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService.recupererDonneesProfessionnellesParReferenceDemande(referenceDeDemande);
+        assertThat(donneesProfessionnelles).isNotNull();
+        assertThat(donneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(1);
+    }
+
+    private void creerListeDiplomes(DonneesProfessionnelles donneesProfessionnelles) {
+        donneesProfessionnelles.validerEtAjouterDiplome(
+                new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
+                        new TitreFormation(TitreFormationApprofondieProgres.PneumologiePediatrique.name()),
+                        new DateObtention(new LocalDate()), new PaysObtention(Pays.Suisse.name()), null));
+        donneesProfessionnelles.validerEtAjouterDiplome(
+                new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), TypeDiplomeAccepte.D_FORMATION_INITIALE,
+                        new TitreFormation(TitreFormationInitialeProgres.CFRDUnDiplomeEtrangerDeMedecin.name()),
+                        new DateObtention(new LocalDate()), new PaysObtention(Pays.Allemagne.name()), new DateReconnaissance(new LocalDate())));
+        donneesProfessionnelles.validerEtAjouterDiplome(
+                new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), TypeDiplomeAccepte.D_POSTGRADE,
+                        new TitreFormation(TitreFormationPostgradeProgres.Cardiologie.name()),
+                        new DateObtention(new LocalDate()), new PaysObtention(Pays.Suisse.name()), null));
     }
 
     // ********************************************************* Private methods for fixtures
@@ -104,7 +106,5 @@ public class DonneesProfessionnellesServiceTest {
     @Transactional(propagation = Propagation.REQUIRED)
     private void intialiserDemandeEnCours() {
         demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession);
-        creerListeDiplomes(demandeEnCours.getDonneesProfessionnelles());
-        demandeEnCours.validerDonneesProfessionnelles();
     }
 }

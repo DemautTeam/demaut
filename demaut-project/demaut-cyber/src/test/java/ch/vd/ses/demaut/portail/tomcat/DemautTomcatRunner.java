@@ -14,7 +14,7 @@ public class DemautTomcatRunner {
 
     public static void main(String[] args) {
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
-        
+
         final String confDir = appDir + "/demaut/config";
         final String dataDir = projectDir + "/app/demaut";
 
@@ -26,18 +26,9 @@ public class DemautTomcatRunner {
         System.setProperty("server.port", "1234");
         System.setProperty("server.contextPath", "/prestations/demaut");
         // A ajouter à la cmd line
-        System.setProperty("encrypt.key", "abcd7d6s7cq6f6svgdfhgf6h8fg68"); // clé
-                                                                            // partagée
-                                                                            // entre
-                                                                            // toutes
-                                                                            // les
-                                                                            // applications
-                                                                            // CO
-                                                                            // (dev
-                                                                            // local)
+        System.setProperty("encrypt.key", "abcd7d6s7cq6f6svgdfhgf6h8fg68"); // clé partagée entre toutes les applications CO (dev local)
 
-        System.setProperty("spring.cloud.config.uri",
-                "http://user:DE_ConfigServer57620@slv1443v.etat-de-vaud.ch:57620/configserver");
+        System.setProperty("spring.cloud.config.uri", "http://user:DE_ConfigServer57620@slv1443v.etat-de-vaud.ch:57620/configserver");
         System.setProperty("spring.profiles.active", "CO");
         System.setProperty("spring.cloud.config.label", "master");
 
