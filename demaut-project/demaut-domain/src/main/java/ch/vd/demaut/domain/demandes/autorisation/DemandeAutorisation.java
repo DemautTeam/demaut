@@ -1,7 +1,20 @@
 package ch.vd.demaut.domain.demandes.autorisation;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import javax.validation.constraints.NotNull;
+
 import ch.vd.demaut.commons.annotations.Aggregate;
-import ch.vd.demaut.domain.annexes.*;
+import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.domain.annexes.AnnexeMetadata;
+import ch.vd.demaut.domain.annexes.AnnexeValidateur;
+import ch.vd.demaut.domain.annexes.AnnexesObligatoires;
+import ch.vd.demaut.domain.annexes.ContenuAnnexe;
+import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
+import ch.vd.demaut.domain.annexes.NomFichier;
+import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.config.ConfigDemaut;
 import ch.vd.demaut.domain.demandes.Demande;
 import ch.vd.demaut.domain.demandes.DemandeFK;
@@ -10,11 +23,6 @@ import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnelles;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonnessProfessionnellesValidateur;
 import ch.vd.demaut.domain.utilisateurs.Login;
-
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Demande d'autorisation associée à un utilisateur <br>
@@ -32,11 +40,12 @@ public class DemandeAutorisation extends Demande {
 
     private DonneesPersonnelles donneesPersonnelles;
 
+    private DonneesProfessionnelles donneesProfessionnelles;
+
     private List<Annexe> annexes;
 
     private transient ConfigDemaut config;
 
-    private DonneesProfessionnelles donneesProfessionnelles;
 
     // ********************************************************* Constructor
 
@@ -44,6 +53,8 @@ public class DemandeAutorisation extends Demande {
     protected DemandeAutorisation() {
         super();
         this.annexes = new ArrayList<>();
+        this.donneesPersonnelles = new DonneesPersonnelles();
+        this.donneesProfessionnelles = new DonneesProfessionnelles();
     }
 
     //Ne pas utiliser ce constructeur mais uniquement la Factory
@@ -120,9 +131,8 @@ public class DemandeAutorisation extends Demande {
         return getListeDesAnnexes().extraireContenu(nomFichier);
     }
 
-    public void validerEtAjouterDonneesProfessionnelles(DonneesProfessionnelles donneesProfessionnelles) {
+    public void validerDonneesProfessionnelles() {
         new DonnessProfessionnellesValidateur().valider(donneesProfessionnelles);
-        this.donneesProfessionnelles = donneesProfessionnelles;
     }
 
     // ********************************************************* Private Methods

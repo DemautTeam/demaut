@@ -1,27 +1,27 @@
 package ch.vd.demaut.domain.demandeur.donneesProf;
 
-import ch.vd.demaut.commons.annotations.ValueObject;
-import ch.vd.demaut.commons.vo.BaseValueObjectWithId;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ListeDesDiplomes;
-
 import java.util.ArrayList;
 import java.util.List;
 
-@ValueObject
-public class DonneesProfessionnelles extends BaseValueObjectWithId {
+import ch.vd.demaut.commons.annotations.Entity;
+import ch.vd.demaut.commons.entities.AbstractEntity;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ListeDesDiplomes;
+
+@Entity
+public class DonneesProfessionnelles extends AbstractEntity {
 
     private CodeGLN codeGLN;
 
     private List<Diplome> diplomes;
 
-    //Used for OpenJPA only
-    protected DonneesProfessionnelles() {
+    public DonneesProfessionnelles() {
         super();
         this.codeGLN = null;
         this.diplomes = new ArrayList<>();
     }
 
+    //TODO: A virer
     public DonneesProfessionnelles(CodeGLN codeGLN, List<Diplome> diplomes) {
         this.codeGLN = codeGLN;
         this.diplomes = diplomes;

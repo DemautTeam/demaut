@@ -2,7 +2,6 @@ package ch.vd.demaut.data.demandes.autorisation.repo;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -24,12 +23,10 @@ import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
-import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateObtention;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateReconnaissance;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ListeDesDiplomes;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.PaysObtention;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormation;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TypeDiplomeAccepte;
@@ -54,7 +51,7 @@ public class DemandeAutorisationRepositoryTest {
 
     @Inject
     private PlatformTransactionManager transactionManagerDemaut;
-    
+
     // ********************************************************* Setup
     @Before
     public void setUp() throws Exception {
@@ -83,7 +80,7 @@ public class DemandeAutorisationRepositoryTest {
     }
 
     @Test
-    //TODO: Nettoyer le code avec des belles methodes lisibles
+    // TODO: Nettoyer le code avec des belles methodes lisibles
     public void sauvegarderUneDemandeAvecAnnexes() {
         TransactionStatus transaction = beginTransaction();
 
@@ -101,9 +98,9 @@ public class DemandeAutorisationRepositoryTest {
         Collection<Annexe> annexes = demandeAutorisation.listerLesAnnexes();
         assertThat(annexes).isNotEmpty();
 
-        //commitTransaction(transaction);
+        // commitTransaction(transaction);
 
-        //transaction = beginTransaction();
+        // transaction = beginTransaction();
 
         // Recuperer la demande
         DemandeAutorisation memeDemande = demandeAutorisationRepository
@@ -111,7 +108,7 @@ public class DemandeAutorisationRepositoryTest {
         assertThat(memeDemande).isEqualTo(demandeAutorisation);
 
         // Tester les annexes
-        //Ceci ne marche pas car OpenJPA enhanced la class 
+        // Ceci ne marche pas car OpenJPA enhanced la class
         // assertThat(memeDemande.listerLesAnnexes()).containsExactlyElementsOf(annexes);
         List<Annexe> memesAnnexes = memeDemande.listerLesAnnexes();
         Annexe premiereAnnexe = memesAnnexes.iterator().next();
@@ -130,11 +127,11 @@ public class DemandeAutorisationRepositoryTest {
         // Sauvegarder la demande
         DemandeAutorisation demandeAutorisation = demandeAutorisationFactory
                 .initierDemandeAutorisation(utilisateur.getLogin(), Profession.Medecin, null);
-        CodeGLN codeGLN = new CodeGLN("7601000000125");
-        ListeDesDiplomes listeDesDiplomes = creerListeDiplomes();
-        DonneesProfessionnelles donneesProfessionnelles = new DonneesProfessionnelles(codeGLN,
-                listeDesDiplomes.listerDiplomes());
-        demandeAutorisation.validerEtAjouterDonneesProfessionnelles(donneesProfessionnelles);
+        
+        DonneesProfessionnelles donneesProfessionnelles = demandeAutorisation.getDonneesProfessionnelles();
+        creerListeDiplomes(donneesProfessionnelles);
+        demandeAutorisation.validerDonneesProfessionnelles();
+        
         assertThat(demandeAutorisation.getId()).isNull();
         demandeAutorisationRepository.store(demandeAutorisation);
         assertThat(demandeAutorisation.getId()).isNotNull();
@@ -157,18 +154,22 @@ public class DemandeAutorisationRepositoryTest {
 
     // ********************************************************* Methods privées
 
-    private ListeDesDiplomes creerListeDiplomes() {
-        ListeDesDiplomes listeDesDiplomes = new ListeDesDiplomes(new ArrayList<Diplome>());
-        listeDesDiplomes.ajouterDiplome(new Diplome(TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
+    private void creerListeDiplomes(DonneesProfessionnelles donneesProfessionnelles) {
+        Diplome diplome;
+
+        diplome = new Diplome(TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
                 new TitreFormation("Pneumologie pédiatrique /118"), new DateObtention(new LocalDate()),
-                new PaysObtention("Suisse"), null));
-        listeDesDiplomes.ajouterDiplome(new Diplome(TypeDiplomeAccepte.D_FORMATION_INITIALE,
+                new PaysObtention("Suisse"), null);
+        donneesProfessionnelles.validerEtAjouterDiplome(diplome);
+        
+        diplome = new Diplome(TypeDiplomeAccepte.D_FORMATION_INITIALE,
                 new TitreFormation("CFR d'un diplôme étranger de médecin /8"), new DateObtention(new LocalDate()),
-                new PaysObtention("Tunisie"), new DateReconnaissance(new LocalDate())));
-        listeDesDiplomes
-                .ajouterDiplome(new Diplome(TypeDiplomeAccepte.D_POSTGRADE, new TitreFormation("Cardiologie /83"),
-                        new DateObtention(new LocalDate()), new PaysObtention("Suisse"), null));
-        return listeDesDiplomes;
+                new PaysObtention("Tunisie"), new DateReconnaissance(new LocalDate()));
+        donneesProfessionnelles.validerEtAjouterDiplome(diplome);
+        
+        diplome = new Diplome(TypeDiplomeAccepte.D_POSTGRADE, new TitreFormation("Cardiologie /83"),
+                new DateObtention(new LocalDate()), new PaysObtention("Suisse"), null);
+        donneesProfessionnelles.validerEtAjouterDiplome(diplome);
     }
 
     private Utilisateur creerUtilisateur() {
@@ -184,7 +185,7 @@ public class DemandeAutorisationRepositoryTest {
     private void commitTransaction(TransactionStatus transaction) {
         transactionManagerDemaut.commit(transaction);
     }
-    
+
     private TransactionStatus beginTransaction() {
         // Voir
         // http://elnur.pro/programmatic-transaction-management-in-tests-with-spring/

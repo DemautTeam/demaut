@@ -1,13 +1,13 @@
 package ch.vd.demaut.domain.demandeur.donneesPerso;
 
-import ch.vd.demaut.commons.annotations.ValueObject;
-import ch.vd.demaut.commons.vo.BaseValueObjectWithId;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-@ValueObject
-public class DonneesPersonnelles extends BaseValueObjectWithId {
+import ch.vd.demaut.commons.annotations.Entity;
+import ch.vd.demaut.commons.entities.AbstractEntity;
+
+@Entity
+public class DonneesPersonnelles extends AbstractEntity {
 
     // ********************************************************* Fields
     @Valid
@@ -39,8 +39,7 @@ public class DonneesPersonnelles extends BaseValueObjectWithId {
 
     // ********************************************************* Constructor
 
-    //Used for OpenJPA only
-    protected DonneesPersonnelles() {
+    public DonneesPersonnelles() {
         super();
         this.nom = null;
         this.prenom = null;
@@ -54,6 +53,7 @@ public class DonneesPersonnelles extends BaseValueObjectWithId {
         this.fax = null;
     }
 
+    //TODO: A supprimer
     public DonneesPersonnelles(Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Genre genre, DateDeNaissance dateDeNaissance, Adresse adresse, Email email, NumeroTelephone telephonePrive, NumeroTelephone telephoneMobile, NumeroTelephone fax) {
         super();
         this.nom = nom;

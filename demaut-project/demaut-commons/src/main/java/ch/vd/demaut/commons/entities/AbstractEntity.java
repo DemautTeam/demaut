@@ -1,9 +1,6 @@
 package ch.vd.demaut.commons.entities;
 
-import ch.vd.demaut.commons.fk.ObjectFunctionalKeyAware;
-
-//TODO: Avec Java8, on peut utiliser les default methods des interfaces et se passer de ObjectFunctionalKeyAware
-abstract public class EntityFunctionalKeyAware extends ObjectFunctionalKeyAware implements Entity<Long> {
+abstract public class AbstractEntity implements Entity<Long> {
 
     protected Long id; //Technical Id
 
