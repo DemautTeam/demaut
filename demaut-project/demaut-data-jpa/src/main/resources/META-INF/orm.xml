@@ -30,6 +30,16 @@
         </attributes>
     </mapped-superclass>
 
+    <mapped-superclass
+            class="ch.vd.demaut.commons.entities.AbstractEntity">
+        <attributes>
+            <id name="id">
+                <generated-value strategy="AUTO"/>
+            </id>
+            <version name="version"></version>
+        </attributes>
+    </mapped-superclass>
+
     <mapped-superclass class="ch.vd.demaut.commons.vo.BaseValueObjectWithId">
         <attributes>
             <id name="id">
