@@ -6,6 +6,7 @@ import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TypeDiplomeNotFoundExce
 
 public enum Pays implements TypeProgres {
     ListeIncomplete(0, "Incomplète", "Liste incomplète..."),
+    Suisse(1, "CH", "Suisse"),
     Afghanistan(2, "AF", "Afghanistan"),
     AfriqueDuSud(3, "ZA", "Afrique du Sud"),
     Albanie(4, "AL", "Albanie"),
@@ -52,7 +53,7 @@ public enum Pays implements TypeProgres {
     Colombie(45, "CO", "Colombie"),
     Comores(46, "KM", "Comores"),
     Congo(47, "CG", "Congo"),
-    CoreeDuNord(48, "KP", "Corée du Nord"),
+    CoreeDuNord(48, "KP", "Corée du Nord");
     // TODO completer la liste
 //            (49, "KR", "Corée du Sud");
 //            (50, "CR", "Costa Rica"),
@@ -195,7 +196,6 @@ public enum Pays implements TypeProgres {
 //            (187, "SO", "Somalie"),
 //            (188, "SD", "Soudan"),
 //            (189, "LK", "Sri Lanka"),
-    Suisse(190, "CH", "Suisse");
 //            (191, "SR", "Suriname"),
 //            (192, "SE", "Suède"),
 //            (193, "SJ", "Svalbard et Île Jan Mayen"),

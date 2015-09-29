@@ -9,18 +9,17 @@ public interface DemandeAutorisationService {
     /**
      * Initialise une demande d'autorisation à l'état Brouillon pour l'utilisateur donné
      *
-     * @param login
-     * @param profession
-     * @return
+     * @param profession Profession
+     * @return DemandeAutorisation
      */
     DemandeAutorisation initialiserDemandeAutorisation(Profession profession);
 
     /**
      * Récupère une demande via sa référence <br/>
      * Renvoie exception si pas trouvée<br/>
-     * @param referenceDeDemande
-     * @return
-     * @throw 
+     *
+     * @param referenceDeDemande ReferenceDeDemande
+     * @return DemandeAutorisation
      */
     DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande referenceDeDemande);
 

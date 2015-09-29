@@ -137,6 +137,7 @@
                 <column name="type_Diplome_Accepte"/>
                 <enumerated>STRING</enumerated>
             </basic>
+            <embedded name="referenceDeDiplome"/>
             <embedded name="titreFormation"/>
             <embedded name="dateObtention"/>
             <embedded name="paysObtention"/>
@@ -224,6 +225,14 @@
         <attributes>
             <basic name="value">
                 <column name="date_Creation"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+    <embeddable class="ch.vd.demaut.domain.demandeur.donneesProf.diplome.ReferenceDeDiplome">
+        <attributes>
+            <basic name="value">
+                <column name="reference_Diplome"/>
             </basic>
         </attributes>
     </embeddable>

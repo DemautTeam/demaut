@@ -64,9 +64,7 @@ public final class RestUtils {
 
         ResponseBuilder responseBuilder = getResponseBuildeOK();
 
-        Response response = buildHeaders(responseBuilder).entity(json).build();
-
-        return response;
+        return buildHeaders(responseBuilder).entity(json).build();
     }
 
     private static ObjectNode buildJSon(Object value) throws JsonProcessingException {

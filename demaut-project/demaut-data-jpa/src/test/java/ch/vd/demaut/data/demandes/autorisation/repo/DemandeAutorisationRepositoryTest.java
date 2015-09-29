@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
@@ -24,18 +25,23 @@ import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
+import ch.vd.demaut.domain.demandeur.Pays;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateObtention;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateReconnaissance;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.PaysObtention;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ReferenceDeDiplome;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormation;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormationApprofondieProgres;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormationInitialeProgres;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormationPostgradeProgres;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TypeDiplomeAccepte;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.domain.utilisateurs.Utilisateur;
 import ch.vd.demaut.domain.utilisateurs.UtilisateurRepository;
 
-@ContextConfiguration({ "classpath*:/data-jpa-test-context.xml" })
+@ContextConfiguration({"classpath*:/data-jpa-test-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class DemandeAutorisationRepositoryTest {
 
@@ -82,7 +88,7 @@ public class DemandeAutorisationRepositoryTest {
     }
 
     @Test
-    // TODO: Nettoyer le code avec des belles methodes lisibles
+    //TODO: Nettoyer le code avec des belles methodes lisibles
     public void sauvegarderUneDemandeAvecAnnexes() {
         transaction = beginTransaction();
 
@@ -134,21 +140,18 @@ public class DemandeAutorisationRepositoryTest {
     // ********************************************************* Methods privées
 
     private void creerListeDiplomes(DonneesProfessionnelles donneesProfessionnelles) {
-        Diplome diplome;
-
-        diplome = new Diplome(TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
-                new TitreFormation("Pneumologie pédiatrique /118"), new DateObtention(new LocalDate()),
-                new PaysObtention("Suisse"), null);
-        donneesProfessionnelles.validerEtAjouterDiplome(diplome);
-
-        diplome = new Diplome(TypeDiplomeAccepte.D_FORMATION_INITIALE,
-                new TitreFormation("CFR d'un diplôme étranger de médecin /8"), new DateObtention(new LocalDate()),
-                new PaysObtention("Tunisie"), new DateReconnaissance(new LocalDate()));
-        donneesProfessionnelles.validerEtAjouterDiplome(diplome);
-
-        diplome = new Diplome(TypeDiplomeAccepte.D_POSTGRADE, new TitreFormation("Cardiologie /83"),
-                new DateObtention(new LocalDate()), new PaysObtention("Suisse"), null);
-        donneesProfessionnelles.validerEtAjouterDiplome(diplome);
+        donneesProfessionnelles.validerEtAjouterDiplome(
+                new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
+                        new TitreFormation(TitreFormationApprofondieProgres.PneumologiePediatrique.name()),
+                        new DateObtention(new LocalDate()), new PaysObtention(Pays.Suisse.name()), null));
+        donneesProfessionnelles.validerEtAjouterDiplome(
+                new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), TypeDiplomeAccepte.D_FORMATION_INITIALE,
+                        new TitreFormation(TitreFormationInitialeProgres.CFRDUnDiplomeEtrangerDeMedecin.name()),
+                        new DateObtention(new LocalDate()), new PaysObtention(Pays.Allemagne.name()), new DateReconnaissance(new LocalDate())));
+        donneesProfessionnelles.validerEtAjouterDiplome(
+                new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), TypeDiplomeAccepte.D_POSTGRADE,
+                        new TitreFormation(TitreFormationPostgradeProgres.Cardiologie.name()),
+                        new DateObtention(new LocalDate()), new PaysObtention(Pays.Suisse.name()), null));
     }
 
     private Utilisateur creerUtilisateur() {

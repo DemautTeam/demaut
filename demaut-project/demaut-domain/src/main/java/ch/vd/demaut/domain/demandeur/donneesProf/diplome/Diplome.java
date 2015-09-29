@@ -6,6 +6,8 @@ import javax.validation.Valid;
 
 public class Diplome extends BaseValueObjectWithId {
 
+    private ReferenceDeDiplome referenceDeDiplome;
+
     @Valid
     private TypeDiplomeAccepte typeDiplomeAccepte;
 
@@ -25,12 +27,18 @@ public class Diplome extends BaseValueObjectWithId {
     public Diplome() {
     }
 
-    public Diplome(TypeDiplomeAccepte typeDiplomeAccepte, TitreFormation titreFormation, DateObtention dateObtention, PaysObtention paysObtention, DateReconnaissance dateReconnaissance) {
+    public Diplome(ReferenceDeDiplome referenceDeDiplome, TypeDiplomeAccepte typeDiplomeAccepte, TitreFormation titreFormation,
+                   DateObtention dateObtention, PaysObtention paysObtention, DateReconnaissance dateReconnaissance) {
+        this.referenceDeDiplome = referenceDeDiplome;
         this.typeDiplomeAccepte = typeDiplomeAccepte;
         this.titreFormation = titreFormation;
         this.dateObtention = dateObtention;
         this.paysObtention = paysObtention;
         this.dateReconnaissance = dateReconnaissance;
+    }
+
+    public ReferenceDeDiplome getReferenceDeDiplome() {
+        return referenceDeDiplome;
     }
 
     public TypeDiplomeAccepte getTypeDiplomeAccepte() {

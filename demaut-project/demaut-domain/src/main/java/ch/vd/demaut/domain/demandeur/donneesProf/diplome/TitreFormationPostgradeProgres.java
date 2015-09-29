@@ -20,8 +20,8 @@ public enum TitreFormationPostgradeProgres implements TypeProgres {
         this.libl = libl;
     }
 
-    static public TitreFormationApprofondieProgres getTypeById(Integer id2) {
-        for (TitreFormationApprofondieProgres type : TitreFormationApprofondieProgres.values()) {
+    static public TitreFormationPostgradeProgres getTypeById(Integer id2) {
+        for (TitreFormationPostgradeProgres type : TitreFormationPostgradeProgres.values()) {
             if (type.getRefProgresID().equals(new RefProgresID(id2))) {
                 return type;
             }

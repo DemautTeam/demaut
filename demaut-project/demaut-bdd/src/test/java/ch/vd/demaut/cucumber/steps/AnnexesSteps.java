@@ -1,16 +1,12 @@
 package ch.vd.demaut.cucumber.steps;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
+import ch.vd.demaut.domain.annexes.*;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 
 import java.util.Collection;
 
-import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
-import ch.vd.demaut.domain.annexes.Annexe;
-import ch.vd.demaut.domain.annexes.AnnexeIntrouvableException;
-import ch.vd.demaut.domain.annexes.AnnexeNonValideException;
-import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
-import ch.vd.demaut.domain.annexes.NomFichier;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class AnnexesSteps {
 
@@ -19,7 +15,7 @@ public class AnnexesSteps {
     // ********************************************************* Fields
 
     private DemandeAutorisation demandeEnCours;
-    
+
     private AccepteOuRefuse actualAcceptationAnnexe;
 
     // ********************************************************* Methods
@@ -27,7 +23,7 @@ public class AnnexesSteps {
     public void initialiserDemandeEnCours(DemandeAutorisation demandeEnCours) {
         this.demandeEnCours = demandeEnCours;
     }
-    
+
     public void ajouterAnnexesADemandeEnCours(ListeDesAnnexes listeDesAnnexesInitiales) {
         Collection<Annexe> annexesInit = listeDesAnnexesInitiales.listerAnnexes();
         for (Annexe annexe : annexesInit) {

@@ -1,12 +1,12 @@
 package ch.vd.demaut.commons.repo.mock;
 
-import java.util.List;
-
 import ch.vd.demaut.commons.entities.EntityFunctionalKeyAware;
 import ch.vd.demaut.commons.exceptions.EntityNotFoundException;
 import ch.vd.demaut.commons.exceptions.EntityNotUniqueException;
 import ch.vd.demaut.commons.fk.FunctionalKey;
 import ch.vd.demaut.commons.repo.GenericFKARepository;
+
+import java.util.List;
 
 /**
  * Repo mock pour les entités avec des clés fonctionnelles qui ajoute des methodes telles que findByFK

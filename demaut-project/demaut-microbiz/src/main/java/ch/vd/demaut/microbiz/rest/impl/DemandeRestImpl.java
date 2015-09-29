@@ -1,6 +1,13 @@
 package ch.vd.demaut.microbiz.rest.impl;
 
-import java.io.IOException;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.microbiz.rest.RestUtils;
+import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
+import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
@@ -12,19 +19,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import java.io.IOException;
 
-import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.microbiz.rest.RestUtils;
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
-
-@CrossOriginResourceSharing(allowOrigins = { "*" }, allowCredentials = true, maxAge = 3600, allowHeaders = {
-        "Content-Type", "X-Requested-With" }, exposeHeaders = { "Access-Control-Allow-Origin" })
+@CrossOriginResourceSharing(allowOrigins = {"*"}, allowCredentials = true, maxAge = 3600, allowHeaders = {
+        "Content-Type", "X-Requested-With"}, exposeHeaders = {"Access-Control-Allow-Origin"})
 @Service("demandeRestImpl")
 @Path("/demande")
 public class DemandeRestImpl {
