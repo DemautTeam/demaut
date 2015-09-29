@@ -1,7 +1,8 @@
 # Launch Demaut Cyber en local utilisant la classe DemautTomcatRunner
 #!/bin/bash
 
-DEMAUT_PRJ=../../demaut-project
+BASEDIR=$(dirname $0)
+DEMAUT_PRJ=$BASEDIR/../../demaut-project
 DEMAUT_DOMAIN=$DEMAUT_PRJ/demaut-domain
 DEMAUT_COMMONS=$DEMAUT_PRJ/demaut-commons
 DEMAUT_DATA_JPA=$DEMAUT_PRJ/demaut-data-jpa
