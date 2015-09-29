@@ -12,5 +12,4 @@ public class UtilisateurRepositoryJPA extends GenericRepositoryImpl<Utilisateur,
     public UtilisateurRepositoryJPA() {
         super(Utilisateur.class);
     }
-
 }

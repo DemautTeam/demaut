@@ -18,6 +18,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.domain.annexes.AnnexeMetadata;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
@@ -52,6 +53,10 @@ public class DemandeAutorisationRepositoryTest {
     @Inject
     private PlatformTransactionManager transactionManagerDemaut;
 
+    // ********************************************************* Transient
+    // fields
+    private TransactionStatus transaction;
+
     // ********************************************************* Setup
     @Before
     public void setUp() throws Exception {
@@ -65,73 +70,47 @@ public class DemandeAutorisationRepositoryTest {
 
     @Test
     public void sauvegarderUneDemande() {
-        TransactionStatus transaction = beginTransaction();
+        transaction = beginTransaction();
 
+        // Construction de la demande
         Utilisateur utilisateur = creerUtilisateur();
+        DemandeAutorisation demandeInit = demandeAutorisationFactory.initierDemandeAutorisation(utilisateur.getLogin(),
+                Profession.Ergotherapeute);
+        assertThat(demandeInit.getId()).isNull();
 
-        // Sauvegarder la demande
-        DemandeAutorisation demandeAutorisation = demandeAutorisationFactory
-                .initierDemandeAutorisation(utilisateur.getLogin(), Profession.Medecin, null);
-        assertThat(demandeAutorisation.getId()).isNull();
-        demandeAutorisationRepository.store(demandeAutorisation);
-        assertThat(demandeAutorisation.getId()).isNotNull();
-
-        commitTransaction(transaction);
+        persisterDemandeEtVerifier(demandeInit);
     }
 
     @Test
     // TODO: Nettoyer le code avec des belles methodes lisibles
     public void sauvegarderUneDemandeAvecAnnexes() {
-        TransactionStatus transaction = beginTransaction();
+        transaction = beginTransaction();
 
+        // Construction de la demande
         Utilisateur utilisateur = creerUtilisateur();
-
-        // Sauvegarder la demande
-        DemandeAutorisation demandeAutorisation = demandeAutorisationFactory
-                .initierDemandeAutorisation(utilisateur.getLogin(), Profession.Chiropraticien, null);
+        DemandeAutorisation demandeInit = demandeAutorisationFactory.initierDemandeAutorisation(utilisateur.getLogin(),
+                Profession.Chiropraticien);
         byte[] contenu = "AnnexeContenu".getBytes();
         Annexe annexe = new Annexe(TypeAnnexe.CV, "test.pdf", contenu, "01.01.2015 11:00");
-        demandeAutorisation.validerEtAttacherAnnexe(annexe);
-        assertThat(demandeAutorisation.getId()).isNull();
-        demandeAutorisationRepository.store(demandeAutorisation);
-        assertThat(demandeAutorisation.getId()).isNotNull();
-        Collection<Annexe> annexes = demandeAutorisation.listerLesAnnexes();
-        assertThat(annexes).isNotEmpty();
+        demandeInit.validerEtAttacherAnnexe(annexe);
 
-        // commitTransaction(transaction);
-
-        // transaction = beginTransaction();
-
-        // Recuperer la demande
-        DemandeAutorisation memeDemande = demandeAutorisationRepository
-                .recupererDemandeParReference(demandeAutorisation.getReferenceDeDemande());
-        assertThat(memeDemande).isEqualTo(demandeAutorisation);
-
-        // Tester les annexes
-        // Ceci ne marche pas car OpenJPA enhanced la class
-        // assertThat(memeDemande.listerLesAnnexes()).containsExactlyElementsOf(annexes);
-        List<Annexe> memesAnnexes = memeDemande.listerLesAnnexes();
-        Annexe premiereAnnexe = memesAnnexes.iterator().next();
-        assertThat(premiereAnnexe).isEqualTo(annexe);
-        assertThat(premiereAnnexe.getContenu().getContenu()).isEqualTo(contenu);
-
-        commitTransaction(transaction);
+        persisterDemandeEtVerifier(demandeInit);
     }
 
     @Test
     public void sauvegarderUneDemandeAvecDonneeProfessionnellesEtDiplomes() {
-        TransactionStatus transaction = beginTransaction();
+        transaction = beginTransaction();
 
         Utilisateur utilisateur = creerUtilisateur();
 
         // Sauvegarder la demande
         DemandeAutorisation demandeAutorisation = demandeAutorisationFactory
-                .initierDemandeAutorisation(utilisateur.getLogin(), Profession.Medecin, null);
-        
+                .initierDemandeAutorisation(utilisateur.getLogin(), Profession.Medecin);
+
         DonneesProfessionnelles donneesProfessionnelles = demandeAutorisation.getDonneesProfessionnelles();
         creerListeDiplomes(donneesProfessionnelles);
         demandeAutorisation.validerDonneesProfessionnelles();
-        
+
         assertThat(demandeAutorisation.getId()).isNull();
         demandeAutorisationRepository.store(demandeAutorisation);
         assertThat(demandeAutorisation.getId()).isNotNull();
@@ -161,12 +140,12 @@ public class DemandeAutorisationRepositoryTest {
                 new TitreFormation("Pneumologie pédiatrique /118"), new DateObtention(new LocalDate()),
                 new PaysObtention("Suisse"), null);
         donneesProfessionnelles.validerEtAjouterDiplome(diplome);
-        
+
         diplome = new Diplome(TypeDiplomeAccepte.D_FORMATION_INITIALE,
                 new TitreFormation("CFR d'un diplôme étranger de médecin /8"), new DateObtention(new LocalDate()),
                 new PaysObtention("Tunisie"), new DateReconnaissance(new LocalDate()));
         donneesProfessionnelles.validerEtAjouterDiplome(diplome);
-        
+
         diplome = new Diplome(TypeDiplomeAccepte.D_POSTGRADE, new TitreFormation("Cardiologie /83"),
                 new DateObtention(new LocalDate()), new PaysObtention("Suisse"), null);
         donneesProfessionnelles.validerEtAjouterDiplome(diplome);
@@ -193,5 +172,47 @@ public class DemandeAutorisationRepositoryTest {
         DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
         return transactionManagerDemaut.getTransaction(definition);
     }
+
+    private DemandeAutorisation recupererDemandePersistee(DemandeAutorisation demandeAutorisation) {
+        commitTransaction(transaction);
+        transaction = beginTransaction();
+        DemandeAutorisation memeDemande = demandeAutorisationRepository
+                .recupererDemandeParReference(demandeAutorisation.getReferenceDeDemande());
+        return memeDemande;
+    }
+
+    private void verifieMemeDemande(DemandeAutorisation demandePersistee, DemandeAutorisation demandeInit) {
+        // Meme Ref
+        assertThat(demandePersistee).isEqualTo(demandeInit);
+        assertThat(demandePersistee.getLogin()).isEqualTo(demandeInit.getLogin());
+        assertThat(demandePersistee.getProfession()).isEqualTo(demandeInit.getProfession());
+
+        // Tester les annexes metadata
+        Collection<AnnexeMetadata> annexeMetadatasInit = demandeInit.listerLesAnnexeMetadatas();
+        Collection<AnnexeMetadata> annexeMetadatasPersit = demandePersistee.listerLesAnnexeMetadatas();
+        assertThat(annexeMetadatasPersit).containsExactlyElementsOf(annexeMetadatasInit);
+
+        // Teste le contenu annexe
+        List<Annexe> annexesPerst = demandePersistee.listerLesAnnexes();
+        List<Annexe> annexesInit = demandeInit.listerLesAnnexes();
+        if (annexesPerst.size() > 0) {
+            Annexe premiereAnnexePerst = annexesPerst.iterator().next();
+            Annexe premiereAnnexeInit = annexesInit.iterator().next();
+            assertThat(premiereAnnexePerst.getContenu().getContenu())
+                    .isEqualTo(premiereAnnexeInit.getContenu().getContenu());
+        }
+    }
+
+    private void persisterDemandeEtVerifier(DemandeAutorisation demandeInit) {
+        // Sauvegarder la demande
+        demandeAutorisationRepository.store(demandeInit);
+
+        // Teste que la demande a été persistée correctement
+        DemandeAutorisation memeDemande = recupererDemandePersistee(demandeInit);
+        verifieMemeDemande(memeDemande, demandeInit);
+
+        commitTransaction(transaction);
+    }
+
 
 }

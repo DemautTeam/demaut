@@ -1,7 +1,7 @@
 #language: fr
 
 @annexes
-Fonctionnalité: Attacher des annexes à la demande par le professionnel
+Fonctionnalité: Gestion des annexes liées à la demande
 
   Contexte:
     Etant donné les formats de fichier acceptés:

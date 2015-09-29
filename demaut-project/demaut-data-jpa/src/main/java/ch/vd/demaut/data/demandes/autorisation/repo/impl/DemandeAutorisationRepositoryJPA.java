@@ -6,7 +6,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import ch.vd.demaut.commons.exceptions.NotYetImplementedException;
 import ch.vd.demaut.data.GenericRepositoryImpl;
@@ -26,14 +25,12 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
 
     // ********************************************************* Implementation des interfaces
     @Override
-    @Transactional(readOnly = true)
     public DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande ref) {
         TypedQuery<DemandeAutorisation> typedQuery = createQueryParReference(ref);
         return typedQuery.getSingleResult();
     }
 
     @Override
-    @Transactional(readOnly = true)
     public DemandeAutorisation trouverDemandeEnCoursDeSaisieDunUtilisateur(Utilisateur utilisateur) {
         //TODO: Implement me
         throw new NotYetImplementedException();

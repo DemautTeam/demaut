@@ -38,6 +38,7 @@ public enum Profession implements TypeProgres {
         this.libl = libelle;
     }
 
+    //TODO: refactor avec TypeAnnexe
     static public Profession getTypeById(Integer id2) {
         for (Profession type : Profession.values()) {
             if (type.getRefProgresID().equals(new RefProgresID(id2))) {

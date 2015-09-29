@@ -44,7 +44,7 @@
     </bean>
 
     <bean
-        class="ch.vd.demaut.cucumber.steps.definitions.AttacherAnnexeStepDefinitions"
+        class="ch.vd.demaut.cucumber.steps.definitions.AnnexesStepDefinitions"
         scope="cucumber-glue">
         <property name="demandeAutorisationSteps" ref="demandeAutorisationSteps"/>
         <property name="annexesSteps" ref="annexesSteps"/>

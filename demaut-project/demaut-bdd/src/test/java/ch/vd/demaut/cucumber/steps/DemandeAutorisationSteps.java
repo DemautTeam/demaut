@@ -48,7 +48,7 @@ public class DemandeAutorisationSteps {
     }
 
     public void initialiserDemandeEnCours(Profession profession) {
-        demandeEnCours = demandeAutorisationFactory.initierDemandeAutorisation(utilisateur.getLogin(), profession, configDemaut);
+        demandeEnCours = demandeAutorisationFactory.initierDemandeAutorisation(utilisateur.getLogin(), profession);
         demandeAutorisationRepository.store(demandeEnCours);
 
         LOGGER.debug("La demande autorisation " + demandeEnCours + " a été ajoutée au repository avec l'id technique:" + demandeEnCours.getId());

@@ -31,7 +31,7 @@ import cucumber.api.java.fr.Lorsque;
 /**
  * Step definitions pour la fonctionnalité "@annexes"
  */
-public class AttacherAnnexeStepDefinitions extends StepDefinitions {
+public class AnnexesStepDefinitions extends StepDefinitions {
 
     // ********************************************************* Fields
 

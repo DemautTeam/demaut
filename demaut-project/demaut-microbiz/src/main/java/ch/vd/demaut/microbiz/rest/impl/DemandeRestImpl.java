@@ -38,12 +38,14 @@ public class DemandeRestImpl {
     @Path("/initialiser/{professionId}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response initialiser(@Context UriInfo uriInfo, @PathParam("professionId") String professionId)
+    public Response initialiser(@Context UriInfo uriInfo, @PathParam("professionId") String professionIdStr)
             throws IOException {
         LOGGER.info("initialiser demande");
 
-        DemandeAutorisation demande = demandeAutorisationService
-                .initialiserDemandeAutorisation(Profession.Chiropraticien);
+        Integer professionId = Integer.valueOf(professionIdStr);
+        Profession profession = Profession.getTypeById(professionId);
+
+        DemandeAutorisation demande = demandeAutorisationService.initialiserDemandeAutorisation(profession);
 
         return RestUtils.forgeResponseObject(demande.getReferenceDeDemande());
     }

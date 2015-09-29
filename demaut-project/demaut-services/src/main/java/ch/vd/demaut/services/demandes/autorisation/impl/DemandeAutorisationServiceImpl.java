@@ -30,12 +30,12 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
     @Override
     public DemandeAutorisation initialiserDemandeAutorisation(Profession profession) {
         Utilisateur utilisateurCourant = utilisateurService.recupererUtilisateurCourant();
-        DemandeAutorisation nouvelleDemande = demandeAutorisationFactory.initierDemandeAutorisation(utilisateurCourant.getLogin(), profession, null);
+        DemandeAutorisation nouvelleDemande = demandeAutorisationFactory.initierDemandeAutorisation(utilisateurCourant.getLogin(), profession);
         demandeAutorisationRepository.store(nouvelleDemande);
         return nouvelleDemande;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande referenceDeDemande) {
         try {

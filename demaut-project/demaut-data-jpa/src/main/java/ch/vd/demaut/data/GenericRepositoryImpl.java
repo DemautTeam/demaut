@@ -1,20 +1,20 @@
 package ch.vd.demaut.data;
 
-import ch.vd.demaut.commons.exceptions.ValidationEntityException;
-import ch.vd.demaut.commons.repo.GenericReadRepository;
-import ch.vd.demaut.commons.repo.GenericRepository;
-import ch.vd.demaut.commons.validation.ValidatorFactoryDefault;
-import org.springframework.transaction.annotation.Transactional;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+
+import ch.vd.demaut.commons.exceptions.ValidationEntityException;
+import ch.vd.demaut.commons.repo.GenericReadRepository;
+import ch.vd.demaut.commons.repo.GenericRepository;
+import ch.vd.demaut.commons.validation.ValidatorFactoryDefault;
 
 public abstract class GenericRepositoryImpl<T, I extends Serializable> implements GenericRepository<T, I>, GenericReadRepository<T, I> {
 
@@ -36,7 +36,6 @@ public abstract class GenericRepositoryImpl<T, I extends Serializable> implement
     }
 
     @Override
-    @Transactional(readOnly = true)
     public T findBy(I id) {
         T entity = getEntityManager().find(this.entityClass, id);
         return entity;
@@ -44,7 +43,6 @@ public abstract class GenericRepositoryImpl<T, I extends Serializable> implement
 
     @Override
     @SuppressWarnings("all")
-    @Transactional(readOnly = true)
     public List<T> findAll() {
         Query typedQuery = getEntityManager()
                 .createQuery("select o from " + entityClass.getSimpleName() + " as o");
@@ -52,7 +50,6 @@ public abstract class GenericRepositoryImpl<T, I extends Serializable> implement
     }
 
     @SuppressWarnings("unchecked")
-    @Transactional(readOnly = true)
     public List<T> findRange(int[] range) {
         Query typedQuery = getEntityManager()
                 .createQuery("select o from " + entityClass.getSimpleName() + " as o");
@@ -62,7 +59,6 @@ public abstract class GenericRepositoryImpl<T, I extends Serializable> implement
     }
 
     @Override
-    @Transactional(readOnly = true)
     public long countAll() {
         Query typedQuery = getEntityManager()
                 .createQuery("select count(o) from " + entityClass.getSimpleName() + " o");
@@ -70,25 +66,21 @@ public abstract class GenericRepositoryImpl<T, I extends Serializable> implement
     }
 
     @Override
-    @Transactional
     public void store(T entity) {
         getEntityManager().persist(entity);
     }
 
     @Override
-    @Transactional
     public void storeAll(Collection<? extends T> entities) {
         getEntityManager().persist(entities);
     }
 
     @Override
-    @Transactional
     public void delete(T entity) {
         getEntityManager().remove(entity);
     }
 
     @Override
-    @Transactional
     public void delete(I id) {
         T entity = getEntityManager().find(this.entityClass, id);
         if (entity != null) {
@@ -97,7 +89,6 @@ public abstract class GenericRepositoryImpl<T, I extends Serializable> implement
     }
 
     @Override
-    @Transactional
     public void deleteAll() {
         Query typedQuery = getEntityManager().createQuery("select o from " + entityClass.getSimpleName() + " as o");
         @SuppressWarnings("unchecked")
@@ -114,7 +105,6 @@ public abstract class GenericRepositoryImpl<T, I extends Serializable> implement
     }
 
     @Override
-    @Transactional
     public void validateAndStore(T entity) {
         Set<ConstraintViolation<T>> constraintsViolation = validate(entity);
         if (constraintsViolation == null || constraintsViolation.size() == 0) {
@@ -125,7 +115,6 @@ public abstract class GenericRepositoryImpl<T, I extends Serializable> implement
     }
 
     @Override
-    @Transactional
     public void validateAndStoreAll(Collection<? extends T> entities) {
         for (T entity : entities) {
             validateAndStore(entity);
