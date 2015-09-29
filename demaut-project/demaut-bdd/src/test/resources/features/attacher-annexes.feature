@@ -11,15 +11,38 @@ Fonctionnalité: Attacher des annexes à la demande par le professionnel
       | png  |
     Etant donné la taille maximale de fichier acceptée "3"MB
     Etant donné la date du jour: "15.07.2015 11:00"
-    Etant donné les annexes obligatoires par type de demande:
-    	| Type de demande 	| Types d´annexe obligatoires 	|
-		| Medecin 		    | CertificatDeTravail,Diplome 		| 
-		| Dieteticien 	    | CertificatDeTravail               	| 
     Etant donné l´utilisateur identifié et connecté avec le login "joe.dalton@vd.ch"
+    Etant donné une demande de profession "Medecin" en cours de saisie ayant la référence "12345"
+    Etant donné les annexes déja saisies:
+      | Type d´annexe       | Nom du fichier |
+      | PieceIdentite       | pieceID.pdf    |
+      | Diplome             | diplome.jpg    |
+
+  @attacher-annexe
+  Scénario: Attacher une annexe
+    Lorsque l´utilisateur attache le fichier "equivalence.pdf" de taille 1M de type "Equivalence"
+    Alors le système Demaut "accepte" d´attacher cette annexe
+    Alors les annexes attachées à la demande "12345" sont:
+      | Type d´annexe       | Nom du fichier |
+      | PieceIdentite       | pieceID.pdf    |
+      | Diplome             | diplome.jpg    |
+      | Equivalence         | equivalence.pdf|
+
+  @attacher-annexe @ignoreme
+  Scénario: Refuser d´attacher une annexe de même type et de même nom de fichier
+    Lorsque l´utilisateur attache le fichier "pieceID.pdf" de taille 1M de type "PieceIdentite"
+    Alors le système Demaut "refuse" d´attacher cette annexe
+
+  @supprimer-annexe
+  Scénario: Supprimer une annexe en fonction du nom de fichier et son type
+    Lorsque l´utilisateur supprime le fichier "pieceID.pdf" de type "PieceIdentite"
+    Alors le système Demaut <action> de supprimer cette annexe
+    Alors les annexes attachées à la demande "12345" sont:
+      | Type d´annexe       | Nom du fichier |
+      | Diplome             | diplome.jpg    |
 
   @format-fichier
   Plan du scénario: Accepter ou refuser les annexes en fonction du format de fichier
-    Etant donné une demande de profession "Medecin" en cours de saisie
     Lorsque l´utilisateur attache le fichier <nom_fichier> de taille 2M de type "CertificatDeTravail"
     Alors le système Demaut <action> d´attacher cette annexe
     Exemples:
@@ -36,7 +59,6 @@ Fonctionnalité: Attacher des annexes à la demande par le professionnel
 
   @taille-fichier
   Plan du scénario: Accepter ou refuser les annexes en fonction de la taille du fichier
-    Etant donné une demande de profession "Medecin" en cours de saisie
     Lorsque l´utilisateur attache le fichier "certificat.pdf" de taille <taille_fichier>M de type "CertificatDeTravail"
     Alors le système Demaut <action> d´attacher cette annexe
     Exemples:
@@ -47,25 +69,3 @@ Fonctionnalité: Attacher des annexes à la demande par le professionnel
       | 4              | "refuse"  |
       | 200            | "refuse"  |
 
-  @attacher-annexe
-  Plan du scénario: Attacher une annexe à une liste existante
-    Etant donné une demande de profession "Medecin" en cours de saisie
-    Etant donné la liste des annexes initiale <annexes_initiales> attachées à la demande en cours
-    Lorsque l´utilisateur attache le fichier "certificat.pdf" de taille 2M de type "CertificatDeTravail"
-    Alors le système Demaut "accepte" d´attacher cette annexe
-    Alors les annexes attachées à la demande sont <annexes>
-    Exemples:
-      | annexes_initiales    | annexes                             |
-      | ""                   | "certificat.pdf"                    |
-      | "cv.pdf"             | "certificat.pdf,cv.pdf"             |
-      | "cv.pdf,diplome.pdf" | "certificat.pdf,cv.pdf,diplome.pdf" |
-
-  @type-demande @ignoreme
-  Plan du scénario: Accepter ou refuser les annexes en fonction de leur type et du type de la demande en cours
-    Etant donné une demande de profession <type_demande> en cours de saisie
-    Lorsque l´utilisateur attache les annexes de type <types_annexe>
-    Alors toutes les annexes obligatoires sont validés: <annexes_complet>
-    Exemples:
-      | type_demande | types_annexe         | annexes_complet |
-      | "Medecin"    | "Diplome"            | "non"           |
-      | "Medecin"    | "Certificat,Diplome" | "oui"           |

@@ -16,6 +16,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Demande d'autorisation associée à un utilisateur <br>
+ *
+ */
 @Aggregate
 public class DemandeAutorisation extends Demande {
 
@@ -96,7 +100,7 @@ public class DemandeAutorisation extends Demande {
         return getListeDesAnnexes().extraireAnnexesDeType(typeAnnexe);
     }
 
-    public Collection<Annexe> listerLesAnnexes() {
+    public List<Annexe> listerLesAnnexes() {
         return getListeDesAnnexes().listerAnnexes();
     }
 
@@ -157,8 +161,8 @@ public class DemandeAutorisation extends Demande {
 
     // ********************************************************* Technical methods
     @Override
-    public DemandeFK getFunctionalKey() {
-        return new DemandeFK(this);
+    public DemandeFK<DemandeAutorisation> getFunctionalKey() {
+        return new DemandeFK<DemandeAutorisation>(this);
     }
 
 }

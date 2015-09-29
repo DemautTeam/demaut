@@ -1,17 +1,18 @@
 package ch.vd.demaut.domain.annexes;
 
-import ch.vd.demaut.commons.annotations.ValueObject;
-import ch.vd.demaut.commons.vo.BaseValueObjectWithId;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
+
+import ch.vd.demaut.commons.annotations.Entity;
+import ch.vd.demaut.commons.entities.EntityFunctionalKeyAware;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 
 /**
  * Représente une Annexe associée à une demande {@link DemandeAutorisation} <br>
  * Une annexe est une pièce jointe (un document) avec des données complémentaires
  */
-@ValueObject
-public class Annexe extends BaseValueObjectWithId {
+@Entity
+public class Annexe extends EntityFunctionalKeyAware {
 
     // ********************************************************* Static Fields
 
@@ -67,6 +68,11 @@ public class Annexe extends BaseValueObjectWithId {
 
     public AnnexeMetadata getAnnexeMetadata() {
         return new AnnexeMetadata(typeAnnexe, nomFichier.getNomFichier(), getTaille());
+    }
+
+    @Override
+    public AnnexeFK getFunctionalKey() {
+        return new AnnexeFK(this);
     }
 
     // ********************************************************* Technical methods

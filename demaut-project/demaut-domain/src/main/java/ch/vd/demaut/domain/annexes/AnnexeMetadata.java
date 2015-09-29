@@ -43,11 +43,6 @@ public class AnnexeMetadata extends BaseValueObject {
         return tailleContenu;
     }
 
-    public double getTailleEnMB() {
-        return ((double) tailleContenu) / ((double) (1024 * 1024));
-    }
-
-
     // ********************************************************* Technical methods
 
     // ********************************************************* Private Methods

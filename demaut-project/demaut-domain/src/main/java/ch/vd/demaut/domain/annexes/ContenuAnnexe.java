@@ -30,7 +30,6 @@ public class ContenuAnnexe extends BaseValueObject {
 
     // ********************************************************* Business Methods
 
-
     // ********************************************************* Getters
     public byte[] getContenu() {
         return contenu;
@@ -38,10 +37,6 @@ public class ContenuAnnexe extends BaseValueObject {
 
     public long getTaille() {
         return taille;
-    }
-
-    public double getTailleEnMB() {
-        return ((double) taille) / ((double) (1024 * 1024));
     }
 
     // ********************************************************* Méthodes privées

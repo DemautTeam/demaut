@@ -1,29 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="utilisateurRepository"
-          class="ch.vd.demaut.data.utilisateurs.repo.impl.UtilisateurRepositoryJPA"
-          scope="cucumber-glue">
+        class="ch.vd.demaut.data.utilisateurs.repo.impl.UtilisateurRepositoryJPA"
+        scope="cucumber-glue">
     </bean>
 
     <bean id="demandeAutorisationRepository"
-          class="ch.vd.demaut.data.demandes.autorisation.repo.impl.DemandeAutorisationRepositoryJPA"
-          scope="cucumber-glue">
+        class="ch.vd.demaut.data.demandes.autorisation.repo.impl.DemandeAutorisationRepositoryJPA"
+        scope="cucumber-glue">
     </bean>
 
     <bean id="demandeAutorisationFactory"
-          class="ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory"
-          scope="cucumber-glue"/>
+        class="ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory"
+        scope="cucumber-glue"/>
 
     <bean id="props"
-          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
                 <value>classpath:cucumber-data.cfg</value>
             </list>
         </property>
+    </bean>
+
+    <bean id="transactionManagerWrapper"
+        class="ch.vd.demaut.spring.utils.JpaTransactionManagerWrapper"
+        scope="cucumber-glue">
+        <property name="platformTransactionManager" ref="transactionManagerDemaut"/>
     </bean>
 
     <import resource="classpath:META-INF/spring/jpa-context.xml"/>

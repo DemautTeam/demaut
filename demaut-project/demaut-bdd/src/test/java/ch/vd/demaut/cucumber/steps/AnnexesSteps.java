@@ -1,11 +1,16 @@
 package ch.vd.demaut.cucumber.steps;
 
-import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
-import ch.vd.demaut.domain.annexes.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
+import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.domain.annexes.AnnexeIntrouvableException;
+import ch.vd.demaut.domain.annexes.AnnexeNonValideException;
+import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
+import ch.vd.demaut.domain.annexes.NomFichier;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 
 public class AnnexesSteps {
 
@@ -13,34 +18,27 @@ public class AnnexesSteps {
 
     // ********************************************************* Fields
 
-    private DemandeAutorisationSteps demandeAutorisationSteps;
-
+    private DemandeAutorisation demandeEnCours;
+    
     private AccepteOuRefuse actualAcceptationAnnexe;
-
-    // ********************************************************* Technical
-    // methods
-
-    public DemandeAutorisationSteps getDemandeAutorisationSteps() {
-        return demandeAutorisationSteps;
-    }
-
-    public void setDemandeAutorisationSteps(DemandeAutorisationSteps demandeAutorisationSteps) {
-        this.demandeAutorisationSteps = demandeAutorisationSteps;
-    }
 
     // ********************************************************* Methods
 
+    public void initialiserDemandeEnCours(DemandeAutorisation demandeEnCours) {
+        this.demandeEnCours = demandeEnCours;
+    }
+    
     public void ajouterAnnexesADemandeEnCours(ListeDesAnnexes listeDesAnnexesInitiales) {
         Collection<Annexe> annexesInit = listeDesAnnexesInitiales.listerAnnexes();
         for (Annexe annexe : annexesInit) {
-            demandeAutorisationSteps.getDemandeEnCours().validerEtAttacherAnnexe(annexe);
+            demandeEnCours.validerEtAttacherAnnexe(annexe);
         }
-        assertThat(demandeAutorisationSteps.getDemandeEnCours().listerLesAnnexes()).hasSameSizeAs(annexesInit);
+        assertThat(demandeEnCours.listerLesAnnexes()).hasSameSizeAs(annexesInit);
     }
 
     public void attacherUneAnnexe(Annexe annexe) {
         try {
-            demandeAutorisationSteps.getDemandeEnCours().validerEtAttacherAnnexe(annexe);
+            demandeEnCours.validerEtAttacherAnnexe(annexe);
             accepteAnnexe();
         } catch (AnnexeNonValideException e) {
             refuseAnnexe();
@@ -50,7 +48,7 @@ public class AnnexesSteps {
     public void supprimerAnnexe(String nomDuFichier, String typeAnnexe) {
         NomFichier nomFichier = new NomFichier(nomDuFichier);
         try {
-            demandeAutorisationSteps.getDemandeEnCours().supprimerUneAnnexeParNomFichier(nomFichier);
+            demandeEnCours.supprimerUneAnnexeParNomFichier(nomFichier);
             accepteAnnexe();
         } catch (AnnexeIntrouvableException e) {
             refuseAnnexe();

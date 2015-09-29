@@ -46,6 +46,8 @@ public class SaisirProfessionStepDefinitions extends StepDefinitions {
     @Etantdonné("^une demande de profession \"([^\"]*)\" en cours de saisie à l´état \"([^\"]*)\"$")
     public void une_demande_de_profession_en_cours_de_saisie_à_l_état(Profession profession, StatutDemandeAutorisation etat) throws Throwable {
         donneesProfessionnellesSteps.getDemandeAutorisationSteps().initialiserDemandeEnCours(profession);
+        
+        //Verifie si initilisation ok
         DemandeAutorisation demandeEnCours = donneesProfessionnellesSteps.getDemandeAutorisationSteps().getDemandeEnCours();
         assertThat(demandeEnCours).isNotNull();
         assertThat(demandeEnCours.getStatutDemandeAutorisation()).isEqualTo(etat);

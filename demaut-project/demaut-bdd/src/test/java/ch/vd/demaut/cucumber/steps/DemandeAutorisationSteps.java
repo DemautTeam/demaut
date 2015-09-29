@@ -1,7 +1,13 @@
 package ch.vd.demaut.cucumber.steps;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ch.vd.demaut.domain.annexes.AnnexesObligatoires;
 import ch.vd.demaut.domain.config.ConfigDemaut;
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
@@ -10,13 +16,7 @@ import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationReposit
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.domain.utilisateurs.Utilisateur;
 import ch.vd.demaut.domain.utilisateurs.UtilisateurRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.transaction.annotation.Transactional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-@Transactional
 public class DemandeAutorisationSteps {
 
     // ********************************************************* Static fields
@@ -33,6 +33,7 @@ public class DemandeAutorisationSteps {
     //FIXME utiliser l'objet ThreadLocal ?
     private Utilisateur utilisateur;
     private DemandeAutorisation demandeEnCours;
+    private MappingReferences mappingReferences = new MappingReferences();
 
     // ********************************************************* Methods
 
@@ -64,8 +65,20 @@ public class DemandeAutorisationSteps {
         return demandeEnCours;
     }
 
+    public DemandeAutorisation getDemandeViaReference(ReferenceDeDemande refScenario) {
+        ReferenceDeDemande refDomaine = mappingReferences.trouverDomaineRef(refScenario);
+        DemandeAutorisation demande = demandeAutorisationRepository.recupererDemandeParReference(refDomaine);
+        return demande;
+    }
+
+    
     public Utilisateur getUtilisateur() {
         return utilisateur;
+    }
+
+    public void enregistrerReferenceDemandeEnCours(ReferenceDeDemande refScenario) {
+        ReferenceDeDemande refDomaine = getDemandeEnCours().getReferenceDeDemande();
+        mappingReferences.ajouterMapping(refScenario, refDomaine);
     }
 
     // ***************************** **************************** Technical methods
@@ -92,4 +105,5 @@ public class DemandeAutorisationSteps {
         demandeAutorisationRepository.deleteAll();
         utilisateurRepository.deleteAll();
     }
+
 }

@@ -1,12 +1,25 @@
 package ch.vd.demaut.cucumber.steps.definitions;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
 import ch.vd.demaut.commons.utils.FileMockHelper;
 import ch.vd.demaut.cucumber.converteurs.annexes.ListeDesAnnexesConverter;
 import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
-import ch.vd.demaut.cucumber.converteurs.commons.OuiNonConverter;
+import ch.vd.demaut.cucumber.converteurs.demandes.ReferenceDeDemandeConverter;
 import ch.vd.demaut.cucumber.converteurs.utilisateurs.LoginConverter;
 import ch.vd.demaut.cucumber.steps.AnnexesSteps;
-import ch.vd.demaut.domain.annexes.*;
+import ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps;
+import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.domain.annexes.AnnexeValidateur;
+import ch.vd.demaut.domain.annexes.FormatFichierAccepte;
+import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
+import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import cucumber.api.DataTable;
@@ -15,23 +28,27 @@ import cucumber.api.java.fr.Alors;
 import cucumber.api.java.fr.Etantdonné;
 import cucumber.api.java.fr.Lorsque;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 /**
- * Step definitions pour la fonctionnalité "Attacher des annexes"
+ * Step definitions pour la fonctionnalité "@annexes"
  */
 public class AttacherAnnexeStepDefinitions extends StepDefinitions {
 
     // ********************************************************* Fields
 
+    private DemandeAutorisationSteps demandeAutorisationSteps;
+
     private AnnexesSteps annexesSteps;
 
     // ********************************************************* Technical
     // methods
+
+    public DemandeAutorisationSteps getDemandeAutorisationSteps() {
+        return demandeAutorisationSteps;
+    }
+
+    public void setDemandeAutorisationSteps(DemandeAutorisationSteps demandeAutorisationSteps) {
+        this.demandeAutorisationSteps = demandeAutorisationSteps;
+    }
 
     public AnnexesSteps getAnnexesSteps() {
         return annexesSteps;
@@ -46,14 +63,16 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
     // ********************************************************* Given
 
     @Etantdonné("^l´utilisateur identifié et connecté avec le login \"([^\"]*)\"$")
-    public void initialiser_utilisateur(
-            @Transform(LoginConverter.class) Login login) throws Throwable {
-        annexesSteps.getDemandeAutorisationSteps().initialiserUtilisateur(login);
+    public void initialiser_utilisateur(@Transform(LoginConverter.class) Login login) throws Throwable {
+        getDemandeAutorisationSteps().initialiserUtilisateur(login);
     }
 
-    @Etantdonné("^une demande de profession \"([^\"]*)\" en cours de saisie$")
-    public void initialiserUneDemandeEnCours(Profession profession) throws Throwable {
-        annexesSteps.getDemandeAutorisationSteps().initialiserDemandeEnCours(profession);
+    @Etantdonné("^une demande de profession \"([^\"]*)\" en cours de saisie ayant la référence \"([^\"]*)\"$")
+    public void initialiserUneDemandeEnCours(Profession profession,
+            @Transform(ReferenceDeDemandeConverter.class) ReferenceDeDemande refDemande) throws Throwable {
+        getDemandeAutorisationSteps().initialiserDemandeEnCours(profession);
+        getDemandeAutorisationSteps().enregistrerReferenceDemandeEnCours(refDemande);
+        getAnnexesSteps().initialiserDemandeEnCours(getDemandeAutorisationSteps().getDemandeEnCours());
     }
 
     @Etantdonné("^les formats de fichier acceptés:$")
@@ -74,46 +93,48 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
         annexesSteps.ajouterAnnexesADemandeEnCours(listeDesAnnexesInitiales);
     }
 
-    @Etantdonné("^les annexes obligatoires par type de demande:$")
-    public void les_annexes_obligatoires_par_type_de_demande(DataTable dataTable) throws Throwable {
-        List<Map<String, String>> mappingProfessionsAvecTypesAnnexeObligatoires = dataTable.asMaps(String.class, String.class);
-        for (Map<String, String> mappingUneProfessionAvecTypesAnnexeObligatoires : mappingProfessionsAvecTypesAnnexeObligatoires) {
-
-            String professionStr = mappingUneProfessionAvecTypesAnnexeObligatoires.get("Type de demande");
-            Profession profession = Profession.valueOf(professionStr);
-
-            String annexesObligatoiresStr = mappingUneProfessionAvecTypesAnnexeObligatoires.get("Types d´annexe obligatoires");
-            String[] annexesObligatoiresArray = annexesObligatoiresStr.split(",");
-            AnnexesObligatoires.Builder builder = new AnnexesObligatoires.Builder();
-            for (String annexeObligatoireStr : annexesObligatoiresArray) {
-                TypeAnnexe annexeObligatoire = TypeAnnexe.valueOf(annexeObligatoireStr);
-                builder.ajouterAnnexeObligatoire(annexeObligatoire);
-            }
-            AnnexesObligatoires annexesObligatoires = builder.build();
-            annexesSteps.getDemandeAutorisationSteps().ajouterAnnexesObligatoires(profession, annexesObligatoires);
-        }
+    @Etantdonné("^les annexes déja saisies:$")
+    public void les_annexes_déja_saisies_par_l_utilisateur(DataTable dataTable) throws Throwable {
+        ListeDesAnnexes annexesSaisies = buildListeAnnexes(dataTable);
+        getAnnexesSteps().ajouterAnnexesADemandeEnCours(annexesSaisies);
     }
+    
 
     // ********************************************************* When
 
     @Lorsque("^l´utilisateur attache le fichier \"([^\"]*)\" de taille (\\d+)M de type \"([^\"]*)\"$")
     public void utilisateur_attache_le_fichier_certificat_exe(String nomFichier, Integer tailleFichierEnMB,
-                                                              TypeAnnexe typeAnnexe) throws Throwable {
+            TypeAnnexe typeAnnexe) throws Throwable {
 
         creerEtAttacherAnnexe(nomFichier, tailleFichierEnMB, typeAnnexe);
     }
 
-    @Lorsque("^l´utilisateur attache les annexes de type \"([^\"]*)\"$")
-    public void utilisateur_attache_les_annexes_de_type(String typesAnnexe) throws Throwable {
-        String[] typesAnnexeArray = typesAnnexe.split(",");
-        for (String typeAnnexeStr : typesAnnexeArray) {
-            TypeAnnexe typeAnnexe = TypeAnnexe.valueOf(typeAnnexeStr);
-            creerEtAttacherAnnexe("annexe.pdf", 5, typeAnnexe);
-        }
+    // ********************************************************* Then
+
+    @Alors("^le système Demaut \"(accepte|refuse)\" (?:d´attacher|de supprimer) cette annexe$")
+    public void le_système_Demaut_accepte_ou_refuse_cette_annexe(AccepteOuRefuse action) throws Throwable {
+        annexesSteps.verifieAcceptationAnnexe(action);
     }
 
-    // ********************************************************* Méthodes
-    // privées
+    @Alors("^les annexes attachées à la demande sont \"([^\"]*)\"$")
+    public void le_système_Demaut_annexe_le_fichier_à_la_demande(
+            @Transform(ListeDesAnnexesConverter.class) ListeDesAnnexes listeDesAnnexesAttendues) throws Throwable {
+        DemandeAutorisation demandeEnCours = getDemandeAutorisationSteps().getDemandeEnCours();
+        Collection<Annexe> annexesDemandeEnCours = demandeEnCours.listerLesAnnexes();
+        Collection<Annexe> annexesAttendues = listeDesAnnexesAttendues.listerAnnexes();
+        assertThat(annexesDemandeEnCours).hasSameSizeAs(annexesAttendues);
+    }
+
+    @Alors("^les annexes attachées à la demande \"([^\"]*)\" sont:$")
+    public void les_annexes_attachées_sont(@Transform(ReferenceDeDemandeConverter.class) ReferenceDeDemande refScenario, DataTable dataTable)
+            throws Throwable {
+        DemandeAutorisation demande = getDemandeAutorisationSteps().getDemandeViaReference(refScenario);
+        List<Annexe> annexesAttendues = buildListeAnnexes(dataTable).listerAnnexes();
+        List<Annexe> annexesDemande = demande.listerLesAnnexes();
+        assertThat(annexesDemande).containsExactlyElementsOf(annexesAttendues);
+    }
+
+    // ******************************************************* Méthodes privées
 
     private void creerEtAttacherAnnexe(String nomFichier, Integer tailleFichier, TypeAnnexe typeAnnexe) {
 
@@ -124,24 +145,21 @@ public class AttacherAnnexeStepDefinitions extends StepDefinitions {
         annexesSteps.attacherUneAnnexe(annexe);
     }
 
-    // ********************************************************* Then
-
-    @Alors("^le système Demaut \"(accepte|refuse)\" d´attacher cette annexe$")
-    public void le_système_Demaut_accepte_ou_refuse_cette_annexe(AccepteOuRefuse action) throws Throwable {
-        annexesSteps.verifieAcceptationAnnexe(action);
+    private ListeDesAnnexes buildListeAnnexes(DataTable dataTable) {
+        
+        ListeDesAnnexes annexes = new ListeDesAnnexes();
+        
+        List<Map<String, String>> mappingTypesNomFichiersAnnexesSaisies = dataTable.asMaps(String.class, String.class);
+        for (Map<String, String> mappingUnTypeNomFichierAnnexesSaisies : mappingTypesNomFichiersAnnexesSaisies) {
+            String typeDeLAnnexe = mappingUnTypeNomFichierAnnexesSaisies.get("Type d´annexe");
+            TypeAnnexe typeAnnexe = TypeAnnexe.valueOf(typeDeLAnnexe);
+            String nomFichier = mappingUnTypeNomFichierAnnexesSaisies.get("Nom du fichier");
+            byte[] contenuFichier = FileMockHelper.buildContenuFichier(2);
+            Annexe annexe = new Annexe(typeAnnexe, nomFichier, contenuFichier, "01.01.2015 11:00");
+            annexes.ajouterAnnexe(annexe);
+        }
+        
+        return annexes;
     }
 
-    @Alors("^les annexes attachées à la demande sont \"([^\"]*)\"$")
-    public void le_système_Demaut_annexe_le_fichier_à_la_demande(
-            @Transform(ListeDesAnnexesConverter.class) ListeDesAnnexes listeDesAnnexesAttendues) throws Throwable {
-        Collection<Annexe> annexesDeLaDemande = annexesSteps.getDemandeAutorisationSteps().getDemandeEnCours().listerLesAnnexes();
-        Collection<Annexe> annexesAttendues = listeDesAnnexesAttendues.listerAnnexes();
-        assertThat(annexesDeLaDemande).hasSameSizeAs(annexesAttendues);
-        // TODO : Vérifier que les noms de fichier attachés sont ceux qui sont attendus
-    }
-
-    @Alors("^toutes les annexes obligatoires sont validés: \"([^\"]*)\"$")
-    public void la_liste_des_annexes_obligatoires_est(@Transform(OuiNonConverter.class) Boolean complete) throws Throwable {
-        assertThat(annexesSteps.getDemandeAutorisationSteps().getDemandeEnCours().annexesObligatoiresCompletes()).isEqualTo(complete);
-    }
 }

@@ -11,9 +11,9 @@ import java.util.List;
 @ValueObject
 public class DonneesProfessionnelles extends BaseValueObjectWithId {
 
-    final private CodeGLN codeGLN;
+    private CodeGLN codeGLN;
 
-    final private List<Diplome> diplomes;
+    private List<Diplome> diplomes;
 
     //Used for OpenJPA only
     protected DonneesProfessionnelles() {
