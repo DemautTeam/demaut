@@ -8,23 +8,22 @@
                     <button type="button" class="close" data-target="#Formulaire_vide" data-dismiss="alert">
                         <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
                     </button>
-                    Veuillez saisir l'information concernant votre demande !
+                    Veuillez saisir l'information concernant votre demande.
                 </div>
                 <div ng-hide="professionSante.professionDataForm.$pristine || professionSante.professionDataForm.$valid">
                     <div id="Profession_obligatoire" class="alert alert-danger" ng-show="professionSante.professionDataForm.profession.$touched && professionSante.professionDataForm.profession.$error.required">
                         <button type="button" class="close" data-target="#Profession_obligatoire" data-dismiss="alert">
                             <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
                         </button>
-                        Veuillez saisir votre profession !
+                        Veuillez saisir votre profession.
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-4"><label for="profession">Profession demandée</label></div>
                     <div class="col-md-6">
-                        <select id="profession" name="profession" ng-model="professionData.profession" required>
-                            <option ng-repeat="profession in professionData.professions" value="{{profession.id}}">{{profession.libl}}</option>
-                        </select>
+                        <select id="profession" name="profession" ng-model="professionData.profession" required
+                                ng-options="profession.libl for profession in professionData.professions track by profession.id"/>
                     </div>
                 </div>
                 <div class="row">

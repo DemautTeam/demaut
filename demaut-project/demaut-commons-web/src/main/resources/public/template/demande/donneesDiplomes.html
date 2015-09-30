@@ -10,6 +10,12 @@
                     </button>
                     Veuillez saisir vos titres et formations !
                 </div>
+                <div id="Edit_warning" class="alert alert-warning" ng-show="wouldEditDiplome">
+                    <button type="button" class="close" data-target="#Edit_warning" data-dismiss="alert">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
+                    </button>
+                    Le diplôme selectionné en modification a été supprimé en base.
+                </div>
                 <div ng-hide="donneesDiplome.diplomeDataForm.$pristine || donneesDiplome.diplomeDataForm.$valid">
                     <div id="TypeDiplome_obligatoire" class="alert alert-danger" ng-show="donneesDiplome.diplomeDataForm.typeDiplome.$touched && donneesDiplome.diplomeDataForm.typeDiplome.$error.required">
                         <button type="button" class="close" data-target="#TypeDiplome_obligatoire" data-dismiss="alert">
@@ -21,34 +27,34 @@
                         <button type="button" class="close" data-target="#TitreFormation_obligatoire" data-dismiss="alert">
                             <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
                         </button>
-                        Veuillez selectionner un un titre de formation !
+                        Veuillez selectionner un un titre de formation.
                     </div>
                     <div id="DateObtention_obligatoire" class="alert alert-danger" ng-show="donneesDiplome.diplomeDataForm.dateObtention.$touched && donneesDiplome.diplomeDataForm.dateObtention.$error.required">
                         <button type="button" class="close" data-target="#DateObtention_obligatoire" data-dismiss="alert">
                             <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
                         </button>
-                        Veuillez saisir une date d'obtention du diplôme !
+                        Veuillez saisir une date d'obtention du diplôme.
                     </div>
                     <div id="PaysObtention_obligatoire" class="alert alert-danger" ng-show="donneesDiplome.diplomeDataForm.paysObtention.$touched && donneesDiplome.diplomeDataForm.paysObtention.$error.required">
                         <button type="button" class="close" data-target="#PaysObtention_obligatoire" data-dismiss="alert">
                             <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
                         </button>
-                        Veuillez saisir le pays d'obtention du diplôme !
+                        Veuillez saisir le pays d'obtention du diplôme.
                     </div>
-                    <div id="NPA_valide" class="alert alert-danger" ng-show="donneesDiplome.diplomeDataForm.dateReconnaissance.$touched && donneesDiplome.diplomeDataForm.dateReconnaissance.$error.required">
-                        <button type="button" class="close" data-target="#NPA_valide" data-dismiss="alert">
+                    <div id="DateReconnaissance_obligatoire" class="alert alert-danger"
+                         ng-show="(donneesDiplome.diplomeDataForm.dateReconnaissance.$touched && donneesDiplome.diplomeDataForm.dateReconnaissance.$error.required) || (!isDateReconnaissanceSaisie() && (wouldStepNext || wouldAddDiplome))">
+                        <button type="button" class="close" data-target="#DateReconnaissance_obligatoire" data-dismiss="alert">
                             <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
                         </button>
-                        Veuillez saisir une date de reconnaissance du diplôme !
+                        Veuillez saisir une date de reconnaissance du diplôme.
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-2"><label for="typeDiplome">Type de diplôme*</label></div>
                     <div class="col-md-10">
-                        <select id="typeDiplome" name="typeDiplome" ng-model="diplomeData.typeDiplomeId" ng-change="fetchListeFormations()" required>
-                            <option ng-repeat="typeDiplome in diplomeData.typeDiplomes" value="{{typeDiplome.id}}">{{typeDiplome.libl}}</option>
-                        </select>
+                        <select id="typeDiplome" name="typeDiplome" ng-model="diplomeData.typeDiplome" ng-change="fetchListeFormations()" required
+                            ng-options="typeDiplome.libl for typeDiplome in diplomeData.typeDiplomes track by typeDiplome.id"/>
                     </div>
                 </div>
                 <div class="row">
@@ -57,9 +63,8 @@
                 <div class="row">
                     <div class="col-md-2"><label for="typeFormation">Titre de la formation*</label></div>
                     <div class="col-md-10">
-                        <select id="typeFormation" name="typeFormation" ng-model="diplomeData.typeFormationId" required>
-                            <option ng-repeat="typeFormation in diplomeData.typeFormations" value="{{typeFormation.id}}">{{typeFormation.libl}}</option>
-                        </select>
+                        <select id="typeFormation" name="typeFormation" ng-model="diplomeData.typeFormation" required
+                                ng-options="typeFormation.libl for typeFormation in diplomeData.typeFormations track by typeFormation.id"/>
                     </div>
                 </div>
                 <div class="row">
@@ -69,13 +74,12 @@
                     <label for="dateObtention" class="col-md-2">Date d'obtention*</label>
                     <div class="col-md-4">
                         <input type="text" id="dateObtention" name="dateObtention" placeholder="jj.mm.aaaa"
-                               class="form-control" required="required" ng-model="diplomeData.dateObtention">
+                               class="form-control" ng-model="diplomeData.dateObtention" required>
                     </div>
                     <label for="paysObtention" class="col-md-2">Pays d'obtention*</label>
                     <div class="col-md-2">
-                        <select id="paysObtention" name="paysObtention" ng-model="diplomeData.paysObtentionId" required>
-                            <option ng-repeat="pays in diplomeData.paysList" value="{{pays.id}}">{{pays.libl}}</option>
-                        </select>
+                        <select id="paysObtention" name="paysObtention" ng-model="diplomeData.paysObtention" required
+                            ng-options="pays.libl for pays in diplomeData.paysList track by pays.id"/>
                     </div>
                 </div>
                 <div class="row">
@@ -85,7 +89,7 @@
                     <label for="dateReconnaissance" class="col-md-2">Date de reconnaissance</label>
                     <div class="col-md-4">
                         <input type="text" id="dateReconnaissance" name="dateReconnaissance" placeholder="jj.mm.aaaa"
-                               class="form-control" ng-required="isDateReconnaissanceRequired()" ng-model="diplomeData.dateReconnaissance">
+                               class="form-control" ng-model="diplomeData.dateReconnaissance" ng-required="isDateReconnaissanceRequired()" >
                     </div>
                 </div>
             </ng-form>
@@ -138,4 +142,4 @@
         </div>
     </fieldset>
 </div>
-<step-actions preview-step-fn="previewStep()" next-step-fn="nextStep()"/>
+<step-actions back-step-fn="backStep()" next-step-fn="nextStep()"/>

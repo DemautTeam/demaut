@@ -59,8 +59,7 @@ public class AnnexesServiceImpl implements AnnexesService {
 
     @Transactional
     @Override
-    public void attacherUneAnnexe(ReferenceDeDemande referenceDeDemande, File file, NomFichier nomFichier,
-                                  TypeAnnexe type) {
+    public void attacherUneAnnexe(ReferenceDeDemande referenceDeDemande, File file, NomFichier nomFichier, TypeAnnexe type) {
         ContenuAnnexe contenuAnnexe = buildContenuAnnexe(file);
         Annexe annexe = new Annexe(type, nomFichier, contenuAnnexe, new DateCreation(new LocalDate()));
         attacherAnnexe(referenceDeDemande, annexe);

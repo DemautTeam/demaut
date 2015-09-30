@@ -56,7 +56,7 @@ public class DiplomeRestImpl {
     @Inject
     private DonneesProfessionnellesService donneesProfessionnellesService;
 
-    private DateTimeFormatter SHORT_DATE_FORMATTER = DateTimeFormat.forPattern("dd-MM-yyyy");
+    private DateTimeFormatter SHORT_DATE_FORMATTER = DateTimeFormat.forPattern("dd.MM.yyyy");
 
     @GET
     @Path("/typeDiplomesList")

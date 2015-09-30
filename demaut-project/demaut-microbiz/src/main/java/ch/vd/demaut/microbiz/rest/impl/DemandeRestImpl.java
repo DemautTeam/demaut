@@ -38,7 +38,7 @@ public class DemandeRestImpl {
     @RolesAllowed("USER")
     public Response initialiser(@Context UriInfo uriInfo, @PathParam("professionId") String professionIdStr)
             throws IOException {
-        LOGGER.info("initialiser demande");
+        LOGGER.info("initialiser demande professionId " + professionIdStr);
 
         Integer professionId = Integer.valueOf(professionIdStr);
         Profession profession = Profession.getTypeById(professionId);

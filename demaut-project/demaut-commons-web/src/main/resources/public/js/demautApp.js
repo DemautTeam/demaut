@@ -133,7 +133,7 @@ ngDemautApp
         $scope.nextStep = function(){
             $scope.wouldStepNext = true;
             if ($scope.professionSante.professionDataForm.$valid) {
-                $http.get(urlPrefix + '/demande/initialiser/' + $scope.professionData.profession).
+                $http.get(urlPrefix + '/demande/initialiser/' + $scope.professionData.profession.id).
                     success(function (data, status, headers, config) {
                     	var refDemande = angular.fromJson(data.response);
                     	//TODO : Ajouter le error handling if refDemande null ou undefined 
@@ -160,13 +160,28 @@ ngDemautApp
         this.params = $routeParams;
         $scope.testSuisse = nationalityTest;//récupération du service de test des nationnalité
         $scope.personalData = {};
+        $scope.personalData.nationalites = [];
+
+        if ($scope.personalData.nationalites == null || $scope.personalData.nationalites == undefined || $scope.personalData.nationalites.length == 0) {
+            $http.get(urlPrefix + '/personal/nationalites').
+                success(function (data, status, headers, config) {
+                    $scope.personalData.nationalites = angular.fromJson(data.response);
+                }).
+                error(function (data, status, headers, config) {
+                    $rootScope.error = 'Error downloading ../personal/nationalites';
+                });
+        }
 
         $scope.isPermisRequired = function () {
-            return !nationalityTest.isSuisse($scope.personalData.nationalite) && !$scope.personalData.permis;
+            return $scope.personalData.nationalite != null && $scope.personalData.nationalite != undefined && !nationalityTest.isSuisse($scope.personalData.nationalite.libl) && !$scope.personalData.permis;
+        };
+
+        $scope.isSuisse = function () {
+            return $scope.personalData.nationalite != null && $scope.personalData.nationalite != undefined && nationalityTest.isSuisse($scope.personalData.nationalite.libl);
         };
 
         $scope.resetPermis = function () {
-            if (nationalityTest.isSuisse($scope.personalData.nationalite)) {
+            if ($scope.isSuisse()) {
                 $scope.personalData.permis = null;
             }
         };
@@ -222,25 +237,27 @@ ngDemautApp
         }
 
         $scope.isDateReconnaissanceRequired = function () {
-            var paysObtentionObj = null;
-            if($scope.diplomeData.paysObtentionId != null && $scope.diplomeData.paysObtentionId != undefined) {
-                for (var indexK = 0; indexK < $scope.diplomeData.paysList.length; indexK++) {
-                    if ($scope.diplomeData.paysList[indexK].id == $scope.diplomeData.paysObtentionId) {
-                        paysObtentionObj = $scope.diplomeData.paysList[indexK];
-                        break;
-                    }
-                }
-            }
-            return paysObtentionObj != null && paysObtentionObj != undefined && !nationalityTest.isSuisse(paysObtentionObj.libl);
+            return $scope.diplomeData.paysObtention != null && $scope.diplomeData.paysObtention != undefined &&
+                !nationalityTest.isSuisse($scope.diplomeData.paysObtention.libl);
+        };
+
+        $scope.isDateReconnaissanceSaisie = function () {
+            return ($scope.diplomeData.paysObtention == null &&  $scope.diplomeData.paysObtention == undefined)
+                ||
+                ($scope.diplomeData.paysObtention != null &&  $scope.diplomeData.paysObtention != undefined &&
+                    nationalityTest.isSuisse($scope.diplomeData.paysObtention.libl))
+                ||
+                (!nationalityTest.isSuisse($scope.diplomeData.paysObtention.libl) &&
+                    $scope.diplomeData.dateReconnaissance != null && $scope.diplomeData.dateReconnaissance != undefined && $scope.diplomeData.dateReconnaissance != '');
         };
 
         $scope.fetchListeFormations = function(){
-            $http.get(urlPrefix + '/diplomes/typeFormationsList/' + $scope.diplomeData.typeDiplomeId).
+            $http.get(urlPrefix + '/diplomes/typeFormationsList/' + $scope.diplomeData.typeDiplome.id).
                 success(function (data, status, headers, config) {
                     $scope.diplomeData.typeFormations = angular.fromJson(data.response);
                 }).
                 error(function (data, status, headers, config) {
-                    $rootScope.error = 'Error downloading ../diplomes/typeFormationsList/' + $scope.diplomeData.typeDiplomeId;
+                    $rootScope.error = 'Error downloading ../diplomes/typeFormationsList/' + $scope.diplomeData.typeDiplome.id;
                 });
         };
 
@@ -262,41 +279,20 @@ ngDemautApp
         };
 
         $scope.addAnotherDiplome = function(){
-            var isValidTypeDiplome = $scope.diplomeData.typeDiplomeId != null && $scope.diplomeData.typeDiplomeId != undefined;
-            var isValidTypeFormation = $scope.diplomeData.typeFormationId != null && $scope.diplomeData.typeFormationId != undefined;
+            $scope.wouldAddDiplome = true;
+            var isValidTypeDiplome = $scope.diplomeData.typeDiplome != null && $scope.diplomeData.typeDiplome != undefined;
+            var isValidTypeFormation = $scope.diplomeData.typeFormation != null && $scope.diplomeData.typeFormation != undefined;
             var isValidDateObtention = $scope.diplomeData.dateObtention != null && $scope.diplomeData.dateObtention != undefined && $scope.diplomeData.dateObtention != '';
-            var isValidPaysObtention = $scope.diplomeData.paysObtentionId != null && $scope.diplomeData.paysObtentionId != undefined;
+            var isValidPaysObtention = $scope.diplomeData.paysObtention != null && $scope.diplomeData.paysObtention != undefined;
 
-            if (isValidTypeDiplome && isValidTypeFormation && isValidDateObtention && isValidPaysObtention) {
-                var dateObtentionString = $scope.diplomeData.dateObtention;
-                var diplomeKey = $scope.diplomeData.typeDiplomeId + '#' + $scope.diplomeData.typeFormationId + '#' + dateObtentionString;
-                var typeDiplomeObj = null;
-                var typeFormationObj = null;
-                var paysObtentionObj = null;
-                for (var indexI = 0; indexI < $scope.diplomeData.typeDiplomes.length; indexI++) {
-                    if ($scope.diplomeData.typeDiplomes[indexI].id == $scope.diplomeData.typeDiplomeId) {
-                        typeDiplomeObj = $scope.diplomeData.typeDiplomes[indexI];
-                        break;
-                    }
-                }
-                for (var indexJ = 0; indexJ < $scope.diplomeData.typeFormations.length; indexJ++) {
-                    if ($scope.diplomeData.typeFormations[indexJ].id == $scope.diplomeData.typeFormationId) {
-                        typeFormationObj = $scope.diplomeData.typeFormations[indexJ];
-                        break;
-                    }
-                }
-                for (var indexK = 0; indexK < $scope.diplomeData.paysList.length; indexK++) {
-                    if ($scope.diplomeData.paysList[indexK].id == $scope.diplomeData.paysObtentionId) {
-                        paysObtentionObj = $scope.diplomeData.paysList[indexK];
-                        break;
-                    }
-                }
+            if (isValidTypeDiplome && isValidTypeFormation && isValidDateObtention && isValidPaysObtention && $scope.isDateReconnaissanceSaisie()) {
+                var diplomeKey = $scope.diplomeData.typeDiplome.id + '#' + $scope.diplomeData.typeFormation.id + '#' + $scope.diplomeData.dateObtention;
                 var diplome = [
                     {   keyDiplome: diplomeKey.replace(/\s/g, ''),
-                        typeDiplome: typeDiplomeObj,
-                        typeFormation: typeFormationObj,
+                        typeDiplome: $scope.diplomeData.typeDiplome,
+                        typeFormation: $scope.diplomeData.typeFormation,
                         dateObtention: $scope.diplomeData.dateObtention,
-                        paysObtention: paysObtentionObj,
+                        paysObtention: $scope.diplomeData.paysObtention,
                         dateReconnaissance: $scope.diplomeData.dateReconnaissance
                     }
                 ];
@@ -304,25 +300,33 @@ ngDemautApp
                 // TODO attendre la reponse server avant de faire le push
                 $scope.diplomeData.diplomes.push(diplome);
                 doCreateDiplome(diplome)
-                $scope.diplomeData.typeDiplomeId = null;
-                $scope.diplomeData.typeFormationId = null;
+                $scope.diplomeData.typeDiplome = null;
+                $scope.diplomeData.typeFormation = null;
                 $scope.diplomeData.dateObtention = null;
-                $scope.diplomeData.paysObtentionId = null;
+                $scope.diplomeData.paysObtention = null;
                 $scope.diplomeData.dateReconnaissance = null;
+                $scope.donneesDiplome.diplomeDataForm.$valid = true;
+                $scope.donneesDiplome.diplomeDataForm.$error = null;
+                $scope.donneesDiplome.diplomeDataForm.$setPristine();
+                $scope.wouldAddDiplome = false;
             }
         };
 
         $scope.editDiplome = function(targetDiplome){
             for (var indexI = 0; indexI < $scope.diplomeData.diplomes.length; indexI++) {
-                if ($scope.diplomeData.diplomes[indexI].keyDiplome == targetDiplome[0].keyDiplome) {
-                    $scope.diplomeData.typeDiplomeId = targetDiplome[0].typeDiplome;
-                    $scope.diplomeData.typeFormationId = targetDiplome[0].typeFormation;
+                if ($scope.diplomeData.diplomes[indexI][0].keyDiplome == targetDiplome[0].keyDiplome) {
+                    $scope.diplomeData.typeDiplome = targetDiplome[0].typeDiplome;
+                    $scope.diplomeData.typeFormation = targetDiplome[0].typeFormation;
                     $scope.diplomeData.dateObtention = targetDiplome[0].dateObtention;
-                    $scope.diplomeData.paysObtentionId = targetDiplome[0].paysObtention;
+                    $scope.diplomeData.paysObtention = targetDiplome[0].paysObtention;
                     $scope.diplomeData.dateReconnaissance = targetDiplome[0].dateReconnaissance;
                     // TODO attendre la reponse server avant de faire le splice
                     $scope.diplomeData.diplomes.splice(indexI, 1);
                     doDeleteDiplome(targetDiplome);
+                    $scope.donneesDiplome.diplomeDataForm.$valid = true;
+                    $scope.donneesDiplome.diplomeDataForm.$setPristine();
+                    $scope.wouldEditDiplome = true;
+                    $scope.$apply();
                     break;
                 }
             }
@@ -330,7 +334,7 @@ ngDemautApp
 
         $scope.deleteDiplome = function(targetDiplome){
             for (var indexI = 0; indexI < $scope.diplomeData.diplomes.length; indexI++) {
-                if ($scope.diplomeData.diplomes[indexI].keyDiplome == targetDiplome[0].keyDiplome) {
+                if ($scope.diplomeData.diplomes[indexI][0].keyDiplome == targetDiplome[0].keyDiplome) {
                     // TODO attendre la reponse server avant de faire le splice
                     $scope.diplomeData.diplomes.splice(indexI, 1);
                     doDeleteDiplome(targetDiplome);
