@@ -104,10 +104,10 @@ public class AnnexeRestImpl {
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @RolesAllowed("USER")
     public Response afficherUneAnnexe(@Context UriInfo uriInfo, @PathParam("demandeReference") String demandeReference,
-            @PathParam("annexeFileName") String annexeFileName, @Multipart("annexeType") String annexeTypeIdStr)
+            @PathParam("annexeFileName") String annexeFileName, @PathParam("annexeType") String annexeTypeIdStr)
                     throws JsonProcessingException {
 
-        LOGGER.info("afficherUneAnnexe " + annexeFileName);
+        LOGGER.info("afficherUneAnnexe:demandeReference=" + demandeReference + ", annexeFileName=" + annexeFileName + ", annexeTypeIdStr=" + annexeTypeIdStr);
 
         //TODO: factoriser dans une methode privée
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);

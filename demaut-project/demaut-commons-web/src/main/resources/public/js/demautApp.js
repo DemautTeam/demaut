@@ -109,7 +109,7 @@ ngDemautApp
     }])
     .controller('ProfessionSanteController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', 'professionTest', '$sessionStorage', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log, professionTest, $sessionStorage) {
         $rootScope.contextMenu = "Profession Santé";
-        $scope.indexStep = 2;
+        $scope.indexStep = 1;
         this.name = "ProfessionSanteController";
         this.params = $routeParams;
         $scope.$storage = $sessionStorage;
@@ -154,7 +154,7 @@ ngDemautApp
     }])
     .controller('DonneesPersoController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', 'urlPrefix', '$log', 'nationalityTest', '$sessionStorage', function ($scope, $rootScope, $routeParams, $http, $location, $interval, urlPrefix, $log, nationalityTest, $sessionStorage) {
         $rootScope.contextMenu = "Données Personnelles";
-        $scope.indexStep = 1;
+        $scope.indexStep = 2;
         this.name = "DonneesPersoController";
         this.params = $routeParams;
         $scope.testSuisse = nationalityTest;//récupération du service de test des nationnalité
@@ -235,7 +235,7 @@ ngDemautApp
 
         $scope.previewStep = function(){
             $scope.indexStep -= 1;
-            $location.path('/Demaut/demande/professionSante');
+            $location.path('/Demaut/demande/donneesPerso');
         };
 
         $scope.nextStep = function () {
@@ -462,23 +462,25 @@ ngDemautApp
             $scope.$apply();
         };
 
-        $scope.viewAnnexe = function (file, annexeType) {
-            $http.get(urlPrefix + '/annexes/afficher/' + $scope.$storage.refDemande + '/' + file.name.replace(/\s/g, '') + '/' + annexeType, {responseType:'arraybuffer'}).
-                success(function (data, status, headers, config) {
+        $scope.viewAnnexe = function (file, annexeTypeId) {
+        	$scope.filename = file.name;
+            $http.get(urlPrefix + '/annexes/afficher/' + $scope.$storage.refDemande + '/' + $scope.filename + '/' + annexeTypeId, {responseType:'arraybuffer'}).
+            	success(function (data, status, headers, config) {
                     displayAnnexeFromBinary(data);
                 }).
                 error(function (data, status, headers, config) {
                     alert('Error downloading ../annexes/afficher/' + file.name);
                 });
 
-            function displayAnnexeFromBinary(file){
-                var binary = new Blob([file], {type: file.type});
+            function displayAnnexeFromBinary(data){
+            	//data = ArrayBuffer, ArrayBufferView, Blob ou DOMString. Voir https://developer.mozilla.org/fr/docs/Web/API/Blob
+                var binary = new Blob([data], {type: data.type});
                 var fileURL = URL.createObjectURL(binary);
                 console.log(fileURL);
                 var elementLink = document.createElement('A');
                 elementLink.href = fileURL;
                 elementLink.target = '_blank';
-                elementLink.download = file.name;
+                elementLink.download = $scope.filename;
                 document.body.appendChild(elementLink);
                 elementLink.click();
             }
@@ -503,7 +505,7 @@ ngDemautApp
         };
 
         function doDeleteFile(file, annexeType) {
-            $http.get(urlPrefix + '/annexes/supprimer/' + $scope.$storage.refDemande + '/' + file.name.replace(/\s/g, '') + '/' + annexeType)
+            $http.get(urlPrefix + '/annexes/supprimer/' + $scope.$storage.refDemande + '/' + file.name + '/' + annexeType)
                 .success(function (data, status, headers, config) {
                     $rootScope.error = 'Une annexe a été supprimée avec succès: \n Status :' +  status;
                 })
@@ -517,7 +519,7 @@ ngDemautApp
             formData.append('ajaxAction', 'upload');
             formData.append("demandeReference", $scope.$storage.refDemande);
             formData.append("annexeFile", currentFetchedFile);
-            formData.append("annexeFileName", currentFetchedFile.name.replace(/\s/g, ''));
+            formData.append("annexeFileName", currentFetchedFile.name);
             formData.append("annexeFileSize", currentFetchedFile.size);
             formData.append("annexeFileType", currentFetchedFile.type);
             formData.append("annexeType", currentFetchedFile.typeAnnexe);
