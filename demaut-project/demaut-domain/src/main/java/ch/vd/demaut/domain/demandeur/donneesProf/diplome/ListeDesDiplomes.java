@@ -31,7 +31,7 @@ public class ListeDesDiplomes {
         return Collections.unmodifiableList(diplomes);
     }
 
-    public void ajouterDiplome(Diplome diplome) {
+    public void ajouterUnDiplome(Diplome diplome) {
         this.diplomes.add(diplome);
     }
 
@@ -40,8 +40,8 @@ public class ListeDesDiplomes {
         return CollectionUtils.select(diplomes, new BeanPropertyValueEqualsPredicate("typeDiplomeAccepte", typeDiplomeAccepte));
     }
 
-    public void supprimerUnDiplomeParTypeEtTitre(TypeDiplomeAccepte dFormationApprofondie, TitreFormation titreFormation) {
-        Diplome diplome = trouverDiplomeParTypeEtTitre(dFormationApprofondie, titreFormation);
+    public void supprimerUnDiplomeParTypeEtTitre(TypeDiplomeAccepte typeDiplomeAccepte, TitreFormation titreFormation) {
+        Diplome diplome = trouverDiplomeParTypeEtTitre(typeDiplomeAccepte, titreFormation);
         diplomes.remove(diplome);
     }
 
@@ -52,5 +52,18 @@ public class ListeDesDiplomes {
             throw new DiplomeIntrouvableException();
         }
         return (Diplome) diplomeTrouvee;
+    }
+
+    public void supprimerUnDiplome(ReferenceDeDiplome referenceDeDiplome) {
+        Diplome diplome = trouverDiplome(referenceDeDiplome);
+        diplomes.remove(diplome);
+    }
+
+    private Diplome trouverDiplome(ReferenceDeDiplome referenceDeDiplome) {
+        Object diplomeTrouve = CollectionUtils.find(diplomes, new BeanPropertyValueEqualsPredicate("referenceDeDiplome", referenceDeDiplome));
+        if (diplomeTrouve == null) {
+            throw new DiplomeIntrouvableException();
+        }
+        return (Diplome) diplomeTrouve;
     }
 }

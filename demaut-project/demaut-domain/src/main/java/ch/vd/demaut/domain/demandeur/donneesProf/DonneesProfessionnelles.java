@@ -7,6 +7,7 @@ import ch.vd.demaut.commons.annotations.Entity;
 import ch.vd.demaut.commons.entities.AbstractEntity;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ListeDesDiplomes;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ReferenceDeDiplome;
 
 @Entity
 public class DonneesProfessionnelles extends AbstractEntity {
@@ -28,7 +29,11 @@ public class DonneesProfessionnelles extends AbstractEntity {
     }
 
     public void validerEtAjouterDiplome(Diplome diplomeAAjouter) {
-        getListeDesDiplomes().ajouterDiplome(diplomeAAjouter);
+        getListeDesDiplomes().ajouterUnDiplome(diplomeAAjouter);
+    }
+
+    public void supprimerUnDiplome(ReferenceDeDiplome referenceDeDiplome) {
+        getListeDesDiplomes().supprimerUnDiplome(referenceDeDiplome);
     }
 
     public CodeGLN getCodeGLN() {
@@ -38,4 +43,5 @@ public class DonneesProfessionnelles extends AbstractEntity {
     public ListeDesDiplomes getListeDesDiplomes() {
         return new ListeDesDiplomes(diplomes);
     }
+
 }

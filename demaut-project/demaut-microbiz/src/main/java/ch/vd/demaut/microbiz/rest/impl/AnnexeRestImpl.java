@@ -159,8 +159,7 @@ public class AnnexeRestImpl {
         NomFichier nomFichier = new NomFichier(annexeFileName);
         Integer annexeTypeId = Integer.valueOf(annexeTypeIdStr);
         TypeAnnexe typeAnnexe = TypeAnnexe.getTypeById(annexeTypeId);
-        AnnexeFK annexeFK = new AnnexeFK(nomFichier, typeAnnexe);
-        return annexeFK;
+        return new AnnexeFK(nomFichier, typeAnnexe);
     }
 
 }

@@ -10,6 +10,8 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class DonneesProfessionnellesSteps {
 
     // ********************************************************* Static fields
@@ -118,21 +120,32 @@ public class DonneesProfessionnellesSteps {
     }
 
     public void setCritereDiplomeEtranger(String critereDiplomeEtranger) {
+        assertThat(critereDiplomeEtranger).isNotEmpty();
         this.critereDiplomeEtranger = critereDiplomeEtranger;
     }
 
     public void verifierEtRenseignerDateObtention(String dateObtentionStr) {
-        LocalDateConverter localDateConverter = new LocalDateConverter();
-        LocalDate dateObtentionLocal = localDateConverter.transform(dateObtentionStr);
-        this.dateObtention = new DateObtention(dateObtentionLocal);
+        assertThat(dateObtentionStr).isNotEmpty();
+        try {
+            LocalDateConverter localDateConverter = new LocalDateConverter();
+            LocalDate dateObtentionLocal = (LocalDate) localDateConverter.fromString(dateObtentionStr);
+            this.dateObtention = new DateObtention(dateObtentionLocal);
+        } catch (Exception e) {
+            // Format de date invalide
+        }
     }
 
     public void verifierEtRenseignerDateReconnaissance(String dateReconnaissanceStr) {
-        String titreFormationValue = this.titreFormation.getValue();
-        if (!StringUtils.isEmpty(titreFormationValue) && titreFormationValue.contains(this.critereDiplomeEtranger)) {
-            LocalDateConverter localDateConverter = new LocalDateConverter();
-            LocalDate dateReconnaissance = localDateConverter.transform(dateReconnaissanceStr);
-            this.dateReconnaissance = new DateReconnaissance(dateReconnaissance);
+        assertThat(dateReconnaissanceStr).isNotEmpty();
+        try {
+            if (this.titreFormation != null && !StringUtils.isEmpty(this.titreFormation.getValue()) &&
+                !StringUtils.isEmpty(this.critereDiplomeEtranger) && this.titreFormation.getValue().contains(this.critereDiplomeEtranger)) {
+                LocalDateConverter localDateConverter = new LocalDateConverter();
+                LocalDate dateReconnaissance = (LocalDate) localDateConverter.fromString(dateReconnaissanceStr);
+                this.dateReconnaissance = new DateReconnaissance(dateReconnaissance);
+            }
+        } catch (Exception e) {
+            // Format de date invalide
         }
     }
 

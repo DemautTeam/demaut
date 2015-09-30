@@ -85,15 +85,32 @@ public class DonneesProfessionnellesServiceTest {
     @Test
     @Transactional
     public void testAjouterUnDiplomes() {
+        DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService.recupererDonneesProfessionnellesParReferenceDemande(referenceDeDemande);
         donneesProfessionnellesService.ajouterUnDiplome(referenceDeDemande,
                 new ReferenceDeDiplome(UUID.randomUUID().toString()),
                 TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
                 new TitreFormation(TitreFormationApprofondieProgres.ChirurgieDeLaMain.name()),
                 new DateObtention(new LocalDate()), new PaysObtention(Pays.AfriqueDuSud.name()), null);
-
-        DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService.recupererDonneesProfessionnellesParReferenceDemande(referenceDeDemande);
         assertThat(donneesProfessionnelles).isNotNull();
         assertThat(donneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(1);
+    }
+
+    @Test
+    @Transactional
+    public void testSupprimerUnDiplomes() {
+        DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService.recupererDonneesProfessionnellesParReferenceDemande(referenceDeDemande);
+        assertThat(donneesProfessionnelles).isNotNull();
+        donneesProfessionnellesService.ajouterUnDiplome(referenceDeDemande,
+                new ReferenceDeDiplome(UUID.randomUUID().toString()),
+                TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
+                new TitreFormation(TitreFormationApprofondieProgres.ChirurgieDeLaMain.name()),
+                new DateObtention(new LocalDate()), new PaysObtention(Pays.AfriqueDuSud.name()), null);
+        assertThat(donneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(1);
+
+        Diplome diplome = donneesProfessionnelles.getListeDesDiplomes().listerDiplomes().get(0);
+        donneesProfessionnellesService.supprimerUnDiplome(referenceDeDemande, diplome.getReferenceDeDiplome());
+        assertThat(donneesProfessionnelles).isNotNull();
+        assertThat(donneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(0);
     }
 
     private void creerListeDiplomes(DonneesProfessionnelles donneesProfessionnelles) {

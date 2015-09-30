@@ -1,7 +1,29 @@
 <div ng-include="'template/include/include-steps.html'"></div>
 <div class="bs-wizard-info text-left">
-    Récapitulatif page<br />
-    Récapitulatif controller: {{recapitulatif.name}}<br />
-    Récapitulatif params: {{recapitulatif.params}}<br />
+    <fieldset>
+        <legend>Veuillez vérifier vos informations saisies :</legend>
+        <div>
+            <ng-form name="recapitulatif.recapitulatifDataForm">
+                <div id="Formulaire_vide" class="alert alert-danger" ng-show="recapitulatif.recapitulatifDataForm.$pristine && wouldStepNext">
+                    <button type="button" class="close" data-target="#Formulaire_vide" data-dismiss="alert">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
+                    </button>
+                    Veuillez saisir vos données personnelles !
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-6">
+                        Récapitulatif page<br />
+                        Récapitulatif controller: {{recapitulatif.name}}<br />
+                        Récapitulatif params: {{recapitulatif.params}}<br />
+                    </div>
+                </div>
+                <div class="row">
+                    <br/>
+                </div>
+            </ng-form>
+            </div>
+    </fieldset>
 </div>
-<step-actions back-step-fn="backStep()" next-step-fn="nextStep()"/>
+<step-actions preview-step-fn="previewStep()" next-step-fn="nextStep()"/>

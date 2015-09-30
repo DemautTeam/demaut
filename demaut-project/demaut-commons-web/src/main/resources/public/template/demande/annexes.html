@@ -2,6 +2,12 @@
 <div class="bs-wizard-info text-left">
     <fieldset>
         <legend>Pièces à fournir :</legend>
+        <div id="Formulaire_vide" class="alert alert-danger" ng-show="annexes.annexesDataForm.$pristine && wouldStepNext">
+            <button type="button" class="close" data-target="#Formulaire_vide" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
+            </button>
+            Veuillez saisir les informations concernant vos annexes !
+        </div>
         <div style="overflow: auto;height: 460px;">
             <ng-form name="annexes.annexesDataForm">
                 <label>En fonction de votre profil et du type d'autorisation que vous souhaitez, vous devez fournir les pièces suivantes :</label>

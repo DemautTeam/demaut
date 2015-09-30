@@ -3,69 +3,75 @@
     <fieldset>
         <legend>Veuillez saisir vos Données Personnelles :</legend>
         <div>
-            <ng-form name="donneesPerso.personalDataForm">
-                <div ng-hide="donneesPerso.personalDataForm.$pristine || donneesPerso.personalDataForm.$valid">
-                    <div id="Nom_obligatoire" class="alert alert-danger" ng-show="donneesPerso.personalDataForm.nom.$touched && donneesPerso.personalDataForm.nom.$error.required">
+            <ng-form name="donneesPerso.donneesPersoDataForm">
+                <div id="Formulaire_vide" class="alert alert-danger" ng-show="donneesPerso.donneesPersoDataForm.$pristine && wouldStepNext">
+                    <button type="button" class="close" data-target="#Formulaire_vide" data-dismiss="alert">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
+                    </button>
+                    Veuillez saisir vos données personnelles !
+                </div>
+                <div ng-hide="donneesPerso.donneesPersoDataForm.$pristine || donneesPerso.donneesPersoDataForm.$valid">
+                    <div id="Nom_obligatoire" class="alert alert-danger" ng-show="donneesPerso.donneesPersoDataForm.nom.$touched && donneesPerso.donneesPersoDataForm.nom.$error.required">
                         <button type="button" class="close" data-target="#Nom_obligatoire" data-dismiss="alert">
                             <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
                         </button>
                         Veuillez saisir votre nom !
                     </div>
-                    <div id="Prenom_obligatoire" class="alert alert-danger" ng-show="donneesPerso.personalDataForm.prenom.$touched && donneesPerso.personalDataForm.prenom.$error.required">
+                    <div id="Prenom_obligatoire" class="alert alert-danger" ng-show="donneesPerso.donneesPersoDataForm.prenom.$touched && donneesPerso.donneesPersoDataForm.prenom.$error.required">
                         <button type="button" class="close" data-target="#Prenom_obligatoire" data-dismiss="alert">
                             <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
                         </button>
                         Veuillez saisir votre prénom !
                     </div>
-                    <div id="Adresse_obligatoire" class="alert alert-danger" ng-show="donneesPerso.personalDataForm.adressePersonnelle.$touched && donneesPerso.personalDataForm.adressePersonnelle.$error.required">
+                    <div id="Adresse_obligatoire" class="alert alert-danger" ng-show="donneesPerso.donneesPersoDataForm.adressePersonnelle.$touched && donneesPerso.donneesPersoDataForm.adressePersonnelle.$error.required">
                         <button type="button" class="close" data-target="#Adresse_obligatoire" data-dismiss="alert">
                             <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
                         </button>
                         Veuillez saisir votre adresse privée !
                     </div>
-                    <div id="Localite_obligatoire" class="alert alert-danger" ng-show="donneesPerso.personalDataForm.localite.$touched && donneesPerso.personalDataForm.localite.$error.required">
+                    <div id="Localite_obligatoire" class="alert alert-danger" ng-show="donneesPerso.donneesPersoDataForm.localite.$touched && donneesPerso.donneesPersoDataForm.localite.$error.required">
                         <button type="button" class="close" data-target="#Localite_obligatoire" data-dismiss="alert">
                             <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
                         </button>
                         Veuillez saisir la localité de votre adresse privée !
                     </div>
-                    <div id="NPA_valide" class="alert alert-danger" ng-show="donneesPerso.personalDataForm.npa.$touched && donneesPerso.personalDataForm.npa.$invalid">
+                    <div id="NPA_valide" class="alert alert-danger" ng-show="donneesPerso.donneesPersoDataForm.npa.$touched && donneesPerso.donneesPersoDataForm.npa.$invalid">
                         <button type="button" class="close" data-target="#NPA_valide" data-dismiss="alert">
                             <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
                         </button>
                         Veuillez saisir un NPA est valide !
                     </div>
-                    <div id="Pays_obligatoire" class="alert alert-danger" ng-show="donneesPerso.personalDataForm.pays.$touched && donneesPerso.personalDataForm.pays.$error.required">
+                    <div id="Pays_obligatoire" class="alert alert-danger" ng-show="donneesPerso.donneesPersoDataForm.pays.$touched && donneesPerso.donneesPersoDataForm.pays.$error.required">
                         <button type="button" class="close" data-target="#Pays_obligatoire" data-dismiss="alert">
                             <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
                         </button>
                         Veuillez saisir le pays de votre adresse privée !
                     </div>
-                    <div id="Telephone_obligatoire" class="alert alert-danger" ng-show="(donneesPerso.personalDataForm.telephoneMobile.$touched || donneesPerso.personalDataForm.telephonePrive.$touched)  && (donneesPerso.personalDataForm.telephoneMobile.$valid || donneesPerso.personalDataForm.telephonePrive.$valid)">
+                    <div id="Telephone_obligatoire" class="alert alert-danger" ng-show="(donneesPerso.donneesPersoDataForm.telephoneMobile.$touched || donneesPerso.donneesPersoDataForm.telephonePrive.$touched)  && (donneesPerso.donneesPersoDataForm.telephoneMobile.$valid || donneesPerso.donneesPersoDataForm.telephonePrive.$valid)">
                         <button type="button" class="close" data-target="#Telephone_obligatoire" data-dismiss="alert">
                             <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
                         </button>
                         Veuillez saisir au moins un numéro de telephone !
                     </div>
-                    <div id="Email_valide" class="alert alert-danger" ng-show="donneesPerso.personalDataForm.email.$touched && donneesPerso.personalDataForm.email.$invalid">
+                    <div id="Email_valide" class="alert alert-danger" ng-show="donneesPerso.donneesPersoDataForm.email.$touched && donneesPerso.donneesPersoDataForm.email.$invalid">
                         <button type="button" class="close" data-target="#Email_valide" data-dismiss="alert">
                             <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
                         </button>
                         Veuillez saisir un email valide !
                     </div>
-                    <div id="Naissance_valide" class="alert alert-danger" ng-show="donneesPerso.personalDataForm.dateDeNaissance.$touched && donneesPerso.personalDataForm.dateDeNaissance.$invalid">
+                    <div id="Naissance_valide" class="alert alert-danger" ng-show="donneesPerso.donneesPersoDataForm.dateDeNaissance.$touched && donneesPerso.donneesPersoDataForm.dateDeNaissance.$invalid">
                         <button type="button" class="close" data-target="#Naissance_valide" data-dismiss="alert">
                             <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
                         </button>
                         Veuillez saisir une date de naissance valide !
                     </div>
-                    <div id="Nationalite_obligatoire" class="alert alert-danger" ng-show="donneesPerso.personalDataForm.nationalite.$touched && donneesPerso.personalDataForm.nationalite.$invalid">
+                    <div id="Nationalite_obligatoire" class="alert alert-danger" ng-show="donneesPerso.donneesPersoDataForm.nationalite.$touched && donneesPerso.donneesPersoDataForm.nationalite.$invalid">
                         <button type="button" class="close" data-target="#Nationalite_obligatoire" data-dismiss="alert">
                             <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
                         </button>
                         Veuillez saisir votre nationalité !
                     </div>
-                    <div id="Permis_obligatoire" class="alert alert-danger" ng-show="donneesPerso.personalDataForm.nationalite.$touched && !testSuisse.isSuisse(personalData.nationalite) && isPermisRequired()">
+                    <div id="Permis_obligatoire" class="alert alert-danger" ng-show="donneesPerso.donneesPersoDataForm.nationalite.$touched && !testSuisse.isSuisse(personalData.nationalite) && isPermisRequired()">
                         <button type="button" class="close" data-target="#Permis_obligatoire" data-dismiss="alert">
                             <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
                         </button>
@@ -107,15 +113,15 @@
                     </div>
                 </div>
                 <div class="row">
-                    <label for="telephonePrive" class="col-md-2">Téléphone privé<span ng-hide="donneesPerso.personalDataForm.mobilePhone.$valid">*</span></label>
+                    <label for="telephonePrive" class="col-md-2">Téléphone privé<span ng-hide="donneesPerso.donneesPersoDataForm.mobilePhone.$valid">*</span></label>
                     <div class="col-md-6">
-                        <input type="tel" id="telephonePrive" name="telephonePrive" ng-required="!donneesPerso.personalDataForm.telephoneMobile.$valid || donneesPerso.personalDataForm.$pristine"  class="form-control"  ng-model="personalData.telephonePrive">
+                        <input type="tel" id="telephonePrive" name="telephonePrive" ng-required="!donneesPerso.donneesPersoDataForm.telephoneMobile.$valid || donneesPerso.donneesPersoDataForm.$pristine"  class="form-control"  ng-model="personalData.telephonePrive">
                     </div>
                     <label for="telephoneMobile" class="col-md-2">
-                        Mobile<span ng-hide="donneesPerso.personalDataForm.personalPhone.$valid">*</span>
+                        Mobile<span ng-hide="donneesPerso.donneesPersoDataForm.personalPhone.$valid">*</span>
                     </label>
                     <div class="col-md-2">
-                        <input type="tel" id="telephoneMobile" ng-required="!donneesPerso.personalDataForm.telephonePrive.$valid || donneesPerso.personalDataForm.$pristine" name="telephoneMobile" class="form-control" ng-model="personalData.telephoneMobile">
+                        <input type="tel" id="telephoneMobile" ng-required="!donneesPerso.donneesPersoDataForm.telephonePrive.$valid || donneesPerso.donneesPersoDataForm.$pristine" name="telephoneMobile" class="form-control" ng-model="personalData.telephoneMobile">
                     </div>
                 </div>
                 <div class="row">
@@ -148,7 +154,7 @@
                         Date de naissance*
                     </label>
                     <div class="col-md-2">
-                        <input type="date" id="dateDeNaissance" name="dateDeNaissance" placeholder="jj-mm-aaaa" class="form-control" required="required" ng-model="personalData.dateDeNaissance">
+                        <input type="date" id="dateDeNaissance" name="dateDeNaissance" placeholder="jj.mm.aaaa" class="form-control" required="required" ng-model="personalData.dateDeNaissance">
                     </div>
                 </div>
                 <div class="row">
@@ -167,4 +173,4 @@
         </div>
     </fieldset>
 </div>
-<step-actions next-step-fn="nextStep()"/>
+<step-actions back-step-fn="backStep()" next-step-fn="nextStep()"/>

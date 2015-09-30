@@ -131,6 +131,7 @@ ngDemautApp
 
         //Etape suivante
         $scope.nextStep = function(){
+            $scope.wouldStepNext = true;
             if ($scope.professionSante.professionDataForm.$valid) {
                 $http.get(urlPrefix + '/demande/initialiser/' + $scope.professionData.profession).
                     success(function (data, status, headers, config) {
@@ -171,17 +172,13 @@ ngDemautApp
         };
 
         $scope.backStep = function () {
-            if ($scope.donneesPerso.personalDataForm.$valid) {
-                $log.info('Formulaire valide !');
-                $scope.indexStep += 1;
-                $location.path('/Demaut/demande/professionSante');
-            }
-            else {
-                $log.info('Formulaire invalide !');
-            }
+            $scope.indexStep -= 1;
+            $location.path('/Demaut/demande/professionSante');
         };
+
         $scope.nextStep = function () {
-            if ($scope.donneesPerso.personalDataForm.$valid) {
+            $scope.wouldStepNext = true;
+            if ($scope.donneesPerso.donneesPersoDataForm.$valid) {
                 $log.info('Formulaire valide !');
                 $scope.indexStep += 1;
                 $location.path('/Demaut/demande/donneesDiplomes');
@@ -191,12 +188,13 @@ ngDemautApp
             }
         };
     }])
-    .controller('DonneesDiplomesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', '$sessionStorage', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log, $sessionStorage) {
+    .controller('DonneesDiplomesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', 'nationalityTest', '$sessionStorage', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log, nationalityTest, $sessionStorage) {
         $rootScope.contextMenu = "Données Diplômes";
         $scope.indexStep = 3;
         this.name = "DonneesDiplomes";
         this.params = $routeParams;
         $scope.$storage = $sessionStorage;
+        $scope.testSuisse = nationalityTest;
         $scope.diplomeData = {};
         $scope.diplomeData.typeDiplomes = [];
         $scope.diplomeData.typeFormations = [];
@@ -223,6 +221,19 @@ ngDemautApp
                 });
         }
 
+        $scope.isDateReconnaissanceRequired = function () {
+            var paysObtentionObj = null;
+            if($scope.diplomeData.paysObtentionId != null && $scope.diplomeData.paysObtentionId != undefined) {
+                for (var indexK = 0; indexK < $scope.diplomeData.paysList.length; indexK++) {
+                    if ($scope.diplomeData.paysList[indexK].id == $scope.diplomeData.paysObtentionId) {
+                        paysObtentionObj = $scope.diplomeData.paysList[indexK];
+                        break;
+                    }
+                }
+            }
+            return paysObtentionObj != null && paysObtentionObj != undefined && !nationalityTest.isSuisse(paysObtentionObj.libl);
+        };
+
         $scope.fetchListeFormations = function(){
             $http.get(urlPrefix + '/diplomes/typeFormationsList/' + $scope.diplomeData.typeDiplomeId).
                 success(function (data, status, headers, config) {
@@ -233,14 +244,21 @@ ngDemautApp
                 });
         };
 
-        $scope.previewStep = function(){
+        $scope.backStep = function(){
             $scope.indexStep -= 1;
             $location.path('/Demaut/demande/donneesPerso');
         };
 
         $scope.nextStep = function () {
-            $scope.indexStep += 1;
-            $location.path('/Demaut/demande/annexes');
+            $scope.wouldStepNext = true;
+            if ($scope.donneesDiplome.diplomeDataForm.$valid) {
+                $log.info('Formulaire valide !');
+                $scope.indexStep += 1;
+                $location.path('/Demaut/demande/annexes');
+            }
+            else {
+                $log.info('Formulaire invalide !');
+            }
         };
 
         $scope.addAnotherDiplome = function(){
@@ -274,7 +292,7 @@ ngDemautApp
                     }
                 }
                 var diplome = [
-                    {   keyDiplome: diplomeKey,
+                    {   keyDiplome: diplomeKey.replace(/\s/g, ''),
                         typeDiplome: typeDiplomeObj,
                         typeFormation: typeFormationObj,
                         dateObtention: $scope.diplomeData.dateObtention,
@@ -341,7 +359,11 @@ ngDemautApp
         };
 
         function doDeleteDiplome(targetDiplome) {
-            $http.get(urlPrefix + '/diplomes/supprimer/' + $scope.$storage.refDemande + '/' + targetDiplome[0].keyDiplome)
+            $http.get(urlPrefix + '/diplomes/supprimer/' + $scope.$storage.refDemande,{
+                params: {
+                    keyDiplome: targetDiplome[0].keyDiplome
+                }
+            })
                 .success(function (data, status, headers, config) {
                     $rootScope.error = 'Un diplôme a été supprimé avec succès: \n Status :' +  status;
                 })
@@ -380,9 +402,17 @@ ngDemautApp
             $scope.indexStep -= 1;
             $location.path('/Demaut/demande/donneesDiplomes');
         };
+
         $scope.nextStep = function(){
-            $scope.indexStep += 1;
-            $location.path('/Demaut/demande/recapitulatif');
+            $scope.wouldStepNext = true;
+            if ($scope.annexes.annexesDataForm.$valid && $scope.annexesData.referenceFiles.length > 0) {
+                $log.info('Formulaire valide !');
+                $scope.indexStep += 1;
+                $location.path('/Demaut/demande/recapitulatif');
+            }
+            else {
+                $log.info('Formulaire invalide !');
+            }
         };
 
         $scope.filesChanged = function (targetFiles) {
@@ -546,8 +576,15 @@ ngDemautApp
             $location.path('/Demaut/demande/annexes');
         };
         $scope.nextStep = function(){
-            $scope.indexStep += 1;
-            $location.path('/Demaut/demande/soumission');
+            $scope.wouldStepNext = true;
+            if ($scope.recapitulatif.recapitulatifDataForm.$valid) {
+                $log.info('Formulaire valide !');
+                $scope.indexStep += 1;
+                $location.path('/Demaut/demande/soumission');
+            }
+            else {
+                $log.info('Formulaire invalide !');
+            }
         };
     }]);
 

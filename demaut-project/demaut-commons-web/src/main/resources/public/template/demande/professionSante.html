@@ -4,6 +4,21 @@
         <legend>Veuillez indiquer la profession pour laquelle vous faîtes une demande :</legend>
         <div>
             <ng-form name="professionSante.professionDataForm">
+                <div id="Formulaire_vide" class="alert alert-danger" ng-show="professionSante.professionDataForm.$pristine && wouldStepNext">
+                    <button type="button" class="close" data-target="#Formulaire_vide" data-dismiss="alert">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
+                    </button>
+                    Veuillez saisir l'information concernant votre demande !
+                </div>
+                <div ng-hide="professionSante.professionDataForm.$pristine || professionSante.professionDataForm.$valid">
+                    <div id="Profession_obligatoire" class="alert alert-danger" ng-show="professionSante.professionDataForm.profession.$touched && professionSante.professionDataForm.profession.$error.required">
+                        <button type="button" class="close" data-target="#Profession_obligatoire" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
+                        </button>
+                        Veuillez saisir votre profession !
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-md-4"><label for="profession">Profession demandée</label></div>
                     <div class="col-md-6">

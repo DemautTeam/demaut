@@ -1,7 +1,29 @@
 <div ng-include="'template/include/include-steps.html'"></div>
 <div class="bs-wizard-info text-left">
-    Soumission page<br />
-    Soumission controller: {{soumission.name}}<br />
-    Soumission params: {{soumission.params}}<br />
+    <fieldset>
+        <legend>Soumission de votre demande :</legend>
+        <div>
+            <ng-form name="soumission.soumissionDataForm">
+                <div id="Formulaire_vide" class="alert alert-danger" ng-show="soumission.soumissionDataForm.$pristine && wouldStepNext">
+                    <button type="button" class="close" data-target="#Formulaire_vide" data-dismiss="alert">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
+                    </button>
+                    Etes-vous sur de vouloir soumettre de votre demande !
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-6">
+                        Soumission page<br />
+                        Soumission controller: {{soumission.name}}<br />
+                        Soumission params: {{soumission.params}}<br />
+                    </div>
+                </div>
+                <div class="row">
+                    <br/>
+                </div>
+            </ng-form>
+        </div>
+    </fieldset>
 </div>
 <step-actions back-step-fn="backStep()"/>

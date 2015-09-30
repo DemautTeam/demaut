@@ -160,7 +160,7 @@ public class DiplomeRestImpl {
         LOGGER.info("ajouterUnDiplome " + keyDiplome);
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);
-        ReferenceDeDiplome referenceDeDiplome = new ReferenceDeDiplome(keyDiplome.replaceAll(" ", ""));
+        ReferenceDeDiplome referenceDeDiplome = new ReferenceDeDiplome(keyDiplome);
         TypeDiplomeAccepte typeDiplomeAccepte = TypeDiplomeAccepte.getTypeById(Integer.parseInt(typeDiplomeId));
         TitreFormation titreFormation = new TitreFormation(convertTypeFormationIdToEnum(typeDiplomeAccepte, typeFormationId).name());
         DateObtention dateObtention = new DateObtention(SHORT_DATE_FORMATTER.parseLocalDate(dateObtentionStr));
@@ -187,5 +187,22 @@ public class DiplomeRestImpl {
             default:
                 return null;
         }
+    }
+
+    @SuppressWarnings("all")
+    @GET
+    @Path("/supprimer/{demandeReference}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("USER")
+    public Response supprimerUnDiplome(@Context UriInfo uriInfo,
+                                     @PathParam("demandeReference") String demandeReference,
+                                     @QueryParam("keyDiplome") String keyDiplome) throws Exception {
+
+        LOGGER.info("supprimerUnDiplome " + keyDiplome);
+
+        ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);
+        ReferenceDeDiplome referenceDeDiplome = new ReferenceDeDiplome(keyDiplome);
+        donneesProfessionnellesService.supprimerUnDiplome(referenceDeDemande, referenceDeDiplome);
+        return RestUtils.forgeResponseTrue();
     }
 }

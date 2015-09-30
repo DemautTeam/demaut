@@ -36,4 +36,9 @@ public class DonneesProfessionnellesServiceMock implements DonneesProfessionnell
     public void ajouterUnDiplome(ReferenceDeDemande referenceDeDemande, ReferenceDeDiplome referenceDeDiplome, TypeDiplomeAccepte typeDiplomeAccepte, TitreFormation titreFormation, DateObtention dateObtention, PaysObtention paysObtention, DateReconnaissance dateReconnaissance) {
         // TODO
     }
+
+    @Override
+    public void supprimerUnDiplome(ReferenceDeDemande referenceDeDemande, ReferenceDeDiplome referenceDeDiplome) {
+        // TODO
+    }
 }

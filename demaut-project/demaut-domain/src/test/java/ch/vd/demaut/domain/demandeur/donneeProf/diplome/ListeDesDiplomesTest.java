@@ -26,15 +26,15 @@ public class ListeDesDiplomesTest {
     @Before
     public void setUp() throws Exception {
         listeDesDiplomes = new ListeDesDiplomes(new ArrayList<Diplome>());
-        listeDesDiplomes.ajouterDiplome(
+        listeDesDiplomes.ajouterUnDiplome(
                 new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
                         new TitreFormation(TitreFormationApprofondieProgres.PneumologiePediatrique.name()),
                         new DateObtention(new LocalDate()), new PaysObtention(Pays.Suisse.name()), null));
-        listeDesDiplomes.ajouterDiplome(
+        listeDesDiplomes.ajouterUnDiplome(
                 new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), TypeDiplomeAccepte.D_FORMATION_INITIALE,
                         new TitreFormation(TitreFormationInitialeProgres.CFRDUnDiplomeEtrangerDeMedecin.name()),
                         new DateObtention(new LocalDate()), new PaysObtention(Pays.Allemagne.name()), new DateReconnaissance(new LocalDate())));
-        listeDesDiplomes.ajouterDiplome(
+        listeDesDiplomes.ajouterUnDiplome(
                 new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), TypeDiplomeAccepte.D_POSTGRADE,
                         new TitreFormation(TitreFormationPostgradeProgres.Cardiologie.name()),
                         new DateObtention(new LocalDate()), new PaysObtention(Pays.Suisse.name()), null));

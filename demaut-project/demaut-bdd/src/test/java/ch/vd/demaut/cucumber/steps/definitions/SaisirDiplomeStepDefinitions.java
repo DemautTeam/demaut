@@ -11,10 +11,12 @@ import cucumber.api.Transform;
 import cucumber.api.java.fr.Alors;
 import cucumber.api.java.fr.Etantdonné;
 import cucumber.api.java.fr.Lorsque;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * Step definitions pour la fonctionnalité "Saisir les Dipômes"
@@ -47,13 +49,20 @@ public class SaisirDiplomeStepDefinitions extends StepDefinitions {
     }
 
     @Etantdonné("^l´utilisateur a déjà saisit un type de \"([^\"]*)\" dans la liste$")
-    public void l_utilisateur_a_deja_saisit_un_type_de_diplome_dans_la_liste() throws Throwable {
-        // TODO
+    public void l_utilisateur_a_deja_saisit_un_type_de_diplome_dans_la_liste(String diplome) throws Throwable {
+        assertThat(diplome).isNotEmpty();
+        this.donneesProfessionnellesSteps.setTypeDiplomeSelectionne(TypeDiplomeAccepte.valueOf(diplome));
+
     }
 
     @Etantdonné("^l´utilisateur a déjà saisit le titre de formation \"([^\"]*)\"$")
     public void l_utilisateur_a_deja_saisit_le_titre_de_formation_formation(String formation) throws Throwable {
-        this.donneesProfessionnellesSteps.setTitreFormation(new TitreFormation(formation));
+        try {
+            assertThat(formation).isNotEmpty();
+            this.donneesProfessionnellesSteps.setTitreFormation(new TitreFormation(formation));
+        } catch (Exception | AssertionError e){
+            // Normal si l'utilisateur oublie de selectionner la formation, alors demaut refuse le diplôme
+        }
     }
 
     @Etantdonné("^l´utilisateur a déjà saisit la date d´obtention \"([^\"]*)\" du diplôme$")
@@ -63,16 +72,18 @@ public class SaisirDiplomeStepDefinitions extends StepDefinitions {
     }
 
     @Etantdonné("^l´utilisateur a déjà saisit la date de reconnaissance \"([^\"]*)\" du diplôme \"([^\"]*)\"$")
-    public void l_utilisateur_a_deja_saisit_la_date_d_obtention_du_diplôme(String dateReconnaissanceStr, String etrangerCritere) throws Throwable {
+    public void l_utilisateur_a_deja_saisit_la_date_d_reconnaissance_du_diplôme(String dateReconnaissanceStr, String etrangerCritere) throws Throwable {
         assertThat(etrangerCritere).isNotEmpty();
-        assertThat(this.donneesProfessionnellesSteps.getTitreFormation()).isNotNull();
-        this.donneesProfessionnellesSteps.verifierEtRenseignerDateReconnaissance(dateReconnaissanceStr);
+        if(!StringUtils.isEmpty(dateReconnaissanceStr)) {
+            this.donneesProfessionnellesSteps.verifierEtRenseignerDateReconnaissance(dateReconnaissanceStr);
+        }
     }
 
     // ********************************************************* When
 
     @Lorsque("^l´utilisateur selectionne un type de \"([^\"]*)\" dans la liste$")
     public void l_utilisateur_selectionne_un_type_de_diplome_dans_la_liste(TypeDiplomeAccepte typeDiplomeSelectionne) throws Throwable {
+        assertThat(typeDiplomeSelectionne).isNotNull();
         assertThat(TypeDiplomeAccepte.values()).contains(typeDiplomeSelectionne);
         this.donneesProfessionnellesSteps.setTypeDiplomeSelectionne(typeDiplomeSelectionne);
     }
@@ -112,7 +123,7 @@ public class SaisirDiplomeStepDefinitions extends StepDefinitions {
             this.donneesProfessionnellesSteps.verifierEtRenseignerDateObtention(dateObtentionStr);
             assertThat(action).isEqualTo(AccepteOuRefuse.accepte);
             this.donneesProfessionnellesSteps.setAcceptationDateObtention(action);
-        } catch (Exception e) {
+        } catch (Exception | AssertionError e) {
             assertThat(message).isNotEmpty();
             assertThat(action).isEqualTo(AccepteOuRefuse.refuse);
             this.donneesProfessionnellesSteps.setAcceptationDateObtention(AccepteOuRefuse.refuse);
@@ -120,15 +131,14 @@ public class SaisirDiplomeStepDefinitions extends StepDefinitions {
     }
 
     @Alors("^le système Demaut \"(accepte|refuse)\" la date de reconnaissance \"([^\"]*)\" avec un \"([^\"]*)\" en cas d´échec$")
-    public void le_système_Demaut_action_la_date_de_reconnaissance_date_reconnaissance_avec_un_message_en_cas_d_échec(AccepteOuRefuse action, String dateReconnaissanceStr, String message) throws Throwable {
-        assertThat(dateReconnaissanceStr).isNotEmpty();
+    public void le_système_Demaut_action_la_date_de_reconnaissance_avec_un_message_en_cas_d_échec(AccepteOuRefuse action, String dateReconnaissanceStr, String message) throws Throwable {
         assertThat(action).isNotNull();
         assertThat(this.donneesProfessionnellesSteps.getCritereDiplomeEtranger()).isNotEmpty();
         try {
             this.donneesProfessionnellesSteps.verifierEtRenseignerDateReconnaissance(dateReconnaissanceStr);
             assertThat(action).isEqualTo(AccepteOuRefuse.accepte);
             this.donneesProfessionnellesSteps.setAcceptationDateReconnaissance(action);
-        } catch (Exception e) {
+        } catch (Exception | AssertionError e) {
             assertThat(message).isNotEmpty();
             assertThat(action).isEqualTo(AccepteOuRefuse.refuse);
             this.donneesProfessionnellesSteps.setAcceptationDateReconnaissance(AccepteOuRefuse.refuse);

@@ -10,7 +10,7 @@ Fonctionnalité: Gestion des annexes liées à la demande
       | jpeg |
       | png  |
     Etant donné la taille maximale de fichier acceptée "3"MB
-    Etant donné la date du jour: "15-07-2015 11:00"
+    Etant donné la date du jour: "15.07.2015 11:00"
     Etant donné l´utilisateur identifié et connecté avec le login "joe.dalton@vd.ch"
     Etant donné une demande de profession "Medecin" en cours de saisie ayant la référence "12345"
     Etant donné les annexes déja saisies:
