@@ -139,7 +139,7 @@ public class DonneesProfessionnellesSteps {
         assertThat(dateReconnaissanceStr).isNotEmpty();
         try {
             if (this.titreFormation != null && !StringUtils.isEmpty(this.titreFormation.getValue()) &&
-                !StringUtils.isEmpty(this.critereDiplomeEtranger) && this.titreFormation.getValue().contains(this.critereDiplomeEtranger)) {
+                    !StringUtils.isEmpty(this.critereDiplomeEtranger) && this.titreFormation.getValue().contains(this.critereDiplomeEtranger)) {
                 LocalDateConverter localDateConverter = new LocalDateConverter();
                 LocalDate dateReconnaissance = (LocalDate) localDateConverter.fromString(dateReconnaissanceStr);
                 this.dateReconnaissance = new DateReconnaissance(dateReconnaissance);

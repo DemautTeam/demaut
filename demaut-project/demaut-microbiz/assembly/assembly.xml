@@ -16,18 +16,11 @@
         </fileSet>
         <fileSet>
             <directory>${project.build.directory}</directory>
-            <outputDirectory>/deployment</outputDirectory>
+            <outputDirectory>${artifactId}-${version}/</outputDirectory>
             <includes>
                 <include>*.jar</include>
             </includes>
         </fileSet>
     </fileSets>
-    <files>
-        <file>
-            <source>target/${build.finalName}.jar</source>
-            <destName>${artifactId}.jar</destName>
-            <outputDirectory>${artifactId}-${version}</outputDirectory>
-        </file>
-    </files>
 </assembly>
 

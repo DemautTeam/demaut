@@ -1,12 +1,11 @@
 package ch.vd.demaut.domain.annexes;
 
+import ch.vd.demaut.domain.exception.AnnexeIntrouvableException;
+import ch.vd.demaut.domain.exception.AnnexeNonValideException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-
-import ch.vd.demaut.domain.exception.AnnexeIntrouvableException;
-import ch.vd.demaut.domain.exception.AnnexeNonValideException;
 
 import java.util.ArrayList;
 import java.util.Collection;

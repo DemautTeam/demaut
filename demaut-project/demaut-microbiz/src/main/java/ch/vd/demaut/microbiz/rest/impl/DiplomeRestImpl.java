@@ -1,21 +1,13 @@
 package ch.vd.demaut.microbiz.rest.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.annotation.security.RolesAllowed;
-import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-
+import ch.vd.demaut.domain.config.TypeProgres;
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandeur.Pays;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.*;
+import ch.vd.demaut.microbiz.progreSoa.ProgreSoaService;
+import ch.vd.demaut.microbiz.rest.RestUtils;
+import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
+import ch.vd.ses.referentiel.demaut_1_0.VcType;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -24,23 +16,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import ch.vd.demaut.domain.config.TypeProgres;
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.demandeur.Pays;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateObtention;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateReconnaissance;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.PaysObtention;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ReferenceDeDiplome;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormation;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormationApprofondieProgres;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormationComplementaireProgres;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormationInitialeProgres;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormationPostgradeProgres;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TypeDiplomeAccepte;
-import ch.vd.demaut.microbiz.progreSoa.ProgreSoaService;
-import ch.vd.demaut.microbiz.rest.RestUtils;
-import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
-import ch.vd.ses.referentiel.demaut_1_0.VcType;
+import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @CrossOriginResourceSharing(allowOrigins = {"*"}, allowCredentials = true, maxAge = 3600, allowHeaders = {
         "Content-Type", "X-Requested-With"}, exposeHeaders = {"Access-Control-Allow-Origin"})
@@ -195,8 +180,8 @@ public class DiplomeRestImpl {
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
     public Response supprimerUnDiplome(@Context UriInfo uriInfo,
-                                     @PathParam("demandeReference") String demandeReference,
-                                     @QueryParam("keyDiplome") String keyDiplome) throws Exception {
+                                       @PathParam("demandeReference") String demandeReference,
+                                       @QueryParam("keyDiplome") String keyDiplome) throws Exception {
 
         LOGGER.info("supprimerUnDiplome " + keyDiplome);
 

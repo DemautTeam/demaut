@@ -1,13 +1,18 @@
 package ch.vd.demaut.data.demandes.autorisation.repo;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
-
-import javax.inject.Inject;
-
+import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.domain.annexes.AnnexeMetadata;
+import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
+import ch.vd.demaut.domain.demandeur.Pays;
+import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.*;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.domain.utilisateurs.Utilisateur;
+import ch.vd.demaut.domain.utilisateurs.UtilisateurRepository;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,28 +23,12 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-import ch.vd.demaut.domain.annexes.Annexe;
-import ch.vd.demaut.domain.annexes.AnnexeMetadata;
-import ch.vd.demaut.domain.annexes.TypeAnnexe;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
-import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
-import ch.vd.demaut.domain.demandeur.Pays;
-import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateObtention;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateReconnaissance;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.PaysObtention;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ReferenceDeDiplome;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormation;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormationApprofondieProgres;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormationInitialeProgres;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormationPostgradeProgres;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TypeDiplomeAccepte;
-import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.domain.utilisateurs.Utilisateur;
-import ch.vd.demaut.domain.utilisateurs.UtilisateurRepository;
+import javax.inject.Inject;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ContextConfiguration({"classpath*:/data-jpa-test-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -179,9 +168,8 @@ public class DemandeAutorisationRepositoryTest {
     private DemandeAutorisation recupererDemandePersistee(DemandeAutorisation demandeAutorisation) {
         commitTransaction(transaction);
         transaction = beginTransaction();
-        DemandeAutorisation memeDemande = demandeAutorisationRepository
+        return demandeAutorisationRepository
                 .recupererDemandeParReference(demandeAutorisation.getReferenceDeDemande());
-        return memeDemande;
     }
 
     private void verifieMemeDemande(DemandeAutorisation demandePersistee, DemandeAutorisation demandeInit) {

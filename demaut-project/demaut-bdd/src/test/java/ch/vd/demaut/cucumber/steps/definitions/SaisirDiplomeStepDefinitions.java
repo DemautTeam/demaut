@@ -16,7 +16,6 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * Step definitions pour la fonctionnalité "Saisir les Dipômes"
@@ -60,7 +59,7 @@ public class SaisirDiplomeStepDefinitions extends StepDefinitions {
         try {
             assertThat(formation).isNotEmpty();
             this.donneesProfessionnellesSteps.setTitreFormation(new TitreFormation(formation));
-        } catch (Exception | AssertionError e){
+        } catch (Exception | AssertionError e) {
             // Normal si l'utilisateur oublie de selectionner la formation, alors demaut refuse le diplôme
         }
     }
@@ -74,7 +73,7 @@ public class SaisirDiplomeStepDefinitions extends StepDefinitions {
     @Etantdonné("^l´utilisateur a déjà saisit la date de reconnaissance \"([^\"]*)\" du diplôme \"([^\"]*)\"$")
     public void l_utilisateur_a_deja_saisit_la_date_d_reconnaissance_du_diplôme(String dateReconnaissanceStr, String etrangerCritere) throws Throwable {
         assertThat(etrangerCritere).isNotEmpty();
-        if(!StringUtils.isEmpty(dateReconnaissanceStr)) {
+        if (!StringUtils.isEmpty(dateReconnaissanceStr)) {
             this.donneesProfessionnellesSteps.verifierEtRenseignerDateReconnaissance(dateReconnaissanceStr);
         }
     }

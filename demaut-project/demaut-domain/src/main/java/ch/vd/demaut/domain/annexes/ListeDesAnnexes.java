@@ -1,11 +1,10 @@
 package ch.vd.demaut.domain.annexes;
 
+import ch.vd.demaut.domain.exception.AnnexeIntrouvableException;
+import ch.vd.demaut.domain.exception.AnnexeNonUniqueException;
 import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import ch.vd.demaut.domain.exception.AnnexeIntrouvableException;
-import ch.vd.demaut.domain.exception.AnnexeNonUniqueException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,9 +32,11 @@ public class ListeDesAnnexes {
 
     // ********************************************************* Business
     // methods
-    /** 
+
+    /**
      * Ajoute une annexe à la liste d'annexes<br>
      * Renvoie une exception si l'annnexe n'est pas unique
+     *
      * @param annexe
      */
     public void ajouterAnnexe(Annexe annexe) {
@@ -46,6 +47,7 @@ public class ListeDesAnnexes {
     /**
      * Suprimer une annexe. <br>
      * Renvoie exception si annexe pas trouvée
+     *
      * @param annexeFK
      */
     public void supprimerUneAnnexe(AnnexeFK annexeFK) {
@@ -104,7 +106,8 @@ public class ListeDesAnnexes {
     private void validerAnnexeUnique(Annexe annexe) {
         if (annexes.contains(annexe)) {
             throw new AnnexeNonUniqueException();
-        };
+        }
+        ;
     }
 
 

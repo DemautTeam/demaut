@@ -1,10 +1,6 @@
 package ch.vd.demaut.microbiz.rest.impl;
 
-import ch.vd.demaut.domain.annexes.AnnexeFK;
-import ch.vd.demaut.domain.annexes.AnnexeMetadata;
-import ch.vd.demaut.domain.annexes.ContenuAnnexe;
-import ch.vd.demaut.domain.annexes.NomFichier;
-import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.domain.annexes.*;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.microbiz.progreSoa.ProgreSoaService;
 import ch.vd.demaut.microbiz.rest.RestUtils;
@@ -30,8 +26,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-@CrossOriginResourceSharing(allowOrigins = { "*" }, allowCredentials = true, maxAge = 3600, allowHeaders = {
-        "Content-Type", "X-Requested-With" }, exposeHeaders = { "Access-Control-Allow-Origin" })
+@CrossOriginResourceSharing(allowOrigins = {"*"}, allowCredentials = true, maxAge = 3600, allowHeaders = {
+        "Content-Type", "X-Requested-With"}, exposeHeaders = {"Access-Control-Allow-Origin"})
 @Service("annexeRestImpl")
 @Path("/annexes")
 public class AnnexeRestImpl {
@@ -104,16 +100,16 @@ public class AnnexeRestImpl {
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @RolesAllowed("USER")
     public Response afficherUneAnnexe(@Context UriInfo uriInfo, @PathParam("demandeReference") String demandeReference,
-            @PathParam("annexeFileName") String annexeFileName, @PathParam("annexeType") String annexeTypeIdStr)
-                    throws JsonProcessingException {
+                                      @PathParam("annexeFileName") String annexeFileName, @PathParam("annexeType") String annexeTypeIdStr)
+            throws JsonProcessingException {
 
         LOGGER.info("afficherUneAnnexe:demandeReference=" + demandeReference + ", annexeFileName=" + annexeFileName + ", annexeTypeIdStr=" + annexeTypeIdStr);
 
         //TODO: factoriser dans une methode privée
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);
         AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
-        
-        ContenuAnnexe contenuAnnexe = annexesService.recupererContenuAnnexe(referenceDeDemande, annexeFK );
+
+        ContenuAnnexe contenuAnnexe = annexesService.recupererContenuAnnexe(referenceDeDemande, annexeFK);
         return RestUtils.forgeResponseStream(contenuAnnexe.getContenu());
     }
 
@@ -123,9 +119,9 @@ public class AnnexeRestImpl {
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
     public Response attacherUneAnnexe(@Context UriInfo uriInfo, @Multipart("demandeReference") String demandeReference,
-            @Multipart("annexeFile") File file, @Multipart("annexeFileName") String annexeFileName,
-            @Multipart("annexeFileSize") String annexeFileSize, @Multipart("annexeFileType") String annexeFileType,
-            @Multipart("annexeType") String annexeTypeIdStr) throws IOException {
+                                      @Multipart("annexeFile") File file, @Multipart("annexeFileName") String annexeFileName,
+                                      @Multipart("annexeFileSize") String annexeFileSize, @Multipart("annexeFileType") String annexeFileType,
+                                      @Multipart("annexeType") String annexeTypeIdStr) throws IOException {
 
         LOGGER.info("attacherUneAnnexe " + annexeFileName);
 
@@ -133,7 +129,7 @@ public class AnnexeRestImpl {
         AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
 
         annexesService.attacherUneAnnexe(referenceDeDemande, file, annexeFK.getNomFichier(), annexeFK.getTypeAnnexe());
-        
+
         return RestUtils.forgeResponseTrue();
     }
 
@@ -142,8 +138,8 @@ public class AnnexeRestImpl {
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
     public Response supprimerUneAnnexe(@Context UriInfo uriInfo, @PathParam("demandeReference") String demandeReference,
-            @PathParam("annexeFileName") String annexeFileName, @PathParam("annexeType") String annexeTypeIdStr)
-                    throws JsonProcessingException {
+                                       @PathParam("annexeFileName") String annexeFileName, @PathParam("annexeType") String annexeTypeIdStr)
+            throws JsonProcessingException {
 
         LOGGER.info("supprimerUneAnnexe " + annexeFileName);
 
@@ -151,7 +147,7 @@ public class AnnexeRestImpl {
         AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
 
         annexesService.supprimerUneAnnexe(referenceDeDemande, annexeFK);
-        
+
         return RestUtils.forgeResponseTrue();
     }
 

@@ -1,13 +1,13 @@
 package ch.vd.demaut.domain.demandeur.donneesProf;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ch.vd.demaut.commons.annotations.Entity;
 import ch.vd.demaut.commons.entities.AbstractEntity;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ListeDesDiplomes;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ReferenceDeDiplome;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class DonneesProfessionnelles extends AbstractEntity {

@@ -1,14 +1,5 @@
 package ch.vd.demaut.cucumber.steps.definitions;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
-
 import ch.vd.demaut.commons.utils.FileMockHelper;
 import ch.vd.demaut.cucumber.converteurs.annexes.ListeDesAnnexesConverter;
 import ch.vd.demaut.cucumber.converteurs.annexes.NomFichierConverter;
@@ -17,15 +8,7 @@ import ch.vd.demaut.cucumber.converteurs.demandes.ReferenceDeDemandeConverter;
 import ch.vd.demaut.cucumber.converteurs.utilisateurs.LoginConverter;
 import ch.vd.demaut.cucumber.steps.AnnexesSteps;
 import ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps;
-import ch.vd.demaut.domain.annexes.Annexe;
-import ch.vd.demaut.domain.annexes.AnnexeFK;
-import ch.vd.demaut.domain.annexes.AnnexeValidateur;
-import ch.vd.demaut.domain.annexes.ContenuAnnexe;
-import ch.vd.demaut.domain.annexes.DateCreation;
-import ch.vd.demaut.domain.annexes.FormatFichierAccepte;
-import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
-import ch.vd.demaut.domain.annexes.NomFichier;
-import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.domain.annexes.*;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
@@ -35,6 +18,14 @@ import cucumber.api.Transform;
 import cucumber.api.java.fr.Alors;
 import cucumber.api.java.fr.Etantdonné;
 import cucumber.api.java.fr.Lorsque;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Step definitions pour la fonctionnalité "@annexes"
@@ -77,7 +68,7 @@ public class AnnexesStepDefinitions extends StepDefinitions {
 
     @Etantdonné("^une demande de profession \"([^\"]*)\" en cours de saisie ayant la référence \"([^\"]*)\"$")
     public void initialiserUneDemandeEnCours(Profession profession,
-            @Transform(ReferenceDeDemandeConverter.class) ReferenceDeDemande refDemande) throws Throwable {
+                                             @Transform(ReferenceDeDemandeConverter.class) ReferenceDeDemande refDemande) throws Throwable {
         getDemandeAutorisationSteps().initialiserDemandeEnCours(profession);
         getDemandeAutorisationSteps().enregistrerReferenceDemandeEnCours(refDemande);
         getAnnexesSteps().initialiserDemandeEnCours(getDemandeAutorisationSteps().getDemandeEnCours());
@@ -111,14 +102,14 @@ public class AnnexesStepDefinitions extends StepDefinitions {
 
     @Lorsque("^l´utilisateur attache le fichier \"([^\"]*)\" de taille (\\d+)M de type \"([^\"]*)\"$")
     public void utilisateur_attache_le_fichier(@Transform(NomFichierConverter.class) NomFichier nomFichier,
-            Integer tailleFichierEnMB, TypeAnnexe typeAnnexe) throws Throwable {
+                                               Integer tailleFichierEnMB, TypeAnnexe typeAnnexe) throws Throwable {
 
         creerEtAttacherAnnexe(nomFichier, tailleFichierEnMB, typeAnnexe);
     }
 
     @Lorsque("^l´utilisateur supprime le fichier \"([^\"]*)\" de type \"([^\"]*)\"$")
     public void l_utilisateur_supprime_le_fichier_de_type(@Transform(NomFichierConverter.class) NomFichier nomFichier,
-            TypeAnnexe typeAnnexe) throws Throwable {
+                                                          TypeAnnexe typeAnnexe) throws Throwable {
         supprimerAnnexe(nomFichier, typeAnnexe);
     }
 
@@ -140,7 +131,7 @@ public class AnnexesStepDefinitions extends StepDefinitions {
 
     @Alors("^les annexes attachées à la demande \"([^\"]*)\" sont:$")
     public void les_annexes_attachées_sont(@Transform(ReferenceDeDemandeConverter.class) ReferenceDeDemande refScenario,
-            DataTable dataTable) throws Throwable {
+                                           DataTable dataTable) throws Throwable {
         DemandeAutorisation demande = getDemandeAutorisationSteps().getDemandeViaReference(refScenario);
         List<Annexe> annexesAttendues = buildListeAnnexes(dataTable).listerAnnexes();
         List<Annexe> annexesDemande = demande.listerLesAnnexes();
@@ -155,7 +146,7 @@ public class AnnexesStepDefinitions extends StepDefinitions {
 
         //TODO: Utiliser la date du jour et tester 
         DateCreation dateCreation = new DateCreation(LocalDate.parse("01.01.2015 11:00", DateTimeFormat.forPattern("dd.MM.yyyy hh:mm")));
-        
+
         Annexe annexe = new Annexe(typeAnnexe, nomFichier, new ContenuAnnexe(contenuFichier), dateCreation);
 
         annexesSteps.attacherUneAnnexe(annexe);
@@ -164,7 +155,7 @@ public class AnnexesStepDefinitions extends StepDefinitions {
     private void supprimerAnnexe(NomFichier nomFichier, TypeAnnexe typeAnnexe) {
 
         AnnexeFK annexeFK = new AnnexeFK(nomFichier, typeAnnexe);
-        
+
         annexesSteps.supprimerAnnexe(annexeFK);
 
     }

@@ -1,10 +1,10 @@
 package ch.vd.demaut.domain.demandeur.donneesPerso;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
 import ch.vd.demaut.commons.annotations.Entity;
 import ch.vd.demaut.commons.entities.AbstractEntity;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class DonneesPersonnelles extends AbstractEntity {

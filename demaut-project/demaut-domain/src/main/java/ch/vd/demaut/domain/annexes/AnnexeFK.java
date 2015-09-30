@@ -25,7 +25,7 @@ public class AnnexeFK extends FunctionalKeyAbstract<Annexe> {
     public NomFichier getNomFichier() {
         return nomFichier;
     }
-    
+
     public TypeAnnexe getTypeAnnexe() {
         return typeAnnexe;
     }
