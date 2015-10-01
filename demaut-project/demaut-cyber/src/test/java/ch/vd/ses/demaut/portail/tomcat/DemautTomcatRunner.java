@@ -15,13 +15,14 @@ public class DemautTomcatRunner {
     public static void main(String[] args) {
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
 
-        final String confDir = appDir + "/demaut/config";
+        final String deployDir = appDir + "/demaut";
         final String dataDir = projectDir + "/app/demaut";
 
         // Mis par le CEI dans Tomcat
         System.setProperty("ch.vd.appDir", appDir);
         System.setProperty("ch.vd.projectDir", projectDir);
-        System.setProperty("ch.vd.confDir", confDir);
+        System.setProperty("ch.vd.deployDir", deployDir);
+		System.setProperty("ch.vd.confDir", deployDir+"/config");
         System.setProperty("ch.vd.dataDir", dataDir);
         System.setProperty("server.port", "1234");
         System.setProperty("server.contextPath", "/prestations/demaut");
