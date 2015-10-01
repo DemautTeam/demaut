@@ -13,8 +13,6 @@ import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.inject.Inject;
-
 public class DemandeAutorisationServiceImpl implements DemandeAutorisationService {
 
     @Autowired

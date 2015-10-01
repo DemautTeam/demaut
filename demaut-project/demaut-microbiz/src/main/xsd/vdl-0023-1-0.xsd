@@ -12,7 +12,7 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="totalMutation" type="xs:integer"/>
-				<xs:element name="mutationRI" type="vdl-0023:mutationRIType" />
+				<xs:element name="mutationRI" type="vdl-0023:mutationRIType"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>

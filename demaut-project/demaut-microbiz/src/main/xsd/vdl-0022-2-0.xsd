@@ -7,32 +7,32 @@
 	<xs:annotation>
 		<xs:documentation xml:lang="fr">Créer par SOI Lausanne :09.06.2015</xs:documentation>
 	</xs:annotation>
-	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0044/4" schemaLocation="eCH-0044-4-1.xsd" />
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0044/4" schemaLocation="eCH-0044-4-1.xsd"/>
 
 	<xs:element name="dossiersRIRoot">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="dossiersRI" minOccurs="1" maxOccurs="unbounded" type="vdl-0022:dossierRIType" />
+				<xs:element name="dossiersRI" minOccurs="1" maxOccurs="unbounded" type="vdl-0022:dossierRIType"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 		
 	<xs:complexType name="dossierRIType">
 		<xs:sequence>
-			<xs:element name="AA" type="xs:string" />
-			<xs:element name="dossierId" type="xs:string" />
-			<xs:element name="personnesRI" minOccurs="1" maxOccurs="unbounded" type="vdl-0022:personneRIType" />
+			<xs:element name="AA" type="xs:string"/>
+			<xs:element name="dossierId" type="xs:string"/>
+			<xs:element name="personnesRI" minOccurs="1" maxOccurs="unbounded" type="vdl-0022:personneRIType"/>
 		</xs:sequence>
 	</xs:complexType>
 	
 	<xs:complexType name="personneRIType">
 		<xs:sequence>
-			<xs:element name="dossierId" type="xs:string" />
-			<xs:element name="localPersonId" type="eCH-0044:namedPersonIdType" />
-			<xs:element name="codeQualPers" type="xs:string" />
-			<xs:element name="qualPers" type="xs:string" />
-			<xs:element name="lastName" type="eCH-0044:baseNameType" />
-			<xs:element name="firstName" type="eCH-0044:baseNameType" />
+			<xs:element name="dossierId" type="xs:string"/>
+			<xs:element name="localPersonId" type="eCH-0044:namedPersonIdType"/>
+			<xs:element name="codeQualPers" type="xs:string"/>
+			<xs:element name="qualPers" type="xs:string"/>
+			<xs:element name="lastName" type="eCH-0044:baseNameType"/>
+			<xs:element name="firstName" type="eCH-0044:baseNameType"/>
 		</xs:sequence>
 	</xs:complexType>
 	
