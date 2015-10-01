@@ -11,6 +11,7 @@ import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -31,10 +32,10 @@ import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class AnnexesServiceTest {
 
-    @Inject
+    @Autowired
     private DemandeAutorisationService demandeAutorisationService;
 
-    @Inject
+    @Autowired
     private AnnexesService annexesService;
 
     //FIXME l'objet File n'est pas optimal

@@ -1,8 +1,11 @@
 var ngDemautApp = angular.module('ngDemautApp', ['ngSanitize', 'ngRoute', 'ngAnimate', 'commonsModule','ngStorage', ]);
 
 /* Necessaire si les services ne sont pas dans la même arborescence que la page html */
-// TODO Dev à corrigert URL Prefix : ngDemautApp.constant('urlPrefix', '/outils/demautMicrobiz');
-ngDemautApp.constant('urlPrefix', 'http://localhost:8083/outils/demautMicrobiz');
+// TODO Pour PROD : ngDemautApp.constant('urlPrefix', '/outils/demautMicrobiz');
+// TODO pour Jetty : ngDemautApp.constant('urlPrefix', 'http://localhost:8083/outils/demautMicrobiz');
+// TODO pour Microbiz Local : ngDemautApp.constant('urlPrefix', 'http://localhost:40022/outils/demautMicrobiz');
+// TODO pour Microbiz DEMO : ngDemautApp.constant('urlPrefix', 'http://slv2395t.etat-de-vaud.ch:41002/outils/demautMicrobiz');
+ngDemautApp.constant('urlPrefix', 'http://slv2395t.etat-de-vaud.ch:41002/outils/demautMicrobiz');
 
 ngDemautApp
     .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
@@ -37,6 +40,11 @@ ngDemautApp
                 templateUrl: 'template/demande/donneesDiplomes.html',
                 controller: 'DonneesDiplomesController',
                 controllerAs: 'donneesDiplomes'
+            })
+            .when('/Demaut/demande/donneesActivites', {
+                templateUrl: 'template/demande/donneesActivites.html',
+                controller: 'DonneesActivitesController',
+                controllerAs: 'donneesActivites'
             })
             .when('/Demaut/demande/annexes', {
                 templateUrl: 'template/demande/annexes.html',
@@ -376,9 +384,87 @@ ngDemautApp
                 });
         };
     }])
+    .controller('DonneesActivitesController', ['$scope', '$rootScope', '$routeParams', '$location', 'urlPrefix', '$log', '$sessionStorage', function ($scope, $rootScope, $routeParams, $location, urlPrefix, $log, $sessionStorage) {
+        $rootScope.contextMenu = "Données Activités";
+        $scope.indexStep = 4;
+        this.name = "DonneesActivitesController";
+        this.params = $routeParams;
+        $scope.$storage = $sessionStorage;
+
+        $scope.backStep = function(){
+            $scope.indexStep -= 1;
+            $location.path('/Demaut/demande/DonneesDiplomes');
+        };
+
+        $scope.nextStep = function(){
+            $scope.wouldStepNext = true;
+            if ($scope.donneesActivite.donneesActiviteForm.$valid) {
+                $log.info('Formulaire valide !');
+                $scope.indexStep += 1;
+                $location.path('/Demaut/demande/annexes');
+            }
+            else {
+                $log.info('Formulaire invalide !');
+            }
+        };
+
+        $scope.activiteData = {};
+        $scope.activiteData.activities = [];
+
+        $scope.previewStep = function(){
+            $scope.indexStep -= 1;
+            $location.path('/Demaut/demande/professionSante');
+        };
+
+        $scope.nextStep = function(){
+            $scope.indexStep += 1;
+            $location.path('/Demaut/demande/annexes');
+        };
+
+        $scope.addAnotherActivitee = function(){
+            var keyActivitee = $scope.activiteData.etablissement + '#' + $scope.activiteData.npa + '#' + $scope.activiteData.pratiquer;
+            var activite = [
+                {keyActivitee: keyActivitee.replace(/\s/g, '')},
+                {etablissement: $scope.activiteData.etablissement},
+                {adresseRue: $scope.activiteData.adresseRue},
+                {npa: $scope.activiteData.npa},
+                {localite: $scope.activiteData.localite},
+                {telephoneProf: $scope.activiteData.telephoneProf},
+                {telephoneMobile: $scope.activiteData.telephoneMobile},
+                {email: $scope.activiteData.email},
+                {fax: $scope.activiteData.fax},
+                {site: $scope.activiteData.site},
+                {flagTauxIndependant: $scope.activiteData.flagTauxIndependant},
+                {tauxIndependant: $scope.activiteData.tauxIndependant},
+                {dateDebutIndependant: $scope.activiteData.dateDebutIndependant},
+                {flagTauxDependant: $scope.activiteData.flagTauxDependant},
+                {tauxDependant: $scope.activiteData.tauxDependant},
+                {dateDebutDependant: $scope.activiteData.dateDebutDependant},
+                {pratiquerBase: $scope.activiteData.pratiquerBase}
+            ];
+
+            $scope.activiteData.activities.push(activite);
+            $scope.activiteData.etablissement = null;
+            $scope.activiteData.adresseRue = null;
+            $scope.activiteData.npa = null;
+            $scope.activiteData.localite = null;
+            $scope.activiteData.telephoneProf = null;
+            $scope.activiteData.telephoneMobile = null;
+            $scope.activiteData.email = null;
+            $scope.activiteData.fax = null;
+            $scope.activiteData.site = null;
+            $scope.activiteData.flagTauxIndependant = null;
+            $scope.activiteData.tauxIndependant = null;
+            $scope.activiteData.dateDebutIndependant = null;
+            $scope.activiteData.flagTauxDependant = null;
+            $scope.activiteData.tauxDependant = null;
+            $scope.activiteData.dateDebutDependant = null;
+            $scope.activiteData.pratiquerBase = null;
+        };
+    }])
     .controller('AnnexesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', '$sessionStorage', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log, $sessionStorage) {
         $rootScope.contextMenu = "Annexes";
-        $scope.indexStep = 4;
+        $scope.indexStep = 5;
         this.name = "AnnexesController";
         this.params = $routeParams;
         $scope.$storage = $sessionStorage;
@@ -404,7 +490,7 @@ ngDemautApp
 
         $scope.backStep = function(){
             $scope.indexStep -= 1;
-            $location.path('/Demaut/demande/donneesDiplomes');
+            $location.path('/Demaut/demande/donneesActivites');
         };
 
         $scope.nextStep = function(){
@@ -571,14 +657,16 @@ ngDemautApp
     }])
     .controller('RecapitulatifController', ['$scope', '$rootScope', '$routeParams', '$location', 'urlPrefix', '$log', '$sessionStorage', function ($scope, $rootScope, $routeParams, $location, urlPrefix, $log, $sessionStorage) {
         $rootScope.contextMenu = "Recapitulatif";
-        $scope.indexStep = 5;
+        $scope.indexStep = 6;
         this.name = "RecapitulatifController";
         this.params = $routeParams;
         $scope.$storage = $sessionStorage;
+
         $scope.backStep = function(){
             $scope.indexStep -= 1;
             $location.path('/Demaut/demande/annexes');
         };
+
         $scope.nextStep = function(){
             $scope.wouldStepNext = true;
             if ($scope.recapitulatif.recapitulatifDataForm.$valid) {

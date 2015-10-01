@@ -10,6 +10,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -25,10 +26,10 @@ import static org.junit.Assert.assertTrue;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ProfessionRestImplTest {
 
-    @Inject
+    @Autowired
     private ProfessionRestImpl professionRestImpl;
 
-    @Inject
+    @Autowired
     private DemandeAutorisationService demandeAutorisationService;
 
     private ReferenceDeDemande referenceDeDemande;

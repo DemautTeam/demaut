@@ -11,6 +11,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.security.RolesAllowed;
@@ -34,10 +35,10 @@ public class ProfessionRestImpl {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProfessionRestImpl.class);
 
-    @Inject
+    @Autowired
     private DonneesProfessionnellesService donneesProfessionnellesService;
 
-    @Inject
+    @Autowired
     private ProgreSoaService progreSoaService;
 
     @GET

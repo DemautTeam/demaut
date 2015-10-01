@@ -8,6 +8,7 @@ import ch.vd.demaut.services.annexes.AnnexesService;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import org.apache.commons.io.IOUtils;
 import org.joda.time.LocalDate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +23,7 @@ public class AnnexesServiceImpl implements AnnexesService {
 
     // ********************************************************* Services
     // injectes
-    @Inject
+    @Autowired
     private DemandeAutorisationService demandeAutorisationService;
 
     // ********************************************************* Implémentation

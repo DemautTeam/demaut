@@ -17,6 +17,7 @@ import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -36,16 +37,16 @@ public class DemandeAutorisationRepositoryTest {
 
     // ********************************************************* Repos et
     // Services injectés
-    @Inject
+    @Autowired
     private DemandeAutorisationRepository demandeAutorisationRepository;
 
-    @Inject
+    @Autowired
     private UtilisateurRepository utilisateurRepository;
 
-    @Inject
+    @Autowired
     private DemandeAutorisationFactory demandeAutorisationFactory;
 
-    @Inject
+    @Autowired
     private PlatformTransactionManager transactionManagerDemaut;
 
     // ********************************************************* Transient

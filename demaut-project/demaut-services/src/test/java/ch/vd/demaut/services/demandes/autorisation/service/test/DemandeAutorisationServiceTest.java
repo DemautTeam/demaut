@@ -8,6 +8,7 @@ import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -23,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class DemandeAutorisationServiceTest extends TestCase {
 
     // ********************************************************* Injected
-    @Inject
+    @Autowired
     private DemandeAutorisationService demandeAutorisationService;
 
     private Profession profession;
