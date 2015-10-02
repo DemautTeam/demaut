@@ -9,52 +9,52 @@ ngDemautApp
 
         $routeProvider
             .when('/Demaut/recherche', {
-                templateUrl: 'template/recherche.html',
+                templateUrl: prestationContext+'/template/recherche.html',
                 controller: 'RechercheController',
                 controllerAs: 'recherche'
             })
             .when('/Demaut/aide', {
-                templateUrl: 'template/aide.html',
+                templateUrl: prestationContext+'/template/aide.html',
                 controller: 'AideController',
                 controllerAs: 'aide'
             })
             .when('/Demaut/formulaire', {
-                templateUrl: 'template/formulaire.html',
+                templateUrl: prestationContext+'/template/formulaire.html',
                 controller: 'FormulaireController',
                 controllerAs: 'demande'
             })
             .when('/Demaut/demande/professionSante', {
-                templateUrl: 'template/demande/professionSante.html',
+                templateUrl: prestationContext+'/template/demande/professionSante.html',
                 controller: 'ProfessionSanteController',
                 controllerAs: 'professionSante'
             })
             .when('/Demaut/demande/donneesPerso', {
-                templateUrl: 'template/demande/donneesPerso.html',
+                templateUrl: prestationContext+'/template/demande/donneesPerso.html',
                 controller: 'DonneesPersoController',
                 controllerAs: 'donneesPerso'
             })
             .when('/Demaut/demande/donneesDiplomes', {
-                templateUrl: 'template/demande/donneesDiplomes.html',
+                templateUrl: prestationContext+'/template/demande/donneesDiplomes.html',
                 controller: 'DonneesDiplomesController',
                 controllerAs: 'donneesDiplomes'
             })
             .when('/Demaut/demande/annexes', {
-                templateUrl: 'template/demande/annexes.html',
+                templateUrl: prestationContext+'/template/demande/annexes.html',
                 controller: 'AnnexesController',
                 controllerAs: 'annexes'
             })
             .when('/Demaut/demande/recapitulatif', {
-                templateUrl: 'template/demande/recapitulatif.html',
+                templateUrl: prestationContext+'/template/demande/recapitulatif.html',
                 controller: 'RecapitulatifController',
                 controllerAs: 'recapitulatif'
             })
             .when('/Demaut/demande/soumission', {
-                templateUrl: 'template/demande/soumission.html',
+                templateUrl: prestationContext+'/template/demande/soumission.html',
                 controller: 'SoumissionController',
                 controllerAs: 'soumission'
             })
             .when('/Demaut/cockpit', {
-                templateUrl: 'template/cockpit.html',
+                templateUrl: prestationContext+'/template/cockpit.html',
                 controller: 'CockpitController',
                 controllerAs: 'cockpit'
             })
