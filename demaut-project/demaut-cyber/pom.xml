@@ -193,13 +193,6 @@
     </dependencies>
     <profiles>
         <profile>
-            <id>not</id>
-            <!-- NOTests -->
-            <properties>
-                <skipTests>true</skipTests>
-            </properties>
-        </profile>
-        <profile>
             <!-- pour le déploiement en demo et dev -->
             <id>env.demo</id>
             <activation>
