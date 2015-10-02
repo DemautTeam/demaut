@@ -40,6 +40,16 @@
         <module>demaut-cyber</module>
     </modules>
 
+    <profiles>
+        <profile>
+            <id>not</id>
+            <!-- NOTests -->
+            <properties>
+                <skipTests>true</skipTests>
+            </properties>
+        </profile>
+    </profiles>
+
     <prerequisites>
         <maven>${maven.prerequisites.version}</maven>
     </prerequisites>

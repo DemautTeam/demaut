@@ -17,7 +17,7 @@ commonsModule.directive('stepActions', function () {
     return {
         restrict: 'E',
         scope: {backStepFn: '&', nextStepFn: '&', cancelAction: '&'},
-        templateUrl: 'template/directive/step-actions.html',
+        templateUrl: prestationContext+'/template/directive/step-actions.html',
         link: function (scope, element, attrs) {
             scope.showNext = element.attr('next-step-fn');
             scope.showBack = element.attr('back-step-fn');
