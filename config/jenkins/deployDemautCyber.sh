@@ -61,7 +61,7 @@ echo "Cleaning Tomcat's container, done..."
 echo "Suppression de l'ancien bundle..."
 ssh $sshOptions $remoteServer rm -rf $remoteBaseApp/$component-*
 echo "Copie de la nouvelle version..."
-scp $sshOptions "$projectBasedir/target/$component-*.tar.gz" $remoteServer:$remoteBaseApp
+scp $sshOptions $projectBasedir/target/$component-*.tar.gz $remoteServer:$remoteBaseApp
 echo "Décompression de la nouvelle version..."
 ssh $sshOptions $remoteServer tar -xzvf $remoteBaseApp/$component-*.tar.gz
 echo "Mise à jour du bundle terminée"
