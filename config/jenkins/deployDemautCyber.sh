@@ -23,7 +23,7 @@ tomcatConfigName=demaut-cyber.xml
 projectBasedir=${WORKSPACE}/demaut-project/$projectFolderName
 
 # deploy to demo
-component=$projectFolderName
+component=demaut
 pathServer=/ccv/data/dsi_cyber/demautIN
 remoteBin=$pathServer
 remoteBaseApp=$pathServer/app/demaut
@@ -35,13 +35,13 @@ remoteServer=dsi_cyber@slv2395t.etat-de-vaud.ch
 chmod 600 ${WORKSPACE}/config/jenkins/id.rsa.jenkins
 sshOptions="-o StrictHostKeyChecking=no -i ${WORKSPACE}/config/jenkins/id.rsa.jenkins"
 
-echo Rechercher bundle à déployer $component : `ls $projectBasedir/target/$component-*.tar.gz`
-bundlecount=`ls -1 $projectBasedir/target/$component-*.tar.gz | wc -l`
-bundleName=`ls $projectBasedir/target/$component-*.tar.gz`
+echo Rechercher bundle à déployer $component : `ls $projectBasedir/target/$component*.tar.gz`
+bundlecount=`ls -1 $projectBasedir/target/$component*.tar.gz | wc -l`
+bundleName=`ls $projectBasedir/target/$component*.tar.gz`
 
 if [ -f $projectBasedir/target/$component-*.tar.gz ] && [ $bundlecount -eq 1 ]
 then
-	 echo Nouveau bundle à déployer: `ls $projectBasedir/target/$component-*.tar.gz`
+	 echo Nouveau bundle à déployer: `ls $projectBasedir/target/$component*.tar.gz`
 else
      echo "Pas de bundle à déployer dans target. Veuillez compiler le projet"
     exit 0
@@ -61,11 +61,11 @@ ssh $sshOptions $remoteServer $remoteBin/tomcatctl.sh clean
 echo "Cleaning Tomcat's container, done..."
 
 echo "Suppression de l'ancien bundle..."
-ssh $sshOptions $remoteServer rm -rf $remoteBaseApp/$component-*
+ssh $sshOptions $remoteServer rm -rf $remoteBaseApp/$component*
 echo "Copie de la nouvelle version..."
 scp $sshOptions $bundleName $remoteServer:$remoteBaseApp
 echo "Décompression de la nouvelle version..."
-ssh $sshOptions $remoteServer tar -xzvf $remoteBaseApp/$component-*.tar.gz
+ssh $sshOptions $remoteServer tar -xzvf $remoteBaseApp/$component*.tar.gz
 echo "Mise à jour du bundle terminée"
 
 echo "Mise à jour du fichier de configuration tomcat sur $remoteServer:$remoteTomcatConfig..."
