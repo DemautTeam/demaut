@@ -12,6 +12,8 @@ import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.security.RolesAllowed;
@@ -28,10 +30,16 @@ import java.util.List;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
 @Service("annexeRestImpl")
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Path("/annexes")
 public class AnnexeRestImpl {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AnnexeRestImpl.class);
+
+    // permet d'accéder aux propriétés HTTP sans polluer les signatures de méthode...
+    // nécessite une scope prototype pour éviter des mélanges de context
+    @Context
+    private UriInfo uriInfo;
 
     @Autowired
     private AnnexesService annexesService;
@@ -82,7 +90,7 @@ public class AnnexeRestImpl {
     @Path("/lister/{demandeReference}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response listerLesAnnexes(@Context UriInfo uriInfo, @PathParam("demandeReference") String demandeReference)
+    public Response listerLesAnnexes(@PathParam("demandeReference") String demandeReference)
             throws JsonProcessingException {
 
         LOGGER.info("listerLesAnnexes pour la demandeRef: " + demandeReference);
@@ -98,7 +106,7 @@ public class AnnexeRestImpl {
     @Path("/afficher/{demandeReference}/{annexeFileName}/{annexeType}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @RolesAllowed("USER")
-    public Response afficherUneAnnexe(@Context UriInfo uriInfo, @PathParam("demandeReference") String demandeReference,
+    public Response afficherUneAnnexe( @PathParam("demandeReference") String demandeReference,
                                       @PathParam("annexeFileName") String annexeFileName, @PathParam("annexeType") String annexeTypeIdStr)
             throws JsonProcessingException {
 
@@ -117,7 +125,7 @@ public class AnnexeRestImpl {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response attacherUneAnnexe(@Context UriInfo uriInfo, @Multipart("demandeReference") String demandeReference,
+    public Response attacherUneAnnexe(@Multipart("demandeReference") String demandeReference,
                                       @Multipart("annexeFile") File file, @Multipart("annexeFileName") String annexeFileName,
                                       @Multipart("annexeFileSize") String annexeFileSize, @Multipart("annexeFileType") String annexeFileType,
                                       @Multipart("annexeType") String annexeTypeIdStr) throws IOException {
@@ -136,7 +144,7 @@ public class AnnexeRestImpl {
     @Path("/supprimer/{demandeReference}/{annexeFileName}/{annexeType}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response supprimerUneAnnexe(@Context UriInfo uriInfo, @PathParam("demandeReference") String demandeReference,
+    public Response supprimerUneAnnexe(@PathParam("demandeReference") String demandeReference,
                                        @PathParam("annexeFileName") String annexeFileName, @PathParam("annexeType") String annexeTypeIdStr)
             throws JsonProcessingException {
 
