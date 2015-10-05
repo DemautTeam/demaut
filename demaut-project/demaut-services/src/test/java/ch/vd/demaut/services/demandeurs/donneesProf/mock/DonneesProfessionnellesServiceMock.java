@@ -33,7 +33,7 @@ public class DonneesProfessionnellesServiceMock implements DonneesProfessionnell
     }
 
     @Override
-    public void ajouterUnDiplome(ReferenceDeDemande referenceDeDemande, ReferenceDeDiplome referenceDeDiplome, TypeDiplomeAccepte typeDiplomeAccepte, TitreFormation titreFormation, DateObtention dateObtention, PaysObtention paysObtention, DateReconnaissance dateReconnaissance) {
+    public void ajouterUnDiplome(ReferenceDeDemande referenceDeDemande, ReferenceDeDiplome referenceDeDiplome, TypeDiplomeAccepte typeDiplomeAccepte, TitreFormation titreFormation, String complement, DateObtention dateObtention, PaysObtention paysObtention, DateReconnaissance dateReconnaissance) {
         // TODO
     }
 

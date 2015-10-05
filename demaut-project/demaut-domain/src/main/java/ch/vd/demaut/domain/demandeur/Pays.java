@@ -2,7 +2,7 @@ package ch.vd.demaut.domain.demandeur;
 
 import ch.vd.demaut.domain.config.RefProgresID;
 import ch.vd.demaut.domain.config.TypeProgres;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TypeDiplomeNotFoundException;
+import ch.vd.demaut.domain.exception.PaysNotFoundException;
 
 public enum Pays implements TypeProgres {
     ListeIncomplete(0, "Incomplète", "Liste incomplète..."),
@@ -275,7 +275,7 @@ public enum Pays implements TypeProgres {
                 return type;
             }
         }
-        throw new TypeDiplomeNotFoundException();
+        throw new PaysNotFoundException();
     }
 
     public RefProgresID getRefProgresID() {

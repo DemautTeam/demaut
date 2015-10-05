@@ -26,8 +26,7 @@ import javax.ws.rs.core.UriInfo;
 import java.util.Arrays;
 import java.util.List;
 
-@CrossOriginResourceSharing(allowOrigins = {"*"}, allowCredentials = true, maxAge = 3600, allowHeaders = {
-        "Content-Type", "X-Requested-With"}, exposeHeaders = {"Access-Control-Allow-Origin"})
+@CrossOriginResourceSharing(allowAllOrigins = true)
 @Service("professionRestImpl")
 @Path("/profession")
 public class ProfessionRestImpl {

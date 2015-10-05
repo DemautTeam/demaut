@@ -7,8 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.apache.camel.Message;
-import org.apache.cxf.rs.security.cors.CorsHeaderConstants;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
@@ -17,13 +15,6 @@ import java.util.Collection;
 public final class RestUtils {
 
     private RestUtils() {
-    }
-
-    // TODO à supprimer dès que le DEV peut passer sur Microbiz
-    public static void forgeExchangeHeaders(Message exchangeOut) {
-        exchangeOut.setHeader(CorsHeaderConstants.HEADER_AC_ALLOW_METHODS, "GET POST PUT");
-        exchangeOut.setHeader(CorsHeaderConstants.HEADER_AC_ALLOW_CREDENTIALS, "false");
-        exchangeOut.setHeader(CorsHeaderConstants.HEADER_AC_ALLOW_ORIGIN, "*");
     }
 
     public static Response forgeResponseList(Collection<?> objects) throws JsonProcessingException {
@@ -44,12 +35,12 @@ public final class RestUtils {
 
     public static Response forgeResponseStream(byte[] object) throws JsonProcessingException {
         ResponseBuilder responseBuilder = getResponseBuildeOK();
-        return buildHeaders(responseBuilder).entity(object).build();
+        return responseBuilder.entity(object).build();
     }
 
     public static Response forgeResponseNoContent() throws JsonProcessingException {
         ResponseBuilder responseBuilder = Response.status(Response.Status.NO_CONTENT.getStatusCode());
-        return buildHeaders(responseBuilder).build();
+        return responseBuilder.build();
     }
 
     //////////////////////// Private Methods
@@ -59,12 +50,9 @@ public final class RestUtils {
     }
 
     private static Response forgeResponseAsString(Object value) throws JsonProcessingException {
-
         ObjectNode json = buildJSon(value);
-
         ResponseBuilder responseBuilder = getResponseBuildeOK();
-
-        return buildHeaders(responseBuilder).entity(json).build();
+        return responseBuilder.entity(json).build();
     }
 
     private static ObjectNode buildJSon(Object value) throws JsonProcessingException {
@@ -84,9 +72,9 @@ public final class RestUtils {
     }
 
     // TODO à supprimer dès que le DEV peut passer sur Microbiz
-    private static ResponseBuilder buildHeaders(ResponseBuilder responseBuilder) {
-        return responseBuilder.header(CorsHeaderConstants.HEADER_AC_ALLOW_METHODS, "GET POST PUT")
-                .header(CorsHeaderConstants.HEADER_AC_ALLOW_CREDENTIALS, "false")
-                .header(CorsHeaderConstants.HEADER_AC_ALLOW_ORIGIN, "*");
-    }
+//    private static ResponseBuilder buildHeaders(ResponseBuilder responseBuilder) {
+//        return responseBuilder.header(CorsHeaderConstants.HEADER_AC_ALLOW_METHODS, "GET POST PUT")
+//                .header(CorsHeaderConstants.HEADER_AC_ALLOW_CREDENTIALS, "false")
+//                .header(CorsHeaderConstants.HEADER_AC_ALLOW_ORIGIN, "*");
+//    }
 }

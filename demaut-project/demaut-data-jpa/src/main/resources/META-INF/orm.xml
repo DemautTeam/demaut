@@ -125,7 +125,6 @@
                 </cascade>
             </one-to-many>
             <embedded name="codeGLN"/>
-            <!--<transient name="diplomes"/>-->
         </attributes>
     </entity>
 
@@ -136,6 +135,9 @@
             <basic name="typeDiplomeAccepte">
                 <column name="type_Diplome_Accepte"/>
                 <enumerated>STRING</enumerated>
+            </basic>
+            <basic name="complement" access="PROPERTY">
+                <column name="complement" column-definition="varchar" length="254"/>
             </basic>
             <embedded name="referenceDeDiplome"/>
             <embedded name="titreFormation"/>

@@ -83,16 +83,28 @@
                     <div class="col-md-10"><input type="text" id="nom" name="nom" class="form-control" required="required" ng-model="personalData.nom"></div>
                 </div>
                 <div class="row">
+                    <br/>
+                </div>
+                <div class="row">
                     <div class="col-md-2"><label for="prenom">Prénom(s)*</label></div>
                     <div class="col-md-10"><input type="text" id="prenom" name="prenom" class="form-control" required="required" ng-model="personalData.prenom"></div>
+                </div>
+                <div class="row">
+                    <br/>
                 </div>
                 <div class="row">
                     <div class="col-md-2"><label for="nomDeCelibataire">Nom de célibataire</label></div>
                     <div class="col-md-10"><input type="text" id="nomDeCelibataire" name="nomDeCelibataire" class="form-control" ng-model="personalData.nomDeCelibataire"></div>
                 </div>
                 <div class="row">
+                    <br/>
+                </div>
+                <div class="row">
                     <div class="col-md-2"><label for="adressePersonnelle">Adresse privée*</label></div>
                     <div class="col-md-10"><input type="text" id="adressePersonnelle" name="adressePersonnelle" class="form-control" required="required" ng-model="personalData.adressePersonnelle"></div>
+                </div>
+                <div class="row">
+                    <br/>
                 </div>
                 <div class="row">
                     <label for="localite" class="col-md-2">Localité*</label>
@@ -113,6 +125,9 @@
                     </div>
                 </div>
                 <div class="row">
+                    <br/>
+                </div>
+                <div class="row">
                     <label for="telephonePrive" class="col-md-2">Téléphone privé<span ng-hide="donneesPerso.donneesPersoDataForm.mobilePhone.$valid">*</span></label>
                     <div class="col-md-6">
                         <input type="tel" id="telephonePrive" name="telephonePrive" ng-required="!donneesPerso.donneesPersoDataForm.telephoneMobile.$valid || donneesPerso.donneesPersoDataForm.$pristine"  class="form-control"  ng-model="personalData.telephonePrive">
@@ -125,6 +140,9 @@
                     </div>
                 </div>
                 <div class="row">
+                    <br/>
+                </div>
+                <div class="row">
                     <label for="email" class="col-md-2">Adresse email*</label>
                     <div class="col-md-6">
                         <input type="email" id="email" class="form-control" required="required" ng-model="personalData.email">
@@ -135,6 +153,9 @@
                     <div class="col-md-2">
                         <input type="tel" id="fax" class="form-control" ng-model="personalData.fax">
                     </div>
+                </div>
+                <div class="row">
+                    <br/>
                 </div>
                 <div class="row">
                     <label class="col-md-2">Genre*</label>
@@ -158,11 +179,22 @@
                     </div>
                 </div>
                 <div class="row">
+                    <br/>
+                </div>
+                <div class="row">
                     <label for="nationalite" class="col-md-2">Nationalité*</label>
-                    <div class="col-md-10">
+                    <div class="col-md-3">
                         <select id="nationalite" name="nationalite" ng-model="personalData.nationalite" required ng-change="resetPermis()"
                                 ng-options="nationalite.libl for nationalite in personalData.nationalites track by nationalite.id"/>
                     </div>
+                    <label for="langue" class="col-md-2">Si vous parler le français*</label>
+                    <div class="col-md-3">
+                        <select id="langue" name="langue" ng-model="personalData.langue" required
+                                ng-options="langue.libl for langue in personalData.langues track by langue.id"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <br/>
                 </div>
                 <div class="row">
                     <label class="col-md-2">Permis<span ng-hide="!isPermisRequired()">*</span></label>
@@ -171,6 +203,9 @@
                     <div class="col-md-2"><label><input type="radio" name="permis" value="demande en cours" ng-disabled="isSuisse()" ng-model="personalData.permis" ng-required="isPermisRequired()"/>Demande en cours</label></div>
                     <div class="col-md-2"><label><input type="radio" name="permis" value="autre" ng-disabled="isSuisse()" ng-model="personalData.permis" ng-required="isPermisRequired()"/>Autre</label></div>
                     <div class="col-md-2"><input type="text" class="form-control" ng-required="(personalData.permis == 'autre')" ng-show="(personalData.permis == 'autre')" ng-model="personalData.permisOther"></div>
+                </div>
+                <div class="row">
+                    <br/>
                 </div>
             </ng-form>
         </div>

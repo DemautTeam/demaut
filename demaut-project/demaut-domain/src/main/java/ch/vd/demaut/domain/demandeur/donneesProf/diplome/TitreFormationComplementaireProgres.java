@@ -2,6 +2,7 @@ package ch.vd.demaut.domain.demandeur.donneesProf.diplome;
 
 import ch.vd.demaut.domain.config.RefProgresID;
 import ch.vd.demaut.domain.config.TypeProgres;
+import ch.vd.demaut.domain.exception.TypeFormationNotFoundException;
 
 public enum TitreFormationComplementaireProgres implements TypeProgres {
     Acupuncture(344861194, "Acupuncture - MTC /77"),
@@ -47,7 +48,7 @@ public enum TitreFormationComplementaireProgres implements TypeProgres {
                 return type;
             }
         }
-        throw new TypeDiplomeNotFoundException();
+        throw new TypeFormationNotFoundException();
     }
 
     public RefProgresID getRefProgresID() {

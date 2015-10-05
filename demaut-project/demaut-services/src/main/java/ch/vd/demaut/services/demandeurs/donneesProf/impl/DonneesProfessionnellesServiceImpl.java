@@ -36,9 +36,10 @@ public class DonneesProfessionnellesServiceImpl implements DonneesProfessionnell
     @Override
     @Transactional
     public void ajouterUnDiplome(ReferenceDeDemande referenceDeDemande, ReferenceDeDiplome referenceDeDiplome, TypeDiplomeAccepte typeDiplomeAccepte,
-                                 TitreFormation titreFormation, DateObtention dateObtention, PaysObtention paysObtention, DateReconnaissance dateReconnaissance) {
+                                 TitreFormation titreFormation, String complement, DateObtention dateObtention, PaysObtention paysObtention,
+                                 DateReconnaissance dateReconnaissance) {
         DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererDemandeParReference(referenceDeDemande);
-        Diplome diplome = new Diplome(referenceDeDiplome, typeDiplomeAccepte, titreFormation, dateObtention, paysObtention, dateReconnaissance);
+        Diplome diplome = new Diplome(referenceDeDiplome, typeDiplomeAccepte, titreFormation, complement, dateObtention, paysObtention, dateReconnaissance);
         demandeAutorisation.getDonneesProfessionnelles().validerEtAjouterDiplome(diplome);
     }
 

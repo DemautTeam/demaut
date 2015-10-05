@@ -152,7 +152,7 @@ public class DonneesProfessionnellesSteps {
     public void initialiserDiplomeEnCours() {
         paysObtention = new PaysObtention(Pays.Allemagne.name());
         this.diplomeEnCours = new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), typeDiplomeSelectionne, titreFormation,
-                dateObtention, paysObtention, dateReconnaissance);
+                null, dateObtention, paysObtention, dateReconnaissance);
     }
 
     public void validerEtAjouterDiplome() {

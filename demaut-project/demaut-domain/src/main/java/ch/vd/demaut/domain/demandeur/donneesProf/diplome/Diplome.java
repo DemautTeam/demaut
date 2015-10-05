@@ -14,6 +14,8 @@ public class Diplome extends BaseValueObjectWithId {
     @Valid
     private TitreFormation titreFormation;
 
+    private String complement;
+
     @Valid
     private DateObtention dateObtention;
 
@@ -28,10 +30,11 @@ public class Diplome extends BaseValueObjectWithId {
     }
 
     public Diplome(ReferenceDeDiplome referenceDeDiplome, TypeDiplomeAccepte typeDiplomeAccepte, TitreFormation titreFormation,
-                   DateObtention dateObtention, PaysObtention paysObtention, DateReconnaissance dateReconnaissance) {
+                   String complement, DateObtention dateObtention, PaysObtention paysObtention, DateReconnaissance dateReconnaissance) {
         this.referenceDeDiplome = referenceDeDiplome;
         this.typeDiplomeAccepte = typeDiplomeAccepte;
         this.titreFormation = titreFormation;
+        this.complement = complement;
         this.dateObtention = dateObtention;
         this.paysObtention = paysObtention;
         this.dateReconnaissance = dateReconnaissance;
@@ -47,6 +50,10 @@ public class Diplome extends BaseValueObjectWithId {
 
     public TitreFormation getTitreFormation() {
         return titreFormation;
+    }
+
+    public String getComplement() {
+        return complement;
     }
 
     public DateObtention getDateObtention() {

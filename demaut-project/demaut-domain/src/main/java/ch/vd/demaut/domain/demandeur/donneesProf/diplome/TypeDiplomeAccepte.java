@@ -2,6 +2,7 @@ package ch.vd.demaut.domain.demandeur.donneesProf.diplome;
 
 import ch.vd.demaut.domain.config.RefProgresID;
 import ch.vd.demaut.domain.config.TypeProgres;
+import ch.vd.demaut.domain.exception.TypeFormationNotFoundException;
 
 public enum TypeDiplomeAccepte implements TypeProgres {
     D_FORMATION_APPROFONDIE(1, "Diplôme de formation approfondie"),
@@ -24,7 +25,7 @@ public enum TypeDiplomeAccepte implements TypeProgres {
                 return type;
             }
         }
-        throw new TypeDiplomeNotFoundException();
+        throw new TypeFormationNotFoundException();
     }
 
     public RefProgresID getRefProgresID() {

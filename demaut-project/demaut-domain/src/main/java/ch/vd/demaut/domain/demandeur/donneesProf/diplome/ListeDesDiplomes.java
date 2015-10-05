@@ -1,5 +1,6 @@
 package ch.vd.demaut.domain.demandeur.donneesProf.diplome;
 
+import ch.vd.demaut.domain.exception.DiplomeIntrouvableException;
 import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
 import org.apache.commons.collections.CollectionUtils;
 

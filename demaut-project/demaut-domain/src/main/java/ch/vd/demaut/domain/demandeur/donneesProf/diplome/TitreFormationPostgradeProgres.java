@@ -2,6 +2,7 @@ package ch.vd.demaut.domain.demandeur.donneesProf.diplome;
 
 import ch.vd.demaut.domain.config.RefProgresID;
 import ch.vd.demaut.domain.config.TypeProgres;
+import ch.vd.demaut.domain.exception.TypeFormationNotFoundException;
 
 public enum TitreFormationPostgradeProgres implements TypeProgres {
     ListeIncomplete(0, "Liste incomplète..."),
@@ -26,7 +27,7 @@ public enum TitreFormationPostgradeProgres implements TypeProgres {
                 return type;
             }
         }
-        throw new TypeDiplomeNotFoundException();
+        throw new TypeFormationNotFoundException();
     }
 
     public RefProgresID getRefProgresID() {

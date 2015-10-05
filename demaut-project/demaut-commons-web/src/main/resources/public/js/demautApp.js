@@ -2,8 +2,8 @@ var ngDemautApp = angular.module('ngDemautApp', ['ngSanitize', 'ngRoute', 'ngAni
 
 /* Necessaire si les services ne sont pas dans la même arborescence que la page html */
 // TODO Pour PROD : ngDemautApp.constant('urlPrefix', '/outils/demautMicrobiz');
-// TODO pour Jetty : ngDemautApp.constant('urlPrefix', 'http://localhost:8083/outils/demautMicrobiz');
-// TODO pour Microbiz Local : ngDemautApp.constant('urlPrefix', 'http://localhost:40022/outils/demautMicrobiz');
+// TODO pour Jetty Local: ngDemautApp.constant('urlPrefix', 'http://localhost:8083/outils/demautMicrobiz');
+// TODO pour Microbiz Local : ngDemautApp.constant('urlPrefix', 'http://localhost:40002/outils/demautMicrobiz');
 // TODO pour Microbiz DEMO : ngDemautApp.constant('urlPrefix', 'http://slv2395t.etat-de-vaud.ch:41002/outils/demautMicrobiz');
 ngDemautApp.constant('urlPrefix', 'http://slv2395t.etat-de-vaud.ch:41002/outils/demautMicrobiz');
 
@@ -122,17 +122,17 @@ ngDemautApp
         this.params = $routeParams;
         $scope.$storage = $sessionStorage;
         $scope.professionData = {};
-        $scope.professionData.profession = null;
         $scope.professionData.professions = [];
+        $scope.professionData.profession = {};
 
         //Récupère liste des professions
         //TODO: créer une methode isProfessionsListInitialized + Ne pas appeler le service a chaque fois (à initialiser au départ)
         if ($scope.professionData.professions.length == 0) {
-            $http.get(urlPrefix + '/profession/professionsList').
-                success(function (data, status, headers, config) {
+            $http.get(urlPrefix + '/profession/professionsList')
+                .success(function (data, status, headers, config) {
                     $scope.professionData.professions = angular.fromJson(data.response);
-                }).
-                error(function (data, status, headers, config) {
+                })
+                .error(function (data, status, headers, config) {
                     $rootScope.error = 'Error downloading ../profession/professionsList';
                 });
         }
@@ -141,17 +141,22 @@ ngDemautApp
         $scope.nextStep = function(){
             $scope.wouldStepNext = true;
             if ($scope.professionSante.professionDataForm.$valid) {
-                $http.get(urlPrefix + '/demande/initialiser/' + $scope.professionData.profession.id).
-                    success(function (data, status, headers, config) {
-                    	var refDemande = angular.fromJson(data.response);
-                    	//TODO : Ajouter le error handling if refDemande null ou undefined 
-                    	$scope.$storage.refDemande = refDemande.value;
-                        $log.info('Reference de la nouvelle demande :' + $scope.$storage.refDemande);
-                    }).
-                    error(function (data, status, headers, config) {
-                    	delete $scope.$storage.refDemande;
-                        $rootScope.error = 'Error from response /demande/initialiser/';
-                    });
+                $http.get(urlPrefix + '/demande/initialiser/', {
+                    params: {
+                        professionId: $scope.professionData.profession.id,
+                        codeGln: $scope.professionData.profession.gln != undefined ? $scope.professionData.profession.gln : null,
+                    }
+                })
+                .success(function (data, status, headers, config) {
+                    var refDemande = angular.fromJson(data.response);
+                    //TODO : Ajouter le error handling if refDemande null ou undefined
+                    $scope.$storage.refDemande = refDemande.value;
+                    $log.info('Reference de la nouvelle demande :' + $scope.$storage.refDemande);
+                })
+                .error(function (data, status, headers, config) {
+                    delete $scope.$storage.refDemande;
+                    $rootScope.error = 'Error from response /demande/initialiser/';
+                });
                 //Go to next page
                 $scope.indexStep += 1;
                 $location.path('/Demaut/demande/donneesPerso');
@@ -169,6 +174,7 @@ ngDemautApp
         $scope.testSuisse = nationalityTest;//récupération du service de test des nationnalité
         $scope.personalData = {};
         $scope.personalData.nationalites = [];
+        $scope.personalData.langues = [];
 
         if ($scope.personalData.nationalites == null || $scope.personalData.nationalites == undefined || $scope.personalData.nationalites.length == 0) {
             $http.get(urlPrefix + '/personal/nationalites').
@@ -177,6 +183,16 @@ ngDemautApp
                 }).
                 error(function (data, status, headers, config) {
                     $rootScope.error = 'Error downloading ../personal/nationalites';
+                });
+        }
+
+        if ($scope.personalData.langues == null || $scope.personalData.langues == undefined || $scope.personalData.langues.length == 0) {
+            $http.get(urlPrefix + '/personal/langues').
+                success(function (data, status, headers, config) {
+                    $scope.personalData.langues = angular.fromJson(data.response);
+                }).
+                error(function (data, status, headers, config) {
+                    $rootScope.error = 'Error downloading ../personal/langues';
                 });
         }
 
@@ -223,6 +239,7 @@ ngDemautApp
         $scope.diplomeData.typeFormations = [];
         $scope.diplomeData.paysList = [];
         $scope.diplomeData.diplomes = [];
+        $scope.diplomeData.diplome = {};
 
         if ($scope.diplomeData.typeDiplomes == null || $scope.diplomeData.typeDiplomes == undefined || $scope.diplomeData.typeDiplomes.length == 0) {
             $http.get(urlPrefix + '/diplomes/typeDiplomesList').
@@ -245,27 +262,27 @@ ngDemautApp
         }
 
         $scope.isDateReconnaissanceRequired = function () {
-            return $scope.diplomeData.paysObtention != null && $scope.diplomeData.paysObtention != undefined &&
-                !nationalityTest.isSuisse($scope.diplomeData.paysObtention.libl);
+            return $scope.diplomeData.diplome.paysObtention != null && $scope.diplomeData.diplome.paysObtention != undefined &&
+                !nationalityTest.isSuisse($scope.diplomeData.diplome.paysObtention.libl);
         };
 
         $scope.isDateReconnaissanceSaisie = function () {
-            return ($scope.diplomeData.paysObtention == null &&  $scope.diplomeData.paysObtention == undefined)
+            return ($scope.diplomeData.diplome.paysObtention == null &&  $scope.diplomeData.diplome.paysObtention == undefined)
                 ||
-                ($scope.diplomeData.paysObtention != null &&  $scope.diplomeData.paysObtention != undefined &&
-                    nationalityTest.isSuisse($scope.diplomeData.paysObtention.libl))
+                ($scope.diplomeData.diplome.paysObtention != null &&  $scope.diplomeData.diplome.paysObtention != undefined &&
+                    nationalityTest.isSuisse($scope.diplomeData.diplome.paysObtention.libl))
                 ||
-                (!nationalityTest.isSuisse($scope.diplomeData.paysObtention.libl) &&
-                    $scope.diplomeData.dateReconnaissance != null && $scope.diplomeData.dateReconnaissance != undefined && $scope.diplomeData.dateReconnaissance != '');
+                (!nationalityTest.isSuisse($scope.diplomeData.diplome.paysObtention.libl) &&
+                    $scope.diplomeData.diplome.dateReconnaissance != null && $scope.diplomeData.diplome.dateReconnaissance != undefined && $scope.diplomeData.diplome.dateReconnaissance != '');
         };
 
         $scope.fetchListeFormations = function(){
-            $http.get(urlPrefix + '/diplomes/typeFormationsList/' + $scope.diplomeData.typeDiplome.id).
+            $http.get(urlPrefix + '/diplomes/typeFormationsList/' + $scope.diplomeData.diplome.typeDiplome.id).
                 success(function (data, status, headers, config) {
                     $scope.diplomeData.typeFormations = angular.fromJson(data.response);
                 }).
                 error(function (data, status, headers, config) {
-                    $rootScope.error = 'Error downloading ../diplomes/typeFormationsList/' + $scope.diplomeData.typeDiplome.id;
+                    $rootScope.error = 'Error downloading ../diplomes/typeFormationsList/' + $scope.diplomeData.diplome.typeDiplome.id;
                 });
         };
 
@@ -279,7 +296,7 @@ ngDemautApp
             if ($scope.donneesDiplome.diplomeDataForm.$valid) {
                 $log.info('Formulaire valide !');
                 $scope.indexStep += 1;
-                $location.path('/Demaut/demande/annexes');
+                $location.path('/Demaut/demande/donneesActivites');
             }
             else {
                 $log.info('Formulaire invalide !');
@@ -288,31 +305,20 @@ ngDemautApp
 
         $scope.addAnotherDiplome = function(){
             $scope.wouldAddDiplome = true;
-            var isValidTypeDiplome = $scope.diplomeData.typeDiplome != null && $scope.diplomeData.typeDiplome != undefined;
-            var isValidTypeFormation = $scope.diplomeData.typeFormation != null && $scope.diplomeData.typeFormation != undefined;
-            var isValidDateObtention = $scope.diplomeData.dateObtention != null && $scope.diplomeData.dateObtention != undefined && $scope.diplomeData.dateObtention != '';
-            var isValidPaysObtention = $scope.diplomeData.paysObtention != null && $scope.diplomeData.paysObtention != undefined;
+            var isValidTypeDiplome = $scope.diplomeData.diplome.typeDiplome != null && $scope.diplomeData.diplome.typeDiplome != undefined;
+            var isValidTypeFormation = $scope.diplomeData.diplome.typeFormation != null && $scope.diplomeData.diplome.typeFormation != undefined;
+            var isValidDateObtention = $scope.diplomeData.diplome.dateObtention != null && $scope.diplomeData.diplome.dateObtention != undefined && $scope.diplomeData.diplome.dateObtention != '';
+            var isValidPaysObtention = $scope.diplomeData.diplome.paysObtention != null && $scope.diplomeData.diplome.paysObtention != undefined;
 
             if (isValidTypeDiplome && isValidTypeFormation && isValidDateObtention && isValidPaysObtention && $scope.isDateReconnaissanceSaisie()) {
-                var diplomeKey = $scope.diplomeData.typeDiplome.id + '#' + $scope.diplomeData.typeFormation.id + '#' + $scope.diplomeData.dateObtention;
-                var diplome = [
-                    {   keyDiplome: diplomeKey.replace(/\s/g, ''),
-                        typeDiplome: $scope.diplomeData.typeDiplome,
-                        typeFormation: $scope.diplomeData.typeFormation,
-                        dateObtention: $scope.diplomeData.dateObtention,
-                        paysObtention: $scope.diplomeData.paysObtention,
-                        dateReconnaissance: $scope.diplomeData.dateReconnaissance
-                    }
-                ];
+                var diplomeKey = $scope.diplomeData.diplome.typeDiplome.id + '#' + $scope.diplomeData.diplome.typeFormation.id + '#' + $scope.diplomeData.diplome.dateObtention;
+                var diplome = angular.copy($scope.diplomeData.diplome);
+                diplome.referenceDeDiplome = diplomeKey.replace(/\s/g, '');
 
                 // TODO attendre la reponse server avant de faire le push
                 $scope.diplomeData.diplomes.push(diplome);
-                doCreateDiplome(diplome)
-                $scope.diplomeData.typeDiplome = null;
-                $scope.diplomeData.typeFormation = null;
-                $scope.diplomeData.dateObtention = null;
-                $scope.diplomeData.paysObtention = null;
-                $scope.diplomeData.dateReconnaissance = null;
+                doCreateDiplome(diplome);
+                $scope.diplomeData.diplome = {};
                 $scope.donneesDiplome.diplomeDataForm.$valid = true;
                 $scope.donneesDiplome.diplomeDataForm.$error = null;
                 $scope.donneesDiplome.diplomeDataForm.$setPristine();
@@ -322,16 +328,15 @@ ngDemautApp
 
         $scope.editDiplome = function(targetDiplome){
             for (var indexI = 0; indexI < $scope.diplomeData.diplomes.length; indexI++) {
-                if ($scope.diplomeData.diplomes[indexI][0].keyDiplome == targetDiplome[0].keyDiplome) {
-                    $scope.diplomeData.typeDiplome = targetDiplome[0].typeDiplome;
-                    $scope.diplomeData.typeFormation = targetDiplome[0].typeFormation;
-                    $scope.diplomeData.dateObtention = targetDiplome[0].dateObtention;
-                    $scope.diplomeData.paysObtention = targetDiplome[0].paysObtention;
-                    $scope.diplomeData.dateReconnaissance = targetDiplome[0].dateReconnaissance;
+                if ($scope.diplomeData.diplomes[indexI].referenceDeDiplome == targetDiplome.referenceDeDiplome) {
+                    $scope.diplomeData.diplome = angular.copy(targetDiplome);
+                    $scope.diplomeData.diplome.referenceDeDiplome = null;
+
                     // TODO attendre la reponse server avant de faire le splice
                     $scope.diplomeData.diplomes.splice(indexI, 1);
                     doDeleteDiplome(targetDiplome);
                     $scope.donneesDiplome.diplomeDataForm.$valid = true;
+                    $scope.donneesDiplome.diplomeDataForm.$error = null;
                     $scope.donneesDiplome.diplomeDataForm.$setPristine();
                     $scope.wouldEditDiplome = true;
                     $scope.$apply();
@@ -342,7 +347,7 @@ ngDemautApp
 
         $scope.deleteDiplome = function(targetDiplome){
             for (var indexI = 0; indexI < $scope.diplomeData.diplomes.length; indexI++) {
-                if ($scope.diplomeData.diplomes[indexI][0].keyDiplome == targetDiplome[0].keyDiplome) {
+                if ($scope.diplomeData.diplomes[indexI].referenceDeDiplome == targetDiplome.referenceDeDiplome) {
                     // TODO attendre la reponse server avant de faire le splice
                     $scope.diplomeData.diplomes.splice(indexI, 1);
                     doDeleteDiplome(targetDiplome);
@@ -354,16 +359,17 @@ ngDemautApp
         function doCreateDiplome(targetDiplome) {
             $http.get(urlPrefix + '/diplomes/ajouter/' + $scope.$storage.refDemande, {
                     params: {
-                        keyDiplome: targetDiplome[0].keyDiplome,
-                        typeDiplome: targetDiplome[0].typeDiplome.id,
-                        typeFormation: targetDiplome[0].typeFormation.id,
-                        dateObtention: targetDiplome[0].dateObtention,
-                        paysObtention: targetDiplome[0].paysObtention.id,
-                        dateReconnaissance: targetDiplome[0].dateReconnaissance == null || targetDiplome[0].dateReconnaissance == undefined || targetDiplome[0].dateReconnaissance == '' ? '-' : targetDiplome[0].dateReconnaissance
+                        referenceDeDiplome: targetDiplome.referenceDeDiplome,
+                        typeDiplome: targetDiplome.typeDiplome.id,
+                        typeFormation: targetDiplome.typeFormation.id,
+                        complement: targetDiplome.complement,
+                        dateObtention: targetDiplome.dateObtention,
+                        paysObtention: targetDiplome.paysObtention.id,
+                        dateReconnaissance: targetDiplome.dateReconnaissance == null || targetDiplome.dateReconnaissance == undefined || targetDiplome.dateReconnaissance == '' ? '-' : targetDiplome.dateReconnaissance
                     }
                 })
                 .success(function (data, status, headers, config) {
-                    $rootScope.error = 'Un diplôme a été supprimé avec succès: \n Status :' +  status;
+                    $rootScope.error = 'Un diplôme a été crée avec succès: \n Status :' +  status;
                 })
                 .error(function (data, status, headers, config) {
                     $rootScope.error = 'Error ' + urlPrefix + '/diplomes/ajouter/ \n Status :' +  status;
@@ -373,7 +379,7 @@ ngDemautApp
         function doDeleteDiplome(targetDiplome) {
             $http.get(urlPrefix + '/diplomes/supprimer/' + $scope.$storage.refDemande,{
                 params: {
-                    keyDiplome: targetDiplome[0].keyDiplome
+                    referenceDeDiplome: targetDiplome.referenceDeDiplome
                 }
             })
                 .success(function (data, status, headers, config) {
@@ -390,6 +396,9 @@ ngDemautApp
         this.name = "DonneesActivitesController";
         this.params = $routeParams;
         $scope.$storage = $sessionStorage;
+        $scope.activiteData = {};
+        $scope.activiteData.activities = [];
+        $scope.activiteData.activitie = {};
 
         $scope.backStep = function(){
             $scope.indexStep -= 1;
@@ -408,9 +417,6 @@ ngDemautApp
             }
         };
 
-        $scope.activiteData = {};
-        $scope.activiteData.activities = [];
-
         $scope.previewStep = function(){
             $scope.indexStep -= 1;
             $location.path('/Demaut/demande/professionSante');
@@ -421,45 +427,92 @@ ngDemautApp
             $location.path('/Demaut/demande/annexes');
         };
 
-        $scope.addAnotherActivitee = function(){
-            var keyActivitee = $scope.activiteData.etablissement + '#' + $scope.activiteData.npa + '#' + $scope.activiteData.pratiquer;
-            var activite = [
-                {keyActivitee: keyActivitee.replace(/\s/g, '')},
-                {etablissement: $scope.activiteData.etablissement},
-                {adresseRue: $scope.activiteData.adresseRue},
-                {npa: $scope.activiteData.npa},
-                {localite: $scope.activiteData.localite},
-                {telephoneProf: $scope.activiteData.telephoneProf},
-                {telephoneMobile: $scope.activiteData.telephoneMobile},
-                {email: $scope.activiteData.email},
-                {fax: $scope.activiteData.fax},
-                {site: $scope.activiteData.site},
-                {flagTauxIndependant: $scope.activiteData.flagTauxIndependant},
-                {tauxIndependant: $scope.activiteData.tauxIndependant},
-                {dateDebutIndependant: $scope.activiteData.dateDebutIndependant},
-                {flagTauxDependant: $scope.activiteData.flagTauxDependant},
-                {tauxDependant: $scope.activiteData.tauxDependant},
-                {dateDebutDependant: $scope.activiteData.dateDebutDependant},
-                {pratiquerBase: $scope.activiteData.pratiquerBase}
-            ];
+        $scope.addAnotherActivite = function(){
+            $scope.wouldAddActivite = true;
+            var keyActivite = $scope.activiteData.activitie.etablissement + '#' + $scope.activiteData.activitie.npa + '#' + $scope.activiteData.activitie.pratiquer;
+            var activite = angular.copy($scope.activiteData.activitie);
+            activite.referenceDeActivite = keyActivite.replace(/\s/g, '');
 
             $scope.activiteData.activities.push(activite);
-            $scope.activiteData.etablissement = null;
-            $scope.activiteData.adresseRue = null;
-            $scope.activiteData.npa = null;
-            $scope.activiteData.localite = null;
-            $scope.activiteData.telephoneProf = null;
-            $scope.activiteData.telephoneMobile = null;
-            $scope.activiteData.email = null;
-            $scope.activiteData.fax = null;
-            $scope.activiteData.site = null;
-            $scope.activiteData.flagTauxIndependant = null;
-            $scope.activiteData.tauxIndependant = null;
-            $scope.activiteData.dateDebutIndependant = null;
-            $scope.activiteData.flagTauxDependant = null;
-            $scope.activiteData.tauxDependant = null;
-            $scope.activiteData.dateDebutDependant = null;
-            $scope.activiteData.pratiquerBase = null;
+            doCreateActivite(activite);
+            $scope.activiteData.activitie = {};
+            $scope.donneesActivite.donneesActiviteForm.$valid = true;
+            $scope.donneesActivite.donneesActiviteForm.$error = null;
+            $scope.donneesActivite.donneesActiviteForm.$setPristine();
+            $scope.wouldAddActivite = false;
+        };
+
+        $scope.editActivite = function(targetActivite){
+            for (var indexI = 0; indexI < $scope.activiteData.activities.length; indexI++) {
+                if ($scope.activiteData.activities[indexI].referenceDeActivite == targetActivite.referenceDeActivite) {
+                    $s$scope.activiteData.activitie = angular.copy(targetActivite);
+                    $$scope.activiteData.activitie.referenceDeActivite = null;
+
+                    // TODO attendre la reponse server avant de faire le splice
+                    $scope.activiteData.activities.splice(indexI, 1);
+                    doDeleteActivite(targetActivite);
+                    $scope.donneesActivite.diplomeDataForm.$valid = true;
+                    $scope.donneesActivite.diplomeDataForm.$setPristine();
+                    $scope.wouldEditActivite = true;
+                    $scope.$apply();
+                    break;
+                }
+            }
+        };
+
+        $scope.deleteActivite = function(targetActivite){
+            for (var indexI = 0; indexI < $scope.activiteData.activities.length; indexI++) {
+                if ($scope.activiteData.activities[indexI].referenceDeActivite == targetActivite.referenceDeActivite) {
+                    // TODO attendre la reponse server avant de faire le splice
+                    $scope.activiteData.activities.splice(indexI, 1);
+                    doDeleteActivite(targetActivite);
+                    break;
+                }
+            }
+        };
+
+        function doCreateActivite(targetActivite) {
+            $http.get(urlPrefix + '/activites/ajouter/' + $scope.$storage.refDemande, {
+                params: {
+                    referenceDeActivite: targetActivite.referenceDeActivite,
+                    etablissement: targetActivite.etablissement,
+                    adresseRue: targetActivite.adresseRue,
+                    npa: targetActivite.npa,
+                    localite: targetActivite.localite,
+                    telephoneProf: targetActivite.telephoneProf,
+                    telephoneMobile: targetActivite.telephoneMobile,
+                    email: targetActivite.email,
+                    fax: targetActivite.fax,
+                    site: targetActivite.site,
+                    flagTauxIndependant: targetActivite.flagTauxIndependant,
+                    tauxIndependant: targetActivite.tauxIndependant,
+                    dateDebutIndependant: targetActivite.dateDebutIndependant,
+                    flagTauxDependant: targetActivite.flagTauxDependant,
+                    tauxDependant: targetActivite.tauxDependant,
+                    dateDebutDependant: targetActivite.dateDebutDependant,
+                    pratiquerBase: targetActivite.pratiquerBase
+                }
+            })
+                .success(function (data, status, headers, config) {
+                    $rootScope.error = 'Une activité a été crée avec succès: \n Status :' +  status;
+                })
+                .error(function (data, status, headers, config) {
+                    $rootScope.error = 'Error ' + urlPrefix + '/activites/ajouter/ \n Status :' +  status;
+                });
+        };
+
+        function doDeleteActivite(targetActivite) {
+            $http.get(urlPrefix + '/activites/supprimer/' + $scope.$storage.refDemande,{
+                params: {
+                    referenceDeActivite: targetActivite.referenceDeActivite
+                }
+            })
+                .success(function (data, status, headers, config) {
+                    $rootScope.error = 'Une activité a été supprimée avec succès: \n Status :' +  status;
+                })
+                .error(function (data, status, headers, config) {
+                    $rootScope.error = 'Error ' + urlPrefix + '/activites/supprimer/ \n Status :' +  status;
+                });
         };
     }])
     .controller('AnnexesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', '$sessionStorage', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log, $sessionStorage) {

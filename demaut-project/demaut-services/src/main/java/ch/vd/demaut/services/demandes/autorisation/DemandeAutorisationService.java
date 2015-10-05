@@ -3,6 +3,7 @@ package ch.vd.demaut.services.demandes.autorisation;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 
 public interface DemandeAutorisationService {
 
@@ -12,7 +13,7 @@ public interface DemandeAutorisationService {
      * @param profession Profession
      * @return DemandeAutorisation
      */
-    DemandeAutorisation initialiserDemandeAutorisation(Profession profession);
+    DemandeAutorisation initialiserDemandeAutorisation(Profession profession, CodeGLN codeGLN);
 
     /**
      * Récupère une demande via sa référence <br/>

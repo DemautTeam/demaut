@@ -6,6 +6,7 @@ import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
+import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.exception.ReferenceDemandeNotFoundException;
 import ch.vd.demaut.domain.utilisateurs.Utilisateur;
 import ch.vd.demaut.domain.utilisateurs.UtilisateurService;
@@ -26,11 +27,12 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
 
     @Transactional
     @Override
-    public DemandeAutorisation initialiserDemandeAutorisation(Profession profession) {
+    public DemandeAutorisation initialiserDemandeAutorisation(Profession profession, CodeGLN codeGLN) {
         Utilisateur utilisateurCourant = utilisateurService.recupererUtilisateurCourant();
-        DemandeAutorisation nouvelleDemande = demandeAutorisationFactory.initierDemandeAutorisation(utilisateurCourant.getLogin(), profession);
-        demandeAutorisationRepository.store(nouvelleDemande);
-        return nouvelleDemande;
+        DemandeAutorisation demandeAutorisation = demandeAutorisationFactory.initierDemandeAutorisation(utilisateurCourant.getLogin(), profession);
+        demandeAutorisation.getDonneesProfessionnelles().validerEtRensignerCodeGLN(codeGLN);
+        demandeAutorisationRepository.store(demandeAutorisation);
+        return demandeAutorisation;
     }
 
     @Transactional

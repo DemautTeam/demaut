@@ -4,6 +4,7 @@ import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.Pays;
+import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.*;
 import ch.vd.demaut.domain.utilisateurs.Login;
@@ -78,7 +79,7 @@ public class DonneesProfessionnellesServiceTest {
         donneesProfessionnellesService.ajouterUnDiplome(referenceDeDemande,
                 new ReferenceDeDiplome(UUID.randomUUID().toString()),
                 TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
-                new TitreFormation(TitreFormationApprofondieProgres.ChirurgieDeLaMain.name()),
+                new TitreFormation(TitreFormationApprofondieProgres.ChirurgieDeLaMain.name()), null,
                 new DateObtention(new LocalDate()), new PaysObtention(Pays.AfriqueDuSud.name()), null);
         assertThat(donneesProfessionnelles).isNotNull();
         assertThat(donneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(1);
@@ -92,7 +93,7 @@ public class DonneesProfessionnellesServiceTest {
         donneesProfessionnellesService.ajouterUnDiplome(referenceDeDemande,
                 new ReferenceDeDiplome(UUID.randomUUID().toString()),
                 TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
-                new TitreFormation(TitreFormationApprofondieProgres.ChirurgieDeLaMain.name()),
+                new TitreFormation(TitreFormationApprofondieProgres.ChirurgieDeLaMain.name()), null,
                 new DateObtention(new LocalDate()), new PaysObtention(Pays.AfriqueDuSud.name()), null);
         assertThat(donneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(1);
 
@@ -105,15 +106,15 @@ public class DonneesProfessionnellesServiceTest {
     private void creerListeDiplomes(DonneesProfessionnelles donneesProfessionnelles) {
         donneesProfessionnelles.validerEtAjouterDiplome(
                 new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
-                        new TitreFormation(TitreFormationApprofondieProgres.PneumologiePediatrique.name()),
+                        new TitreFormation(TitreFormationApprofondieProgres.PneumologiePediatrique.name()), null,
                         new DateObtention(new LocalDate()), new PaysObtention(Pays.Suisse.name()), null));
         donneesProfessionnelles.validerEtAjouterDiplome(
                 new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), TypeDiplomeAccepte.D_FORMATION_INITIALE,
-                        new TitreFormation(TitreFormationInitialeProgres.CFRDUnDiplomeEtrangerDeMedecin.name()),
+                        new TitreFormation(TitreFormationInitialeProgres.CFRDUnDiplomeEtrangerDeMedecin.name()), null,
                         new DateObtention(new LocalDate()), new PaysObtention(Pays.Allemagne.name()), new DateReconnaissance(new LocalDate())));
         donneesProfessionnelles.validerEtAjouterDiplome(
                 new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), TypeDiplomeAccepte.D_POSTGRADE,
-                        new TitreFormation(TitreFormationPostgradeProgres.Cardiologie.name()),
+                        new TitreFormation(TitreFormationPostgradeProgres.Cardiologie.name()), null,
                         new DateObtention(new LocalDate()), new PaysObtention(Pays.Suisse.name()), null));
     }
 
@@ -121,6 +122,6 @@ public class DonneesProfessionnellesServiceTest {
 
     @Transactional(propagation = Propagation.REQUIRED)
     private void intialiserDemandeEnCours() {
-        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession);
+        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, new CodeGLN("7601000000125"));
     }
 }

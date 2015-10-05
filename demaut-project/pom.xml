@@ -619,6 +619,13 @@
                 <version>${com.h2.version}</version>
                 <scope>test</scope>
             </dependency>
+	    <!-- Dev Run with Jetty & Oracle DB -->
+            <dependency>
+                <groupId>oracle</groupId>
+                <artifactId>oracle-jdbc</artifactId>
+                <version>6.0</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

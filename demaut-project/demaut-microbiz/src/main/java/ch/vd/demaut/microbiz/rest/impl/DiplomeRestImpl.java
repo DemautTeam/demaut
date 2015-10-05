@@ -27,8 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@CrossOriginResourceSharing(allowOrigins = {"*"}, allowCredentials = true, maxAge = 3600, allowHeaders = {
-        "Content-Type", "X-Requested-With"}, exposeHeaders = {"Access-Control-Allow-Origin"})
+@CrossOriginResourceSharing(allowAllOrigins = true)
 @Service("diplomeRestImpl")
 @Path("/diplomes")
 public class DiplomeRestImpl {
@@ -138,14 +137,15 @@ public class DiplomeRestImpl {
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
     public Response ajouterUnDiplome(@Context UriInfo uriInfo, @PathParam("demandeReference") String demandeReference,
-                                     @QueryParam("keyDiplome") String keyDiplome, @QueryParam("typeDiplome") String typeDiplomeId,
-                                     @QueryParam("typeFormation") String typeFormationId, @QueryParam("dateObtention") String dateObtentionStr,
-                                     @QueryParam("paysObtention") String paysObtentionId, @QueryParam("dateReconnaissance") String dateReconnaissanceStr) throws Exception {
+                                     @QueryParam("referenceDeDiplome") String referenceDeDiplomeStr, @QueryParam("typeDiplome") String typeDiplomeId,
+                                     @QueryParam("typeFormation") String typeFormationId, @QueryParam("complement") String complement,
+                                     @QueryParam("dateObtention") String dateObtentionStr, @QueryParam("paysObtention") String paysObtentionId,
+                                     @QueryParam("dateReconnaissance") String dateReconnaissanceStr) throws Exception {
 
-        LOGGER.info("ajouterUnDiplome " + keyDiplome);
+        LOGGER.info("ajouterUnDiplome " + referenceDeDiplomeStr);
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);
-        ReferenceDeDiplome referenceDeDiplome = new ReferenceDeDiplome(keyDiplome);
+        ReferenceDeDiplome referenceDeDiplome = new ReferenceDeDiplome(referenceDeDiplomeStr);
         TypeDiplomeAccepte typeDiplomeAccepte = TypeDiplomeAccepte.getTypeById(Integer.parseInt(typeDiplomeId));
         TitreFormation titreFormation = new TitreFormation(convertTypeFormationIdToEnum(typeDiplomeAccepte, typeFormationId).name());
         DateObtention dateObtention = new DateObtention(SHORT_DATE_FORMATTER.parseLocalDate(dateObtentionStr));
@@ -155,7 +155,8 @@ public class DiplomeRestImpl {
             dateReconnaissance = new DateReconnaissance(SHORT_DATE_FORMATTER.parseLocalDate(dateReconnaissanceStr));
         }
 
-        donneesProfessionnellesService.ajouterUnDiplome(referenceDeDemande, referenceDeDiplome, typeDiplomeAccepte, titreFormation, dateObtention, paysObtention, dateReconnaissance);
+        donneesProfessionnellesService.ajouterUnDiplome(referenceDeDemande, referenceDeDiplome, typeDiplomeAccepte, titreFormation,
+                complement, dateObtention, paysObtention, dateReconnaissance);
         return RestUtils.forgeResponseTrue();
     }
 

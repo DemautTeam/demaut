@@ -124,7 +124,7 @@ public class AnnexesServiceTest {
 
     @Transactional(propagation = Propagation.REQUIRED)
     private void intialiserDemandeEnCours(Annexe annexeALier) {
-        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession);
+        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null);
         if (annexeALier != null) {
             annexesService.attacherUneAnnexe(demandeEnCours.getReferenceDeDemande(), annexeALier);
         }

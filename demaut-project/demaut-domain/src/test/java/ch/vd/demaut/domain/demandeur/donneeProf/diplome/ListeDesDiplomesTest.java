@@ -2,6 +2,7 @@ package ch.vd.demaut.domain.demandeur.donneeProf.diplome;
 
 import ch.vd.demaut.domain.demandeur.Pays;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.*;
+import ch.vd.demaut.domain.exception.DiplomeIntrouvableException;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,15 +29,15 @@ public class ListeDesDiplomesTest {
         listeDesDiplomes = new ListeDesDiplomes(new ArrayList<Diplome>());
         listeDesDiplomes.ajouterUnDiplome(
                 new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
-                        new TitreFormation(TitreFormationApprofondieProgres.PneumologiePediatrique.name()),
+                        new TitreFormation(TitreFormationApprofondieProgres.PneumologiePediatrique.name()), null,
                         new DateObtention(new LocalDate()), new PaysObtention(Pays.Suisse.name()), null));
         listeDesDiplomes.ajouterUnDiplome(
                 new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), TypeDiplomeAccepte.D_FORMATION_INITIALE,
-                        new TitreFormation(TitreFormationInitialeProgres.CFRDUnDiplomeEtrangerDeMedecin.name()),
+                        new TitreFormation(TitreFormationInitialeProgres.CFRDUnDiplomeEtrangerDeMedecin.name()), null,
                         new DateObtention(new LocalDate()), new PaysObtention(Pays.Allemagne.name()), new DateReconnaissance(new LocalDate())));
         listeDesDiplomes.ajouterUnDiplome(
                 new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), TypeDiplomeAccepte.D_POSTGRADE,
-                        new TitreFormation(TitreFormationPostgradeProgres.Cardiologie.name()),
+                        new TitreFormation(TitreFormationPostgradeProgres.Cardiologie.name()), null,
                         new DateObtention(new LocalDate()), new PaysObtention(Pays.Suisse.name()), null));
     }
 

@@ -29,6 +29,19 @@
                 <div class="row">
                     <br/>
                 </div>
+                <div class="row">
+                    <br/>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><label for="gln">Code GLN (EAN)</label></div>
+                    <div class="col-md-6">
+                        <input type="number" id="gln" name="gln" ng-minlength="0" ng-maxlength="13" ng-model="professionData.gln"
+                               ng-model-options="{ updateOn: 'blur' }" placeholder="7601000000125">
+                    </div>
+                </div>
+                <div class="row">
+                    <br/>
+                </div>
             </ng-form>
         </div>
     </fieldset>

@@ -302,9 +302,17 @@
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
         </dependency>
+	<!-- Test Run -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+            <scope>provided</scope>
+        </dependency>
+	<!-- Dev Run with Jetty & Oracle DB -->
+        <dependency>
+            <groupId>oracle</groupId>
+            <artifactId>oracle-jdbc</artifactId>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>

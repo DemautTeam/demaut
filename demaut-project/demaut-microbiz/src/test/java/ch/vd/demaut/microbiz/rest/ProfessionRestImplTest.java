@@ -40,7 +40,7 @@ public class ProfessionRestImplTest {
         assertNotNull(professionRestImpl);
         assertThat(demandeAutorisationService).isNotNull();
 
-        DemandeAutorisation demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession);
+        DemandeAutorisation demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null);
         referenceDeDemande = demandeEnCours.getReferenceDeDemande();
     }
 

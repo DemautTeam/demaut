@@ -2,7 +2,7 @@ package ch.vd.demaut.domain.demandes.autorisation;
 
 import ch.vd.demaut.domain.config.RefProgresID;
 import ch.vd.demaut.domain.config.TypeProgres;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TypeDiplomeNotFoundException;
+import ch.vd.demaut.domain.exception.TypeDiplomeNotFoundException;
 
 public enum Profession implements TypeProgres {
     Chiropraticien(53843599, "Chiropraticien"),//

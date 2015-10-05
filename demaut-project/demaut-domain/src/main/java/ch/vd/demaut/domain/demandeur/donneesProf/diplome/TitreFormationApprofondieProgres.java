@@ -2,6 +2,7 @@ package ch.vd.demaut.domain.demandeur.donneesProf.diplome;
 
 import ch.vd.demaut.domain.config.RefProgresID;
 import ch.vd.demaut.domain.config.TypeProgres;
+import ch.vd.demaut.domain.exception.TypeFormationNotFoundException;
 
 public enum TitreFormationApprofondieProgres implements TypeProgres {
     PneumologiePediatrique(344861166, "Pneumologie pédiatrique /118"),
@@ -48,7 +49,7 @@ public enum TitreFormationApprofondieProgres implements TypeProgres {
                 return type;
             }
         }
-        throw new TypeDiplomeNotFoundException();
+        throw new TypeFormationNotFoundException();
     }
 
     public RefProgresID getRefProgresID() {

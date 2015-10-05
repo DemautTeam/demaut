@@ -32,6 +32,10 @@ public class DonneesProfessionnelles extends AbstractEntity {
         getListeDesDiplomes().ajouterUnDiplome(diplomeAAjouter);
     }
 
+    public void validerEtRensignerCodeGLN(CodeGLN codeGLNAAjouter) {
+        this.codeGLN = codeGLNAAjouter;
+    }
+
     public void supprimerUnDiplome(ReferenceDeDiplome referenceDeDiplome) {
         getListeDesDiplomes().supprimerUnDiplome(referenceDeDiplome);
     }

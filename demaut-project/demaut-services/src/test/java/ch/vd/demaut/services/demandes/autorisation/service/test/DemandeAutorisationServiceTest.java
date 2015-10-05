@@ -42,7 +42,7 @@ public class DemandeAutorisationServiceTest extends TestCase {
     @Test
     @Transactional
     public void testerInitialiserDemandeAutorisation() {
-        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession);
+        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null);
         assertThat(demandeEnCours).isNotNull();
         assertThat(demandeEnCours.getId()).isGreaterThan(0L);
         assertThat(demandeEnCours.getReferenceDeDemande()).isNotNull();
@@ -52,7 +52,7 @@ public class DemandeAutorisationServiceTest extends TestCase {
     @Transactional
     public void testerRecupererDemandeParReference() {
         //Setup fixtures
-        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession);
+        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null);
         ReferenceDeDemande referenceDeDemande = demandeEnCours.getReferenceDeDemande();
 
         //Récupère demande en cours
