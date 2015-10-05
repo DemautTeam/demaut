@@ -39,7 +39,7 @@ echo Rechercher bundle à déployer $component : `ls $projectBasedir/target/$com
 bundlecount=`ls -1 $projectBasedir/target/$component*.tar.gz | wc -l`
 bundleName=`ls $projectBasedir/target/$component*.tar.gz`
 
-if [ -f $projectBasedir/target/$component-*.tar.gz ] && [ $bundlecount -eq 1 ]
+if [ -f $projectBasedir/target/$component*.tar.gz ] && [ $bundlecount -eq 1 ]
 then
 	 echo Nouveau bundle à déployer: `ls $projectBasedir/target/$component*.tar.gz`
 else
