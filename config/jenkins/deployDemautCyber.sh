@@ -65,7 +65,7 @@ ssh $sshOptions $remoteServer rm -rf $remoteBaseApp/$component*
 echo "Copie de la nouvelle version..."
 scp $sshOptions $bundleName $remoteServer:$remoteBaseApp
 echo "Décompression de la nouvelle version..."
-ssh $sshOptions $remoteServer tar -xzvf $remoteBaseApp/$component*.tar.gz
+ssh $sshOptions $remoteServer tar -xzvf $remoteBaseApp/$component*.tar.gz -C $remoteBaseApp
 echo "Mise à jour du bundle terminée"
 
 echo "Mise à jour du fichier de configuration tomcat sur $remoteServer:$remoteTomcatConfig..."
