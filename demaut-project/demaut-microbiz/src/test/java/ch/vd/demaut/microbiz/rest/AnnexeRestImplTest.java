@@ -65,13 +65,13 @@ public class AnnexeRestImplTest {
 
     @Test
     public void testListerLesAnnexes() throws Exception {
-        Response response = annexeRest.listerLesAnnexes(null, referenceDeDemande.getValue());
+        Response response = annexeRest.listerLesAnnexes(referenceDeDemande.getValue());
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
     @Test
     public void testAfficherUneAnnexeInvalid() throws Exception {
-        Response response = annexeRest.afficherUneAnnexe(null, referenceDeDemande.getValue(), "Test_multipart.pdf",
+        Response response = annexeRest.afficherUneAnnexe(referenceDeDemande.getValue(), "Test_multipart.pdf",
                 "-1");
         assertNotNull(response);
     }
@@ -80,7 +80,7 @@ public class AnnexeRestImplTest {
     public void testAttacherUneAnnexe() throws Exception {
         File fileMultipart = new File("target/Test_multipart.cfg");
         FileUtils.writeByteArrayToFile(fileMultipart, byteArray);
-        Response response = annexeRest.attacherUneAnnexe(null, referenceDeDemande.getValue(), fileMultipart,
+        Response response = annexeRest.attacherUneAnnexe(referenceDeDemande.getValue(), fileMultipart,
                 "Test_multipart.pdf", String.valueOf(byteArray.length), "application/cfg",
                 String.valueOf(TypeAnnexe.CV.getRefProgresID().getId()));
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
@@ -88,7 +88,7 @@ public class AnnexeRestImplTest {
 
     @Test
     public void testSupprimerAnnexe() throws Exception {
-        Response response = annexeRest.supprimerUneAnnexe(null, referenceDeDemande.getValue(), "Test_multipart.pdf",
+        Response response = annexeRest.supprimerUneAnnexe(referenceDeDemande.getValue(), "Test_multipart.pdf",
                 String.valueOf(TypeAnnexe.CV.getRefProgresID().getId()));
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
