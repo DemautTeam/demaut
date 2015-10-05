@@ -26,7 +26,7 @@
 
     <files>
         <file>
-            <source>target/${artifactId}.war</source>
+            <source>target/${artifactId}-${version}.war</source>
             <destName>${assembly.appName}.war</destName>
             <outputDirectory>deployment</outputDirectory>
         </file>
