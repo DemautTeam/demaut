@@ -103,7 +103,7 @@ ngDemautApp
         this.name = "CockpitController";
         this.params = $routeParams;
     }])
-    .controller('ProfessionSanteController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', 'professionTest', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log, professionTest) {
+    .controller('ProfessionSanteController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'configService', '$log', 'professionTest', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log, professionTest) {
         $rootScope.contextMenu = "Profession Santé";
         $scope.indexStep = 1;
         this.name = "ProfessionSanteController";
@@ -115,7 +115,7 @@ ngDemautApp
         //Récupère liste des professions
         //TODO: créer une methode isProfessionsListInitialized + Ne pas appeler le service a chaque fois (à initialiser au départ)
         if ($scope.professionData.professions.length == 0) {
-            $http.get(urlPrefix + '/profession/professionsList')
+            $http.get(configService.getUrlPrefix() + '/profession/professionsList')
                 .success(function (data, status, headers, config) {
                     $scope.professionData.professions = angular.fromJson(data.response);
                 })
@@ -128,7 +128,7 @@ ngDemautApp
         $scope.nextStep = function(){
             $scope.wouldStepNext = true;
             if ($scope.professionSante.professionDataForm.$valid) {
-                $http.get(urlPrefix + '/demande/initialiser', {
+                $http.get(configService.getUrlPrefix() + '/demande/initialiser', {
                     params: {
                         professionId: $scope.professionData.profession.id,
                         codeGln: $scope.professionData.profession.gln != undefined ? $scope.professionData.profession.gln : null,

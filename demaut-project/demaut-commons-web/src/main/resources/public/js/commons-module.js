@@ -1,4 +1,4 @@
-var commonsModule = angular.module('commonsModule', []);
+var commonsModule = angular.module('commonsModule', ['ngResource']);
 
 commonsModule.service('nationalityTest', ['$log', function ($log) {
     this.suissePattern = new RegExp('[Ss]uisse');
@@ -11,6 +11,14 @@ commonsModule.service('professionTest', ['$log', function ($log) {
     this.isProfessionMedicaleUni = function (textValue, listValues) {
         return textValue != null && textValue != undefined && listValues.indexOf(textValue) != -1;
     };
+}]);
+
+commonsModule.service('configService', ['$resource', function($resource){
+    this.config = $resource('api/config/urlprefix');
+    this.getUrlPrefix = function(){
+        return this.config.get();
+    }
+
 }]);
 
 commonsModule.directive('stepActions', function () {
