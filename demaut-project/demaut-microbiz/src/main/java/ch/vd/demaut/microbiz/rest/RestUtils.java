@@ -1,5 +1,6 @@
 package ch.vd.demaut.microbiz.rest;
 
+import ch.vd.demaut.domain.exception.UtilisateurNotFoundException;
 import ch.vd.demaut.microbiz.json.converters.TypeProgresJsonSerializer;
 import ch.vd.pee.microbiz.core.utils.Json;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -7,74 +8,53 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.springframework.util.StringUtils;
 
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 import java.util.Collection;
 
 public final class RestUtils {
 
+    private static final String DEMAUT_USER_ID_HEADER = "demaut-user-id";
+    private static final String IAM_USER_ID_HEADER = "iam-user-id";
+
+    private static final ObjectWriter viewWriter = new ObjectMapper().writer();
+
     private RestUtils() {
     }
 
-    public static Response forgeResponseList(Collection<?> objects) throws JsonProcessingException {
-        return forgeResponseAsString(objects);
+    public static Response BuildStream(byte[] object) throws JsonProcessingException {
+        return Response.ok()
+                .entity(object)
+                .build();
     }
 
-    public static Response forgeResponseString(String object) throws JsonProcessingException {
-        return forgeResponseAsString(object);
+    public static Response buildJSon(Collection<?> objects) throws JsonProcessingException {
+        return Response.ok()
+                .entity(Json.newObject().put("response", viewWriter.writeValueAsString(objects)))
+                .build();
     }
 
-    public static Response forgeResponseObject(Object object) throws JsonProcessingException {
-        return forgeResponseAsString(object);
-    }
-
-    public static Response forgeResponseTrue() throws JsonProcessingException {
-        return forgeResponseAsString(Boolean.TRUE);
-    }
-
-    public static Response forgeResponseStream(byte[] object) throws JsonProcessingException {
-        ResponseBuilder responseBuilder = getResponseBuildeOK();
-        return responseBuilder.entity(object).build();
-    }
-
-    public static Response forgeResponseNoContent() throws JsonProcessingException {
-        ResponseBuilder responseBuilder = Response.status(Response.Status.NO_CONTENT.getStatusCode());
-        return responseBuilder.build();
-    }
-
-    //////////////////////// Private Methods
-
-    private static ResponseBuilder getResponseBuildeOK() {
-        return Response.status(Response.Status.OK);
-    }
-
-    private static Response forgeResponseAsString(Object value) throws JsonProcessingException {
-        ObjectNode json = buildJSon(value);
-        ResponseBuilder responseBuilder = getResponseBuildeOK();
-        return responseBuilder.entity(json).build();
-    }
-
-    private static ObjectNode buildJSon(Object value) throws JsonProcessingException {
-        ObjectMapper objMapper = buildJSonObjectMapper();
-        ObjectWriter writer = objMapper.writer();
-        String jsonStr = writer.writeValueAsString(value);
-        return Json.newObject().put("response", jsonStr);
-    }
-
-    public static ObjectMapper buildJSonObjectMapper() {
+    public static Response buildRef(Collection<?> objects) throws JsonProcessingException {
         ObjectMapper objMapper = new ObjectMapper();
         SimpleModule module = new SimpleModule("EnumModule");
         module.addSerializer(new TypeProgresJsonSerializer());
         objMapper.registerModule(module);
-
-        return objMapper;
+        ObjectWriter writer = objMapper.writer();
+        String jsonStr = writer.writeValueAsString(objects);
+        ObjectNode json = Json.newObject().put("response", jsonStr);
+        return Response.ok().entity(json).build();
     }
 
-    // TODO à supprimer dès que le DEV peut passer sur Microbiz
-//    private static ResponseBuilder buildHeaders(ResponseBuilder responseBuilder) {
-//        return responseBuilder.header(CorsHeaderConstants.HEADER_AC_ALLOW_METHODS, "GET POST PUT")
-//                .header(CorsHeaderConstants.HEADER_AC_ALLOW_CREDENTIALS, "false")
-//                .header(CorsHeaderConstants.HEADER_AC_ALLOW_ORIGIN, "*");
-//    }
+    public static String fetchCurrentUserToken(HttpHeaders httpHeaders) {
+        String userToken = httpHeaders.getHeaderString(DEMAUT_USER_ID_HEADER);
+        if (StringUtils.isEmpty(userToken)) {
+            userToken = httpHeaders.getHeaderString(IAM_USER_ID_HEADER);
+            if (StringUtils.isEmpty(userToken)) {
+                throw new UtilisateurNotFoundException();
+            }
+        }
+        return userToken;
+    }
 }

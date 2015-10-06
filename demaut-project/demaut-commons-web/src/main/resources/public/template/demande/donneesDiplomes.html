@@ -62,7 +62,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-2"><label for="typeFormation">Titre de la formation*</label></div>
-                    <div class="col-md-10">
+                    <div class="col-md-8">
                         <select id="typeFormation" name="typeFormation" ng-model="diplomeData.diplome.typeFormation" required
                                 ng-options="typeFormation.libl for typeFormation in diplomeData.typeFormations track by typeFormation.id"/>
                     </div>
@@ -82,13 +82,13 @@
                 <div class="row">
                     <label for="dateObtention" class="col-md-2">Date d'obtention*</label>
                     <div class="col-md-4">
-                        <input type="text" id="dateObtention" name="dateObtention" placeholder="jj.mm.aaaa"
-                               class="form-control" ng-model="diplomeData.diplome.dateObtention" required>
+                        <input type="text" id="dateObtention" name="dateObtention" placeholder="jj.mm.aaaa" class="form-control"
+                               ng-model="diplomeData.diplome.dateObtention" required>
                     </div>
                     <label for="paysObtention" class="col-md-2">Pays d'obtention*</label>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <select id="paysObtention" name="paysObtention" ng-model="diplomeData.diplome.paysObtention" required
-                            ng-options="pays.libl for pays in diplomeData.paysList track by pays.id"/>
+                                ng-options="pays.libl for pays in diplomeData.paysList track by pays.id"/>
                     </div>
                 </div>
                 <div class="row">
@@ -97,8 +97,8 @@
                 <div class="row">
                     <label for="dateReconnaissance" class="col-md-2">Date de reconnaissance</label>
                     <div class="col-md-4">
-                        <input type="text" id="dateReconnaissance" name="dateReconnaissance" placeholder="jj.mm.aaaa"
-                               class="form-control" ng-model="diplomeData.diplome.dateReconnaissance" ng-required="isDateReconnaissanceRequired()" >
+                        <input type="text" id="dateReconnaissance" name="dateReconnaissance" placeholder="jj.mm.aaaa" class="form-control"
+                               ng-model="diplomeData.diplome.dateReconnaissance" ng-required="isDateReconnaissanceRequired()">
                     </div>
                 </div>
             </ng-form>

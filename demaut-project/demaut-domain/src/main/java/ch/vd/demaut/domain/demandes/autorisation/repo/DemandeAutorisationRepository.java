@@ -6,7 +6,7 @@ import ch.vd.demaut.commons.repo.GenericReadRepository;
 import ch.vd.demaut.commons.repo.GenericRepository;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.utilisateurs.Utilisateur;
+import ch.vd.demaut.domain.utilisateurs.Login;
 
 /**
  * Repository des {@link DemandeAutorisation}
@@ -19,7 +19,7 @@ public interface DemandeAutorisationRepository
      * Récupère une demande par référence de demande <br>
      * Lève une exception si pas trouvée
      *
-     * @param referenceDeDemande
+     * @param referenceDeDemande ReferenceDeDemande
      * @return La demande récupérée
      * @throws EntityNotFoundException
      */
@@ -29,9 +29,9 @@ public interface DemandeAutorisationRepository
      * Renvoie une demande dans l'état Brouillon associée à un Utilisateur. <br>
      * Renvoie null si elle n'est pas trouvée
      *
-     * @param utilisateur
+     * @param login Login
      * @return Une Demande autorisation dans l'état Brouillon et associée à
      * l'utilisateur
      */
-    DemandeAutorisation trouverDemandeEnCoursDeSaisieDunUtilisateur(Utilisateur utilisateur);
+    DemandeAutorisation trouverDemandeBrouillonParUtilisateur(Login login);
 }

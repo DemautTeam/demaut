@@ -4,6 +4,7 @@ import ch.vd.demaut.domain.annexes.*;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.exception.AnnexeNonUniqueException;
+import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.annexes.AnnexesService;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import org.apache.commons.io.IOUtils;
@@ -46,6 +47,7 @@ public class AnnexesServiceTest {
     private Annexe annexe;
 
     private Profession profession;
+    private Login login;
 
     @Before
     public void setUp() throws Exception {
@@ -56,8 +58,9 @@ public class AnnexesServiceTest {
         annexe = new Annexe(TypeAnnexe.CV, nomFichier, new ContenuAnnexe(byteArray), new DateCreation(new LocalDate()));
 
         profession = Profession.Medecin;
+        login = new Login("admin@admin");
 
-        intialiserDemandeEnCours(annexe);
+        intialiserDemandeEnCours(annexe, login);
 
         assertThat(annexesService).isNotNull();
         assertThat(byteArray).isNotNull();
@@ -123,8 +126,8 @@ public class AnnexesServiceTest {
     // ********************************************************* Private methods for fixtures
 
     @Transactional(propagation = Propagation.REQUIRED)
-    private void intialiserDemandeEnCours(Annexe annexeALier) {
-        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null);
+    private void intialiserDemandeEnCours(Annexe annexeALier, Login login) {
+        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null, login);
         if (annexeALier != null) {
             annexesService.attacherUneAnnexe(demandeEnCours.getReferenceDeDemande(), annexeALier);
         }

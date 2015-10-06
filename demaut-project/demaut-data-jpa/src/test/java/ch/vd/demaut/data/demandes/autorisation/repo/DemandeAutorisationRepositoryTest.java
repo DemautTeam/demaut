@@ -145,8 +145,8 @@ public class DemandeAutorisationRepositoryTest {
 
     private Utilisateur creerUtilisateur() {
         // Créer et sauvegarder un Utilisateur
-        Login login1 = new Login("login1");
-        Utilisateur utilisateur = new Utilisateur(login1);
+        Login login = new Login("admin@admin");
+        Utilisateur utilisateur = new Utilisateur(login);
         utilisateurRepository.store(utilisateur);
         assertThat(utilisateur.getId()).isNotNull();
         utilisateur = utilisateurRepository.findBy(utilisateur.getId());

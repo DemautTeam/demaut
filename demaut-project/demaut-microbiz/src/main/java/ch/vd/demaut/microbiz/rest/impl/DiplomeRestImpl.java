@@ -1,11 +1,13 @@
 package ch.vd.demaut.microbiz.rest.impl;
 
 import ch.vd.demaut.domain.config.TypeProgres;
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandeur.Pays;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.*;
+import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.microbiz.progreSoa.ProgreSoaService;
 import ch.vd.demaut.microbiz.rest.RestUtils;
+import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
 import ch.vd.ses.referentiel.demaut_1_0.VcType;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
@@ -14,25 +16,28 @@ import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
 @Service("diplomeRestImpl")
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Path("/diplomes")
 public class DiplomeRestImpl {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DiplomeRestImpl.class);
+
+    @Autowired
+    private DemandeAutorisationService demandeAutorisationService;
 
     @Autowired
     private ProgreSoaService progreSoaService;
@@ -40,13 +45,19 @@ public class DiplomeRestImpl {
     @Autowired
     private DonneesProfessionnellesService donneesProfessionnellesService;
 
+    @Context
+    private UriInfo uriInfo;
+
+    @Context
+    private HttpHeaders httpHeaders;
+
     private DateTimeFormatter SHORT_DATE_FORMATTER = DateTimeFormat.forPattern("dd.MM.yyyy");
 
     @GET
     @Path("/typeDiplomesList")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response listerLesTypesDeDiplomes(@Context UriInfo uriInfo) throws Exception {
+    public Response listerLesTypesDeDiplomes() throws Exception {
 
         LOGGER.info("listerLesTypesDeDiplomes");
 
@@ -54,7 +65,7 @@ public class DiplomeRestImpl {
         List<TypeDiplomeAccepte> diplomeAcceptes = buildListeTypesDiplomesAcceptesSansProgresSOA();
         // Autre altrenative:
         //List<VcType> diplomeAcceptes = buildListeTypesDiplomesAcceptesAvecProgresSOA(uriInfo);
-        return RestUtils.forgeResponseList(diplomeAcceptes);
+        return RestUtils.buildRef(diplomeAcceptes);
     }
 
     private List<TypeDiplomeAccepte> buildListeTypesDiplomesAcceptesSansProgresSOA() {
@@ -62,11 +73,10 @@ public class DiplomeRestImpl {
     }
 
     @GET
-    @Path("/typeFormationsList/{typeDiplome}")
+    @Path("/typeFormationsList")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response listerLesTitresFormations(@Context UriInfo uriInfo, @PathParam("typeDiplome") String typeDiplomeId)
-            throws Exception {
+    public Response listerLesTitresFormations(@QueryParam("typeDiplome") String typeDiplomeId) throws Exception {
 
         LOGGER.info("listerLesTitresFormations " + typeDiplomeId);
 
@@ -76,7 +86,7 @@ public class DiplomeRestImpl {
         List<?> titreFormations = buildListeTitresFormationsSansProgresSOA(typeDiplomeAccepte);
         // Autre altrenative:
         //List<VcType> titreFormations = buildListeTitresFormationsAvecProgresSOA(uriInfo, typeDiplomeAccepte);
-        return RestUtils.forgeResponseList(titreFormations);
+        return RestUtils.buildRef(titreFormations);
     }
 
     private List<?> buildListeTitresFormationsSansProgresSOA(TypeDiplomeAccepte typeDiplomeAccepte) {
@@ -115,7 +125,7 @@ public class DiplomeRestImpl {
     @Path("/paysList")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response listerLesPays(@Context UriInfo uriInfo) throws Exception {
+    public Response listerLesPays() throws Exception {
 
         LOGGER.info("listerLesPays");
 
@@ -123,7 +133,7 @@ public class DiplomeRestImpl {
         List<Pays> paysList = buildListePaysSansProgresSOA();
         // Autre altrenative:
         //List<VcType> paysList = buildListePaysAvecProgresSOA(uriInfo);
-        return RestUtils.forgeResponseList(paysList);
+        return RestUtils.buildRef(paysList);
     }
 
 
@@ -133,18 +143,21 @@ public class DiplomeRestImpl {
 
     @SuppressWarnings("all")
     @GET
-    @Path("/ajouter/{demandeReference}")
+    @Path("/ajouter")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response ajouterUnDiplome(@Context UriInfo uriInfo, @PathParam("demandeReference") String demandeReference,
-                                     @QueryParam("referenceDeDiplome") String referenceDeDiplomeStr, @QueryParam("typeDiplome") String typeDiplomeId,
-                                     @QueryParam("typeFormation") String typeFormationId, @QueryParam("complement") String complement,
-                                     @QueryParam("dateObtention") String dateObtentionStr, @QueryParam("paysObtention") String paysObtentionId,
+    public Response ajouterUnDiplome(@QueryParam("referenceDeDiplome") String referenceDeDiplomeStr,
+                                     @QueryParam("typeDiplome") String typeDiplomeId,
+                                     @QueryParam("typeFormation") String typeFormationId,
+                                     @QueryParam("complement") String complement,
+                                     @QueryParam("dateObtention") String dateObtentionStr,
+                                     @QueryParam("paysObtention") String paysObtentionId,
                                      @QueryParam("dateReconnaissance") String dateReconnaissanceStr) throws Exception {
 
-        LOGGER.info("ajouterUnDiplome " + referenceDeDiplomeStr);
+        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
 
-        ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);
+        LOGGER.info("ajouterUnDiplome pour : " + login.getValue() + ", typeDiplome=" + typeDiplomeId + ", typeFormation=" + typeFormationId);
+
         ReferenceDeDiplome referenceDeDiplome = new ReferenceDeDiplome(referenceDeDiplomeStr);
         TypeDiplomeAccepte typeDiplomeAccepte = TypeDiplomeAccepte.getTypeById(Integer.parseInt(typeDiplomeId));
         TitreFormation titreFormation = new TitreFormation(convertTypeFormationIdToEnum(typeDiplomeAccepte, typeFormationId).name());
@@ -155,9 +168,11 @@ public class DiplomeRestImpl {
             dateReconnaissance = new DateReconnaissance(SHORT_DATE_FORMATTER.parseLocalDate(dateReconnaissanceStr));
         }
 
-        donneesProfessionnellesService.ajouterUnDiplome(referenceDeDemande, referenceDeDiplome, typeDiplomeAccepte, titreFormation,
-                complement, dateObtention, paysObtention, dateReconnaissance);
-        return RestUtils.forgeResponseTrue();
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+
+        donneesProfessionnellesService.ajouterUnDiplome(demandeAutorisation.getReferenceDeDemande(), referenceDeDiplome, typeDiplomeAccepte,
+                titreFormation, complement, dateObtention, paysObtention, dateReconnaissance);
+        return RestUtils.buildJSon(Arrays.asList(true));
     }
 
     private TypeProgres convertTypeFormationIdToEnum(TypeDiplomeAccepte typeDiplomeAccepte, String typeFormationId) {
@@ -177,18 +192,19 @@ public class DiplomeRestImpl {
 
     @SuppressWarnings("all")
     @GET
-    @Path("/supprimer/{demandeReference}")
+    @Path("/supprimer")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response supprimerUnDiplome(@Context UriInfo uriInfo,
-                                       @PathParam("demandeReference") String demandeReference,
-                                       @QueryParam("keyDiplome") String keyDiplome) throws Exception {
+    public Response supprimerUnDiplome(@QueryParam("referenceDeDiplome") String referenceDeDiplomeStr) throws Exception {
 
-        LOGGER.info("supprimerUnDiplome " + keyDiplome);
+        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
 
-        ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(demandeReference);
-        ReferenceDeDiplome referenceDeDiplome = new ReferenceDeDiplome(keyDiplome);
-        donneesProfessionnellesService.supprimerUnDiplome(referenceDeDemande, referenceDeDiplome);
-        return RestUtils.forgeResponseTrue();
+        LOGGER.info("supprimerUnDiplome pour : " + login.getValue() + ", referenceDeDiplome=" + referenceDeDiplomeStr);
+
+        ReferenceDeDiplome referenceDeDiplome = new ReferenceDeDiplome(referenceDeDiplomeStr);
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+
+        donneesProfessionnellesService.supprimerUnDiplome(demandeAutorisation.getReferenceDeDemande(), referenceDeDiplome);
+        return RestUtils.buildJSon(Arrays.asList(true));
     }
 }

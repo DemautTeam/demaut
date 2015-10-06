@@ -3,6 +3,7 @@ package ch.vd.demaut.services.demandes.autorisation.service.test;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import junit.framework.TestCase;
 import org.junit.Before;
@@ -27,14 +28,16 @@ public class DemandeAutorisationServiceTest extends TestCase {
 
     private Profession profession;
     private DemandeAutorisation demandeEnCours;
-
+    private Login login;
 
     // ********************************************************* Setups
     @Before
     public void setUp() throws Exception {
         profession = Profession.Medecin;
+        login = new Login("admin@admin");
 
         assertThat(demandeAutorisationService).isNotNull();
+        assertThat(login).isNotNull();
     }
 
     // ********************************************************* Tests
@@ -42,7 +45,7 @@ public class DemandeAutorisationServiceTest extends TestCase {
     @Test
     @Transactional
     public void testerInitialiserDemandeAutorisation() {
-        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null);
+        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null, login);
         assertThat(demandeEnCours).isNotNull();
         assertThat(demandeEnCours.getId()).isGreaterThan(0L);
         assertThat(demandeEnCours.getReferenceDeDemande()).isNotNull();
@@ -51,8 +54,7 @@ public class DemandeAutorisationServiceTest extends TestCase {
     @Test
     @Transactional
     public void testerRecupererDemandeParReference() {
-        //Setup fixtures
-        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null);
+        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null, login);
         ReferenceDeDemande referenceDeDemande = demandeEnCours.getReferenceDeDemande();
 
         //Récupère demande en cours

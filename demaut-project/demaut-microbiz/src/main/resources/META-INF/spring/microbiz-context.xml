@@ -31,6 +31,7 @@
             <ref local="demandeRestImpl"/>
             <ref local="diplomeRestImpl"/>
             <ref local="personelRestImpl"/>
+            <ref local="activiteRestImpl"/>
         </cxf:serviceBeans>
         <cxf:providers>
             <ref local="customeJacksonJaxbJsonProvider"/>

@@ -3,10 +3,12 @@ package ch.vd.demaut.microbiz.rest;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.microbiz.rest.impl.ProfessionRestImpl;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -26,7 +28,7 @@ import static org.junit.Assert.assertTrue;
 public class ProfessionRestImplTest {
 
     @Autowired
-    private ProfessionRestImpl professionRestImpl;
+    private ProfessionRestImpl professionRest;
 
     @Autowired
     private DemandeAutorisationService demandeAutorisationService;
@@ -36,23 +38,25 @@ public class ProfessionRestImplTest {
     @Before
     public void setUp() throws Exception {
         Profession profession = Profession.Medecin;
+        Login login = new Login("admin@admin");
 
-        assertNotNull(professionRestImpl);
+        assertNotNull(professionRest);
         assertThat(demandeAutorisationService).isNotNull();
 
-        DemandeAutorisation demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null);
+        DemandeAutorisation demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null, login);
         referenceDeDemande = demandeEnCours.getReferenceDeDemande();
     }
 
     @Test
     public void testListerLesProfessionsDeLaSante() throws Exception {
-        Response response = professionRestImpl.listerLesProfessionsDeLaSante(null);
+        Response response = professionRest.listerLesProfessionsDeLaSante();
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
+    @Ignore("TODO Should mock @Context HttpHeaders demaut-user-id")
     @Test
     public void testAfficherDonneesProfession() throws Exception {
-        Response response = professionRestImpl.afficherDonneesProfession(null, referenceDeDemande.getValue());
+        Response response = professionRest.afficherDonneesProfession();
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 }

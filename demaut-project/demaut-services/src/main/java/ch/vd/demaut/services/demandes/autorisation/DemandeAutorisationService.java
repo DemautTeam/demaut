@@ -4,6 +4,7 @@ import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
+import ch.vd.demaut.domain.utilisateurs.Login;
 
 public interface DemandeAutorisationService {
 
@@ -13,7 +14,7 @@ public interface DemandeAutorisationService {
      * @param profession Profession
      * @return DemandeAutorisation
      */
-    DemandeAutorisation initialiserDemandeAutorisation(Profession profession, CodeGLN codeGLN);
+    DemandeAutorisation initialiserDemandeAutorisation(Profession profession, CodeGLN codeGLN, Login login);
 
     /**
      * Récupère une demande via sa référence <br/>
@@ -24,5 +25,13 @@ public interface DemandeAutorisationService {
      */
     DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande referenceDeDemande);
 
+    /**
+     * Récupère une demande brouillon via sa référence <br/>
+     * Renvoie exception si pas trouvée<br/>
+     *
+     * @param login Login
+     * @return DemandeAutorisation
+     */
+    DemandeAutorisation trouverDemandeBrouillonParUtilisateur(Login login);
 }
 

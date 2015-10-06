@@ -13,16 +13,13 @@ import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.*;
 import java.util.Arrays;
 import java.util.List;
 
+@CrossOriginResourceSharing(allowAllOrigins = true)
 @Service("activiteRestImpl")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-@CrossOriginResourceSharing(allowAllOrigins = true)
 @Path("/activite")
 public class ActiviteRestImpl {
 
@@ -30,6 +27,9 @@ public class ActiviteRestImpl {
 
     @Context
     private UriInfo uriInfo;
+
+    @Context
+    private HttpHeaders httpHeaders;
 
     @GET
     @Path("/nationalites")
@@ -43,7 +43,7 @@ public class ActiviteRestImpl {
         List<Pays> paysList = buildListePaysSansProgresSOA();
         // Autre altrenative:
         //List<VcType> paysList = buildListePaysAvecProgresSOA(uriInfo);
-        return RestUtils.forgeResponseList(paysList);
+        return RestUtils.buildRef(paysList);
     }
 
     private List<Pays> buildListePaysSansProgresSOA() {

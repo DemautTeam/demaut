@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -15,13 +16,13 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Ignore
 public class JSonConversionTest {
 
     private ObjectMapper objMapper;
 
     @Before
     public void setUp() throws Exception {
-        objMapper = RestUtils.buildJSonObjectMapper();
     }
 
     @Test

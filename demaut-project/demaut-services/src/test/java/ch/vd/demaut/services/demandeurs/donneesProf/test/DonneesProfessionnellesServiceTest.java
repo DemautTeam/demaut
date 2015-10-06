@@ -122,6 +122,6 @@ public class DonneesProfessionnellesServiceTest {
 
     @Transactional(propagation = Propagation.REQUIRED)
     private void intialiserDemandeEnCours() {
-        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, new CodeGLN("7601000000125"));
+        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, new CodeGLN("7601000000125"), login);
     }
 }

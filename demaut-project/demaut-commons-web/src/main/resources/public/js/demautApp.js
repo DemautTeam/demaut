@@ -1,4 +1,4 @@
-var ngDemautApp = angular.module('ngDemautApp', ['ngSanitize', 'ngRoute', 'ngAnimate', 'commonsModule','ngStorage', ]);
+var ngDemautApp = angular.module('ngDemautApp', ['ngSanitize', 'ngRoute', 'ngAnimate', 'commonsModule']);
 
 /* Necessaire si les services ne sont pas dans la même arborescence que la page html */
 // TODO Pour PROD : ngDemautApp.constant('urlPrefix', '/outils/demautMicrobiz');
@@ -95,18 +95,6 @@ ngDemautApp
                 }
             };
         });
-
-        /* Registers auth token interceptor, auth token is either passed by header (ex : an authenticated user token) */
-        //$httpProvider.interceptors.push(function ($q, $rootScope, $location) {
-        //    return {
-        //        'request': function(config) {
-        //            config.headers['X-iam-With'] = 'iamToken';
-        //            config.headers['X-Demaut-Reference'] = 'demautReference';
-        //            return config || $q.when(config);
-        //        }
-        //    };
-        //});
-
     }
     ])
     .controller('CockpitController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', 'urlPrefix', '$log', function ($scope, $rootScope, $routeParams, $http, $location, $interval, urlPrefix, $log) {
@@ -115,12 +103,11 @@ ngDemautApp
         this.name = "CockpitController";
         this.params = $routeParams;
     }])
-    .controller('ProfessionSanteController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', 'professionTest', '$sessionStorage', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log, professionTest, $sessionStorage) {
+    .controller('ProfessionSanteController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', 'professionTest', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log, professionTest) {
         $rootScope.contextMenu = "Profession Santé";
         $scope.indexStep = 1;
         this.name = "ProfessionSanteController";
         this.params = $routeParams;
-        $scope.$storage = $sessionStorage;
         $scope.professionData = {};
         $scope.professionData.professions = [];
         $scope.professionData.profession = {};
@@ -141,7 +128,7 @@ ngDemautApp
         $scope.nextStep = function(){
             $scope.wouldStepNext = true;
             if ($scope.professionSante.professionDataForm.$valid) {
-                $http.get(urlPrefix + '/demande/initialiser/', {
+                $http.get(urlPrefix + '/demande/initialiser', {
                     params: {
                         professionId: $scope.professionData.profession.id,
                         codeGln: $scope.professionData.profession.gln != undefined ? $scope.professionData.profession.gln : null,
@@ -150,11 +137,9 @@ ngDemautApp
                 .success(function (data, status, headers, config) {
                     var refDemande = angular.fromJson(data.response);
                     //TODO : Ajouter le error handling if refDemande null ou undefined
-                    $scope.$storage.refDemande = refDemande.value;
-                    $log.info('Reference de la nouvelle demande :' + $scope.$storage.refDemande);
+                    $log.info('Reference de la nouvelle demande :' + refDemande[0].value);
                 })
                 .error(function (data, status, headers, config) {
-                    delete $scope.$storage.refDemande;
                     $rootScope.error = 'Error from response /demande/initialiser/';
                 });
                 //Go to next page
@@ -166,7 +151,7 @@ ngDemautApp
             }
         };
     }])
-    .controller('DonneesPersoController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', 'urlPrefix', '$log', 'nationalityTest', '$sessionStorage', function ($scope, $rootScope, $routeParams, $http, $location, $interval, urlPrefix, $log, nationalityTest, $sessionStorage) {
+    .controller('DonneesPersoController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', 'urlPrefix', '$log', 'nationalityTest', function ($scope, $rootScope, $routeParams, $http, $location, $interval, urlPrefix, $log, nationalityTest) {
         $rootScope.contextMenu = "Données Personnelles";
         $scope.indexStep = 2;
         this.name = "DonneesPersoController";
@@ -227,12 +212,11 @@ ngDemautApp
             }
         };
     }])
-    .controller('DonneesDiplomesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', 'nationalityTest', '$sessionStorage', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log, nationalityTest, $sessionStorage) {
+    .controller('DonneesDiplomesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', 'nationalityTest', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log, nationalityTest) {
         $rootScope.contextMenu = "Données Diplômes";
         $scope.indexStep = 3;
         this.name = "DonneesDiplomes";
         this.params = $routeParams;
-        $scope.$storage = $sessionStorage;
         $scope.testSuisse = nationalityTest;
         $scope.diplomeData = {};
         $scope.diplomeData.typeDiplomes = [];
@@ -277,7 +261,9 @@ ngDemautApp
         };
 
         $scope.fetchListeFormations = function(){
-            $http.get(urlPrefix + '/diplomes/typeFormationsList/' + $scope.diplomeData.diplome.typeDiplome.id).
+            $http.get(urlPrefix + '/diplomes/typeFormationsList' , {
+                params: { typeDiplome: $scope.diplomeData.diplome.typeDiplome.id }
+            }).
                 success(function (data, status, headers, config) {
                     $scope.diplomeData.typeFormations = angular.fromJson(data.response);
                 }).
@@ -357,7 +343,7 @@ ngDemautApp
         };
 
         function doCreateDiplome(targetDiplome) {
-            $http.get(urlPrefix + '/diplomes/ajouter/' + $scope.$storage.refDemande, {
+            $http.get(urlPrefix + '/diplomes/ajouter', {
                     params: {
                         referenceDeDiplome: targetDiplome.referenceDeDiplome,
                         typeDiplome: targetDiplome.typeDiplome.id,
@@ -377,7 +363,7 @@ ngDemautApp
         };
 
         function doDeleteDiplome(targetDiplome) {
-            $http.get(urlPrefix + '/diplomes/supprimer/' + $scope.$storage.refDemande,{
+            $http.get(urlPrefix + '/diplomes/supprimer',{
                 params: {
                     referenceDeDiplome: targetDiplome.referenceDeDiplome
                 }
@@ -390,12 +376,11 @@ ngDemautApp
                 });
         };
     }])
-    .controller('DonneesActivitesController', ['$scope', '$rootScope', '$routeParams', '$location', 'urlPrefix', '$log', '$sessionStorage', function ($scope, $rootScope, $routeParams, $location, urlPrefix, $log, $sessionStorage) {
+    .controller('DonneesActivitesController', ['$scope', '$rootScope', '$routeParams', '$location', 'urlPrefix', '$log', function ($scope, $rootScope, $routeParams, $location, urlPrefix, $log) {
         $rootScope.contextMenu = "Données Activités";
         $scope.indexStep = 4;
         this.name = "DonneesActivitesController";
         this.params = $routeParams;
-        $scope.$storage = $sessionStorage;
         $scope.activiteData = {};
         $scope.activiteData.activities = [];
         $scope.activiteData.activitie = {};
@@ -415,16 +400,6 @@ ngDemautApp
             else {
                 $log.info('Formulaire invalide !');
             }
-        };
-
-        $scope.previewStep = function(){
-            $scope.indexStep -= 1;
-            $location.path('/Demaut/demande/professionSante');
-        };
-
-        $scope.nextStep = function(){
-            $scope.indexStep += 1;
-            $location.path('/Demaut/demande/annexes');
         };
 
         $scope.addAnotherActivite = function(){
@@ -472,7 +447,7 @@ ngDemautApp
         };
 
         function doCreateActivite(targetActivite) {
-            $http.get(urlPrefix + '/activites/ajouter/' + $scope.$storage.refDemande, {
+            $http.get(urlPrefix + '/activites/ajouter', {
                 params: {
                     referenceDeActivite: targetActivite.referenceDeActivite,
                     etablissement: targetActivite.etablissement,
@@ -502,7 +477,7 @@ ngDemautApp
         };
 
         function doDeleteActivite(targetActivite) {
-            $http.get(urlPrefix + '/activites/supprimer/' + $scope.$storage.refDemande,{
+            $http.get(urlPrefix + '/activites/supprimer', {
                 params: {
                     referenceDeActivite: targetActivite.referenceDeActivite
                 }
@@ -515,21 +490,15 @@ ngDemautApp
                 });
         };
     }])
-    .controller('AnnexesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', '$sessionStorage', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log, $sessionStorage) {
+    .controller('AnnexesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log) {
         $rootScope.contextMenu = "Annexes";
         $scope.indexStep = 5;
         this.name = "AnnexesController";
         this.params = $routeParams;
-        $scope.$storage = $sessionStorage;
         $scope.annexesData = {};
-        $scope.$storage = $sessionStorage;
         $scope.annexesData.annexeFormats = ["application/pdf", "image/jpg", "image/jpeg", "image/png"];
         $scope.annexesData.annexeTypes = [];
         $scope.annexesData.referenceFiles = [];
-
-        if ($scope.$storage.refDemande == undefined) {
-        	console.log("Pas de Reference de demande");
-        }
 
         if ($scope.annexesData.annexeTypes == null || $scope.annexesData.annexeTypes.length == 0) {
             $http.get(urlPrefix + '/annexes/typesList').
@@ -637,8 +606,8 @@ ngDemautApp
 
         $scope.viewAnnexe = function (file, annexeTypeId) {
         	$scope.filename = file.name;
-            $http.get(urlPrefix + '/annexes/afficher/' + $scope.$storage.refDemande + '/' + $scope.filename + '/' + annexeTypeId, {responseType:'arraybuffer'}).
-            	success(function (data, status, headers, config) {
+            $http.get(urlPrefix + '/annexes/afficher/' + $scope.filename + '/' + annexeTypeId, {responseType:'arraybuffer'})
+                .success(function (data, status, headers, config) {
                     displayAnnexeFromBinary(data);
                 }).
                 error(function (data, status, headers, config) {
@@ -678,7 +647,12 @@ ngDemautApp
         };
 
         function doDeleteFile(file, annexeType) {
-            $http.get(urlPrefix + '/annexes/supprimer/' + $scope.$storage.refDemande + '/' + file.name + '/' + annexeType)
+            $http.get(urlPrefix + '/annexes/supprimer', {
+                params: {
+                    annexeFileName: file.name,
+                    annexeType: annexeType
+                }
+            })
                 .success(function (data, status, headers, config) {
                     $rootScope.error = 'Une annexe a été supprimée avec succès: \n Status :' +  status;
                 })
@@ -686,11 +660,9 @@ ngDemautApp
                     $rootScope.error = 'Error ' + urlPrefix + '/annexes/supprimer/ \n Status :' +  status;
                 });
         };
-
         function doUploadFile(currentFetchedFile) {
             var formData = new FormData();
             formData.append('ajaxAction', 'upload');
-            formData.append("demandeReference", $scope.$storage.refDemande);
             formData.append("annexeFile", currentFetchedFile);
             formData.append("annexeFileName", currentFetchedFile.name);
             formData.append("annexeFileSize", currentFetchedFile.size);
@@ -708,12 +680,11 @@ ngDemautApp
                 });
         };
     }])
-    .controller('RecapitulatifController', ['$scope', '$rootScope', '$routeParams', '$location', 'urlPrefix', '$log', '$sessionStorage', function ($scope, $rootScope, $routeParams, $location, urlPrefix, $log, $sessionStorage) {
+    .controller('RecapitulatifController', ['$scope', '$rootScope', '$routeParams', '$location', 'urlPrefix', '$log', function ($scope, $rootScope, $routeParams, $location, urlPrefix, $log) {
         $rootScope.contextMenu = "Recapitulatif";
         $scope.indexStep = 6;
         this.name = "RecapitulatifController";
         this.params = $routeParams;
-        $scope.$storage = $sessionStorage;
 
         $scope.backStep = function(){
             $scope.indexStep -= 1;
@@ -741,4 +712,5 @@ ngDemautApp
 
         $rootScope.$on('$routeChangeStart', function () {
         });
+
     });

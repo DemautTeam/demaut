@@ -6,7 +6,7 @@ import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.StatutDemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
-import ch.vd.demaut.domain.utilisateurs.Utilisateur;
+import ch.vd.demaut.domain.utilisateurs.Login;
 
 import java.util.List;
 
@@ -25,15 +25,15 @@ public class DemandeAutorisationRepositoryJava extends
 
     @Override
     public DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande referenceDeDemande) {
-        DemandeFK<DemandeAutorisation> functionalKey = new DemandeFK<DemandeAutorisation>(referenceDeDemande);
+        DemandeFK<DemandeAutorisation> functionalKey = new DemandeFK<>(referenceDeDemande);
         return getByFK(functionalKey);
     }
 
     @Override
-    public DemandeAutorisation trouverDemandeEnCoursDeSaisieDunUtilisateur(Utilisateur utilisateur) {
+    public DemandeAutorisation trouverDemandeBrouillonParUtilisateur(Login login) {
         List<DemandeAutorisation> demandes = findAll();
         for (DemandeAutorisation demande : demandes) {
-            if (demande.getLogin().equals(utilisateur.getLogin())) {
+            if (demande.getLogin().equals(login)) {
                 if (demande.getStatutDemandeAutorisation() == StatutDemandeAutorisation.Brouillon) {
                     return demande;
                 }
@@ -41,6 +41,4 @@ public class DemandeAutorisationRepositoryJava extends
         }
         return null;
     }
-
-
 }

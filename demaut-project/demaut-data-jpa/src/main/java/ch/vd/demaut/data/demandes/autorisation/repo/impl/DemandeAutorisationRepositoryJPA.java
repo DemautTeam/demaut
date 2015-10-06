@@ -1,11 +1,11 @@
 package ch.vd.demaut.data.demandes.autorisation.repo.impl;
 
-import ch.vd.demaut.commons.exceptions.NotYetImplementedException;
 import ch.vd.demaut.data.GenericRepositoryImpl;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.StatutDemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
-import ch.vd.demaut.domain.utilisateurs.Utilisateur;
+import ch.vd.demaut.domain.utilisateurs.Login;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
@@ -24,24 +24,34 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
 
     // ********************************************************* Implementation des interfaces
     @Override
-    public DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande ref) {
-        TypedQuery<DemandeAutorisation> typedQuery = createQueryParReference(ref);
+    public DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande referenceDeDemande) {
+        TypedQuery<DemandeAutorisation> typedQuery = createQueryParReference(referenceDeDemande);
         return typedQuery.getSingleResult();
     }
 
     @Override
-    public DemandeAutorisation trouverDemandeEnCoursDeSaisieDunUtilisateur(Utilisateur utilisateur) {
-        //TODO: Implement me
-        throw new NotYetImplementedException();
+    public DemandeAutorisation trouverDemandeBrouillonParUtilisateur(Login login) {
+        StatutDemandeAutorisation statutDemandeAutorisation = StatutDemandeAutorisation.Brouillon;
+        TypedQuery<DemandeAutorisation> typedQuery = createQueryBrouillonParUtilisateur(statutDemandeAutorisation, login);
+        return typedQuery.getSingleResult();
     }
 
     // ********************************************************* Methodes privées
-    private TypedQuery<DemandeAutorisation> createQueryParReference(ReferenceDeDemande ref) {
+    private TypedQuery<DemandeAutorisation> createQueryParReference(ReferenceDeDemande referenceDeDemande) {
         final CriteriaBuilder builder = this.getEntityManager().getCriteriaBuilder();
         final CriteriaQuery<DemandeAutorisation> criteriaQuery = builder.createQuery(DemandeAutorisation.class);
         Root<DemandeAutorisation> autorisationRoot = criteriaQuery.from(DemandeAutorisation.class);
-        criteriaQuery.where(builder.equal(autorisationRoot.get("referenceDeDemande").get("value"), ref.getValue()));
+        criteriaQuery.where(builder.equal(autorisationRoot.get("referenceDeDemande").get("value"), referenceDeDemande.getValue()));
         return this.getEntityManager().createQuery(criteriaQuery);
     }
 
+    private TypedQuery<DemandeAutorisation> createQueryBrouillonParUtilisateur(StatutDemandeAutorisation statutDemandeAutorisation, Login login) {
+        final CriteriaBuilder builder = this.getEntityManager().getCriteriaBuilder();
+        final CriteriaQuery<DemandeAutorisation> criteriaQuery = builder.createQuery(DemandeAutorisation.class);
+        Root<DemandeAutorisation> autorisationRoot = criteriaQuery.from(DemandeAutorisation.class);
+        criteriaQuery.where(
+                builder.equal(autorisationRoot.get("statutDemandeAutorisation"), statutDemandeAutorisation),
+                builder.equal(autorisationRoot.get("login").get("value"), login.getValue()));
+        return this.getEntityManager().createQuery(criteriaQuery);
+    }
 }
