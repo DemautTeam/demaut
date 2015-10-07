@@ -49,12 +49,13 @@ Fonctionnalité: Saisir les données professionnelles de la demande
   Plan du scénario: Ajouter un diplôme à la liste des diplômes
     Etant donné l´utilisateur a déjà saisit un type de <diplome> dans la liste
     Etant donné l´utilisateur a déjà saisit le titre de formation <formation>
+    Etant donné l´utilisateur a déjà saisit ou pas le complément de formation <complement>
     Etant donné l´utilisateur a déjà saisit la date d´obtention <date_obtention> du diplôme
     Etant donné l´utilisateur a déjà saisit la date de reconnaissance <date_reconnaissance> du diplôme "étranger"
     Lorsque l´utilisateur initialise le diplôme en cours
     Alors le système Demaut <action> le diplome avec un <message> en cas d´échec
     Exemples:
-      | diplome                       |   formation                                 | date_obtention   | date_reconnaissance | action    | message                                                                       |
-      | "D_FORMATION_APPROFONDIE"     |   "Pneumologie pédiatrique /118"            | "12.12.2011"     | "12.12.2011"        | "accepte" | ""                                                                            |
-      | "D_FORMATION_COMPLEMENTAIRE"  |   ""                                        | "12.12.2011"     | "12.12.2011"        | "refuse"  | "Les renseignements concernant le titre ou la formation ne sont pas complets" |
-      | "D_FORMATION_INITIALE"        |   "CFR d'un diplôme étranger de médecin /8" | "12.12.2011"     | ""                  | "refuse"  | "Les renseignements concernant le diplôme étrangers ne sont pas complets"     |
+      | diplome                       |   formation                                 | complement        | date_obtention   | date_reconnaissance | action    | message                                                                       |
+      | "D_FORMATION_APPROFONDIE"     |   "Pneumologie pédiatrique /118"            | "complement1"     | "12.12.2011"     | "12.12.2011"        | "accepte" | ""                                                                            |
+      | "D_FORMATION_COMPLEMENTAIRE"  |   ""                                        | ""                | "12.12.2011"     | "12.12.2011"        | "refuse"  | "Les renseignements concernant le titre ou la formation ne sont pas complets" |
+      | "D_FORMATION_INITIALE"        |   "CFR d'un diplôme étranger de médecin /8" | "complement2"     | "12.12.2011"     | ""                  | "refuse"  | "Les renseignements concernant le diplôme étrangers ne sont pas complets"     |

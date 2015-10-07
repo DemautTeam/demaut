@@ -78,6 +78,14 @@ public class SaisirDiplomeStepDefinitions extends StepDefinitions {
         }
     }
 
+
+    @Etantdonné("^l´utilisateur a déjà saisit ou pas le complément de formation \"([^\"]*)\"$")
+    public void l_utilisateur_a_déjà_saisit_ou_pas_le_complément_de_formation_complement(String complement) throws Throwable {
+        if (!StringUtils.isEmpty(complement)) {
+            this.donneesProfessionnellesSteps.renseignerComplement(complement);
+        }
+    }
+
     // ********************************************************* When
 
     @Lorsque("^l´utilisateur selectionne un type de \"([^\"]*)\" dans la liste$")

@@ -30,6 +30,7 @@ public class DonneesProfessionnellesSteps {
     private DateReconnaissance dateReconnaissance;
     private AccepteOuRefuse acceptationDateObtention;
     private AccepteOuRefuse acceptationDateReconnaissance;
+    private String complement;
     private String critereDiplomeEtranger;
 
     // ********************************************************* Technical methods
@@ -152,10 +153,14 @@ public class DonneesProfessionnellesSteps {
     public void initialiserDiplomeEnCours() {
         paysObtention = new PaysObtention(Pays.Allemagne.name());
         this.diplomeEnCours = new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), typeDiplomeSelectionne, titreFormation,
-                null, dateObtention, paysObtention, dateReconnaissance);
+                complement, dateObtention, paysObtention, dateReconnaissance);
     }
 
     public void validerEtAjouterDiplome() {
         demandeAutorisationSteps.getDemandeEnCours().getDonneesProfessionnelles().validerEtAjouterDiplome(this.diplomeEnCours);
+    }
+
+    public void renseignerComplement(String complement) {
+        this.complement = complement;
     }
 }
