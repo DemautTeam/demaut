@@ -1,6 +1,7 @@
 package ch.vd.demaut.services.annexes.test;
 
 import ch.vd.demaut.domain.annexes.*;
+import ch.vd.demaut.domain.demandes.DateDeCreation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.exception.AnnexeNonUniqueException;
@@ -55,7 +56,7 @@ public class AnnexesServiceTest {
         file = new File("src/test/resources/demautServicesTest.cfg");
 
         nomFichier = new NomFichier("Test_multipart.pdf");
-        annexe = new Annexe(TypeAnnexe.CV, nomFichier, new ContenuAnnexe(byteArray), new DateCreation(new LocalDate()));
+        annexe = new Annexe(TypeAnnexe.CV, nomFichier, new ContenuAnnexe(byteArray), new DateDeCreation(new LocalDate()));
 
         profession = Profession.Medecin;
         login = new Login("admin@admin");

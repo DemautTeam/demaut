@@ -66,8 +66,7 @@ public class ProfessionRestImpl {
     }
 
     /**
-     * Méthode qui renvoie la liste des professions sans passer par le WS
-     * ProgresSOA
+     * Méthode qui renvoie la liste des professions sans passer par le WS ProgresSOA
      */
     private List<Profession> buildListeProfessionsSansProgresSOA() {
         return Arrays.asList(Profession.values());

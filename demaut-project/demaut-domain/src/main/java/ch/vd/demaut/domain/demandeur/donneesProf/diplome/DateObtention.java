@@ -5,11 +5,12 @@ import org.joda.time.LocalDate;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import java.util.Date;
 
 public class DateObtention extends BaseValueObject {
 
     @NotNull
-    private LocalDate value;
+    private Date value;
 
     // ********************************************************* Constructors
 
@@ -17,18 +18,18 @@ public class DateObtention extends BaseValueObject {
     }
 
     public DateObtention(LocalDate value) {
-        this.value = value;
+        this.value = value.toDate();
     }
 
     public DateObtention(int annee, int mois, int jourDuMois) {
-        this.value = new LocalDate(annee, mois, jourDuMois);
+        this.value = new LocalDate(annee, mois, jourDuMois).toDate();
     }
 
     // ********************************************************* Business Methods
 
     @NotNull
     @Past
-    public LocalDate getValue() {
+    public Date getValue() {
         return value;
     }
 }
