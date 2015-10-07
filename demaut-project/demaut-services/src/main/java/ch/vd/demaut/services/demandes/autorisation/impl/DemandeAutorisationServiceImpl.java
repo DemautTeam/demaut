@@ -1,5 +1,8 @@
 package ch.vd.demaut.services.demandes.autorisation.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
 import ch.vd.demaut.commons.exceptions.EntityNotFoundException;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
@@ -9,10 +12,7 @@ import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationReposit
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.exception.ReferenceDemandeNotFoundException;
 import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.domain.utilisateurs.UtilisateurService;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 public class DemandeAutorisationServiceImpl implements DemandeAutorisationService {
 
@@ -21,9 +21,6 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
 
     @Autowired
     private DemandeAutorisationFactory demandeAutorisationFactory;
-
-    @Autowired
-    private UtilisateurService utilisateurService;
 
     @Transactional
     @Override
