@@ -4,7 +4,6 @@ import ch.vd.demaut.domain.annexes.*;
 import ch.vd.demaut.domain.demandes.DateDeCreation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.exception.AnnexeNonUniqueException;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.annexes.AnnexesService;
@@ -62,7 +61,7 @@ public class AnnexesServiceTest {
         profession = Profession.Medecin;
         login = new Login("admin@admin");
 
-        if(demandeEnCours == null) {
+        if (demandeEnCours == null) {
             intialiserDemandeEnCours(annexe, login);
         }
 
@@ -133,10 +132,10 @@ public class AnnexesServiceTest {
     private void intialiserDemandeEnCours(Annexe annexeALier, Login login) {
         try {
             demandeEnCours = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
-        } catch (javax.persistence.NonUniqueResultException | javax.persistence.NoResultException e)
-        {}
+        } catch (javax.persistence.NonUniqueResultException | javax.persistence.NoResultException e) {
+        }
 
-        if(demandeEnCours == null) {
+        if (demandeEnCours == null) {
             demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null, login);
             if (!demandeEnCours.listerLesAnnexes().contains(annexeALier)) {
                 annexesService.attacherUneAnnexe(login, annexeALier);

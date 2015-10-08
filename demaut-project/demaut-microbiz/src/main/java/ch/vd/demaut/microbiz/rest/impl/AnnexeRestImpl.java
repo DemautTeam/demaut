@@ -1,7 +1,6 @@
 package ch.vd.demaut.microbiz.rest.impl;
 
 import ch.vd.demaut.domain.annexes.*;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.microbiz.progreSoa.ProgreSoaService;
 import ch.vd.demaut.microbiz.rest.RestUtils;
@@ -23,6 +22,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -103,7 +103,8 @@ public class AnnexeRestImpl {
         Collection<TypeAnnexe> typeAnnexes = annexesService.listerLesTypeAnnexesObligatoires(login);
 
         // TODO only for test to be removed
-        if(typeAnnexes.isEmpty()){
+        if (typeAnnexes.isEmpty()) {
+            typeAnnexes = new ArrayList<>();
             typeAnnexes.add(TypeAnnexe.CV);
             typeAnnexes.add(TypeAnnexe.CertificatDeTravail);
             typeAnnexes.add(TypeAnnexe.PieceIdentite);

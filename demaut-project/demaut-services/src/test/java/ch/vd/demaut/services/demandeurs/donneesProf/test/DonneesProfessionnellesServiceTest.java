@@ -47,7 +47,7 @@ public class DonneesProfessionnellesServiceTest {
         profession = Profession.Medecin;
         login = new Login("admin@admin");
 
-        if(demandeEnCours == null) {
+        if (demandeEnCours == null) {
             intialiserDemandeEnCours();
         }
 
@@ -126,10 +126,10 @@ public class DonneesProfessionnellesServiceTest {
     private void intialiserDemandeEnCours() {
         try {
             demandeEnCours = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
-        } catch (javax.persistence.NonUniqueResultException | javax.persistence.NoResultException e)
-        {}
+        } catch (javax.persistence.NonUniqueResultException | javax.persistence.NoResultException e) {
+        }
 
-        if(demandeEnCours == null) {
+        if (demandeEnCours == null) {
             demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, new CodeGLN("7601000000125"), login);
         }
     }
