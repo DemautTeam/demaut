@@ -21,6 +21,6 @@ public class ConfiguratorServiceImpl implements ConfiguratorService{
 
     @Override
     public String getUrlPrefix() {
-        return urlPrefix;
+        return "{\"urlPrefix\":\"" + urlPrefix + "\"}";
     }
 }
