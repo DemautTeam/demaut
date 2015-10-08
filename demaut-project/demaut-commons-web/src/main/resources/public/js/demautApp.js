@@ -5,7 +5,7 @@ var ngDemautApp = angular.module('ngDemautApp', ['ngSanitize', 'ngRoute', 'ngAni
 // TODO pour Jetty Local: ngDemautApp.constant('urlPrefix', 'http://localhost:8083/outils/demautMicrobiz');
 // TODO pour Microbiz Local : ngDemautApp.constant('urlPrefix', 'http://localhost:40002/outils/demautMicrobiz');
 // TODO pour Microbiz DEMO : ngDemautApp.constant('urlPrefix', 'http://slv2395t.etat-de-vaud.ch:41002/outils/demautMicrobiz');
-ngDemautApp.constant('urlPrefix', 'http://slv2395t.etat-de-vaud.ch:41002/outils/demautMicrobiz');
+//ngDemautApp.constant('urlPrefix', 'http://slv2395t.etat-de-vaud.ch:41002/outils/demautMicrobiz');
 
 ngDemautApp
     .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
@@ -97,13 +97,14 @@ ngDemautApp
         });
     }
     ])
-    .controller('CockpitController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', 'urlPrefix', '$log', function ($scope, $rootScope, $routeParams, $http, $location, $interval, urlPrefix, $log) {
+    .controller('CockpitController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', '$log', function ($scope, $rootScope, $routeParams, $http, $location, $interval, urlPrefix, $log) {
         $rootScope.contextMenu = "Cockpit";
         $scope.indexStep = 0;
         this.name = "CockpitController";
         this.params = $routeParams;
     }])
-    .controller('ProfessionSanteController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'configService', '$log', 'professionTest', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log, professionTest) {
+    .controller('ProfessionSanteController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'configService', '$log', 'professionTest',
+            function ($scope, $rootScope, $routeParams, $http, $location, configService, $log, professionTest) {
         $rootScope.contextMenu = "Profession Santé";
         $scope.indexStep = 1;
         this.name = "ProfessionSanteController";
@@ -115,32 +116,35 @@ ngDemautApp
         //Récupère liste des professions
         //TODO: créer une methode isProfessionsListInitialized + Ne pas appeler le service a chaque fois (à initialiser au départ)
         if ($scope.professionData.professions.length == 0) {
-            $http.get(configService.getUrlPrefix() + '/profession/professionsList')
-                .success(function (data, status, headers, config) {
-                    $scope.professionData.professions = angular.fromJson(data.response);
-                })
-                .error(function (data, status, headers, config) {
-                    $rootScope.error = 'Error downloading ../profession/professionsList';
-                });
+               $http.get(urlPrefix + '/profession/professionsList')
+                    .success(function (data, status, headers, config) {
+                        $scope.professionData.professions = angular.fromJson(data.response);
+                    })
+                    .error(function (data, status, headers, config) {
+                        $rootScope.error = 'Error downloading ../profession/professionsList';
+                    });
+
         }
 
         //Etape suivante
         $scope.nextStep = function(){
             $scope.wouldStepNext = true;
             if ($scope.professionSante.professionDataForm.$valid) {
-                $http.get(configService.getUrlPrefix() + '/demande/initialiser', {
-                    params: {
-                        professionId: $scope.professionData.profession.id,
-                        codeGln: $scope.professionData.profession.gln != undefined ? $scope.professionData.profession.gln : null,
-                    }
-                })
-                .success(function (data, status, headers, config) {
-                    var refDemande = angular.fromJson(data.response);
-                    //TODO : Ajouter le error handling if refDemande null ou undefined
-                    $log.info('Reference de la nouvelle demande :' + refDemande[0].value);
-                })
-                .error(function (data, status, headers, config) {
-                    $rootScope.error = 'Error from response /demande/initialiser/';
+                configService.getUrlPrefix().get(function(config){
+                    $http.get(urlPrefix + '/demande/initialiser', {
+                        params: {
+                            professionId: $scope.professionData.profession.id,
+                            codeGln: $scope.professionData.profession.gln != undefined ? $scope.professionData.profession.gln : null,
+                        }
+                    })
+                    .success(function (data, status, headers, config) {
+                        var refDemande = angular.fromJson(data.response);
+                        //TODO : Ajouter le error handling if refDemande null ou undefined
+                        $log.info('Reference de la nouvelle demande :' + refDemande[0].value);
+                    })
+                    .error(function (data, status, headers, config) {
+                        $rootScope.error = 'Error from response /demande/initialiser/';
+                    });
                 });
                 //Go to next page
                 $scope.indexStep += 1;
@@ -151,7 +155,7 @@ ngDemautApp
             }
         };
     }])
-    .controller('DonneesPersoController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', 'urlPrefix', '$log', 'nationalityTest', function ($scope, $rootScope, $routeParams, $http, $location, $interval, urlPrefix, $log, nationalityTest) {
+    .controller('DonneesPersoController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', '$log', 'nationalityTest', function ($scope, $rootScope, $routeParams, $http, $location, $interval, $log, nationalityTest) {
         $rootScope.contextMenu = "Données Personnelles";
         $scope.indexStep = 2;
         this.name = "DonneesPersoController";
@@ -212,7 +216,8 @@ ngDemautApp
             }
         };
     }])
-    .controller('DonneesDiplomesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', 'nationalityTest', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log, nationalityTest) {
+    .controller('DonneesDiplomesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$log', 'nationalityTest',
+        function ($scope, $rootScope, $routeParams, $http, $location, $log, nationalityTest) {
         $rootScope.contextMenu = "Données Diplômes";
         $scope.indexStep = 3;
         this.name = "DonneesDiplomes";
@@ -376,7 +381,7 @@ ngDemautApp
                 });
         };
     }])
-    .controller('DonneesActivitesController', ['$scope', '$rootScope', '$routeParams', '$location', 'urlPrefix', '$log', function ($scope, $rootScope, $routeParams, $location, urlPrefix, $log) {
+    .controller('DonneesActivitesController', ['$scope', '$rootScope', '$routeParams', '$location', '$log', function ($scope, $rootScope, $routeParams, $location, $log) {
         $rootScope.contextMenu = "Données Activités";
         $scope.indexStep = 4;
         this.name = "DonneesActivitesController";
@@ -490,7 +495,7 @@ ngDemautApp
                 });
         };
     }])
-    .controller('AnnexesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', 'urlPrefix', '$log', function ($scope, $rootScope, $routeParams, $http, $location, urlPrefix, $log) {
+    .controller('AnnexesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$log', function ($scope, $rootScope, $routeParams, $http, $location, $log) {
         $rootScope.contextMenu = "Annexes";
         $scope.indexStep = 5;
         this.name = "AnnexesController";
@@ -680,7 +685,8 @@ ngDemautApp
                 });
         };
     }])
-    .controller('RecapitulatifController', ['$scope', '$rootScope', '$routeParams', '$location', 'urlPrefix', '$log', function ($scope, $rootScope, $routeParams, $location, urlPrefix, $log) {
+    .controller('RecapitulatifController', ['$scope', '$rootScope', '$routeParams', '$location', '$log',
+        function ($scope, $rootScope, $routeParams, $location, $log) {
         $rootScope.contextMenu = "Recapitulatif";
         $scope.indexStep = 6;
         this.name = "RecapitulatifController";
@@ -705,7 +711,7 @@ ngDemautApp
     }]);
 
 ngDemautApp
-    .run(function($rootScope, $sce, $location, $http, urlPrefix) {
+    .run(function($rootScope, $sce, $location, $http) {
 
         $rootScope.$on('$viewContentLoaded', function() {
         });
