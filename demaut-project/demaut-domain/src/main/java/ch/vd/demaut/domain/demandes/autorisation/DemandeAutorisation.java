@@ -6,7 +6,6 @@ import ch.vd.demaut.domain.demandes.Demande;
 import ch.vd.demaut.domain.demandes.DemandeFK;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnelles;
-import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnellesValidateur;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnellesValidateur;
 import ch.vd.demaut.domain.utilisateurs.Login;
@@ -85,16 +84,16 @@ public class DemandeAutorisation extends Demande {
         return getListeDesAnnexes().listerAnnexesMetadata();
     }
 
+    public List<TypeAnnexe> listerLesTypeAnnexesObligatoires() {
+        return getListeTypeAnnexesObligatoires().listerTypesAnnexe();
+    }
+
     public ContenuAnnexe extraireContenuAnnexe(AnnexeFK annexeFK) {
         return getListeDesAnnexes().extraireContenu(annexeFK);
     }
 
     public void validerDonneesProfessionnelles() {
         new DonneesProfessionnellesValidateur().valider(donneesProfessionnelles);
-    }
-
-    public void validerDonneesPersonnelles() {
-        new DonneesPersonnellesValidateur().valider(donneesPersonnelles);
     }
 
     // ********************************************************* Private Methods
@@ -119,6 +118,10 @@ public class DemandeAutorisation extends Demande {
 
     public ListeDesAnnexes getListeDesAnnexes() {
         return new ListeDesAnnexes(annexes);
+    }
+
+    public ListeTypeAnnexesObligatoires getListeTypeAnnexesObligatoires() {
+        return new ListeTypeAnnexesObligatoires();
     }
 
     public DonneesProfessionnelles getDonneesProfessionnelles() {

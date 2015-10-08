@@ -13,7 +13,7 @@ import java.util.List;
  * Liste de types d'annexe ({@link Annexe}) obligatoire pour la complétude d'une {@link DemandeAutorisation}
  */
 @ValueObject
-public class AnnexesObligatoires extends BaseValueObject {
+public class ListeTypeAnnexesObligatoires extends BaseValueObject {
 
     // ********************************************************* Fields
 
@@ -21,12 +21,16 @@ public class AnnexesObligatoires extends BaseValueObject {
 
     // ********************************************************* Constructor
 
-    public AnnexesObligatoires(List<TypeAnnexe> types) {
-        this.typesAnnexe = types;
+    public ListeTypeAnnexesObligatoires() {
+        typesAnnexe = new ArrayList<>();
     }
 
-    public AnnexesObligatoires(TypeAnnexe... types) {
-        this(Arrays.asList(types));
+    public ListeTypeAnnexesObligatoires(List<TypeAnnexe> typeAnnexes) {
+        this.typesAnnexe = typeAnnexes;
+    }
+
+    public ListeTypeAnnexesObligatoires(TypeAnnexe... typeAnnexes) {
+        this(Arrays.asList(typeAnnexes));
     }
 
     // ********************************************************* Methode metier
@@ -39,15 +43,15 @@ public class AnnexesObligatoires extends BaseValueObject {
 
     // ********************************************************* Builder
     public static class Builder {
-        private List<TypeAnnexe> typesAnnexe = new ArrayList<TypeAnnexe>();
+        private List<TypeAnnexe> typesAnnexe = new ArrayList<>();
 
         public Builder ajouterAnnexeObligatoire(TypeAnnexe typeAnnexe) {
             typesAnnexe.add(typeAnnexe);
             return this;
         }
 
-        public AnnexesObligatoires build() {
-            return new AnnexesObligatoires(typesAnnexe);
+        public ListeTypeAnnexesObligatoires build() {
+            return new ListeTypeAnnexesObligatoires(typesAnnexe);
         }
     }
 

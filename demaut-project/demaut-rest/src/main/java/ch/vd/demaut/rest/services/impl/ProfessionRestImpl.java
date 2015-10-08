@@ -13,6 +13,14 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.microbiz.progreSoa.ProgreSoaService;
+import ch.vd.demaut.microbiz.rest.RestUtils;
+import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
+import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
+import ch.vd.ses.referentiel.demaut_1_0.VcType;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,9 +106,8 @@ public class ProfessionRestImpl {
 
         LOGGER.info("afficherDonneesProfession " + login.getValue());
 
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
-        Profession profession = demandeAutorisation.getProfession();
-        CodeGLN codeGLN = demandeAutorisation.getDonneesProfessionnelles().getCodeGLN();
+        Profession profession = donneesProfessionnellesService.afficherDonneesProfession(login);
+        CodeGLN codeGLN = donneesProfessionnellesService.recupererDonneesProfessionnelles(login).getCodeGLN();
         return RestUtils.buildJSon(Arrays.asList(profession, codeGLN));
     }
 }

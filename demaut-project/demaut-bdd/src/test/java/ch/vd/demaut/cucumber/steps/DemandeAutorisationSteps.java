@@ -1,6 +1,6 @@
 package ch.vd.demaut.cucumber.steps;
 
-import ch.vd.demaut.domain.annexes.AnnexesObligatoires;
+import ch.vd.demaut.domain.annexes.ListeTypeAnnexesObligatoires;
 import ch.vd.demaut.domain.config.ConfigDemaut;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
@@ -36,8 +36,8 @@ public class DemandeAutorisationSteps {
 
     // ********************************************************* Methods
 
-    public void ajouterAnnexesObligatoires(Profession profession, AnnexesObligatoires annexesObligatoires) {
-        configDemaut.ajouterAnnexesObligatoires(profession, annexesObligatoires);
+    public void ajouterAnnexesObligatoires(Profession profession, ListeTypeAnnexesObligatoires listeTypeAnnexesObligatoires) {
+        configDemaut.ajouterAnnexesObligatoires(profession, listeTypeAnnexesObligatoires);
     }
 
     public void initialiserUtilisateur(Login login) {

@@ -47,7 +47,9 @@ public class DonneesProfessionnellesServiceTest {
         profession = Profession.Medecin;
         login = new Login("admin@admin");
 
-        intialiserDemandeEnCours();
+        if (demandeEnCours == null) {
+            intialiserDemandeEnCours();
+        }
 
         assertThat(demandeEnCours).isNotNull();
         referenceDeDemande = demandeEnCours.getReferenceDeDemande();
@@ -59,14 +61,14 @@ public class DonneesProfessionnellesServiceTest {
 
     @Test
     public void testAfficherDonneesProfession() throws Exception {
-        Profession profession = donneesProfessionnellesService.afficherDonneesProfession(referenceDeDemande);
+        Profession profession = donneesProfessionnellesService.afficherDonneesProfession(login);
         assertThat(profession).isNotNull();
     }
 
     @Test
     @Transactional
     public void testHasListeDeDiplomes() {
-        DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService.recupererDonneesProfessionnellesParReferenceDemande(referenceDeDemande);
+        DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService.recupererDonneesProfessionnelles(login);
         creerListeDiplomes(donneesProfessionnelles);
         assertThat(donneesProfessionnelles).isNotNull();
         assertThat(donneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(3);
@@ -75,8 +77,8 @@ public class DonneesProfessionnellesServiceTest {
     @Test
     @Transactional
     public void testAjouterUnDiplomes() {
-        DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService.recupererDonneesProfessionnellesParReferenceDemande(referenceDeDemande);
-        donneesProfessionnellesService.ajouterUnDiplome(referenceDeDemande,
+        DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService.recupererDonneesProfessionnelles(login);
+        donneesProfessionnellesService.ajouterUnDiplome(login,
                 new ReferenceDeDiplome(UUID.randomUUID().toString()),
                 TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
                 new TitreFormation(TitreFormationApprofondieProgres.ChirurgieDeLaMain.name()), null,
@@ -88,9 +90,9 @@ public class DonneesProfessionnellesServiceTest {
     @Test
     @Transactional
     public void testSupprimerUnDiplomes() {
-        DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService.recupererDonneesProfessionnellesParReferenceDemande(referenceDeDemande);
+        DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService.recupererDonneesProfessionnelles(login);
         assertThat(donneesProfessionnelles).isNotNull();
-        donneesProfessionnellesService.ajouterUnDiplome(referenceDeDemande,
+        donneesProfessionnellesService.ajouterUnDiplome(login,
                 new ReferenceDeDiplome(UUID.randomUUID().toString()),
                 TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
                 new TitreFormation(TitreFormationApprofondieProgres.ChirurgieDeLaMain.name()), null,
@@ -98,7 +100,7 @@ public class DonneesProfessionnellesServiceTest {
         assertThat(donneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(1);
 
         Diplome diplome = donneesProfessionnelles.getListeDesDiplomes().listerDiplomes().get(0);
-        donneesProfessionnellesService.supprimerUnDiplome(referenceDeDemande, diplome.getReferenceDeDiplome());
+        donneesProfessionnellesService.supprimerUnDiplome(login, diplome.getReferenceDeDiplome());
         assertThat(donneesProfessionnelles).isNotNull();
         assertThat(donneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(0);
     }
@@ -122,6 +124,13 @@ public class DonneesProfessionnellesServiceTest {
 
     @Transactional(propagation = Propagation.REQUIRED)
     private void intialiserDemandeEnCours() {
-        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, new CodeGLN("7601000000125"), login);
+        try {
+            demandeEnCours = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+        } catch (javax.persistence.NonUniqueResultException | javax.persistence.NoResultException e) {
+        }
+
+        if (demandeEnCours == null) {
+            demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, new CodeGLN("7601000000125"), login);
+        }
     }
 }

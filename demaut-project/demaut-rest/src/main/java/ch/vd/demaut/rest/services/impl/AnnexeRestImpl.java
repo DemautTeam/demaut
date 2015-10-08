@@ -20,6 +20,14 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import ch.vd.demaut.domain.annexes.*;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.microbiz.progreSoa.ProgreSoaService;
+import ch.vd.demaut.microbiz.rest.RestUtils;
+import ch.vd.demaut.services.annexes.AnnexesService;
+import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
+import ch.vd.ses.referentiel.demaut_1_0.VcType;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
@@ -43,6 +51,15 @@ import ch.vd.demaut.rest.commons.json.RestUtils;
 import ch.vd.demaut.services.annexes.AnnexesService;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import ch.vd.ses.referentiel.demaut_1_0.VcType;
+import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.*;
+import javax.ws.rs.core.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
 @Service("annexeRestImpl")
@@ -117,29 +134,27 @@ public class AnnexeRestImpl {
 
         LOGGER.info("listerLesAnnexes pour : " + login.getValue());
 
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
-        Collection<AnnexeMetadata> annexesMetadata = annexesService.listerLesAnnexeMetadatas(demandeAutorisation.getReferenceDeDemande());
+        Collection<AnnexeMetadata> annexesMetadata = annexesService.listerLesAnnexeMetadatas(login);
 
         return RestUtils.buildJSon(annexesMetadata);
     }
 
     // Methode avec @PathParam doit être inchangée
     @GET
-    @Path("/afficher/{annexeFileName}/{annexeType}")
+    @Path("/afficher")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @RolesAllowed("USER")
-    public Response afficherUneAnnexe(@PathParam("annexeFileName") String annexeFileName,
-                                      @PathParam("annexeType") String annexeTypeIdStr)
+    public Response afficherUneAnnexe(@QueryParam("annexeFileName") String annexeFileName,
+                                      @QueryParam("annexeType") String annexeTypeIdStr)
             throws JsonProcessingException {
 
         Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
 
         LOGGER.info("afficherUneAnnexe pour : " + login.getValue() + ", annexeFileName=" + annexeFileName + ", annexeTypeIdStr=" + annexeTypeIdStr);
 
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
         AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
 
-        ContenuAnnexe contenuAnnexe = annexesService.recupererContenuAnnexe(demandeAutorisation.getReferenceDeDemande(), annexeFK);
+        ContenuAnnexe contenuAnnexe = annexesService.recupererContenuAnnexe(login, annexeFK);
         return RestUtils.BuildStream(contenuAnnexe.getContenu());
     }
 
@@ -158,10 +173,9 @@ public class AnnexeRestImpl {
 
         LOGGER.info("attacherUneAnnexe pour : " + login.getValue() + ", annexeFileName=" + annexeFileName + ", annexeTypeIdStr=" + annexeTypeIdStr);
 
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
         AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
 
-        annexesService.attacherUneAnnexe(demandeAutorisation.getReferenceDeDemande(), file, annexeFK.getNomFichier(), annexeFK.getTypeAnnexe());
+        annexesService.attacherUneAnnexe(login, file, annexeFK.getNomFichier(), annexeFK.getTypeAnnexe());
         return RestUtils.buildJSon(Arrays.asList(true));
     }
 
@@ -176,10 +190,9 @@ public class AnnexeRestImpl {
 
         LOGGER.info("supprimerUneAnnexe pour : " + login.getValue() + ", annexeFileName=" + annexeFileName + ", annexeTypeIdStr=" + annexeTypeIdStr);
 
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
         AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
 
-        annexesService.supprimerUneAnnexe(demandeAutorisation.getReferenceDeDemande(), annexeFK);
+        annexesService.supprimerUneAnnexe(login, annexeFK);
         return RestUtils.buildJSon(Arrays.asList(true));
     }
 
