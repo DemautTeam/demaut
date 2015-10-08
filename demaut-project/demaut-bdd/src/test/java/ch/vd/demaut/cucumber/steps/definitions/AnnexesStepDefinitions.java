@@ -62,18 +62,6 @@ public class AnnexesStepDefinitions extends StepDefinitions {
 
     // ********************************************************* Given
 
-    @Etantdonné("^l´utilisateur identifié et connecté avec le login \"([^\"]*)\"$")
-    public void initialiser_utilisateur(@Transform(LoginConverter.class) Login login) throws Throwable {
-        getDemandeAutorisationSteps().initialiserUtilisateur(login);
-    }
-
-    @Etantdonné("^une demande de profession \"([^\"]*)\" en cours de saisie ayant la référence \"([^\"]*)\"$")
-    public void initialiserUneDemandeEnCours(Profession profession,
-                                             @Transform(ReferenceDeDemandeConverter.class) ReferenceDeDemande refDemande) throws Throwable {
-        getDemandeAutorisationSteps().initialiserDemandeEnCours(profession);
-        getDemandeAutorisationSteps().enregistrerReferenceDemandeEnCours(refDemande);
-        getAnnexesSteps().initialiserDemandeEnCours(getDemandeAutorisationSteps().getDemandeEnCours());
-    }
 
     @Etantdonné("^les formats de fichier acceptés:$")
     public void les_formats_de_fichier_acceptés(DataTable dataTable) throws Throwable {
