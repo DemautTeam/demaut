@@ -16,9 +16,6 @@ import javax.ws.rs.core.UriInfo;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.microbiz.progreSoa.ProgreSoaService;
-import ch.vd.demaut.microbiz.rest.RestUtils;
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
 import ch.vd.ses.referentiel.demaut_1_0.VcType;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
@@ -29,14 +26,8 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
-import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.progreSoa.services.ProgreSoaService;
 import ch.vd.demaut.rest.commons.json.RestUtils;
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
-import ch.vd.ses.referentiel.demaut_1_0.VcType;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
 @Service("professionRestImpl")
@@ -47,10 +38,10 @@ public class ProfessionRestImpl {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProfessionRestImpl.class);
 
     @Autowired
-    private DemandeAutorisationService demandeAutorisationService;
-
-    @Autowired
     private ProgreSoaService progreSoaService;
+    
+    @Autowired
+    private DonneesProfessionnellesService donneesProfessionnellesService;
 
     @Context
     private UriInfo uriInfo;

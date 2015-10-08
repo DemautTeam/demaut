@@ -2,7 +2,6 @@ package ch.vd.demaut.services.annexes.impl;
 
 import ch.vd.demaut.domain.annexes.*;
 import ch.vd.demaut.domain.demandes.DateDeCreation;
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.exception.AnnexeNonValideException;
 import ch.vd.demaut.domain.utilisateurs.Login;
@@ -99,9 +98,5 @@ public class AnnexesServiceImpl implements AnnexesService {
             throw new AnnexeNonValideException();
         }
         return new ContenuAnnexe(contenu);
-    }
-
-    private DemandeAutorisation recupererDemandeParRef(ReferenceDeDemande referenceDeDemande) {
-        return demandeAutorisationService.recupererDemandeParReference(referenceDeDemande);
     }
 }

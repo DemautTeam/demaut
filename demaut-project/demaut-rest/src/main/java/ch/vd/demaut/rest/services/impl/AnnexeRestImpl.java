@@ -11,7 +11,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
@@ -20,12 +19,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import ch.vd.demaut.domain.annexes.*;
 import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.microbiz.progreSoa.ProgreSoaService;
-import ch.vd.demaut.microbiz.rest.RestUtils;
 import ch.vd.demaut.services.annexes.AnnexesService;
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import ch.vd.ses.referentiel.demaut_1_0.VcType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
@@ -37,29 +32,13 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
 import ch.vd.demaut.domain.annexes.AnnexeFK;
 import ch.vd.demaut.domain.annexes.AnnexeMetadata;
 import ch.vd.demaut.domain.annexes.ContenuAnnexe;
 import ch.vd.demaut.domain.annexes.NomFichier;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.progreSoa.services.ProgreSoaService;
 import ch.vd.demaut.rest.commons.json.RestUtils;
-import ch.vd.demaut.services.annexes.AnnexesService;
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
-import ch.vd.ses.referentiel.demaut_1_0.VcType;
-import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.*;
-import javax.ws.rs.core.*;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
 @Service("annexeRestImpl")
@@ -68,9 +47,6 @@ import java.util.List;
 public class AnnexeRestImpl {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AnnexeRestImpl.class);
-
-    @Autowired
-    private DemandeAutorisationService demandeAutorisationService;
 
     @Autowired
     private AnnexesService annexesService;
