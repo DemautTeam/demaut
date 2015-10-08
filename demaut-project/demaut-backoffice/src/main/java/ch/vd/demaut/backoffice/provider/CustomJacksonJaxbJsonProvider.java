@@ -6,7 +6,7 @@ import org.springframework.beans.factory.FactoryBean;
 
 import javax.ws.rs.core.MediaType;
 
-public class CustomeJacksonJaxbJsonProvider implements FactoryBean<JacksonJaxbJsonProvider> {
+public class CustomJacksonJaxbJsonProvider implements FactoryBean<JacksonJaxbJsonProvider> {
 
     @Override
     public JacksonJaxbJsonProvider getObject() throws Exception {
