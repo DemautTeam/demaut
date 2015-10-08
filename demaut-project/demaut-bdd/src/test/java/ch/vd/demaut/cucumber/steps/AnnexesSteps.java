@@ -16,6 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class AnnexesSteps {
 
     // ********************************************************* Static fields
+    private DemandeAutorisationSteps demandeAutorisationSteps;
 
     // ********************************************************* Fields
 
@@ -25,21 +26,29 @@ public class AnnexesSteps {
 
     // ********************************************************* Methods
 
-    public void initialiserDemandeEnCours(DemandeAutorisation demandeEnCours) {
-        this.demandeEnCours = demandeEnCours;
+
+    public void setDemandeAutorisationSteps(DemandeAutorisationSteps demandeAutorisationSteps) {
+        this.demandeAutorisationSteps = demandeAutorisationSteps;
+    }
+
+    public DemandeAutorisation getDemandeEnCours() {
+        if (demandeEnCours == null) {
+            this.demandeEnCours = demandeAutorisationSteps.getDemandeEnCours();
+        }
+        return demandeEnCours;
     }
 
     public void ajouterAnnexesADemandeEnCours(ListeDesAnnexes listeDesAnnexesInitiales) {
         Collection<Annexe> annexesInit = listeDesAnnexesInitiales.listerAnnexes();
         for (Annexe annexe : annexesInit) {
-            demandeEnCours.validerEtAttacherAnnexe(annexe);
+            getDemandeEnCours().validerEtAttacherAnnexe(annexe);
         }
-        assertThat(demandeEnCours.listerLesAnnexes()).hasSameSizeAs(annexesInit);
+        assertThat(getDemandeEnCours().listerLesAnnexes()).hasSameSizeAs(annexesInit);
     }
 
     public void attacherUneAnnexe(Annexe annexe) {
         try {
-            demandeEnCours.validerEtAttacherAnnexe(annexe);
+            getDemandeEnCours().validerEtAttacherAnnexe(annexe);
             accepteAnnexe();
         } catch (AnnexeNonValideException | AnnexeNonUniqueException e) {
             refuseAnnexe();
@@ -48,7 +57,7 @@ public class AnnexesSteps {
 
     public void supprimerAnnexe(AnnexeFK annexeFK) {
         try {
-            demandeEnCours.supprimerUneAnnexe(annexeFK);
+            getDemandeEnCours().supprimerUneAnnexe(annexeFK);
             accepteAnnexe();
         } catch (AnnexeIntrouvableException e) {
             refuseAnnexe();

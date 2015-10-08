@@ -6,7 +6,7 @@ import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ListeDesDiplomes;
 import javax.validation.ConstraintViolation;
 import java.util.Set;
 
-public class DonnessProfessionnellesValidateur extends AbstractDataValidateur<DonneesProfessionnelles> {
+public class DonneesProfessionnellesValidateur extends AbstractDataValidateur<DonneesProfessionnelles> {
 
     // ********************************************************* Static fields
 
