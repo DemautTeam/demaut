@@ -21,6 +21,7 @@
 
     <bean id="annexesSteps" class="ch.vd.demaut.cucumber.steps.AnnexesSteps"
         scope="cucumber-glue">
+        <property name="demandeAutorisationSteps" ref="demandeAutorisationSteps"/>
     </bean>
 
     <bean id="donneesProfessionnellesSteps"
