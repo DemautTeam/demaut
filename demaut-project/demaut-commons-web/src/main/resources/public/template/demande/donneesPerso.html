@@ -175,7 +175,17 @@
                         Date de naissance*
                     </label>
                     <div class="col-md-2">
-                        <input type="date" id="dateDeNaissance" name="dateDeNaissance" placeholder="jj.mm.aaaa" class="form-control" required="required" ng-model="personalData.dateDeNaissance">
+                        <p class="input-group">
+                            <input type="text" class="form-control" id="dateDeNaissance" name="dateDeNaissance" placeholder="{{datePicker.placeholder}}"
+                                   datepicker-popup="{{datePicker.format}}" ng-model="personalData.dateDeNaissance"
+                                   is-open="personalData.datePicker.status.dateDeNaissance.opened" min-date="datePicker.minDate" datepicker-options="datePicker.dateOptions"
+                                   required close-text="Fermer" clear-text="Effacer" current-text="Aujourd'hui"/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="openDatePicker(personalData.datePicker.status.dateDeNaissance)">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                        </p>
                     </div>
                 </div>
                 <div class="row">

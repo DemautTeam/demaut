@@ -1,4 +1,4 @@
-var ngDemautApp = angular.module('ngDemautApp', ['ngSanitize', 'ngRoute', 'ngAnimate', 'commonsModule']);
+var ngDemautApp = angular.module('ngDemautApp', ['ngSanitize', 'ngRoute', 'ngAnimate', 'commonsModule', 'ui.bootstrap']);
 
 /* Necessaire si les services ne sont pas dans la même arborescence que la page html */
 // TODO Pour PROD : ngDemautApp.constant('urlPrefix', '/outils/demautMicrobiz');
@@ -164,6 +164,8 @@ ngDemautApp
         $scope.personalData = {};
         $scope.personalData.nationalites = [];
         $scope.personalData.langues = [];
+        $scope.personalData.datePicker = {};
+        $scope.personalData.datePicker.status = {};
 
         if ($scope.personalData.nationalites == null || $scope.personalData.nationalites == undefined || $scope.personalData.nationalites.length == 0) {
             $http.get(urlPrefix + '/personal/nationalites').
@@ -184,6 +186,10 @@ ngDemautApp
                     $rootScope.error = 'Error downloading ../personal/langues';
                 });
         }
+
+        $scope.personalData.datePicker.status.dateDeNaissance = {
+            opened: false
+        };
 
         $scope.isPermisRequired = function () {
             return $scope.personalData.nationalite != null && $scope.personalData.nationalite != undefined && !nationalityTest.isSuisse($scope.personalData.nationalite.libl) && !$scope.personalData.permis;
@@ -229,6 +235,8 @@ ngDemautApp
         $scope.diplomeData.paysList = [];
         $scope.diplomeData.diplomes = [];
         $scope.diplomeData.diplome = {};
+        $scope.diplomeData.datePicker = {};
+        $scope.diplomeData.datePicker.status = {};
 
         if ($scope.diplomeData.typeDiplomes == null || $scope.diplomeData.typeDiplomes == undefined || $scope.diplomeData.typeDiplomes.length == 0) {
             $http.get(urlPrefix + '/diplomes/typeDiplomesList').
@@ -249,6 +257,13 @@ ngDemautApp
                     $rootScope.error = 'Error downloading ../diplomes/paysList';
                 });
         }
+
+        $scope.diplomeData.datePicker.status.dateObtention = {
+            opened: false
+        };
+        $scope.diplomeData.datePicker.status.dateReconnaissance = {
+            opened: false
+        };
 
         $scope.isDateReconnaissanceRequired = function () {
             return $scope.diplomeData.diplome.paysObtention != null && $scope.diplomeData.diplome.paysObtention != undefined &&
@@ -389,6 +404,16 @@ ngDemautApp
         $scope.activiteData = {};
         $scope.activiteData.activities = [];
         $scope.activiteData.activitie = {};
+        $scope.activiteData.datePicker = {};
+        $scope.activiteData.datePicker.status = {};
+
+        $scope.activiteData.datePicker.status.dateDebutIndependant = {
+            opened: false
+        };
+
+        $scope.activiteData.datePicker.status.dateDebutDependant = {
+            opened: false
+        };
 
         $scope.backStep = function(){
             $scope.indexStep -= 1;
@@ -712,6 +737,20 @@ ngDemautApp
 
 ngDemautApp
     .run(function($rootScope, $sce, $location, $http) {
+
+        $rootScope.datePicker = {};
+        $rootScope.datePicker.minDate = new Date();
+        $rootScope.datePicker.naxDate = new Date();
+        $rootScope.datePicker.placeholder = 'jj.mm.yyyy';
+        $rootScope.datePicker.format = 'dd.MM.yyyy';
+        $rootScope.datePicker.options =  {
+            formatYear: 'yyyyy',
+            startingDay: 1
+        };
+
+        $rootScope.openDatePicker = function(targetDatepicker){
+            targetDatepicker.opened = true;
+        };
 
         $rootScope.$on('$viewContentLoaded', function() {
         });

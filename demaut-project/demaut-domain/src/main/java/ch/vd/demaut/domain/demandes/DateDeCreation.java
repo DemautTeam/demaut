@@ -1,34 +1,35 @@
-package ch.vd.demaut.domain.annexes;
+package ch.vd.demaut.domain.demandes;
 
 import ch.vd.demaut.commons.vo.BaseValueObject;
 import org.joda.time.LocalDate;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import java.util.Date;
 
-public class DateCreation extends BaseValueObject {
+public class DateDeCreation extends BaseValueObject {
 
     @NotNull
-    private LocalDate value;
+    private Date value;
 
     // ********************************************************* Constructors
 
-    public DateCreation() {
+    public DateDeCreation() {
     }
 
-    public DateCreation(LocalDate value) {
-        this.value = value;
+    public DateDeCreation(LocalDate value) {
+        this.value = value.toDate();
     }
 
-    public DateCreation(int annee, int mois, int jourDuMois) {
-        this.value = new LocalDate(annee, mois, jourDuMois);
+    public DateDeCreation(int annee, int mois, int jourDuMois) {
+        this.value = new LocalDate(annee, mois, jourDuMois).toDate();
     }
 
     // ********************************************************* Business Methods
 
     @NotNull
     @Past
-    public LocalDate getValue() {
+    public Date getValue() {
         return value;
     }
 }

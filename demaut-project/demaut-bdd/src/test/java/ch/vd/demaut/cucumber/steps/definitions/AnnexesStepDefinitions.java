@@ -9,6 +9,7 @@ import ch.vd.demaut.cucumber.converteurs.utilisateurs.LoginConverter;
 import ch.vd.demaut.cucumber.steps.AnnexesSteps;
 import ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps;
 import ch.vd.demaut.domain.annexes.*;
+import ch.vd.demaut.domain.demandes.DateDeCreation;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
@@ -145,9 +146,9 @@ public class AnnexesStepDefinitions extends StepDefinitions {
         byte[] contenuFichier = FileMockHelper.buildContenuFichier(tailleFichier);
 
         //TODO: Utiliser la date du jour et tester 
-        DateCreation dateCreation = new DateCreation(LocalDate.parse("01.01.2015 11:00", DateTimeFormat.forPattern("dd.MM.yyyy hh:mm")));
+        DateDeCreation dateDeCreation = new DateDeCreation(LocalDate.parse("01.01.2015 11:00", DateTimeFormat.forPattern("dd.MM.yyyy hh:mm")));
 
-        Annexe annexe = new Annexe(typeAnnexe, nomFichier, new ContenuAnnexe(contenuFichier), dateCreation);
+        Annexe annexe = new Annexe(typeAnnexe, nomFichier, new ContenuAnnexe(contenuFichier), dateDeCreation);
 
         annexesSteps.attacherUneAnnexe(annexe);
     }

@@ -1,6 +1,7 @@
 package ch.vd.demaut.services.annexes.impl;
 
 import ch.vd.demaut.domain.annexes.*;
+import ch.vd.demaut.domain.demandes.DateDeCreation;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.exception.AnnexeNonValideException;
@@ -61,7 +62,7 @@ public class AnnexesServiceImpl implements AnnexesService {
     @Override
     public void attacherUneAnnexe(ReferenceDeDemande referenceDeDemande, File file, NomFichier nomFichier, TypeAnnexe type) {
         ContenuAnnexe contenuAnnexe = buildContenuAnnexe(file);
-        Annexe annexe = new Annexe(type, nomFichier, contenuAnnexe, new DateCreation(new LocalDate()));
+        Annexe annexe = new Annexe(type, nomFichier, contenuAnnexe, new DateDeCreation(new LocalDate()));
         attacherAnnexe(referenceDeDemande, annexe);
     }
 

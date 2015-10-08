@@ -92,8 +92,18 @@
                             <div class="col-md-4">
                                 <input type="number" id="tauxIndependant" class="form-control" required="isTauxIndependantRequired" ng-model="activiteData.activite.tauxIndependant"/>
                             </div>
-                            <div class="col-md-3">
-                                <input type="text" id="dateDebutIndependant" name="dateDebutIndependant" placeholder="jj-mm-aaaa" class="form-control" required="isDateDebutIndependantRequired" ng-model="activiteData.activite.dateDebutIndependant"/>
+                            <div class="col-md-2">
+                                <p class="input-group">
+                                    <input type="text" class="form-control" id="dateDebutIndependant" name="dateDebutIndependant" placeholder="{{datePicker.placeholder}}"
+                                           datepicker-popup="{{datePicker.format}}" ng-model="activiteData.activite.dateDebutIndependant"
+                                           is-open="activiteData.datePicker.status.dateDebutIndependant.opened" min-date="datePicker.minDate" datepicker-options="datePicker.dateOptions"
+                                           required="isDateDebutIndependantRequired" close-text="Fermer" clear-text="Effacer" current-text="Aujourd'hui"/>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="openDatePicker(activiteData.datePicker.status.dateDebutIndependant)">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+                                    </span>
+                                </p>
                             </div>
                         </div>
                         <div class="row">
@@ -104,8 +114,18 @@
                             <div class="col-md-4">
                                 <input type="number" id="tauxDependant" class="form-control" required="isTauxDependantRequired" ng-model="activiteData.activite.tauxDependant">
                             </div>
-                            <div class="col-md-3">
-                                <input type="text" id="dateDebutDependant" name="dateDebutDependant" placeholder="jj-mm-aaaa" class="form-control" required="isDateDebutDependantRequired" ng-model="activiteData.activite.dateDebutDependant">
+                            <div class="col-md-2">
+                                <p class="input-group">
+                                    <input type="text" class="form-control" id="dateDebutDependant" name="dateDebutDependant" placeholder="{{datePicker.placeholder}}"
+                                           datepicker-popup="{{datePicker.format}}" ng-model="activiteData.activite.dateDebutDependant"
+                                           is-open="activiteData.datePicker.status.dateDebutDependant.opened" max-date="datePicker.maxDate" datepicker-options="datePicker.dateOptions"
+                                           required="isDateDebutDependantRequired" close-text="Fermer" clear-text="Effacer" current-text="Aujourd'hui"/>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="openDatePicker(activiteData.datePicker.status.dateDebutDependant)">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+                                    </span>
+                                </p>
                             </div>
                         </div>
                         <div class="row">

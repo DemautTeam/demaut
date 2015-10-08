@@ -72,7 +72,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-2"><label for="complement">Complément</label></div>
-                    <div class="col-md-10">
+                    <div class="col-md-8">
                         <input type="text" id="complement" name="complement" class="form-control" ng-model="personalData.diplome.complement">
                     </div>
                 </div>
@@ -81,9 +81,20 @@
                 </div>
                 <div class="row">
                     <label for="dateObtention" class="col-md-2">Date d'obtention*</label>
-                    <div class="col-md-4">
-                        <input type="text" id="dateObtention" name="dateObtention" placeholder="jj.mm.aaaa" class="form-control"
-                               ng-model="diplomeData.diplome.dateObtention" required>
+                    <div class="col-md-2">
+                        <p class="input-group">
+                            <input type="text" class="form-control" id="dateObtention" name="dateObtention" placeholder="{{datePicker.placeholder}}"
+                                   datepicker-popup="{{datePicker.format}}" ng-model="diplomeData.diplome.dateObtention"
+                                   is-open="diplomeData.datePicker.status.dateObtention.opened" max-date="datePicker.maxDate" datepicker-options="datePicker.dateOptions"
+                                   required close-text="Fermer" clear-text="Effacer" current-text="aujourd'hui"/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="openDatePicker(diplomeData.datePicker.status.dateObtention)">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="col-md-2">
                     </div>
                     <label for="paysObtention" class="col-md-2">Pays d'obtention*</label>
                     <div class="col-md-4">
@@ -96,9 +107,18 @@
                 </div>
                 <div class="row">
                     <label for="dateReconnaissance" class="col-md-2">Date de reconnaissance</label>
-                    <div class="col-md-4">
-                        <input type="text" id="dateReconnaissance" name="dateReconnaissance" placeholder="jj.mm.aaaa" class="form-control"
-                               ng-model="diplomeData.diplome.dateReconnaissance" ng-required="isDateReconnaissanceRequired()">
+                    <div class="col-md-2">
+                        <p class="input-group">
+                            <input type="text" class="form-control" id="dateReconnaissance" name="dateReconnaissance" placeholder="{{datePicker.placeholder}}"
+                                   datepicker-popup="{{datePicker.format}}" ng-model="diplomeData.diplome.dateReconnaissance"
+                                   is-open="diplomeData.datePicker.status.dateReconnaissance.opened" max-date="datePicker.maxDate" datepicker-options="datePicker.dateOptions"
+                                   ng-required="isDateReconnaissanceRequired()" close-text="Fermer" clear-text="Effacer" current-text="Aujourd'hui"/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="openDatePicker(diplomeData.datePicker.status.dateReconnaissance)">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                        </p>
                     </div>
                 </div>
             </ng-form>

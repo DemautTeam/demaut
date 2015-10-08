@@ -22,7 +22,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,7 +54,7 @@ public class DiplomeRestImpl {
     @Context
     private HttpHeaders httpHeaders;
 
-    private DateTimeFormatter SHORT_DATE_FORMATTER = DateTimeFormat.forPattern("dd.MM.yyyy");
+    private DateTimeFormatter SHORT_DATE_PARSER = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
     @GET
     @Path("/typeDiplomesList")
@@ -141,6 +144,11 @@ public class DiplomeRestImpl {
         return Arrays.asList(Pays.values());
     }
 
+    /**
+     * Méthode qui ajoute un diplome du professionnel la liste des titres et formations
+     * dateObtention String (format 2015-10-06T22:00:00.000Z)
+     * dateReconnaissance String (format 2015-10-06T22:00:00.000Z)
+     */
     @SuppressWarnings("all")
     @GET
     @Path("/ajouter")
@@ -161,11 +169,11 @@ public class DiplomeRestImpl {
         ReferenceDeDiplome referenceDeDiplome = new ReferenceDeDiplome(referenceDeDiplomeStr);
         TypeDiplomeAccepte typeDiplomeAccepte = TypeDiplomeAccepte.getTypeById(Integer.parseInt(typeDiplomeId));
         TitreFormation titreFormation = new TitreFormation(convertTypeFormationIdToEnum(typeDiplomeAccepte, typeFormationId).name());
-        DateObtention dateObtention = new DateObtention(SHORT_DATE_FORMATTER.parseLocalDate(dateObtentionStr));
+        DateObtention dateObtention = new DateObtention(SHORT_DATE_PARSER.parseLocalDate(dateObtentionStr));
         PaysObtention paysObtention = new PaysObtention(Pays.getTypeById(Integer.parseInt(paysObtentionId)).name());
         DateReconnaissance dateReconnaissance = null;
         if (!StringUtils.isEmpty(dateReconnaissanceStr) && !"-".equals(dateReconnaissanceStr)) {
-            dateReconnaissance = new DateReconnaissance(SHORT_DATE_FORMATTER.parseLocalDate(dateReconnaissanceStr));
+            dateReconnaissance = new DateReconnaissance(SHORT_DATE_PARSER.parseLocalDate(dateReconnaissanceStr));
         }
 
         DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);

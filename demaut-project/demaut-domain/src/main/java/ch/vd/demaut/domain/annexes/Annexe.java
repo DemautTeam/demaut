@@ -2,6 +2,7 @@ package ch.vd.demaut.domain.annexes;
 
 import ch.vd.demaut.commons.annotations.Entity;
 import ch.vd.demaut.commons.entities.EntityFunctionalKeyAware;
+import ch.vd.demaut.domain.demandes.DateDeCreation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
@@ -22,7 +23,7 @@ public class Annexe extends EntityFunctionalKeyAware {
 
     private NomFichier nomFichier;
 
-    private DateCreation dateCreation;
+    private DateDeCreation dateDeCreation;
 
     // ********************************************************* Constructor
 
@@ -32,15 +33,15 @@ public class Annexe extends EntityFunctionalKeyAware {
 
     public Annexe(TypeAnnexe typeAnnexe, String nomFichier, byte[] contenu, String dateCreation) {
         this(typeAnnexe, new NomFichier(nomFichier), new ContenuAnnexe(contenu),
-                new DateCreation(LocalDate.parse(dateCreation, DateTimeFormat.forPattern("dd.MM.yyyy hh:mm"))));
+                new DateDeCreation(LocalDate.parse(dateCreation, DateTimeFormat.forPattern("dd.MM.yyyy hh:mm"))));
     }
 
-    public Annexe(TypeAnnexe typeAnnexe, NomFichier nomFichier, ContenuAnnexe contenu, DateCreation dateCreation) {
+    public Annexe(TypeAnnexe typeAnnexe, NomFichier nomFichier, ContenuAnnexe contenu, DateDeCreation dateDeCreation) {
         super();
         this.typeAnnexe = typeAnnexe;
         this.nomFichier = nomFichier;
         this.contenu = contenu;
-        this.dateCreation = dateCreation;
+        this.dateDeCreation = dateDeCreation;
     }
 
     // ********************************************************* Getters
@@ -61,8 +62,8 @@ public class Annexe extends EntityFunctionalKeyAware {
         return nomFichier;
     }
 
-    public DateCreation getDateCreation() {
-        return dateCreation;
+    public DateDeCreation getDateDeCreation() {
+        return dateDeCreation;
     }
 
     public AnnexeMetadata getAnnexeMetadata() {

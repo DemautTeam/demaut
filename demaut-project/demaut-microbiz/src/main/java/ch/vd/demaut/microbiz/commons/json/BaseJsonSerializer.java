@@ -12,7 +12,7 @@ import java.lang.reflect.Type;
 /**
  * Classe abstraite qui implémente {@link JsonSerializer} et fournit les implémentations par défaut de
  * {@link #handledType()} et {@link #serialize(Object, JsonGenerator, SerializerProvider)}
- * 
+ * <p/>
  * La plupart des JsonSerializer doivent hériter de cette classe
  *
  * @param <T>

@@ -62,6 +62,7 @@
         <inheritance strategy="SINGLE_TABLE"/>
         <attributes>
             <embedded name="referenceDeDemande"/>
+            <embedded name="dateDeCreation"/>
         </attributes>
     </entity>
 
@@ -108,7 +109,7 @@
             </basic>
             <embedded name="nomFichier"/>
             <embedded name="contenu"/>
-            <embedded name="dateCreation"/>
+            <embedded name="dateDeCreation"/>
         </attributes>
     </entity>
 
@@ -202,7 +203,7 @@
     <embeddable class="ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateObtention">
         <attributes>
             <basic name="value">
-                <column name="date_Obtention"/>
+                <column name="date_Obtention" column-definition="date"/>
             </basic>
         </attributes>
     </embeddable>
@@ -218,15 +219,15 @@
     <embeddable class="ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateReconnaissance">
         <attributes>
             <basic name="value">
-                <column name="date_Reconnaissance"/>
+                <column name="date_Reconnaissance" column-definition="date"/>
             </basic>
         </attributes>
     </embeddable>
 
-    <embeddable class="ch.vd.demaut.domain.annexes.DateCreation">
+    <embeddable class="ch.vd.demaut.domain.demandes.DateDeCreation">
         <attributes>
             <basic name="value">
-                <column name="date_Creation"/>
+                <column name="date_Creation" column-definition="date"/>
             </basic>
         </attributes>
     </embeddable>

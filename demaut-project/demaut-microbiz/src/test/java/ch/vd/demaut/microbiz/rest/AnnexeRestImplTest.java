@@ -94,7 +94,7 @@ public class AnnexeRestImplTest {
     @Ignore("Should mock @Context HttpHeaders demaut-user-id")
     @Test
     public void testSupprimerAnnexe() throws Exception {
-        Response response = annexeRest.supprimerUneAnnexe( "Test_multipart.pdf",
+        Response response = annexeRest.supprimerUneAnnexe("Test_multipart.pdf",
                 String.valueOf(TypeAnnexe.CV.getRefProgresID().getId()));
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }

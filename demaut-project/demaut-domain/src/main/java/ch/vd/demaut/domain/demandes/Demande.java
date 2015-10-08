@@ -7,6 +7,8 @@ public abstract class Demande extends EntityFunctionalKeyAware {
     // ********************************************************* Fields
     protected ReferenceDeDemande referenceDeDemande;
 
+    protected DateDeCreation dateDeCreation;
+
     // ********************************************************* Constructeur
 
     protected Demande() {
@@ -19,9 +21,16 @@ public abstract class Demande extends EntityFunctionalKeyAware {
     }
 
 
+    public void generateDateDeCreation() {
+        dateDeCreation = new DateDeCreation();
+    }
+
     // ********************************************************* Getters
     public ReferenceDeDemande getReferenceDeDemande() {
         return referenceDeDemande;
     }
 
+    public DateDeCreation getDateDeCreation() {
+        return dateDeCreation;
+    }
 }
