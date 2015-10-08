@@ -4,6 +4,7 @@ import ch.vd.demaut.domain.annexes.*;
 import ch.vd.demaut.domain.demandes.DateDeCreation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.exception.AnnexeNonUniqueException;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.annexes.AnnexesService;
@@ -61,7 +62,9 @@ public class AnnexesServiceTest {
         profession = Profession.Medecin;
         login = new Login("admin@admin");
 
-        intialiserDemandeEnCours(annexe, login);
+        if(demandeEnCours == null) {
+            intialiserDemandeEnCours(annexe, login);
+        }
 
         assertThat(annexesService).isNotNull();
         assertThat(byteArray).isNotNull();
@@ -71,7 +74,7 @@ public class AnnexesServiceTest {
 
     @Test
     public void testListerLesAnnexesMetadata() throws Exception {
-        Collection<?> listerLesAnnexes = annexesService.listerLesAnnexeMetadatas(demandeEnCours.getReferenceDeDemande());
+        Collection<?> listerLesAnnexes = annexesService.listerLesAnnexeMetadatas(login);
         assertThat(listerLesAnnexes).isNotEmpty();
     }
 
@@ -83,10 +86,10 @@ public class AnnexesServiceTest {
         //Setup fixtures
 
         //Attache une annexe
-        annexesService.attacherUneAnnexe(demandeEnCours.getReferenceDeDemande(), file, nomFichier, TypeAnnexe.AttestationBonneConduite);
+        annexesService.attacherUneAnnexe(login, file, nomFichier, TypeAnnexe.AttestationBonneConduite);
 
         //Récupère demande en cours
-        demandeEnCours = demandeAutorisationService.recupererDemandeParReference(demandeEnCours.getReferenceDeDemande());
+        demandeEnCours = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
 
         //Vérifie si annexe attachée
         Collection<Annexe> annexes = demandeEnCours.listerLesAnnexes();
@@ -101,7 +104,7 @@ public class AnnexesServiceTest {
     public void testerAttacherAnnexeNonUnique() {
         try {
             //Attache une annexe
-            annexesService.attacherUneAnnexe(demandeEnCours.getReferenceDeDemande(), file, nomFichier, TypeAnnexe.CV);
+            annexesService.attacherUneAnnexe(login, file, nomFichier, TypeAnnexe.CV);
             failBecauseExceptionWasNotThrown(AnnexeNonUniqueException.class);
         } catch (AnnexeNonUniqueException e) {
 
@@ -114,11 +117,11 @@ public class AnnexesServiceTest {
         long tailleAnnexe = annexe.getTaille();
 
         //Récupère demande en cours
-        demandeEnCours = demandeAutorisationService.recupererDemandeParReference(demandeEnCours.getReferenceDeDemande());
+        demandeEnCours = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
 
         //Vérifie si annexe attachée
         AnnexeFK annexeFK = new AnnexeFK(nomFichier, TypeAnnexe.CV);
-        ContenuAnnexe contenuAnnexe = annexesService.recupererContenuAnnexe(demandeEnCours.getReferenceDeDemande(), annexeFK);
+        ContenuAnnexe contenuAnnexe = annexesService.recupererContenuAnnexe(login, annexeFK);
 
         assertThat(contenuAnnexe).isNotNull();
         assertThat(contenuAnnexe.getTaille()).isEqualTo(tailleAnnexe);
@@ -128,10 +131,16 @@ public class AnnexesServiceTest {
 
     @Transactional(propagation = Propagation.REQUIRED)
     private void intialiserDemandeEnCours(Annexe annexeALier, Login login) {
-        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null, login);
-        if (annexeALier != null) {
-            annexesService.attacherUneAnnexe(demandeEnCours.getReferenceDeDemande(), annexeALier);
+        try {
+            demandeEnCours = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+        } catch (javax.persistence.NonUniqueResultException | javax.persistence.NoResultException e)
+        {}
+
+        if(demandeEnCours == null) {
+            demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null, login);
+            if (!demandeEnCours.listerLesAnnexes().contains(annexeALier)) {
+                annexesService.attacherUneAnnexe(login, annexeALier);
+            }
         }
     }
-
 }

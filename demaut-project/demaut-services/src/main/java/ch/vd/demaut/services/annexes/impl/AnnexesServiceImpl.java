@@ -5,6 +5,7 @@ import ch.vd.demaut.domain.demandes.DateDeCreation;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.exception.AnnexeNonValideException;
+import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.annexes.AnnexesService;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import org.apache.commons.io.IOUtils;
@@ -33,55 +34,58 @@ public class AnnexesServiceImpl implements AnnexesService {
      * L'annexe retournée de préférence ne devrait PAS contenir le contunu
      * stream pour la consultation front
      *
-     * @param referenceDeDemande ReferenceDeDemande
+     * @param login Login
      * @return Collection AnnexeMetadata
      */
     @Transactional(readOnly = true)
     @Override
-    public Collection<AnnexeMetadata> listerLesAnnexeMetadatas(ReferenceDeDemande referenceDeDemande) {
-        DemandeAutorisation demandeAutorisation = recupererDemandeParRef(referenceDeDemande);
+    public Collection<AnnexeMetadata> listerLesAnnexeMetadatas(Login login) {
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
         return demandeAutorisation.listerLesAnnexeMetadatas();
+    }
+
+    @Override
+    public Collection<TypeAnnexe> listerLesTypeAnnexesObligatoires(Login login) {
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+        return demandeAutorisation.listerLesTypeAnnexesObligatoires();
     }
 
     /**
      * L'annexe retournée DOIT absolument contenir le contunu stream pour la
      * consultation front
      *
-     * @param referenceDeDemande ReferenceDeDemande
-     * @param annexeFK           AnnexeFK
+     * @param login    Login
+     * @param annexeFK AnnexeFK
      * @return Annexe
      */
     @Transactional(readOnly = true)
     @Override
-    public ContenuAnnexe recupererContenuAnnexe(ReferenceDeDemande referenceDeDemande, AnnexeFK annexeFK) {
-        DemandeAutorisation demandeAutorisation = recupererDemandeParRef(referenceDeDemande);
+    public ContenuAnnexe recupererContenuAnnexe(Login login, AnnexeFK annexeFK) {
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
         return demandeAutorisation.extraireContenuAnnexe(annexeFK);
     }
 
     @Transactional
     @Override
-    public void attacherUneAnnexe(ReferenceDeDemande referenceDeDemande, File file, NomFichier nomFichier, TypeAnnexe type) {
+    public void attacherUneAnnexe(Login login, File file, NomFichier nomFichier, TypeAnnexe type) {
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
         ContenuAnnexe contenuAnnexe = buildContenuAnnexe(file);
         Annexe annexe = new Annexe(type, nomFichier, contenuAnnexe, new DateDeCreation(new LocalDate()));
-        attacherAnnexe(referenceDeDemande, annexe);
-    }
-
-    @Transactional
-    @Override
-    public void attacherUneAnnexe(ReferenceDeDemande referenceDeDemande, Annexe annexe) {
-        attacherAnnexe(referenceDeDemande, annexe);
-    }
-
-    @Transactional
-    @Override
-    public void supprimerUneAnnexe(ReferenceDeDemande referenceDeDemande, AnnexeFK annexeFK) {
-        DemandeAutorisation demandeAutorisation = recupererDemandeParRef(referenceDeDemande);
-        demandeAutorisation.supprimerUneAnnexe(annexeFK);
-    }
-
-    private void attacherAnnexe(ReferenceDeDemande ref, Annexe annexe) {
-        DemandeAutorisation demandeAutorisation = recupererDemandeParRef(ref);
         demandeAutorisation.validerEtAttacherAnnexe(annexe);
+    }
+
+    @Transactional
+    @Override
+    public void attacherUneAnnexe(Login login, Annexe annexe) {
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+        demandeAutorisation.validerEtAttacherAnnexe(annexe);
+    }
+
+    @Transactional
+    @Override
+    public void supprimerUneAnnexe(Login login, AnnexeFK annexeFK) {
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+        demandeAutorisation.supprimerUneAnnexe(annexeFK);
     }
 
     // ********************************************************* Methodes

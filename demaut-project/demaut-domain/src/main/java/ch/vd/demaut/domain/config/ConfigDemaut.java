@@ -1,6 +1,6 @@
 package ch.vd.demaut.domain.config;
 
-import ch.vd.demaut.domain.annexes.AnnexesObligatoires;
+import ch.vd.demaut.domain.annexes.ListeTypeAnnexesObligatoires;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 
 /**
@@ -14,13 +14,13 @@ public interface ConfigDemaut {
      * @param profession Profession de la demande
      * @return Listes des annexes obligatoires pour la demande
      */
-    AnnexesObligatoires getAnnexesObligatoires(Profession profession);
+    ListeTypeAnnexesObligatoires getAnnexesObligatoires(Profession profession);
 
     /**
      * Construit l'initialisation de la configuration des annexes obligatoires
      *
      * @param profession
-     * @param annexesObligatoires
+     * @param listeTypeAnnexesObligatoires
      */
-    void ajouterAnnexesObligatoires(Profession profession, AnnexesObligatoires annexesObligatoires);
+    void ajouterAnnexesObligatoires(Profession profession, ListeTypeAnnexesObligatoires listeTypeAnnexesObligatoires);
 }

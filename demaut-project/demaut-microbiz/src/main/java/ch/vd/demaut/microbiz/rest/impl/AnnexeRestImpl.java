@@ -91,6 +91,28 @@ public class AnnexeRestImpl {
     }
 
     @GET
+    @Path("/typesObligatoiresList")
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("USER")
+    public Response listerLesTypeAnnexesObligatoires() throws Exception {
+
+        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
+
+        LOGGER.info("listerLesTypeAnnexesObligatoires pour : " + login.getValue());
+
+        Collection<TypeAnnexe> typeAnnexes = annexesService.listerLesTypeAnnexesObligatoires(login);
+
+        // TODO only for test to be removed
+        if(typeAnnexes.isEmpty()){
+            typeAnnexes.add(TypeAnnexe.CV);
+            typeAnnexes.add(TypeAnnexe.CertificatDeTravail);
+            typeAnnexes.add(TypeAnnexe.PieceIdentite);
+            typeAnnexes.add(TypeAnnexe.Titre);
+        }
+        return RestUtils.buildRef(typeAnnexes);
+    }
+
+    @GET
     @Path("/lister")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
@@ -100,29 +122,27 @@ public class AnnexeRestImpl {
 
         LOGGER.info("listerLesAnnexes pour : " + login.getValue());
 
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
-        Collection<AnnexeMetadata> annexesMetadata = annexesService.listerLesAnnexeMetadatas(demandeAutorisation.getReferenceDeDemande());
+        Collection<AnnexeMetadata> annexesMetadata = annexesService.listerLesAnnexeMetadatas(login);
 
         return RestUtils.buildJSon(annexesMetadata);
     }
 
     // Methode avec @PathParam doit être inchangée
     @GET
-    @Path("/afficher/{annexeFileName}/{annexeType}")
+    @Path("/afficher")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @RolesAllowed("USER")
-    public Response afficherUneAnnexe(@PathParam("annexeFileName") String annexeFileName,
-                                      @PathParam("annexeType") String annexeTypeIdStr)
+    public Response afficherUneAnnexe(@QueryParam("annexeFileName") String annexeFileName,
+                                      @QueryParam("annexeType") String annexeTypeIdStr)
             throws JsonProcessingException {
 
         Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
 
         LOGGER.info("afficherUneAnnexe pour : " + login.getValue() + ", annexeFileName=" + annexeFileName + ", annexeTypeIdStr=" + annexeTypeIdStr);
 
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
         AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
 
-        ContenuAnnexe contenuAnnexe = annexesService.recupererContenuAnnexe(demandeAutorisation.getReferenceDeDemande(), annexeFK);
+        ContenuAnnexe contenuAnnexe = annexesService.recupererContenuAnnexe(login, annexeFK);
         return RestUtils.BuildStream(contenuAnnexe.getContenu());
     }
 
@@ -141,10 +161,9 @@ public class AnnexeRestImpl {
 
         LOGGER.info("attacherUneAnnexe pour : " + login.getValue() + ", annexeFileName=" + annexeFileName + ", annexeTypeIdStr=" + annexeTypeIdStr);
 
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
         AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
 
-        annexesService.attacherUneAnnexe(demandeAutorisation.getReferenceDeDemande(), file, annexeFK.getNomFichier(), annexeFK.getTypeAnnexe());
+        annexesService.attacherUneAnnexe(login, file, annexeFK.getNomFichier(), annexeFK.getTypeAnnexe());
         return RestUtils.buildJSon(Arrays.asList(true));
     }
 
@@ -159,10 +178,9 @@ public class AnnexeRestImpl {
 
         LOGGER.info("supprimerUneAnnexe pour : " + login.getValue() + ", annexeFileName=" + annexeFileName + ", annexeTypeIdStr=" + annexeTypeIdStr);
 
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
         AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
 
-        annexesService.supprimerUneAnnexe(demandeAutorisation.getReferenceDeDemande(), annexeFK);
+        annexesService.supprimerUneAnnexe(login, annexeFK);
         return RestUtils.buildJSon(Arrays.asList(true));
     }
 

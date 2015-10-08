@@ -1,6 +1,5 @@
 package ch.vd.demaut.microbiz.rest.impl;
 
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.utilisateurs.Login;
@@ -96,9 +95,8 @@ public class ProfessionRestImpl {
 
         LOGGER.info("afficherDonneesProfession " + login.getValue());
 
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
-        Profession profession = demandeAutorisation.getProfession();
-        CodeGLN codeGLN = demandeAutorisation.getDonneesProfessionnelles().getCodeGLN();
+        Profession profession = donneesProfessionnellesService.afficherDonneesProfession(login);
+        CodeGLN codeGLN = donneesProfessionnellesService.recupererDonneesProfessionnelles(login).getCodeGLN();
         return RestUtils.buildJSon(Arrays.asList(profession, codeGLN));
     }
 }

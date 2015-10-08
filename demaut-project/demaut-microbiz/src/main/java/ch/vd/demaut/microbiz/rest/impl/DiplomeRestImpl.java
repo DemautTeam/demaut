@@ -1,13 +1,11 @@
 package ch.vd.demaut.microbiz.rest.impl;
 
 import ch.vd.demaut.domain.config.TypeProgres;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandeur.Pays;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.*;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.microbiz.progreSoa.ProgreSoaService;
 import ch.vd.demaut.microbiz.rest.RestUtils;
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
 import ch.vd.ses.referentiel.demaut_1_0.VcType;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
@@ -38,9 +36,6 @@ import java.util.List;
 public class DiplomeRestImpl {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DiplomeRestImpl.class);
-
-    @Autowired
-    private DemandeAutorisationService demandeAutorisationService;
 
     @Autowired
     private ProgreSoaService progreSoaService;
@@ -176,9 +171,7 @@ public class DiplomeRestImpl {
             dateReconnaissance = new DateReconnaissance(SHORT_DATE_PARSER.parseLocalDate(dateReconnaissanceStr));
         }
 
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
-
-        donneesProfessionnellesService.ajouterUnDiplome(demandeAutorisation.getReferenceDeDemande(), referenceDeDiplome, typeDiplomeAccepte,
+        donneesProfessionnellesService.ajouterUnDiplome(login, referenceDeDiplome, typeDiplomeAccepte,
                 titreFormation, complement, dateObtention, paysObtention, dateReconnaissance);
         return RestUtils.buildJSon(Arrays.asList(true));
     }
@@ -210,9 +203,8 @@ public class DiplomeRestImpl {
         LOGGER.info("supprimerUnDiplome pour : " + login.getValue() + ", referenceDeDiplome=" + referenceDeDiplomeStr);
 
         ReferenceDeDiplome referenceDeDiplome = new ReferenceDeDiplome(referenceDeDiplomeStr);
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
 
-        donneesProfessionnellesService.supprimerUnDiplome(demandeAutorisation.getReferenceDeDemande(), referenceDeDiplome);
+        donneesProfessionnellesService.supprimerUnDiplome(login, referenceDeDiplome);
         return RestUtils.buildJSon(Arrays.asList(true));
     }
 }
