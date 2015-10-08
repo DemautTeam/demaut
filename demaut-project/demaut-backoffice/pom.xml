@@ -10,7 +10,7 @@
     
     <modelVersion>4.0.0</modelVersion>
     <artifactId>demaut-backoffice</artifactId>
-    <name>Demaut-backoffice</name>
+    <name>demaut-backoffice</name>
     <description>Demaut Backoffice Module</description>
     <packaging>bundle</packaging>
 

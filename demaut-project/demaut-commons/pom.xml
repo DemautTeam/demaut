@@ -9,7 +9,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>demaut-commons</artifactId>
-    <name>Demaut-commons</name>
+    <name>demaut-commons</name>
     <description>Demaut Commons Module</description>
     <packaging>jar</packaging>
 
@@ -24,6 +24,19 @@
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.el</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator-cdi</artifactId>
+        </dependency>
+
 
         <!-- Utilities -->
         <dependency>

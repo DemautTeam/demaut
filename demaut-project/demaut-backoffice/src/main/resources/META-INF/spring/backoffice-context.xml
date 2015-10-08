@@ -25,7 +25,7 @@
     <ctx:component-scan base-package="ch.vd.demaut.backoffice"/>
 
     <bean id="JacksonJaxbJsonProvider"
-          class="ch.vd.demaut.backoffice.provider.CustomeJacksonJaxbJsonProvider"/>
+          class="ch.vd.demaut.backoffice.provider.CustomJacksonJaxbJsonProvider"/>
 
     <bean id="authenticationFilter" class="ch.vd.demaut.backoffice.filter.CustomAuthenticationFilter">
         <property name="contextName" value="karaf"/>
