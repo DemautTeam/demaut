@@ -4,5 +4,7 @@ public enum TypePermis {
     B,
     C,
     DemandeEnCours,
-    Autre;
+    Autre,
+    Aucun;
+
 }

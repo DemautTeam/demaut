@@ -14,12 +14,7 @@
     <packaging>war</packaging>
 
     <properties>
-        <properties.urlPrefix>http://localhost:8083/outils/demautMicrobiz</properties.urlPrefix>
-
-<!-- Jetty Local: <properties.urlPrefix>http://localhost:8083/outils/demautMicrobiz</properties.urlPrefix>-->
-<!-- Microbiz Local : <properties.urlPrefix>http://localhost:40002/outils/demautMicrobiz</properties.urlPrefix>-->
-<!-- Microbiz DEMO : <properties.urlPrefix>http://slv2395t.etat-de-vaud.ch:41002/outils/demautMicrobiz</properties.urlPrefix>-->
-
+        <properties.urlPrefix>http://slv2395t.etat-de-vaud.ch:41002/outils/demautMicrobiz</properties.urlPrefix>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>

@@ -6,6 +6,7 @@ import ch.vd.demaut.domain.demandes.Demande;
 import ch.vd.demaut.domain.demandes.DemandeFK;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnelles;
+import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnellesValidateur;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnellesValidateur;
 import ch.vd.demaut.domain.utilisateurs.Login;
@@ -20,6 +21,14 @@ import java.util.List;
  */
 @Aggregate
 public class DemandeAutorisation extends Demande {
+
+    private static final AnnexeValidateur ANNEXE_VALIDATEUR = new AnnexeValidateur();
+
+    private static final DonneesPersonnellesValidateur DONNEES_PERSONNELLES_VALIDATEUR = new DonneesPersonnellesValidateur();
+
+    private static final DonneesProfessionnellesValidateur DONNEES_PROFESSIONNELLES_VALIDATEUR = new DonneesProfessionnellesValidateur();
+
+
 
     // ********************************************************* Fields
     private Profession profession;
@@ -61,7 +70,7 @@ public class DemandeAutorisation extends Demande {
      * @param annexeALier Annexe
      */
     public void validerEtAttacherAnnexe(Annexe annexeALier) {
-        new AnnexeValidateur().valider(annexeALier);
+        ANNEXE_VALIDATEUR.valider(annexeALier);
         getListeDesAnnexes().ajouterAnnexe(annexeALier);
     }
 
@@ -92,8 +101,16 @@ public class DemandeAutorisation extends Demande {
         return getListeDesAnnexes().extraireContenu(annexeFK);
     }
 
+    // ******** Donnees Personnelles
+
+    public void validerEtAttacherLesDonneesPersonnelles(DonneesPersonnelles donneesPersonnelles) {
+        DONNEES_PERSONNELLES_VALIDATEUR.valider(donneesPersonnelles);
+        this.donneesPersonnelles = donneesPersonnelles;
+    }
+
+    // ******* Donnees Professionnelles
     public void validerDonneesProfessionnelles() {
-        new DonneesProfessionnellesValidateur().valider(donneesProfessionnelles);
+        DONNEES_PROFESSIONNELLES_VALIDATEUR.valider(donneesProfessionnelles);
     }
 
     // ********************************************************* Private Methods

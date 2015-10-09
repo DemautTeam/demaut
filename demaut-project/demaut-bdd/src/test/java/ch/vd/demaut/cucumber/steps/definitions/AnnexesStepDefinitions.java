@@ -3,7 +3,7 @@ package ch.vd.demaut.cucumber.steps.definitions;
 import ch.vd.demaut.commons.utils.FileMockHelper;
 import ch.vd.demaut.cucumber.converteurs.annexes.ListeDesAnnexesConverter;
 import ch.vd.demaut.cucumber.converteurs.annexes.NomFichierConverter;
-import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
+import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
 import ch.vd.demaut.cucumber.converteurs.demandes.ReferenceDeDemandeConverter;
 import ch.vd.demaut.cucumber.steps.AnnexesSteps;
 import ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps;
@@ -102,8 +102,8 @@ public class AnnexesStepDefinitions extends StepDefinitions {
     // ********************************************************* Then
 
     @Alors("^le système Demaut \"(accepte|refuse)\" (?:d´attacher|de supprimer) cette annexe$")
-    public void le_système_Demaut_accepte_ou_refuse_cette_annexe(AccepteOuRefuse action) throws Throwable {
-        annexesSteps.verifieAcceptationAnnexe(action);
+    public void le_système_Demaut_accepte_ou_refuse_cette_annexe(AccepteOuRefuse expected) throws Throwable {
+        AccepteOuRefuse.verifieAcceptation(expected, annexesSteps.getActualAcceptationAnnexe());
     }
 
     @Alors("^les annexes attachées à la demande sont \"([^\"]*)\"$")
