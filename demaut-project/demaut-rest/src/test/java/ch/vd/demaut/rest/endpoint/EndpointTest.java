@@ -1,4 +1,4 @@
-package ch.vd.demaut.microbiz.endpoint;
+package ch.vd.demaut.rest.endpoint;
 
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;

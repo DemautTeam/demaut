@@ -1,9 +1,13 @@
-package ch.vd.demaut.microbiz.filter;
+package ch.vd.demaut.rest.filter;
 
 import org.apache.cxf.jaxrs.security.JAASAuthenticationFilter;
 
 import javax.ws.rs.container.ContainerRequestContext;
 
+/**
+ * Permet de désactiver le filtre authentication 
+ * TODO: Penser à l'activer en UAT(QUALITE) / INTG / PROD
+ */
 public class CustomAuthenticationFilter extends JAASAuthenticationFilter {
 
     private boolean active;

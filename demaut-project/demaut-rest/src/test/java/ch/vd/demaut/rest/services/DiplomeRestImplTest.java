@@ -1,4 +1,4 @@
-package ch.vd.demaut.microbiz.rest;
+package ch.vd.demaut.rest.services;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;

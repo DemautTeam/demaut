@@ -1,4 +1,4 @@
-package ch.vd.demaut.microbiz.json;
+package ch.vd.demaut.rest.json;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

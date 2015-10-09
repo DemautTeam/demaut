@@ -63,6 +63,12 @@
             <artifactId>jackson-jaxrs-json-provider</artifactId>
         </dependency>
 
+        <!-- CXF Test -->
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-rs-client</artifactId>
+        </dependency>
+        
         <!-- Utilities -->
         <dependency>
             <groupId>org.joda</groupId>

@@ -371,6 +371,16 @@
                 <artifactId>cxf-rt-rs-extension-search</artifactId>
                 <version>${cxf.rt.version}</version>
             </dependency>
+            
+            <!-- CXF Test -->
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-rs-client</artifactId>
+                <version>${cxf.rt.version}</version>
+                <scope>test</scope>
+            </dependency>
+            
+            <!-- Jackson -->
             <dependency>
                 <groupId>com.fasterxml.jackson.jaxrs</groupId>
                 <artifactId>jackson-jaxrs-json-provider</artifactId>
@@ -594,7 +604,7 @@
                 <version>${mockito.version}</version>
                 <scope>test</scope>
             </dependency>
-            
+
             <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>

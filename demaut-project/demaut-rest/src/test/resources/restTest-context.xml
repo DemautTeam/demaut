@@ -19,7 +19,7 @@
 		http://cxf.apache.org/jaxrs
 		http://cxf.apache.org/schemas/jaxrs.xsd">
 
-    <util:properties id="props" location="demautMicrobizTest.cfg"/>
+    <util:properties id="props" location="demautRestTest.cfg"/>
 
     <bean id="iamInteceptor" class="ch.vd.demaut.microbiz.rest.IamBypassInterceptor"/>
 
@@ -28,5 +28,11 @@
     </bean>
 
     <import resource="classpath:META-INF/spring/microbiz-context.xml"/>
+
+<!--     <cxf:server address="${demaut.progre.soa.endpoint}"> -->
+<!--         <cxf:serviceBeans> -->
+<!--             <ref local="progreSoaServiceMock"/> -->
+<!--         </cxf:serviceBeans> -->
+<!--     </cxf:server> -->
 
 </beans>

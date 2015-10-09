@@ -11,10 +11,6 @@
 		http://www.springframework.org/schema/util
 		http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <bean id="demandeAutorisationRepository" class="ch.vd.demaut.data.demandes.autorisation.repo.impl.DemandeAutorisationRepositoryJPA"/>
-
-    <bean id="demandeAutorisationFactory" class="ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory"/>
-
     <bean id="demandeAutorisationService" class="ch.vd.demaut.services.demandes.autorisation.impl.DemandeAutorisationServiceImpl"/>
 
     <bean id="annexesService" class="ch.vd.demaut.services.annexes.impl.AnnexesServiceImpl"/>
@@ -26,5 +22,7 @@
     <context:annotation-config/>
     
     <context:component-scan base-package="ch.vd.demaut"/>
+
+    <import resource="classpath:META-INF/spring/jpa-context.xml"/>
 
 </beans>

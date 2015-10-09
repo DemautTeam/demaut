@@ -20,9 +20,12 @@
 		http://cxf.apache.org/jaxrs
 		http://cxf.apache.org/schemas/jaxrs.xsd">
 
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>    
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+
     <ctx:property-placeholder properties-ref="props"/>
 
-    <cxf:server address="${demaut.microbiz.service.endpoint}">
+    <cxf:server address="${demaut.rest.service.endpoint}">
         <cxf:serviceBeans>
             <ref local="annexeRestImpl"/>
             <ref local="professionRestImpl"/>
@@ -42,14 +45,12 @@
 
     <bean id="customJacksonJaxbJsonProvider" class="ch.vd.demaut.rest.providers.CustomJacksonJaxbJsonProvider"/>
 
-    <bean id="authenticationFilter" class="ch.vd.demaut.microbiz.filter.CustomAuthenticationFilter">
+    <bean id="authenticationFilter" class="ch.vd.demaut.rest.filter.CustomAuthenticationFilter">
         <property name="contextName" value="karaf"/>
         <property name="realmName" value="demautMicrobiz"/>
-        <property name="active" value="${demaut.microbiz.security.active}"/>
+        <property name="active" value="${demaut.rest.security.active}"/>
     </bean>
 
-    <import resource="classpath:META-INF/spring/jpa-context.xml"/>
-    
     <import resource="classpath:META-INF/spring/services-context.xml"/>
 
 </beans>
