@@ -2,6 +2,7 @@ package ch.vd.demaut.rest.services.impl;
 
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
+import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.progreSoa.services.ProgreSoaService;
 import ch.vd.demaut.rest.commons.json.RestUtils;
@@ -79,6 +80,20 @@ public class ProfessionRestImpl {
         // TODO mettre en cache la liste des professions
         String path = uriInfo != null ? uriInfo.getBaseUri().getPath() : null;
         return progreSoaService.listeSOAProfession(path).getVcList().getVc();
+    }
+
+    @GET
+    @Path("/professionsCodeGLN")
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("USER")
+    public Response listerLesProfessionsCodeGLN() throws Exception {
+
+        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
+
+        LOGGER.info("listerLesProfessionsCodeGLN " + login.getValue());
+
+        DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService.recupererDonneesProfessionnelles(login);
+        return RestUtils.buildRef(donneesProfessionnelles.getListeProfessionsCodeGLN());
     }
 
     @GET

@@ -56,8 +56,8 @@ public class DonneesProfessionnellesServiceImpl implements DonneesProfessionnell
     public void renseignerLesDonneesPersonnelles(Login login, Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Localite localite, NPA npa,
                                                  Pays pays, Adresse adresse, Email email, NumeroTelephone telephonePrive, NumeroTelephone telephoneMobile,
                                                  NumeroTelephone fax, Genre genre, DateDeNaissance dateDeNaissance, Pays nationalite, Langue langue, Permis permis) {
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
         // TODO
-        //DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
         // demandeAutorisation.getDonneesPersonnelles().renseignerLesDonneesPersonnelles(login, nom, prenom, nomDeCelibataire, localite, npa, pays, adresse, email,
         // telephonePrive, telephoneMobile, fax, genre, dateDeNaissance, nationalite, langue, permis);
     }

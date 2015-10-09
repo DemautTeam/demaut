@@ -17,8 +17,13 @@
                         </button>
                         Veuillez saisir votre profession.
                     </div>
+                    <div id="GLN_obligatoire" class="alert alert-danger" ng-show="(professionSante.professionDataForm.gln.$touched || wouldStepNext) && professionSante.professionDataForm.gln.$error.required">
+                        <button type="button" class="close" data-target="#GLN_obligatoire" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
+                        </button>
+                        Veuillez saisir votre code GLN.
+                    </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-4"><label for="profession">Profession demandée</label></div>
                     <div class="col-md-6">
@@ -36,11 +41,20 @@
                     <div class="col-md-4"><label for="gln">Code GLN (EAN)</label></div>
                     <div class="col-md-6">
                         <input type="number" id="gln" name="gln" ng-minlength="0" ng-maxlength="13" ng-model="professionData.gln"
-                               ng-model-options="{ updateOn: 'blur' }" placeholder="7601000000125">
+                               class="form-control" placeholder="7601000000125" ng-required="isProfessionNecessiteCodeGLN()">
                     </div>
                 </div>
                 <div class="row">
                     <br/>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><label></label></div>
+                    <div class="col-md-8">
+                        <label>
+                            Si vous ne disposez pas d'un code GLN (EAN), veuillez vous adresser à l'Office fédéral de la santé publique
+                            <a href="http://www.retdata.ch" style="color: blue">www.retdata.ch</a>
+                        </label>
+                    </div>
                 </div>
             </ng-form>
         </div>

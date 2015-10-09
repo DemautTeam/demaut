@@ -1,26 +1,28 @@
 package ch.vd.demaut.rest.services;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.UUID;
-
-import javax.ws.rs.core.Response;
-
+import ch.vd.demaut.domain.demandeur.Pays;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormationPostgradeProgres;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TypeDiplomeAccepte;
+import ch.vd.demaut.rest.services.impl.DiplomeRestImpl;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import ch.vd.demaut.domain.demandeur.Pays;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormationPostgradeProgres;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TypeDiplomeAccepte;
-import ch.vd.demaut.rest.services.impl.DiplomeRestImpl;
+import javax.ws.rs.core.Response;
+import java.util.UUID;
 
-@Ignore
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+@ContextConfiguration({"classpath*:restTest-context.xml"})
+@RunWith(SpringJUnit4ClassRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DiplomeRestImplTest {
 

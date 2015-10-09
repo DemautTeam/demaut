@@ -2,6 +2,7 @@ package ch.vd.demaut.domain.demandeur.donneesProf;
 
 import ch.vd.demaut.commons.annotations.Entity;
 import ch.vd.demaut.commons.entities.AbstractEntity;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ListeDesDiplomes;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ReferenceDeDiplome;
@@ -33,7 +34,10 @@ public class DonneesProfessionnelles extends AbstractEntity {
     }
 
     public void validerEtRensignerCodeGLN(CodeGLN codeGLNAAjouter) {
-        this.codeGLN = codeGLNAAjouter;
+        if(codeGLNAAjouter != null) {
+            new CodeGLNValidator().valider(codeGLNAAjouter);
+            this.codeGLN = codeGLNAAjouter;
+        }
     }
 
     public void supprimerUnDiplome(ReferenceDeDiplome referenceDeDiplome) {
@@ -46,6 +50,23 @@ public class DonneesProfessionnelles extends AbstractEntity {
 
     public ListeDesDiplomes getListeDesDiplomes() {
         return new ListeDesDiplomes(diplomes);
+    }
+
+    public List<Profession> getListeProfessionsCodeGLN() {
+        return new ArrayList<Profession>() {
+            {
+                add(Profession.Medecin);
+                add(Profession.MedecinDentiste);
+                add(Profession.Pharmacien);
+                add(Profession.Chiropraticien);
+                add(Profession.Infirmier);
+                add(Profession.Physiotherapeute);
+                add(Profession.Ergotherapeute);
+                add(Profession.SageFemme);
+                add(Profession.Dieteticien);
+                add(Profession.PsychotherapeuteNonMedecin);
+            }
+        };
     }
 
 }
