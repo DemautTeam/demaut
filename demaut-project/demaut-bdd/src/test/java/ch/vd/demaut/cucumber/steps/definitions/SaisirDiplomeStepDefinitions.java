@@ -2,7 +2,11 @@ package ch.vd.demaut.cucumber.steps.definitions;
 
 import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
 import ch.vd.demaut.cucumber.converteurs.diplomes.ListeDesFormationsConverter;
+import ch.vd.demaut.cucumber.converteurs.donneesperso.NationaliteConverter;
 import ch.vd.demaut.cucumber.steps.DonneesProfessionnellesSteps;
+import ch.vd.demaut.domain.demandeur.donneesPerso.Nationalite;
+import ch.vd.demaut.domain.demandeur.donneesPerso.Permis;
+import ch.vd.demaut.domain.demandeur.donneesPerso.TypePermis;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ListeDesFormations;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormation;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TypeDiplomeAccepte;
@@ -13,6 +17,7 @@ import cucumber.api.java.fr.Etantdonné;
 import cucumber.api.java.fr.Lorsque;
 import org.springframework.util.StringUtils;
 
+import javax.validation.constraints.AssertFalse;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -47,14 +52,14 @@ public class SaisirDiplomeStepDefinitions extends StepDefinitions {
         this.donneesProfessionnellesSteps.setTypeDiplomeAcceptes(typeDiplomeAcceptes);
     }
 
-    @Etantdonné("^l´utilisateur a déjà saisit un type de \"([^\"]*)\" dans la liste$")
+    @Etantdonné("^l´utilisateur a déjà saisi un type de \"([^\"]*)\" dans la liste$")
     public void l_utilisateur_a_deja_saisit_un_type_de_diplome_dans_la_liste(String diplome) throws Throwable {
         assertThat(diplome).isNotEmpty();
         this.donneesProfessionnellesSteps.setTypeDiplomeSelectionne(TypeDiplomeAccepte.valueOf(diplome));
 
     }
 
-    @Etantdonné("^l´utilisateur a déjà saisit le titre de formation \"([^\"]*)\"$")
+    @Etantdonné("^l´utilisateur a déjà saisi le titre de formation \"([^\"]*)\"$")
     public void l_utilisateur_a_deja_saisit_le_titre_de_formation_formation(String formation) throws Throwable {
         try {
             assertThat(formation).isNotEmpty();
@@ -64,13 +69,13 @@ public class SaisirDiplomeStepDefinitions extends StepDefinitions {
         }
     }
 
-    @Etantdonné("^l´utilisateur a déjà saisit la date d´obtention \"([^\"]*)\" du diplôme$")
+    @Etantdonné("^l´utilisateur a déjà saisi la date d´obtention \"([^\"]*)\" du diplôme$")
     public void l_utilisateur_a_deja_saisit_la_date_d_obtention_date_obtention_du_diplôme(String dateObtentionStr) throws Throwable {
         assertThat(dateObtentionStr).isNotEmpty();
         this.donneesProfessionnellesSteps.verifierEtRenseignerDateObtention(dateObtentionStr);
     }
 
-    @Etantdonné("^l´utilisateur a déjà saisit la date de reconnaissance \"([^\"]*)\" du diplôme \"([^\"]*)\"$")
+    @Etantdonné("^l´utilisateur a déjà saisi la date de reconnaissance \"([^\"]*)\" du diplôme \"([^\"]*)\"$")
     public void l_utilisateur_a_deja_saisit_la_date_d_reconnaissance_du_diplôme(String dateReconnaissanceStr, String etrangerCritere) throws Throwable {
         assertThat(etrangerCritere).isNotEmpty();
         if (!StringUtils.isEmpty(dateReconnaissanceStr)) {
@@ -79,7 +84,7 @@ public class SaisirDiplomeStepDefinitions extends StepDefinitions {
     }
 
 
-    @Etantdonné("^l´utilisateur a déjà saisit ou pas le complément de formation \"([^\"]*)\"$")
+    @Etantdonné("^l´utilisateur a déjà saisi ou pas le complément de formation \"([^\"]*)\"$")
     public void l_utilisateur_a_déjà_saisit_ou_pas_le_complément_de_formation_complement(String complement) throws Throwable {
         if (!StringUtils.isEmpty(complement)) {
             this.donneesProfessionnellesSteps.renseignerComplement(complement);
@@ -88,7 +93,7 @@ public class SaisirDiplomeStepDefinitions extends StepDefinitions {
 
     // ********************************************************* When
 
-    @Lorsque("^l´utilisateur selectionne un type de \"([^\"]*)\" dans la liste$")
+    @Lorsque("^l´utilisateur sélectionne un type de \"([^\"]*)\" dans la liste$")
     public void l_utilisateur_selectionne_un_type_de_diplome_dans_la_liste(TypeDiplomeAccepte typeDiplomeSelectionne) throws Throwable {
         assertThat(typeDiplomeSelectionne).isNotNull();
         assertThat(TypeDiplomeAccepte.values()).contains(typeDiplomeSelectionne);
@@ -101,7 +106,7 @@ public class SaisirDiplomeStepDefinitions extends StepDefinitions {
         this.donneesProfessionnellesSteps.verifierEtRenseignerDateObtention(dateObtention);
     }
 
-    @Lorsque("^l´utilisateur selectionne un type de formation obtenue à l´\"([^\"]*)\" dans la liste$")
+    @Lorsque("^l´utilisateur sélectionne un type de formation obtenue à l´\"([^\"]*)\" dans la liste$")
     public void l_utilisateur_selectionne_un_type_de_diplome_dans_la_liste(String etrangerCritere) throws Throwable {
         assertThat(etrangerCritere).isNotEmpty();
         this.donneesProfessionnellesSteps.setCritereDiplomeEtranger(etrangerCritere);

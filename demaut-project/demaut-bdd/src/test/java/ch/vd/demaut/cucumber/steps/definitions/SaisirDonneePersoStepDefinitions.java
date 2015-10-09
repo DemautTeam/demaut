@@ -1,14 +1,13 @@
 package ch.vd.demaut.cucumber.steps.definitions;
 
 import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
+import ch.vd.demaut.cucumber.converteurs.donneesperso.NationaliteConverter;
 import ch.vd.demaut.cucumber.converteurs.donneesperso.NomConverter;
 import ch.vd.demaut.cucumber.converteurs.donneesperso.PrenomConverter;
 import ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps;
 import ch.vd.demaut.cucumber.steps.DonneesPersonnellesSteps;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnelles;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Nom;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Prenom;
+import ch.vd.demaut.domain.demandeur.donneesPerso.*;
 import cucumber.api.Transform;
 import cucumber.api.java.fr.Alors;
 import cucumber.api.java.fr.Lorsque;
@@ -42,6 +41,10 @@ public class SaisirDonneePersoStepDefinitions extends StepDefinitions {
 
     // ********************************************************* Given
 
+    @Lorsque("^le demandeur saisit la nationalité \"([^\"]*)\" et le permis \"([^\"]*)\"$")
+    public void le_demandeur_saisi_la_et_le(@Transform(NationaliteConverter.class) Nationalite nationalité, TypePermis typePermis) throws Throwable {
+
+    }
 
     // ********************************************************* When
 

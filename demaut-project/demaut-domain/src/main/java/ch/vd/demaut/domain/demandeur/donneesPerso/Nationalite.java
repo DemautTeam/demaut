@@ -1,7 +1,9 @@
 package ch.vd.demaut.domain.demandeur.donneesPerso;
 
-/**
- * Created by mourad on 09.10.15.
- */
-public class Nationalite {
+import ch.vd.demaut.commons.vo.StringVO;
+
+public class Nationalite extends StringVO {
+    public Nationalite(String value) {
+        super(value);
+    }
 }

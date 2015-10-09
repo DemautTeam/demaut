@@ -33,7 +33,27 @@ public class DonneesPersonnellesSteps {
 
     //************************************************************
 
-    public void initDonneePersonnelles(Nom nom, Prenom prenom){
+    public void initDonneePersonnelles(Nom nom, Prenom prenom) {
+        Localite localite = new Localite("Lausanne");
+        NPA npa = new NPA("1000");
+        Pays pays = Pays.Suisse;
+        Adresse adresse = new Adresse("", "", localite, npa, pays);
+        Email email = new Email("john.doe@nobody.com");
+        Genre genre = Genre.Feminin;
+        DateDeNaissance dateDeNaissance = new DateDeNaissance(LocalDate.now());
+        NumeroTelephone numeroTelephone = new NumeroTelephone("022222222");
+        NumeroTelephone numeroMobile = new NumeroTelephone("07625225123");
+        NumeroTelephone numeroFax = new NumeroTelephone("023456789");
+        Nationalite nationalite = new Nationalite("Andorre");
+        TypePermis typePermis = TypePermis.B;
+
+
+        currentDonnees = new DonneesPersonnelles(nom, prenom, null, genre, dateDeNaissance, adresse, email, numeroTelephone, numeroMobile, numeroFax, nationalite, typePermis);
+    }
+
+    public void initDonneePersonnelles(Nationalite nationalite, TypePermis typePermis) {
+        Nom nom = new Nom("test nom");
+        Prenom prenom = new Prenom("Test prenom");
         Localite localite = new Localite("Lausanne");
         NPA npa = new NPA("1000");
         Pays pays = Pays.Suisse;
@@ -45,20 +65,19 @@ public class DonneesPersonnellesSteps {
         NumeroTelephone numeroMobile = new NumeroTelephone("07625225123");
         NumeroTelephone numeroFax = new NumeroTelephone("023456789");
 
-        currentDonnees = new DonneesPersonnelles(nom, prenom, null, genre, dateDeNaissance, adresse, email, numeroTelephone, numeroMobile, numeroFax);
+        currentDonnees = new DonneesPersonnelles(nom, prenom, null, genre, dateDeNaissance, adresse, email, numeroTelephone, numeroMobile, numeroFax, nationalite, typePermis);
     }
 
-    public AccepteOuRefuse getActionActuelle(){
+    public AccepteOuRefuse getActionActuelle() {
         return actionActuelle;
     }
 
-    public void attacheDonneesPersonellesALaDemandeDAutorisation(){
+    public void attacheDonneesPersonellesALaDemandeDAutorisation() {
         assertThat(currentDonnees).isNotNull();
         try {
             demandeAutorisationSteps.getDemandeEnCours().validerEtAttacherLesDonneesPersonnelles(currentDonnees);
             actionActuelle = accepte;
-        }
-        catch (DomainException e){
+        } catch (DomainException e) {
             actionActuelle = refuse;
         }
     }
