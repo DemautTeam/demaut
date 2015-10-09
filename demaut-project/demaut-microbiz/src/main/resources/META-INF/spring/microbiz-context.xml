@@ -34,7 +34,7 @@
             <ref local="activiteRestImpl"/>
         </cxf:serviceBeans>
         <cxf:providers>
-            <ref local="customeJacksonJaxbJsonProvider"/>
+            <ref local="customJacksonJaxbJsonProvider"/>
             <ref local="authenticationFilter"/>
             <ref local="corsFilter"/>
         </cxf:providers>
@@ -42,7 +42,7 @@
 
     <bean id="corsFilter" class="org.apache.cxf.rs.security.cors.CrossOriginResourceSharingFilter"/>
 
-    <bean id="customeJacksonJaxbJsonProvider" class="ch.vd.demaut.microbiz.provider.CustomJacksonJaxbJsonProvider"/>
+    <bean id="customJacksonJaxbJsonProvider" class="ch.vd.demaut.rest.providers.CustomJacksonJaxbJsonProvider"/>
 
     <bean id="authenticationFilter" class="ch.vd.demaut.microbiz.filter.CustomAuthenticationFilter">
         <property name="contextName" value="karaf"/>

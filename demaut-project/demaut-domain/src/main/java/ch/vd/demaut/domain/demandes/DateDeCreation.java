@@ -15,6 +15,7 @@ public class DateDeCreation extends BaseValueObject {
     // ********************************************************* Constructors
 
     public DateDeCreation() {
+        this.value = new Date();
     }
 
     public DateDeCreation(LocalDate value) {

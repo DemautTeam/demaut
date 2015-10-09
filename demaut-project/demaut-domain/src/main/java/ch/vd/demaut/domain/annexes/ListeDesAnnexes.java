@@ -107,7 +107,6 @@ public class ListeDesAnnexes {
         if (annexes.contains(annexe)) {
             throw new AnnexeNonUniqueException();
         }
-        ;
     }
 
 

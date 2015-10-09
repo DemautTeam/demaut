@@ -5,7 +5,6 @@ import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
-import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ContextConfiguration({"classpath*:/servicesTest-context.xml"})
 @ActiveProfiles({"data"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class DemandeAutorisationServiceTest extends TestCase {
+public class DemandeAutorisationServiceTest {
 
     // ********************************************************* Injected
     @Autowired

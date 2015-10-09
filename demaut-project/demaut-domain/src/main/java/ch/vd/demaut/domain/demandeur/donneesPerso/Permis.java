@@ -18,6 +18,11 @@ public class Permis extends BaseValueObject {
         this.autrePermis = new AutrePermis("");
     }
 
+    public Permis(AutrePermis autrePermis) {
+        this.typePermis = TypePermis.Autre;
+        this.autrePermis = autrePermis;
+    }
+
     public TypePermis getTypePermis() {
         return typePermis;
     }

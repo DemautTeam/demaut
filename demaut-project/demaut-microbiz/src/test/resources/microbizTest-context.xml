@@ -29,10 +29,10 @@
 
     <import resource="classpath:META-INF/spring/microbiz-context.xml"/>
 
-    <cxf:server address="${demaut.microbiz.progre.soa.endpoint}">
-        <cxf:serviceBeans>
-            <ref local="progreSoaServiceMock"/>
-        </cxf:serviceBeans>
-    </cxf:server>
+<!--     <cxf:server address="${demaut.progre.soa.endpoint}"> -->
+<!--         <cxf:serviceBeans> -->
+<!--             <ref local="progreSoaServiceMock"/> -->
+<!--         </cxf:serviceBeans> -->
+<!--     </cxf:server> -->
 
 </beans>

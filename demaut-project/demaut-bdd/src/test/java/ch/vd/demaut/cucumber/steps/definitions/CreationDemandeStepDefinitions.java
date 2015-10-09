@@ -44,6 +44,7 @@ public class CreationDemandeStepDefinitions extends StepDefinitions {
         getDemandeAutorisationSteps().initialiserDemandeEnCours(profession);
         getDemandeAutorisationSteps().enregistrerReferenceDemandeEnCours(refDemande);
     }
+
     // ********************************************************* When
     @Lorsque("^l´utilisateur initialise une demande de profession \"([^\"]*)\"$")
     public void lutilisateur_initialise_une_demande_de_profession(Profession profession) throws Throwable {

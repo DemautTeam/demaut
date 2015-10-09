@@ -131,7 +131,7 @@
         </div>
         <div ng-show="diplomeData.diplomes.length > 0">
             <legend>Formations et titres :</legend>
-            <div style="overflow: auto;height: 460px;">
+            <div style="overflow: auto;">
                 <table class="table table-striped">
                     <thead>
                     <tr bgcolor="#99CC00">
@@ -143,19 +143,19 @@
                         <th></th>
                     </tr>
                     </thead>
-                    <tr ng-repeat="diplome in diplomeData.diplomes">
+                    <tr ng-repeat="diplome in diplomeData.diplomes | orderBy:'-dateObtention'">
                         <td>{{diplome.typeDiplome.libl}}</td>
                         <td>
                             {{diplome.typeFormation.libl}}
                         </td>
                         <td>
-                            {{diplome.dateObtention}}
+                            {{diplome.dateObtention | date:'dd.MM.yyyy'}}
                         </td>
                         <td>
                             {{diplome.paysObtention.libl}}
                         </td>
                         <td>
-                            {{diplome.dateReconnaissance}}
+                            {{diplome.dateReconnaissance | date:'dd.MM.yyyy'}}
                         </td>
                         <td>
                             <a href="" ng-click="editDiplome(diplome)" class="btn btn-xs btn-default">

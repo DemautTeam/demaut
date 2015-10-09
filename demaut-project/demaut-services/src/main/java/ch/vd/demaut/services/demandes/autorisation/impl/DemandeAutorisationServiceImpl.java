@@ -9,7 +9,6 @@ import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationReposit
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.exception.ReferenceDemandeNotFoundException;
 import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.domain.utilisateurs.UtilisateurService;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,9 +20,6 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
 
     @Autowired
     private DemandeAutorisationFactory demandeAutorisationFactory;
-
-    @Autowired
-    private UtilisateurService utilisateurService;
 
     @Transactional
     @Override

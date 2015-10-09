@@ -9,7 +9,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>demaut-data-jpa</artifactId>
-    <name>Demaut-data-jpa</name>
+    <name>demaut-data-jpa</name>
     <description>Demaut Data Module</description>
     <packaging>jar</packaging>
 
@@ -79,34 +79,6 @@
         <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
-        </dependency>
-
-        <!-- validation -->
-        <dependency>
-            <groupId>javax.el</groupId>
-            <artifactId>javax.el-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>javax.el</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator-cdi</artifactId>
-        </dependency>
-
-        <!-- Utilities -->
-        <dependency>
-            <groupId>javax.inject</groupId>
-            <artifactId>javax.inject</artifactId>
         </dependency>
 
         <!-- Testing -->
