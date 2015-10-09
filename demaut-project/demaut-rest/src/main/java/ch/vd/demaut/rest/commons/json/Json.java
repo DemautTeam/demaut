@@ -1,10 +1,10 @@
 package ch.vd.demaut.rest.commons.json;
 
-import java.io.InputStream;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import java.io.InputStream;
 
 public class Json {
     private static final ObjectMapper defaultObjectMapper = new ObjectMapper();

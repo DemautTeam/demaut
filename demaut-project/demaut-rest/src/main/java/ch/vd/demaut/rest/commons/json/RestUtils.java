@@ -1,20 +1,17 @@
 package ch.vd.demaut.rest.commons.json;
 
-import java.util.Collection;
-
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.Response;
-
-import org.apache.cxf.common.util.StringUtils;
-
+import ch.vd.demaut.domain.exception.UtilisateurNotFoundException;
+import ch.vd.demaut.rest.json.converters.TypeProgresJsonSerializer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.apache.cxf.common.util.StringUtils;
 
-import ch.vd.demaut.domain.exception.UtilisateurNotFoundException;
-import ch.vd.demaut.rest.json.converters.TypeProgresJsonSerializer;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.Response;
+import java.util.Collection;
 
 public final class RestUtils {
 
