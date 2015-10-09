@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ctx="http://www.springframework.org/schema/context"
+	xmlns:camel="http://camel.apache.org/schema/spring" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:cxf="http://cxf.apache.org/jaxrs"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://camel.apache.org/schema/spring
+       http://camel.apache.org/schema/spring/camel-spring.xsd
+       http://www.springframework.org/schema/jdbc
+		http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util.xsd
+		http://cxf.apache.org/jaxrs
+		http://cxf.apache.org/schemas/jaxrs.xsd">
+
+    <ctx:property-placeholder properties-ref="props"/>
+
+    <cxf:server address="${demaut.microbiz.service.endpoint}">
+        <cxf:serviceBeans>
+            <ref local="annexeRestImpl"/>
+            <ref local="professionRestImpl"/>
+            <ref local="demandeRestImpl"/>
+            <ref local="diplomeRestImpl"/>
+            <ref local="personelRestImpl"/>
+            <ref local="activiteRestImpl"/>
+        </cxf:serviceBeans>
+        <cxf:providers>
+            <ref local="customJacksonJaxbJsonProvider"/>
+            <ref local="authenticationFilter"/>
+            <ref local="corsFilter"/>
+        </cxf:providers>
+    </cxf:server>
+
+    <bean id="corsFilter" class="org.apache.cxf.rs.security.cors.CrossOriginResourceSharingFilter"/>
+
+    <bean id="customJacksonJaxbJsonProvider" class="ch.vd.demaut.rest.providers.CustomJacksonJaxbJsonProvider"/>
+
+    <bean id="authenticationFilter" class="ch.vd.demaut.microbiz.filter.CustomAuthenticationFilter">
+        <property name="contextName" value="karaf"/>
+        <property name="realmName" value="demautMicrobiz"/>
+        <property name="active" value="${demaut.microbiz.security.active}"/>
+    </bean>
+
+    <import resource="classpath:META-INF/spring/jpa-context.xml"/>
+    
+    <import resource="classpath:META-INF/spring/services-context.xml"/>
+
+</beans>

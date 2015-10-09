@@ -12,6 +12,37 @@
     <packaging>war</packaging>
     <description>Maven Module pour construire un WAR déployable sur Tomcat/Jetty</description>
 
+    <dependencies>
+        <!-- Demaut -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>demaut-commons</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>demaut-domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>demaut-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>demaut-services</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>demaut-rest</artifactId>
+        </dependency>
+
+        <!-- Demaut test -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>demaut-commons4test</artifactId>
+        </dependency>
+
+    </dependencies>
+
     <build>
         <finalName>demaut-webapp</finalName>
     </build>
