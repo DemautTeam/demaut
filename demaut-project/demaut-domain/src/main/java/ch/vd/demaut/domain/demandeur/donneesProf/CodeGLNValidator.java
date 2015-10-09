@@ -2,7 +2,6 @@ package ch.vd.demaut.domain.demandeur.donneesProf;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.validation.AbstractDataValidateur;
-import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.exception.CodeGLNNonValideException;
 import org.apache.commons.lang3.StringUtils;
 
