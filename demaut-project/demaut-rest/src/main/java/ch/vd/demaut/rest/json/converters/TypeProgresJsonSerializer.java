@@ -1,12 +1,11 @@
 package ch.vd.demaut.rest.json.converters;
 
-import java.io.IOException;
-
+import ch.vd.demaut.domain.config.TypeProgres;
+import ch.vd.demaut.rest.commons.json.EnumJsonSerializer;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import ch.vd.demaut.domain.config.TypeProgres;
-import ch.vd.demaut.rest.commons.json.EnumJsonSerializer;
+import java.io.IOException;
 
 public class TypeProgresJsonSerializer extends EnumJsonSerializer<TypeProgres> {
 

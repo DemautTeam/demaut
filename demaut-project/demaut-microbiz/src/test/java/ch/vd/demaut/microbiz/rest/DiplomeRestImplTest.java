@@ -4,7 +4,6 @@ import ch.vd.demaut.domain.demandeur.Pays;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormationPostgradeProgres;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TypeDiplomeAccepte;
 import ch.vd.demaut.rest.services.impl.DiplomeRestImpl;
-
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.FixMethodOrder;

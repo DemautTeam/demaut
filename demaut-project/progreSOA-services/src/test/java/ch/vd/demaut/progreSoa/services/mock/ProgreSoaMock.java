@@ -1,9 +1,8 @@
 package ch.vd.demaut.progreSoa.services.mock;
 
+import ch.vd.demaut.progreSoa.services.impl.ProgreSoaServiceImpl;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
-
-import ch.vd.demaut.progreSoa.services.impl.ProgreSoaServiceImpl;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

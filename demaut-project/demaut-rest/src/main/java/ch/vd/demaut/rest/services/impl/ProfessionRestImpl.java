@@ -1,21 +1,10 @@
 package ch.vd.demaut.rest.services.impl;
 
-import java.util.Arrays;
-import java.util.List;
-
-import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.progreSoa.services.ProgreSoaService;
+import ch.vd.demaut.rest.commons.json.RestUtils;
 import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
 import ch.vd.ses.referentiel.demaut_1_0.VcType;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
@@ -26,8 +15,13 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import ch.vd.demaut.progreSoa.services.ProgreSoaService;
-import ch.vd.demaut.rest.commons.json.RestUtils;
+import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.*;
+import java.util.Arrays;
+import java.util.List;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
 @Service("professionRestImpl")
@@ -39,7 +33,7 @@ public class ProfessionRestImpl {
 
     @Autowired
     private ProgreSoaService progreSoaService;
-    
+
     @Autowired
     private DonneesProfessionnellesService donneesProfessionnellesService;
 

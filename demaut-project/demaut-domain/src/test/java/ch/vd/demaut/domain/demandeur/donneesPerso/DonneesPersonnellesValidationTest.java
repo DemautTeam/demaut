@@ -24,6 +24,7 @@ public class DonneesPersonnellesValidationTest extends AbstractValidationTest<Do
     private NumeroTelephone numeroTelephone;
     private NumeroTelephone numeroMobile;
     private NumeroTelephone numeroFax;
+    private Pays nationalite;
 
     @Before
     public void init() {
@@ -40,9 +41,10 @@ public class DonneesPersonnellesValidationTest extends AbstractValidationTest<Do
         numeroTelephone = new NumeroTelephone("022222222");
         numeroMobile = new NumeroTelephone("07625225123");
         numeroFax = new NumeroTelephone("023456789");
+        nationalite = Pays.Suisse;
 
-        donneesPersonnellesValides = new DonneesPersonnelles(nomValide, prenomValide, null, genreValide, dateDeNaissance, adresseValide, emailValide, numeroTelephone, numeroMobile, numeroFax);
-        donneesPersonnellesInvalideNom = new DonneesPersonnelles(nomInvalide, prenomValide, null, genreValide, dateDeNaissance, adresseValide, emailValide, numeroTelephone, numeroMobile, numeroFax);
+        donneesPersonnellesValides = new DonneesPersonnelles(nomValide, prenomValide, null, genreValide, dateDeNaissance, adresseValide, nationalite, emailValide, numeroTelephone, numeroMobile, numeroFax);
+        donneesPersonnellesInvalideNom = new DonneesPersonnelles(nomInvalide, prenomValide, null, genreValide, dateDeNaissance, adresseValide, nationalite, emailValide, numeroTelephone, numeroMobile, numeroFax);
     }
 
     @Test

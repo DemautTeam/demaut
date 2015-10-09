@@ -1,13 +1,5 @@
 package ch.vd.demaut.cucumber.steps.definitions;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-import java.util.Map;
-
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
-
 import ch.vd.demaut.commons.utils.FileMockHelper;
 import ch.vd.demaut.cucumber.converteurs.annexes.ListeDesAnnexesConverter;
 import ch.vd.demaut.cucumber.converteurs.annexes.NomFichierConverter;
@@ -15,14 +7,7 @@ import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
 import ch.vd.demaut.cucumber.converteurs.demandes.ReferenceDeDemandeConverter;
 import ch.vd.demaut.cucumber.steps.AnnexesSteps;
 import ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps;
-import ch.vd.demaut.domain.annexes.Annexe;
-import ch.vd.demaut.domain.annexes.AnnexeFK;
-import ch.vd.demaut.domain.annexes.AnnexeValidateur;
-import ch.vd.demaut.domain.annexes.ContenuAnnexe;
-import ch.vd.demaut.domain.annexes.FormatFichierAccepte;
-import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
-import ch.vd.demaut.domain.annexes.NomFichier;
-import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.domain.annexes.*;
 import ch.vd.demaut.domain.demandes.DateDeCreation;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
@@ -31,6 +16,14 @@ import cucumber.api.Transform;
 import cucumber.api.java.fr.Alors;
 import cucumber.api.java.fr.Etantdonné;
 import cucumber.api.java.fr.Lorsque;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Step definitions pour la fonctionnalité "@annexes"
@@ -111,6 +104,15 @@ public class AnnexesStepDefinitions extends StepDefinitions {
     @Alors("^le système Demaut \"(accepte|refuse)\" (?:d´attacher|de supprimer) cette annexe$")
     public void le_système_Demaut_accepte_ou_refuse_cette_annexe(AccepteOuRefuse action) throws Throwable {
         annexesSteps.verifieAcceptationAnnexe(action);
+    }
+
+    @Alors("^les annexes attachées à la demande sont \"([^\"]*)\"$")
+    public void le_système_Demaut_annexe_le_fichier_à_la_demande(
+            @Transform(ListeDesAnnexesConverter.class) ListeDesAnnexes listeDesAnnexesAttendues) throws Throwable {
+        DemandeAutorisation demandeEnCours = getDemandeAutorisationSteps().getDemandeEnCours();
+        Collection<Annexe> annexesDemandeEnCours = demandeEnCours.listerLesAnnexes();
+        Collection<Annexe> annexesAttendues = listeDesAnnexesAttendues.listerAnnexes();
+        assertThat(annexesDemandeEnCours).hasSameSizeAs(annexesAttendues);
     }
 
     @Alors("^les annexes attachées à la demande \"([^\"]*)\" sont:$")

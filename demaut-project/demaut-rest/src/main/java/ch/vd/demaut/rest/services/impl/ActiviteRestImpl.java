@@ -2,7 +2,6 @@ package ch.vd.demaut.rest.services.impl;
 
 import ch.vd.demaut.domain.demandeur.Pays;
 import ch.vd.demaut.rest.commons.json.RestUtils;
-
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

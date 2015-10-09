@@ -204,14 +204,46 @@ ngDemautApp
 
             $scope.nextStep = function () {
                 $scope.wouldStepNext = true;
+
                 if ($scope.donneesPerso.donneesPersoDataForm.$valid) {
                     $log.info('Formulaire valide !');
+                    doCreateDonneesPerso();
                     $scope.indexStep += 1;
                     $location.path('/Demaut/demande/donneesDiplomes');
                 }
                 else {
                     $log.info('Formulaire invalide !');
                 }
+            };
+
+            function doCreateDonneesPerso() {
+                $http.get(urlPrefix + '/personal/ajouter', {
+                    params: {
+                        nom: $scope.personalData.nom,
+                        prenom: $scopepersonalData.prenom,
+                        nomDeCelibataire: $scope.personalData.nomDeCelibataire,
+                        adressePersonnelle: $scope.personalData.adressePersonnelle,
+                        localite: $scope.localite,
+                        npa: $scope.personalData.npa,
+                        pays: $scope.personalData.pays.id,
+                        telephonePrive: $scope.personalData.telephonePrive,
+                        telephoneMobile: $scope.personalData.telephoneMobile,
+                        email: $scope.personalData.email,
+                        fax: $scope.personalData.fax,
+                        gender: $scope.personalData.gender,
+                        dateDeNaissance: $scope.personalData.dateDeNaissance,
+                        nationalite: $scope.personalData.nationalite.id,
+                        langue: $scope.personalData.langue,
+                        permis: $scope.personalData.permis,
+                        permisOther: $scope.personalData.permisOther
+                    }
+                })
+                    .success(function (data, status, headers, config) {
+                        $log.info('Une donnée personnelle a été crée avec succès!');
+                    })
+                    .error(function (data, status, headers, config) {
+                        $rootScope.error = 'Error ' + urlPrefix + '/personal/ajouter/ \n Status :' + status;
+                    });
             };
         }])
     .controller('DonneesDiplomesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$log', 'nationalityTest',
@@ -364,7 +396,7 @@ ngDemautApp
                         complement: targetDiplome.complement,
                         dateObtention: targetDiplome.dateObtention,
                         paysObtention: targetDiplome.paysObtention.id,
-                        dateReconnaissance: targetDiplome.dateReconnaissance == null || targetDiplome.dateReconnaissance == undefined || targetDiplome.dateReconnaissance == '' ? '-' : targetDiplome.dateReconnaissance
+                        dateReconnaissance: targetDiplome.dateReconnaissance != undefined ? targetDiplome.dateReconnaissance : null
                     }
                 })
                     .success(function (data, status, headers, config) {

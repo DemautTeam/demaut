@@ -1,10 +1,8 @@
 package ch.vd.demaut.progreSoa.services.test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-
-import java.util.List;
-
+import ch.vd.demaut.progreSoa.services.ProgreSoaService;
+import ch.vd.ses.referentiel.demaut_1_0.RefRoot;
+import ch.vd.ses.referentiel.tiers_v01.ReportedOrganisationType;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
@@ -15,9 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import ch.vd.demaut.progreSoa.services.ProgreSoaService;
-import ch.vd.ses.referentiel.demaut_1_0.RefRoot;
-import ch.vd.ses.referentiel.tiers_v01.ReportedOrganisationType;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
 
 @Ignore("TODO: remove me")
 @ContextConfiguration({"classpath*:progreSOA-context-test.xml"})

@@ -35,8 +35,8 @@ import java.util.List;
 @Path("/diplomes")
 public class DiplomeRestImpl {
 
+    public static final DateTimeFormatter SHORT_DATE_PARSER = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     private static final Logger LOGGER = LoggerFactory.getLogger(DiplomeRestImpl.class);
-
     @Autowired
     private ProgreSoaService progreSoaService;
 
@@ -48,8 +48,6 @@ public class DiplomeRestImpl {
 
     @Context
     private HttpHeaders httpHeaders;
-
-    private DateTimeFormatter SHORT_DATE_PARSER = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
     @GET
     @Path("/typeDiplomesList")

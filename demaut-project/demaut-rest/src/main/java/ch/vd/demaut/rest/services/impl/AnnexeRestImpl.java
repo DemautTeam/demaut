@@ -1,25 +1,9 @@
 package ch.vd.demaut.rest.services.impl;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-
-import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-
+import ch.vd.demaut.domain.annexes.*;
 import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.progreSoa.services.ProgreSoaService;
+import ch.vd.demaut.rest.commons.json.RestUtils;
 import ch.vd.demaut.services.annexes.AnnexesService;
 import ch.vd.ses.referentiel.demaut_1_0.VcType;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -32,13 +16,14 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import ch.vd.demaut.domain.annexes.AnnexeFK;
-import ch.vd.demaut.domain.annexes.AnnexeMetadata;
-import ch.vd.demaut.domain.annexes.ContenuAnnexe;
-import ch.vd.demaut.domain.annexes.NomFichier;
-import ch.vd.demaut.domain.annexes.TypeAnnexe;
-import ch.vd.demaut.progreSoa.services.ProgreSoaService;
-import ch.vd.demaut.rest.commons.json.RestUtils;
+import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.*;
+import javax.ws.rs.core.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
 @Service("annexeRestImpl")

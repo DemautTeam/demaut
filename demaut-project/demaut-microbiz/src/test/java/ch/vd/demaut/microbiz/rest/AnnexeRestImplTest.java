@@ -39,8 +39,6 @@ public class AnnexeRestImplTest {
     @Autowired
     private DemandeAutorisationService demandeAutorisationService;
 
-    private ReferenceDeDemande referenceDeDemande;
-
     private byte[] byteArray;
 
     @Before
@@ -54,7 +52,7 @@ public class AnnexeRestImplTest {
         assertNotNull(annexeRest);
 
         DemandeAutorisation demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null, login);
-        referenceDeDemande = demandeEnCours.getReferenceDeDemande();
+        ReferenceDeDemande referenceDeDemande = demandeEnCours.getReferenceDeDemande();
         assertNotNull(referenceDeDemande);
         Annexe annexe = new Annexe(TypeAnnexe.CV, "Test_multipart.pdf", byteArray, "01.01.2015 11:00");
         demandeEnCours.validerEtAttacherAnnexe(annexe);
@@ -76,7 +74,7 @@ public class AnnexeRestImplTest {
     @Ignore("Should mock @Context HttpHeaders demaut-user-id")
     @Test
     public void testAfficherUneAnnexeInvalid() throws Exception {
-        Response response = annexeRest.afficherUneAnnexe("Test_multipart.pdf", "-1");
+        Response response = annexeRest.afficherUneAnnexe("Test_multipart.pdf", "1");
         assertNotNull(response);
     }
 

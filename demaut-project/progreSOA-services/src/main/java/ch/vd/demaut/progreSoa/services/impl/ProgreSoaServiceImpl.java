@@ -1,24 +1,22 @@
 package ch.vd.demaut.progreSoa.services.impl;
 
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
+import ch.vd.demaut.progreSoa.services.ProgreSoaService;
+import ch.vd.ses.referentiel.demaut_1_0.RefRoot;
+import ch.vd.ses.referentiel.tiers_v01.ReportedOrganisationType;
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
-
-import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-
-import ch.vd.demaut.progreSoa.services.ProgreSoaService;
-import ch.vd.ses.referentiel.demaut_1_0.RefRoot;
-import ch.vd.ses.referentiel.tiers_v01.ReportedOrganisationType;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
 
 @Service("progreSoaService")
 public class ProgreSoaServiceImpl implements ProgreSoaService {

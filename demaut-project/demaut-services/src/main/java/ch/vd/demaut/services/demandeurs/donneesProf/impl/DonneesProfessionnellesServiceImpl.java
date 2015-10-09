@@ -2,6 +2,8 @@ package ch.vd.demaut.services.demandeurs.donneesProf.impl;
 
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.domain.demandeur.Pays;
+import ch.vd.demaut.domain.demandeur.donneesPerso.*;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnellesNotFoundException;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.*;
@@ -48,5 +50,15 @@ public class DonneesProfessionnellesServiceImpl implements DonneesProfessionnell
     public void supprimerUnDiplome(Login login, ReferenceDeDiplome referenceDeDiplome) {
         DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
         demandeAutorisation.getDonneesProfessionnelles().supprimerUnDiplome(referenceDeDiplome);
+    }
+
+    @Override
+    public void renseignerLesDonneesPersonnelles(Login login, Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Localite localite, NPA npa,
+                                                 Pays pays, Adresse adresse, Email email, NumeroTelephone telephonePrive, NumeroTelephone telephoneMobile,
+                                                 NumeroTelephone fax, Genre genre, DateDeNaissance dateDeNaissance, Pays nationalite, Langue langue, Permis permis) {
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+        // TODO
+        // demandeAutorisation.getDonneesPersonnelles().renseignerLesDonneesPersonnelles(login, nom, prenom, nomDeCelibataire, localite, npa, pays, adresse, email,
+        // telephonePrive, telephoneMobile, fax, genre, dateDeNaissance, nationalite, langue, permis);
     }
 }
