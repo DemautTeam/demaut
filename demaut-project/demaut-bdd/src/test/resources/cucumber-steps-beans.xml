@@ -21,6 +21,12 @@
 
     <bean id="annexesSteps" class="ch.vd.demaut.cucumber.steps.AnnexesSteps"
         scope="cucumber-glue">
+        <property name="demandeAutorisationSteps" ref="demandeAutorisationSteps"/>
+    </bean>
+
+    <bean id="donneesPersonnellesSteps" class="ch.vd.demaut.cucumber.steps.DonneesPersonnellesSteps"
+          scope="cucumber-glue">
+        <property name="demandeAutorisationSteps" ref="demandeAutorisationSteps"/>
     </bean>
 
     <bean id="donneesProfessionnellesSteps"
@@ -61,5 +67,12 @@
         scope="cucumber-glue">
         <property name="donneesProfessionnellesSteps" ref="donneesProfessionnellesSteps"/>
     </bean>
+
+    <bean
+    class="ch.vd.demaut.cucumber.steps.definitions.SaisirDonneePersoStepDefinitions"
+    scope="cucumber-glue">
+        <property name="demandeAutorisationSteps" ref="demandeAutorisationSteps"/>
+        <property name="donneesPersonnellesSteps" ref="donneesPersonnellesSteps"/>
+</bean>
 
 </beans>
