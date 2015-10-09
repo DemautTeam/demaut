@@ -36,6 +36,11 @@ public class DonneesPersonnelles extends AbstractEntity {
 
     final private NumeroTelephone fax;
 
+    final private Nationalite nationalite;
+
+    @NotNull
+    final private TypePermis typePermis;
+
 
     // ********************************************************* Constructor
 
@@ -51,10 +56,12 @@ public class DonneesPersonnelles extends AbstractEntity {
         this.telephonePrive = null;
         this.telephoneMobile = null;
         this.fax = null;
+        nationalite = null;
+        typePermis = TypePermis.Aucun;
     }
 
     //TODO: A supprimer
-    public DonneesPersonnelles(Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Genre genre, DateDeNaissance dateDeNaissance, Adresse adresse, Email email, NumeroTelephone telephonePrive, NumeroTelephone telephoneMobile, NumeroTelephone fax) {
+    public DonneesPersonnelles(Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Genre genre, DateDeNaissance dateDeNaissance, Adresse adresse, Email email, NumeroTelephone telephonePrive, NumeroTelephone telephoneMobile, NumeroTelephone fax, Nationalite nationalite, TypePermis typePermis) {
         super();
         this.nom = nom;
         this.prenom = prenom;
@@ -66,6 +73,8 @@ public class DonneesPersonnelles extends AbstractEntity {
         this.telephonePrive = telephonePrive;
         this.telephoneMobile = telephoneMobile;
         this.fax = fax;
+        this.nationalite = nationalite;
+        this.typePermis = typePermis;
     }
 
     // ********************************************************* Getters
@@ -107,5 +116,13 @@ public class DonneesPersonnelles extends AbstractEntity {
 
     public NumeroTelephone getFax() {
         return fax;
+    }
+
+    public Nationalite getNationalite() {
+        return nationalite;
+    }
+
+    public TypePermis getTypePermis() {
+        return typePermis;
     }
 }
