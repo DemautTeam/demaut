@@ -93,7 +93,7 @@ public class ProfessionRestImpl {
         LOGGER.info("listerLesProfessionsCodeGLN " + login.getValue());
 
         DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService.recupererDonneesProfessionnelles(login);
-        return RestUtils.buildRef(donneesProfessionnelles.getListeProfessionsCodeGLN());
+        return RestUtils.buildRef(donneesProfessionnelles.listerProfessionsExigeantCodeGLN());
     }
 
     @GET

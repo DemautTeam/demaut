@@ -1,14 +1,16 @@
 package ch.vd.demaut.domain.demandeur.donneesProf;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.validation.Valid;
+
 import ch.vd.demaut.commons.annotations.Entity;
 import ch.vd.demaut.commons.entities.AbstractEntity;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ListeDesDiplomes;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ReferenceDeDiplome;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class DonneesProfessionnelles extends AbstractEntity {
@@ -23,7 +25,7 @@ public class DonneesProfessionnelles extends AbstractEntity {
         this.diplomes = new ArrayList<>();
     }
 
-    //TODO: A virer
+    // TODO: A virer
     public DonneesProfessionnelles(CodeGLN codeGLN, List<Diplome> diplomes) {
         this.codeGLN = codeGLN;
         this.diplomes = diplomes;
@@ -33,11 +35,9 @@ public class DonneesProfessionnelles extends AbstractEntity {
         getListeDesDiplomes().ajouterUnDiplome(diplomeAAjouter);
     }
 
-    public void validerEtRensignerCodeGLN(CodeGLN codeGLNAAjouter) {
-        if (codeGLNAAjouter != null) {
-            new CodeGLNValidator().valider(codeGLNAAjouter);
-            this.codeGLN = codeGLNAAjouter;
-        }
+    public void validerEtRenseignerCodeGLN(CodeGLN codeGLNAAjouter) {
+        new CodeGLNValidator().valider(codeGLNAAjouter);
+        this.codeGLN = codeGLNAAjouter;
     }
 
     public void supprimerUnDiplome(ReferenceDeDiplome referenceDeDiplome) {
@@ -52,7 +52,12 @@ public class DonneesProfessionnelles extends AbstractEntity {
         return new ListeDesDiplomes(diplomes);
     }
 
-    public List<Profession> getListeProfessionsCodeGLN() {
+    /**
+     * Liste des professions exigeant un code GLN
+     * 
+     * @return
+     */
+    public List<Profession> listerProfessionsExigeantCodeGLN() {
         return new ArrayList<Profession>() {
             {
                 add(Profession.Medecin);

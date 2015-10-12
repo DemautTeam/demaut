@@ -26,7 +26,7 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
     @Override
     public DemandeAutorisation initialiserDemandeAutorisation(Profession profession, CodeGLN codeGLN, Login login) {
         DemandeAutorisation demandeAutorisation = demandeAutorisationFactory.initierDemandeAutorisation(login, profession);
-        demandeAutorisation.getDonneesProfessionnelles().validerEtRensignerCodeGLN(codeGLN);
+        demandeAutorisation.getDonneesProfessionnelles().validerEtRenseignerCodeGLN(codeGLN);
         demandeAutorisationRepository.store(demandeAutorisation);
         return demandeAutorisation;
     }
