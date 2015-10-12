@@ -34,7 +34,7 @@ public class DonneesProfessionnelles extends AbstractEntity {
     }
 
     public void validerEtRensignerCodeGLN(CodeGLN codeGLNAAjouter) {
-        if (codeGLNAAjouter != null) {
+        if(codeGLNAAjouter != null) {
             new CodeGLNValidator().valider(codeGLNAAjouter);
             this.codeGLN = codeGLNAAjouter;
         }

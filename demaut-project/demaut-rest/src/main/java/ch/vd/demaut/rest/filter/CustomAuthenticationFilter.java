@@ -5,7 +5,7 @@ import org.apache.cxf.jaxrs.security.JAASAuthenticationFilter;
 import javax.ws.rs.container.ContainerRequestContext;
 
 /**
- * Permet de désactiver le filtre authentication
+ * Permet de désactiver le filtre authentication 
  * TODO: Penser à l'activer en UAT(QUALITE) / INTG / PROD
  */
 public class CustomAuthenticationFilter extends JAASAuthenticationFilter {
