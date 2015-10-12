@@ -4,7 +4,7 @@ import ch.vd.demaut.domain.demandeur.Pays;
 import ch.vd.demaut.domain.demandeur.donneesPerso.*;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.rest.commons.json.RestUtils;
-import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
+import ch.vd.demaut.services.demandeurs.donneesPerso.DonneesPersonnellesService;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +21,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.*;
 import java.util.Arrays;
-import java.util.List;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
 @Service("personelRestImpl")
@@ -32,7 +31,7 @@ public class PersonelRestImpl {
     private static final Logger LOGGER = LoggerFactory.getLogger(PersonelRestImpl.class);
 
     @Autowired
-    private DonneesProfessionnellesService donneesProfessionnellesService;
+    private DonneesPersonnellesService donneesPersonnellesService;
 
     @Context
     private UriInfo uriInfo;
@@ -48,15 +47,7 @@ public class PersonelRestImpl {
 
         LOGGER.info("listerLesNationalites");
 
-        // Altrenative:
-        List<Pays> paysList = buildListePaysSansProgresSOA();
-        // Autre altrenative:
-        //List<VcType> paysList = buildListePaysAvecProgresSOA(uriInfo);
-        return RestUtils.buildRef(paysList);
-    }
-
-    private List<Pays> buildListePaysSansProgresSOA() {
-        return Arrays.asList(Pays.values());
+        return RestUtils.buildRef(Arrays.asList(Pays.values()));
     }
 
     @GET
@@ -67,15 +58,7 @@ public class PersonelRestImpl {
 
         LOGGER.info("listerLesLangues");
 
-        // Altrenative:
-        List<Langue> paysList = buildListeLangueSansProgresSOA();
-        // Autre altrenative:
-        //List<VcType> paysList = buildListeLangueAvecProgresSOA(uriInfo);
-        return RestUtils.buildRef(paysList);
-    }
-
-    private List<Langue> buildListeLangueSansProgresSOA() {
-        return Arrays.asList(Langue.values());
+        return RestUtils.buildRef(Arrays.asList(Langue.values()));
     }
 
     /**
@@ -136,7 +119,7 @@ public class PersonelRestImpl {
             }
         }
 
-        donneesProfessionnellesService.renseignerLesDonneesPersonnelles(login, nom, prenom, nomDeCelibataire, localite, npa, pays, adresse, email,
+        donneesPersonnellesService.renseignerLesDonneesPersonnelles(login, nom, prenom, nomDeCelibataire, adresse, email,
                 telephonePrive, telephoneMobile, fax, genre, dateDeNaissance, nationalite, langue, permis);
 
         return RestUtils.buildJSon(Arrays.asList(true));

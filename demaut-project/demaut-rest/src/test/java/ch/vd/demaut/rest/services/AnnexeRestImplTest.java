@@ -27,7 +27,7 @@ import java.io.FileInputStream;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-@Ignore("Unable to instantiate Configuration ValidationException")
+@Ignore("TODO Should mock @Context HttpHeaders demaut-user-id")
 @ContextConfiguration({"classpath*:restTest-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -43,7 +43,7 @@ public class AnnexeRestImplTest {
 
     @Before
     public void setUp() throws Exception {
-        byteArray = IOUtils.toByteArray(new FileInputStream("src/test/resources/demautMicrobizTest.cfg"));
+        byteArray = IOUtils.toByteArray(new FileInputStream("src/test/resources/demautRestTest.cfg"));
 
         Profession profession = Profession.Medecin;
         Login login = new Login("admin@admin");
@@ -64,21 +64,18 @@ public class AnnexeRestImplTest {
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
-    @Ignore("Should mock @Context HttpHeaders demaut-user-id")
     @Test
     public void testListerLesAnnexes() throws Exception {
         Response response = annexeRest.listerLesAnnexes();
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
-    @Ignore("Should mock @Context HttpHeaders demaut-user-id")
     @Test
     public void testAfficherUneAnnexeInvalid() throws Exception {
         Response response = annexeRest.afficherUneAnnexe("Test_multipart.pdf", "1");
         assertNotNull(response);
     }
 
-    @Ignore("Should mock @Context HttpHeaders demaut-user-id")
     @Test
     public void testAttacherUneAnnexe() throws Exception {
         File fileMultipart = new File("target/Test_multipart.cfg");
@@ -89,7 +86,6 @@ public class AnnexeRestImplTest {
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
-    @Ignore("Should mock @Context HttpHeaders demaut-user-id")
     @Test
     public void testSupprimerAnnexe() throws Exception {
         Response response = annexeRest.supprimerUneAnnexe("Test_multipart.pdf",

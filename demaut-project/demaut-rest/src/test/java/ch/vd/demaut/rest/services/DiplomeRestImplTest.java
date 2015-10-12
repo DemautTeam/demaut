@@ -21,7 +21,7 @@ import java.util.UUID;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-@Ignore
+@Ignore("TODO Should mock @Context HttpHeaders demaut-user-id")
 @ContextConfiguration({"classpath*:restTest-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -55,7 +55,6 @@ public class DiplomeRestImplTest {
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
-    @Ignore("Should mock @Context HttpHeaders demaut-user-id")
     @Test
     public void testAjouterUnDiplome() throws Exception {
         Response response = diplomeRest.ajouterUnDiplome(referenceDeDiplomeStr,
@@ -65,7 +64,6 @@ public class DiplomeRestImplTest {
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
-    @Ignore("Should mock @Context HttpHeaders demaut-user-id")
     @Test
     public void testSupprimerUnDiplome() throws Exception {
         Response response = diplomeRest.supprimerUnDiplome(referenceDeDiplomeStr);

@@ -22,5 +22,4 @@ public abstract class AbstractDataValidateur<T> implements DataValidateur<T> {
     protected Set<ConstraintViolation<T>> validateData(T data) {
         return validator.validate(data);
     }
-
 }

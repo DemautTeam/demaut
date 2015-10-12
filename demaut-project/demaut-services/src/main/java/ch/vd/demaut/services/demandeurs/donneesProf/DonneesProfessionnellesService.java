@@ -1,8 +1,6 @@
 package ch.vd.demaut.services.demandeurs.donneesProf;
 
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.domain.demandeur.Pays;
-import ch.vd.demaut.domain.demandeur.donneesPerso.*;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.*;
 import ch.vd.demaut.domain.utilisateurs.Login;
@@ -17,8 +15,4 @@ public interface DonneesProfessionnellesService {
                           String complement, DateObtention dateObtention, PaysObtention paysObtention, DateReconnaissance dateReconnaissance);
 
     void supprimerUnDiplome(Login login, ReferenceDeDiplome referenceDeDiplome);
-
-    void renseignerLesDonneesPersonnelles(Login login, Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Localite localite, NPA npa, Pays pays,
-                                          Adresse adresse, Email email, NumeroTelephone telephonePrive, NumeroTelephone telephoneMobile, NumeroTelephone fax,
-                                          Genre genre, DateDeNaissance dateDeNaissance, Pays nationalite, Langue langue, Permis permis);
 }

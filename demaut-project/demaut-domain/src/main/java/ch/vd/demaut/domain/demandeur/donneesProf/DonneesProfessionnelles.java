@@ -1,16 +1,14 @@
 package ch.vd.demaut.domain.demandeur.donneesProf;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.validation.Valid;
-
 import ch.vd.demaut.commons.annotations.Entity;
 import ch.vd.demaut.commons.entities.AbstractEntity;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ListeDesDiplomes;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ReferenceDeDiplome;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class DonneesProfessionnelles extends AbstractEntity {
@@ -54,8 +52,8 @@ public class DonneesProfessionnelles extends AbstractEntity {
 
     /**
      * Liste des professions exigeant un code GLN
-     * 
-     * @return
+     *
+     * @return List
      */
     public List<Profession> listerProfessionsExigeantCodeGLN() {
         return new ArrayList<Profession>() {
@@ -73,5 +71,4 @@ public class DonneesProfessionnelles extends AbstractEntity {
             }
         };
     }
-
 }

@@ -59,10 +59,13 @@ public class DemandeRestImpl {
         if (!StringUtils.isEmpty(codeGlnStr)) {
             codeGLN = new CodeGLN(codeGlnStr);
         }
-        
-        DemandeAutorisation demande = demandeAutorisationService.initialiserDemandeAutorisation(profession, codeGLN, login);
-        
-        return RestUtils.buildJSon(Arrays.asList(demande.getReferenceDeDemande()));
+        DemandeAutorisation demandeAutorisation;
+        try {
+            demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+        } catch (DemandeNotFoundException e) {
+            demandeAutorisation = demandeAutorisationService.initialiserDemandeAutorisation(profession, codeGLN, login);
+        }
+        return RestUtils.buildJSon(Arrays.asList(demandeAutorisation.getReferenceDeDemande()));
     }
 
     @GET

@@ -25,8 +25,7 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
     @Transactional
     @Override
     public DemandeAutorisation initialiserDemandeAutorisation(Profession profession, CodeGLN codeGLN, Login login) {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationFactory.initierDemandeAutorisation(login,
-                profession);
+        DemandeAutorisation demandeAutorisation = demandeAutorisationFactory.initierDemandeAutorisation(login, profession);
         // TODO: Valider les règles métier sur le code GLN i.e. pour les
         // professions obligatoires par exemple. Code a faire dans le domaine au
         // niveau de la demandeautorisation via @Valid 

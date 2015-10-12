@@ -36,11 +36,9 @@ public class DonneesProfessionnellesServiceTest {
     @Autowired
     private DemandeAutorisationService demandeAutorisationService;
 
-    private ReferenceDeDemande referenceDeDemande;
     private Profession profession;
     private Login login;
     private DemandeAutorisation demandeEnCours;
-
 
     @Before
     public void setUp() throws Exception {
@@ -52,7 +50,7 @@ public class DonneesProfessionnellesServiceTest {
         }
 
         assertThat(demandeEnCours).isNotNull();
-        referenceDeDemande = demandeEnCours.getReferenceDeDemande();
+        ReferenceDeDemande referenceDeDemande = demandeEnCours.getReferenceDeDemande();
         assertThat(referenceDeDemande).isNotNull();
         assertThat(profession).isNotNull();
         assertThat(login).isNotNull();

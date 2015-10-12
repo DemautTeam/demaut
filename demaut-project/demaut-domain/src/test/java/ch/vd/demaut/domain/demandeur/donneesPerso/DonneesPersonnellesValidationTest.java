@@ -25,6 +25,8 @@ public class DonneesPersonnellesValidationTest extends AbstractValidationTest<Do
     private NumeroTelephone numeroMobile;
     private NumeroTelephone numeroFax;
     private Pays nationalite;
+    private Langue langue;
+    private Permis permis;
 
     @Before
     public void init() {
@@ -42,9 +44,11 @@ public class DonneesPersonnellesValidationTest extends AbstractValidationTest<Do
         numeroMobile = new NumeroTelephone("07625225123");
         numeroFax = new NumeroTelephone("023456789");
         nationalite = Pays.Suisse;
+        langue = Langue.Allemand;
+        permis = new Permis(TypePermis.C);
 
-        donneesPersonnellesValides = new DonneesPersonnelles(nomValide, prenomValide, null, genreValide, dateDeNaissance, adresseValide, nationalite, emailValide, numeroTelephone, numeroMobile, numeroFax);
-        donneesPersonnellesInvalideNom = new DonneesPersonnelles(nomInvalide, prenomValide, null, genreValide, dateDeNaissance, adresseValide, nationalite, emailValide, numeroTelephone, numeroMobile, numeroFax);
+        donneesPersonnellesValides = new DonneesPersonnelles(nomValide, prenomValide, null, adresseValide, emailValide, numeroTelephone, numeroMobile, numeroFax, genreValide, dateDeNaissance, nationalite, langue, permis);
+        donneesPersonnellesInvalideNom = new DonneesPersonnelles(nomInvalide, prenomValide, null, adresseValide, emailValide, numeroTelephone, numeroMobile, numeroFax, genreValide, dateDeNaissance, nationalite, langue, permis);
     }
 
     @Test
@@ -59,6 +63,5 @@ public class DonneesPersonnellesValidationTest extends AbstractValidationTest<Do
         addExpectedConstraintViolation("nom.value");
         testSomeConstraintViolations();
     }
-
 
 }

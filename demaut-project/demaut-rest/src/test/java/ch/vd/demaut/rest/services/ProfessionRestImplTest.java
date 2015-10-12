@@ -18,10 +18,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.ws.rs.core.Response;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-@Ignore
+@Ignore("TODO Should mock @Context HttpHeaders demaut-user-id")
 @ContextConfiguration({"classpath*:restTest-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -38,10 +37,11 @@ public class ProfessionRestImplTest {
         Profession profession = Profession.Medecin;
         Login login = new Login("admin@admin");
 
-        assertNotNull(professionRest);
+        assertThat(professionRest).isNotNull();
         assertThat(demandeAutorisationService).isNotNull();
 
         DemandeAutorisation demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null, login);
+        assertThat(demandeEnCours).isNotNull();
     }
 
     @Test
@@ -50,7 +50,6 @@ public class ProfessionRestImplTest {
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
-    @Ignore("TODO Should mock @Context HttpHeaders demaut-user-id")
     @Test
     public void testAfficherDonneesProfession() throws Exception {
         Response response = professionRest.afficherDonneesProfession();

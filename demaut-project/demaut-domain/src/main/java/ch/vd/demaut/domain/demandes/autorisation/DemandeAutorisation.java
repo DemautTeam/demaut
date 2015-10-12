@@ -51,6 +51,8 @@ public class DemandeAutorisation extends Demande {
         this.statutDemandeAutorisation = StatutDemandeAutorisation.Brouillon;
         this.login = login;
         this.profession = profession;
+        this.donneesPersonnelles = new DonneesPersonnelles();
+        this.donneesProfessionnelles = new DonneesProfessionnelles();
     }
 
     // ********************************************************* Business Methods

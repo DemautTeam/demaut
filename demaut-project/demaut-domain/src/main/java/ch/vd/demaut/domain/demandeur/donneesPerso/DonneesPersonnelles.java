@@ -28,6 +28,7 @@ public class DonneesPersonnelles extends AbstractEntity {
     @Valid
     private Adresse adresse;
 
+    @NotNull
     private Pays nationalite;
 
     @Valid
@@ -39,6 +40,11 @@ public class DonneesPersonnelles extends AbstractEntity {
 
     private NumeroTelephone fax;
 
+    @NotNull
+    private Langue langue;
+
+    private Permis permis;
+
 
     // ********************************************************* Constructor
 
@@ -47,8 +53,9 @@ public class DonneesPersonnelles extends AbstractEntity {
     }
 
     //TODO: A supprimer
-    public DonneesPersonnelles(Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Genre genre, DateDeNaissance dateDeNaissance, Adresse adresse,
-                               Pays nationalite, Email email, NumeroTelephone telephonePrive, NumeroTelephone telephoneMobile, NumeroTelephone fax) {
+    public DonneesPersonnelles(Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Adresse adresse, Email email,
+                               NumeroTelephone telephonePrive, NumeroTelephone telephoneMobile, NumeroTelephone fax, Genre genre,
+                               DateDeNaissance dateDeNaissance, Pays nationalite, Langue langue, Permis permis) {
         super();
         this.nom = nom;
         this.prenom = prenom;
@@ -61,6 +68,8 @@ public class DonneesPersonnelles extends AbstractEntity {
         this.telephoneMobile = telephoneMobile;
         this.fax = fax;
         this.nationalite = nationalite;
+        this.langue = langue;
+        this.permis = permis;
     }
 
     // ********************************************************* Getters
@@ -106,5 +115,31 @@ public class DonneesPersonnelles extends AbstractEntity {
 
     public Pays getNationalite() {
         return nationalite;
+    }
+
+    public Langue getLangue() {
+        return langue;
+    }
+
+    public Permis getPermis() {
+        return permis;
+    }
+
+    public void renseignerLesDonneesPersonnelles(Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Adresse adresse, Email email,
+                                                 NumeroTelephone telephonePrive, NumeroTelephone telephoneMobile, NumeroTelephone fax, Genre genre,
+                                                 DateDeNaissance dateDeNaissance, Pays nationalite, Langue langue, Permis permis) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.nomDeCelibataire = nomDeCelibataire;
+        this.adresse = adresse;
+        this.email = email;
+        this.telephonePrive = telephonePrive;
+        this.telephoneMobile = telephoneMobile;
+        this.fax = fax;
+        this.genre = genre;
+        this.dateDeNaissance = dateDeNaissance;
+        this.nationalite = nationalite;
+        this.langue = langue;
+        this.permis = permis;
     }
 }
