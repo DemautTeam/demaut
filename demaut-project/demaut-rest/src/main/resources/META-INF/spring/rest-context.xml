@@ -4,7 +4,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ctx="http://www.springframework.org/schema/context"
     xmlns:camel="http://camel.apache.org/schema/spring" xmlns:context="http://www.springframework.org/schema/context"
     xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx"
-    xmlns:util="http://www.springframework.org/schema/util" xmlns:cxf="http://cxf.apache.org/jaxrs"
+    xmlns:util="http://www.springframework.org/schema/util" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
@@ -21,26 +21,7 @@
 		http://cxf.apache.org/schemas/jaxrs.xsd">
 
     <import resource="classpath:META-INF/cxf/cxf.xml"/>
-    <import resource="classpath:META-INF/cxf/cxf-extension-jaxrs-binding.xml"/>
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
-
-    <ctx:property-placeholder properties-ref="props"/>
-
-    <cxf:server address="${demaut.rest.service.endpoint}">
-        <cxf:serviceBeans>
-            <ref local="annexeRestImpl"/>
-            <ref local="professionRestImpl"/>
-            <ref local="demandeRestImpl"/>
-            <ref local="diplomeRestImpl"/>
-            <ref local="personelRestImpl"/>
-            <ref local="activiteRestImpl"/>
-        </cxf:serviceBeans>
-        <cxf:providers>
-            <ref local="customJacksonJaxbJsonProvider"/>
-            <ref local="authenticationFilter"/>
-            <ref local="corsFilter"/>
-        </cxf:providers>
-    </cxf:server>
 
     <bean id="corsFilter"
         class="org.apache.cxf.rs.security.cors.CrossOriginResourceSharingFilter"/>

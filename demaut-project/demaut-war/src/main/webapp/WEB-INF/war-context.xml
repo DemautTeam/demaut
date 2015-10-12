@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
     xmlns:ctx="http://www.springframework.org/schema/context"
     xmlns:util="http://www.springframework.org/schema/util"
     xsi:schemaLocation="
@@ -23,8 +22,27 @@
 <!--     </bean> -->
     
 <!--     <util:properties id="props" location="classpath*:demautWar.cfg"/> -->
-    
-    <bean id="props" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+
+    <ctx:property-placeholder properties-ref="props"/>
+
+    <jaxrs:server address="${demaut.rest.service.endpoint}">
+        <jaxrs:serviceBeans>
+            <ref bean="annexeRestImpl"/>
+            <ref bean="professionRestImpl"/>
+            <ref bean="demandeRestImpl"/>
+            <ref bean="diplomeRestImpl"/>
+            <ref bean="personelRestImpl"/>
+            <ref bean="activiteRestImpl"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:providers>
+            <ref bean="customJacksonJaxbJsonProvider"/>
+            <ref bean="authenticationFilter"/>
+            <ref bean="corsFilter"/>
+        </jaxrs:providers>
+    </jaxrs:server>
+
+    <bean id="props"
+        class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="locations">
             <list>
                 <value>classpath*:*demautWar.cfg</value>
