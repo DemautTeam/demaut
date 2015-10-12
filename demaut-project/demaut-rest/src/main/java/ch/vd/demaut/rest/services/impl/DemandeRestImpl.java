@@ -3,6 +3,7 @@ package ch.vd.demaut.rest.services.impl;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
+import ch.vd.demaut.domain.exception.DemandeNotFoundException;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.rest.commons.json.RestUtils;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
@@ -58,7 +59,12 @@ public class DemandeRestImpl {
         if (!StringUtils.isEmpty(codeGlnStr)) {
             codeGLN = new CodeGLN(codeGlnStr);
         }
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.initialiserDemandeAutorisation(profession, codeGLN, login);
+        DemandeAutorisation demandeAutorisation;
+        try {
+            demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+        } catch (DemandeNotFoundException e) {
+            demandeAutorisation = demandeAutorisationService.initialiserDemandeAutorisation(profession, codeGLN, login);
+        }
         return RestUtils.buildJSon(Arrays.asList(demandeAutorisation.getReferenceDeDemande()));
     }
 

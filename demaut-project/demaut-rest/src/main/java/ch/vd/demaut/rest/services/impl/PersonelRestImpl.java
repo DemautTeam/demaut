@@ -99,7 +99,7 @@ public class PersonelRestImpl {
                                                      @QueryParam("telephoneMobile") String telephoneMobileStr,
                                                      @QueryParam("email") String emailStr,
                                                      @QueryParam("fax") String faxStr,
-                                                     @QueryParam("gender") String gender,
+                                                     @QueryParam("genre") String genreStr,
                                                      @QueryParam("dateDeNaissance") String dateDeNaissanceStr,
                                                      @QueryParam("nationalite") String nationaliteId,
                                                      @QueryParam("langue") String langueId,
@@ -121,7 +121,7 @@ public class PersonelRestImpl {
         NumeroTelephone telephonePrive = new NumeroTelephone(telephonePriveStr);
         NumeroTelephone telephoneMobile = new NumeroTelephone(telephoneMobileStr);
         NumeroTelephone fax = new NumeroTelephone(faxStr);
-        Genre genre = Genre.valueOf(gender);
+        Genre genre = Genre.valueOf(genreStr);
         DateDeNaissance dateDeNaissance = new DateDeNaissance(DiplomeRestImpl.SHORT_DATE_PARSER.parseLocalDate(dateDeNaissanceStr));
         Pays nationalite = Pays.getTypeById(Integer.parseInt(nationaliteId));
         Langue langue = Langue.getTypeById(Integer.parseInt(langueId));
