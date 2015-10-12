@@ -19,7 +19,7 @@ public class DonneesProfessionnellesServiceImpl implements DonneesProfessionnell
     private DemandeAutorisationService demandeAutorisationService;
 
     @Override
-    public Profession afficherDonneesProfession(Login login) {
+    public Profession recupererDonneesProfession(Login login) {
         DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
         return demandeAutorisation.getProfession();
     }

@@ -58,8 +58,8 @@ public class DonneesProfessionnellesServiceTest {
     }
 
     @Test
-    public void testAfficherDonneesProfession() throws Exception {
-        Profession profession = donneesProfessionnellesService.afficherDonneesProfession(login);
+    public void testRecupererDonneesProfession() throws Exception {
+        Profession profession = donneesProfessionnellesService.recupererDonneesProfession(login);
         assertThat(profession).isNotNull();
     }
 

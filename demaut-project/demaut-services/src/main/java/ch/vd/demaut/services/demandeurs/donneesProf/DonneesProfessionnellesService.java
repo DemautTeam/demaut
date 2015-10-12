@@ -7,7 +7,7 @@ import ch.vd.demaut.domain.utilisateurs.Login;
 
 public interface DonneesProfessionnellesService {
 
-    Profession afficherDonneesProfession(Login login);
+    Profession recupererDonneesProfession(Login login);
 
     DonneesProfessionnelles recupererDonneesProfessionnelles(Login login);
 

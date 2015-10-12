@@ -51,8 +51,8 @@ public class ProfessionRestImplTest {
     }
 
     @Test
-    public void testAfficherDonneesProfession() throws Exception {
-        Response response = professionRest.afficherDonneesProfession();
+    public void testRecupererDonneesProfession() throws Exception {
+        Response response = professionRest.recupererDonneesProfession();
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 }

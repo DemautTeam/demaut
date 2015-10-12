@@ -100,13 +100,13 @@ public class ProfessionRestImpl {
     @Path("/donnees/")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response afficherDonneesProfession() throws Exception {
+    public Response recupererDonneesProfession() throws Exception {
 
         Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
 
-        LOGGER.info("afficherDonneesProfession " + login.getValue());
+        LOGGER.info("recupererDonneesProfession " + login.getValue());
 
-        Profession profession = donneesProfessionnellesService.afficherDonneesProfession(login);
+        Profession profession = donneesProfessionnellesService.recupererDonneesProfession(login);
         CodeGLN codeGLN = donneesProfessionnellesService.recupererDonneesProfessionnelles(login).getCodeGLN();
         return RestUtils.buildJSon(Arrays.asList(profession, codeGLN));
     }

@@ -20,7 +20,7 @@ public class DonneesProfessionnellesServiceMock implements DonneesProfessionnell
     }
 
     @Override
-    public Profession afficherDonneesProfession(Login login) {
+    public Profession recupererDonneesProfession(Login login) {
         // TODO
         return null;
     }
