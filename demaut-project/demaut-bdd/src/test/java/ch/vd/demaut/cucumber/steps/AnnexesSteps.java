@@ -68,6 +68,7 @@ public class AnnexesSteps {
     // ***************************** **************************** Technical
     // methods
 
+    //TODO: Mutualiser cela
     public void verifieAcceptationAnnexe(AccepteOuRefuse expectedAcceptationAnnexe) {
         assertThat(actualAcceptationAnnexe).isEqualTo(expectedAcceptationAnnexe);
     }

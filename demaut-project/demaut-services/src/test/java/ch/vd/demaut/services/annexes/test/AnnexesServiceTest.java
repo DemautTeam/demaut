@@ -1,13 +1,12 @@
 package ch.vd.demaut.services.annexes.test;
 
-import ch.vd.demaut.domain.annexes.*;
-import ch.vd.demaut.domain.demandes.DateDeCreation;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.domain.exception.AnnexeNonUniqueException;
-import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.services.annexes.AnnexesService;
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Collection;
+
 import org.apache.commons.io.IOUtils;
 import org.joda.time.LocalDate;
 import org.junit.Before;
@@ -21,12 +20,19 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.Collection;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
+import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.domain.annexes.AnnexeFK;
+import ch.vd.demaut.domain.annexes.ContenuAnnexe;
+import ch.vd.demaut.domain.annexes.NomFichier;
+import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.domain.demandes.DateDeCreation;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
+import ch.vd.demaut.domain.exception.AnnexeNonUniqueException;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.services.annexes.AnnexesService;
+import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 
 @ContextConfiguration({"classpath*:/servicesTest-context.xml"})
 @ActiveProfiles({"data"})
@@ -49,6 +55,7 @@ public class AnnexesServiceTest {
 
     private Profession profession;
     private Login login;
+    private CodeGLN glnValide = new CodeGLN("4719512002889");
 
     @Before
     public void setUp() throws Exception {
@@ -130,13 +137,14 @@ public class AnnexesServiceTest {
 
     @Transactional(propagation = Propagation.REQUIRED)
     private void intialiserDemandeEnCours(Annexe annexeALier, Login login) {
+        //TODO: Tout est a revoir ici !
         try {
             demandeEnCours = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
         } catch (javax.persistence.NonUniqueResultException | javax.persistence.NoResultException e) {
         }
 
         if (demandeEnCours == null) {
-            demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null, login);
+            demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, glnValide, login);
             if (!demandeEnCours.listerLesAnnexes().contains(annexeALier)) {
                 annexesService.attacherUneAnnexe(login, annexeALier);
             }

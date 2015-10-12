@@ -8,6 +8,9 @@ import ch.vd.demaut.domain.demandeur.donneesProf.diplome.*;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +21,12 @@ public class DonneesProfessionnellesServiceImpl implements DonneesProfessionnell
     @Autowired
     private DemandeAutorisationService demandeAutorisationService;
 
+
+    @Override
+    public List<Profession> listerProfessionsAvecCodeGlnObligatoire() {
+        return Profession.listerProfessionsAvecCodeGlnObligatoire();
+    }
+    
     @Override
     public Profession recupererDonneesProfession(Login login) {
         DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
@@ -50,4 +59,5 @@ public class DonneesProfessionnellesServiceImpl implements DonneesProfessionnell
         DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
         demandeAutorisation.getDonneesProfessionnelles().supprimerUnDiplome(referenceDeDiplome);
     }
+
 }

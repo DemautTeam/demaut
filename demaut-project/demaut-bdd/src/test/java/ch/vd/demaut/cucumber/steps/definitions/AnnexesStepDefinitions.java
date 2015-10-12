@@ -63,7 +63,9 @@ public class AnnexesStepDefinitions extends StepDefinitions {
     @Etantdonné("^les formats de fichier acceptés:$")
     public void les_formats_de_fichier_acceptés(DataTable dataTable) throws Throwable {
         List<FormatFichierAccepte> formatsAcceptes = dataTable.asList(FormatFichierAccepte.class);
-        assertThat(formatsAcceptes).containsExactly(FormatFichierAccepte.values());
+        
+        assertThat(FormatFichierAccepte.values()).hasSameSizeAs(formatsAcceptes);
+        assertThat(FormatFichierAccepte.values()).containsAll(formatsAcceptes);
     }
 
     @Etantdonné("^la taille maximale de fichier acceptée \"([^\"]*)\"MB$")
@@ -121,7 +123,9 @@ public class AnnexesStepDefinitions extends StepDefinitions {
         DemandeAutorisation demande = getDemandeAutorisationSteps().getDemandeViaReference(refScenario);
         List<Annexe> annexesAttendues = buildListeAnnexes(dataTable).listerAnnexes();
         List<Annexe> annexesDemande = demande.listerLesAnnexes();
-        assertThat(annexesDemande).containsExactlyElementsOf(annexesAttendues);
+        
+        assertThat(annexesDemande).hasSameSizeAs(annexesAttendues);
+        assertThat(annexesDemande).containsAll(annexesAttendues);
     }
 
     // ******************************************************* Méthodes privées

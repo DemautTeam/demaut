@@ -32,7 +32,7 @@ public class DemandeAutorisationServiceTest {
     // ********************************************************* Setups
     @Before
     public void setUp() throws Exception {
-        profession = Profession.Medecin;
+        profession = Profession.Podologue;
         login = new Login("admin@admin");
 
         assertThat(demandeAutorisationService).isNotNull();
