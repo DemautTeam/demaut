@@ -2,7 +2,7 @@ package ch.vd.demaut.domain.demandeur.donneeProf;
 
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLNValidator;
-import ch.vd.demaut.domain.exception.CodeGLNNonValideException;
+import ch.vd.demaut.domain.exception.CodeGlnNonValideException;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -54,7 +54,7 @@ public class CodeGLNValidateurTest {
     private void validerCodeGLNValide(CodeGLN codeGLN) {
         try {
             validateur.valider(codeGLN);
-        } catch (CodeGLNNonValideException e) {
+        } catch (CodeGlnNonValideException e) {
             fail("Failed because exception codeGLNNonValideException was thrown", e);
         }
     }
@@ -62,8 +62,8 @@ public class CodeGLNValidateurTest {
     private void validerCodeGLNEtTesterInvalide(CodeGLN codeGLN) {
         try {
             validateur.valider(codeGLN);
-            failBecauseExceptionWasNotThrown(CodeGLNNonValideException.class);
-        } catch (CodeGLNNonValideException e) {
+            failBecauseExceptionWasNotThrown(CodeGlnNonValideException.class);
+        } catch (CodeGlnNonValideException e) {
         }
     }
 }

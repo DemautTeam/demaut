@@ -2,7 +2,7 @@ package ch.vd.demaut.domain.demandeur.donneesProf;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.validation.AbstractDataValidateur;
-import ch.vd.demaut.domain.exception.CodeGLNNonValideException;
+import ch.vd.demaut.domain.exception.CodeGlnNonValideException;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.ConstraintViolation;
@@ -41,21 +41,21 @@ public class CodeGLNValidator extends AbstractDataValidateur<CodeGLN> {
         Set<ConstraintViolation<CodeGLN>> constraintViolationsResult = validateData(codeGLN);
 
         if (constraintViolationsResult.size() > 0) {
-            throw new CodeGLNNonValideException();
+            throw new CodeGlnNonValideException();
         }
     }
 
     public void validerTaille(CodeGLN codeGLN) {
         String value = codeGLN.getValue();
         if (StringUtils.isEmpty(value)) {
-            throw new CodeGLNNonValideException();
+            throw new CodeGlnNonValideException();
         }
         if (value.length() < getTailleMin()) {
-            throw new CodeGLNNonValideException();
+            throw new CodeGlnNonValideException();
         }
 
         if (value.length() > getTailleMax()) {
-            throw new CodeGLNNonValideException();
+            throw new CodeGlnNonValideException();
         }
     }
 }
