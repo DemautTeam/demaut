@@ -1,4 +1,4 @@
-package ch.vd.demaut.domain.demandeur.donneesProf;
+package ch.vd.demaut.domain.demandeur.donneesProf.diplome;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.validation.AbstractDataValidateur;
@@ -12,7 +12,7 @@ import java.util.Set;
 @ValueObject
 public class CodeGLNValidator extends AbstractDataValidateur<CodeGLN> {
     // ********************************************************* Static fields
-    static private final int tailleMin = 13;
+    static private final int tailleMin = 1;
     static private final int tailleMax = 13;
 
     // ********************************************************* Constructeur
@@ -36,6 +36,10 @@ public class CodeGLNValidator extends AbstractDataValidateur<CodeGLN> {
 
         // 2. Valide taille codeGLN
         validerTaille(codeGLN);
+
+        // 3. Valide Checksum
+        validerChecksum(codeGLN);
+
     }
 
     public void validerStructure(CodeGLN codeGLN) {
@@ -58,5 +62,9 @@ public class CodeGLNValidator extends AbstractDataValidateur<CodeGLN> {
         if (value.length() > getTailleMax()) {
             throw new CodeGLNNonValideException();
         }
+    }
+
+    private void validerChecksum(CodeGLN codeGLN) {
+        // TODO Checksum https://en.wikipedia.org/wiki/Global_Location_Number
     }
 }

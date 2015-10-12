@@ -7,7 +7,6 @@ import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
-import ch.vd.demaut.domain.exception.DemandeNotFoundException;
 import ch.vd.demaut.domain.exception.ReferenceDemandeNotFoundException;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
@@ -46,7 +45,7 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
         try {
             return demandeAutorisationRepository.trouverDemandeBrouillonParUtilisateur(login);
         } catch (EntityNotFoundException e) {
-            throw new DemandeNotFoundException();
+            throw new ReferenceDemandeNotFoundException();
         }
     }
 }
