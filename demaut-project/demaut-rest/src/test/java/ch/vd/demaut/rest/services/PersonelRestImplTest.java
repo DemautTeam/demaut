@@ -53,9 +53,9 @@ public class PersonelRestImplTest {
         Email email = new Email("john.doe@nobody.com");
         Genre genre = Genre.Feminin;
         String dateDeNaissance = "31.05.1980";
-        NumeroTelephone telephonePrive = new NumeroTelephone("022222222");
-        NumeroTelephone telephoneMobile = new NumeroTelephone("07625225123");
-        NumeroTelephone fax = new NumeroTelephone("023456789");
+        TelephonePrive telephonePrive = new TelephonePrive("022222222");
+        TelephoneMobile telephoneMobile = new TelephoneMobile("07625225123");
+        Fax fax = new Fax("023456789");
         Pays nationalite = Pays.Allemagne;
         Langue langue = Langue.Allemand;
         Permis permis = new Permis(TypePermis.C);

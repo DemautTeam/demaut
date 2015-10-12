@@ -30,6 +30,7 @@ public class DonneesProfessionnellesServiceImpl implements DonneesProfessionnell
         if (demandeAutorisation.getDonneesProfessionnelles() == null) {
             throw new DonneesProfessionnellesNotFoundException();
         }
+        demandeAutorisation.validerDonneesProfessionnelles();
         return demandeAutorisation.getDonneesProfessionnelles();
     }
 

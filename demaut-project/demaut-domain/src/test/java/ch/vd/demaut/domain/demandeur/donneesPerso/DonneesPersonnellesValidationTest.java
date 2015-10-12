@@ -21,9 +21,9 @@ public class DonneesPersonnellesValidationTest extends AbstractValidationTest<Do
     private Email emailValide;
     private Genre genreValide;
     private DateDeNaissance dateDeNaissance;
-    private NumeroTelephone numeroTelephone;
-    private NumeroTelephone numeroMobile;
-    private NumeroTelephone numeroFax;
+    private TelephonePrive telephonePrive;
+    private TelephoneMobile numeroMobile;
+    private Fax fax;
     private Pays nationalite;
     private Langue langue;
     private Permis permis;
@@ -40,15 +40,15 @@ public class DonneesPersonnellesValidationTest extends AbstractValidationTest<Do
         emailValide = new Email("john.doe@nobody.com");
         genreValide = Genre.Feminin;
         dateDeNaissance = new DateDeNaissance(LocalDate.now());
-        numeroTelephone = new NumeroTelephone("022222222");
-        numeroMobile = new NumeroTelephone("07625225123");
-        numeroFax = new NumeroTelephone("023456789");
+        telephonePrive = new TelephonePrive("022222222");
+        numeroMobile = new TelephoneMobile("07625225123");
+        fax = new Fax("023456789");
         nationalite = Pays.Suisse;
         langue = Langue.Allemand;
         permis = new Permis(TypePermis.C);
 
-        donneesPersonnellesValides = new DonneesPersonnelles(nomValide, prenomValide, null, adresseValide, emailValide, numeroTelephone, numeroMobile, numeroFax, genreValide, dateDeNaissance, nationalite, langue, permis);
-        donneesPersonnellesInvalideNom = new DonneesPersonnelles(nomInvalide, prenomValide, null, adresseValide, emailValide, numeroTelephone, numeroMobile, numeroFax, genreValide, dateDeNaissance, nationalite, langue, permis);
+        donneesPersonnellesValides = new DonneesPersonnelles(nomValide, prenomValide, null, adresseValide, emailValide, telephonePrive, numeroMobile, fax, genreValide, dateDeNaissance, nationalite, langue, permis);
+        donneesPersonnellesInvalideNom = new DonneesPersonnelles(nomInvalide, prenomValide, null, adresseValide, emailValide, telephonePrive, numeroMobile, fax, genreValide, dateDeNaissance, nationalite, langue, permis);
     }
 
     @Test

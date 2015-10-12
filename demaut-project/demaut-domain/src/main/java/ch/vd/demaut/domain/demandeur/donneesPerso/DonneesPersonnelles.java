@@ -34,11 +34,11 @@ public class DonneesPersonnelles extends AbstractEntity {
     @Valid
     private Email email;
 
-    private NumeroTelephone telephonePrive;
+    private TelephonePrive telephonePrive;
 
-    private NumeroTelephone telephoneMobile;
+    private TelephoneMobile telephoneMobile;
 
-    private NumeroTelephone fax;
+    private Fax fax;
 
     @NotNull
     private Langue langue;
@@ -54,7 +54,7 @@ public class DonneesPersonnelles extends AbstractEntity {
 
     //TODO: A supprimer
     public DonneesPersonnelles(Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Adresse adresse, Email email,
-                               NumeroTelephone telephonePrive, NumeroTelephone telephoneMobile, NumeroTelephone fax, Genre genre,
+                               TelephonePrive telephonePrive, TelephoneMobile telephoneMobile, Fax fax, Genre genre,
                                DateDeNaissance dateDeNaissance, Pays nationalite, Langue langue, Permis permis) {
         super();
         this.nom = nom;
@@ -97,11 +97,11 @@ public class DonneesPersonnelles extends AbstractEntity {
         return adresse;
     }
 
-    public NumeroTelephone getTelephonePrive() {
+    public TelephonePrive getTelephonePrive() {
         return telephonePrive;
     }
 
-    public NumeroTelephone getTelephoneMobile() {
+    public TelephoneMobile getTelephoneMobile() {
         return telephoneMobile;
     }
 
@@ -109,7 +109,7 @@ public class DonneesPersonnelles extends AbstractEntity {
         return email;
     }
 
-    public NumeroTelephone getFax() {
+    public Fax getFax() {
         return fax;
     }
 
@@ -126,7 +126,7 @@ public class DonneesPersonnelles extends AbstractEntity {
     }
 
     public void renseignerLesDonneesPersonnelles(Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Adresse adresse, Email email,
-                                                 NumeroTelephone telephonePrive, NumeroTelephone telephoneMobile, NumeroTelephone fax, Genre genre,
+                                                 TelephonePrive telephonePrive, TelephoneMobile telephoneMobile, Fax fax, Genre genre,
                                                  DateDeNaissance dateDeNaissance, Pays nationalite, Langue langue, Permis permis) {
         this.nom = nom;
         this.prenom = prenom;

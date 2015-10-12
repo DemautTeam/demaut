@@ -9,6 +9,9 @@ import javax.validation.constraints.Size;
 @ValueObject
 public class Localite extends StringVO {
 
+    public Localite() {
+    }
+
     public Localite(String value) {
         super(value);
     }

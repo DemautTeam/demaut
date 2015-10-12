@@ -101,9 +101,9 @@ public class PersonelRestImpl {
         Pays pays = Pays.getTypeById(Integer.parseInt(paysId));
         Adresse adresse = new Adresse(adressePersonnelle, complement, localite, npa, pays);
         Email email = new Email(emailStr);
-        NumeroTelephone telephonePrive = new NumeroTelephone(telephonePriveStr);
-        NumeroTelephone telephoneMobile = new NumeroTelephone(telephoneMobileStr);
-        NumeroTelephone fax = new NumeroTelephone(faxStr);
+        TelephonePrive telephonePrive = new TelephonePrive(telephonePriveStr);
+        TelephoneMobile telephoneMobile = new TelephoneMobile(telephoneMobileStr);
+        Fax fax = new Fax(faxStr);
         Genre genre = Genre.valueOf(genreStr);
         DateDeNaissance dateDeNaissance = new DateDeNaissance(DiplomeRestImpl.SHORT_DATE_PARSER.parseLocalDate(dateDeNaissanceStr));
         Pays nationalite = Pays.getTypeById(Integer.parseInt(nationaliteId));

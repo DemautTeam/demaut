@@ -29,10 +29,11 @@ public class DonneesPersonnellesServiceImpl implements DonneesPersonnellesServic
 
     @Override
     public void renseignerLesDonneesPersonnelles(Login login, Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Adresse adresse, Email email,
-                                                 NumeroTelephone telephonePrive, NumeroTelephone telephoneMobile,
-                                                 NumeroTelephone fax, Genre genre, DateDeNaissance dateDeNaissance, Pays nationalite, Langue langue, Permis permis) {
+                                                 TelephonePrive telephonePrive, TelephoneMobile telephoneMobile, Fax fax, Genre genre, DateDeNaissance dateDeNaissance,
+                                                 Pays nationalite, Langue langue, Permis permis) {
         DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
         demandeAutorisation.getDonneesPersonnelles().renseignerLesDonneesPersonnelles(nom, prenom, nomDeCelibataire, adresse, email,
                 telephonePrive, telephoneMobile, fax, genre, dateDeNaissance, nationalite, langue, permis);
+        demandeAutorisation.validerDonneesPersonnelles();
     }
 }

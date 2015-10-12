@@ -7,6 +7,9 @@ import javax.validation.constraints.Pattern;
 
 public class Email extends StringVO {
 
+    public Email() {
+    }
+
     public Email(String value) {
         super(value);
     }

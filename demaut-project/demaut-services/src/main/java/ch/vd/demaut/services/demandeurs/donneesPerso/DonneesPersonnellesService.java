@@ -9,6 +9,6 @@ public interface DonneesPersonnellesService {
     DonneesPersonnelles recupererDonneesPersonnelles(Login login);
 
     void renseignerLesDonneesPersonnelles(Login login, Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Adresse adresse, Email email,
-                                          NumeroTelephone telephonePrive, NumeroTelephone telephoneMobile, NumeroTelephone fax,
+                                          TelephonePrive telephonePrive, TelephoneMobile telephoneMobile, Fax fax,
                                           Genre genre, DateDeNaissance dateDeNaissance, Pays nationalite, Langue langue, Permis permis);
 }

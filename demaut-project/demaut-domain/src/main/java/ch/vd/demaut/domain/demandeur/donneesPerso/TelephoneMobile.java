@@ -2,18 +2,15 @@ package ch.vd.demaut.domain.demandeur.donneesPerso;
 
 import ch.vd.demaut.commons.vo.StringVO;
 
-import javax.validation.constraints.Size;
+public class TelephoneMobile extends StringVO {
 
-public class NPA extends StringVO {
-
-    public NPA() {
+    public TelephoneMobile() {
     }
 
-    public NPA(String value) {
+    public TelephoneMobile(String value) {
         super(value);
     }
 
-    @Size(max = 15)
     @Override
     public String getValue() {
         return super.getValue();
