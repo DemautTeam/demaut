@@ -1,12 +1,19 @@
 package ch.vd.demaut.rest.services.impl;
 
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
-import ch.vd.demaut.domain.exception.DemandeNotFoundException;
-import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.rest.commons.json.RestUtils;
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
+import java.io.IOException;
+import java.util.Arrays;
+
+import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,14 +23,13 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.*;
-import java.io.IOException;
-import java.util.Arrays;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
+import ch.vd.demaut.domain.exception.DemandeNotFoundException;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.rest.commons.json.RestUtils;
+import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
 @Service("demandeRestImpl")

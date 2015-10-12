@@ -3,19 +3,35 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:jaxrs="http://cxf.apache.org/jaxrs"
     xmlns:ctx="http://www.springframework.org/schema/context"
+    xmlns:util="http://www.springframework.org/schema/util"
     xsi:schemaLocation="
     http://www.springframework.org/schema/beans 
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/util
+    http://www.springframework.org/schema/util/spring-util.xsd
     http://cxf.apache.org/jaxrs
     http://cxf.apache.org/schemas/jaxrs.xsd">
 
-    <ctx:property-placeholder properties-ref="props"/>
-
-    <import resource="classpath:META-INF/spring/jpa-context.xml"/>
+<!--     <bean id="props" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> -->
+<!--         <property name="locations"> -->
+<!--             <list> -->
+<!--                 <value>classpath:/demautWar.cfg</value> -->
+<!--             </list> -->
+<!--         </property> -->
+<!--     </bean> -->
     
-    <import resource="classpath:META-INF/spring/services-context.xml"/>
+<!--     <util:properties id="props" location="classpath*:demautWar.cfg"/> -->
+    
+    <bean id="props" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath*:*demautWar.cfg</value>
+            </list>
+        </property>
+    </bean>
 
+    <import resource="classpath:META-INF/spring/rest-context.xml"/>
 
 </beans>

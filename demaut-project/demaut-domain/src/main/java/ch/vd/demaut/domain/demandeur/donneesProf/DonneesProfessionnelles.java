@@ -57,6 +57,7 @@ public class DonneesProfessionnelles extends AbstractEntity {
      */
     public List<Profession> listerProfessionsExigeantCodeGLN() {
         return new ArrayList<Profession>() {
+            private static final long serialVersionUID = 1L;
             {
                 add(Profession.Medecin);
                 add(Profession.MedecinDentiste);
