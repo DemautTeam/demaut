@@ -23,6 +23,24 @@
     <import resource="classpath:META-INF/cxf/cxf.xml"/>
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
 
+    <ctx:property-placeholder properties-ref="props"/>
+
+    <jaxrs:server address="${demaut.rest.service.endpoint}">
+        <jaxrs:serviceBeans>
+            <ref bean="annexeRestImpl"/>
+            <ref bean="professionRestImpl"/>
+            <ref bean="demandeRestImpl"/>
+            <ref bean="diplomeRestImpl"/>
+            <ref bean="personelRestImpl"/>
+            <ref bean="activiteRestImpl"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:providers>
+            <ref bean="customJacksonJaxbJsonProvider"/>
+            <ref bean="authenticationFilter"/>
+            <ref bean="corsFilter"/>
+        </jaxrs:providers>
+    </jaxrs:server>
+
     <bean id="corsFilter"
         class="org.apache.cxf.rs.security.cors.CrossOriginResourceSharingFilter"/>
 
