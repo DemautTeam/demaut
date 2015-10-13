@@ -71,7 +71,7 @@ public class DemandeAutorisationRepositoryTest {
         transaction = beginTransaction();
 
         // Construction de la demande
-        Utilisateur utilisateur = creerUtilisateur();
+        Utilisateur utilisateur = creerUtilisateur("admin1@admin");
         DemandeAutorisation demandeInit = demandeAutorisationFactory.initierDemandeAutorisation(utilisateur.getLogin(),
                 Profession.Ergotherapeute, glnValide);
         assertThat(demandeInit.getId()).isNull();
@@ -85,7 +85,7 @@ public class DemandeAutorisationRepositoryTest {
         transaction = beginTransaction();
 
         // Construction de la demande
-        Utilisateur utilisateur = creerUtilisateur();
+        Utilisateur utilisateur = creerUtilisateur("admin2@admin");
         DemandeAutorisation demandeInit = demandeAutorisationFactory.initierDemandeAutorisation(utilisateur.getLogin(),
                 Profession.Chiropraticien, glnValide);
         byte[] contenu = "AnnexeContenu".getBytes();
@@ -99,7 +99,7 @@ public class DemandeAutorisationRepositoryTest {
     public void sauvegarderUneDemandeAvecDonneeProfessionnellesEtDiplomes() {
         transaction = beginTransaction();
 
-        Utilisateur utilisateur = creerUtilisateur();
+        Utilisateur utilisateur = creerUtilisateur("admin3@admin");
 
         // Sauvegarder la demande
         DemandeAutorisation demandeAutorisation = demandeAutorisationFactory
@@ -146,9 +146,9 @@ public class DemandeAutorisationRepositoryTest {
                         new DateObtention(new LocalDate()), new PaysObtention(Pays.Suisse.name()), null));
     }
 
-    private Utilisateur creerUtilisateur() {
+    private Utilisateur creerUtilisateur(String loginStr) {
+        Login login = new Login(loginStr);
         // Créer et sauvegarder un Utilisateur
-        Login login = new Login("admin@admin");
         Utilisateur utilisateur = new Utilisateur(login);
         utilisateurRepository.store(utilisateur);
         assertThat(utilisateur.getId()).isNotNull();
@@ -168,6 +168,11 @@ public class DemandeAutorisationRepositoryTest {
         return transactionManagerDemaut.getTransaction(definition);
     }
 
+    private void rollbackTransaction(TransactionStatus transaction) {
+        transactionManagerDemaut.rollback(transaction);
+    }
+
+    
     private DemandeAutorisation recupererDemandePersistee(DemandeAutorisation demandeAutorisation) {
         commitTransaction(transaction);
         transaction = beginTransaction();

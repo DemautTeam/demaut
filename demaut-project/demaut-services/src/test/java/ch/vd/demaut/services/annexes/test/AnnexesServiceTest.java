@@ -66,20 +66,16 @@ public class AnnexesServiceTest {
         annexe = new Annexe(TypeAnnexe.CV, nomFichier, new ContenuAnnexe(byteArray), new DateDeCreation(new LocalDate()));
 
         profession = Profession.Medecin;
-        login = new Login("admin@admin");
-
-        if (demandeEnCours == null) {
-            intialiserDemandeEnCours(annexe, login);
-        }
+        login = null;
 
         assertThat(annexesService).isNotNull();
-        assertThat(byteArray).isNotNull();
-        assertThat(demandeEnCours.getReferenceDeDemande()).isNotNull();
-        assertThat(nomFichier).isNotNull();
     }
 
     @Test
     public void testListerLesAnnexesMetadata() throws Exception {
+        //Setup fixtures
+        creerDemandeEnCoursAvecAnnexe(annexe, new Login("admin4@admin"));
+
         Collection<?> listerLesAnnexes = annexesService.listerLesAnnexeMetadatas(login);
         assertThat(listerLesAnnexes).isNotEmpty();
     }
@@ -90,12 +86,13 @@ public class AnnexesServiceTest {
     @Rollback(value = false)
     public void testerAttacherUneAnnexe() {
         //Setup fixtures
-
+        creerDemandeEnCoursAvecAnnexe(annexe, new Login("admin1@admin"));
+        
         //Attache une annexe
         annexesService.attacherUneAnnexe(login, file, nomFichier, TypeAnnexe.AttestationBonneConduite);
 
         //Récupère demande en cours
-        demandeEnCours = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+        demandeEnCours = demandeAutorisationService.recupererBrouillon(login);
 
         //Vérifie si annexe attachée
         Collection<Annexe> annexes = demandeEnCours.listerLesAnnexes();
@@ -108,6 +105,8 @@ public class AnnexesServiceTest {
     @Transactional
     @Rollback(value = true)
     public void testerAttacherAnnexeNonUnique() {
+        //Setup fixtures
+        creerDemandeEnCoursAvecAnnexe(annexe, new Login("admin2@admin"));
         try {
             //Attache une annexe
             annexesService.attacherUneAnnexe(login, file, nomFichier, TypeAnnexe.CV);
@@ -120,10 +119,13 @@ public class AnnexesServiceTest {
     @Test
     public void testerRecupererContenuAnnexe() {
 
+        //Setup fixtures
+        creerDemandeEnCoursAvecAnnexe(annexe, new Login("admin3@admin"));
+
         long tailleAnnexe = annexe.getTaille();
 
         //Récupère demande en cours
-        demandeEnCours = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+        demandeEnCours = demandeAutorisationService.recupererBrouillon(login);
 
         //Vérifie si annexe attachée
         AnnexeFK annexeFK = new AnnexeFK(nomFichier, TypeAnnexe.CV);
@@ -136,18 +138,11 @@ public class AnnexesServiceTest {
     // ********************************************************* Private methods for fixtures
 
     @Transactional(propagation = Propagation.REQUIRED)
-    private void intialiserDemandeEnCours(Annexe annexeALier, Login login) {
-        //TODO: Tout est a revoir ici !
-        try {
-            demandeEnCours = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
-        } catch (javax.persistence.NonUniqueResultException | javax.persistence.NoResultException e) {
-        }
+    private void creerDemandeEnCoursAvecAnnexe(Annexe annexeALier, Login login) {
+        this.login = login; 
 
-        if (demandeEnCours == null) {
-            demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, glnValide, login);
-            if (!demandeEnCours.listerLesAnnexes().contains(annexeALier)) {
-                annexesService.attacherUneAnnexe(login, annexeALier);
-            }
-        }
+        demandeAutorisationService.initialiserDemandeAutorisation(profession, glnValide, login);
+        
+        annexesService.attacherUneAnnexe(login, annexeALier);
     }
 }

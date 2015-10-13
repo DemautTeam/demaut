@@ -27,6 +27,4 @@
 
 	<import resource="classpath:META-INF/spring/jpa-context.xml"/>
 
-    <bean id="demandeAutorisationFactory" class="ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory"/>
-
 </beans>

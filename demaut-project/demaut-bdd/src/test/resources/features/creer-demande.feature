@@ -18,7 +18,7 @@ Fonctionnalité: Créer une demande
       | Dieteticien                |
       | PsychotherapeuteNonMedecin |
 
-  Scénario: Créer une demande
+  Scénario: Créer une demande avec code GLN valide
     Lorsque l´utilisateur initialise une demande de profession "Medecin" avec un code GLN valide
     Alors le système Demaut crée la demande avec les caractéristiques [état: "Brouillon", utilisateur: "joe.dalton@vd.ch", type: "Medecin"]
   
@@ -26,6 +26,11 @@ Fonctionnalité: Créer une demande
     Lorsque l´utilisateur initialise une demande de profession "Medecin" sans code GLN
     Alors le système Demaut refuse de créer la demande
 
-  Scénario: Créer une demande même sans code GLN
+  Scénario: Créer une demande sans code GLN
     Lorsque l´utilisateur initialise une demande de profession "Osteopathe" sans code GLN
     Alors le système Demaut crée la demande avec les caractéristiques [état: "Brouillon", utilisateur: "joe.dalton@vd.ch", type: "Osteopathe"]
+
+  Scénario: Refuser de créer une demande si le brouillon existe déjà
+  	Etant donné une demande de profession "Medecin" en cours de saisie ayant la référence "12345"
+    Lorsque l´utilisateur initialise une demande de profession "Osteopathe" sans code GLN
+    Alors le système Demaut refuse de créer la demande
