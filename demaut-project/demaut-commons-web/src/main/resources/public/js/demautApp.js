@@ -236,10 +236,10 @@ ngDemautApp
                 $http.get(urlPrefix + '/personal/ajouter', {
                     params: {
                         nom: $scope.personalData.nom,
-                        prenom: $scopepersonalData.prenom,
+                        prenom: $scope.personalData.prenom,
                         nomDeCelibataire: $scope.personalData.nomDeCelibataire,
                         adressePersonnelle: $scope.personalData.adressePersonnelle,
-                        localite: $scope.localite,
+                        localite: $scope.personalData.localite,
                         npa: $scope.personalData.npa,
                         pays: $scope.personalData.pays.id,
                         telephonePrive: $scope.personalData.telephonePrive,
