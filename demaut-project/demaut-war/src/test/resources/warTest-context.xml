@@ -17,7 +17,7 @@
         class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="locations">
             <list>
-                <value>classpath*:*demautWarTest.cfg</value>
+                <value>classpath*:demautWarTest.cfg</value>
             </list>
         </property>
     </bean>
