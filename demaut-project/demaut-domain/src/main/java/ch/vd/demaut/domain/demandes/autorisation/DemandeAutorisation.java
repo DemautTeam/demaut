@@ -88,7 +88,11 @@ public class DemandeAutorisation extends Demande {
     }
 
     public List<TypeAnnexe> listerLesTypeAnnexesObligatoires() {
-        return getListeTypeAnnexesObligatoires().listerTypesAnnexe();
+        return determinerListeTypeAnnexesObligatoires().listerTypesAnnexeObligatoires();
+    }
+
+    public ListeTypeAnnexesObligatoires determinerListeTypeAnnexesObligatoires() {
+        return new ListeTypeAnnexesObligatoires(this).determinerListeTypeAnnexesObligatoires();
     }
 
     public ContenuAnnexe extraireContenuAnnexe(AnnexeFK annexeFK) {
@@ -125,10 +129,6 @@ public class DemandeAutorisation extends Demande {
 
     public ListeDesAnnexes getListeDesAnnexes() {
         return new ListeDesAnnexes(annexes);
-    }
-
-    public ListeTypeAnnexesObligatoires getListeTypeAnnexesObligatoires() {
-        return new ListeTypeAnnexesObligatoires();
     }
 
     public DonneesProfessionnelles getDonneesProfessionnelles() {

@@ -6,6 +6,8 @@ import java.util.List;
 import ch.vd.demaut.commons.annotations.Entity;
 import ch.vd.demaut.commons.entities.AbstractEntity;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.ActiviteFuture;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.ListeDesActivitesFutures;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ListeDesDiplomes;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ReferenceDeDiplome;
@@ -18,7 +20,9 @@ public class DonneesProfessionnelles extends AbstractEntity {
     private CodeGLN codeGLN;
 
     private List<Diplome> diplomes;
-    
+
+    private transient List<ActiviteFuture> activiteFutures;
+
     //TODO: Ajouter la reference a la DemandeAutorisation (ou si pas necessaire a la profession)
     //private Profession profession; 
 
@@ -29,12 +33,14 @@ public class DonneesProfessionnelles extends AbstractEntity {
         super();
         this.codeGLN = null;
         this.diplomes = new ArrayList<>();
+        this.activiteFutures = new ArrayList<>();
     }
 
     // TODO: A virer
     public DonneesProfessionnelles(CodeGLN codeGLN, List<Diplome> diplomes) {
         this.codeGLN = codeGLN;
         this.diplomes = diplomes;
+        this.activiteFutures = new ArrayList<>();
     }
 
     // ********************************************************* Methodes metiers
@@ -42,10 +48,14 @@ public class DonneesProfessionnelles extends AbstractEntity {
         getListeDesDiplomes().ajouterUnDiplome(diplomeAAjouter);
     }
 
+    public void validerEtAjouterActiviteFuture(ActiviteFuture activiteFutureAAjouter) {
+        getActiviteFutures().ajouterUneActiviteFuture(activiteFutureAAjouter);
+    }
+
     /**
      * Valide si le Code GLN est obligatoire et correct.
      * Si pas obligatoire, le code peut être nul
-     * @param codeGlnAAjouter
+     * @param codeGlnAAjouter CodeGLN
      */
     public void validerEtRenseignerCodeGLN(CodeGLN codeGlnAAjouter, Profession profession) {
 
@@ -67,6 +77,10 @@ public class DonneesProfessionnelles extends AbstractEntity {
 
     public ListeDesDiplomes getListeDesDiplomes() {
         return new ListeDesDiplomes(diplomes);
+    }
+
+    public ListeDesActivitesFutures getActiviteFutures() {
+        return new ListeDesActivitesFutures(activiteFutures);
     }
 
     // ********************************************************* Methodes privées

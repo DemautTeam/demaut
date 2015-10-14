@@ -3,11 +3,14 @@ package ch.vd.demaut.domain.annexes;
 import ch.vd.demaut.domain.config.RefProgresID;
 import ch.vd.demaut.domain.config.TypeProgres;
 import ch.vd.demaut.domain.exception.TypeAnnexeNotFoundException;
+import org.apache.commons.collections.comparators.ComparableComparator;
+
+import java.util.Comparator;
 
 /**
  * Représente le type d'une annexe
  */
-public enum TypeAnnexe implements TypeProgres {
+public enum TypeAnnexe implements TypeProgres, Comparator {
     CV(1, "CV"),
     Diplome(2, "Diplôme"),
     Titre(3, "Titre(s) (pour chaque Postgrade)"),
@@ -17,9 +20,13 @@ public enum TypeAnnexe implements TypeProgres {
     AttestationBonneConduite(7, "Attestation de bonne conduite"),
     CertificatMedical(8, "Certificat médical"),
     ResponsabiliteCivile(9, "Responsabilité civile"),
-    PieceIdentite(10, "Piece Identité"),
-    AutorisationPratiquer(11, "Autorisation(s) de pratiquer"),
-    Divers(12, "Divers");
+    PieceIdentite(10, "Piece d'identité"),
+    AttestationNiveauFrancais(11, "Attestation de niveau de français"),
+    AutorisationPratiquer(12, "Autorisation(s) de pratiquer"),
+    Recusation(13, "Récusation"),
+    Originaux(14, "Présenter les originaux des diplômes au SSP"),
+    SpecimenSignature(15, "Spécimen signature (à transmettre par courrier postal)"),
+    Divers(16, "Divers");
 
     private RefProgresID refProgresID;
 
@@ -47,5 +54,11 @@ public enum TypeAnnexe implements TypeProgres {
     public String getLibl() {
         return libl;
     }
+
+    @Override
+    public int compare(Object type1, Object type2) {
+        return ((TypeAnnexe)type1).getRefProgresID().getId() - ((TypeAnnexe)type2).getRefProgresID().getId();
+    }
+
 
 }
