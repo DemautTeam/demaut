@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import ch.vd.demaut.domain.exception.DemandeNotFoundException;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,10 +67,17 @@ public class DemandeRestImpl {
             codeGLN = new CodeGLN(codeGlnStr);
         }
         
-        DemandeAutorisation demande = demandeAutorisationService.initialiserDemandeAutorisation(profession, codeGLN, login);
+//        DemandeAutorisation demande = demandeAutorisationService.initialiserDemandeAutorisation(profession, codeGLN, login);
         //TODO: Tester s'il existe une demande et si oui, lancer une exception 
-        
-        return RestUtils.buildJSon(Arrays.asList(demande.getReferenceDeDemande()));
+        DemandeAutorisation demandeAutorisation;
+        try {
+            demandeAutorisation = demandeAutorisationService.recupererBrouillon(login);
+        } catch (DemandeNotFoundException e) {
+            demandeAutorisation = demandeAutorisationService.initialiserDemandeAutorisation(profession, codeGLN, login);
+        }
+
+
+        return RestUtils.buildJSon(Arrays.asList(demandeAutorisation.getReferenceDeDemande()));
     }
 
     @GET
