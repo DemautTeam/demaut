@@ -1,6 +1,7 @@
 package ch.vd.demaut.services.demandeurs.donneesPerso.impl;
 
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.demandeur.Pays;
 import ch.vd.demaut.domain.demandeur.donneesPerso.*;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnellesNotFoundException;
@@ -17,6 +18,9 @@ public class DonneesPersonnellesServiceImpl implements DonneesPersonnellesServic
     @Autowired
     private DemandeAutorisationService demandeAutorisationService;
 
+    @Autowired
+    private DemandeAutorisationRepository demandeAutorisationRepository;
+
 
     @Transactional
     public DonneesPersonnelles recupererDonneesPersonnelles(Login login) {
@@ -27,6 +31,7 @@ public class DonneesPersonnellesServiceImpl implements DonneesPersonnellesServic
         return demandeAutorisation.getDonneesPersonnelles();
     }
 
+    @Transactional
     @Override
     public void renseignerLesDonneesPersonnelles(Login login, Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Adresse adresse, Email email,
                                                  TelephonePrive telephonePrive, TelephoneMobile telephoneMobile, Fax fax, Genre genre, DateDeNaissance dateDeNaissance,
@@ -35,5 +40,7 @@ public class DonneesPersonnellesServiceImpl implements DonneesPersonnellesServic
         demandeAutorisation.getDonneesPersonnelles().renseignerLesDonneesPersonnelles(nom, prenom, nomDeCelibataire, adresse, email,
                 telephonePrive, telephoneMobile, fax, genre, dateDeNaissance, nationalite, langue, permis);
         demandeAutorisation.validerDonneesPersonnelles();
+
+        demandeAutorisationRepository.store(demandeAutorisation);
     }
 }
