@@ -115,13 +115,14 @@
                         NPA*
                     </label>
                     <div class="col-md-2">
-                        <input type="text" id="npa" name="npa" class="form-control" required="required"  ng-model="personalData.npa">
+                        <input type="text" id="npa" name="npa" class="form-control" required="required" ng-model="personalData.npa">
                     </div>
                     <label for="pays" class="col-md-2">
                         Pays*
                     </label>
                     <div class="col-md-2">
-                        <input type="text" id="pays" name="pays" class="form-control" required="required" ng-model="personalData.pays">
+                        <select id="pays" name="pays" ng-model="personalData.pays" required
+                                ng-options="pays.libl for pays in personalData.paysList track by pays.id"/>
                     </div>
                 </div>
                 <div class="row">
@@ -161,13 +162,13 @@
                     <label class="col-md-2">Genre*</label>
                     <div class="col-md-3">
                         <label>
-                        <input type="radio" name="genre" value="feminin" ng-model="personalData.genre" ng-required="!personalData.genre">
+                        <input type="radio" name="genre" value="Feminin" ng-model="personalData.genre" ng-required="!personalData.genre">
                         Feminin
                         </label>
                     </div>
                     <div class="col-md-3">
                         <label>
-                        <input type="radio" name="genre" value="masculin" ng-model="personalData.genre" ng-required="!personalData.genre">
+                        <input type="radio" name="genre" value="Masculin" ng-model="personalData.genre" ng-required="!personalData.genre">
                         Masculin
                         </label>
                     </div>
