@@ -41,7 +41,7 @@
                     <div class="col-md-4"><label for="gln">Code GLN (EAN)</label></div>
                     <div class="col-md-6">
                         <input type="text" id="gln" name="gln" ng-minlength="0" ng-maxlength="13" ng-model="professionData.gln"
-                               placeholder="7601000000125" ng-required="isProfessionNecessiteCodeGLN()">
+                               placeholder="7601000000125" onfocus="this.placeholder = ''" onblur="this.placeholder = '7601000000125'"  ng-required="isProfessionNecessiteCodeGLN()">
                     </div>
                 </div>
                 <div class="row">
