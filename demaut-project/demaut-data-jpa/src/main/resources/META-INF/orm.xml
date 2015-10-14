@@ -91,18 +91,18 @@
                 <enumerated>STRING</enumerated>
             </basic>
             <!-- On ne peut pas utiliser EAGER : https://issues.apache.org/jira/browse/OPENJPA-1908 -->
-            <one-to-many name="annexes" fetch="LAZY">
+            <one-to-many name="annexes">
                 <join-column/>
                 <cascade>
                     <cascade-all/>
                 </cascade>
             </one-to-many>
-            <one-to-one name="donneesProfessionnelles" fetch="LAZY">
+            <one-to-one name="donneesProfessionnelles">
                 <cascade>
                     <cascade-all/>
                 </cascade>
             </one-to-one>
-            <one-to-one name="donneesPersonnelles" fetch="LAZY">
+            <one-to-one name="donneesPersonnelles">
                 <cascade>
                     <cascade-all/>
                 </cascade>
@@ -121,6 +121,7 @@
     <!-- ANNEXE -->
 
     <entity class="ch.vd.demaut.domain.annexes.Annexe">
+        <table name="ANNEXE"/>
         <attributes>
             <basic name="typeAnnexe">
                 <column name="type_Annexe"/>
@@ -138,7 +139,7 @@
         <table name="DONNEES_PROFESSIONNELLES"/>
         <attributes>
             <!-- On ne peut pas utiliser EAGER : https://issues.apache.org/jira/browse/OPENJPA-1908 -->
-            <one-to-many name="diplomes" fetch="LAZY">
+            <one-to-many name="diplomes">
                 <join-column/>
                 <cascade>
                     <cascade-all/>
@@ -150,7 +151,6 @@
 
     <entity class="ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnelles">
         <table name="DONNEES_PERSONNELLES"/>
-
         <attributes>
             <basic name="nationalite">
                 <column name="nationalite"/>
@@ -164,7 +164,7 @@
                 <column name="genre"/>
                 <enumerated>STRING</enumerated>
             </basic>
-            <one-to-one name="adresse" fetch="LAZY">
+            <one-to-one name="adresse">
                 <cascade>
                     <cascade-all/>
                 </cascade>
@@ -184,6 +184,7 @@
     <!-- DIPLOME -->
 
     <entity class="ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome">
+        <table name="DIPLOME"/>
         <attributes>
             <basic name="typeDiplomeAccepte">
                 <column name="type_Diplome_Accepte"/>
