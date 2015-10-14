@@ -20,7 +20,7 @@ public class DonneesPersonnellesServiceImpl implements DonneesPersonnellesServic
 
     @Transactional
     public DonneesPersonnelles recupererDonneesPersonnelles(Login login) {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererBrouillon(login);
         if (demandeAutorisation.getDonneesPersonnelles() == null) {
             throw new DonneesProfessionnellesNotFoundException();
         }
@@ -31,7 +31,7 @@ public class DonneesPersonnellesServiceImpl implements DonneesPersonnellesServic
     public void renseignerLesDonneesPersonnelles(Login login, Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Adresse adresse, Email email,
                                                  TelephonePrive telephonePrive, TelephoneMobile telephoneMobile, Fax fax, Genre genre, DateDeNaissance dateDeNaissance,
                                                  Pays nationalite, Langue langue, Permis permis) {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererBrouillon(login);
         demandeAutorisation.getDonneesPersonnelles().renseignerLesDonneesPersonnelles(nom, prenom, nomDeCelibataire, adresse, email,
                 telephonePrive, telephoneMobile, fax, genre, dateDeNaissance, nationalite, langue, permis);
         demandeAutorisation.validerDonneesPersonnelles();

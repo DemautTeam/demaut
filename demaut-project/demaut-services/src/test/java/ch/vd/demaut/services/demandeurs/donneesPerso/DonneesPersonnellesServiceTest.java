@@ -1,28 +1,44 @@
 package ch.vd.demaut.services.demandeurs.donneesPerso;
 
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.domain.demandeur.Pays;
-import ch.vd.demaut.domain.demandeur.donneesPerso.*;
-import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
-import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.domain.demandeur.Pays;
+import ch.vd.demaut.domain.demandeur.donneesPerso.Adresse;
+import ch.vd.demaut.domain.demandeur.donneesPerso.DateDeNaissance;
+import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnelles;
+import ch.vd.demaut.domain.demandeur.donneesPerso.Email;
+import ch.vd.demaut.domain.demandeur.donneesPerso.Fax;
+import ch.vd.demaut.domain.demandeur.donneesPerso.Genre;
+import ch.vd.demaut.domain.demandeur.donneesPerso.Langue;
+import ch.vd.demaut.domain.demandeur.donneesPerso.Localite;
+import ch.vd.demaut.domain.demandeur.donneesPerso.NPA;
+import ch.vd.demaut.domain.demandeur.donneesPerso.Nom;
+import ch.vd.demaut.domain.demandeur.donneesPerso.Permis;
+import ch.vd.demaut.domain.demandeur.donneesPerso.Prenom;
+import ch.vd.demaut.domain.demandeur.donneesPerso.TelephoneMobile;
+import ch.vd.demaut.domain.demandeur.donneesPerso.TelephonePrive;
+import ch.vd.demaut.domain.demandeur.donneesPerso.TypePermis;
+import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 
-@ContextConfiguration({"classpath*:/servicesTest-context.xml"})
-@ActiveProfiles({"data"})
+@ContextConfiguration({ "classpath*:/servicesTest-context.xml" })
+@ActiveProfiles({ "data" })
 @RunWith(SpringJUnit4ClassRunner.class)
 public class DonneesPersonnellesServiceTest {
 
@@ -56,6 +72,7 @@ public class DonneesPersonnellesServiceTest {
 
     @Test
     @Transactional
+    @Rollback(value = true)
     public void testRecupererDonneesPersonnelles() throws Exception {
         DonneesPersonnelles donneesPersonnelles = donneesPersonnellesService.recupererDonneesPersonnelles(login);
         assertThat(donneesPersonnelles).isNotNull();
@@ -63,6 +80,7 @@ public class DonneesPersonnellesServiceTest {
 
     @Test
     @Transactional
+    @Rollback(value = true)
     public void testRenseignerLesDonneesPersonnelles() throws Exception {
         Nom nom = new Nom("Doe");
         Prenom prenom = new Prenom("John");
@@ -88,17 +106,12 @@ public class DonneesPersonnellesServiceTest {
         assertThat(donneesPersonnelles.getEmail().getValue()).isEqualTo(email.getValue());
     }
 
-    //********************************************************* Private methods for fixtures
+    // ********************************************************* Private methods
+    // for fixtures
 
     @Transactional(propagation = Propagation.REQUIRED)
     private void intialiserDemandeEnCours() {
-        try {
-            demandeEnCours = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
-        } catch (javax.persistence.NonUniqueResultException | javax.persistence.NoResultException e) {
-        }
-
-        if (demandeEnCours == null) {
-            demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, new CodeGLN("7601000000125"), login);
-        }
+        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession,
+                new CodeGLN("7601000000125"), login);
     }
 }

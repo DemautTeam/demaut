@@ -6,6 +6,8 @@ import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.StatutDemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
+import ch.vd.demaut.domain.exception.DemandeBrouillonExisteDejaException;
+import ch.vd.demaut.domain.exception.DemandeNotFoundException;
 import ch.vd.demaut.domain.utilisateurs.Login;
 
 import java.util.List;
@@ -30,15 +32,33 @@ public class DemandeAutorisationRepositoryJava extends
     }
 
     @Override
-    public DemandeAutorisation trouverDemandeBrouillonParUtilisateur(Login login) {
+    public DemandeAutorisation recupererBrouillon(Login login) {
+        DemandeAutorisation brouillon = trouverDemandeBrouillonParUtilisateur(login);
+        if (brouillon == null) {
+            throw new DemandeNotFoundException();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean brouillonExiste(Login login) {
+        DemandeAutorisation brouillon = trouverDemandeBrouillonParUtilisateur(login);
+        return brouillon != null;
+    }
+
+    private DemandeAutorisation trouverDemandeBrouillonParUtilisateur(Login login) {
+        DemandeAutorisation brouillon = null;
         List<DemandeAutorisation> demandes = findAll();
         for (DemandeAutorisation demande : demandes) {
             if (demande.getLogin().equals(login)) {
                 if (demande.getStatutDemandeAutorisation() == StatutDemandeAutorisation.Brouillon) {
-                    return demande;
+                    if (brouillon != null) {
+                        throw new DemandeBrouillonExisteDejaException();
+                    }
+                    brouillon = demande;
                 }
             }
         }
-        return null;
+        return brouillon;
     }
 }

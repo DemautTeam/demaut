@@ -40,7 +40,7 @@ public class DemandeRestImplTest {
 
     @Test
     public void testRecupererCurrentBrouillon() throws Exception {
-        Response response = demandeRest.trouverDemandeBrouillonParUtilisateur();
+        Response response = demandeRest.recupererBrouillon();
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 }

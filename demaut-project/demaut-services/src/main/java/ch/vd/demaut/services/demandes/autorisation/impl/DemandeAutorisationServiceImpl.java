@@ -44,9 +44,9 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
     }
 
     @Override
-    public DemandeAutorisation trouverDemandeBrouillonParUtilisateur(Login login) {
+    public DemandeAutorisation recupererBrouillon(Login login) {
         try {
-            return demandeAutorisationRepository.trouverDemandeBrouillonParUtilisateur(login);
+            return demandeAutorisationRepository.recupererBrouillon(login);
         } catch (EntityNotFoundException e) {
             throw new DemandeNotFoundException();
         }

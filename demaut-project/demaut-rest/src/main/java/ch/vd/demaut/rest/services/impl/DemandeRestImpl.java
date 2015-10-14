@@ -76,14 +76,14 @@ public class DemandeRestImpl {
     @Path("/recuperer")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response trouverDemandeBrouillonParUtilisateur() throws IOException {
+    public Response recupererBrouillon() throws IOException {
 
         Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
 
         LOGGER.info("recuperer Brouillon pour : " + login.getValue());
 
         DemandeAutorisation demandeAutorisation = demandeAutorisationService
-                .trouverDemandeBrouillonParUtilisateur(login);
+                .recupererBrouillon(login);
         // TODO remonter les infos a afficher dans Cockpit
         return RestUtils.buildJSon(Arrays.asList(demandeAutorisation.getReferenceDeDemande()));
     }

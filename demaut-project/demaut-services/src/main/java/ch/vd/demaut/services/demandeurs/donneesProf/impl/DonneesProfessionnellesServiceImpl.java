@@ -29,13 +29,13 @@ public class DonneesProfessionnellesServiceImpl implements DonneesProfessionnell
     
     @Override
     public Profession recupererDonneesProfession(Login login) {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererBrouillon(login);
         return demandeAutorisation.getProfession();
     }
 
     @Transactional
     public DonneesProfessionnelles recupererDonneesProfessionnelles(Login login) {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererBrouillon(login);
         if (demandeAutorisation.getDonneesProfessionnelles() == null) {
             throw new DonneesProfessionnellesNotFoundException();
         }
@@ -48,7 +48,7 @@ public class DonneesProfessionnellesServiceImpl implements DonneesProfessionnell
     public void ajouterUnDiplome(Login login, ReferenceDeDiplome referenceDeDiplome, TypeDiplomeAccepte typeDiplomeAccepte,
                                  TitreFormation titreFormation, String complement, DateObtention dateObtention, PaysObtention paysObtention,
                                  DateReconnaissance dateReconnaissance) {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererBrouillon(login);
         Diplome diplome = new Diplome(referenceDeDiplome, typeDiplomeAccepte, titreFormation, complement, dateObtention, paysObtention, dateReconnaissance);
         demandeAutorisation.getDonneesProfessionnelles().validerEtAjouterDiplome(diplome);
     }
@@ -56,7 +56,7 @@ public class DonneesProfessionnellesServiceImpl implements DonneesProfessionnell
     @Override
     @Transactional
     public void supprimerUnDiplome(Login login, ReferenceDeDiplome referenceDeDiplome) {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererBrouillon(login);
         demandeAutorisation.getDonneesProfessionnelles().supprimerUnDiplome(referenceDeDiplome);
     }
 

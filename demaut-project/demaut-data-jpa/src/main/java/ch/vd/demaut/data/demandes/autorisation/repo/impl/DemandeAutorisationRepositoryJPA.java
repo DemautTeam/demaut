@@ -1,17 +1,22 @@
 package ch.vd.demaut.data.demandes.autorisation.repo.impl;
 
-import ch.vd.demaut.data.GenericRepositoryImpl;
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.StatutDemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
-import ch.vd.demaut.domain.utilisateurs.Login;
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+
+import org.springframework.stereotype.Repository;
+
+import ch.vd.demaut.data.GenericRepositoryImpl;
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.StatutDemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
+import ch.vd.demaut.domain.exception.DemandeBrouillonExisteDejaException;
+import ch.vd.demaut.domain.exception.DemandeNotFoundException;
+import ch.vd.demaut.domain.utilisateurs.Login;
 
 @Repository
 public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<DemandeAutorisation, Long>
@@ -30,13 +35,31 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
     }
 
     @Override
-    public DemandeAutorisation trouverDemandeBrouillonParUtilisateur(Login login) {
-        StatutDemandeAutorisation statutDemandeAutorisation = StatutDemandeAutorisation.Brouillon;
-        TypedQuery<DemandeAutorisation> typedQuery = createQueryBrouillonParUtilisateur(statutDemandeAutorisation, login);
-        return typedQuery.getSingleResult();
+    public DemandeAutorisation recupererBrouillon(Login login) {
+        List<DemandeAutorisation> brouillons = trouverBrouillonsParUtilisateur(login);
+        if (brouillons.size() > 1) {
+            throw new DemandeBrouillonExisteDejaException();
+        }
+        if (brouillons.isEmpty()) {
+            throw new DemandeNotFoundException();
+        }
+        return brouillons.get(0);
+    }
+
+    //TODO: Utiliser une query avec Count
+    @Override
+    public boolean brouillonExiste(Login login) {
+        List<DemandeAutorisation> brouillons = trouverBrouillonsParUtilisateur(login);
+        return !brouillons.isEmpty();
     }
 
     // ********************************************************* Methodes privées
+    private List<DemandeAutorisation> trouverBrouillonsParUtilisateur(Login login) {
+        TypedQuery<DemandeAutorisation> typedQuery = createQueryBrouillonParUtilisateur(login);
+        List<DemandeAutorisation> demandesTrouvees = typedQuery.getResultList();
+        return demandesTrouvees;
+    }
+    
     private TypedQuery<DemandeAutorisation> createQueryParReference(ReferenceDeDemande referenceDeDemande) {
         final CriteriaBuilder builder = this.getEntityManager().getCriteriaBuilder();
         final CriteriaQuery<DemandeAutorisation> criteriaQuery = builder.createQuery(DemandeAutorisation.class);
@@ -45,13 +68,14 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
         return this.getEntityManager().createQuery(criteriaQuery);
     }
 
-    private TypedQuery<DemandeAutorisation> createQueryBrouillonParUtilisateur(StatutDemandeAutorisation statutDemandeAutorisation, Login login) {
+    private TypedQuery<DemandeAutorisation> createQueryBrouillonParUtilisateur(Login login) {
         final CriteriaBuilder builder = this.getEntityManager().getCriteriaBuilder();
-        final CriteriaQuery<DemandeAutorisation> criteriaQuery = builder.createQuery(DemandeAutorisation.class);
-        Root<DemandeAutorisation> autorisationRoot = criteriaQuery.from(DemandeAutorisation.class);
-        criteriaQuery.where(
-                builder.equal(autorisationRoot.get("statutDemandeAutorisation"), statutDemandeAutorisation),
+        final CriteriaQuery<DemandeAutorisation> cq = builder.createQuery(DemandeAutorisation.class);
+        Root<DemandeAutorisation> autorisationRoot = cq.from(DemandeAutorisation.class);
+        cq.where(
+                builder.equal(autorisationRoot.get("statutDemandeAutorisation"), StatutDemandeAutorisation.Brouillon),
                 builder.equal(autorisationRoot.get("login").get("value"), login.getValue()));
-        return this.getEntityManager().createQuery(criteriaQuery);
+        return this.getEntityManager().createQuery(cq);
     }
+
 }
