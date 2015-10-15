@@ -19,9 +19,17 @@ Fonctionnalité: Saisir les données personnelles de la demande
       | ""            | ""     | "refuse"  |
 
 
-
+  @ignoreme
   Scénario: Saisir le nom du demandeur trop long
     Lorsque l´utilisateur saisit son nom "ghhoihoijhohohuhuhiuhiuhiuhiuhiuhiuhiuhuigwghgwwghhoihoijhohohuhuhiuhiuhiuhiuhiuhiuhiuhuigwghgwwghhoihoijhohohuhuhiuhiuhiuhiuhiuhiuhiuhuigwghgwwghhoihoijhohohuhuhiuhiuhiuhiuhiuhiuhiuhuigwghgwwghhoihoijhohohuhuhiuhiuhiuhiuhiuhiuhiuhuigwghgwwghhoihoijhohohuhuhiuhiuhiuhiuhiuhiuhiuhuigwghgww"
     Alors le système Demaut "refuse" les données personnelles
 
-
+  Plan du scénario: Saisie de la nationnalité
+    Lorsque le demandeur saisit la nationalité <nationalite> et le permis <permis>
+    Alors le système Demaut <action> les données personnelles
+    Exemples:
+      | nationalite   | permis   | action    |
+      | "suisse"      | "Aucun"  | "accepte" |
+      | "brésilienne" | "B"      | "accepte" |
+      | "française"   | "Aucun"  | "refuse"  |
+      | ""            | "Aucun"  | "refuse"  |

@@ -104,8 +104,8 @@ public class AnnexesStepDefinitions extends StepDefinitions {
     // ********************************************************* Then
 
     @Alors("^le système Demaut \"(accepte|refuse)\" (?:d´attacher|de supprimer) cette annexe$")
-    public void le_système_Demaut_accepte_ou_refuse_cette_annexe(AccepteOuRefuse expected) throws Throwable {
-        AccepteOuRefuse.verifieAcceptation(expected, annexesSteps.getActualAcceptationAnnexe());
+    public void le_système_Demaut_accepte_ou_refuse_cette_annexe(AccepteOuRefuse action) throws Throwable {
+        annexesSteps.verifieAcceptationAnnexe(action);
     }
 
     @Alors("^les annexes attachées à la demande sont \"([^\"]*)\"$")

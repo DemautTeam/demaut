@@ -2,10 +2,10 @@ package ch.vd.demaut.cucumber.steps;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
 import ch.vd.demaut.domain.annexes.ListeTypeAnnexesObligatoires;
 import ch.vd.demaut.domain.config.ConfigDemaut;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;

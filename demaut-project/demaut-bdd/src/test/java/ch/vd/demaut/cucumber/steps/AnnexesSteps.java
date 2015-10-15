@@ -1,6 +1,6 @@
 package ch.vd.demaut.cucumber.steps;
 
-import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
+import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
 import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.AnnexeFK;
 import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
