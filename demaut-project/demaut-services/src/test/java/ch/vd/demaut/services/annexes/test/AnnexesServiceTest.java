@@ -1,13 +1,12 @@
 package ch.vd.demaut.services.annexes.test;
 
-import ch.vd.demaut.domain.annexes.*;
-import ch.vd.demaut.domain.demandes.DateDeCreation;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.domain.exception.AnnexeNonUniqueException;
-import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.services.annexes.AnnexesService;
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Collection;
+
 import org.apache.commons.io.IOUtils;
 import org.joda.time.LocalDate;
 import org.junit.Before;
@@ -21,12 +20,19 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.Collection;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
+import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.domain.annexes.AnnexeFK;
+import ch.vd.demaut.domain.annexes.ContenuAnnexe;
+import ch.vd.demaut.domain.annexes.NomFichier;
+import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.domain.demandes.DateDeCreation;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
+import ch.vd.demaut.domain.exception.AnnexeNonUniqueException;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.services.annexes.AnnexesService;
+import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 
 @ContextConfiguration({"classpath*:/servicesTest-context.xml"})
 @ActiveProfiles({"data"})
@@ -49,6 +55,7 @@ public class AnnexesServiceTest {
 
     private Profession profession;
     private Login login;
+    private CodeGLN glnValide = new CodeGLN("4719512002889");
 
     @Before
     public void setUp() throws Exception {
@@ -59,20 +66,16 @@ public class AnnexesServiceTest {
         annexe = new Annexe(TypeAnnexe.CV, nomFichier, new ContenuAnnexe(byteArray), new DateDeCreation(new LocalDate()));
 
         profession = Profession.Medecin;
-        login = new Login("admin@admin");
-
-        if (demandeEnCours == null) {
-            intialiserDemandeEnCours(annexe, login);
-        }
+        login = null;
 
         assertThat(annexesService).isNotNull();
-        assertThat(byteArray).isNotNull();
-        assertThat(demandeEnCours.getReferenceDeDemande()).isNotNull();
-        assertThat(nomFichier).isNotNull();
     }
 
     @Test
     public void testListerLesAnnexesMetadata() throws Exception {
+        //Setup fixtures
+        creerDemandeEnCoursAvecAnnexe(annexe, new Login("admin4@admin"));
+
         Collection<?> listerLesAnnexes = annexesService.listerLesAnnexeMetadatas(login);
         assertThat(listerLesAnnexes).isNotEmpty();
     }
@@ -83,12 +86,13 @@ public class AnnexesServiceTest {
     @Rollback(value = false)
     public void testerAttacherUneAnnexe() {
         //Setup fixtures
-
+        creerDemandeEnCoursAvecAnnexe(annexe, new Login("admin1@admin"));
+        
         //Attache une annexe
         annexesService.attacherUneAnnexe(login, file, nomFichier, TypeAnnexe.AttestationBonneConduite);
 
         //Récupère demande en cours
-        demandeEnCours = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+        demandeEnCours = demandeAutorisationService.recupererBrouillon(login);
 
         //Vérifie si annexe attachée
         Collection<Annexe> annexes = demandeEnCours.listerLesAnnexes();
@@ -101,6 +105,8 @@ public class AnnexesServiceTest {
     @Transactional
     @Rollback(value = true)
     public void testerAttacherAnnexeNonUnique() {
+        //Setup fixtures
+        creerDemandeEnCoursAvecAnnexe(annexe, new Login("admin2@admin"));
         try {
             //Attache une annexe
             annexesService.attacherUneAnnexe(login, file, nomFichier, TypeAnnexe.CV);
@@ -113,10 +119,13 @@ public class AnnexesServiceTest {
     @Test
     public void testerRecupererContenuAnnexe() {
 
+        //Setup fixtures
+        creerDemandeEnCoursAvecAnnexe(annexe, new Login("admin3@admin"));
+
         long tailleAnnexe = annexe.getTaille();
 
         //Récupère demande en cours
-        demandeEnCours = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+        demandeEnCours = demandeAutorisationService.recupererBrouillon(login);
 
         //Vérifie si annexe attachée
         AnnexeFK annexeFK = new AnnexeFK(nomFichier, TypeAnnexe.CV);
@@ -129,17 +138,11 @@ public class AnnexesServiceTest {
     // ********************************************************* Private methods for fixtures
 
     @Transactional(propagation = Propagation.REQUIRED)
-    private void intialiserDemandeEnCours(Annexe annexeALier, Login login) {
-        try {
-            demandeEnCours = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
-        } catch (javax.persistence.NonUniqueResultException | javax.persistence.NoResultException e) {
-        }
+    private void creerDemandeEnCoursAvecAnnexe(Annexe annexeALier, Login login) {
+        this.login = login; 
 
-        if (demandeEnCours == null) {
-            demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null, login);
-            if (!demandeEnCours.listerLesAnnexes().contains(annexeALier)) {
-                annexesService.attacherUneAnnexe(login, annexeALier);
-            }
-        }
+        demandeAutorisationService.initialiserDemandeAutorisation(profession, glnValide, login);
+        
+        annexesService.attacherUneAnnexe(login, annexeALier);
     }
 }

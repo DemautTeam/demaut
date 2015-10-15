@@ -4,6 +4,7 @@ import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
+import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.utilisateurs.Utilisateur;
 import ch.vd.demaut.domain.utilisateurs.UtilisateurService;
 
@@ -24,9 +25,9 @@ public class DemandeAutorisationDomainService {
         this.demandeAutorisationRepository = repo;
     }
 
-    public DemandeAutorisation initialiserDemandeAutorisation(Profession profession) {
+    public DemandeAutorisation initialiserDemandeAutorisation(Profession profession, CodeGLN codeGLN) {
         Utilisateur utilisateurCourant = utilisateurService.recupererUtilisateurCourant();
-        DemandeAutorisation nouvelleDemande = factory.initierDemandeAutorisation(utilisateurCourant.getLogin(), profession);
+        DemandeAutorisation nouvelleDemande = factory.initierDemandeAutorisation(utilisateurCourant.getLogin(), profession,codeGLN);
         demandeAutorisationRepository.store(nouvelleDemande);
         return nouvelleDemande;
     }

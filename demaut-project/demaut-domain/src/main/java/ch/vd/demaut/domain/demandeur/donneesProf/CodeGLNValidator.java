@@ -1,9 +1,8 @@
-package ch.vd.demaut.domain.demandeur.donneesProf.diplome;
+package ch.vd.demaut.domain.demandeur.donneesProf;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.validation.AbstractDataValidateur;
-import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
-import ch.vd.demaut.domain.exception.CodeGLNNonValideException;
+import ch.vd.demaut.domain.exception.CodeGlnNonValideException;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.ConstraintViolation;
@@ -12,7 +11,7 @@ import java.util.Set;
 @ValueObject
 public class CodeGLNValidator extends AbstractDataValidateur<CodeGLN> {
     // ********************************************************* Static fields
-    static private final int tailleMin = 1;
+    static private final int tailleMin = 13;
     static private final int tailleMax = 13;
 
     // ********************************************************* Constructeur
@@ -36,35 +35,27 @@ public class CodeGLNValidator extends AbstractDataValidateur<CodeGLN> {
 
         // 2. Valide taille codeGLN
         validerTaille(codeGLN);
-
-        // 3. Valide Checksum
-        validerChecksum(codeGLN);
-
     }
 
     public void validerStructure(CodeGLN codeGLN) {
         Set<ConstraintViolation<CodeGLN>> constraintViolationsResult = validateData(codeGLN);
 
         if (constraintViolationsResult.size() > 0) {
-            throw new CodeGLNNonValideException();
+            throw new CodeGlnNonValideException();
         }
     }
 
     public void validerTaille(CodeGLN codeGLN) {
         String value = codeGLN.getValue();
         if (StringUtils.isEmpty(value)) {
-            throw new CodeGLNNonValideException();
+            throw new CodeGlnNonValideException();
         }
         if (value.length() < getTailleMin()) {
-            throw new CodeGLNNonValideException();
+            throw new CodeGlnNonValideException();
         }
 
         if (value.length() > getTailleMax()) {
-            throw new CodeGLNNonValideException();
+            throw new CodeGlnNonValideException();
         }
-    }
-
-    private void validerChecksum(CodeGLN codeGLN) {
-        // TODO Checksum https://en.wikipedia.org/wiki/Global_Location_Number
     }
 }

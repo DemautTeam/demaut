@@ -6,6 +6,9 @@ import javax.validation.constraints.Size;
 
 public class NPA extends StringVO {
 
+    public NPA() {
+    }
+
     public NPA(String value) {
         super(value);
     }

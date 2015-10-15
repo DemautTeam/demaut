@@ -10,6 +10,10 @@ import javax.validation.constraints.Size;
 public class Prenom extends StringVO {
 
     // ********************************************************* Constructor
+
+    public Prenom() {
+    }
+
     public Prenom(String value) {
         super(value);
     }

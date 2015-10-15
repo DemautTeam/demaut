@@ -55,6 +55,20 @@
     <!-- 		</attributes> -->
     <!-- 	</embeddable> -->
 
+    <!-- Cannot use attribute-override inside embedded attribute even the doc say its OK -->
+    <!--http://openjpa.apache.org/builds/1.2.3/apache-openjpa/docs/jpa_overview_mapping_field.html-->
+    <!--<embedded name="telephonePrive">-->
+        <!--<attribute-override name="value">-->
+            <!--<column name="telephone_prive" column-definition="varchar" length="254"/>-->
+        <!--</attribute-override>-->
+    <!--</embedded>-->
+    <!--<embedded name="telephoneMobile">-->
+        <!--<attribute-override name="value">-->
+            <!--<column name="telephone_mobile" column-definition="varchar" length="254"/>-->
+        <!--</attribute-override>-->
+    <!--</embedded>-->
+
+
     <!-- DEMANDE -->
 
     <entity class="ch.vd.demaut.domain.demandes.Demande">
@@ -77,13 +91,18 @@
                 <enumerated>STRING</enumerated>
             </basic>
             <!-- On ne peut pas utiliser EAGER : https://issues.apache.org/jira/browse/OPENJPA-1908 -->
-            <one-to-many name="annexes" fetch="LAZY">
+            <one-to-many name="annexes">
                 <join-column/>
                 <cascade>
                     <cascade-all/>
                 </cascade>
             </one-to-many>
-            <one-to-one name="donneesProfessionnelles" fetch="LAZY">
+            <one-to-one name="donneesProfessionnelles">
+                <cascade>
+                    <cascade-all/>
+                </cascade>
+            </one-to-one>
+            <one-to-one name="donneesPersonnelles">
                 <cascade>
                     <cascade-all/>
                 </cascade>
@@ -102,6 +121,7 @@
     <!-- ANNEXE -->
 
     <entity class="ch.vd.demaut.domain.annexes.Annexe">
+        <table name="ANNEXE"/>
         <attributes>
             <basic name="typeAnnexe">
                 <column name="type_Annexe"/>
@@ -119,7 +139,7 @@
         <table name="DONNEES_PROFESSIONNELLES"/>
         <attributes>
             <!-- On ne peut pas utiliser EAGER : https://issues.apache.org/jira/browse/OPENJPA-1908 -->
-            <one-to-many name="diplomes" fetch="LAZY">
+            <one-to-many name="diplomes">
                 <join-column/>
                 <cascade>
                     <cascade-all/>
@@ -129,9 +149,42 @@
         </attributes>
     </entity>
 
+    <entity class="ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnelles">
+        <table name="DONNEES_PERSONNELLES"/>
+        <attributes>
+            <basic name="nationalite">
+                <column name="nationalite"/>
+                <enumerated>ORDINAL</enumerated>
+            </basic>
+            <basic name="langue">
+                <column name="langue"/>
+                <enumerated>ORDINAL</enumerated>
+            </basic>
+            <basic name="genre">
+                <column name="genre"/>
+                <enumerated>STRING</enumerated>
+            </basic>
+            <one-to-one name="adresse">
+                <cascade>
+                    <cascade-all/>
+                </cascade>
+            </one-to-one>
+            <embedded name="nom"/>
+            <embedded name="prenom"/>
+            <embedded name="nomDeCelibataire"/>
+            <embedded name="dateDeNaissance"/>
+            <embedded name="email"/>
+            <embedded name="telephonePrive"/>
+            <embedded name="telephoneMobile"/>
+            <embedded name="fax"/>
+            <embedded name="permis"/>
+        </attributes>
+    </entity>
+
     <!-- DIPLOME -->
 
     <entity class="ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome">
+        <table name="DIPLOME"/>
         <attributes>
             <basic name="typeDiplomeAccepte">
                 <column name="type_Diplome_Accepte"/>
@@ -145,6 +198,26 @@
             <embedded name="dateObtention"/>
             <embedded name="paysObtention"/>
             <embedded name="dateReconnaissance"/>
+        </attributes>
+    </entity>
+
+    <!-- ADRESSE -->
+
+    <entity class="ch.vd.demaut.domain.demandeur.donneesPerso.Adresse">
+        <table name="ADRESSE_PERSONNELLE"/>
+        <attributes>
+            <basic name="pays">
+                <column name="pays"/>
+                <enumerated>ORDINAL</enumerated>
+            </basic>
+            <basic name="voie" access="PROPERTY">
+                <column name="voie" column-definition="varchar" length="254"/>
+            </basic>
+            <basic name="complement" access="PROPERTY">
+                <column name="complement" column-definition="varchar" length="254"/>
+            </basic>
+            <embedded name="npa"/>
+            <embedded name="localite"/>
         </attributes>
     </entity>
 
@@ -171,7 +244,7 @@
     <embeddable class="ch.vd.demaut.domain.utilisateurs.Login">
         <attributes>
             <basic name="value" access="PROPERTY">
-                <column name="login"/>
+                <column name="login" column-definition="varchar" length="254"/>
             </basic>
         </attributes>
     </embeddable>
@@ -179,7 +252,7 @@
     <embeddable class="ch.vd.demaut.domain.demandes.ReferenceDeDemande">
         <attributes>
             <basic name="value">
-                <column name="reference_Demande"/>
+                <column name="reference_Demande" column-definition="varchar" length="254"/>
             </basic>
         </attributes>
     </embeddable>
@@ -187,7 +260,7 @@
     <embeddable class="ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN">
         <attributes>
             <basic name="value">
-                <column name="code_GLN"/>
+                <column name="code_GLN" column-definition="varchar" length="254"/>
             </basic>
         </attributes>
     </embeddable>
@@ -195,7 +268,7 @@
     <embeddable class="ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormation">
         <attributes>
             <basic name="value">
-                <column name="titre_Formation"/>
+                <column name="titre_Formation" column-definition="varchar" length="254"/>
             </basic>
         </attributes>
     </embeddable>
@@ -235,7 +308,113 @@
     <embeddable class="ch.vd.demaut.domain.demandeur.donneesProf.diplome.ReferenceDeDiplome">
         <attributes>
             <basic name="value">
-                <column name="reference_Diplome"/>
+                <column name="reference_Diplome" column-definition="varchar" length="254"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+    <embeddable class="ch.vd.demaut.domain.demandeur.donneesPerso.NPA">
+        <attributes>
+            <basic name="value">
+                <column name="npa" column-definition="varchar" length="254"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+    <embeddable class="ch.vd.demaut.domain.demandeur.donneesPerso.Localite">
+        <attributes>
+            <basic name="value">
+                <column name="localite" column-definition="varchar" length="254"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+    <embeddable class="ch.vd.demaut.domain.demandeur.donneesPerso.Nom">
+        <attributes>
+            <basic name="value">
+                <column name="nom" column-definition="varchar" length="254"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+    <embeddable class="ch.vd.demaut.domain.demandeur.donneesPerso.Prenom">
+        <attributes>
+            <basic name="value">
+                <column name="prenom" column-definition="varchar" length="254"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+    <embeddable class="ch.vd.demaut.domain.demandeur.donneesPerso.NomDeCelibataire">
+        <attributes>
+            <basic name="value">
+                <column name="nom_de_Celibataire" column-definition="varchar" length="254"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+    <embeddable class="ch.vd.demaut.domain.demandeur.donneesPerso.DateDeNaissance">
+        <attributes>
+            <basic name="value">
+                <column name="date_de_Naissance" column-definition="date"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+    <embeddable class="ch.vd.demaut.domain.demandeur.donneesPerso.Email">
+        <attributes>
+            <basic name="value">
+                <column name="email" column-definition="varchar" length="254"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+    <embeddable class="ch.vd.demaut.domain.demandeur.donneesPerso.NumeroTelephone">
+        <attributes>
+            <basic name="value">
+                <column name="telephone" column-definition="varchar" length="254"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+    <embeddable class="ch.vd.demaut.domain.demandeur.donneesPerso.TelephonePrive">
+        <attributes>
+            <basic name="value">
+                <column name="telephone_prive" column-definition="varchar" length="254"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+    <embeddable class="ch.vd.demaut.domain.demandeur.donneesPerso.TelephoneMobile">
+        <attributes>
+            <basic name="value">
+                <column name="telephone_mobile" column-definition="varchar" length="254"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+    <embeddable class="ch.vd.demaut.domain.demandeur.donneesPerso.Fax">
+        <attributes>
+            <basic name="value">
+                <column name="fax" column-definition="varchar" length="254"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+    <embeddable class="ch.vd.demaut.domain.demandeur.donneesPerso.Permis">
+        <attributes>
+            <basic name="typePermis">
+                <column name="type_permis"/>
+                <enumerated>STRING</enumerated>
+            </basic>
+            <embedded name="autrePermis"/>
+        </attributes>
+    </embeddable>
+
+    <embeddable class="ch.vd.demaut.domain.demandeur.donneesPerso.AutrePermis">
+        <attributes>
+            <basic name="value">
+                <column name="autre_permis" column-definition="varchar" length="254"/>
             </basic>
         </attributes>
     </embeddable>

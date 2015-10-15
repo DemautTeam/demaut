@@ -1,6 +1,6 @@
 package ch.vd.demaut.cucumber.steps;
 
-import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
+import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
 import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.AnnexeFK;
 import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
@@ -68,9 +68,9 @@ public class AnnexesSteps {
     // ***************************** **************************** Technical
     // methods
 
-
-    public AccepteOuRefuse getActualAcceptationAnnexe() {
-        return actualAcceptationAnnexe;
+    //TODO: Mutualiser cela
+    public void verifieAcceptationAnnexe(AccepteOuRefuse expectedAcceptationAnnexe) {
+        assertThat(actualAcceptationAnnexe).isEqualTo(expectedAcceptationAnnexe);
     }
 
     public void accepteAnnexe() {

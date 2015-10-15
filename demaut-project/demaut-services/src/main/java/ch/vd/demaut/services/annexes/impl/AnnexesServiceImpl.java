@@ -39,13 +39,13 @@ public class AnnexesServiceImpl implements AnnexesService {
     @Transactional(readOnly = true)
     @Override
     public Collection<AnnexeMetadata> listerLesAnnexeMetadatas(Login login) {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererBrouillon(login);
         return demandeAutorisation.listerLesAnnexeMetadatas();
     }
 
     @Override
     public Collection<TypeAnnexe> listerLesTypeAnnexesObligatoires(Login login) {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererBrouillon(login);
         return demandeAutorisation.listerLesTypeAnnexesObligatoires();
     }
 
@@ -60,14 +60,14 @@ public class AnnexesServiceImpl implements AnnexesService {
     @Transactional(readOnly = true)
     @Override
     public ContenuAnnexe recupererContenuAnnexe(Login login, AnnexeFK annexeFK) {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererBrouillon(login);
         return demandeAutorisation.extraireContenuAnnexe(annexeFK);
     }
 
     @Transactional
     @Override
     public void attacherUneAnnexe(Login login, File file, NomFichier nomFichier, TypeAnnexe type) {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererBrouillon(login);
         ContenuAnnexe contenuAnnexe = buildContenuAnnexe(file);
         Annexe annexe = new Annexe(type, nomFichier, contenuAnnexe, new DateDeCreation(new LocalDate()));
         demandeAutorisation.validerEtAttacherAnnexe(annexe);
@@ -76,14 +76,14 @@ public class AnnexesServiceImpl implements AnnexesService {
     @Transactional
     @Override
     public void attacherUneAnnexe(Login login, Annexe annexe) {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererBrouillon(login);
         demandeAutorisation.validerEtAttacherAnnexe(annexe);
     }
 
     @Transactional
     @Override
     public void supprimerUneAnnexe(Login login, AnnexeFK annexeFK) {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.trouverDemandeBrouillonParUtilisateur(login);
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererBrouillon(login);
         demandeAutorisation.supprimerUneAnnexe(annexeFK);
     }
 

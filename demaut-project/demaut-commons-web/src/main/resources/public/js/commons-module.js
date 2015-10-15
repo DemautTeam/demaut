@@ -8,14 +8,21 @@ commonsModule.service('nationalityTest', ['$log', function ($log) {
 }]);
 
 commonsModule.service('professionTest', ['$log', function ($log) {
-    this.isProfessionMedicaleUni = function (textValue, listValues) {
-        return textValue != null && textValue != undefined && listValues.indexOf(textValue) != -1;
+    this.isProfessionNecessiteCodeGLN = function (professionValue, listProfessions) {
+        if (professionValue != null && professionValue != undefined) {
+            for (var indexI = 0; indexI < listProfessions.length; indexI++) {
+                if (listProfessions[indexI].id == professionValue.id) {
+                    return true;
+                }
+            }
+        }
+        return false;
     };
 }]);
 
-commonsModule.service('configService', ['$resource', function($resource){
+commonsModule.service('configService', ['$resource', function ($resource) {
     this.config = $resource('api/config/urlprefix');
-    this.getUrlPrefix = function(){
+    this.getUrlPrefix = function () {
         return this.config.get();
     }
 

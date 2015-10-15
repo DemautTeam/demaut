@@ -2,6 +2,7 @@ package ch.vd.demaut.domain.demandeur.donneesPerso;
 
 import ch.vd.demaut.commons.annotations.Entity;
 import ch.vd.demaut.commons.entities.AbstractEntity;
+import ch.vd.demaut.domain.demandeur.Pays;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -11,57 +12,50 @@ public class DonneesPersonnelles extends AbstractEntity {
 
     // ********************************************************* Fields
     @Valid
-    final private Nom nom;
+    private Nom nom;
 
     @Valid
-    final private Prenom prenom;
+    private Prenom prenom;
 
-    final private NomDeCelibataire nomDeCelibataire;
+    private NomDeCelibataire nomDeCelibataire;
 
     @NotNull
-    final private Genre genre;
+    private Genre genre;
 
     @Valid
-    final private DateDeNaissance dateDeNaissance;
+    private DateDeNaissance dateDeNaissance;
 
     @Valid
-    final private Adresse adresse;
-
-    @Valid
-    final private Email email;
-
-    final private NumeroTelephone telephonePrive;
-
-    final private NumeroTelephone telephoneMobile;
-
-    final private NumeroTelephone fax;
-
-    final private Nationalite nationalite;
+    private Adresse adresse;
 
     @NotNull
-    final private TypePermis typePermis;
+    private Pays nationalite;
+
+    @Valid
+    private Email email;
+
+    private TelephonePrive telephonePrive;
+
+    private TelephoneMobile telephoneMobile;
+
+    private Fax fax;
+
+    @NotNull
+    private Langue langue;
+
+    private Permis permis;
 
 
     // ********************************************************* Constructor
 
     public DonneesPersonnelles() {
         super();
-        this.nom = null;
-        this.prenom = null;
-        this.nomDeCelibataire = null;
-        this.genre = null;
-        this.dateDeNaissance = null;
-        this.adresse = null;
-        this.email = null;
-        this.telephonePrive = null;
-        this.telephoneMobile = null;
-        this.fax = null;
-        nationalite = null;
-        typePermis = TypePermis.Aucun;
     }
 
     //TODO: A supprimer
-    public DonneesPersonnelles(Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Genre genre, DateDeNaissance dateDeNaissance, Adresse adresse, Email email, NumeroTelephone telephonePrive, NumeroTelephone telephoneMobile, NumeroTelephone fax, Nationalite nationalite, TypePermis typePermis) {
+    public DonneesPersonnelles(Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Adresse adresse, Email email,
+                               TelephonePrive telephonePrive, TelephoneMobile telephoneMobile, Fax fax, Genre genre,
+                               DateDeNaissance dateDeNaissance, Pays nationalite, Langue langue, Permis permis) {
         super();
         this.nom = nom;
         this.prenom = prenom;
@@ -74,7 +68,8 @@ public class DonneesPersonnelles extends AbstractEntity {
         this.telephoneMobile = telephoneMobile;
         this.fax = fax;
         this.nationalite = nationalite;
-        this.typePermis = typePermis;
+        this.langue = langue;
+        this.permis = permis;
     }
 
     // ********************************************************* Getters
@@ -102,11 +97,11 @@ public class DonneesPersonnelles extends AbstractEntity {
         return adresse;
     }
 
-    public NumeroTelephone getTelephonePrive() {
+    public TelephonePrive getTelephonePrive() {
         return telephonePrive;
     }
 
-    public NumeroTelephone getTelephoneMobile() {
+    public TelephoneMobile getTelephoneMobile() {
         return telephoneMobile;
     }
 
@@ -114,15 +109,37 @@ public class DonneesPersonnelles extends AbstractEntity {
         return email;
     }
 
-    public NumeroTelephone getFax() {
+    public Fax getFax() {
         return fax;
     }
 
-    public Nationalite getNationalite() {
+    public Pays getNationalite() {
         return nationalite;
     }
 
-    public TypePermis getTypePermis() {
-        return typePermis;
+    public Langue getLangue() {
+        return langue;
+    }
+
+    public Permis getPermis() {
+        return permis;
+    }
+
+    public void renseignerLesDonneesPersonnelles(Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Adresse adresse, Email email,
+                                                 TelephonePrive telephonePrive, TelephoneMobile telephoneMobile, Fax fax, Genre genre,
+                                                 DateDeNaissance dateDeNaissance, Pays nationalite, Langue langue, Permis permis) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.nomDeCelibataire = nomDeCelibataire;
+        this.adresse = adresse;
+        this.email = email;
+        this.telephonePrive = telephonePrive;
+        this.telephoneMobile = telephoneMobile;
+        this.fax = fax;
+        this.genre = genre;
+        this.dateDeNaissance = dateDeNaissance;
+        this.nationalite = nationalite;
+        this.langue = langue;
+        this.permis = permis;
     }
 }

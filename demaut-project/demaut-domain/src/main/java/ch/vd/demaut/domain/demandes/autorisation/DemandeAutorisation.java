@@ -60,6 +60,8 @@ public class DemandeAutorisation extends Demande {
         this.statutDemandeAutorisation = StatutDemandeAutorisation.Brouillon;
         this.login = login;
         this.profession = profession;
+        this.donneesPersonnelles = new DonneesPersonnelles();
+        this.donneesProfessionnelles = new DonneesProfessionnelles();
     }
 
     // ********************************************************* Business Methods
@@ -94,7 +96,11 @@ public class DemandeAutorisation extends Demande {
     }
 
     public List<TypeAnnexe> listerLesTypeAnnexesObligatoires() {
-        return getListeTypeAnnexesObligatoires().listerTypesAnnexe();
+        return determinerListeTypeAnnexesObligatoires().listerTypesAnnexeObligatoires();
+    }
+
+    public ListeTypeAnnexesObligatoires determinerListeTypeAnnexesObligatoires() {
+        return new ListeTypeAnnexesObligatoires(this).determinerListeTypeAnnexesObligatoires();
     }
 
     public ContenuAnnexe extraireContenuAnnexe(AnnexeFK annexeFK) {
@@ -111,6 +117,10 @@ public class DemandeAutorisation extends Demande {
     // ******* Donnees Professionnelles
     public void validerDonneesProfessionnelles() {
         DONNEES_PROFESSIONNELLES_VALIDATEUR.valider(donneesProfessionnelles);
+    }
+
+    public void validerDonneesPersonnelles() {
+        new DonneesPersonnellesValidateur().valider(donneesPersonnelles);
     }
 
     // ********************************************************* Private Methods
@@ -135,10 +145,6 @@ public class DemandeAutorisation extends Demande {
 
     public ListeDesAnnexes getListeDesAnnexes() {
         return new ListeDesAnnexes(annexes);
-    }
-
-    public ListeTypeAnnexesObligatoires getListeTypeAnnexesObligatoires() {
-        return new ListeTypeAnnexesObligatoires();
     }
 
     public DonneesProfessionnelles getDonneesProfessionnelles() {

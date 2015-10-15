@@ -4,9 +4,12 @@ import ch.vd.demaut.commons.vo.BaseValueObject;
 
 public class Permis extends BaseValueObject {
 
-    final private TypePermis typePermis;
+    private TypePermis typePermis;
 
-    final private AutrePermis autrePermis;
+    private AutrePermis autrePermis;
+
+    public Permis() {
+    }
 
     public Permis(TypePermis typePermis, AutrePermis autrePermis) {
         this.typePermis = typePermis;

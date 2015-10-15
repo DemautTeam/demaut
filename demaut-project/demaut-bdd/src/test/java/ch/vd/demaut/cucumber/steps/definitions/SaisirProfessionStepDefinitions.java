@@ -1,6 +1,6 @@
 package ch.vd.demaut.cucumber.steps.definitions;
 
-import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
+import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
 import ch.vd.demaut.cucumber.steps.DonneesProfessionnellesSteps;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
@@ -19,7 +19,8 @@ public class SaisirProfessionStepDefinitions extends StepDefinitions {
     // ********************************************************* Fields
     private DonneesProfessionnellesSteps donneesProfessionnellesSteps;
 
-    // ********************************************************* Technical methods
+    // ********************************************************* Technical
+    // methods
 
     public DonneesProfessionnellesSteps getDonneesProfessionnellesSteps() {
         return donneesProfessionnellesSteps;
@@ -27,6 +28,10 @@ public class SaisirProfessionStepDefinitions extends StepDefinitions {
 
     public void setDonneesProfessionnellesSteps(DonneesProfessionnellesSteps donneesProfessionnellesSteps) {
         this.donneesProfessionnellesSteps = donneesProfessionnellesSteps;
+    }
+
+    public DemandeAutorisationSteps getDemandeAutorisationSteps() {
+        return donneesProfessionnellesSteps.getDemandeAutorisationSteps();
     }
 
     // ********************************************************* Before
@@ -66,7 +71,6 @@ public class SaisirProfessionStepDefinitions extends StepDefinitions {
     public void le_système_Demaut_les_données_professionnelles(AccepteOuRefuse action, String message) throws Throwable {
         // TODO
     }
-
 
     @Alors("^le système Demaut crée la demande avec les données professionnelles$")
     public void le_système_Demaut_crée_la_demande_avec_les_données_professionnelles() throws Throwable {
