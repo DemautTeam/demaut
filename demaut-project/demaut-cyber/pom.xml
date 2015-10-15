@@ -14,7 +14,12 @@
     <packaging>war</packaging>
 
     <properties>
-        <properties.urlPrefix>http://slv2395t.etat-de-vaud.ch:41002/outils/demautMicrobiz</properties.urlPrefix>
+        <properties.urlPrefix>http://localhost:8083/outils/demautMicrobiz</properties.urlPrefix>
+
+<!-- Jetty Local: <properties.urlPrefix>http://localhost:8083/outils/demautMicrobiz</properties.urlPrefix>-->
+<!-- Microbiz Local : <properties.urlPrefix>http://localhost:40002/outils/demautMicrobiz</properties.urlPrefix>-->
+<!-- Microbiz DEMO : <properties.urlPrefix>http://slv2395t.etat-de-vaud.ch:41002/outils/demautMicrobiz</properties.urlPrefix>-->
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
@@ -86,6 +91,11 @@
             <version>${spring.framework.version}</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.framework.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>commons-lang</groupId>
@@ -118,27 +128,22 @@
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-jaxrs</artifactId>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-rs-extension-providers</artifactId>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-rs-extension-search</artifactId>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-jaxrs</artifactId>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>javax.ws.rs</groupId>
             <artifactId>javax.ws.rs-api</artifactId>
-            <scope>compile</scope>
         </dependency>
 
         <!-- IAM -->

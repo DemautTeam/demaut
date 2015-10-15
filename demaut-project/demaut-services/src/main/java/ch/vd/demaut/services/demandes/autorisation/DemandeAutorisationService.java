@@ -26,12 +26,12 @@ public interface DemandeAutorisationService {
     DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande referenceDeDemande);
 
     /**
-     * Récupère une demande brouillon via sa référence <br/>
+     * Récupère une demande brouillon via le login <br/>
      * Renvoie exception si pas trouvée<br/>
      *
      * @param login Login
      * @return DemandeAutorisation
      */
-    DemandeAutorisation trouverDemandeBrouillonParUtilisateur(Login login);
+    DemandeAutorisation recupererBrouillon(Login login);
 }
 

@@ -7,6 +7,7 @@ import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
+import ch.vd.demaut.domain.exception.DemandeNotFoundException;
 import ch.vd.demaut.domain.exception.ReferenceDemandeNotFoundException;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
@@ -24,9 +25,11 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
     @Transactional
     @Override
     public DemandeAutorisation initialiserDemandeAutorisation(Profession profession, CodeGLN codeGLN, Login login) {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationFactory.initierDemandeAutorisation(login, profession);
-        demandeAutorisation.getDonneesProfessionnelles().validerEtRensignerCodeGLN(codeGLN);
+        
+        DemandeAutorisation demandeAutorisation = demandeAutorisationFactory.initierDemandeAutorisation(login, profession, codeGLN);
+        
         demandeAutorisationRepository.store(demandeAutorisation);
+
         return demandeAutorisation;
     }
 
@@ -41,11 +44,11 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
     }
 
     @Override
-    public DemandeAutorisation trouverDemandeBrouillonParUtilisateur(Login login) {
+    public DemandeAutorisation recupererBrouillon(Login login) {
         try {
-            return demandeAutorisationRepository.trouverDemandeBrouillonParUtilisateur(login);
+            return demandeAutorisationRepository.recupererBrouillon(login);
         } catch (EntityNotFoundException e) {
-            throw new ReferenceDemandeNotFoundException();
+            throw new DemandeNotFoundException();
         }
     }
 }

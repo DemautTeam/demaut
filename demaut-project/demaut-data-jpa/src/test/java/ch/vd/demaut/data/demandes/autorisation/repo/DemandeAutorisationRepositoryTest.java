@@ -8,6 +8,7 @@ import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.demandeur.Pays;
+import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.*;
 import ch.vd.demaut.domain.utilisateurs.Login;
@@ -51,6 +52,8 @@ public class DemandeAutorisationRepositoryTest {
     // ********************************************************* Transient
     // fields
     private TransactionStatus transaction;
+    
+    private CodeGLN glnValide = new CodeGLN("4719512002889");
 
     // ********************************************************* Setup
     @Before
@@ -68,9 +71,9 @@ public class DemandeAutorisationRepositoryTest {
         transaction = beginTransaction();
 
         // Construction de la demande
-        Utilisateur utilisateur = creerUtilisateur();
+        Utilisateur utilisateur = creerUtilisateur("admin1@admin");
         DemandeAutorisation demandeInit = demandeAutorisationFactory.initierDemandeAutorisation(utilisateur.getLogin(),
-                Profession.Ergotherapeute);
+                Profession.Ergotherapeute, glnValide);
         assertThat(demandeInit.getId()).isNull();
 
         persisterDemandeEtVerifier(demandeInit);
@@ -82,9 +85,9 @@ public class DemandeAutorisationRepositoryTest {
         transaction = beginTransaction();
 
         // Construction de la demande
-        Utilisateur utilisateur = creerUtilisateur();
+        Utilisateur utilisateur = creerUtilisateur("admin2@admin");
         DemandeAutorisation demandeInit = demandeAutorisationFactory.initierDemandeAutorisation(utilisateur.getLogin(),
-                Profession.Chiropraticien);
+                Profession.Chiropraticien, glnValide);
         byte[] contenu = "AnnexeContenu".getBytes();
         Annexe annexe = new Annexe(TypeAnnexe.CV, "test.pdf", contenu, "01.01.2015 11:00");
         demandeInit.validerEtAttacherAnnexe(annexe);
@@ -96,11 +99,11 @@ public class DemandeAutorisationRepositoryTest {
     public void sauvegarderUneDemandeAvecDonneeProfessionnellesEtDiplomes() {
         transaction = beginTransaction();
 
-        Utilisateur utilisateur = creerUtilisateur();
+        Utilisateur utilisateur = creerUtilisateur("admin3@admin");
 
         // Sauvegarder la demande
         DemandeAutorisation demandeAutorisation = demandeAutorisationFactory
-                .initierDemandeAutorisation(utilisateur.getLogin(), Profession.Medecin);
+                .initierDemandeAutorisation(utilisateur.getLogin(), Profession.Medecin,glnValide);
 
         DonneesProfessionnelles donneesProfessionnelles = demandeAutorisation.getDonneesProfessionnelles();
         creerListeDiplomes(donneesProfessionnelles);
@@ -143,9 +146,9 @@ public class DemandeAutorisationRepositoryTest {
                         new DateObtention(new LocalDate()), new PaysObtention(Pays.Suisse.name()), null));
     }
 
-    private Utilisateur creerUtilisateur() {
+    private Utilisateur creerUtilisateur(String loginStr) {
+        Login login = new Login(loginStr);
         // Créer et sauvegarder un Utilisateur
-        Login login = new Login("admin@admin");
         Utilisateur utilisateur = new Utilisateur(login);
         utilisateurRepository.store(utilisateur);
         assertThat(utilisateur.getId()).isNotNull();
@@ -165,6 +168,11 @@ public class DemandeAutorisationRepositoryTest {
         return transactionManagerDemaut.getTransaction(definition);
     }
 
+    private void rollbackTransaction(TransactionStatus transaction) {
+        transactionManagerDemaut.rollback(transaction);
+    }
+
+    
     private DemandeAutorisation recupererDemandePersistee(DemandeAutorisation demandeAutorisation) {
         commitTransaction(transaction);
         transaction = beginTransaction();
@@ -181,8 +189,10 @@ public class DemandeAutorisationRepositoryTest {
         // Tester les annexes metadata
         Collection<AnnexeMetadata> annexeMetadatasInit = demandeInit.listerLesAnnexeMetadatas();
         Collection<AnnexeMetadata> annexeMetadatasPersit = demandePersistee.listerLesAnnexeMetadatas();
-        assertThat(annexeMetadatasPersit).containsExactlyElementsOf(annexeMetadatasInit);
-
+        
+        assertThat(annexeMetadatasPersit).hasSameSizeAs(annexeMetadatasInit);
+        assertThat(annexeMetadatasPersit).containsAll(annexeMetadatasInit);
+        
         // Teste le contenu annexe
         List<Annexe> annexesPerst = demandePersistee.listerLesAnnexes();
         List<Annexe> annexesInit = demandeInit.listerLesAnnexes();

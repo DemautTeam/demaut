@@ -1,26 +1,31 @@
 package ch.vd.demaut.domain.demandeur.donneesPerso;
 
-import ch.vd.demaut.commons.vo.BaseValueObject;
+import ch.vd.demaut.commons.annotations.Entity;
+import ch.vd.demaut.commons.entities.AbstractEntity;
 import ch.vd.demaut.domain.demandeur.Pays;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-public class Adresse extends BaseValueObject {
+@Entity
+public class Adresse extends AbstractEntity {
 
     @NotNull
-    private final String voie;
+    private String voie;
 
-    private final String complement;
-
-    @Valid
-    private final NPA npa;
+    private String complement;
 
     @Valid
-    private final Localite localite;
+    private NPA npa;
 
     @Valid
-    private final Pays pays;
+    private Localite localite;
+
+    @Valid
+    private Pays pays;
+
+    public Adresse() {
+    }
 
     public Adresse(String voie, String complement, Localite localite, NPA npa, Pays pays) {
         super();

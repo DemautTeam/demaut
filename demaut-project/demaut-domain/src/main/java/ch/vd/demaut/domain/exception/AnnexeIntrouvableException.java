@@ -3,7 +3,7 @@ package ch.vd.demaut.domain.exception;
 import ch.vd.demaut.commons.exceptions.DomainException;
 
 /**
- * Exception causée par une annexe non trouve
+ * Exception causée par une annexe non trouvee
  */
 public class AnnexeIntrouvableException extends DomainException {
 

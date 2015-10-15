@@ -1,9 +1,11 @@
 package ch.vd.demaut.domain.demandeur.donneesProf.diplome;
 
+import ch.vd.demaut.commons.annotations.Entity;
 import ch.vd.demaut.commons.vo.BaseValueObjectWithId;
 
 import javax.validation.Valid;
 
+@Entity
 public class Diplome extends BaseValueObjectWithId {
 
     private ReferenceDeDiplome referenceDeDiplome;

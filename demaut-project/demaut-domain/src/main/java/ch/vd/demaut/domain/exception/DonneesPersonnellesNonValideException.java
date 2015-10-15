@@ -1,4 +1,4 @@
-package ch.vd.demaut.domain.demandeur.donneesPerso;
+package ch.vd.demaut.domain.exception;
 
 import ch.vd.demaut.commons.exceptions.DomainException;
 

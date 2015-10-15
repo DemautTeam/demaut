@@ -27,11 +27,18 @@ public interface DemandeAutorisationRepository
 
     /**
      * Renvoie une demande dans l'état Brouillon associée à un Utilisateur. <br>
-     * Renvoie null si elle n'est pas trouvée
+     * Renvoie exception si elle n'est pas trouvée ou s'il y en a plusieurs
      *
      * @param login Login
      * @return Une Demande autorisation dans l'état Brouillon et associée à
      * l'utilisateur
      */
-    DemandeAutorisation trouverDemandeBrouillonParUtilisateur(Login login);
+    DemandeAutorisation recupererBrouillon(Login login);
+
+    /**
+     * Teste si l'utilisateur a un brouillon associé
+     * @param login
+     * @return
+     */
+    boolean brouillonExiste(Login login);
 }

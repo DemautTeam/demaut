@@ -105,10 +105,8 @@ ngDemautApp
             this.params = $routeParams;
             $scope.professionData = {};
             $scope.professionData.professions = [];
-            $scope.professionData.profession = {};
+            $scope.professionData.professionsCodeGLN = [];
 
-            //Récupère liste des professions
-            //TODO: créer une methode isProfessionsListInitialized + Ne pas appeler le service a chaque fois (à initialiser au départ)
             if ($scope.professionData.professions.length == 0) {
                 $http.get(urlPrefix + '/profession/professionsList')
                     .success(function (data, status, headers, config) {
@@ -119,14 +117,27 @@ ngDemautApp
                     });
             }
 
+            if ($scope.professionData.professionsCodeGLN.length == 0) {
+                $http.get(urlPrefix + '/profession/professionsCodeGLN')
+                    .success(function (data, status, headers, config) {
+                        $scope.professionData.professionsCodeGLN = angular.fromJson(data.response);
+                    })
+                    .error(function (data, status, headers, config) {
+                        $rootScope.error = 'Error downloading ../profession/professionsCodeGLN';
+                    });
+            }
+
             //Etape suivante
             $scope.nextStep = function () {
                 $scope.wouldStepNext = true;
-                if ($scope.professionSante.professionDataForm.$valid) {
+                if ($scope.professionSante.professionDataForm.$valid &&
+                    !(professionTest.isProfessionNecessiteCodeGLN($scope.professionData.profession, $scope.professionData.professionsCodeGLN) &&
+                    ($scope.professionData.gln == null || $scope.professionData.gln == undefined))) {
+
                     $http.get(urlPrefix + '/demande/initialiser', {
                         params: {
                             professionId: $scope.professionData.profession.id,
-                            codeGln: $scope.professionData.profession.gln != undefined ? $scope.professionData.profession.gln : null,
+                            codeGln: $scope.professionData.gln != undefined ? $scope.professionData.gln : null,
                         }
                     })
                         .success(function (data, status, headers, config) {
@@ -145,6 +156,11 @@ ngDemautApp
                     $log.info('Formulaire invalide !');
                 }
             };
+
+            $scope.isProfessionNecessiteCodeGLN = function() {
+                return $scope.professionData.profession != null && $scope.professionData.profession != undefined &&
+                    professionTest.isProfessionNecessiteCodeGLN($scope.professionData.profession, $scope.professionData.professionsCodeGLN)
+            };
         }])
     .controller('DonneesPersoController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', '$log', 'nationalityTest',
         function ($scope, $rootScope, $routeParams, $http, $location, $interval, $log, nationalityTest) {
@@ -156,10 +172,11 @@ ngDemautApp
             $scope.personalData = {};
             $scope.personalData.nationalites = [];
             $scope.personalData.langues = [];
+            $scope.personalData.paysList = [];
             $scope.personalData.datePicker = {};
             $scope.personalData.datePicker.status = {};
 
-            if ($scope.personalData.nationalites == null || $scope.personalData.nationalites == undefined || $scope.personalData.nationalites.length == 0) {
+            if ($scope.personalData.nationalites.length == 0) {
                 $http.get(urlPrefix + '/personal/nationalites').
                     success(function (data, status, headers, config) {
                         $scope.personalData.nationalites = angular.fromJson(data.response);
@@ -169,7 +186,7 @@ ngDemautApp
                     });
             }
 
-            if ($scope.personalData.langues == null || $scope.personalData.langues == undefined || $scope.personalData.langues.length == 0) {
+            if ($scope.personalData.langues.length == 0) {
                 $http.get(urlPrefix + '/personal/langues').
                     success(function (data, status, headers, config) {
                         $scope.personalData.langues = angular.fromJson(data.response);
@@ -179,6 +196,15 @@ ngDemautApp
                     });
             }
 
+            if ($scope.personalData.paysList.length == 0) {
+                $http.get(urlPrefix + '/diplomes/paysList').
+                    success(function (data, status, headers, config) {
+                        $scope.personalData.paysList = angular.fromJson(data.response);
+                    }).
+                    error(function (data, status, headers, config) {
+                        $scope.error = 'Error downloading ../diplomes/paysList';
+                    });
+            }
             $scope.personalData.datePicker.status.dateDeNaissance = {
                 opened: false
             };
@@ -220,17 +246,17 @@ ngDemautApp
                 $http.get(urlPrefix + '/personal/ajouter', {
                     params: {
                         nom: $scope.personalData.nom,
-                        prenom: $scopepersonalData.prenom,
+                        prenom: $scope.personalData.prenom,
                         nomDeCelibataire: $scope.personalData.nomDeCelibataire,
                         adressePersonnelle: $scope.personalData.adressePersonnelle,
-                        localite: $scope.localite,
+                        localite: $scope.personalData.localite,
                         npa: $scope.personalData.npa,
                         pays: $scope.personalData.pays.id,
                         telephonePrive: $scope.personalData.telephonePrive,
                         telephoneMobile: $scope.personalData.telephoneMobile,
                         email: $scope.personalData.email,
                         fax: $scope.personalData.fax,
-                        gender: $scope.personalData.gender,
+                        genre: $scope.personalData.genre,
                         dateDeNaissance: $scope.personalData.dateDeNaissance,
                         nationalite: $scope.personalData.nationalite.id,
                         langue: $scope.personalData.langue,
@@ -262,7 +288,7 @@ ngDemautApp
             $scope.diplomeData.datePicker = {};
             $scope.diplomeData.datePicker.status = {};
 
-            if ($scope.diplomeData.typeDiplomes == null || $scope.diplomeData.typeDiplomes == undefined || $scope.diplomeData.typeDiplomes.length == 0) {
+            if ($scope.diplomeData.typeDiplomes.length == 0) {
                 $http.get(urlPrefix + '/diplomes/typeDiplomesList').
                     success(function (data, status, headers, config) {
                         $scope.diplomeData.typeDiplomes = angular.fromJson(data.response);
@@ -272,7 +298,7 @@ ngDemautApp
                     });
             }
 
-            if ($scope.diplomeData.paysList == null || $scope.diplomeData.paysList == undefined || $scope.diplomeData.paysList.length == 0) {
+            if ($scope.diplomeData.paysList.length == 0) {
                 $http.get(urlPrefix + '/diplomes/paysList').
                     success(function (data, status, headers, config) {
                         $scope.diplomeData.paysList = angular.fromJson(data.response);
@@ -460,7 +486,7 @@ ngDemautApp
 
             $scope.addAnotherActivite = function () {
                 $scope.wouldAddActivite = true;
-                var keyActivite = $scope.activiteData.activitie.etablissement + '#' + $scope.activiteData.activitie.npa + '#' + $scope.activiteData.activitie.pratiquer;
+                var keyActivite = $scope.activiteData.activitie.etablissement + '#' + $scope.activiteData.activitie.npa + '#' + $scope.activiteData.activitie.flagTauxIndependant;
                 var activite = angular.copy($scope.activiteData.activitie);
                 activite.referenceDeActivite = keyActivite.replace(/\s/g, '');
 
@@ -559,7 +585,7 @@ ngDemautApp
             $scope.annexesData.referenceFiles = [];
             $scope.annexesData.annexeTypeSelected = {};
 
-            if ($scope.annexesData.annexeTypes == null || $scope.annexesData.annexeTypes.length == 0) {
+            if ($scope.annexesData.annexeTypes.length == 0) {
                 $http.get(urlPrefix + '/annexes/typesList').
                     success(function (data, status, headers, config) {
                         $scope.annexesData.annexeTypes = angular.fromJson(data.response);
@@ -569,7 +595,7 @@ ngDemautApp
                     });
             }
 
-            if ($scope.annexesData.annexeTypesObligatoires == null || $scope.annexesData.annexeTypesObligatoires.length == 0) {
+            if ($scope.annexesData.annexeTypesObligatoires.length == 0) {
                 $http.get(urlPrefix + '/annexes/typesObligatoiresList').
                     success(function (data, status, headers, config) {
                         $scope.annexesData.annexeTypesObligatoires = angular.fromJson(data.response);
@@ -765,7 +791,9 @@ ngDemautApp
                     .error(function (data, status, headers, config) {
                         $rootScope.error = 'Error Upload: [' + urlPrefix + '/annexes/attacher' + status;
                     });
-                $timeout(function() { deferred.resolve(); }, 10000);
+                $timeout(function () {
+                    deferred.resolve();
+                }, 10000);
             };
         }])
     .controller('RecapitulatifController', ['$scope', '$rootScope', '$routeParams', '$location', '$log',

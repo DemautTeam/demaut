@@ -86,6 +86,20 @@ public class AnnexeRestImpl {
     }
 
     @GET
+    @Path("/typesObligatoiresList")
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("USER")
+    public Response listerLesTypeAnnexesObligatoires() throws Exception {
+
+        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
+
+        LOGGER.info("listerLesTypeAnnexesObligatoires pour : " + login.getValue());
+
+        Collection<TypeAnnexe> typeAnnexes = annexesService.listerLesTypeAnnexesObligatoires(login);
+        return RestUtils.buildRef(typeAnnexes);
+    }
+
+    @GET
     @Path("/lister")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")

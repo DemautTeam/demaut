@@ -94,7 +94,7 @@
         <!-- Beans Validation -->
         <javax.validation.version>1.1.0.Final</javax.validation.version>
         <javax.el.version>3.0.0</javax.el.version>
-        <hibernate.validator.version>5.1.3.Final</hibernate.validator.version>
+        <hibernate.validator.version>5.2.2.Final</hibernate.validator.version>
 
         <!-- Cucumber -->
         <cucumber.version>1.2.3</cucumber.version>
@@ -347,6 +347,11 @@
 
             <!-- CXF -->
             <dependency>
+                <groupId>javax.ws.rs</groupId>
+                <artifactId>javax.ws.rs-api</artifactId>
+                <version>${javax.ws.rs.api.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.cxf</groupId>
                 <artifactId>cxf-rt-transports-http-jetty</artifactId>
                 <version>${cxf.rt.version}</version>
@@ -372,12 +377,12 @@
                 <version>${cxf.rt.version}</version>
             </dependency>
             
-            <!-- CXF Test -->
+            <!-- CXF Client : used for ProgreSOA -->
             <dependency>
                 <groupId>org.apache.cxf</groupId>
                 <artifactId>cxf-rt-rs-client</artifactId>
                 <version>${cxf.rt.version}</version>
-                <scope>test</scope>
+<!--                 <scope>test</scope> -->
             </dependency>
             
             <!-- Jackson -->
@@ -438,6 +443,11 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-tx</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
                 <version>${spring.version}</version>
             </dependency>
 
