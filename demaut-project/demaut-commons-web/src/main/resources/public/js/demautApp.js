@@ -134,6 +134,8 @@ ngDemautApp
                     !(professionTest.isProfessionNecessiteCodeGLN($scope.professionData.profession, $scope.professionData.professionsCodeGLN) &&
                     ($scope.professionData.gln == null || $scope.professionData.gln == undefined))) {
 
+                    $rootScope.profession = $scope.professionData.profession;
+
                     $http.get(urlPrefix + '/demande/initialiser', {
                         params: {
                             professionId: $scope.professionData.profession.id,
@@ -585,6 +587,7 @@ ngDemautApp
             $scope.annexesData.annexeTypesObligatoires = [];
             $scope.annexesData.referenceFiles = [];
             $scope.annexesData.annexeTypeSelected = {};
+            $scope.annexesData.profession = $rootScope.profession;
 
             if ($scope.annexesData.annexeTypes.length == 0) {
                 $http.get(urlPrefix + '/annexes/typesList').

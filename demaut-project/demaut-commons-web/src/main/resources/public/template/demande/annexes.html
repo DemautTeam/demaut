@@ -1,7 +1,7 @@
 <div ng-include="'template/include/include-steps-new.html'"></div>
 <div class="bs-wizard-info text-left">
     <fieldset>
-        <legend>Pièces à fournir :</legend>
+        <legend>Merci de bien vouloir fournir les documents obligatoires</legend>
         <div id="Formulaire_vide" class="alert alert-danger"
              ng-show="annexes.annexesDataForm.$pristine && wouldStepNext">
             <button type="button" class="close" data-target="#Formulaire_vide" data-dismiss="alert">
@@ -11,68 +11,114 @@
         </div>
         <div>
             <ng-form name="annexes.annexesDataForm">
-                <label>En fonction de votre profil et du type d'autorisation que vous souhaitez, vous devez fournir les pièces suivantes :</label>
-
+                <div class="row">
+                    <br/>
+                </div>
+                <div class="row">
+                    <label class="checkbox-inline">Vous avez demandé une autorisation de pratiquer pour une activité de {{annexesData.profession.libl}}.
+                        <br/>Merci de bien vouloir numériser et charger les documents suivants:</label>
+                </div>
+                <div class="row">
+                    <br/>
+                </div>
                 <div class="row" ng-repeat="annexeType in annexesData.annexeTypesObligatoires">
                     <div class="col-md-1">
-                        <input type="checkbox" id="{{annexeType.id}}" name="{{annexeType.id}}"
-                               class="form-control" ng-model="annexeType.checked" required/>
+                        <!--<input type="checkbox" id="{{annexeType.id}}" name="{{annexeType.id}}"-->
+                               <!--class="form-control" ng-model="annexeType.checked" required/>-->
                      </div>
                     <div class="col-md-10">
-                        <label class="checkbox-inline">{{annexeType.libl}}</label>
+                        <li class="glyphicon glyphicon-ok-sign"><label class="checkbox-inline">{{annexeType.libl}}</label></li>
                     </div>
                 </div>
                 <div class="row">
                     <br/>
                 </div>
                 <div class="row">
-                    <div class="col-md-4"><label for="annexeType">Ajouter une annexe de type :</label></div>
-                    <div class="col-md-4">
-                        <select id="annexeType" name="annexeType" ng-model="annexesData.annexeTypeSelected" required
-                                ng-options="annexeType.libl for annexeType in annexesData.annexeTypes track by annexeType.id"/>
-                    </div>
-                    <div class="col-md-4">
-                        <span class="btn btn-success fileinput-button">
-                            <i class="glyphicon glyphicon-plus"></i>
-                                <!-- Warning : No binding support for File Upload control -->
-                            <input type="file" id="file" name="file" multiple ng-disabled="isAnnexeTypeNotSelected()"
-                                   accept="image/jpg,image/png,image/jpeg,application/pdf" style="width:200px;"
-                                   onchange="angular.element(this).scope().filesChanged(this)">
-                            </span>
-                    </div>
-                </div>
-                <div class="row">
                     <br/>
                 </div>
-                <div ng-show="files.length > 0">
-                    <legend>Annexes ajoutées :</legend>
-                    <div style="overflow: auto;">
+                <div class="row">
+                    <div class="col-md-10">
+                        <legend>Vos fichiers téléchargés :</legend>
+                    </div>
+                    <div class="col-md-6" style="overflow: auto;" ng-show="files.length > 0">
                         <table class="table table-striped" ng-show="files">
-                            <thead>
-                            <tr bgcolor="#99CC00">
-                                <th>Fichier</th>
-                                <th>Format</th>
-                                <th>Taille</th>
-                                <th>Type</th>
-                                <th></th>
-                            </tr>
-                            </thead>
+                            <!--<thead>-->
+                            <!--<tr bgcolor="#99CC00">-->
+                                <!--<th>Fichier</th>-->
+                                <!--<th>Format</th>-->
+                                <!--<th>Taille</th>-->
+                                <!--<th>Type</th>-->
+                                <!--<th></th>-->
+                            <!--</tr>-->
+                            <!--</thead>-->
                             <tr ng-repeat="file in files">
                                 <td>{{file.name}}</td>
-                                <td>{{file.type}}</td>
-                                <td>{{file.size}}</td>
-                                <td>{{file.typeAnnexe}}</td>
+                                <!--<td>{{file.type}}</td>-->
+                                <!--<td>{{file.size}}</td>-->
+                                <!--<td>{{file.typeAnnexe}}</td>-->
                                 <td>
+                                    <span class="badge">
                                     <a href="" ng-click="viewAnnexe(file)" class="btn btn-xs btn-default">
                                         <span class="glyphicon glyphicon-eye-open"></span>
                                     </a>
                                     <a href="" ng-click="deleteAnnexe(file)" class="btn btn-xs btn-default">
                                         <span class="glyphicon glyphicon-trash"></span>
                                     </a>
+                                    </span>
                                 </td>
                             </tr>
                         </table>
                     </div>
+                    <label class="checkbox-inline" ng-show="!files || files.length == 0">Vous n'avez pas de document pour l'instant.</label>
+                </div>
+                <div class="row">
+                    <br/>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <legend></legend>
+                    </div>
+                </div>
+                <div class="row">
+                    <!--<div class="col-md-4">-->
+                        <!--<select id="annexeType" name="annexeType" ng-model="annexesData.annexeTypeSelected" required-->
+                                <!--ng-options="annexeType.libl for annexeType in annexesData.annexeTypes track by annexeType.id"/>-->
+                    <!--</div>-->
+                    <div class="col-md-6">
+                        <span class="btn btn-success fileinput-button">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <!-- Warning : No binding support (ng-model) for File Upload control -->
+                            Choisir un fichier sur mon ordinateur
+                            <input type="file" id="file" name="file" multiple
+                                   accept="image/jpg,image/png,image/jpeg,application/pdf" style="width:200px;"
+                                   onchange="angular.element(this).scope().filesChanged(this)">
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <br/>
+                </div>
+                <div class="row">
+                    <label class="checkbox-inline">(Vous pouvez charger un ou plusieurs fichiers à la fois)</label>
+                </div>
+                <div class="row">
+                    <br/>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <legend>Confirmation:</legend>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <input type="checkbox" id="confirmation" name="confirmation" ng-model="annexesData.confirmation" required/>
+                        J'ai bien vérifié avoir chargé l'ensemble des documents qui m'ont été demandés
+                    </div>
+                    <div class="col-md-1">
+                    </div>
+                </div>
+                <div class="row">
+                    <br/>
                 </div>
             </ng-form>
         </div>
