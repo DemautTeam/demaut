@@ -1,6 +1,6 @@
 package ch.vd.demaut.cucumber.steps.definitions;
 
-import ch.vd.demaut.cucumber.converteurs.commons.AccepteOuRefuse;
+import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
 import ch.vd.demaut.cucumber.converteurs.demandes.ReferenceDeDemandeConverter;
 import ch.vd.demaut.cucumber.converteurs.utilisateurs.LoginConverter;
 import ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps;

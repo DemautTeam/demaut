@@ -2,7 +2,6 @@ package ch.vd.demaut.cucumber.steps;
 
 import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
 import ch.vd.demaut.commons.exceptions.DomainException;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandeur.Pays;
 import ch.vd.demaut.domain.demandeur.donneesPerso.*;
 import org.joda.time.LocalDate;
@@ -41,17 +40,19 @@ public class DonneesPersonnellesSteps {
         Email email = new Email("john.doe@nobody.com");
         Genre genre = Genre.Feminin;
         DateDeNaissance dateDeNaissance = new DateDeNaissance(LocalDate.now());
-        NumeroTelephone numeroTelephone = new NumeroTelephone("022222222");
-        NumeroTelephone numeroMobile = new NumeroTelephone("07625225123");
-        NumeroTelephone numeroFax = new NumeroTelephone("023456789");
-        Nationalite nationalite = new Nationalite("Andorre");
-        TypePermis typePermis = TypePermis.B;
+        TelephonePrive numeroTelephone = new TelephonePrive("022222222");
+        TelephoneMobile numeroMobile = new TelephoneMobile("07625225123");
+        Pays nationalite = Pays.Andorre;
+        Langue langue = Langue.Anglais;
+        Permis permis = new Permis(TypePermis.B);
 
 
-        currentDonnees = new DonneesPersonnelles(nom, prenom, null, genre, dateDeNaissance, adresse, email, numeroTelephone, numeroMobile, numeroFax, nationalite, typePermis);
+        currentDonnees = new DonneesPersonnelles(nom, prenom, null, adresse, email,
+                numeroTelephone, numeroMobile, null, genre,
+                dateDeNaissance, nationalite, langue, permis);
     }
 
-    public void initDonneePersonnelles(Nationalite nationalite, TypePermis typePermis) {
+    public void initDonneePersonnelles(Pays nationalite, TypePermis typePermis) {
         Nom nom = new Nom("test nom");
         Prenom prenom = new Prenom("Test prenom");
         Localite localite = new Localite("Lausanne");
@@ -61,11 +62,13 @@ public class DonneesPersonnellesSteps {
         Email email = new Email("john.doe@nobody.com");
         Genre genre = Genre.Feminin;
         DateDeNaissance dateDeNaissance = new DateDeNaissance(LocalDate.now());
-        NumeroTelephone numeroTelephone = new NumeroTelephone("022222222");
-        NumeroTelephone numeroMobile = new NumeroTelephone("07625225123");
-        NumeroTelephone numeroFax = new NumeroTelephone("023456789");
+        TelephonePrive numeroTelephone = new TelephonePrive("022222222");
+        TelephoneMobile numeroMobile = new TelephoneMobile("07625225123");
+        Langue langue = Langue.Anglais;
+        Permis permis = new Permis(typePermis);
 
-        currentDonnees = new DonneesPersonnelles(nom, prenom, null, genre, dateDeNaissance, adresse, email, numeroTelephone, numeroMobile, numeroFax, nationalite, typePermis);
+        currentDonnees = new DonneesPersonnelles(nom, prenom, null, adresse, email, numeroTelephone, numeroMobile, null, genre,
+                dateDeNaissance, nationalite, langue, permis);
     }
 
     public AccepteOuRefuse getActionActuelle() {
