@@ -169,57 +169,58 @@ ngDemautApp
             this.name = "DonneesPersoController";
             this.params = $routeParams;
             $scope.testSuisse = nationalityTest;//récupération du service de test des nationnalité
-            $scope.personalData = {};
-            $scope.personalData.nationalites = [];
-            $scope.personalData.langues = [];
-            $scope.personalData.paysList = [];
-            $scope.personalData.datePicker = {};
-            $scope.personalData.datePicker.status = {};
+            $rootScope.personalData = {};
+            $rootScope.personalData.nationalites = [];
+            $rootScope.personalData.langues = [];
+            $rootScope.personalData.paysList = [];
+            $rootScope.personalData.datePicker = {};
+            $rootScope.personalData.datePicker.status = {};
 
-            if ($scope.personalData.nationalites.length == 0) {
+            if ($rootScope.personalData.nationalites.length == 0) {
                 $http.get(urlPrefix + '/personal/nationalites').
                     success(function (data, status, headers, config) {
-                        $scope.personalData.nationalites = angular.fromJson(data.response);
+                        $rootScope.personalData.nationalites = angular.fromJson(data.response);
                     }).
                     error(function (data, status, headers, config) {
                         $rootScope.error = 'Error downloading ../personal/nationalites';
                     });
             }
 
-            if ($scope.personalData.langues.length == 0) {
+            if ($rootScope.personalData.langues.length == 0) {
                 $http.get(urlPrefix + '/personal/langues').
                     success(function (data, status, headers, config) {
-                        $scope.personalData.langues = angular.fromJson(data.response);
+                        $rootScope.personalData.langues = angular.fromJson(data.response);
                     }).
                     error(function (data, status, headers, config) {
                         $rootScope.error = 'Error downloading ../personal/langues';
                     });
             }
 
-            if ($scope.personalData.paysList.length == 0) {
+            if ($rootScope.personalData.paysList.length == 0) {
                 $http.get(urlPrefix + '/diplomes/paysList').
                     success(function (data, status, headers, config) {
-                        $scope.personalData.paysList = angular.fromJson(data.response);
+                        $rootScope.personalData.paysList = angular.fromJson(data.response);
                     }).
                     error(function (data, status, headers, config) {
-                        $scope.error = 'Error downloading ../diplomes/paysList';
+                        $rootScope.error = 'Error downloading ../diplomes/paysList';
                     });
             }
-            $scope.personalData.datePicker.status.dateDeNaissance = {
+
+            $rootScope.personalData.datePicker.status.dateDeNaissance = {
                 opened: false
             };
 
             $scope.isPermisRequired = function () {
-                return $scope.personalData.nationalite != null && $scope.personalData.nationalite != undefined && !nationalityTest.isSuisse($scope.personalData.nationalite.libl) && !$scope.personalData.permis;
+                return $rootScope.personalData.nationalite != null && $rootScope.personalData.nationalite != undefined && !nationalityTest.isSuisse($rootScope.personalData.nationalite.libl) && !$rootScope.personalData.permis;
             };
 
             $scope.isSuisse = function () {
-                return $scope.personalData.nationalite != null && $scope.personalData.nationalite != undefined && nationalityTest.isSuisse($scope.personalData.nationalite.libl);
+                return $rootScope.personalData.nationalite != null && $rootScope.personalData.nationalite != undefined && nationalityTest.isSuisse($rootScope.personalData.nationalite.libl);
             };
 
             $scope.resetPermis = function () {
                 if ($scope.isSuisse()) {
-                    $scope.personalData.permis = null;
+                    $rootScope.personalData.permis = null;
                 }
             };
 
@@ -245,23 +246,23 @@ ngDemautApp
             function doCreateDonneesPerso() {
                 $http.get(urlPrefix + '/personal/ajouter', {
                     params: {
-                        nom: $scope.personalData.nom,
-                        prenom: $scope.personalData.prenom,
-                        nomDeCelibataire: $scope.personalData.nomDeCelibataire,
-                        adressePersonnelle: $scope.personalData.adressePersonnelle,
-                        localite: $scope.personalData.localite,
-                        npa: $scope.personalData.npa,
-                        pays: $scope.personalData.pays.id,
-                        telephonePrive: $scope.personalData.telephonePrive,
-                        telephoneMobile: $scope.personalData.telephoneMobile,
-                        email: $scope.personalData.email,
-                        fax: $scope.personalData.fax,
-                        genre: $scope.personalData.genre,
-                        dateDeNaissance: $scope.personalData.dateDeNaissance,
-                        nationalite: $scope.personalData.nationalite.id,
-                        langue: $scope.personalData.langue,
-                        permis: $scope.personalData.permis,
-                        permisOther: $scope.personalData.permisOther
+                        nom: $rootScope.personalData.nom,
+                        prenom: $rootScope.personalData.prenom,
+                        nomDeCelibataire: $rootScope.personalData.nomDeCelibataire,
+                        adressePersonnelle: $rootScope.personalData.adressePersonnelle,
+                        localite: $rootScope.personalData.localite,
+                        npa: $rootScope.personalData.npa,
+                        pays: $rootScope.personalData.pays.id,
+                        telephonePrive: $rootScope.personalData.telephonePrive,
+                        telephoneMobile: $rootScope.personalData.telephoneMobile,
+                        email: $rootScope.personalData.email,
+                        fax: $rootScope.personalData.fax,
+                        genre: $rootScope.personalData.genre,
+                        dateDeNaissance: $rootScope.personalData.dateDeNaissance,
+                        nationalite: $rootScope.personalData.nationalite.id,
+                        langue: $rootScope.personalData.langue.id,
+                        permis: $rootScope.personalData.permis,
+                        permisOther: $rootScope.personalData.permisOther
                     }
                 })
                     .success(function (data, status, headers, config) {
@@ -825,7 +826,7 @@ ngDemautApp
     .run(function ($rootScope, $sce, $location, $http) {
 
         $rootScope.datePicker = {};
-        $rootScope.datePicker.minDate = new Date();
+        $rootScope.datePicker.minDate = new Date('1900-01-01');
         $rootScope.datePicker.naxDate = new Date();
         $rootScope.datePicker.placeholder = 'jj.mm.yyyy';
         $rootScope.datePicker.format = 'dd.MM.yyyy';
