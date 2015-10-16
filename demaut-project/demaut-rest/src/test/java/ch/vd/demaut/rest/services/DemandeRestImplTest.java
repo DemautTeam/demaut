@@ -40,7 +40,18 @@ public class DemandeRestImplTest {
 
     @Test
     public void testRecupererCurrentBrouillon() throws Exception {
-        Response response = demandeRest.recupererBrouillon();
+        Response response = demandeRest.recupererBrouillon("9e88c31c-9cdf-4b8d-964a-b0af8fd06c1b");
+        assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
+    }
+
+    @Test
+    public void testRecupererListeBrouillons() throws Exception {
+        Response response = demandeRest.recupererListeBrouillons();
+        assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
+    }
+    @Test
+    public void testSupprimerUnBrouillon() throws Exception {
+        Response response = demandeRest.supprimerUnBrouillon(demandeRest.recupererBrouillon("9e88c31c-9cdf-4b8d-964a-b0af8fd06c1b").getEntity().toString());
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 }

@@ -53,6 +53,12 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>oracle</groupId>
+            <artifactId>oracle-jdbc</artifactId>
+            <version>${oracle.jdbc.version}</version>
+            <scope>runtime</scope>
+        </dependency>
         
         <!-- CXF -->
         <dependency>

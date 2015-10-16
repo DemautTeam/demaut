@@ -37,7 +37,7 @@ public class ListeDesAnnexes {
      * Ajoute une annexe à la liste d'annexes<br>
      * Renvoie une exception si l'annnexe n'est pas unique
      *
-     * @param annexe
+     * @param annexe Annexe
      */
     public void ajouterAnnexe(Annexe annexe) {
         validerAnnexeUnique(annexe);

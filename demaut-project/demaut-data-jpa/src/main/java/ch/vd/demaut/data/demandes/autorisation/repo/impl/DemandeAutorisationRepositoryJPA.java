@@ -46,6 +46,11 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
         return brouillons.get(0);
     }
 
+    @Override
+    public List<DemandeAutorisation> recupererListeBrouillons(Login login) {
+        return trouverBrouillonsParUtilisateur(login);
+    }
+
     //TODO: Utiliser une query avec Count
     @Override
     public boolean brouillonExiste(Login login) {
@@ -56,8 +61,7 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
     // ********************************************************* Methodes privées
     private List<DemandeAutorisation> trouverBrouillonsParUtilisateur(Login login) {
         TypedQuery<DemandeAutorisation> typedQuery = createQueryBrouillonParUtilisateur(login);
-        List<DemandeAutorisation> demandesTrouvees = typedQuery.getResultList();
-        return demandesTrouvees;
+        return typedQuery.getResultList();
     }
     
     private TypedQuery<DemandeAutorisation> createQueryParReference(ReferenceDeDemande referenceDeDemande) {

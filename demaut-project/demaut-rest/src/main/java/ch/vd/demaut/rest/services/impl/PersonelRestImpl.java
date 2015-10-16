@@ -122,6 +122,6 @@ public class PersonelRestImpl {
         donneesPersonnellesService.renseignerLesDonneesPersonnelles(login, nom, prenom, nomDeCelibataire, adresse, email,
                 telephonePrive, telephoneMobile, fax, genre, dateDeNaissance, nationalite, langue, permis);
 
-        return RestUtils.buildJSon(Arrays.asList(true));
+        return RestUtils.buildJSon(true);
     }
 }

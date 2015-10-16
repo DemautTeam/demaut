@@ -7,12 +7,15 @@ import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,7 +91,7 @@ public class ProfessionRestImpl {
     }
 
     @GET
-    @Path("/professionsCodeGLN")
+    @Path("/professionsCodeGLNObligatoire")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
     public Response listerProfessionsAvecCodeGLNObligatoire() throws Exception {
@@ -101,17 +104,36 @@ public class ProfessionRestImpl {
     }
 
     @GET
-    @Path("/donnees/")
+    @Path("/professionDeDemande")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response recupererDonneesProfession() throws Exception {
+    public Response recupererProfessionDeDemande(@QueryParam("referenceDeDemande") String referenceDeDemandeStr) throws Exception {
 
         Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
 
-        LOGGER.info("recupererDonneesProfession " + login.getValue());
+        LOGGER.info("recuperer Profession de demande " + login.getValue()  + ", referenceDeDemande=" + referenceDeDemandeStr);
 
-        Profession profession = donneesProfessionnellesService.recupererDonneesProfession(login);
-        CodeGLN codeGLN = donneesProfessionnellesService.recupererDonneesProfessionnelles(login).getCodeGLN();
-        return RestUtils.buildJSon(Arrays.asList(profession, codeGLN));
+        ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
+
+        Profession profession = donneesProfessionnellesService.recupererProfessionDeDemande(login, referenceDeDemande);
+        CodeGLN codeGLN = donneesProfessionnellesService.recupererDonneesProfessionnelles(login, referenceDeDemande).getCodeGLN();
+        return RestUtils.buildJSon(Arrays.asList(profession.getRefProgresID().getId(), codeGLN.getValue()));
     }
+
+    @GET
+    @Path("/updateCodeGLN")
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("USER")
+    public Response validerEtRenseignerCodeGLN(@QueryParam("referenceDeDemande") String referenceDeDemandeStr,
+                                               @QueryParam("codeGln") String codeGln) throws Exception {
+
+        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
+
+        LOGGER.info("recuperer Profession de demande " + login.getValue()  + ", codeGln=" + codeGln);
+
+        ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
+        CodeGLN codeGLN = new CodeGLN(codeGln);
+
+        donneesProfessionnellesService.validerEtRenseignerCodeGLN(login, referenceDeDemande, codeGLN);
+        return RestUtils.buildJSon(true);    }
 }

@@ -1,5 +1,10 @@
+<div ng-include="'template/include/include-titre.html'"></div>
 <div ng-include="'template/include/include-steps-new.html'"></div>
+
 <div class="bs-wizard-info text-left">
+    <div class="row">
+        <br/>
+    </div>
     <fieldset>
         <legend>Merci de bien vouloir fournir les documents obligatoires</legend>
         <div id="Formulaire_vide" class="alert alert-danger"
@@ -11,9 +16,6 @@
         </div>
         <div>
             <ng-form name="annexes.annexesDataForm">
-                <div class="row">
-                    <br/>
-                </div>
                 <div class="row">
                     <label class="checkbox-inline">Vous avez demandé une autorisation de pratiquer pour une activité de {{annexesData.profession.libl}}.
                         <br/>Merci de bien vouloir numériser et charger les documents suivants:</label>
@@ -42,20 +44,8 @@
                     </div>
                     <div class="col-md-6" style="overflow: auto;" ng-show="files.length > 0">
                         <table class="table table-striped" ng-show="files">
-                            <!--<thead>-->
-                            <!--<tr bgcolor="#99CC00">-->
-                                <!--<th>Fichier</th>-->
-                                <!--<th>Format</th>-->
-                                <!--<th>Taille</th>-->
-                                <!--<th>Type</th>-->
-                                <!--<th></th>-->
-                            <!--</tr>-->
-                            <!--</thead>-->
                             <tr ng-repeat="file in files">
                                 <td>{{file.name}}</td>
-                                <!--<td>{{file.type}}</td>-->
-                                <!--<td>{{file.size}}</td>-->
-                                <!--<td>{{file.typeAnnexe}}</td>-->
                                 <td>
                                     <span class="badge">
                                     <a href="" ng-click="viewAnnexe(file)" class="btn btn-xs btn-default">
@@ -85,7 +75,7 @@
                                 <!--ng-options="annexeType.libl for annexeType in annexesData.annexeTypes track by annexeType.id"/>-->
                     <!--</div>-->
                     <div class="col-md-6">
-                        <span class="btn btn-success fileinput-button">
+                        <span class="btn btn-success fileinput-button" style="background-color: #B2CC2B">
                             <i class="glyphicon glyphicon-plus"></i>
                             <!-- Warning : No binding support (ng-model) for File Upload control -->
                             Choisir un fichier sur mon ordinateur

@@ -1,6 +1,7 @@
 package ch.vd.demaut.rest.services.impl;
 
 import ch.vd.demaut.domain.config.TypeProgres;
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandeur.Pays;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.*;
 import ch.vd.demaut.domain.utilisateurs.Login;
@@ -147,7 +148,8 @@ public class DiplomeRestImpl {
     @Path("/ajouter")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response ajouterUnDiplome(@QueryParam("referenceDeDiplome") String referenceDeDiplomeStr,
+    public Response ajouterUnDiplome(@QueryParam("referenceDeDemande") String referenceDeDemandeStr,
+                                     @QueryParam("referenceDeDiplome") String referenceDeDiplomeStr,
                                      @QueryParam("typeDiplome") String typeDiplomeId,
                                      @QueryParam("typeFormation") String typeFormationId,
                                      @QueryParam("complement") String complement,
@@ -157,8 +159,9 @@ public class DiplomeRestImpl {
 
         Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
 
-        LOGGER.info("ajouterUnDiplome pour : " + login.getValue() + ", typeDiplome=" + typeDiplomeId + ", typeFormation=" + typeFormationId);
+        LOGGER.info("ajouterUnDiplome pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr + ", typeDiplome=" + typeDiplomeId + ", typeFormation=" + typeFormationId);
 
+        ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
         ReferenceDeDiplome referenceDeDiplome = new ReferenceDeDiplome(referenceDeDiplomeStr);
         TypeDiplomeAccepte typeDiplomeAccepte = TypeDiplomeAccepte.getTypeById(Integer.parseInt(typeDiplomeId));
         TitreFormation titreFormation = new TitreFormation(convertTypeFormationIdToEnum(typeDiplomeAccepte, typeFormationId).name());
@@ -169,9 +172,9 @@ public class DiplomeRestImpl {
             dateReconnaissance = new DateReconnaissance(SHORT_DATE_PARSER.parseLocalDate(dateReconnaissanceStr));
         }
 
-        donneesProfessionnellesService.ajouterUnDiplome(login, referenceDeDiplome, typeDiplomeAccepte,
+        donneesProfessionnellesService.ajouterUnDiplome(login, referenceDeDemande, referenceDeDiplome, typeDiplomeAccepte,
                 titreFormation, complement, dateObtention, paysObtention, dateReconnaissance);
-        return RestUtils.buildJSon(Arrays.asList(true));
+        return RestUtils.buildJSon(true);
     }
 
     private TypeProgres convertTypeFormationIdToEnum(TypeDiplomeAccepte typeDiplomeAccepte, String typeFormationId) {
@@ -194,15 +197,17 @@ public class DiplomeRestImpl {
     @Path("/supprimer")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response supprimerUnDiplome(@QueryParam("referenceDeDiplome") String referenceDeDiplomeStr) throws Exception {
+    public Response supprimerUnDiplome(@QueryParam("referenceDeDemande") String referenceDeDemandeStr,
+                                       @QueryParam("referenceDeDiplome") String referenceDeDiplomeStr) throws Exception {
 
         Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
 
-        LOGGER.info("supprimerUnDiplome pour : " + login.getValue() + ", referenceDeDiplome=" + referenceDeDiplomeStr);
+        LOGGER.info("supprimerUnDiplome pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr + ", referenceDeDiplome=" + referenceDeDiplomeStr);
 
+        ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
         ReferenceDeDiplome referenceDeDiplome = new ReferenceDeDiplome(referenceDeDiplomeStr);
 
-        donneesProfessionnellesService.supprimerUnDiplome(login, referenceDeDiplome);
-        return RestUtils.buildJSon(Arrays.asList(true));
+        donneesProfessionnellesService.supprimerUnDiplome(login, referenceDeDemande, referenceDeDiplome);
+        return RestUtils.buildJSon(true);
     }
 }

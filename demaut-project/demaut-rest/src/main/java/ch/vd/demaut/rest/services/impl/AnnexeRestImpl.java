@@ -151,7 +151,7 @@ public class AnnexeRestImpl {
         AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
 
         annexesService.attacherUneAnnexe(login, file, annexeFK.getNomFichier(), annexeFK.getTypeAnnexe());
-        return RestUtils.buildJSon(Arrays.asList(true));
+        return RestUtils.buildJSon(true);
     }
 
     @GET
@@ -168,7 +168,7 @@ public class AnnexeRestImpl {
         AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
 
         annexesService.supprimerUneAnnexe(login, annexeFK);
-        return RestUtils.buildJSon(Arrays.asList(true));
+        return RestUtils.buildJSon(true);
     }
 
     private AnnexeFK buildAnnexeFK(String annexeFileName, String annexeTypeIdStr) {
