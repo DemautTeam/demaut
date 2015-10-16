@@ -10,13 +10,9 @@
                     </button>
                     Veuillez saisir vos données personnelles.
                 </div>
+
                 <div ng-hide="donneesPerso.donneesPersoDataForm.$pristine || donneesPerso.donneesPersoDataForm.$valid">
-                    <div id="Nom_obligatoire" class="alert alert-danger" ng-show="donneesPerso.donneesPersoDataForm.nom.$touched && donneesPerso.donneesPersoDataForm.nom.$error.required">
-                        <button type="button" class="close" data-target="#Nom_obligatoire" data-dismiss="alert">
-                            <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
-                        </button>
-                        Veuillez saisir votre nom.
-                    </div>
+
                     <div id="Prenom_obligatoire" class="alert alert-danger" ng-show="donneesPerso.donneesPersoDataForm.prenom.$touched && donneesPerso.donneesPersoDataForm.prenom.$error.required">
                         <button type="button" class="close" data-target="#Prenom_obligatoire" data-dismiss="alert">
                             <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
@@ -78,12 +74,13 @@
                         Veuillez préciser votre permis de séjour.
                     </div>
                 </div>
-                <div class="row">
+                <div class="row form-group" ng-class="{ 'has-error' : donneesPerso.donneesPersoDataForm.nom.$invalid && !donneesPerso.donneesPersoDataForm.nom.$pristine}" >
                     <div class="col-md-2"><label for="nom">Nom*</label></div>
-                    <div class="col-md-10"><input type="text" id="nom" name="nom" class="form-control" required="required" ng-model="personalData.nom"></div>
-                </div>
-                <div class="row">
-                    <br/>
+                    <div class="col-md-6" popover-enable="donneesPerso.donneesPersoDataForm.nom.$invalid && !donneesPerso.donneesPersoDataForm.nom.$pristine"
+                         popover-trigger="none" popover-is-open="displayToolTip(donneesPerso.donneesPersoDataForm.nom)" popover-placement="right"
+                         uib-popover="Veuillez saisir votre prénom.">
+                        <input type="text" id="nom" name="nom" class="form-control" required ng-model="personalData.nom">
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-2"><label for="prenom">Prénom(s)*</label></div>
@@ -179,7 +176,8 @@
                         <p class="input-group">
                             <input type="text" class="form-control" id="dateDeNaissance" name="dateDeNaissance" placeholder="{{datePicker.placeholder}}"
                                    datepicker-popup="{{datePicker.format}}" ng-model="personalData.dateDeNaissance"
-                                   is-open="personalData.datePicker.status.dateDeNaissance.opened" min-date="datePicker.minDate" datepicker-options="datePicker.dateOptions"
+                                   is-open="personalData.datePicker.status.dateDeNaissance.opened" min-date="datePicker.minDate"
+                                   datepicker-options="datePicker.dateOptions"
                                    required close-text="Fermer" clear-text="Effacer" current-text="Aujourd'hui"/>
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" ng-click="openDatePicker(personalData.datePicker.status.dateDeNaissance)">

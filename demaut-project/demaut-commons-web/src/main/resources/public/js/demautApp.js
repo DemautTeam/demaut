@@ -842,6 +842,10 @@ ngDemautApp
             targetDatepicker.opened = true;
         };
 
+        $rootScope.displayToolTip = function (targetToolTip) {
+           return targetToolTip.$invalid;
+        };
+
         $rootScope.$on('$viewContentLoaded', function () {
         });
 
