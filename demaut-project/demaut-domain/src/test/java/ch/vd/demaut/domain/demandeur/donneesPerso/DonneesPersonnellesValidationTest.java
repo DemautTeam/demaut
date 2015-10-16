@@ -40,8 +40,8 @@ public class DonneesPersonnellesValidationTest extends AbstractValidationTest<Do
         emailValide = new Email("john.doe@nobody.com");
         genreValide = Genre.Feminin;
         dateDeNaissance = new DateDeNaissance(LocalDate.now());
-        telephonePrive = new TelephonePrive("022222222");
-        numeroMobile = new TelephoneMobile("07625225123");
+        telephonePrive = new TelephonePrive("+4122222222");
+        numeroMobile = new TelephoneMobile("00625225123");
         fax = new Fax("023456789");
         nationalite = Pays.Suisse;
         langue = Langue.Allemand;
