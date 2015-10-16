@@ -52,7 +52,7 @@ public class DonneesPersonnellesSteps {
                 dateDeNaissance, nationalite, langue, permis);
     }
 
-    public void initDonneePersonnelles(Pays nationalite, TypePermis typePermis) {
+    public void initDonneePersonnelles(Pays nationalite, Permis permis) {
         Nom nom = new Nom("test nom");
         Prenom prenom = new Prenom("Test prenom");
         Localite localite = new Localite("Lausanne");
@@ -65,13 +65,13 @@ public class DonneesPersonnellesSteps {
         TelephonePrive numeroTelephone = new TelephonePrive("022222222");
         TelephoneMobile numeroMobile = new TelephoneMobile("07625225123");
         Langue langue = Langue.Anglais;
-        Permis permis = new Permis(typePermis);
 
         currentDonnees = new DonneesPersonnelles(nom, prenom, null, adresse, email, numeroTelephone, numeroMobile, null, genre,
                 dateDeNaissance, nationalite, langue, permis);
     }
 
     public AccepteOuRefuse getActionActuelle() {
+        assertThat(actionActuelle).isNotNull();
         return actionActuelle;
     }
 
@@ -84,6 +84,5 @@ public class DonneesPersonnellesSteps {
             actionActuelle = refuse;
         }
     }
-
 
 }

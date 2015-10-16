@@ -53,7 +53,8 @@ public enum Pays implements TypeProgres {
     Colombie(45, "CO", "Colombie"),
     Comores(46, "KM", "Comores"),
     Congo(47, "CG", "Congo"),
-    CoreeDuNord(48, "KP", "Corée du Nord");
+    CoreeDuNord(48, "KP", "Corée du Nord"),
+    France(62, "FR", "France");
     // TODO completer la liste
 //            (49, "KR", "Corée du Sud");
 //            (50, "CR", "Costa Rica"),

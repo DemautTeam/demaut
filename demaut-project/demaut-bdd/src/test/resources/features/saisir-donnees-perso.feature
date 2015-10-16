@@ -4,8 +4,8 @@
 Fonctionnalité: Saisir les données personnelles de la demande
 
   Contexte:
-    Etant donné la date du jour: "15.07.2015 11:00"
-    Etant donné l´utilisateur identifié et connecté avec le login "joe.dalton@vd.ch"
+    Etant donné la date du jour: "15.10.2015 11:00"
+    Etant donné l´utilisateur identifié et connecté avec le login "john.doe@noone.ch"
     Etant donné une demande de profession "Medecin" en cours de saisie ayant la référence "12345"
 
   Plan du scénario: Saisir le nom du demandeur
@@ -19,7 +19,6 @@ Fonctionnalité: Saisir les données personnelles de la demande
       | ""            | ""     | "refuse"  |
 
 
-  @ignoreme
   Scénario: Saisir le nom du demandeur trop long
     Lorsque l´utilisateur saisit son nom "ghhoihoijhohohuhuhiuhiuhiuhiuhiuhiuhiuhuigwghgwwghhoihoijhohohuhuhiuhiuhiuhiuhiuhiuhiuhuigwghgwwghhoihoijhohohuhuhiuhiuhiuhiuhiuhiuhiuhuigwghgwwghhoihoijhohohuhuhiuhiuhiuhiuhiuhiuhiuhuigwghgwwghhoihoijhohohuhuhiuhiuhiuhiuhiuhiuhiuhuigwghgwwghhoihoijhohohuhuhiuhiuhiuhiuhiuhiuhiuhuigwghgww"
     Alors le système Demaut "refuse" les données personnelles
@@ -29,7 +28,7 @@ Fonctionnalité: Saisir les données personnelles de la demande
     Alors le système Demaut <action> les données personnelles
     Exemples:
       | nationalite   | permis   | action    |
-      | "suisse"      | "Aucun"  | "accepte" |
-      | "brésilienne" | "B"      | "accepte" |
-      | "française"   | "Aucun"  | "refuse"  |
+      | "Suisse"      | "Aucun"  | "accepte" |
+      | "Bresil"      | "B"      | "accepte" |
+      | "France"      | "Aucun"  | "refuse"  |
       | ""            | "Aucun"  | "refuse"  |
