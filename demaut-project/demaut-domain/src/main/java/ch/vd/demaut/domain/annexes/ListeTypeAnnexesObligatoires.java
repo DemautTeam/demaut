@@ -1,7 +1,5 @@
 package ch.vd.demaut.domain.annexes;
 
-import ch.vd.demaut.commons.annotations.ValueObject;
-import ch.vd.demaut.commons.vo.BaseValueObject;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.Pays;
@@ -25,8 +23,7 @@ import java.util.List;
 /**
  * Liste de types d'annexe ({@link Annexe}) obligatoire pour la complétude d'une {@link DemandeAutorisation}
  */
-@ValueObject
-public class ListeTypeAnnexesObligatoires extends BaseValueObject {
+public class ListeTypeAnnexesObligatoires {
 
     // ********************************************************* Fields
 

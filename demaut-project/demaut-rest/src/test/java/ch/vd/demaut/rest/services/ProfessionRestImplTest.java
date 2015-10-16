@@ -52,8 +52,14 @@ public class ProfessionRestImplTest {
     }
 
     @Test
-    public void testRecupererDonneesProfession() throws Exception {
-        Response response = professionRest.recupererDonneesProfession();
+    public void testRecupererProfessionDeDemande() throws Exception {
+        Response response = professionRest.recupererProfessionDeDemande("9e88c31c-9cdf-4b8d-964a-b0af8fd06c1b");
+        assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
+    }
+
+    @Test
+    public void testValiderEtRenseignerCodeGLN() throws Exception {
+        Response response = professionRest.validerEtRenseignerCodeGLN("9e88c31c-9cdf-4b8d-964a-b0af8fd06c1b", "4719512002889");
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 }

@@ -1,8 +1,44 @@
 <div class="bs-wizard-info text-left">
-    <div class="col-md-3">
-        <ul class="nav nav- nav-stacked">
-            <li class="active" style="background-color: #9d9d9d"><a href="#">Acceuil Demaut</a></li>
-            <li><a href="#!/Demaut/demande/professionSante">Nouvelle demande d'autorisation de pratiquer</a></li>
-        </ul>
+    <div class="row">
+        <div class="col-md-12">
+            <legend>Vos demandes en cours :</legend>
+        </div>
+        <div class="col-md-6" style="overflow: auto;" ng-show="cockpitData.demandesBrouillons.length > 0">
+            <table class="table table-striped" ng-show="cockpitData.demandesBrouillons">
+                <tr ng-repeat="demande in cockpitData.demandesBrouillons">
+                    <td style="font-weight: bold;">Demande d'autorisation<br/>
+                        Créé le {{demande['dateDeCreation']['value'] | date:'dd.MM.yyyy HH:mm:ss'}} pour une activité de {{demande['profession']}}<br/>
+                        Code GLN {{demande['donneesProfessionnelles']['codeGLN']['value']}} <br/>
+                        Pour {{demande['donneesPersonnelles']['nom']['value']}},  {{demande['donneesPersonnelles']['prenom']['value']}} <br/>
+                        Date de naissance {{demande['donneesPersonnelles']['dateDeNaissance']['value'] | date:'dd.MM.yyyy'}}, {{demande['donneesPersonnelles']['nationalite']}} <br/>
+                        Habitant à {{demande['donneesPersonnelles']['adresse']['voie']['value']}}, {{demande['donneesPersonnelles']['adresse']['localite']['value']}}
+                    </td>
+                    <td>
+                        <span class="badge">
+                        <a href="" ng-click="viewDemande(demande['referenceDeDemande']['value'])" class="btn btn-xs btn-default">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                        </a>
+                        <a href="" ng-click="deleteDemande(demande['referenceDeDemande']['value'])" ng-confirm-click="Voulez-vous vraiment supprimer la demande en cours ?"
+                           class="btn btn-xs btn-default">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                        </span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-10">
+            <label class="checkbox-inline" ng-show="!cockpitData.demandesBrouillons || cockpitData.demandesBrouillons.length == 0">Vous n'avez pas de demandes en cours pour l'instant.</label>
+        </div>
+    </div>
+    <div class="row">
+        <br/>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <a href="#!/Demaut/demande/professionSante" class="btn btn-primary submit-btn" ng-show="cockpitData.demandesBrouillons && cockpitData.demandesBrouillons.length == 0">
+                Nouvelle demande d'autorisation de pratiquer
+            </a>
+        </div>
     </div>
 </div>

@@ -8,6 +8,8 @@ import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.utilisateurs.Login;
 
+import java.util.List;
+
 /**
  * Repository des {@link DemandeAutorisation}
  */
@@ -35,10 +37,12 @@ public interface DemandeAutorisationRepository
      */
     DemandeAutorisation recupererBrouillon(Login login);
 
+    List<DemandeAutorisation> recupererListeBrouillons(Login login);
+
     /**
      * Teste si l'utilisateur a un brouillon associé
-     * @param login
-     * @return
+     * @param login Login
+     * @return boolean
      */
     boolean brouillonExiste(Login login);
 }

@@ -5,6 +5,7 @@ import ch.vd.demaut.rest.json.converters.TypeProgresJsonSerializer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.cxf.common.util.StringUtils;
@@ -18,7 +19,7 @@ public final class RestUtils {
     private static final String DEMAUT_USER_ID_HEADER = "demaut-user-id";
     private static final String IAM_USER_ID_HEADER = "iam-user-id";
 
-    private static final ObjectWriter viewWriter = new ObjectMapper().writer();
+    private static final ObjectWriter viewWriter = new ObjectMapper().configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false).writer();
 
     private RestUtils() {
     }
@@ -32,6 +33,12 @@ public final class RestUtils {
     public static Response buildJSon(Collection<?> objects) throws JsonProcessingException {
         return Response.ok()
                 .entity(Json.newObject().put("response", viewWriter.writeValueAsString(objects)))
+                .build();
+    }
+
+    public static Response buildJSon(Object object) throws JsonProcessingException {
+        return Response.ok()
+                .entity(Json.newObject().put("response", viewWriter.writeValueAsString(object)))
                 .build();
     }
 

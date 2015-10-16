@@ -39,3 +39,18 @@ commonsModule.directive('stepActions', function () {
         }
     };
 });
+
+commonsModule.directive('ngConfirmClick', [
+    function(){
+        return {
+            link: function (scope, element, attr) {
+                var msg = attr.ngConfirmClick || "Voulez-vous poursuivre l'opération en cours ?";
+                var clickAction = attr.confirmedClick;
+                element.bind('click',function (event) {
+                    if (window.confirm(msg)) {
+                        scope.cockpitData.doDelete = true;
+                    }
+                });
+            }
+        };
+    }])

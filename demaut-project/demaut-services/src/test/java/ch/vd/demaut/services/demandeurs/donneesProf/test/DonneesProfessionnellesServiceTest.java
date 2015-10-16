@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.UUID;
 
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,8 +17,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.Pays;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
@@ -47,6 +46,7 @@ public class DonneesProfessionnellesServiceTest {
     @Autowired
     private DemandeAutorisationService demandeAutorisationService;
 
+    private DemandeAutorisation demandeAutorisation;
     private Profession profession;
     private Login login;
 
@@ -61,7 +61,7 @@ public class DonneesProfessionnellesServiceTest {
     public void testRecupererDonneesProfession() throws Exception {
         intialiserDemandeEnCours("admin1@admin.com");
 
-        Profession profession = donneesProfessionnellesService.recupererDonneesProfession(login);
+        Profession profession = donneesProfessionnellesService.recupererProfessionDeDemande(login, demandeAutorisation.getReferenceDeDemande());
         assertThat(profession).isNotNull();
     }
 
@@ -72,7 +72,7 @@ public class DonneesProfessionnellesServiceTest {
         intialiserDemandeEnCours("admin2@admin.com");
 
         DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService
-                .recupererDonneesProfessionnelles(login);
+                .recupererDonneesProfessionnelles(login, demandeAutorisation.getReferenceDeDemande());
         creerListeDiplomes(donneesProfessionnelles);
         assertThat(donneesProfessionnelles).isNotNull();
         assertThat(donneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(3);
@@ -85,8 +85,9 @@ public class DonneesProfessionnellesServiceTest {
         intialiserDemandeEnCours("admin3@admin.com");
 
         DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService
-                .recupererDonneesProfessionnelles(login);
-        donneesProfessionnellesService.ajouterUnDiplome(login, new ReferenceDeDiplome(UUID.randomUUID().toString()),
+                .recupererDonneesProfessionnelles(login, demandeAutorisation.getReferenceDeDemande());
+        donneesProfessionnellesService.ajouterUnDiplome(login, demandeAutorisation.getReferenceDeDemande(),
+                new ReferenceDeDiplome(UUID.randomUUID().toString()),
                 TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
                 new TitreFormation(TitreFormationApprofondieProgres.ChirurgieDeLaMain.name()), null,
                 new DateObtention(new LocalDate()), new PaysObtention(Pays.AfriqueDuSud.name()), null);
@@ -101,18 +102,33 @@ public class DonneesProfessionnellesServiceTest {
         intialiserDemandeEnCours("admin4@admin.com");
 
         DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService
-                .recupererDonneesProfessionnelles(login);
+                .recupererDonneesProfessionnelles(login, demandeAutorisation.getReferenceDeDemande());
         assertThat(donneesProfessionnelles).isNotNull();
-        donneesProfessionnellesService.ajouterUnDiplome(login, new ReferenceDeDiplome(UUID.randomUUID().toString()),
+        donneesProfessionnellesService.ajouterUnDiplome(login, demandeAutorisation.getReferenceDeDemande(),
+                new ReferenceDeDiplome(UUID.randomUUID().toString()),
                 TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
                 new TitreFormation(TitreFormationApprofondieProgres.ChirurgieDeLaMain.name()), null,
                 new DateObtention(new LocalDate()), new PaysObtention(Pays.AfriqueDuSud.name()), null);
         assertThat(donneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(1);
 
         Diplome diplome = donneesProfessionnelles.getListeDesDiplomes().listerDiplomes().get(0);
-        donneesProfessionnellesService.supprimerUnDiplome(login, diplome.getReferenceDeDiplome());
+        donneesProfessionnellesService.supprimerUnDiplome(login, demandeAutorisation.getReferenceDeDemande(), diplome.getReferenceDeDiplome());
         assertThat(donneesProfessionnelles).isNotNull();
         assertThat(donneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(0);
+    }
+
+    @Test
+    @Transactional
+    @Rollback(value = true)
+    public void testValiderEtRenseignerCodeGLN() {
+        intialiserDemandeEnCours("admin3@admin.com");
+        donneesProfessionnellesService.validerEtRenseignerCodeGLN(login, demandeAutorisation.getReferenceDeDemande(), new CodeGLN("4719512002889"));
+
+        DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService
+                .recupererDonneesProfessionnelles(login, demandeAutorisation.getReferenceDeDemande());
+        assertThat(donneesProfessionnelles).isNotNull();
+        assertThat(donneesProfessionnelles.getCodeGLN()).isNotNull();
+        assertThat(donneesProfessionnelles.getCodeGLN().getValue()).isEqualTo("4719512002889");
     }
 
     // ********************************************************* Private methods
@@ -138,6 +154,7 @@ public class DonneesProfessionnellesServiceTest {
     private void intialiserDemandeEnCours(String loginStr) {
         this.login = new Login(loginStr);
 
-        demandeAutorisationService.initialiserDemandeAutorisation(profession, new CodeGLN("7601000000125"), login);
+        demandeAutorisation = demandeAutorisationService.initialiserDemandeAutorisation(profession, new CodeGLN("7601000000125"), login);
+        assertThat(demandeAutorisation).isNotNull();
     }
 }

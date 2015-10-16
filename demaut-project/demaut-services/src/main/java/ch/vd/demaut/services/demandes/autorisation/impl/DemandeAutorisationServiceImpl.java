@@ -14,6 +14,9 @@ import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DemandeAutorisationServiceImpl implements DemandeAutorisationService {
 
     @Autowired
@@ -29,7 +32,6 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
         DemandeAutorisation demandeAutorisation = demandeAutorisationFactory.initierDemandeAutorisation(login, profession, codeGLN);
         
         demandeAutorisationRepository.store(demandeAutorisation);
-
         return demandeAutorisation;
     }
 
@@ -49,6 +51,26 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
             return demandeAutorisationRepository.recupererBrouillon(login);
         } catch (EntityNotFoundException e) {
             throw new DemandeNotFoundException();
+        }
+    }
+
+    @Override
+    public List<DemandeAutorisation> recupererListeBrouillons(Login login) {
+        try {
+            return demandeAutorisationRepository.recupererListeBrouillons(login);
+        } catch (EntityNotFoundException e) {
+            return new ArrayList<>();
+        }
+    }
+
+    @Transactional
+    @Override
+    public void supprimerUnBrouillon(Login login, ReferenceDeDemande referenceDeDemande) {
+        try {
+            demandeAutorisationRepository.delete(demandeAutorisationRepository.recupererDemandeParReference(referenceDeDemande));
+            //TODO trace login de modification dans DB
+        } catch (EntityNotFoundException e) {
+            throw new ReferenceDemandeNotFoundException();
         }
     }
 }

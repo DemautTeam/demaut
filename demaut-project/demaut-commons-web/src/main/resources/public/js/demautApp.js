@@ -90,15 +90,62 @@ ngDemautApp
             };
         });
     }])
-    .controller('CockpitController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', '$log',
-        function ($scope, $rootScope, $routeParams, $http, $location, $interval, urlPrefix, $log) {
+    .controller('CockpitController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', '$log', '$window',
+        function ($scope, $rootScope, $routeParams, $http, $location, $interval, $log, $window) {
             $rootScope.contextMenu = "Cockpit";
             $scope.indexStep = 0;
             this.name = "CockpitController";
             this.params = $routeParams;
+            $scope.cockpitData = {};
+            $scope.cockpitData.demandesBrouillons = [];
+            $scope.cockpitData.doDelete = false;
+
+            $http.get(urlPrefix + '/demande/recupererListBrouillons')
+                .success(function (data, status, headers, config) {
+                    $scope.cockpitData.demandesBrouillons = angular.fromJson(data.response);
+                    $log.info('Liste de demandes a été crée avec succès!');
+                })
+                .error(function (data, status, headers, config) {
+                    $rootScope.error = 'Error fetching ../demande/recupererListBrouillons';
+                    $log.info('Error ' + urlPrefix + '/demande/recupererListBrouillons/ \n Status :' + status);
+                });
+
+            $scope.viewDemande = function (referenceDeDemande) {
+                $scope.indexStep += 1;
+                $window.localStorage.setItem('referenceDeDemande', referenceDeDemande);
+                $location.path('/Demaut/demande/professionSante');
+            };
+
+            $scope.deleteDemande = function (referenceDeDemande) {
+                if($scope.cockpitData.doDelete) {
+                    for (var indexI = 0; indexI < $scope.cockpitData.demandesBrouillons.length; indexI++) {
+                        if ($scope.cockpitData.demandesBrouillons[indexI]['referenceDeDemande']['value'] == referenceDeDemande) {
+                            $scope.cockpitData.demandesBrouillons.splice(indexI, 1);
+                            doDeleteDemande(referenceDeDemande);
+                            break;
+                        }
+                    }
+                }
+            };
+
+            function doDeleteDemande(referenceDeDemande) {
+                $http.get(urlPrefix + '/demande/supprimer', {
+                    params: {
+                        referenceDeDemande: referenceDeDemande
+                    }
+                })
+                    .success(function (data, status, headers, config) {
+                        $log.info('Une demande a été supprimée avec succès!');
+                    })
+                    .error(function (data, status, headers, config) {
+                        $rootScope.error = 'Error ' + urlPrefix + '/demande/supprimer/ \n Status :' + status;
+                        $log.info('Error ' + urlPrefix + '/demande/supprimer/ \n Status :' + status);
+                    });
+            };
+
         }])
-    .controller('ProfessionSanteController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$log', 'professionTest',
-        function ($scope, $rootScope, $routeParams, $http, $location, $log, professionTest) {
+    .controller('ProfessionSanteController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$log', '$window', 'professionTest',
+        function ($scope, $rootScope, $routeParams, $http, $location, $log, $window, professionTest) {
             $rootScope.contextMenu = "Profession Santé";
             $scope.indexStep = 1;
             this.name = "ProfessionSanteController";
@@ -111,19 +158,51 @@ ngDemautApp
                 $http.get(urlPrefix + '/profession/professionsList')
                     .success(function (data, status, headers, config) {
                         $scope.professionData.professions = angular.fromJson(data.response);
+                        $log.info('Liste professions a été récupérée avec succès!');
                     })
                     .error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error downloading ../profession/professionsList';
+                        $rootScope.error = 'Error fetching ../profession/professionsList';
+                        $log.info('Error ' + urlPrefix + '/profession/professionsList/ \n Status :' + status);
                     });
             }
 
             if ($scope.professionData.professionsCodeGLN.length == 0) {
-                $http.get(urlPrefix + '/profession/professionsCodeGLN')
+                $http.get(urlPrefix + '/profession/professionsCodeGLNObligatoire')
                     .success(function (data, status, headers, config) {
                         $scope.professionData.professionsCodeGLN = angular.fromJson(data.response);
+                        $log.info('Liste professions exigeant code GLN a été récupérée avec succès!');
                     })
                     .error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error downloading ../profession/professionsCodeGLN';
+                        $rootScope.error = 'Error fetching ../profession/professionsCodeGLNObligatoire';
+                        $log.info('Error ' + urlPrefix + '/profession/professionsCodeGLNObligatoire/ \n Status :' + status);
+                    });
+            }
+
+            $scope.isBrouillonExistant = function () {
+                return window.localStorage && $window.localStorage.getItem('referenceDeDemande');
+            };
+
+            if($scope.isBrouillonExistant()) {
+                $http.get(urlPrefix + '/profession/professionDeDemande', {
+                    params: {
+                        referenceDeDemande: $window.localStorage.getItem('referenceDeDemande')
+                    }
+                })
+                    .success(function (data, status, headers, config) {
+                        var response = angular.fromJson(data.response);
+                        for (var indexI = 0; indexI < $scope.professionData.professions.length; indexI++) {
+                            if ($scope.professionData.professions[indexI].id == response[0]) {
+                                $scope.professionData.profession = $scope.professionData.professions[indexI];
+                                break;
+                            }
+                        }
+                        $scope.professionData.gln = response[1] == null || response[1] == undefined ? '' : response[1];
+                        $log.info('Profession de la demande a été récupérée avec succès!');
+                    })
+                    .error(function (data, status, headers, config) {
+                        $rootScope.error = 'Error fetching ../profession/professionDeDemande';
+                        $log.info('Error ' + urlPrefix + '/profession/professionDeDemande/ \n Status :' + status);
+
                     });
             }
 
@@ -134,22 +213,42 @@ ngDemautApp
                     !(professionTest.isProfessionNecessiteCodeGLN($scope.professionData.profession, $scope.professionData.professionsCodeGLN) &&
                     ($scope.professionData.gln == null || $scope.professionData.gln == undefined))) {
 
-                    $rootScope.profession = $scope.professionData.profession;
+                    $window.localStorage.setItem('profession', $scope.professionData.profession);
 
-                    $http.get(urlPrefix + '/demande/initialiser', {
-                        params: {
-                            professionId: $scope.professionData.profession.id,
-                            codeGln: $scope.professionData.gln != undefined ? $scope.professionData.gln : null,
-                        }
-                    })
-                        .success(function (data, status, headers, config) {
-                            var refDemande = angular.fromJson(data.response);
-                            //TODO : Ajouter le error handling if refDemande null ou undefined
-                            $log.info('Reference de la nouvelle demande :' + refDemande[0].value);
+                    if(!$scope.isBrouillonExistant()) {
+                        $http.get(urlPrefix + '/demande/initialiser', {
+                            params: {
+                                professionId: $scope.professionData.profession.id,
+                                codeGln: $scope.professionData.gln != undefined ? $scope.professionData.gln : null,
+                            }
                         })
-                        .error(function (data, status, headers, config) {
-                            $rootScope.error = 'Error from response /demande/initialiser/';
-                        });
+                            .success(function (data, status, headers, config) {
+                                var refDemande = angular.fromJson(data.response);
+                                //TODO : Ajouter le error handling if refDemande null ou undefined
+                                $log.info('Une nouvelle demande a été intitialisée avec succès!');
+                            })
+                            .error(function (data, status, headers, config) {
+                                $rootScope.error = 'Error fetching ../demande/initialiser/';
+                                $log.info('Error ' + urlPrefix + '/demande/initialiser/ \n Status :' + status);
+
+                            });
+                    }
+                    else {
+                        $http.get(urlPrefix + '/profession/updateCodeGLN', {
+                            params: {
+                                referenceDeDemande: $window.localStorage.getItem('referenceDeDemande'),
+                                codeGln: $scope.professionData.gln
+                            }
+                        })
+                            .success(function (data, status, headers, config) {
+                                $log.info('Code GLN de la demande a été updaté avec succès!');
+                            })
+                            .error(function (data, status, headers, config) {
+                                $rootScope.error = 'Error fetching ../profession/updateCodeGLN';
+                                $log.info('Error ' + urlPrefix + '/profession/updateCodeGLN/ \n Status :' + status);
+                            });
+                    }
+
                     //Go to next page
                     $scope.indexStep += 1;
                     $location.path('/Demaut/demande/donneesPerso');
@@ -171,58 +270,64 @@ ngDemautApp
             this.name = "DonneesPersoController";
             this.params = $routeParams;
             $scope.testSuisse = nationalityTest;//récupération du service de test des nationnalité
-            $rootScope.personalData = {};
-            $rootScope.personalData.nationalites = [];
-            $rootScope.personalData.langues = [];
-            $rootScope.personalData.paysList = [];
-            $rootScope.personalData.datePicker = {};
-            $rootScope.personalData.datePicker.status = {};
+            $scope.personalData = {};
+            $scope.personalData.nationalites = [];
+            $scope.personalData.langues = [];
+            $scope.personalData.paysList = [];
+            $scope.personalData.datePicker = {};
+            $scope.personalData.datePicker.status = {};
 
-            if ($rootScope.personalData.nationalites.length == 0) {
+            if ($scope.personalData.nationalites.length == 0) {
                 $http.get(urlPrefix + '/personal/nationalites').
                     success(function (data, status, headers, config) {
-                        $rootScope.personalData.nationalites = angular.fromJson(data.response);
+                        $scope.personalData.nationalites = angular.fromJson(data.response);
+                        $log.info('Liste nationalites a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error downloading ../personal/nationalites';
+                        $rootScope.error = 'Error fetching ../personal/nationalites';
+                        $log.info('Error ' + urlPrefix + '/personal/nationalites/ \n Status :' + status);
                     });
             }
 
-            if ($rootScope.personalData.langues.length == 0) {
+            if ($scope.personalData.langues.length == 0) {
                 $http.get(urlPrefix + '/personal/langues').
                     success(function (data, status, headers, config) {
-                        $rootScope.personalData.langues = angular.fromJson(data.response);
+                        $scope.personalData.langues = angular.fromJson(data.response);
+                        $log.info('Liste langues a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error downloading ../personal/langues';
+                        $rootScope.error = 'Error fetching ../personal/langues';
+                        $log.info('Error ' + urlPrefix + '/personal/langues/ \n Status :' + status);
                     });
             }
 
-            if ($rootScope.personalData.paysList.length == 0) {
+            if ($scope.personalData.paysList.length == 0) {
                 $http.get(urlPrefix + '/diplomes/paysList').
                     success(function (data, status, headers, config) {
-                        $rootScope.personalData.paysList = angular.fromJson(data.response);
+                        $scope.personalData.paysList = angular.fromJson(data.response);
+                        $log.info('Liste pays a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error downloading ../diplomes/paysList';
+                        $rootScope.error = 'Error fetching ../diplomes/paysList';
+                        $log.info('Error ' + urlPrefix + '/diplomes/paysList/ \n Status :' + status);
                     });
             }
 
-            $rootScope.personalData.datePicker.status.dateDeNaissance = {
+            $scope.personalData.datePicker.status.dateDeNaissance = {
                 opened: false
             };
 
             $scope.isPermisRequired = function () {
-                return $rootScope.personalData.nationalite != null && $rootScope.personalData.nationalite != undefined && !nationalityTest.isSuisse($rootScope.personalData.nationalite.libl) && !$rootScope.personalData.permis;
+                return $scope.personalData.nationalite != null && $scope.personalData.nationalite != undefined && !nationalityTest.isSuisse($scope.personalData.nationalite.libl) && !$scope.personalData.permis;
             };
 
             $scope.isSuisse = function () {
-                return $rootScope.personalData.nationalite != null && $rootScope.personalData.nationalite != undefined && nationalityTest.isSuisse($rootScope.personalData.nationalite.libl);
+                return $scope.personalData.nationalite != null && $scope.personalData.nationalite != undefined && nationalityTest.isSuisse($scope.personalData.nationalite.libl);
             };
 
             $scope.resetPermis = function () {
                 if ($scope.isSuisse()) {
-                    $rootScope.personalData.permis = null;
+                    $scope.personalData.permis = null;
                 }
             };
 
@@ -248,23 +353,23 @@ ngDemautApp
             function doCreateDonneesPerso() {
                 $http.get(urlPrefix + '/personal/ajouter', {
                     params: {
-                        nom: $rootScope.personalData.nom,
-                        prenom: $rootScope.personalData.prenom,
-                        nomDeCelibataire: $rootScope.personalData.nomDeCelibataire,
-                        adressePersonnelle: $rootScope.personalData.adressePersonnelle,
-                        localite: $rootScope.personalData.localite,
-                        npa: $rootScope.personalData.npa,
-                        pays: $rootScope.personalData.pays.id,
-                        telephonePrive: $rootScope.personalData.telephonePrive,
-                        telephoneMobile: $rootScope.personalData.telephoneMobile,
-                        email: $rootScope.personalData.email,
-                        fax: $rootScope.personalData.fax,
-                        genre: $rootScope.personalData.genre,
-                        dateDeNaissance: $rootScope.personalData.dateDeNaissance,
-                        nationalite: $rootScope.personalData.nationalite.id,
-                        langue: $rootScope.personalData.langue.id,
-                        permis: $rootScope.personalData.permis,
-                        permisOther: $rootScope.personalData.permisOther
+                        nom: $scope.personalData.nom,
+                        prenom: $scope.personalData.prenom,
+                        nomDeCelibataire: $scope.personalData.nomDeCelibataire,
+                        adressePersonnelle: $scope.personalData.adressePersonnelle,
+                        localite: $scope.personalData.localite,
+                        npa: $scope.personalData.npa,
+                        pays: $scope.personalData.pays.id,
+                        telephonePrive: $scope.personalData.telephonePrive,
+                        telephoneMobile: $scope.personalData.telephoneMobile,
+                        email: $scope.personalData.email,
+                        fax: $scope.personalData.fax,
+                        genre: $scope.personalData.genre,
+                        dateDeNaissance: $scope.personalData.dateDeNaissance,
+                        nationalite: $scope.personalData.nationalite.id,
+                        langue: $scope.personalData.langue.id,
+                        permis: $scope.personalData.permis,
+                        permisOther: $scope.personalData.permisOther
                     }
                 })
                     .success(function (data, status, headers, config) {
@@ -272,6 +377,7 @@ ngDemautApp
                     })
                     .error(function (data, status, headers, config) {
                         $rootScope.error = 'Error ' + urlPrefix + '/personal/ajouter/ \n Status :' + status;
+                        $log.info('Error ' + urlPrefix + '/personal/ajouter/ \n Status :' + status);
                     });
             };
         }])
@@ -295,9 +401,11 @@ ngDemautApp
                 $http.get(urlPrefix + '/diplomes/typeDiplomesList').
                     success(function (data, status, headers, config) {
                         $scope.diplomeData.typeDiplomes = angular.fromJson(data.response);
+                        $log.info('Liste types diplomes a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error downloading ../diplomes/typeDiplomesList';
+                        $rootScope.error = 'Error fetching ../diplomes/typeDiplomesList';
+                        $log.info('Error ' + urlPrefix + '/diplomes/typeDiplomesList/ \n Status :' + status);
                     });
             }
 
@@ -305,9 +413,11 @@ ngDemautApp
                 $http.get(urlPrefix + '/diplomes/paysList').
                     success(function (data, status, headers, config) {
                         $scope.diplomeData.paysList = angular.fromJson(data.response);
+                        $log.info('Liste pays a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error downloading ../diplomes/paysList';
+                        $rootScope.error = 'Error fetching ../diplomes/paysList';
+                        $log.info('Error ' + urlPrefix + '/diplomes/paysList/ \n Status :' + status);
                     });
             }
 
@@ -338,9 +448,11 @@ ngDemautApp
                 }).
                     success(function (data, status, headers, config) {
                         $scope.diplomeData.typeFormations = angular.fromJson(data.response);
+                        $log.info('Liste types fromations a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error downloading ../diplomes/typeFormationsList/' + $scope.diplomeData.diplome.typeDiplome.id;
+                        $rootScope.error = 'Error fetching ../diplomes/typeFormationsList/';
+                        $log.info('Error ' + urlPrefix + '/diplomes/typeFormationsList/ \n Status :' + status);
                     });
             };
 
@@ -433,6 +545,7 @@ ngDemautApp
                     })
                     .error(function (data, status, headers, config) {
                         $rootScope.error = 'Error ' + urlPrefix + '/diplomes/ajouter/ \n Status :' + status;
+                        $log.info('Error ' + urlPrefix + '/diplomes/ajouter/ \n Status :' + status);
                     });
             };
 
@@ -447,6 +560,7 @@ ngDemautApp
                     })
                     .error(function (data, status, headers, config) {
                         $rootScope.error = 'Error ' + urlPrefix + '/diplomes/supprimer/ \n Status :' + status;
+                        $log.info('Error ' + urlPrefix + '/diplomes/supprimer/ \n Status :' + status);
                     });
             };
         }])
@@ -558,6 +672,7 @@ ngDemautApp
                     })
                     .error(function (data, status, headers, config) {
                         $rootScope.error = 'Error ' + urlPrefix + '/activites/ajouter/ \n Status :' + status;
+                        $log.info('Error ' + urlPrefix + '/activites/ajouter/ \n Status :' + status);
                     });
             };
 
@@ -572,11 +687,12 @@ ngDemautApp
                     })
                     .error(function (data, status, headers, config) {
                         $rootScope.error = 'Error ' + urlPrefix + '/activites/supprimer/ \n Status :' + status;
+                        $log.info('Error ' + urlPrefix + '/activites/supprimer/ \n Status :' + status);
                     });
             };
         }])
-    .controller('AnnexesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$log', '$q', '$timeout',
-        function ($scope, $rootScope, $routeParams, $http, $location, $log, $q, $timeout) {
+    .controller('AnnexesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$log', '$q', '$timeout', '$window',
+        function ($scope, $rootScope, $routeParams, $http, $location, $log, $q, $timeout, $window) {
             $rootScope.contextMenu = "Annexes";
             $scope.indexStep = 5;
             this.name = "AnnexesController";
@@ -587,15 +703,17 @@ ngDemautApp
             $scope.annexesData.annexeTypesObligatoires = [];
             $scope.annexesData.referenceFiles = [];
             $scope.annexesData.annexeTypeSelected = {};
-            $scope.annexesData.profession = $rootScope.profession;
+            $scope.annexesData.profession = $window.localStorage.getItem('profession');
 
             if ($scope.annexesData.annexeTypes.length == 0) {
                 $http.get(urlPrefix + '/annexes/typesList').
                     success(function (data, status, headers, config) {
                         $scope.annexesData.annexeTypes = angular.fromJson(data.response);
+                        $log.info('Liste types annexes a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error downloading ../annexes/typesList';
+                        $rootScope.error = 'Error fetching ../annexes/typesList';
+                        $log.info('Error ' + urlPrefix + '/annexes/typesList/ \n Status :' + status);
                     });
             }
 
@@ -603,9 +721,11 @@ ngDemautApp
                 $http.get(urlPrefix + '/annexes/typesObligatoiresList').
                     success(function (data, status, headers, config) {
                         $scope.annexesData.annexeTypesObligatoires = angular.fromJson(data.response);
+                        $log.info('Liste types annexes obligatoires a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error downloading ../annexes/typesObligatoiresList';
+                        $rootScope.error = 'Error fetching ../annexes/typesObligatoiresList';
+                        $log.info('Error ' + urlPrefix + '/annexes/typesObligatoiresList/ \n Status :' + status);
                     });
             }
 
@@ -723,9 +843,11 @@ ngDemautApp
                 })
                     .success(function (data, status, headers, config) {
                         displayAnnexeFromBinary(data);
+                        $log.info('Une annexes a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
-                        alert('Error downloading ../annexes/afficher/' + file.name);
+                        $rootScope.error = 'Error ' + urlPrefix + '/annexes/afficher/ \n Status :' + status;
+                        $log.info('Error ' + urlPrefix + '/annexes/afficher/ \n Status :' + status);
                     });
 
                 function displayAnnexeFromBinary(data) {
@@ -772,6 +894,7 @@ ngDemautApp
                     })
                     .error(function (data, status, headers, config) {
                         $rootScope.error = 'Error ' + urlPrefix + '/annexes/supprimer/ \n Status :' + status;
+                        $log.info('Error ' + urlPrefix + '/annexes/supprimer/ \n Status :' + status);
                     });
             };
 
@@ -790,10 +913,11 @@ ngDemautApp
                     timeout: deferred.promise
                 })
                     .success(function (data, status, headers, config) {
-                        $log.info('Une annexe a été envoyée avec succès!');
+                        $log.info('Une annexe a été uplodée avec succès!');
                     })
                     .error(function (data, status, headers, config) {
                         $rootScope.error = 'Error Upload: [' + urlPrefix + '/annexes/attacher' + status;
+                        $log.info('Error ' + urlPrefix + '/annexes/attacher/ \n Status :' + status);
                     });
                 $timeout(function () {
                     deferred.resolve();

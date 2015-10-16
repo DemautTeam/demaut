@@ -2,6 +2,7 @@ package ch.vd.demaut.rest.services.impl;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
@@ -14,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.exception.DemandeNotFoundException;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
@@ -53,7 +55,7 @@ public class DemandeRestImpl {
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
     public Response initialiserDemande(@QueryParam("professionId") String professionIdStr,
-            @QueryParam("codeGln") String codeGlnStr) throws IOException {
+                                       @QueryParam("codeGln") String codeGlnStr) throws IOException {
 
         Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
 
@@ -67,32 +69,66 @@ public class DemandeRestImpl {
             codeGLN = new CodeGLN(codeGlnStr);
         }
         
-//        DemandeAutorisation demande = demandeAutorisationService.initialiserDemandeAutorisation(profession, codeGLN, login);
-        //TODO: Tester s'il existe une demande et si oui, lancer une exception 
+        // DemandeAutorisation demande = demandeAutorisationService.initialiserDemandeAutorisation(profession, codeGLN, login);
+        // TODO: Tester s'il existe une demande et si oui, lancer une exception
         DemandeAutorisation demandeAutorisation;
         try {
             demandeAutorisation = demandeAutorisationService.recupererBrouillon(login);
         } catch (DemandeNotFoundException e) {
             demandeAutorisation = demandeAutorisationService.initialiserDemandeAutorisation(profession, codeGLN, login);
         }
-
-
-        return RestUtils.buildJSon(Arrays.asList(demandeAutorisation.getReferenceDeDemande()));
+        return RestUtils.buildJSon(demandeAutorisation.getReferenceDeDemande());
     }
 
+    /**
+     * Méthode qui renvoie un broullion via referenceDeDemande
+     */
     @GET
-    @Path("/recuperer")
+    @Path("/recupererBrouillon")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response recupererBrouillon() throws IOException {
+    public Response recupererBrouillon(@QueryParam("referenceDeDemande") String referenceDeDemandeStr) throws IOException {
 
         Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
 
-        LOGGER.info("recuperer Brouillon pour : " + login.getValue());
+        LOGGER.info("recuperer Brouillon pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr);
 
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService
-                .recupererBrouillon(login);
-        // TODO remonter les infos a afficher dans Cockpit
-        return RestUtils.buildJSon(Arrays.asList(demandeAutorisation.getReferenceDeDemande()));
+        ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
+
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererDemandeParReference(referenceDeDemande);
+        return RestUtils.buildJSon(demandeAutorisation);
+    }
+
+    /**
+     * Méthode qui renvoie la liste des broullions utilisés dans Cockpit
+     */
+    @GET
+    @Path("/recupererListBrouillons")
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("USER")
+    public Response recupererListeBrouillons() throws IOException {
+
+        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
+
+        LOGGER.info("recuperer listes Brouillons pour : " + login.getValue());
+
+        List<DemandeAutorisation> demandeAutorisations = demandeAutorisationService.recupererListeBrouillons(login);
+        return RestUtils.buildJSon(demandeAutorisations);
+    }
+
+    @GET
+    @Path("/supprimer")
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("USER")
+    public Response supprimerUnBrouillon(@QueryParam("referenceDeDemande") String referenceDeDemandeStr) throws IOException {
+
+        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
+
+        LOGGER.info("supprimer un brouillons pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr);
+
+        ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
+
+        demandeAutorisationService.supprimerUnBrouillon(login, referenceDeDemande);
+        return RestUtils.buildJSon(true);
     }
 }

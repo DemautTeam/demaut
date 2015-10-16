@@ -4,7 +4,10 @@ import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
+import ch.vd.demaut.domain.exception.ReferenceDemandeNotFoundException;
 import ch.vd.demaut.domain.utilisateurs.Login;
+
+import java.util.List;
 
 public interface DemandeAutorisationService {
 
@@ -33,5 +36,9 @@ public interface DemandeAutorisationService {
      * @return DemandeAutorisation
      */
     DemandeAutorisation recupererBrouillon(Login login);
+
+    List<DemandeAutorisation> recupererListeBrouillons(Login login);
+
+    void supprimerUnBrouillon(Login login, ReferenceDeDemande referenceDeDemande);
 }
 

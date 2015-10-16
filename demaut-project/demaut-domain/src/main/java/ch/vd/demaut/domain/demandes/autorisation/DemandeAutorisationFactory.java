@@ -18,15 +18,16 @@ public class DemandeAutorisationFactory {
 
     // ********************************************************* Public methods 
     public DemandeAutorisation initierDemandeAutorisation(Login login, Profession profession, CodeGLN codeGLN) {
-        DemandeAutorisation demande = new DemandeAutorisation(login, profession);
+        DemandeAutorisation demandeAutorisation = new DemandeAutorisation(login, profession);
         
         throwExceptionSiDemandeBrouillonExisteDeja(login);
         
-        demande.getDonneesProfessionnelles().validerEtRenseignerCodeGLN(codeGLN, profession);
+        demandeAutorisation.getDonneesProfessionnelles().validerEtRenseignerCodeGLN(codeGLN, profession);
         
-        demande.generateReference();
+        demandeAutorisation.generateReference();
+        demandeAutorisation.generateDateDeCreation();
         
-        return demande;
+        return demandeAutorisation;
     }
 
     // ********************************************************* Private methods 
