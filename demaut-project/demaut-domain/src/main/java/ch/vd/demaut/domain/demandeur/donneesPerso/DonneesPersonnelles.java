@@ -35,10 +35,13 @@ public class DonneesPersonnelles extends AbstractEntity {
     @Valid
     private Email email;
 
+    @Valid
     private TelephonePrive telephonePrive;
 
+    @Valid
     private TelephoneMobile telephoneMobile;
 
+    @Valid
     private Fax fax;
 
     @NotNull
