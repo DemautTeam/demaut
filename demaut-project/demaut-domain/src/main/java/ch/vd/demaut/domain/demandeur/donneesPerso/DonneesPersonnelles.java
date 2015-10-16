@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@AlternativePhone(prive = "telephonePrive", mobile = "telephoneMobile")
 public class DonneesPersonnelles extends AbstractEntity {
 
     // ********************************************************* Fields
