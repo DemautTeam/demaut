@@ -1,6 +1,6 @@
 input.ng-invalid.ng-untouched {
 }
-/*TODO Supprimer si confirm? le comportement de required */
+/*TODO Supprimer si confirmé le comportement de required */
 /*input.ng-invalid.ng-touched  {*/
     /*background-color: rgba(255, 218, 220,100);*/
     /*background-image: none;*/
