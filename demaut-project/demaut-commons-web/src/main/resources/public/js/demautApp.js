@@ -92,7 +92,7 @@ ngDemautApp
     }])
     .controller('CockpitController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', '$log', '$window',
         function ($scope, $rootScope, $routeParams, $http, $location, $interval, $log, $window) {
-            $rootScope.contextMenu = "Cockpit";
+            $rootScope.contextMenu = 'Cockpit';
             $scope.indexStep = 0;
             this.name = "CockpitController";
             this.params = $routeParams;
@@ -146,7 +146,7 @@ ngDemautApp
         }])
     .controller('ProfessionSanteController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$log', '$window', 'professionTest',
         function ($scope, $rootScope, $routeParams, $http, $location, $log, $window, professionTest) {
-            $rootScope.contextMenu = "Profession Santé";
+            $rootScope.contextMenu = 'DemandeAutorisation';
             $scope.indexStep = 1;
             this.name = "ProfessionSanteController";
             this.params = $routeParams;
@@ -265,7 +265,7 @@ ngDemautApp
         }])
     .controller('DonneesPersoController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', '$log', 'nationalityTest',
         function ($scope, $rootScope, $routeParams, $http, $location, $interval, $log, nationalityTest) {
-            $rootScope.contextMenu = "Données Personnelles";
+            $rootScope.contextMenu = 'DemandeAutorisation';
             $scope.indexStep = 2;
             this.name = "DonneesPersoController";
             this.params = $routeParams;
@@ -383,7 +383,7 @@ ngDemautApp
         }])
     .controller('DonneesDiplomesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$log', 'nationalityTest',
         function ($scope, $rootScope, $routeParams, $http, $location, $log, nationalityTest) {
-            $rootScope.contextMenu = "Données Diplômes";
+            $rootScope.contextMenu = 'DemandeAutorisation';
             $scope.indexStep = 3;
             this.name = "DonneesDiplomes";
             this.params = $routeParams;
@@ -566,7 +566,7 @@ ngDemautApp
         }])
     .controller('DonneesActivitesController', ['$scope', '$rootScope', '$routeParams', '$location', '$log',
         function ($scope, $rootScope, $routeParams, $location, $log) {
-            $rootScope.contextMenu = "Données Activités";
+            $rootScope.contextMenu = 'DemandeAutorisation';
             $scope.indexStep = 4;
             this.name = "DonneesActivitesController";
             this.params = $routeParams;
@@ -693,7 +693,7 @@ ngDemautApp
         }])
     .controller('AnnexesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$log', '$q', '$timeout', '$window',
         function ($scope, $rootScope, $routeParams, $http, $location, $log, $q, $timeout, $window) {
-            $rootScope.contextMenu = "Annexes";
+            $rootScope.contextMenu = 'DemandeAutorisation';
             $scope.indexStep = 5;
             this.name = "AnnexesController";
             this.params = $routeParams;
@@ -926,7 +926,7 @@ ngDemautApp
         }])
     .controller('RecapitulatifController', ['$scope', '$rootScope', '$routeParams', '$location', '$log',
         function ($scope, $rootScope, $routeParams, $location, $log) {
-            $rootScope.contextMenu = "Recapitulatif";
+            $rootScope.contextMenu = 'DemandeAutorisation';
             $scope.indexStep = 6;
             this.name = "RecapitulatifController";
             this.params = $routeParams;
@@ -951,7 +951,6 @@ ngDemautApp
 
 ngDemautApp
     .run(function ($rootScope, $sce, $location, $http) {
-
         $rootScope.datePicker = {};
         $rootScope.datePicker.minDate = new Date('1900-01-01');
         $rootScope.datePicker.naxDate = new Date();
@@ -975,5 +974,4 @@ ngDemautApp
 
         $rootScope.$on('$routeChangeStart', function () {
         });
-
     });

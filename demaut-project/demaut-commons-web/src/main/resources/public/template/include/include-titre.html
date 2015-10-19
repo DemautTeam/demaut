@@ -1,10 +1,14 @@
 <div>
     <div>
        <span>
-            <h3 style="color:crimson" ng-show="$error">
+            <h3 style="color:crimson" ng-show="error">
                 <b>Un problème a été détecté. Merci de contacter l'adminsitrateur du système !</b>
             </h3>
-            <h2>Demande d'autorisation</h2>
+           <h2 ng-show="contextMenu == 'DemandeAutorisation'">Demande d'autorisation</h2>
+           <h2 ng-show="contextMenu == 'Cockpit'">Cockpit Demaut</h2>
+           <h2 ng-show="contextMenu == 'Aide'">Aide Demaut</h2>
+           <h2 ng-show="contextMenu == 'Formulaire'">Formulaire papier</h2>
+           <h2 ng-show="contextMenu == 'Recherche'">Recherche de demande</h2>
         </span>
     </div>
 </div>
