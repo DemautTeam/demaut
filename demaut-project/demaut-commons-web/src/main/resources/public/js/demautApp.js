@@ -1132,9 +1132,34 @@ ngDemautApp
             targetDatepicker.opened = true;
         };
 
-        $rootScope.displayToolTip = function (targetToolTip) {
-           return targetToolTip.$invalid;
+
+        $rootScope.changeTelephonePriveRequirement = function (telephonePrive, telephoneMobile) {
+
+            if (telephonePrive.$pristine){
+                telephonePrive.$error.required = true;
+                return;
+            }
+
+            if (telephonePrive.$valid)
+                telephoneMobile.$error.required = false;
+
+
         };
+
+
+        $rootScope.changeTelephoneMobileRequirement = function (telephoneMobile, telephonePrive) {
+            if (telephoneMobile.$pristine && telephonePrive.$pristine){
+                telephonePrive.$error.required = true;
+                telephoneMobile.$error.required = true;
+                return;
+            }
+
+            if (telephonePrive.$valid)
+                telephoneMobile.$error.required = false;
+        };
+
+
+
 
         $rootScope.$on('$viewContentLoaded', function () {
         });

@@ -1,15 +1,30 @@
-<div class="modal-footer">
-
-    <button ng-show="showBack" class="btn btn-primary submit-btn" type="submit" aria-label="Précédent" ng-click="backStepFn()">
-        <span class="glyphicon glyphicon-backward"></span>
-        Précédent
-    </button>
-    <button class="btn btn-primary submit-btn" type="submit" aria-label="Abondonner" ng-click="abondonnerDemande()">
-        <span class="glyphicon glyphicon-remove"></span>
-        Abandonner la Demande
-    </button>
-    <button ng-show="showNext" class="btn btn-primary submit-btn pull-right" type="submit" aria-label="Suivant" ng-click="nextStepFn()">
-        <span class="glyphicon glyphicon-forward"></span>
-        Suivant
-    </button>
+<div class="row modal-footer">
+    <div class="col-md-6 text-left">
+        <button ng-show="showBack" class="btn btn-primary submit-btn" type="submit" aria-label="Précédent"
+                ng-click="backStepFn()">
+            <span class="glyphicon glyphicon-backward"></span>
+            Précédent
+        </button>
+    </div>
+    <div class="col-md-6 text-right">
+        <button ng-show="showNext" class="btn btn-primary submit-btn pull-right" type="submit" aria-label="Suivant"
+                ng-click="nextStepFn()">
+            <span class="glyphicon glyphicon-forward"></span>
+            Suivant
+        </button>
+    </div>
 </div>
+<div class="modal-footer">
+    <div class="text-center">
+        <button class="btn btn-primary submit-btn" type="submit" aria-label="Abondonner" ng-click="abondonnerDemande()">
+            <span class="glyphicon glyphicon-remove"></span>
+            Abandonner la Demande
+        </button>
+        <button class="btn btn-primary submit-btn" type="submit" aria-label="Enregistrer poour finanliser ultérieurment"
+                ng-click="nextStepFn()">
+            <span class="glyphicon glyphicon-remove"></span>
+            Enregistrer poour finanliser ultérieurment
+        </button>
+    </div>
+</div>
+
