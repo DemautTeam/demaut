@@ -1,10 +1,11 @@
 input.ng-invalid.ng-untouched {
 }
-input.ng-invalid.ng-touched  {
-    background-color: rgba(255, 218, 220,100);
-    background-image: none;
-    border-color: #d9534f;
-}
+/*TODO Supprimer si confirmé le comportement de required */
+/*input.ng-invalid.ng-touched  {*/
+    /*background-color: rgba(255, 218, 220,100);*/
+    /*background-image: none;*/
+    /*border-color: #d9534f;*/
+/*}*/
 
 ul.error-message {
     margin-left: auto;
