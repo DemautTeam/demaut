@@ -69,14 +69,8 @@ public class DemandeRestImpl {
             codeGLN = new CodeGLN(codeGlnStr);
         }
         
-        // DemandeAutorisation demande = demandeAutorisationService.initialiserDemandeAutorisation(profession, codeGLN, login);
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.initialiserDemandeAutorisation(profession, codeGLN, login);
         // TODO: Tester s'il existe une demande et si oui, lancer une exception
-        DemandeAutorisation demandeAutorisation;
-        try {
-            demandeAutorisation = demandeAutorisationService.recupererBrouillon(login);
-        } catch (DemandeNotFoundException e) {
-            demandeAutorisation = demandeAutorisationService.initialiserDemandeAutorisation(profession, codeGLN, login);
-        }
         return RestUtils.buildJSon(demandeAutorisation.getReferenceDeDemande());
     }
 
