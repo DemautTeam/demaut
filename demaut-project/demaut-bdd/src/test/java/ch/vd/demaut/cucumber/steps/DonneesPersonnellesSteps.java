@@ -52,6 +52,26 @@ public class DonneesPersonnellesSteps {
                 dateDeNaissance, nationalite, langue, permis);
     }
 
+    public void initDonneePersonnelles(TelephonePrive telephonePrive, TelephoneMobile telephoneMobile) {
+        Nom nom = new Nom("test nom");
+        Prenom prenom = new Prenom("Test prenom");
+        Localite localite = new Localite("Lausanne");
+        NPA npa = new NPA("1000");
+        Pays pays = Pays.Suisse;
+        Adresse adresse = new Adresse("", "", localite, npa, pays);
+        Email email = new Email("john.doe@nobody.com");
+        Genre genre = Genre.Feminin;
+        DateDeNaissance dateDeNaissance = new DateDeNaissance(LocalDate.now());
+        Pays nationalite = Pays.Andorre;
+        Langue langue = Langue.Anglais;
+        Permis permis = new Permis(TypePermis.B);
+
+
+        currentDonnees = new DonneesPersonnelles(nom, prenom, null, adresse, email,
+                telephonePrive, telephoneMobile, null, genre,
+                dateDeNaissance, nationalite, langue, permis);
+    }
+
     public void initDonneePersonnelles(Pays nationalite, Permis permis) {
         Nom nom = new Nom("test nom");
         Prenom prenom = new Prenom("Test prenom");
@@ -79,8 +99,10 @@ public class DonneesPersonnellesSteps {
         assertThat(currentDonnees).isNotNull();
         try {
             demandeAutorisationSteps.getDemandeEnCours().validerEtAttacherLesDonneesPersonnelles(currentDonnees);
+            logger.info("donnees personnelles acceptées");
             actionActuelle = accepte;
         } catch (DomainException e) {
+            logger.info("donnees personnelles refusées",e);
             actionActuelle = refuse;
         }
     }
