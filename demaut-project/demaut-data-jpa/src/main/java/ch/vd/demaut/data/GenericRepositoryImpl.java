@@ -18,17 +18,26 @@ import java.util.Set;
 
 public abstract class GenericRepositoryImpl<T, I extends Serializable> implements GenericRepository<T, I>, GenericReadRepository<T, I> {
 
-    protected final Class<T> entityClass;
+    private final Class<T> entityClass;
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    public GenericRepositoryImpl(Class<T> entityClass) {
+    /**
+     * Template classe, il est obligatoire de surcharger ce constructeur.
+     *
+     * @param entityClass
+     */
+    protected GenericRepositoryImpl(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
 
     public EntityManager getEntityManager() {
         return this.entityManager;
+    }
+
+    public Class<T> getEntityClass() {
+        return entityClass;
     }
 
     @Override
