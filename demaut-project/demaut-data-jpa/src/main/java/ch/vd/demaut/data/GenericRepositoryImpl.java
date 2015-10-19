@@ -8,6 +8,7 @@ import ch.vd.demaut.commons.validation.ValidatorFactoryDefault;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.io.Serializable;
@@ -17,7 +18,7 @@ import java.util.Set;
 
 public abstract class GenericRepositoryImpl<T, I extends Serializable> implements GenericRepository<T, I>, GenericReadRepository<T, I> {
 
-    protected Class<T> entityClass;
+    protected final Class<T> entityClass;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -30,10 +31,6 @@ public abstract class GenericRepositoryImpl<T, I extends Serializable> implement
         return this.entityManager;
     }
 
-    public void setEntityManager(final EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
-
     @Override
     public T findBy(I id) {
         T entity = getEntityManager().find(this.entityClass, id);
@@ -41,17 +38,15 @@ public abstract class GenericRepositoryImpl<T, I extends Serializable> implement
     }
 
     @Override
-    @SuppressWarnings("all")
     public List<T> findAll() {
-        Query typedQuery = getEntityManager()
-                .createQuery("select o from " + entityClass.getSimpleName() + " as o");
+        TypedQuery<T> typedQuery = getEntityManager()
+                .createQuery("select o from " + entityClass.getSimpleName() + " as o", entityClass);
         return typedQuery.getResultList();
     }
 
-    @SuppressWarnings("unchecked")
     public List<T> findRange(int[] range) {
-        Query typedQuery = getEntityManager()
-                .createQuery("select o from " + entityClass.getSimpleName() + " as o");
+        TypedQuery<T> typedQuery = getEntityManager()
+                .createQuery("select o from " + entityClass.getSimpleName() + " as o", entityClass);
         typedQuery.setMaxResults(range[1] - range[0]);
         typedQuery.setFirstResult(range[0]);
         return typedQuery.getResultList();
@@ -74,6 +69,11 @@ public abstract class GenericRepositoryImpl<T, I extends Serializable> implement
         getEntityManager().persist(entities);
     }
 
+    /**
+     * Attention : Cette méthode nécessite une entité "attachée" à la couche de persistence et dans la même transaction.
+     *
+     * @param entity
+     */
     @Override
     public void delete(T entity) {
         getEntityManager().remove(entity);
@@ -89,8 +89,7 @@ public abstract class GenericRepositoryImpl<T, I extends Serializable> implement
 
     @Override
     public void deleteAll() {
-        Query typedQuery = getEntityManager().createQuery("select o from " + entityClass.getSimpleName() + " as o");
-        @SuppressWarnings("unchecked")
+        TypedQuery<T> typedQuery = getEntityManager().createQuery("select o from " + entityClass.getSimpleName() + " as o", entityClass);
         List<T> entities = typedQuery.getResultList();
         if (entities != null && !entities.isEmpty()) {
             getEntityManager().remove(entities);
