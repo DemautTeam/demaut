@@ -54,9 +54,9 @@ public abstract class GenericRepositoryImpl<T, I extends Serializable> implement
 
     @Override
     public long countAll() {
-        Query typedQuery = getEntityManager()
-                .createQuery("select count(o) from " + entityClass.getSimpleName() + " o");
-        return ((Long) typedQuery.getSingleResult()).intValue();
+        TypedQuery<Long> typedQuery = getEntityManager()
+                .createQuery("select count(o) from " + entityClass.getSimpleName() + " o", Long.class);
+        return typedQuery.getSingleResult();
     }
 
     @Override

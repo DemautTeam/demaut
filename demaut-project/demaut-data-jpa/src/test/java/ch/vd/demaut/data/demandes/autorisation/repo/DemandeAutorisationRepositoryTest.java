@@ -53,7 +53,7 @@ public class DemandeAutorisationRepositoryTest {
     // fields
     private TransactionStatus transaction;
     
-    private CodeGLN glnValide = new CodeGLN("4719512002889");
+    private final CodeGLN glnValide = new CodeGLN("4719512002889");
 
     // ********************************************************* Setup
     @Before
@@ -77,6 +77,12 @@ public class DemandeAutorisationRepositoryTest {
         assertThat(demandeInit.getId()).isNull();
 
         persisterDemandeEtVerifier(demandeInit);
+    }
+
+    @Test
+    public void countAllDemande(){
+        long result = demandeAutorisationRepository.countAll();
+        assertThat(result).isGreaterThanOrEqualTo(0);
     }
 
     @Test
