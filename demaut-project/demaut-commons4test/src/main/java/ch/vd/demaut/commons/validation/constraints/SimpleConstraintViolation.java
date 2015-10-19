@@ -9,15 +9,26 @@ import javax.validation.ConstraintViolation;
  */
 public class SimpleConstraintViolation<T> extends BaseValueObject {
 
-    private String propertyName;
+    private final String propertyName;
 
     public SimpleConstraintViolation(String propertyName) {
-        super();
         this.propertyName = propertyName;
     }
 
     public SimpleConstraintViolation(ConstraintViolation<T> constraintViolation) {
         this(constraintViolation.getPropertyPath().toString());
+    }
+
+    /**
+     * Retourne le hashCode de la propriété.
+     *
+     * Suppression d'une alerte critique de sonar.
+     *
+     * @return
+     */
+    @Override
+    public int hashCode() {
+        return propertyName.hashCode();
     }
 
     @Override
