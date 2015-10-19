@@ -1,9 +1,7 @@
 package ch.vd.demaut.cucumber.steps.definitions;
 
 import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
-import ch.vd.demaut.cucumber.converteurs.donneesperso.NationaliteConverter;
-import ch.vd.demaut.cucumber.converteurs.donneesperso.NomConverter;
-import ch.vd.demaut.cucumber.converteurs.donneesperso.PrenomConverter;
+import ch.vd.demaut.cucumber.converteurs.donneesperso.*;
 import ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps;
 import ch.vd.demaut.cucumber.steps.DonneesPersonnellesSteps;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
@@ -65,6 +63,15 @@ public class SaisirDonneePersoStepDefinitions extends StepDefinitions {
         DemandeAutorisation demandeAutorisation = demandeAutorisationSteps.getDemandeEnCours();
         donneesPersonnellesSteps.initDonneePersonnelles(nom, prenomValid);
         donneesPersonnellesSteps.attacheDonneesPersonellesALaDemandeDAutorisation();
+    }
+
+    @Lorsque("^l´utilisateur saisit ses donnees personnelles: téléphone privé=\"([^\"]*)\", Téléphone Mobile=\"([^\"]*)\"$")
+    public void l_utilisateur_saisit_ses_donnees_personnelles_téléphone_fixe_Téléphone_Mobile(@Transform(TelephonePriveConverter.class) TelephonePrive telephonePrive,
+                                                                                              @Transform(TelephoneMobileConverter.class) TelephoneMobile telephoneMobile) throws Throwable {
+        DemandeAutorisation demandeAutorisation = demandeAutorisationSteps.getDemandeEnCours();
+        donneesPersonnellesSteps.initDonneePersonnelles(telephonePrive, telephoneMobile);
+        donneesPersonnellesSteps.attacheDonneesPersonellesALaDemandeDAutorisation();
+
     }
 
     // ********************************************************* Then

@@ -32,3 +32,15 @@ Fonctionnalité: Saisir les données personnelles de la demande
       | "Bresil"      | "B"      | "accepte" |
       | "France"      | "Aucun"  | "refuse"  |
       | ""            | "Aucun"  | "refuse"  |
+
+  Plan du scénario: Saisir les numéros de téléphone fixe ou mobile
+    Lorsque l´utilisateur saisit ses donnees personnelles: téléphone privé=<numeroPrive>, Téléphone Mobile=<numeroMobile>
+    Alors le système Demaut <action> les données personnelles
+    Exemples:
+      | numeroPrive    | numeroMobile | action    |
+      | "0226543210"   | ""           | "accepte" |
+      | "+41226543210" | ""           | "accepte" |
+      | "2265"        | ""           | "refuse"  |
+      | ""             | "0767894545" | "accepte" |
+      | "0222222222"   | "0789745621" | "accepte" |
+      | ""             | ""           | "refuse"  |
