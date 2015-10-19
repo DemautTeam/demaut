@@ -51,14 +51,14 @@ public class AlternativePhoneValidator implements ConstraintValidator<Alternativ
     public boolean isValid(Object value, ConstraintValidatorContext context) {
         try {
             TelephonePrive telephonePrive = (TelephonePrive) PropertyUtils.getProperty(value, priveField);
-            logger.info("Valeur de telephone prive : {}", telephonePrive );
             TelephoneMobile telephoneMobile = (TelephoneMobile) PropertyUtils.getProperty(value, mobileField);
-            logger.info("Valeur de telephone mobile : {}", telephoneMobile );
-            if(telephonePrive == null && StringUtils.isEmpty(telephonePrive.getValue()) ){
-                if(telephoneMobile == null && StringUtils.isEmpty(telephoneMobile.getValue()) ){
+            if(telephonePrive == null || StringUtils.isEmpty(telephonePrive.getValue()) ){
+                if(telephoneMobile == null || StringUtils.isEmpty(telephoneMobile.getValue()) ){
+                    logger.info("les 2 numeros sont vides -> ko");
                     return false;
                 }
             }
+            logger.info("au moins 1 numéro est rempli -> ok");
             return true;
 
         }

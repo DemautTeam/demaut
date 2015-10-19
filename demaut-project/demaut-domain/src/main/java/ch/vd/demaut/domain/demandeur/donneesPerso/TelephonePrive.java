@@ -13,7 +13,7 @@ public class TelephonePrive extends StringVO {
         super(value);
     }
 
-    @Pattern(regexp = "[0\\+]+\\d{4,}", message = "Veuillez entrer un numéro de téléphone valide...")
+    @Pattern(regexp = "[0\\+]+\\d{5,}", message = "Veuillez entrer un numéro de téléphone valide...")
     @Override
     public String getValue() {
         return super.getValue();
