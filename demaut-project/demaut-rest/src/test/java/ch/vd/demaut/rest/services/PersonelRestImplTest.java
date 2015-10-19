@@ -25,21 +25,12 @@ public class PersonelRestImplTest {
 
     private PersonelRestImpl personelRest;
 
+    private String referenceDeDemande;
+
     @Before
     public void setUp() throws Exception {
         assertNotNull(personelRest);
-    }
-
-    @Test
-    public void testListerLesNationalites() throws Exception {
-        Response response = personelRest.listerLesNationalites();
-        assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
-    }
-
-    @Test
-    public void testListerLesLangues() throws Exception {
-        Response response = personelRest.listerLesLangues();
-        assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
+        referenceDeDemande = "9e88c31c-9cdf-4b8d-964a-b0af8fd06c1b";
     }
 
     @Test
@@ -60,9 +51,15 @@ public class PersonelRestImplTest {
         Langue langue = Langue.Allemand;
         Permis permis = new Permis(TypePermis.C);
 
-        Response response = personelRest.renseignerLesDonneesPersonnelles(nom.getValue(), prenom.getValue(), null, adresse.getVoie(), adresse.getComplement(), localite.getValue(),
+        Response response = personelRest.renseignerLesDonneesPersonnelles(referenceDeDemande, nom.getValue(), prenom.getValue(), null, adresse.getVoie(), adresse.getComplement(), localite.getValue(),
                 npa.getValue(), String.valueOf(pays.getRefProgresID()), email.getValue(), telephonePrive.getValue(), telephoneMobile.getValue(), fax.getValue(), genre.name(),
                 dateDeNaissance, String.valueOf(nationalite.getRefProgresID()), String.valueOf(langue.getRefProgresID()), permis.getTypePermis().name(), null);
+        assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
+    }
+
+    @Test
+    public void testRecupererDonneesPersonnelles() throws Exception {
+        Response response = personelRest.recupererDonneesPersonnelles(referenceDeDemande);
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 }

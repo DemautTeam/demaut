@@ -197,6 +197,7 @@ ngDemautApp
                             }
                         }
                         $scope.professionData.gln = response[1] == null || response[1] == undefined ? '' : response[1];
+                        $scope.professionSante.professionDataForm.$pristine = false;
                         $log.info('Profession de la demande a été récupérée avec succès!');
                     })
                     .error(function (data, status, headers, config) {
@@ -208,7 +209,7 @@ ngDemautApp
 
             //Etape suivante
             $scope.nextStep = function () {
-                $scope.wouldStepNext = true;
+                $rootScope.wouldStepNext = true;
                 if ($scope.professionSante.professionDataForm.$valid &&
                     !(professionTest.isProfessionNecessiteCodeGLN($scope.professionData.profession, $scope.professionData.professionsCodeGLN) &&
                     ($scope.professionData.gln == null || $scope.professionData.gln == undefined))) {
@@ -248,9 +249,6 @@ ngDemautApp
                                 $log.info('Error ' + urlPrefix + '/profession/updateCodeGLN/ \n Status :' + status);
                             });
                     }
-
-                    //Go to next page
-                    $scope.indexStep += 1;
                     $location.path('/Demaut/demande/donneesPerso');
                 }
                 else {
@@ -263,8 +261,8 @@ ngDemautApp
                     professionTest.isProfessionNecessiteCodeGLN($scope.professionData.profession, $scope.professionData.professionsCodeGLN)
             };
         }])
-    .controller('DonneesPersoController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', '$log', 'nationalityTest',
-        function ($scope, $rootScope, $routeParams, $http, $location, $interval, $log, nationalityTest) {
+    .controller('DonneesPersoController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', '$log', '$window', 'nationalityTest',
+        function ($scope, $rootScope, $routeParams, $http, $location, $interval, $log, $window, nationalityTest) {
             $rootScope.contextMenu = 'DemandeAutorisation';
             $scope.indexStep = 2;
             this.name = "DonneesPersoController";
@@ -278,38 +276,92 @@ ngDemautApp
             $scope.personalData.datePicker.status = {};
 
             if ($scope.personalData.nationalites.length == 0) {
-                $http.get(urlPrefix + '/personal/nationalites').
+                $http.get(urlPrefix + '/shared/nationalites').
                     success(function (data, status, headers, config) {
                         $scope.personalData.nationalites = angular.fromJson(data.response);
                         $log.info('Liste nationalites a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error fetching ../personal/nationalites';
-                        $log.info('Error ' + urlPrefix + '/personal/nationalites/ \n Status :' + status);
+                        $rootScope.error = 'Error fetching ../shared/nationalites';
+                        $log.info('Error ' + urlPrefix + '/shared/nationalites/ \n Status :' + status);
                     });
             }
 
             if ($scope.personalData.langues.length == 0) {
-                $http.get(urlPrefix + '/personal/langues').
+                $http.get(urlPrefix + '/shared/langues').
                     success(function (data, status, headers, config) {
                         $scope.personalData.langues = angular.fromJson(data.response);
                         $log.info('Liste langues a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error fetching ../personal/langues';
-                        $log.info('Error ' + urlPrefix + '/personal/langues/ \n Status :' + status);
+                        $rootScope.error = 'Error fetching ../shared/langues';
+                        $log.info('Error ' + urlPrefix + '/shared/langues/ \n Status :' + status);
                     });
             }
 
             if ($scope.personalData.paysList.length == 0) {
-                $http.get(urlPrefix + '/diplomes/paysList').
+                $http.get(urlPrefix + '/shared/paysList').
                     success(function (data, status, headers, config) {
                         $scope.personalData.paysList = angular.fromJson(data.response);
                         $log.info('Liste pays a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error fetching ../diplomes/paysList';
-                        $log.info('Error ' + urlPrefix + '/diplomes/paysList/ \n Status :' + status);
+                        $rootScope.error = 'Error fetching ../shared/paysList';
+                        $log.info('Error ' + urlPrefix + '/shared/paysList/ \n Status :' + status);
+                    });
+            }
+
+            $scope.isBrouillonExistant = function () {
+                return window.localStorage && $window.localStorage.getItem('referenceDeDemande');
+            };
+
+            if($scope.isBrouillonExistant()) {
+                $http.get(urlPrefix + '/personal/recuperer', {
+                    params: {
+                        referenceDeDemande: $window.localStorage.getItem('referenceDeDemande')
+                    }
+                }).
+                    success(function (data, status, headers, config) {
+                        var response = angular.fromJson(data.response);
+                        $scope.personalData.nom = response.nom.value;
+                        $scope.personalData.prenom = response.prenom.value;
+                        $scope.personalData.nomDeCelibataire = response.nomDeCelibataire.value;
+                        $scope.personalData.adressePersonnelle = response.adresse.voie;
+                        $scope.personalData.complement = response.adresse.complement;
+                        $scope.personalData.localite = response.adresse.localite.value;
+                        $scope.personalData.npa = response.adresse.npa.value;
+                        for (var indexI = 0; indexI < $scope.personalData.paysList.length; indexI++) {
+                            if ($scope.personalData.paysList[indexI].name == response.adresse.pays) {
+                                $scope.personalData.pays = $scope.personalData.paysList[indexI];
+                                break;
+                            }
+                        }
+                        $scope.personalData.telephonePrive = response.telephonePrive.value;
+                        $scope.personalData.telephoneMobile = response.telephoneMobile.value;
+                        $scope.personalData.email = response.email.value;
+                        $scope.personalData.fax = response.fax.value;
+                        $scope.personalData.genre = response.genre;
+                        $scope.personalData.dateDeNaissance = new Date(response.dateDeNaissance.value);
+                        for (var indexJ = 0; indexJ < $scope.personalData.nationalites.length; indexJ++) {
+                            if ($scope.personalData.nationalites[indexJ].name == response.nationalite) {
+                                $scope.personalData.nationalite = $scope.personalData.nationalites[indexJ];
+                                break;
+                            }
+                        }
+                        for (var indexK = 0; indexK < $scope.personalData.langues.length; indexK++) {
+                            if ($scope.personalData.langues[indexK].name == response.langue) {
+                                $scope.personalData.langue = $scope.personalData.langues[indexK];
+                                break;
+                            }
+                        }
+                        $scope.personalData.permis = response.permis.typePermis;
+                        $scope.personalData.permisOther = response.permis.autrePermis.value;
+                        $scope.donneesPerso.donneesPersoDataForm.$pristine = false;
+                        $log.info('Objet Données personnlles a été récupéré avec succès!');
+                    }).
+                    error(function (data, status, headers, config) {
+                        $rootScope.error = 'Error fetching ../personal/recuperer';
+                        $log.info('Error ' + urlPrefix + '/personal/recuperer/ \n Status :' + status);
                     });
             }
 
@@ -332,17 +384,16 @@ ngDemautApp
             };
 
             $scope.backStep = function () {
-                $scope.indexStep -= 1;
+                $rootScope.wouldStepBack = true;
                 $location.path('/Demaut/demande/professionSante');
             };
 
             $scope.nextStep = function () {
-                $scope.wouldStepNext = true;
+                $rootScope.wouldStepNext = true;
 
                 if ($scope.donneesPerso.donneesPersoDataForm.$valid) {
                     $log.info('Formulaire valide !');
-                    doCreateDonneesPerso();
-                    $scope.indexStep += 1;
+                    doUpdateDonneesPerso();
                     $location.path('/Demaut/demande/donneesDiplomes');
                 }
                 else {
@@ -350,9 +401,10 @@ ngDemautApp
                 }
             };
 
-            function doCreateDonneesPerso() {
-                $http.get(urlPrefix + '/personal/ajouter', {
+            function doUpdateDonneesPerso() {
+                $http.get(urlPrefix + '/personal/renseigner', {
                     params: {
+                        referenceDeDemande: $window.localStorage.getItem('referenceDeDemande'),
                         nom: $scope.personalData.nom,
                         prenom: $scope.personalData.prenom,
                         nomDeCelibataire: $scope.personalData.nomDeCelibataire,
@@ -376,13 +428,13 @@ ngDemautApp
                         $log.info('Une donnée personnelle a été crée avec succès!');
                     })
                     .error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error ' + urlPrefix + '/personal/ajouter/ \n Status :' + status;
-                        $log.info('Error ' + urlPrefix + '/personal/ajouter/ \n Status :' + status);
+                        $rootScope.error = 'Error ' + urlPrefix + '/personal/renseigner/ \n Status :' + status;
+                        $log.info('Error ' + urlPrefix + '/personal/renseigner/ \n Status :' + status);
                     });
             };
         }])
-    .controller('DonneesDiplomesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$log', 'nationalityTest',
-        function ($scope, $rootScope, $routeParams, $http, $location, $log, nationalityTest) {
+    .controller('DonneesDiplomesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$log', '$window', 'nationalityTest',
+        function ($scope, $rootScope, $routeParams, $http, $location, $log, $window, nationalityTest) {
             $rootScope.contextMenu = 'DemandeAutorisation';
             $scope.indexStep = 3;
             this.name = "DonneesDiplomes";
@@ -390,6 +442,7 @@ ngDemautApp
             $scope.testSuisse = nationalityTest;
             $scope.diplomeData = {};
             $scope.diplomeData.typeDiplomes = [];
+            $scope.diplomeData.typeFormationsAll = [];
             $scope.diplomeData.typeFormations = [];
             $scope.diplomeData.paysList = [];
             $scope.diplomeData.diplomes = [];
@@ -409,15 +462,97 @@ ngDemautApp
                     });
             }
 
+            if ($scope.diplomeData.typeFormationsAll.length == 0) {
+                $http.get(urlPrefix + '/diplomes/typeFormationsAll').
+                    success(function (data, status, headers, config) {
+                        $scope.diplomeData.typeFormationsAll = angular.fromJson(data.response);
+                        $log.info('Liste types diplomes a été récupérée avec succès!');
+                    }).
+                    error(function (data, status, headers, config) {
+                        $rootScope.error = 'Error fetching ../diplomes/typeFormationsAll';
+                        $log.info('Error ' + urlPrefix + '/diplomes/typeFormationsAll/ \n Status :' + status);
+                    });
+            }
+
             if ($scope.diplomeData.paysList.length == 0) {
-                $http.get(urlPrefix + '/diplomes/paysList').
+                $http.get(urlPrefix + '/shared/paysList').
                     success(function (data, status, headers, config) {
                         $scope.diplomeData.paysList = angular.fromJson(data.response);
                         $log.info('Liste pays a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error fetching ../diplomes/paysList';
-                        $log.info('Error ' + urlPrefix + '/diplomes/paysList/ \n Status :' + status);
+                        $rootScope.error = 'Error fetching ../shared/paysList';
+                        $log.info('Error ' + urlPrefix + '/shared/paysList/ \n Status :' + status);
+                    });
+            }
+
+            $scope.isBrouillonExistant = function () {
+                return window.localStorage && $window.localStorage.getItem('referenceDeDemande');
+            };
+
+            $scope.fetchListeFormations = function () {
+                $http.get(urlPrefix + '/diplomes/typeFormationsList', {
+                    params: {typeDiplome: $scope.diplomeData.diplome.typeDiplome.id}
+                }).
+                    success(function (data, status, headers, config) {
+                        $scope.diplomeData.typeFormations = angular.fromJson(data.response);
+                        $log.info('Liste types fromations a été récupérée avec succès!');
+                    }).
+                    error(function (data, status, headers, config) {
+                        $rootScope.error = 'Error fetching ../diplomes/typeFormationsList/';
+                        $log.info('Error ' + urlPrefix + '/diplomes/typeFormationsList/ \n Status :' + status);
+                    });
+            };
+
+            if($scope.isBrouillonExistant()) {
+                $http.get(urlPrefix + '/diplomes/diplomesSaisis', {
+                    params: {
+                        referenceDeDemande: $window.localStorage.getItem('referenceDeDemande')
+                    }
+                })
+                    .success(function (data, status, headers, config) {
+                        var fetchedDiplomes = angular.fromJson(data.response);
+
+                        for (var indexOut = 0; indexOut < fetchedDiplomes.length; indexOut++) {
+                            if (fetchedDiplomes[indexOut] != null && fetchedDiplomes[indexOut] != undefined) {
+
+                                var currentDiplome = fetchedDiplomes[indexOut];
+                                var displayedDiplome = {};
+
+                                displayedDiplome.referenceDeDiplome = currentDiplome.referenceDeDiplome.value;
+
+                                for (var indexJ = 0; indexJ < $scope.diplomeData.typeDiplomes.length; indexJ++) {
+                                    if ($scope.diplomeData.typeDiplomes[indexJ].name == currentDiplome.typeDiplomeAccepte) {
+                                        displayedDiplome.typeDiplome = $scope.diplomeData.typeDiplomes[indexJ];
+                                        break;
+                                    }
+                                }
+
+                                for (var indexZ = 0; indexZ < $scope.diplomeData.typeFormationsAll.length; indexZ++) {
+                                    if ($scope.diplomeData.typeFormationsAll[indexZ].name == currentDiplome.titreFormation.value) {
+                                        displayedDiplome.typeFormation = $scope.diplomeData.typeFormationsAll[indexZ];
+                                        break;
+                                    }
+                                }
+                                displayedDiplome.complement = currentDiplome.complement;
+                                displayedDiplome.dateObtention = new Date(currentDiplome.dateObtention.value);
+
+                                for (var indexK = 0; indexK < $scope.diplomeData.paysList.length; indexK++) {
+                                    if ($scope.diplomeData.paysList[indexK].name == currentDiplome.paysObtention.value) {
+                                        displayedDiplome.paysObtention = $scope.diplomeData.paysList[indexK];
+                                        break;
+                                    }
+                                }
+                                displayedDiplome.dateReconnaissance = currentDiplome.dateReconnaissance == null || currentDiplome.dateReconnaissance == undefined || currentDiplome.dateReconnaissance.value == null ? '' : new Date(currentDiplome.dateReconnaissance.value);
+                                $scope.diplomeData.diplomes.push(displayedDiplome);
+                            }
+                        }
+                        $scope.donneesDiplome.diplomeDataForm.$pristine = false;
+                        $log.info('liste de diplomes saisis a été récupérée avec succès!');
+                    })
+                    .error(function (data, status, headers, config) {
+                        $rootScope.error = 'Error fetching ../diplomes/diplomesSaisis';
+                        $log.info('Error ' + urlPrefix + '/diplomes/diplomesSaisis/ \n Status :' + status);
                     });
             }
 
@@ -442,30 +577,15 @@ ngDemautApp
                     $scope.diplomeData.diplome.dateReconnaissance != null && $scope.diplomeData.diplome.dateReconnaissance != undefined && $scope.diplomeData.diplome.dateReconnaissance != '');
             };
 
-            $scope.fetchListeFormations = function () {
-                $http.get(urlPrefix + '/diplomes/typeFormationsList', {
-                    params: {typeDiplome: $scope.diplomeData.diplome.typeDiplome.id}
-                }).
-                    success(function (data, status, headers, config) {
-                        $scope.diplomeData.typeFormations = angular.fromJson(data.response);
-                        $log.info('Liste types fromations a été récupérée avec succès!');
-                    }).
-                    error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error fetching ../diplomes/typeFormationsList/';
-                        $log.info('Error ' + urlPrefix + '/diplomes/typeFormationsList/ \n Status :' + status);
-                    });
-            };
-
             $scope.backStep = function () {
-                $scope.indexStep -= 1;
+                $rootScope.wouldStepBack = true;
                 $location.path('/Demaut/demande/donneesPerso');
             };
 
             $scope.nextStep = function () {
-                $scope.wouldStepNext = true;
+                $rootScope.wouldStepNext = true;
                 if ($scope.donneesDiplome.diplomeDataForm.$valid) {
                     $log.info('Formulaire valide !');
-                    $scope.indexStep += 1;
                     $location.path('/Demaut/demande/donneesActivites');
                 }
                 else {
@@ -485,7 +605,7 @@ ngDemautApp
                     var diplome = angular.copy($scope.diplomeData.diplome);
                     diplome.referenceDeDiplome = diplomeKey.replace(/\s/g, '');
                     diplome.dateObtention = new Date(diplome.dateObtention);
-                    diplome.dateReconnaissance = diplome.dateReconnaissance == null || diplome.dateReconnaissance == undefined || diplome.dateReconnaissance == '' ? '' : new Date(diplome.dateObtention);
+                    diplome.dateReconnaissance = diplome.dateReconnaissance == null || diplome.dateReconnaissance == undefined || diplome.dateReconnaissance == '' ? '' : new Date(diplome.dateReconnaissance);
 
                     // TODO attendre la reponse server avant de faire le push
                     $scope.diplomeData.diplomes.push(diplome);
@@ -531,6 +651,7 @@ ngDemautApp
             function doCreateDiplome(targetDiplome) {
                 $http.get(urlPrefix + '/diplomes/ajouter', {
                     params: {
+                        referenceDeDemande: $window.localStorage.getItem('referenceDeDemande'),
                         referenceDeDiplome: targetDiplome.referenceDeDiplome,
                         typeDiplome: targetDiplome.typeDiplome.id,
                         typeFormation: targetDiplome.typeFormation.id,
@@ -552,6 +673,7 @@ ngDemautApp
             function doDeleteDiplome(targetDiplome) {
                 $http.get(urlPrefix + '/diplomes/supprimer', {
                     params: {
+                        referenceDeDemande: $window.localStorage.getItem('referenceDeDemande'),
                         referenceDeDiplome: targetDiplome.referenceDeDiplome
                     }
                 })
@@ -585,15 +707,14 @@ ngDemautApp
             };
 
             $scope.backStep = function () {
-                $scope.indexStep -= 1;
+                $rootScope.wouldStepBack = true;
                 $location.path('/Demaut/demande/DonneesDiplomes');
             };
 
             $scope.nextStep = function () {
-                $scope.wouldStepNext = true;
+                $rootScope.wouldStepNext = true;
                 if ($scope.donneesActivite.donneesActiviteForm.$valid) {
                     $log.info('Formulaire valide !');
-                    $scope.indexStep += 1;
                     $location.path('/Demaut/demande/annexes');
                 }
                 else {
@@ -718,7 +839,11 @@ ngDemautApp
             }
 
             if ($scope.annexesData.annexeTypesObligatoires.length == 0) {
-                $http.get(urlPrefix + '/annexes/typesObligatoiresList').
+                $http.get(urlPrefix + '/annexes/typesObligatoiresList', {
+                    params: {
+                        referenceDeDemande: $window.localStorage.getItem('referenceDeDemande')
+                    }
+                }).
                     success(function (data, status, headers, config) {
                         $scope.annexesData.annexeTypesObligatoires = angular.fromJson(data.response);
                         $log.info('Liste types annexes obligatoires a été récupérée avec succès!');
@@ -729,16 +854,55 @@ ngDemautApp
                     });
             }
 
+            $scope.isBrouillonExistant = function () {
+                return window.localStorage && $window.localStorage.getItem('referenceDeDemande');
+            };
+
+            if($scope.isBrouillonExistant()) {
+                $http.get(urlPrefix + '/annexes/annexesSaisis', {
+                    params: {
+                        referenceDeDemande: $window.localStorage.getItem('referenceDeDemande')
+                    }
+                })
+                    .success(function (data, status, headers, config) {
+                        var fetchedAnnexes = angular.fromJson(data.response);
+
+                        for (var indexOut = 0; indexOut < fetchedAnnexes.length; indexOut++) {
+                            if (fetchedAnnexes[indexOut] != null && fetchedAnnexes[indexOut] != undefined) {
+
+                                var currentAnnexe = fetchedAnnexes[indexOut];
+                                var displayedAnnexe = {};
+
+                                for (var indexJ = 0; indexJ < $scope.annexesData.annexeTypes.length; indexJ++) {
+                                    if ($scope.annexesData.annexeTypes[indexJ].name == currentAnnexe.typeAnnexe) {
+                                        displayedAnnexe.annexeType = $scope.annexesData.annexeTypes[indexJ];
+                                        break;
+                                    }
+                                }
+
+                                displayedAnnexe.name = currentAnnexe.nomFichier.value;
+                                displayedAnnexe.dateDeCreation = new Date(currentAnnexe.dateDeCreation.value);
+                                $scope.annexesData.referenceFiles.push(displayedAnnexe);
+                            }
+                        }
+                        $scope.donneesDiplome.diplomeDataForm.$pristine = false;
+                        $log.info('liste de diplomes saisis a été récupérée avec succès!');
+                    })
+                    .error(function (data, status, headers, config) {
+                        $rootScope.error = 'Error fetching ../diplomes/diplomesSaisis';
+                        $log.info('Error ' + urlPrefix + '/diplomes/diplomesSaisis/ \n Status :' + status);
+                    });
+            }
+
             $scope.backStep = function () {
-                $scope.indexStep -= 1;
+                $rootScope.wouldStepBack = true;
                 $location.path('/Demaut/demande/donneesActivites');
             };
 
             $scope.nextStep = function () {
-                $scope.wouldStepNext = true;
+                $rootScope.wouldStepNext = true;
                 if ($scope.annexes.annexesDataForm.$valid && $scope.annexesData.referenceFiles.length > 0) {
                     $log.info('Formulaire valide !');
-                    $scope.indexStep += 1;
                     $location.path('/Demaut/demande/recapitulatif');
                 }
                 else {
@@ -837,6 +1001,7 @@ ngDemautApp
                 $http.get(urlPrefix + '/annexes/afficher/', {
                     responseType: 'arraybuffer',
                     params: {
+                        referenceDeDemande: $window.localStorage.getItem('referenceDeDemande'),
                         annexeFileName: file.name,
                         annexeType: file.typeAnnexe
                     }
@@ -885,6 +1050,7 @@ ngDemautApp
             function doDeleteFile(file) {
                 $http.get(urlPrefix + '/annexes/supprimer', {
                     params: {
+                        referenceDeDemande: $window.localStorage.getItem('referenceDeDemande'),
                         annexeFileName: file.name,
                         annexeType: file.typeAnnexe
                     }
@@ -901,6 +1067,7 @@ ngDemautApp
             function doUploadFile(currentFetchedFile) {
                 var formData = new FormData();
                 formData.append('ajaxAction', 'upload');
+                formData.append("referenceDeDemande", $window.localStorage.getItem('referenceDeDemande'));
                 formData.append("annexeFile", currentFetchedFile);
                 formData.append("annexeFileName", currentFetchedFile.name);
                 formData.append("annexeFileSize", currentFetchedFile.size);
@@ -932,15 +1099,14 @@ ngDemautApp
             this.params = $routeParams;
 
             $scope.backStep = function () {
-                $scope.indexStep -= 1;
+                $rootScope.wouldStepBack = true;
                 $location.path('/Demaut/demande/annexes');
             };
 
             $scope.nextStep = function () {
-                $scope.wouldStepNext = true;
+                $rootScope.wouldStepNext = true;
                 if ($scope.recapitulatif.recapitulatifDataForm.$valid) {
                     $log.info('Formulaire valide !');
-                    $scope.indexStep += 1;
                     $location.path('/Demaut/demande/soumission');
                 }
                 else {
@@ -973,5 +1139,16 @@ ngDemautApp
         });
 
         $rootScope.$on('$routeChangeStart', function () {
+            var isContextDemande = $rootScope.contextMenu != undefined && $rootScope.contextMenu == 'DemandeAutorisation';
+            var notStepNext = $rootScope.wouldStepNext == null || $rootScope.wouldStepNext == undefined || $rootScope.wouldStepNext != true;
+            var notStepBack = $rootScope.wouldStepBack == null || $rootScope.wouldStepBack == undefined || $rootScope.wouldStepBack != true;
+            if(isContextDemande && notStepNext && notStepBack) {
+                $location.path('/Demaut/cockpit');
+            }
+        });
+
+        $rootScope.$on('$routeChangeSuccess', function () {
+            $rootScope.wouldStepNext = false;
+            $rootScope.wouldStepBack = false;
         });
     });

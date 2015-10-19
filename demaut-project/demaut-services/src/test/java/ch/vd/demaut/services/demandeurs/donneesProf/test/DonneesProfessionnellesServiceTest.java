@@ -1,7 +1,9 @@
 package ch.vd.demaut.services.demandeurs.donneesProf.test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertTrue;
 
+import java.util.List;
 import java.util.UUID;
 
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
@@ -34,6 +36,8 @@ import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TypeDiplomeAccepte;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
+
+import javax.xml.ws.Response;
 
 @ContextConfiguration({ "classpath*:/servicesTest-context.xml" })
 @ActiveProfiles({ "data" })
@@ -129,6 +133,27 @@ public class DonneesProfessionnellesServiceTest {
         assertThat(donneesProfessionnelles).isNotNull();
         assertThat(donneesProfessionnelles.getCodeGLN()).isNotNull();
         assertThat(donneesProfessionnelles.getCodeGLN().getValue()).isEqualTo("4719512002889");
+    }
+
+    @Test
+    @Transactional
+    @Rollback(value = true)
+    public void testRecupererDiplomesSaisis() throws Exception {
+        intialiserDemandeEnCours("admin3@admin.com");
+        DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService
+                .recupererDonneesProfessionnelles(login, demandeAutorisation.getReferenceDeDemande());
+        assertThat(donneesProfessionnelles).isNotNull();
+        donneesProfessionnellesService.ajouterUnDiplome(login, demandeAutorisation.getReferenceDeDemande(),
+                new ReferenceDeDiplome(UUID.randomUUID().toString()),
+                TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
+                new TitreFormation(TitreFormationApprofondieProgres.ChirurgieDeLaMain.name()), null,
+                new DateObtention(new LocalDate()), new PaysObtention(Pays.AfriqueDuSud.name()), null);
+        assertThat(donneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(1);
+
+        List<Diplome> diplomesSaisis = donneesProfessionnellesService.recupererDiplomesSaisis(login, demandeAutorisation.getReferenceDeDemande());
+
+        assertThat(diplomesSaisis).isNotNull();
+        assertThat(diplomesSaisis).isNotEmpty();
     }
 
     // ********************************************************* Private methods

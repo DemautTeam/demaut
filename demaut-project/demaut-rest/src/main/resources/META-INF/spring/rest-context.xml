@@ -27,6 +27,7 @@
 
     <jaxrs:server address="${demaut.rest.service.endpoint}">
         <jaxrs:serviceBeans>
+            <ref bean="sharedRestImpl"/>
             <ref bean="annexeRestImpl"/>
             <ref bean="professionRestImpl"/>
             <ref bean="demandeRestImpl"/>

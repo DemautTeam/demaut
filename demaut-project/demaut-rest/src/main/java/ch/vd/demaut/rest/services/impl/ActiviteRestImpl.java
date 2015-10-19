@@ -31,22 +31,4 @@ public class ActiviteRestImpl {
     @Context
     private HttpHeaders httpHeaders;
 
-    @GET
-    @Path("/nationalites")
-    @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed("USER")
-    public Response listerLesNationalites() throws Exception {
-
-        LOGGER.info("listerLesNationalites");
-
-        // Altrenative:
-        List<Pays> paysList = buildListePaysSansProgresSOA();
-        // Autre altrenative:
-        //List<VcType> paysList = buildListePaysAvecProgresSOA(uriInfo);
-        return RestUtils.buildRef(paysList);
-    }
-
-    private List<Pays> buildListePaysSansProgresSOA() {
-        return Arrays.asList(Pays.values());
-    }
 }

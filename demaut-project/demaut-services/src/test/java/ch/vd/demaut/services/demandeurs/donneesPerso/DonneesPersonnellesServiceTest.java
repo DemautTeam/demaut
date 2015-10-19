@@ -74,7 +74,7 @@ public class DonneesPersonnellesServiceTest {
     @Transactional
     @Rollback(value = true)
     public void testRecupererDonneesPersonnelles() throws Exception {
-        DonneesPersonnelles donneesPersonnelles = donneesPersonnellesService.recupererDonneesPersonnelles(login);
+        DonneesPersonnelles donneesPersonnelles = donneesPersonnellesService.recupererDonneesPersonnelles(login, demandeEnCours.getReferenceDeDemande());
         assertThat(donneesPersonnelles).isNotNull();
     }
 
@@ -98,10 +98,10 @@ public class DonneesPersonnellesServiceTest {
         Langue langue = Langue.Allemand;
         Permis permis = new Permis(TypePermis.C);
 
-        donneesPersonnellesService.renseignerLesDonneesPersonnelles(login, nom, prenom, null, adresse, email,
+        donneesPersonnellesService.renseignerLesDonneesPersonnelles(login, demandeEnCours.getReferenceDeDemande(), nom, prenom, null, adresse, email,
                 telephonePrive, telephoneMobile, fax, genre, dateDeNaissance, nationalite, langue, permis);
 
-        DonneesPersonnelles donneesPersonnelles = donneesPersonnellesService.recupererDonneesPersonnelles(login);
+        DonneesPersonnelles donneesPersonnelles = donneesPersonnellesService.recupererDonneesPersonnelles(login, demandeEnCours.getReferenceDeDemande());
         assertThat(donneesPersonnelles).isNotNull();
         assertThat(donneesPersonnelles.getEmail().getValue()).isEqualTo(email.getValue());
     }

@@ -50,12 +50,6 @@ public class DiplomeRestImplTest {
     }
 
     @Test
-    public void testListerLesPays() throws Exception {
-        Response response = diplomeRest.listerLesPays();
-        assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
-    }
-
-    @Test
     public void testAjouterUnDiplome() throws Exception {
         Response response = diplomeRest.ajouterUnDiplome("9e88c31c-9cdf-4b8d-964a-b0af8fd06c1b", referenceDeDiplomeStr,
                 String.valueOf(TypeDiplomeAccepte.D_POSTGRADE.getRefProgresID().getId()),
@@ -67,6 +61,12 @@ public class DiplomeRestImplTest {
     @Test
     public void testSupprimerUnDiplome() throws Exception {
         Response response = diplomeRest.supprimerUnDiplome("9e88c31c-9cdf-4b8d-964a-b0af8fd06c1b", referenceDeDiplomeStr);
+        assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
+    }
+
+    @Test
+    public void testRecupererDiplomesSaisis() throws Exception {
+        Response response = diplomeRest.recupererDiplomesSaisis("9e88c31c-9cdf-4b8d-964a-b0af8fd06c1b");
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 }

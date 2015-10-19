@@ -24,4 +24,5 @@ public interface DonneesProfessionnellesService {
 
     void validerEtRenseignerCodeGLN(Login login, ReferenceDeDemande referenceDeDemande, CodeGLN codeGLN);
 
+    List<Diplome> recupererDiplomesSaisis(Login login, ReferenceDeDemande referenceDeDemande);
 }

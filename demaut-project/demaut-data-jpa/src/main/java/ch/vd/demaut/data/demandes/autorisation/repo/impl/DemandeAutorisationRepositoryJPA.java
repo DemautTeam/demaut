@@ -3,10 +3,12 @@ package ch.vd.demaut.data.demandes.autorisation.repo.impl;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 
+import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnelles;
+import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome;
 import org.springframework.stereotype.Repository;
 
 import ch.vd.demaut.data.GenericRepositoryImpl;
@@ -65,10 +67,10 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
     }
     
     private TypedQuery<DemandeAutorisation> createQueryParReference(ReferenceDeDemande referenceDeDemande) {
-        final CriteriaBuilder builder = this.getEntityManager().getCriteriaBuilder();
-        final CriteriaQuery<DemandeAutorisation> criteriaQuery = builder.createQuery(DemandeAutorisation.class);
+        final CriteriaBuilder criteriaBuilder = this.getEntityManager().getCriteriaBuilder();
+        final CriteriaQuery<DemandeAutorisation> criteriaQuery = criteriaBuilder.createQuery(DemandeAutorisation.class);
         Root<DemandeAutorisation> autorisationRoot = criteriaQuery.from(DemandeAutorisation.class);
-        criteriaQuery.where(builder.equal(autorisationRoot.get("referenceDeDemande").get("value"), referenceDeDemande.getValue()));
+        criteriaQuery.where(criteriaBuilder.equal(autorisationRoot.get("referenceDeDemande").get("value"), referenceDeDemande.getValue()));
         return this.getEntityManager().createQuery(criteriaQuery);
     }
 

@@ -1,5 +1,6 @@
 package ch.vd.demaut.services.demandeurs.donneesPerso.impl;
 
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.demandeur.Pays;
@@ -23,8 +24,8 @@ public class DonneesPersonnellesServiceImpl implements DonneesPersonnellesServic
 
 
     @Transactional
-    public DonneesPersonnelles recupererDonneesPersonnelles(Login login) {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererBrouillon(login);
+    public DonneesPersonnelles recupererDonneesPersonnelles(Login login, ReferenceDeDemande referenceDeDemande) {
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererDemandeParReference(referenceDeDemande);
         if (demandeAutorisation.getDonneesPersonnelles() == null) {
             throw new DonneesProfessionnellesNotFoundException();
         }
@@ -33,10 +34,11 @@ public class DonneesPersonnellesServiceImpl implements DonneesPersonnellesServic
 
     @Transactional
     @Override
-    public void renseignerLesDonneesPersonnelles(Login login, Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Adresse adresse, Email email,
+    public void renseignerLesDonneesPersonnelles(Login login, ReferenceDeDemande referenceDeDemande,
+                                                 Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Adresse adresse, Email email,
                                                  TelephonePrive telephonePrive, TelephoneMobile telephoneMobile, Fax fax, Genre genre, DateDeNaissance dateDeNaissance,
                                                  Pays nationalite, Langue langue, Permis permis) {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererBrouillon(login);
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererDemandeParReference(referenceDeDemande);
         demandeAutorisation.getDonneesPersonnelles().renseignerLesDonneesPersonnelles(nom, prenom, nomDeCelibataire, adresse, email,
                 telephonePrive, telephoneMobile, fax, genre, dateDeNaissance, nationalite, langue, permis);
         demandeAutorisation.validerDonneesPersonnelles();

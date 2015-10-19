@@ -86,6 +86,22 @@ public class DiplomeRestImpl {
         return RestUtils.buildRef(titreFormations);
     }
 
+    @GET
+    @Path("/typeFormationsAll")
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("USER")
+    public Response listerLesTitresFormationsAll() throws Exception {
+
+        LOGGER.info("listerLesTitresFormationsAll");
+
+        List<TypeProgres> typeFormationsAll = new ArrayList<>();
+        typeFormationsAll.addAll(Arrays.<TypeProgres>asList(TitreFormationApprofondieProgres.values()));
+        typeFormationsAll.addAll(Arrays.<TypeProgres>asList(TitreFormationComplementaireProgres.values()));
+        typeFormationsAll.addAll(Arrays.<TypeProgres>asList(TitreFormationInitialeProgres.values()));
+        typeFormationsAll.addAll(Arrays.<TypeProgres>asList(TitreFormationPostgradeProgres.values()));
+        return RestUtils.buildRef(typeFormationsAll);
+    }
+
     private List<?> buildListeTitresFormationsSansProgresSOA(TypeDiplomeAccepte typeDiplomeAccepte) {
         switch (typeDiplomeAccepte) {
             case D_FORMATION_APPROFONDIE:
@@ -116,26 +132,6 @@ public class DiplomeRestImpl {
             default:
                 return new ArrayList<>();
         }
-    }
-
-    @GET
-    @Path("/paysList")
-    @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed("USER")
-    public Response listerLesPays() throws Exception {
-
-        LOGGER.info("listerLesPays");
-
-        // Altrenative:
-        List<Pays> paysList = buildListePaysSansProgresSOA();
-        // Autre altrenative:
-        //List<VcType> paysList = buildListePaysAvecProgresSOA(uriInfo);
-        return RestUtils.buildRef(paysList);
-    }
-
-
-    private List<Pays> buildListePaysSansProgresSOA() {
-        return Arrays.asList(Pays.values());
     }
 
     /**
@@ -209,5 +205,21 @@ public class DiplomeRestImpl {
 
         donneesProfessionnellesService.supprimerUnDiplome(login, referenceDeDemande, referenceDeDiplome);
         return RestUtils.buildJSon(true);
+    }
+
+    @SuppressWarnings("all")
+    @GET
+    @Path("/diplomesSaisis")
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("USER")
+    public Response recupererDiplomesSaisis(@QueryParam("referenceDeDemande") String referenceDeDemandeStr) throws Exception {
+        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
+
+        LOGGER.info("recupererDiplomesSaisis pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr);
+
+        ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
+
+        List<Diplome> diplomesSaisis = donneesProfessionnellesService.recupererDiplomesSaisis(login, referenceDeDemande);
+        return RestUtils.buildJSon(diplomesSaisis);
     }
 }

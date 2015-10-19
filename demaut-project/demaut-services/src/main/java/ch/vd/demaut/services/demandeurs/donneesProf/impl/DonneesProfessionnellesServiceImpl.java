@@ -70,4 +70,11 @@ public class DonneesProfessionnellesServiceImpl implements DonneesProfessionnell
         demandeAutorisation.getDonneesProfessionnelles().validerEtRenseignerCodeGLN(codeGLN, demandeAutorisation.getProfession());
         //TODO trace login de modification dans DB
     }
+
+    @Override
+    @Transactional
+    public List<Diplome> recupererDiplomesSaisis(Login login, ReferenceDeDemande referenceDeDemande) {
+        DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererDemandeParReference(referenceDeDemande);
+        return demandeAutorisation.getDonneesProfessionnelles().getListeDesDiplomes().listerDiplomes();
+    }
 }

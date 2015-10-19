@@ -1,5 +1,7 @@
 package ch.vd.demaut.rest.services.impl;
 
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandeur.Pays;
 import ch.vd.demaut.domain.demandeur.donneesPerso.*;
 import ch.vd.demaut.domain.utilisateurs.Login;
@@ -20,6 +22,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.*;
+import java.io.IOException;
 import java.util.Arrays;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
@@ -39,38 +42,17 @@ public class PersonelRestImpl {
     @Context
     private HttpHeaders httpHeaders;
 
-    @GET
-    @Path("/nationalites")
-    @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed("USER")
-    public Response listerLesNationalites() throws Exception {
-
-        LOGGER.info("listerLesNationalites");
-
-        return RestUtils.buildRef(Arrays.asList(Pays.values()));
-    }
-
-    @GET
-    @Path("/langues")
-    @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed("USER")
-    public Response listerLesLangues() throws Exception {
-
-        LOGGER.info("listerLesLangues");
-
-        return RestUtils.buildRef(Arrays.asList(Langue.values()));
-    }
-
     /**
      * Méthode qui renseigner les Donnees Personnelles du demandeur
      * dateDeNaissance String (format 2015-10-06T22:00:00.000Z)
      */
     @SuppressWarnings("all")
     @GET
-    @Path("/ajouter")
+    @Path("/renseigner")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response renseignerLesDonneesPersonnelles(@QueryParam("nom") String nomStr,
+    public Response renseignerLesDonneesPersonnelles(@QueryParam("referenceDeDemande") String referenceDeDemandeStr,
+                                                     @QueryParam("nom") String nomStr,
                                                      @QueryParam("prenom") String prenomStr,
                                                      @QueryParam("nomDeCelibataire") String nomDeCelibataireStr,
                                                      @QueryParam("adressePersonnelle") String adressePersonnelle,
@@ -91,8 +73,9 @@ public class PersonelRestImpl {
 
         Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
 
-        LOGGER.info("ajouterUnDiplome pour : " + login.getValue() + ", nom=" + nomStr + ", prenom=" + prenomStr);
+        LOGGER.info("renseignerLesDonneesPersonnelles pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr);
 
+        ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
         Nom nom = new Nom(nomStr);
         Prenom prenom = new Prenom(prenomStr);
         NomDeCelibataire nomDeCelibataire = new NomDeCelibataire(nomDeCelibataireStr);
@@ -119,9 +102,28 @@ public class PersonelRestImpl {
             }
         }
 
-        donneesPersonnellesService.renseignerLesDonneesPersonnelles(login, nom, prenom, nomDeCelibataire, adresse, email,
+        donneesPersonnellesService.renseignerLesDonneesPersonnelles(login, referenceDeDemande, nom, prenom, nomDeCelibataire, adresse, email,
                 telephonePrive, telephoneMobile, fax, genre, dateDeNaissance, nationalite, langue, permis);
 
         return RestUtils.buildJSon(true);
+    }
+
+    /**
+     * Méthode qui renvoie un broullion de donnees personnelles via referenceDeDemande
+     */
+    @GET
+    @Path("/recuperer")
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("USER")
+    public Response recupererDonneesPersonnelles(@QueryParam("referenceDeDemande") String referenceDeDemandeStr) throws IOException {
+
+        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
+
+        LOGGER.info("recuperer Brouillon de donnees personnelles pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr);
+
+        ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
+
+        DonneesPersonnelles donneesPersonnelles = donneesPersonnellesService.recupererDonneesPersonnelles(login, referenceDeDemande);
+        return RestUtils.buildJSon(donneesPersonnelles);
     }
 }

@@ -76,7 +76,7 @@ public class AnnexesServiceTest {
         //Setup fixtures
         creerDemandeEnCoursAvecAnnexe(annexe, new Login("admin4@admin"));
 
-        Collection<?> listerLesAnnexes = annexesService.listerLesAnnexeMetadatas(login);
+        Collection<?> listerLesAnnexes = annexesService.listerLesAnnexeMetadatas(login, demandeEnCours.getReferenceDeDemande());
         assertThat(listerLesAnnexes).isNotEmpty();
     }
 
@@ -89,7 +89,7 @@ public class AnnexesServiceTest {
         creerDemandeEnCoursAvecAnnexe(annexe, new Login("admin1@admin"));
         
         //Attache une annexe
-        annexesService.attacherUneAnnexe(login, file, nomFichier, TypeAnnexe.AttestationBonneConduite);
+        annexesService.attacherUneAnnexe(login, demandeEnCours.getReferenceDeDemande(), file, nomFichier, TypeAnnexe.AttestationBonneConduite);
 
         //Récupère demande en cours
         demandeEnCours = demandeAutorisationService.recupererBrouillon(login);
@@ -109,7 +109,7 @@ public class AnnexesServiceTest {
         creerDemandeEnCoursAvecAnnexe(annexe, new Login("admin2@admin"));
         try {
             //Attache une annexe
-            annexesService.attacherUneAnnexe(login, file, nomFichier, TypeAnnexe.CV);
+            annexesService.attacherUneAnnexe(login, demandeEnCours.getReferenceDeDemande(), file, nomFichier, TypeAnnexe.CV);
             failBecauseExceptionWasNotThrown(AnnexeNonUniqueException.class);
         } catch (AnnexeNonUniqueException e) {
 
@@ -129,7 +129,7 @@ public class AnnexesServiceTest {
 
         //Vérifie si annexe attachée
         AnnexeFK annexeFK = new AnnexeFK(nomFichier, TypeAnnexe.CV);
-        ContenuAnnexe contenuAnnexe = annexesService.recupererContenuAnnexe(login, annexeFK);
+        ContenuAnnexe contenuAnnexe = annexesService.recupererContenuAnnexe(login, demandeEnCours.getReferenceDeDemande(), annexeFK);
 
         assertThat(contenuAnnexe).isNotNull();
         assertThat(contenuAnnexe.getTaille()).isEqualTo(tailleAnnexe);
@@ -139,10 +139,10 @@ public class AnnexesServiceTest {
 
     @Transactional(propagation = Propagation.REQUIRED)
     private void creerDemandeEnCoursAvecAnnexe(Annexe annexeALier, Login login) {
-        this.login = login; 
+        this.login = login;
 
-        demandeAutorisationService.initialiserDemandeAutorisation(profession, glnValide, login);
+        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, glnValide, login);
         
-        annexesService.attacherUneAnnexe(login, annexeALier);
+        annexesService.attacherUneAnnexe(login, demandeEnCours.getReferenceDeDemande(), annexeALier);
     }
 }
