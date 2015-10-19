@@ -1,6 +1,5 @@
 package ch.vd.demaut.cucumber.converteurs.donneesperso;
 
-import ch.vd.demaut.domain.demandeur.donneesPerso.Nom;
 import ch.vd.demaut.domain.demandeur.donneesPerso.Prenom;
 import cucumber.api.Transformer;
 
