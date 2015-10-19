@@ -99,6 +99,7 @@ ngDemautApp
             $scope.cockpitData = {};
             $scope.cockpitData.demandesBrouillons = [];
             $scope.cockpitData.doDelete = false;
+            $window.localStorage.removeItem('referenceDeDemande');
 
             $http.get(urlPrefix + '/demande/recupererListBrouillons')
                 .success(function (data, status, headers, config) {
