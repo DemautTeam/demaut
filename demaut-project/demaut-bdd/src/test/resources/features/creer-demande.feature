@@ -34,3 +34,18 @@ Fonctionnalité: Créer une demande
   	Etant donné une demande de profession "Medecin" en cours de saisie ayant la référence "12345"
     Lorsque l´utilisateur initialise une demande de profession "Osteopathe" sans code GLN
     Alors le système Demaut refuse de créer la demande
+  
+  @code-gln  
+  Plan du scénario: Valider le code gln du demandeur
+    Lorsque l´utilisateur initialise une demande de profession "Medecin" avec un code GLN <gln>
+    Alors le code gln est <valide>
+    Alors le système Demaut <action> de créer la demande
+    Exemples:
+      | gln              | action    | 
+      | "7601000000125"  | "accepte" |
+      | ""               | "refuse"  |
+      | "g7601000000125" | "refuse"  |
+
+
+
+   

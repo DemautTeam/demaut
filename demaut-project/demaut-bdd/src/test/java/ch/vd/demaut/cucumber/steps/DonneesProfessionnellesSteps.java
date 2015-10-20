@@ -3,6 +3,7 @@ package ch.vd.demaut.cucumber.steps;
 import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
 import ch.vd.demaut.cucumber.converteurs.commons.LocalDateConverter;
 import ch.vd.demaut.domain.demandeur.Pays;
+import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.*;
 import org.joda.time.LocalDate;
 import org.springframework.util.StringUtils;
@@ -19,6 +20,9 @@ public class DonneesProfessionnellesSteps {
     // ********************************************************* Fields
     private DemandeAutorisationSteps demandeAutorisationSteps;
 
+    // ********************************************************* Code GLN
+    private CodeGLN codeGLN;
+
     // ********************************************************* Diplome
     private Diplome diplomeEnCours;
     private List<TypeDiplomeAccepte> typeDiplomeAcceptes;
@@ -33,7 +37,19 @@ public class DonneesProfessionnellesSteps {
     private String complement;
     private String critereDiplomeEtranger;
 
-    // ********************************************************* Technical methods
+    // ********************************************************* Methods metier
+
+    public void initialiserDiplomeEnCours() {
+        paysObtention = new PaysObtention(Pays.Allemagne.name());
+        this.diplomeEnCours = new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), typeDiplomeSelectionne, titreFormation,
+                complement, dateObtention, paysObtention, dateReconnaissance);
+    }
+
+    public void validerEtAjouterDiplome() {
+        demandeAutorisationSteps.getDemandeEnCours().getDonneesProfessionnelles().validerEtAjouterDiplome(this.diplomeEnCours);
+    }
+
+    // ********************************************************* Getters & Setters
 
     public DemandeAutorisationSteps getDemandeAutorisationSteps() {
         return demandeAutorisationSteps;
@@ -46,11 +62,6 @@ public class DonneesProfessionnellesSteps {
     public Diplome getDiplomeEnCours() {
         return diplomeEnCours;
     }
-
-    public void setDiplomeEnCours(Diplome diplomeEnCours) {
-        this.diplomeEnCours = diplomeEnCours;
-    }
-
 
     public List<TypeDiplomeAccepte> getTypeDiplomeAcceptes() {
         return typeDiplomeAcceptes;
@@ -121,8 +132,11 @@ public class DonneesProfessionnellesSteps {
     }
 
     public void setCritereDiplomeEtranger(String critereDiplomeEtranger) {
-        assertThat(critereDiplomeEtranger).isNotEmpty();
         this.critereDiplomeEtranger = critereDiplomeEtranger;
+    }
+
+    public void renseignerComplement(String complement) {
+        this.complement = complement;
     }
 
     public void verifierEtRenseignerDateObtention(String dateObtentionStr) {
@@ -150,17 +164,5 @@ public class DonneesProfessionnellesSteps {
         }
     }
 
-    public void initialiserDiplomeEnCours() {
-        paysObtention = new PaysObtention(Pays.Allemagne.name());
-        this.diplomeEnCours = new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), typeDiplomeSelectionne, titreFormation,
-                complement, dateObtention, paysObtention, dateReconnaissance);
-    }
 
-    public void validerEtAjouterDiplome() {
-        demandeAutorisationSteps.getDemandeEnCours().getDonneesProfessionnelles().validerEtAjouterDiplome(this.diplomeEnCours);
-    }
-
-    public void renseignerComplement(String complement) {
-        this.complement = complement;
-    }
 }
