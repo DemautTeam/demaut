@@ -1,17 +1,26 @@
 package ch.vd.demaut.cucumber.steps.definitions;
 
+import org.apache.commons.lang3.StringUtils;
+
 import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
-import ch.vd.demaut.cucumber.converteurs.donneesperso.*;
+import ch.vd.demaut.cucumber.converteurs.donneesperso.NomConverter;
+import ch.vd.demaut.cucumber.converteurs.donneesperso.PrenomConverter;
+import ch.vd.demaut.cucumber.converteurs.donneesperso.TelephoneMobileConverter;
+import ch.vd.demaut.cucumber.converteurs.donneesperso.TelephonePriveConverter;
 import ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps;
 import ch.vd.demaut.cucumber.steps.DonneesPersonnellesSteps;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandeur.Pays;
-import ch.vd.demaut.domain.demandeur.donneesPerso.*;
+import ch.vd.demaut.domain.demandeur.donneesPerso.Nom;
+import ch.vd.demaut.domain.demandeur.donneesPerso.Permis;
+import ch.vd.demaut.domain.demandeur.donneesPerso.Prenom;
+import ch.vd.demaut.domain.demandeur.donneesPerso.TelephoneMobile;
+import ch.vd.demaut.domain.demandeur.donneesPerso.TelephonePrive;
+import ch.vd.demaut.domain.demandeur.donneesPerso.TypePermis;
 import cucumber.api.Transform;
 import cucumber.api.java.fr.Alors;
+import cucumber.api.java.fr.Etantdonné;
 import cucumber.api.java.fr.Lorsque;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Step definitions pour la fonctionnalité "Saisir les DonneePerso"
@@ -40,6 +49,21 @@ public class SaisirDonneePersoStepDefinitions extends StepDefinitions {
 
     // ********************************************************* Given
 
+
+    @Etantdonné("^la taille maximale du nom configurée à (\\d+) caractères$")
+    public void la_taille_maximale_du_nom_configurée_à_caractères(int arg1) throws Throwable {
+        //TODO : Tester la valeur max de @Size(min = 1, max = 120)
+    }
+
+    // ********************************************************* When
+
+    @Lorsque("^l´utilisateur saisit un nom d´une longueur de (\\d+) caractères$")
+    public void l_utilisateur_saisit_un_nom_d_une_longueur_de_caractères(int longueurN) throws Throwable {
+        String nomStr = StringUtils.repeat("*", longueurN);
+        donneesPersonnellesSteps.initDonneePersonnelles(new Nom(nomStr), new Prenom("prenom"));
+        donneesPersonnellesSteps.attacheDonneesPersonellesALaDemandeDAutorisation();
+    }    
+    
     @Lorsque("^le demandeur saisit la nationalité \"([^\"]*)\" et le permis \"([^\"]*)\"$")
     public void le_demandeur_saisi_la_et_le(Pays nationalité, TypePermis typePermis) throws Throwable {
         DemandeAutorisation demandeAutorisation = demandeAutorisationSteps.getDemandeEnCours();
@@ -47,7 +71,7 @@ public class SaisirDonneePersoStepDefinitions extends StepDefinitions {
         donneesPersonnellesSteps.attacheDonneesPersonellesALaDemandeDAutorisation();
     }
 
-    // ********************************************************* When
+    
 
     @Lorsque("^l´utilisateur saisit ses donnees personnelles: nom=\"([^\"]*)\", prenom=\"([^\"]*)\"$")
     public void l_utilisateur_saisit_ses_donnees_personnelles_nom_prenom(@Transform(NomConverter.class) Nom nom,
