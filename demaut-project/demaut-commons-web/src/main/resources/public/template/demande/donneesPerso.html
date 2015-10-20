@@ -103,7 +103,8 @@
                         <div class="col-md-2" popover-enable="wouldStepNext || (donneesPerso.donneesPersoDataForm.telephonePrive.$error.required && !donneesPerso.donneesPersoDataForm.telephonePrive.$pristine)"
                              popover-trigger="none" popover-is-open="wouldStepNext && (donneesPerso.donneesPersoDataForm.telephonePrive.$invalid || donneesPerso.donneesPersoDataForm.telephoneMobile.$invalid)" popover-placement="right"
                              uib-popover="Veuillez saisir au moins un numéro de telephone.">
-                            <input type="tel" id="telephonePrive" name="telephonePrive" ng-required="changeTelephonePriveRequirement(donneesPerso.donneesPersoDataForm.telephonePrive, donneesPerso.donneesPersoDataForm.telephoneMobile)" class="form-control"  ng-model="personalData.telephonePrive">
+                            <input type="tel" id="telephonePrive" name="telephonePrive" ng-required="changeTelephonePriveRequirement(donneesPerso.donneesPersoDataForm.telephonePrive, donneesPerso.donneesPersoDataForm.telephoneMobile)" class="form-control"
+                                   ng-model="personalData.telephonePrive" placeholder="0123456 ou +41123456">
                         </div>
                     </div>
                     <!--Téléphone mobile-->
@@ -112,14 +113,15 @@
                         <div class="col-md-2" popover-enable="donneesPerso.donneesPersoDataForm.telephoneMobile.$error.required && !donneesPerso.donneesPersoDataForm.telephoneMobile.$pristine"
                              popover-trigger="none" popover-is-open="wouldStepNext && donneesPerso.donneesPersoDataForm.telephoneMobile.$error.required" popover-placement="right"
                              uib-popover="Veuillez saisir au moins un numéro de telephone.">
-                            <input type="tel" id="telephoneMobile" name="telephoneMobile" ng-required="changeTelephoneMobileRequirement(donneesPerso.donneesPersoDataForm.telephoneMobile, donneesPerso.donneesPersoDataForm.telephonePrive)" class="form-control" ng-model="personalData.telephoneMobile">
+                            <input type="tel" id="telephoneMobile" name="telephoneMobile" ng-required="changeTelephoneMobileRequirement(donneesPerso.donneesPersoDataForm.telephoneMobile, donneesPerso.donneesPersoDataForm.telephonePrive)" class="form-control"
+                                   ng-model="personalData.telephoneMobile" placeholder="0123456 ou +41123456">
                         </div>
                     </div>
                     <!--Fax-->
                     <div class="row form-group">
                         <label for="fax" class="col-md-2">Fax</label>
                         <div class="col-md-2">
-                            <input type="tel" id="fax" name="fax" class="form-control" ng-model="personalData.fax">
+                            <input type="tel" id="fax" name="fax" class="form-control" ng-model="personalData.fax" placeholder="0123456 ou +41123456">
                         </div>
                     </div>
                     <!--Email-->

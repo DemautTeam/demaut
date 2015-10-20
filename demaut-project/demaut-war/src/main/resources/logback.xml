@@ -26,6 +26,7 @@
 
     <logger name="org.springframework" level="DEBUG"/>
 	<logger name="org.springframework.security" level="WARN"/>
+	<logger name="org.apache.openjpa" level="WARN"/>
 
 	<root level="INFO">
 		<appender-ref ref="LOGFILE"/>

@@ -31,7 +31,6 @@ public class DonneesPersonnellesValidateur extends AbstractDataValidateur<Donnee
             throw new DonneesPersonnellesNonValideException();
         }
         validateNationalitePermis(donneesPersonnelles);
-
     }
 
     private void validateNationalitePermis(DonneesPersonnelles donneesPersonnelles){
