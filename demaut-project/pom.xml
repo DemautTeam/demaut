@@ -147,7 +147,6 @@
         <!-- Persistence -->
         <openjpa.version>2.3.0</openjpa.version>
         <geronimo.jpa.spec.version>1.1.1</geronimo.jpa.spec.version>
-        <eclipse.persistence.version>2.1.0</eclipse.persistence.version>
         <commons.dbcp.version>1.4</commons.dbcp.version>
         <javax.jta.version>1.1</javax.jta.version>
 
@@ -484,11 +483,6 @@
                         <artifactId>commons-logging</artifactId>
                     </exclusion>
                 </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.persistence</groupId>
-                <artifactId>javax.persistence</artifactId>
-                <version>${eclipse.persistence.version}</version>
             </dependency>
             <dependency>
                 <groupId>javax.transaction</groupId>
