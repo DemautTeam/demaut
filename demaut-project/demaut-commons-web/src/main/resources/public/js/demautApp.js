@@ -225,8 +225,8 @@ ngDemautApp
                             }
                         })
                             .success(function (data, status, headers, config) {
-                                var refDemande = angular.fromJson(data.response);
-                                //TODO : Ajouter le error handling if refDemande null ou undefined
+                                var referenceDeDemande = angular.fromJson(data.response);
+                                $window.localStorage.setItem('referenceDeDemande', referenceDeDemande.value);
                                 $log.info('Une nouvelle demande a été intitialisée avec succès!');
                             })
                             .error(function (data, status, headers, config) {
