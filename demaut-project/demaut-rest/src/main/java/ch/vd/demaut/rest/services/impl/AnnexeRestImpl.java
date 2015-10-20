@@ -182,8 +182,8 @@ public class AnnexeRestImpl {
 
     private AnnexeFK buildAnnexeFK(String annexeFileName, String annexeTypeIdStr) {
         NomFichier nomFichier = new NomFichier(annexeFileName);
-        Integer annexeTypeId = Integer.valueOf(annexeTypeIdStr);
-        TypeAnnexe typeAnnexe = TypeAnnexe.getTypeById(annexeTypeId);
+        //Integer annexeTypeId = Integer.valueOf(annexeTypeIdStr);
+        TypeAnnexe typeAnnexe = TypeAnnexe.AutoPratiquer;
         return new AnnexeFK(nomFichier, typeAnnexe);
     }
 }

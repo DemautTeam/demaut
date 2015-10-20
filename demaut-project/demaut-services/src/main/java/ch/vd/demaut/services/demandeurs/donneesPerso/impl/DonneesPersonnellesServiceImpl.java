@@ -22,8 +22,6 @@ public class DonneesPersonnellesServiceImpl implements DonneesPersonnellesServic
     @Autowired
     private DemandeAutorisationRepository demandeAutorisationRepository;
 
-
-    @Transactional
     public DonneesPersonnelles recupererDonneesPersonnelles(Login login, ReferenceDeDemande referenceDeDemande) {
         DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererDemandeParReference(referenceDeDemande);
         if (demandeAutorisation.getDonneesPersonnelles() == null) {
@@ -43,6 +41,6 @@ public class DonneesPersonnellesServiceImpl implements DonneesPersonnellesServic
                 telephonePrive, telephoneMobile, fax, genre, dateDeNaissance, nationalite, langue, permis);
         demandeAutorisation.validerDonneesPersonnelles();
 
-        demandeAutorisationRepository.store(demandeAutorisation);
+
     }
 }

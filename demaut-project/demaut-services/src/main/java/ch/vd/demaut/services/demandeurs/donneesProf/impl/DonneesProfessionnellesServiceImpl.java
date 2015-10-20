@@ -34,8 +34,7 @@ public class DonneesProfessionnellesServiceImpl implements DonneesProfessionnell
         DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererDemandeParReference(referenceDeDemande);
         return demandeAutorisation.getProfession();
     }
-
-    @Transactional
+ 
     public DonneesProfessionnelles recupererDonneesProfessionnelles(Login login, ReferenceDeDemande referenceDeDemande) {
         DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererDemandeParReference(referenceDeDemande);
         if (demandeAutorisation.getDonneesProfessionnelles() == null) {

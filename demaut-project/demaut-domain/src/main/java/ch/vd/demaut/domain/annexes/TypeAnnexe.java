@@ -26,7 +26,9 @@ public enum TypeAnnexe implements TypeProgres, Comparator {
     Recusation(13, "Récusation"),
     Originaux(14, "Présenter les originaux des diplômes au SSP"),
     SpecimenSignature(15, "Spécimen signature (à transmettre par courrier postal)"),
-    Divers(16, "Divers");
+    Divers(16, "Divers"),
+    AutoPratiquer(17, "Auto. Pratiquer"),
+    AutoExcercer(18, "Auto. Excercer");
 
     private RefProgresID refProgresID;
 

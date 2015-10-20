@@ -14,6 +14,7 @@ import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
     public DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande referenceDeDemande) {
         try {
             return demandeAutorisationRepository.recupererDemandeParReference(referenceDeDemande);
-        } catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException | NoResultException e) {
             throw new ReferenceDemandeNotFoundException();
         }
     }
