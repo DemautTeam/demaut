@@ -190,7 +190,7 @@
                 <column name="type_Diplome_Accepte"/>
                 <enumerated>STRING</enumerated>
             </basic>
-            <basic name="complement" access="PROPERTY">
+            <basic name="complement">
                 <column name="complement" column-definition="varchar" length="254"/>
             </basic>
             <embedded name="referenceDeDiplome"/>
@@ -210,10 +210,10 @@
                 <column name="pays"/>
                 <enumerated>ORDINAL</enumerated>
             </basic>
-            <basic name="voie" access="PROPERTY">
+            <basic name="voie">
                 <column name="voie" column-definition="varchar" length="254"/>
             </basic>
-            <basic name="complement" access="PROPERTY">
+            <basic name="complement">
                 <column name="complement" column-definition="varchar" length="254"/>
             </basic>
             <embedded name="npa"/>
@@ -225,7 +225,7 @@
 
     <embeddable class="ch.vd.demaut.domain.annexes.NomFichier">
         <attributes>
-            <basic name="nomFichier" access="PROPERTY">
+            <basic name="nomFichier">
                 <column name="nom_fichier" column-definition="varchar" length="254"/>
             </basic>
         </attributes>
@@ -233,17 +233,17 @@
 
     <embeddable class="ch.vd.demaut.domain.annexes.ContenuAnnexe">
         <attributes>
-            <basic name="contenu" access="PROPERTY">
+            <basic name="contenu">
                 <column name="contenu"/>
                 <lob/>
             </basic>
-            <basic name="taille" access="PROPERTY"/>
+            <basic name="taille"/>
         </attributes>
     </embeddable>
 
     <embeddable class="ch.vd.demaut.domain.utilisateurs.Login">
         <attributes>
-            <basic name="value" access="FIELD">
+            <basic name="value">
                 <column name="login" column-definition="varchar" length="254"/>
             </basic>
         </attributes>
