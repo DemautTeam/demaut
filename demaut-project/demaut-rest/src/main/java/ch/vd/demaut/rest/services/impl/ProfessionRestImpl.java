@@ -136,5 +136,6 @@ public class ProfessionRestImpl {
         CodeGLN codeGLN =  StringUtils.isEmpty(codeGln) ? null : new CodeGLN(codeGln);
 
         donneesProfessionnellesService.validerEtRenseignerCodeGLN(login, referenceDeDemande, codeGLN);
-        return RestUtils.buildJSon(true);    }
+        return RestUtils.buildJSon(true);    
+    }
 }

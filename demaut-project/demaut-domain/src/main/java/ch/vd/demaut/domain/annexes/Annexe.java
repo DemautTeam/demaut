@@ -67,7 +67,7 @@ public class Annexe extends EntityFunctionalKeyAware {
     }
 
     public AnnexeMetadata getAnnexeMetadata() {
-        return new AnnexeMetadata(typeAnnexe, nomFichier.getNomFichier(), getTaille());
+        return new AnnexeMetadata(typeAnnexe, nomFichier.getNomFichier(), getTaille(), dateDeCreation);
     }
 
     @Override
