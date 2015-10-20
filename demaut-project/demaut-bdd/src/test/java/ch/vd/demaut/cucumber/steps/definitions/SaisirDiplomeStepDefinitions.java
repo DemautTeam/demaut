@@ -97,7 +97,6 @@ public class SaisirDiplomeStepDefinitions extends StepDefinitions {
 
     @Lorsque("^l´utilisateur saisit la date d´obtention \"([^\"]*)\" du diplôme$")
     public void l_utilisateur_saisit_la_date_obtention_du_diplôme(String dateObtention) throws Throwable {
-        assertThat(dateObtention).isNotNull();
         this.donneesProfessionnellesSteps.verifierEtRenseignerDateObtention(dateObtention);
     }
 
@@ -124,8 +123,6 @@ public class SaisirDiplomeStepDefinitions extends StepDefinitions {
 
     @Alors("^le système Demaut \"(accepte|refuse)\" la date d´obtention \"([^\"]*)\" avec un \"([^\"]*)\" en cas d´échec$")
     public void le_système_Demaut_action_la_date_d_obtention_avec_un_message_en_cas_d_échec(AccepteOuRefuse action, String dateObtentionStr, String message) throws Throwable {
-        assertThat(dateObtentionStr).isNotEmpty();
-        assertThat(action).isNotNull();
         try {
             this.donneesProfessionnellesSteps.verifierEtRenseignerDateObtention(dateObtentionStr);
             assertThat(action).isEqualTo(AccepteOuRefuse.accepte);

@@ -6,7 +6,7 @@ Fonctionnalité: Saisir les données professionnelles de la demande
   Contexte:
     Etant donné la date du jour: "15.07.2015 11:00"
     Etant donné l´utilisateur identifié et connecté avec le login "joe.dalton@vd.ch"
-    Etant donné une demande de profession "Medecin" en cours de saisie à l´état "Brouillon"
+    Etant donné une demande de profession "Medecin" en cours de saisie ayant la référence "12345"
     Etant donné les types de diplômes acceptés non vide:
       | D_FORMATION_APPROFONDIE     |
       | D_FORMATION_COMPLEMENTAIRE  |
@@ -32,7 +32,7 @@ Fonctionnalité: Saisir les données professionnelles de la demande
       | date_obtention   | action    | message                       |
       | "12.12.2011"     | "accepte" | ""                            |
       | "32.12.2011"     | "refuse"  | "Date d'obtention non valide" |
-      | "01.01.2025"     | "refuse"  | "Date d'obtention non valide" |
+      | "16.07.2015"     | "refuse"  | "Date d'obtention non valide" |
 
   @saisir-date-reconnaissance
   Plan du scénario: Saisir une date de reconnaissance du diplôme
