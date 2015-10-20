@@ -144,6 +144,8 @@ ngDemautApp
                     });
             };
 
+            // indispensable pour le rendering initiale du cockpit
+            $scope.initilized = true;
         }])
     .controller('ProfessionSanteController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$log', '$window', 'professionTest',
         function ($scope, $rootScope, $routeParams, $http, $location, $log, $window, professionTest) {
@@ -198,7 +200,9 @@ ngDemautApp
                             }
                         }
                         $scope.professionData.gln = response[1] == null || response[1] == undefined ? '' : response[1];
-                        $scope.professionSante.professionDataForm.$pristine = false;
+                        if($scope.professionData.profession != null && $scope.professionData.profession != undefined) {
+                            $scope.professionSante.professionDataForm.$pristine = false;
+                        }
                         $log.info('Profession de la demande a été récupérée avec succès!');
                     })
                     .error(function (data, status, headers, config) {
@@ -232,7 +236,6 @@ ngDemautApp
                             .error(function (data, status, headers, config) {
                                 $rootScope.error = 'Error fetching ../demande/initialiser/';
                                 $log.info('Error ' + urlPrefix + '/demande/initialiser/ \n Status :' + status);
-
                             });
                     }
                     else {
@@ -327,22 +330,28 @@ ngDemautApp
                         $scope.personalData.nom = response.nom.value;
                         $scope.personalData.prenom = response.prenom.value;
                         $scope.personalData.nomDeCelibataire = response.nomDeCelibataire.value;
-                        $scope.personalData.adressePersonnelle = response.adresse.voie;
-                        $scope.personalData.complement = response.adresse.complement;
-                        $scope.personalData.localite = response.adresse.localite.value;
-                        $scope.personalData.npa = response.adresse.npa.value;
-                        for (var indexI = 0; indexI < $scope.personalData.paysList.length; indexI++) {
-                            if ($scope.personalData.paysList[indexI].name == response.adresse.pays) {
-                                $scope.personalData.pays = $scope.personalData.paysList[indexI];
-                                break;
+
+                        if(response.adresse != null && response.adresse != undefined) {
+                            $scope.personalData.adressePersonnelle = response.adresse.voie;
+                            $scope.personalData.complement = response.adresse.complement;
+                            $scope.personalData.localite = response.adresse.localite.value;
+                            $scope.personalData.npa = response.adresse.npa.value;
+
+                            for (var indexI = 0; indexI < $scope.personalData.paysList.length; indexI++) {
+                                if ($scope.personalData.paysList[indexI].name == response.adresse.pays) {
+                                    $scope.personalData.pays = $scope.personalData.paysList[indexI];
+                                    break;
+                                }
                             }
                         }
+
                         $scope.personalData.telephonePrive = response.telephonePrive.value;
                         $scope.personalData.telephoneMobile = response.telephoneMobile.value;
                         $scope.personalData.email = response.email.value;
                         $scope.personalData.fax = response.fax.value;
                         $scope.personalData.genre = response.genre;
                         $scope.personalData.dateDeNaissance = new Date(response.dateDeNaissance.value);
+
                         for (var indexJ = 0; indexJ < $scope.personalData.nationalites.length; indexJ++) {
                             if ($scope.personalData.nationalites[indexJ].name == response.nationalite) {
                                 $scope.personalData.nationalite = $scope.personalData.nationalites[indexJ];
@@ -355,9 +364,13 @@ ngDemautApp
                                 break;
                             }
                         }
-                        $scope.personalData.permis = response.permis.typePermis;
-                        $scope.personalData.permisOther = response.permis.autrePermis.value;
-                        $scope.donneesPerso.donneesPersoDataForm.$pristine = false;
+                        if(response.permis != null && response.permis != undefined) {
+                            $scope.personalData.permis = response.permis.typePermis;
+                            $scope.personalData.permisOther = response.permis.autrePermis.value;
+                        }
+                        if(response != null && response != undefined) {
+                            $scope.donneesPerso.donneesPersoDataForm.$pristine = false;
+                        }
                         $log.info('Objet Données personnlles a été récupéré avec succès!');
                     }).
                     error(function (data, status, headers, config) {
@@ -548,7 +561,9 @@ ngDemautApp
                                 $scope.diplomeData.diplomes.push(displayedDiplome);
                             }
                         }
-                        $scope.donneesDiplome.diplomeDataForm.$pristine = false;
+                        if($scope.diplomeData.diplomes.length > 0) {
+                            $scope.donneesDiplome.diplomeDataForm.$pristine = false;
+                        }
                         $log.info('liste de diplomes saisis a été récupérée avec succès!');
                     })
                     .error(function (data, status, headers, config) {
@@ -614,7 +629,6 @@ ngDemautApp
                     $scope.diplomeData.diplome = {};
                     $scope.donneesDiplome.diplomeDataForm.$valid = true;
                     $scope.donneesDiplome.diplomeDataForm.$error = {};
-                    $scope.donneesDiplome.diplomeDataForm.$setPristine();
                     $scope.wouldAddDiplome = false;
                 }
             };
@@ -886,12 +900,15 @@ ngDemautApp
                                 $scope.annexesData.referenceFiles.push(displayedAnnexe);
                             }
                         }
-                        $scope.donneesDiplome.diplomeDataForm.$pristine = false;
-                        $log.info('liste de diplomes saisis a été récupérée avec succès!');
+                        $scope.files = $scope.annexesData.referenceFiles;
+                        if($scope.files.length > 0) {
+                            $scope.annexes.annexesDataForm.$pristine = false;
+                        }
+                        $log.info('liste de annexes saisis a été récupérée avec succès!');
                     })
                     .error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error fetching ../diplomes/diplomesSaisis';
-                        $log.info('Error ' + urlPrefix + '/diplomes/diplomesSaisis/ \n Status :' + status);
+                        $rootScope.error = 'Error fetching ../annexes/annexesSaisis';
+                        $log.info('Error ' + urlPrefix + '/annexes/annexesSaisis/ \n Status :' + status);
                     });
             }
 

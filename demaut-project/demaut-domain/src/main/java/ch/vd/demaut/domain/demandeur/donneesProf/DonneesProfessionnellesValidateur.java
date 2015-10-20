@@ -27,14 +27,7 @@ public class DonneesProfessionnellesValidateur extends AbstractDataValidateur<Do
     @Override
     public void valider(DonneesProfessionnelles donneesProfessionnelles) {
 
-        // 1. Valide la structure d'une donneesProfessionnelles
         validerStructure(donneesProfessionnelles);
-
-        // 2. Valide CodeGLN
-        validerCodeGLN(donneesProfessionnelles);
-
-        // 3. Valide Diplome
-        validerDiplome(donneesProfessionnelles);
 
     }
 
@@ -46,15 +39,4 @@ public class DonneesProfessionnellesValidateur extends AbstractDataValidateur<Do
         }
     }
 
-    public void validerCodeGLN(DonneesProfessionnelles donneesProfessionnelles) {
-        @SuppressWarnings("unused")
-        CodeGLN codeGLN = donneesProfessionnelles.getCodeGLN();
-        // TODO : implement me
-    }
-
-    private void validerDiplome(DonneesProfessionnelles donneesProfessionnelles) {
-        @SuppressWarnings("unused")
-        ListeDesDiplomes listeDesDiplomes = donneesProfessionnelles.getListeDesDiplomes();
-        // TODO : implement me
-    }
 }

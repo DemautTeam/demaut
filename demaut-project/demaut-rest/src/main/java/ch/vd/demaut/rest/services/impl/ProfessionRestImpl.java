@@ -31,6 +31,7 @@ import ch.vd.demaut.progreSoa.services.ProgreSoaService;
 import ch.vd.demaut.rest.commons.json.RestUtils;
 import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
 import ch.vd.ses.referentiel.demaut_1_0.VcType;
+import org.springframework.util.StringUtils;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
 @Service("professionRestImpl")
@@ -129,10 +130,10 @@ public class ProfessionRestImpl {
 
         Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
 
-        LOGGER.info("recuperer Profession de demande " + login.getValue()  + ", codeGln=" + codeGln);
+        LOGGER.info("validerEtRenseignerCodeGLN " + login.getValue()  + ", codeGln=" + codeGln);
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
-        CodeGLN codeGLN = new CodeGLN(codeGln);
+        CodeGLN codeGLN =  StringUtils.isEmpty(codeGln) ? null : new CodeGLN(codeGln);
 
         donneesProfessionnellesService.validerEtRenseignerCodeGLN(login, referenceDeDemande, codeGLN);
         return RestUtils.buildJSon(true);    }

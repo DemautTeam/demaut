@@ -69,10 +69,6 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.eclipse.persistence</groupId>
-            <artifactId>javax.persistence</artifactId>
-        </dependency>
-        <dependency>
             <groupId>javax.transaction</groupId>
             <artifactId>jta</artifactId>
         </dependency>
