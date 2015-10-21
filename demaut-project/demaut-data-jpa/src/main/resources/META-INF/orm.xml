@@ -93,7 +93,7 @@
             </basic>
             <!-- On ne peut pas utiliser EAGER : https://issues.apache.org/jira/browse/OPENJPA-1908 -->
             <one-to-many name="annexes">
-                <join-column/>
+                <join-column name="ANNEXES_ID"/>
                 <cascade>
                     <cascade-all/>
                 </cascade>
@@ -141,7 +141,7 @@
         <attributes>
             <!-- On ne peut pas utiliser EAGER : https://issues.apache.org/jira/browse/OPENJPA-1908 -->
             <one-to-many name="diplomes">
-                <join-column/>
+                <join-column name="DIPLOMES_ID"/>
                 <cascade>
                     <cascade-all/>
                 </cascade>

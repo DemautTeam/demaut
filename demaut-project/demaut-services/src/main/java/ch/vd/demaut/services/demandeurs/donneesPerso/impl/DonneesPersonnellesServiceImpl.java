@@ -17,13 +17,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class DonneesPersonnellesServiceImpl implements DonneesPersonnellesService {
 
     @Autowired
-    private DemandeAutorisationService demandeAutorisationService;
-
-    @Autowired
     private DemandeAutorisationRepository demandeAutorisationRepository;
 
+    @Override
+    @Transactional(readOnly = true)
     public DonneesPersonnelles recupererDonneesPersonnelles(Login login, ReferenceDeDemande referenceDeDemande) {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererDemandeParReference(referenceDeDemande);
+        DemandeAutorisation demandeAutorisation = demandeAutorisationRepository.recupererDemandeParReference(referenceDeDemande);
         if (demandeAutorisation.getDonneesPersonnelles() == null) {
             throw new DonneesProfessionnellesNotFoundException();
         }
@@ -36,11 +35,9 @@ public class DonneesPersonnellesServiceImpl implements DonneesPersonnellesServic
                                                  Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Adresse adresse, Email email,
                                                  TelephonePrive telephonePrive, TelephoneMobile telephoneMobile, Fax fax, Genre genre, DateDeNaissance dateDeNaissance,
                                                  Pays nationalite, Langue langue, Permis permis) {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererDemandeParReference(referenceDeDemande);
+        DemandeAutorisation demandeAutorisation = demandeAutorisationRepository.recupererDemandeParReference(referenceDeDemande);
         demandeAutorisation.getDonneesPersonnelles().renseignerLesDonneesPersonnelles(nom, prenom, nomDeCelibataire, adresse, email,
                 telephonePrive, telephoneMobile, fax, genre, dateDeNaissance, nationalite, langue, permis);
         demandeAutorisation.validerDonneesPersonnelles();
-
-
     }
 }
