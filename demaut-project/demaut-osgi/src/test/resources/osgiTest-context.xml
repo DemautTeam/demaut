@@ -19,7 +19,7 @@
 		http://cxf.apache.org/jaxrs
 		http://cxf.apache.org/schemas/jaxrs.xsd">
 
-    <util:properties id="props" location="demautMicrobizTest.cfg"/>
+    <util:properties id="props" location="demautOsgiTest.cfg"/>
 
     <bean id="iamInteceptor" class="ch.vd.demaut.microbiz.rest.IamBypassInterceptor"/>
 
@@ -27,6 +27,6 @@
         <constructor-arg value="src/main/resources/www"/>
     </bean>
 
-    <import resource="classpath:META-INF/spring/microbiz-context.xml"/>
+    <import resource="classpath:META-INF/spring/osgi-context.xml"/>
 
 </beans>
