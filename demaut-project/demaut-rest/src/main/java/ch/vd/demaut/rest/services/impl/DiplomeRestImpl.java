@@ -1,14 +1,20 @@
 package ch.vd.demaut.rest.services.impl;
 
-import ch.vd.demaut.domain.config.TypeProgres;
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.demandeur.Pays;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.*;
-import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.progreSoa.services.ProgreSoaService;
-import ch.vd.demaut.rest.commons.json.RestUtils;
-import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
-import ch.vd.ses.referentiel.demaut_1_0.VcType;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -20,15 +26,24 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import ch.vd.demaut.domain.config.TypeProgres;
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandeur.Pays;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateObtention;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateReconnaissance;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ReferenceDeDiplome;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormation;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormationApprofondieProgres;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormationComplementaireProgres;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormationInitialeProgres;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormationPostgradeProgres;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TypeDiplomeAccepte;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.progreSoa.services.ProgreSoaService;
+import ch.vd.demaut.rest.commons.json.RestUtils;
+import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
+import ch.vd.ses.referentiel.demaut_1_0.VcType;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
 @Service("diplomeRestImpl")
@@ -162,7 +177,7 @@ public class DiplomeRestImpl {
         TypeDiplomeAccepte typeDiplomeAccepte = TypeDiplomeAccepte.getTypeById(Integer.parseInt(typeDiplomeId));
         TitreFormation titreFormation = new TitreFormation(convertTypeFormationIdToEnum(typeDiplomeAccepte, typeFormationId).name());
         DateObtention dateObtention = new DateObtention(SHORT_DATE_PARSER.parseLocalDate(dateObtentionStr));
-        PaysObtention paysObtention = new PaysObtention(Pays.getTypeById(Integer.parseInt(paysObtentionId)).name());
+        Pays paysObtention = Pays.getTypeById(Integer.parseInt(paysObtentionId));
         DateReconnaissance dateReconnaissance = null;
         if (!StringUtils.isEmpty(dateReconnaissanceStr) && !"-".equals(dateReconnaissanceStr)) {
             dateReconnaissance = new DateReconnaissance(SHORT_DATE_PARSER.parseLocalDate(dateReconnaissanceStr));

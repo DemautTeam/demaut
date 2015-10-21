@@ -3,12 +3,10 @@ package ch.vd.demaut.data.demandes.autorisation.repo.impl;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
-import ch.vd.demaut.domain.annexes.Annexe;
-import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnelles;
-import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome;
 import org.springframework.stereotype.Repository;
 
 import ch.vd.demaut.data.GenericRepositoryImpl;

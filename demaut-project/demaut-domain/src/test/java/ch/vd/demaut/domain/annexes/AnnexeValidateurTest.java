@@ -70,7 +70,7 @@ public class AnnexeValidateurTest {
     @SuppressWarnings("all")
     private Annexe buildAnnexe(int tailleFichierEnMB, String nomFichier) {
         byte[] contenu = FileMockHelper.buildContenuFichier(tailleFichierEnMB);
-        return new Annexe(TypeAnnexe.CV, nomFichier, contenu, "01.01.2015 11:00");
+        return new Annexe(nomFichier, contenu, "01.01.2015 11:00");
     }
 
 

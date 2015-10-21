@@ -47,7 +47,7 @@ public class AnnexesServiceImpl implements AnnexesService {
     @Override
     public Collection<TypeAnnexe> listerLesTypeAnnexesObligatoires(Login login, ReferenceDeDemande referenceDeDemande) {
         DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererDemandeParReference(referenceDeDemande);
-        return demandeAutorisation.listerLesTypeAnnexesObligatoires();
+        return demandeAutorisation.calculerTypesAnnexeObligatoires();
     }
 
     /**
@@ -67,10 +67,10 @@ public class AnnexesServiceImpl implements AnnexesService {
 
     @Transactional
     @Override
-    public void attacherUneAnnexe(Login login, ReferenceDeDemande referenceDeDemande, File file, NomFichier nomFichier, TypeAnnexe type) {
+    public void attacherUneAnnexe(Login login, ReferenceDeDemande referenceDeDemande, File file, NomFichier nomFichier) {
         DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererDemandeParReference(referenceDeDemande);
         ContenuAnnexe contenuAnnexe = buildContenuAnnexe(file);
-        Annexe annexe = new Annexe(type, nomFichier, contenuAnnexe, new DateDeCreation(new LocalDate()));
+        Annexe annexe = new Annexe(nomFichier, contenuAnnexe, new DateDeCreation(new LocalDate()));
         demandeAutorisation.validerEtAttacherAnnexe(annexe);
     }
 

@@ -1,19 +1,11 @@
 package ch.vd.demaut.data.demandes.autorisation.repo;
 
-import ch.vd.demaut.domain.annexes.Annexe;
-import ch.vd.demaut.domain.annexes.AnnexeMetadata;
-import ch.vd.demaut.domain.annexes.TypeAnnexe;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
-import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
-import ch.vd.demaut.domain.demandeur.Pays;
-import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
-import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.*;
-import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.domain.utilisateurs.Utilisateur;
-import ch.vd.demaut.domain.utilisateurs.UtilisateurRepository;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
+
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,11 +17,27 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.domain.annexes.AnnexeMetadata;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
+import ch.vd.demaut.domain.demandeur.Pays;
+import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
+import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateObtention;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateReconnaissance;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ReferenceDeDiplome;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormation;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormationApprofondieProgres;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormationInitialeProgres;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormationPostgradeProgres;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TypeDiplomeAccepte;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.domain.utilisateurs.Utilisateur;
+import ch.vd.demaut.domain.utilisateurs.UtilisateurRepository;
 
 @ContextConfiguration({"classpath*:/jpaTest-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -95,7 +103,7 @@ public class DemandeAutorisationRepositoryTest {
         DemandeAutorisation demandeInit = demandeAutorisationFactory.initierDemandeAutorisation(utilisateur.getLogin(),
                 Profession.Chiropraticien, glnValide);
         byte[] contenu = "AnnexeContenu".getBytes();
-        Annexe annexe = new Annexe(TypeAnnexe.CV, "test.pdf", contenu, "01.01.2015 11:00");
+        Annexe annexe = new Annexe("test.pdf", contenu, "01.01.2015 11:00");
         demandeInit.validerEtAttacherAnnexe(annexe);
 
         persisterDemandeEtVerifier(demandeInit);
@@ -141,15 +149,15 @@ public class DemandeAutorisationRepositoryTest {
         donneesProfessionnelles.validerEtAjouterDiplome(
                 new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
                         new TitreFormation(TitreFormationApprofondieProgres.PneumologiePediatrique.name()), null,
-                        new DateObtention(new LocalDate()), new PaysObtention(Pays.Suisse.name()), null));
+                        new DateObtention(new LocalDate()), Pays.Suisse, null));
         donneesProfessionnelles.validerEtAjouterDiplome(
                 new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), TypeDiplomeAccepte.D_FORMATION_INITIALE,
                         new TitreFormation(TitreFormationInitialeProgres.CFRDUnDiplomeEtrangerDeMedecin.name()), null,
-                        new DateObtention(new LocalDate()), new PaysObtention(Pays.Allemagne.name()), new DateReconnaissance(new LocalDate())));
+                        new DateObtention(new LocalDate()), Pays.Allemagne, new DateReconnaissance(new LocalDate())));
         donneesProfessionnelles.validerEtAjouterDiplome(
                 new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), TypeDiplomeAccepte.D_POSTGRADE,
                         new TitreFormation(TitreFormationPostgradeProgres.Cardiologie.name()), null,
-                        new DateObtention(new LocalDate()), new PaysObtention(Pays.Suisse.name()), null));
+                        new DateObtention(new LocalDate()), Pays.Suisse, null));
     }
 
     private Utilisateur creerUtilisateur(String loginStr) {
@@ -174,11 +182,6 @@ public class DemandeAutorisationRepositoryTest {
         return transactionManagerDemaut.getTransaction(definition);
     }
 
-    private void rollbackTransaction(TransactionStatus transaction) {
-        transactionManagerDemaut.rollback(transaction);
-    }
-
-    
     private DemandeAutorisation recupererDemandePersistee(DemandeAutorisation demandeAutorisation) {
         commitTransaction(transaction);
         transaction = beginTransaction();

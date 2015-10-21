@@ -1,17 +1,22 @@
 package ch.vd.demaut.cucumber.steps;
 
-import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
-import ch.vd.demaut.cucumber.converteurs.commons.LocalDateConverter;
-import ch.vd.demaut.domain.demandeur.Pays;
-import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.*;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+
 import org.joda.time.LocalDate;
 import org.springframework.util.StringUtils;
 
-import java.util.List;
-import java.util.UUID;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
+import ch.vd.demaut.cucumber.converteurs.commons.LocalDateConverter;
+import ch.vd.demaut.domain.demandeur.Pays;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateObtention;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateReconnaissance;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ListeDesFormations;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ReferenceDeDiplome;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormation;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TypeDiplomeAccepte;
 
 public class DonneesProfessionnellesSteps {
 
@@ -21,7 +26,6 @@ public class DonneesProfessionnellesSteps {
     private DemandeAutorisationSteps demandeAutorisationSteps;
 
     // ********************************************************* Code GLN
-    private CodeGLN codeGLN;
 
     // ********************************************************* Diplome
     private Diplome diplomeEnCours;
@@ -30,7 +34,6 @@ public class DonneesProfessionnellesSteps {
     private ListeDesFormations listeDesFormations;
     private TitreFormation titreFormation;
     private DateObtention dateObtention;
-    private PaysObtention paysObtention;
     private DateReconnaissance dateReconnaissance;
     private AccepteOuRefuse acceptationDateObtention;
     private AccepteOuRefuse acceptationDateReconnaissance;
@@ -40,16 +43,18 @@ public class DonneesProfessionnellesSteps {
     // ********************************************************* Methods metier
 
     public void initialiserDiplomeEnCours() {
-        paysObtention = new PaysObtention(Pays.Allemagne.name());
-        this.diplomeEnCours = new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), typeDiplomeSelectionne, titreFormation,
-                complement, dateObtention, paysObtention, dateReconnaissance);
+        this.diplomeEnCours = new Diplome(new ReferenceDeDiplome("refDiplome1"),
+                TypeDiplomeAccepte.D_FORMATION_APPROFONDIE, titreFormation, complement, dateObtention, Pays.Allemagne,
+                dateReconnaissance);
     }
 
     public void validerEtAjouterDiplome() {
-        demandeAutorisationSteps.getDemandeEnCours().getDonneesProfessionnelles().validerEtAjouterDiplome(this.diplomeEnCours);
+        demandeAutorisationSteps.getDemandeEnCours().getDonneesProfessionnelles()
+                .validerEtAjouterDiplome(this.diplomeEnCours);
     }
 
-    // ********************************************************* Getters & Setters
+    // ********************************************************* Getters &
+    // Setters
 
     public DemandeAutorisationSteps getDemandeAutorisationSteps() {
         return demandeAutorisationSteps;
@@ -152,8 +157,9 @@ public class DonneesProfessionnellesSteps {
     public void verifierEtRenseignerDateReconnaissance(String dateReconnaissanceStr) {
         assertThat(dateReconnaissanceStr).isNotEmpty();
         try {
-            if (this.titreFormation != null && !StringUtils.isEmpty(this.titreFormation.getValue()) &&
-                    !StringUtils.isEmpty(this.critereDiplomeEtranger) && this.titreFormation.getValue().contains(this.critereDiplomeEtranger)) {
+            if (this.titreFormation != null && !StringUtils.isEmpty(this.titreFormation.getValue())
+                    && !StringUtils.isEmpty(this.critereDiplomeEtranger)
+                    && this.titreFormation.getValue().contains(this.critereDiplomeEtranger)) {
                 LocalDateConverter localDateConverter = new LocalDateConverter();
                 LocalDate dateReconnaissance = (LocalDate) localDateConverter.fromString(dateReconnaissanceStr);
                 this.dateReconnaissance = new DateReconnaissance(dateReconnaissance);
@@ -162,6 +168,5 @@ public class DonneesProfessionnellesSteps {
             // Format de date invalide
         }
     }
-
 
 }
