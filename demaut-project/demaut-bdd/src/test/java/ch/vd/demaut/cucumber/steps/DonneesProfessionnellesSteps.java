@@ -140,7 +140,6 @@ public class DonneesProfessionnellesSteps {
     }
 
     public void verifierEtRenseignerDateObtention(String dateObtentionStr) {
-        assertThat(dateObtentionStr).isNotEmpty();
         try {
             LocalDateConverter localDateConverter = new LocalDateConverter();
             LocalDate dateObtentionLocal = (LocalDate) localDateConverter.fromString(dateObtentionStr);

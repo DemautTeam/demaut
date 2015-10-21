@@ -59,11 +59,10 @@ public class AnnexesStepDefinitions extends StepDefinitions {
 
     // ********************************************************* Given
 
-
     @Etantdonné("^les formats de fichier acceptés:$")
     public void les_formats_de_fichier_acceptés(DataTable dataTable) throws Throwable {
         List<FormatFichierAccepte> formatsAcceptes = dataTable.asList(FormatFichierAccepte.class);
-        
+
         assertThat(FormatFichierAccepte.values()).hasSameSizeAs(formatsAcceptes);
         assertThat(FormatFichierAccepte.values()).containsAll(formatsAcceptes);
     }
@@ -88,17 +87,17 @@ public class AnnexesStepDefinitions extends StepDefinitions {
 
     // ********************************************************* When
 
-    @Lorsque("^l´utilisateur attache le fichier \"([^\"]*)\" de taille (\\d+)M de type \"([^\"]*)\"$")
+    @Lorsque("^l´utilisateur attache le fichier \"([^\"]*)\" de taille (\\d+)M$")
     public void utilisateur_attache_le_fichier(@Transform(NomFichierConverter.class) NomFichier nomFichier,
-                                               Integer tailleFichierEnMB, TypeAnnexe typeAnnexe) throws Throwable {
+            Integer tailleFichierEnMB) throws Throwable {
 
-        creerEtAttacherAnnexe(nomFichier, tailleFichierEnMB, typeAnnexe);
+        creerEtAttacherAnnexe(nomFichier, tailleFichierEnMB, TypeAnnexe.AutoPratiquer);
     }
 
-    @Lorsque("^l´utilisateur supprime le fichier \"([^\"]*)\" de type \"([^\"]*)\"$")
-    public void l_utilisateur_supprime_le_fichier_de_type(@Transform(NomFichierConverter.class) NomFichier nomFichier,
-                                                          TypeAnnexe typeAnnexe) throws Throwable {
-        supprimerAnnexe(nomFichier, typeAnnexe);
+    @Lorsque("^l´utilisateur supprime le fichier \"([^\"]*)\"$")
+    public void l_utilisateur_supprime_le_fichier_de_type(@Transform(NomFichierConverter.class) NomFichier nomFichier)
+            throws Throwable {
+        supprimerAnnexe(nomFichier, TypeAnnexe.AutoPratiquer);
     }
 
     // ********************************************************* Then
@@ -119,11 +118,11 @@ public class AnnexesStepDefinitions extends StepDefinitions {
 
     @Alors("^les annexes attachées à la demande \"([^\"]*)\" sont:$")
     public void les_annexes_attachées_sont(@Transform(ReferenceDeDemandeConverter.class) ReferenceDeDemande refScenario,
-                                           DataTable dataTable) throws Throwable {
+            DataTable dataTable) throws Throwable {
         DemandeAutorisation demande = getDemandeAutorisationSteps().getDemandeViaReference(refScenario);
         List<Annexe> annexesAttendues = buildListeAnnexes(dataTable).listerAnnexes();
         List<Annexe> annexesDemande = demande.listerLesAnnexes();
-        
+
         assertThat(annexesDemande).hasSameSizeAs(annexesAttendues);
         assertThat(annexesDemande).containsAll(annexesAttendues);
     }
@@ -134,8 +133,9 @@ public class AnnexesStepDefinitions extends StepDefinitions {
 
         byte[] contenuFichier = FileMockHelper.buildContenuFichier(tailleFichier);
 
-        //TODO: Utiliser la date du jour et tester 
-        DateDeCreation dateDeCreation = new DateDeCreation(LocalDate.parse("01.01.2015 11:00", DateTimeFormat.forPattern("dd.MM.yyyy hh:mm")));
+        // TODO: Utiliser la date du jour et tester
+        DateDeCreation dateDeCreation = new DateDeCreation(
+                LocalDate.parse("01.01.2015 11:00", DateTimeFormat.forPattern("dd.MM.yyyy hh:mm")));
 
         Annexe annexe = new Annexe(typeAnnexe, nomFichier, new ContenuAnnexe(contenuFichier), dateDeCreation);
 
@@ -156,11 +156,9 @@ public class AnnexesStepDefinitions extends StepDefinitions {
 
         List<Map<String, String>> mappingTypesNomFichiersAnnexesSaisies = dataTable.asMaps(String.class, String.class);
         for (Map<String, String> mappingUnTypeNomFichierAnnexesSaisies : mappingTypesNomFichiersAnnexesSaisies) {
-            String typeDeLAnnexe = mappingUnTypeNomFichierAnnexesSaisies.get("Type d´annexe");
-            TypeAnnexe typeAnnexe = TypeAnnexe.valueOf(typeDeLAnnexe);
             String nomFichier = mappingUnTypeNomFichierAnnexesSaisies.get("Nom du fichier");
             byte[] contenuFichier = FileMockHelper.buildContenuFichier(2);
-            Annexe annexe = new Annexe(typeAnnexe, nomFichier, contenuFichier, "01.01.2015 11:00");
+            Annexe annexe = new Annexe(TypeAnnexe.AutoPratiquer, nomFichier, contenuFichier, "01.01.2015 11:00");
             annexes.ajouterAnnexe(annexe);
         }
 

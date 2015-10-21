@@ -895,7 +895,7 @@ ngDemautApp
                                     }
                                 }
 
-                                displayedAnnexe.name = currentAnnexe.nomFichier.value;
+                                displayedAnnexe.name = currentAnnexe.nomFichier.nomFichier;
                                 displayedAnnexe.dateDeCreation = new Date(currentAnnexe.dateDeCreation.value);
                                 $scope.annexesData.referenceFiles.push(displayedAnnexe);
                             }
