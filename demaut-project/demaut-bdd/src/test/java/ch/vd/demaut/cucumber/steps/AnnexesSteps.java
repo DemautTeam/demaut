@@ -1,6 +1,7 @@
 package ch.vd.demaut.cucumber.steps;
 
 import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
+import ch.vd.demaut.commons.exceptions.EntityNotUniqueException;
 import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.AnnexeFK;
 import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
@@ -18,6 +19,10 @@ public class AnnexesSteps {
     // ********************************************************* Static fields
     private DemandeAutorisationSteps demandeAutorisationSteps;
 
+    private DonneesPersonnellesSteps donneesPersonnellesSteps;
+
+    private DonneesProfessionnellesSteps donneesProfessionnellesSteps;
+
     // ********************************************************* Fields
 
     private DemandeAutorisation demandeEnCours;
@@ -26,10 +31,6 @@ public class AnnexesSteps {
 
     // ********************************************************* Methods
 
-
-    public void setDemandeAutorisationSteps(DemandeAutorisationSteps demandeAutorisationSteps) {
-        this.demandeAutorisationSteps = demandeAutorisationSteps;
-    }
 
     public DemandeAutorisation getDemandeEnCours() {
         if (demandeEnCours == null) {
@@ -50,7 +51,7 @@ public class AnnexesSteps {
         try {
             getDemandeEnCours().validerEtAttacherAnnexe(annexe);
             accepteAnnexe();
-        } catch (AnnexeNonValideException | AnnexeNonUniqueException e) {
+        } catch (AnnexeNonValideException | AnnexeNonUniqueException | EntityNotUniqueException e) {
             refuseAnnexe();
         }
     }
@@ -62,12 +63,8 @@ public class AnnexesSteps {
         } catch (AnnexeIntrouvableException e) {
             refuseAnnexe();
         }
-
     }
-
-    // ***************************** **************************** Technical
-    // methods
-
+    
     //TODO: Mutualiser cela
     public void verifieAcceptationAnnexe(AccepteOuRefuse expectedAcceptationAnnexe) {
         assertThat(actualAcceptationAnnexe).isEqualTo(expectedAcceptationAnnexe);
@@ -80,4 +77,32 @@ public class AnnexesSteps {
     public void refuseAnnexe() {
         actualAcceptationAnnexe = AccepteOuRefuse.refuse;
     }
+
+    // ***************************** **************************** Technical
+    // methods
+
+    public void setDemandeAutorisationSteps(DemandeAutorisationSteps demandeAutorisationSteps) {
+        this.demandeAutorisationSteps = demandeAutorisationSteps;
+    }
+    
+    public DemandeAutorisationSteps getDemandeAutorisationSteps() {
+        return demandeAutorisationSteps;
+    }
+    
+    public void setDonneesPersonnellesSteps(DonneesPersonnellesSteps donneesPersonnellesSteps) {
+        this.donneesPersonnellesSteps = donneesPersonnellesSteps;
+    }
+    
+    public DonneesPersonnellesSteps getDonneesPersonnellesSteps() {
+        return donneesPersonnellesSteps;
+    }
+
+    public DonneesProfessionnellesSteps getDonneesProfessionnellesSteps() {
+        return donneesProfessionnellesSteps;
+    }
+    
+    public void setDonneesProfessionnellesSteps(DonneesProfessionnellesSteps donneesProfessionnellesSteps) {
+        this.donneesProfessionnellesSteps = donneesProfessionnellesSteps;
+    }
+    
 }

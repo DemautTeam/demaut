@@ -290,4 +290,11 @@ public enum Pays implements TypeProgres {
     public String getCode() {
         return code;
     }
+    
+    public boolean estSuisse() {
+        return this.equals(Suisse);
+    }
+    public boolean estEtranger() {
+        return !estSuisse();
+    }
 }
