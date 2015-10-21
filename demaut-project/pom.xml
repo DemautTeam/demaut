@@ -41,7 +41,7 @@
         <module>demaut-services</module>
         <module>demaut-rest</module>
         <module>demaut-war</module>
-        <module>demaut-microbiz</module>
+        <module>demaut-osgi</module>
 
         <!-- Front End Modules -->
         <module>demaut-commons-web</module>

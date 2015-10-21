@@ -7,9 +7,9 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>demaut-microbiz</artifactId>
-    <name>demaut-microbiz</name>
-    <description>Demaut Microbiz Module</description>
+    <artifactId>demaut-osgi</artifactId>
+    <name>demaut-osgi</name>
+    <description>Demaut Service OSGi Module</description>
     <packaging>bundle</packaging>
 
     <dependencies>
