@@ -76,8 +76,8 @@ public class CreationDemandeStepDefinitions extends StepDefinitions {
         getDemandeAutorisationSteps().verifieDemandeCree(profession, statut, login);
     }
 
-    @Alors("^le système Demaut refuse de créer la demande$")
-    public void le_système_Demaut_refuse_de_créer_la_demande() {
-        getDemandeAutorisationSteps().verifieAcceptationAnnexe(AccepteOuRefuse.refuse);
+    @Alors("^le système Demaut \"(accepte|refuse)\" de créer la demande$")
+    public void le_système_Demaut_refuse_de_créer_la_demande(AccepteOuRefuse action) {
+        getDemandeAutorisationSteps().verifieAcceptationAnnexe(action);
     }
 }
