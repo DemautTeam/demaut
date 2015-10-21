@@ -31,7 +31,7 @@ public class EndpointTest {
 
     @Before
     public void setUp() {
-        xmlApplicationContext = new ClassPathXmlApplicationContext(new String[]{"/microbizTest-context.xml"});
+        xmlApplicationContext = new ClassPathXmlApplicationContext(new String[]{"/restTest-context.xml"});
         assertNotNull(xmlApplicationContext);
 
         ConfigurableListableBeanFactory beanFactory = xmlApplicationContext.getBeanFactory();
