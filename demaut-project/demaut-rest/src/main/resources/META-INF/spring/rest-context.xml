@@ -2,19 +2,11 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ctx="http://www.springframework.org/schema/context"
-    xmlns:camel="http://camel.apache.org/schema/spring" xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx"
     xmlns:util="http://www.springframework.org/schema/util" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd
-       http://camel.apache.org/schema/spring
-       http://camel.apache.org/schema/spring/camel-spring.xsd
-       http://www.springframework.org/schema/jdbc
-		http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
-		http://www.springframework.org/schema/tx
-		http://www.springframework.org/schema/tx/spring-tx.xsd
 		http://www.springframework.org/schema/util
 		http://www.springframework.org/schema/util/spring-util.xsd
 		http://cxf.apache.org/jaxrs
@@ -37,6 +29,7 @@
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <ref bean="customJacksonJaxbJsonProvider"/>
+            <ref bean="domainExceptionHandler"/>
             <ref bean="authenticationFilter"/>
             <ref bean="corsFilter"/>
         </jaxrs:providers>
@@ -47,6 +40,7 @@
 
     <bean id="customJacksonJaxbJsonProvider"
         class="ch.vd.demaut.rest.providers.CustomJacksonJaxbJsonProvider"/>
+    <bean id="domainExceptionHandler" class="ch.vd.demaut.rest.providers.DomainExceptionHandler"/>
 
     <bean id="authenticationFilter" class="ch.vd.demaut.rest.filter.CustomAuthenticationFilter">
         <property name="contextName" value="karaf"/>

@@ -5,7 +5,9 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import org.springframework.beans.factory.FactoryBean;
 
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.ext.Provider;
 
+@Provider
 public class CustomJacksonJaxbJsonProvider implements FactoryBean<JacksonJaxbJsonProvider> {
 
     @Override
