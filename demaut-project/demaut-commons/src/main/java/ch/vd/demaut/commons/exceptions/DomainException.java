@@ -1,6 +1,8 @@
 package ch.vd.demaut.commons.exceptions;
 
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * <strong>Exception du Domaine :</strong> Gestion des toutes les erreurs liées au domaine.
  */
@@ -62,5 +64,14 @@ public class DomainException extends BaseException {
      */
     public DomainException(Throwable cause) {
         super(cause);
+    }
+
+    @Override
+    public String getMessage() {
+        String message = super.getMessage();
+        if (StringUtils.isEmpty(message)) {
+            message = "Erreur du domaine métier, message non defini...";
+        }
+        return message;
     }
 }
