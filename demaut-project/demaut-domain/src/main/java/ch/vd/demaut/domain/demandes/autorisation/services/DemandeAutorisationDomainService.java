@@ -27,7 +27,7 @@ public class DemandeAutorisationDomainService {
 
     public DemandeAutorisation initialiserDemandeAutorisation(Profession profession, CodeGLN codeGLN) {
         Utilisateur utilisateurCourant = utilisateurService.recupererUtilisateurCourant();
-        DemandeAutorisation nouvelleDemande = factory.initierDemandeAutorisation(utilisateurCourant.getLogin(), profession,codeGLN);
+        DemandeAutorisation nouvelleDemande = factory.initierDemandeAutorisation(utilisateurCourant.getLogin(), profession, codeGLN);
         demandeAutorisationRepository.store(nouvelleDemande);
         return nouvelleDemande;
     }

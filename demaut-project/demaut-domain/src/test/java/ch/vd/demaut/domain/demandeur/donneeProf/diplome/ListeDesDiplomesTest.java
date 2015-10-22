@@ -30,15 +30,15 @@ public class ListeDesDiplomesTest {
         listeDesDiplomes.ajouterUnDiplome(
                 new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
                         new TitreFormation(TitreFormationApprofondieProgres.PneumologiePediatrique.name()), null,
-                        new DateObtention(new LocalDate()), Pays.Suisse, null));
+                        new DateObtention(new LocalDate()), new PaysObtention(Pays.Suisse.name()), null));
         listeDesDiplomes.ajouterUnDiplome(
                 new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), TypeDiplomeAccepte.D_FORMATION_INITIALE,
                         new TitreFormation(TitreFormationInitialeProgres.CFRDUnDiplomeEtrangerDeMedecin.name()), null,
-                        new DateObtention(new LocalDate()), Pays.Allemagne, new DateReconnaissance(new LocalDate())));
+                        new DateObtention(new LocalDate()), new PaysObtention(Pays.Allemagne.name()), new DateReconnaissance(new LocalDate())));
         listeDesDiplomes.ajouterUnDiplome(
                 new Diplome(new ReferenceDeDiplome(UUID.randomUUID().toString()), TypeDiplomeAccepte.D_POSTGRADE,
                         new TitreFormation(TitreFormationPostgradeProgres.Cardiologie.name()), null,
-                        new DateObtention(new LocalDate()), Pays.Suisse, null));
+                        new DateObtention(new LocalDate()), new PaysObtention(Pays.Suisse.name()), null));
     }
 
     @Test

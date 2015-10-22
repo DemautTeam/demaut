@@ -12,6 +12,9 @@ public class AnnexeMetadata extends BaseValueObject {
 
     // ********************************************************* Fields
     @NotNull
+    private TypeAnnexe typeAnnexe;
+
+    @NotNull
     @Valid
     private NomFichier nomFichier;
 
@@ -22,14 +25,19 @@ public class AnnexeMetadata extends BaseValueObject {
 
     // ********************************************************* Constructor
 
-    public AnnexeMetadata(String nomFichier, long tailleContenu, DateDeCreation dateDeCreation) {
+    public AnnexeMetadata(TypeAnnexe typeAnnexe, String nomFichier, long tailleContenu, DateDeCreation dateDeCreation) {
         super();
+        this.typeAnnexe = typeAnnexe;
         this.nomFichier = new NomFichier(nomFichier);
         this.tailleContenu = tailleContenu;
         this.dateDeCreation = dateDeCreation;
     }
 
     // ********************************************************* Getters
+
+    public TypeAnnexe getTypeAnnexe() {
+        return typeAnnexe;
+    }
 
     public NomFichier getNomFichier() {
         return nomFichier;

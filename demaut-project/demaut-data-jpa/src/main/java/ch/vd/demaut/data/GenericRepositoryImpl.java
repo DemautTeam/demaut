@@ -1,20 +1,19 @@
 package ch.vd.demaut.data;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import ch.vd.demaut.commons.exceptions.ValidationEntityException;
+import ch.vd.demaut.commons.repo.GenericReadRepository;
+import ch.vd.demaut.commons.repo.GenericRepository;
+import ch.vd.demaut.commons.validation.ValidatorFactoryDefault;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-
-import ch.vd.demaut.commons.exceptions.ValidationEntityException;
-import ch.vd.demaut.commons.repo.GenericReadRepository;
-import ch.vd.demaut.commons.repo.GenericRepository;
-import ch.vd.demaut.commons.validation.ValidatorFactoryDefault;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 public abstract class GenericRepositoryImpl<T, I extends Serializable> implements GenericRepository<T, I>, GenericReadRepository<T, I> {
 

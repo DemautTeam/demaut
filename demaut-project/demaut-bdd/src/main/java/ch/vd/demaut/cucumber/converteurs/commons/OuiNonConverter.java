@@ -14,4 +14,5 @@ public class OuiNonConverter extends Transformer<Boolean> {
         }
         return positive.equalsIgnoreCase(str) ? Boolean.TRUE : Boolean.FALSE;
     }
+
 }

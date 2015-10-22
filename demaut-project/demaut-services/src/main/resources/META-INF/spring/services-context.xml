@@ -15,6 +15,6 @@
     
     <context:component-scan base-package="ch.vd.demaut"/>
 
-    <import resource="classpath:META-INF/spring/jpa-context.xml"/>
+    <import resource="classpath*:META-INF/spring/jpa-context.xml"/>
 
 </beans>

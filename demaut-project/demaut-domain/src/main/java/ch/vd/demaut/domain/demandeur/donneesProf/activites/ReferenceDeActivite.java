@@ -1,12 +1,16 @@
 package ch.vd.demaut.domain.demandeur.donneesProf.activites;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
-import ch.vd.demaut.commons.vo.StringVO;
+import ch.vd.demaut.commons.vo.BaseValueObject;
+
+import javax.validation.constraints.NotNull;
 
 @ValueObject
-public class ReferenceDeActivite extends StringVO {
+public class ReferenceDeActivite extends BaseValueObject {
 
     // ********************************************************* Fields
+
+    private String value;
 
     // ********************************************************* Constructor
 
@@ -14,9 +18,13 @@ public class ReferenceDeActivite extends StringVO {
     }
 
     public ReferenceDeActivite(String reference) {
-        super(reference);
+        this.value = value;
     }
 
     // ********************************************************* Getters
+    @NotNull
+    public String getValue() {
+        return value;
+    }
 
 }

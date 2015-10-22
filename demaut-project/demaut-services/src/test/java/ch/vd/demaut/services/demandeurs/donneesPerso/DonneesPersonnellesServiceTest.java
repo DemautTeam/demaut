@@ -1,7 +1,13 @@
 package ch.vd.demaut.services.demandeurs.donneesPerso;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.domain.demandeur.Pays;
+import ch.vd.demaut.domain.demandeur.donneesPerso.*;
+import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,31 +20,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.domain.demandeur.Pays;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Adresse;
-import ch.vd.demaut.domain.demandeur.donneesPerso.DateDeNaissance;
-import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnelles;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Email;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Fax;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Genre;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Langue;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Localite;
-import ch.vd.demaut.domain.demandeur.donneesPerso.NPA;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Nom;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Permis;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Prenom;
-import ch.vd.demaut.domain.demandeur.donneesPerso.TelephoneMobile;
-import ch.vd.demaut.domain.demandeur.donneesPerso.TelephonePrive;
-import ch.vd.demaut.domain.demandeur.donneesPerso.TypePermis;
-import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
-import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@ContextConfiguration({ "classpath*:/servicesTest-context.xml" })
-@ActiveProfiles({ "data" })
+@ContextConfiguration({"classpath*:/servicesTest-context.xml"})
+@ActiveProfiles({"data"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class DonneesPersonnellesServiceTest {
 

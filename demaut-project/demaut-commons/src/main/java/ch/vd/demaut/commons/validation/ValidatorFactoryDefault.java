@@ -9,7 +9,7 @@ import javax.validation.ValidatorFactory;
  * Factory to create a JavaBean validator
  * <p/>
  * Warning validator is a singleton.
- *
+ * <p/>
  * TODO : Faire une factoy Spring pour faciliter l'usage et faire de l'injection de dependance
  */
 public class ValidatorFactoryDefault {

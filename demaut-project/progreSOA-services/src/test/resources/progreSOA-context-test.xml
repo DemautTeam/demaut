@@ -13,8 +13,8 @@
 	   http://cxf.apache.org/jaxrs
 	   http://cxf.apache.org/schemas/jaxrs.xsd">
 
-    <import resource="classpath:META-INF/cxf/cxf.xml"/>
-    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+    <import resource="classpath*:META-INF/cxf/cxf.xml"/>
+    <import resource="classpath*:META-INF/cxf/cxf-servlet.xml"/>
 
     <util:properties id="props" location="progreSOA-test.cfg"/>
 
@@ -22,7 +22,7 @@
 
     <ctx:annotation-config/>
 
-    <ctx:component-scan base-package="ch.vd.demaut.progreSOA.services"/>
+    <ctx:component-scan base-package="ch.vd.demaut.progreSoa.services"/>
 
 <!--     <cxf:server address="${demaut.progre.soa.endpoint}"> -->
 <!--         <cxf:serviceBeans> -->

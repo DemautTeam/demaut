@@ -1,19 +1,12 @@
 package ch.vd.demaut.domain.demandeur.donneesProf.diplome;
 
+import ch.vd.demaut.commons.annotations.Entity;
+import ch.vd.demaut.commons.vo.BaseValueObjectWithId;
+
 import javax.validation.Valid;
 
-import ch.vd.demaut.commons.annotations.Entity;
-import ch.vd.demaut.commons.entities.EntityFunctionalKeyAware;
-import ch.vd.demaut.domain.demandeur.Pays;
-
-/** 
- * Classe qui représente un diplome du demandeur
- *
- */
 @Entity
-public class Diplome extends EntityFunctionalKeyAware {
-
-    // ********************************************************* Fields
+public class Diplome extends BaseValueObjectWithId {
 
     private ReferenceDeDiplome referenceDeDiplome;
 
@@ -29,18 +22,17 @@ public class Diplome extends EntityFunctionalKeyAware {
     private DateObtention dateObtention;
 
     @Valid
-    private Pays paysObtention;
+    private PaysObtention paysObtention;
 
     @Valid
     private DateReconnaissance dateReconnaissance;
 
-    // ********************************************************* Constructors
     //Only here for OpenJPA
     public Diplome() {
     }
 
     public Diplome(ReferenceDeDiplome referenceDeDiplome, TypeDiplomeAccepte typeDiplomeAccepte, TitreFormation titreFormation,
-                   String complement, DateObtention dateObtention, Pays paysObtention, DateReconnaissance dateReconnaissance) {
+                   String complement, DateObtention dateObtention, PaysObtention paysObtention, DateReconnaissance dateReconnaissance) {
         this.referenceDeDiplome = referenceDeDiplome;
         this.typeDiplomeAccepte = typeDiplomeAccepte;
         this.titreFormation = titreFormation;
@@ -49,14 +41,6 @@ public class Diplome extends EntityFunctionalKeyAware {
         this.paysObtention = paysObtention;
         this.dateReconnaissance = dateReconnaissance;
     }
-
-    // ********************************************************* Methodes metier
-    
-    boolean estEtranger() {
-        return paysObtention.estEtranger();
-    }
-
-    // ********************************************************* Getters
 
     public ReferenceDeDiplome getReferenceDeDiplome() {
         return referenceDeDiplome;
@@ -78,17 +62,11 @@ public class Diplome extends EntityFunctionalKeyAware {
         return dateObtention;
     }
 
-    public Pays getPaysObtention() {
+    public PaysObtention getPaysObtention() {
         return paysObtention;
     }
 
     public DateReconnaissance getDateReconnaissance() {
         return dateReconnaissance;
-    }
-
-    // ********************************************************* Methods techniques
-    @Override
-    public DiplomeFK getFunctionalKey() {
-        return new DiplomeFK(this); 
     }
 }

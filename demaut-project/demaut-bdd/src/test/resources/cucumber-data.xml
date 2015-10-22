@@ -34,6 +34,6 @@
         <property name="platformTransactionManager" ref="transactionManagerDemaut"/>
     </bean>
 
-    <import resource="classpath:META-INF/spring/jpa-context.xml"/>
+    <import resource="classpath*:META-INF/spring/jpa-context.xml"/>
 
 </beans>

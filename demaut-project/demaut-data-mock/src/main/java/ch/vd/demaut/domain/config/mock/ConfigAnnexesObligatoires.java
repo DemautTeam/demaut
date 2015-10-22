@@ -1,6 +1,6 @@
 package ch.vd.demaut.domain.config.mock;
 
-import ch.vd.demaut.domain.annexes.MoteurReglesPourAnnexesObligatoires;
+import ch.vd.demaut.domain.annexes.ListeTypeAnnexesObligatoires;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 
 import java.util.HashMap;
@@ -11,13 +11,13 @@ import java.util.Map;
  */
 public class ConfigAnnexesObligatoires {
 
-    private Map<Profession, MoteurReglesPourAnnexesObligatoires> config = new HashMap<Profession, MoteurReglesPourAnnexesObligatoires>();
+    private Map<Profession, ListeTypeAnnexesObligatoires> config = new HashMap<Profession, ListeTypeAnnexesObligatoires>();
 
-    public MoteurReglesPourAnnexesObligatoires getAnnexesObligatoires(Profession profession) {
+    public ListeTypeAnnexesObligatoires getAnnexesObligatoires(Profession profession) {
         return config.get(profession);
     }
 
-    public void ajouterAnnexesObligatoires(Profession profession, MoteurReglesPourAnnexesObligatoires listeTypeAnnexesObligatoires) {
+    public void ajouterAnnexesObligatoires(Profession profession, ListeTypeAnnexesObligatoires listeTypeAnnexesObligatoires) {
         config.put(profession, listeTypeAnnexesObligatoires);
     }
 

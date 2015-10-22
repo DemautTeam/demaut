@@ -5,19 +5,19 @@ import ch.vd.demaut.commons.vo.BaseValueObject;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class TitreFormation extends BaseValueObject {
+public class PaysObtention extends BaseValueObject {
 
     private String value;
 
-    public TitreFormation() {
+    public PaysObtention() {
     }
 
-    public TitreFormation(String value) {
+    public PaysObtention(String value) {
         this.value = value;
     }
 
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 1, max = 100)
     public String getValue() {
         return value;
     }

@@ -33,11 +33,11 @@ public class DonneesPersonnellesValidateur extends AbstractDataValidateur<Donnee
         validateNationalitePermis(donneesPersonnelles);
     }
 
-    private void validateNationalitePermis(DonneesPersonnelles donneesPersonnelles){
-        if (donneesPersonnelles.getNationalite() != Pays.Suisse){
-            if(donneesPersonnelles.getPermis() == null || donneesPersonnelles.getPermis().getTypePermis() == TypePermis.Aucun){
+    private void validateNationalitePermis(DonneesPersonnelles donneesPersonnelles) {
+        if (donneesPersonnelles.getNationalite() != Pays.Suisse) {
+            if (donneesPersonnelles.getPermis() == null || donneesPersonnelles.getPermis().getTypePermis() == TypePermis.Aucun) {
                 throw new DonneesPersonnellesNonValideException("Le permis n'est pas renseigné");
-            } else if(donneesPersonnelles.getPermis().getTypePermis() == TypePermis.Autre && StringUtils.isEmpty(donneesPersonnelles.getPermis().getAutrePermis().getValue())){
+            } else if (donneesPersonnelles.getPermis().getTypePermis() == TypePermis.Autre && StringUtils.isEmpty(donneesPersonnelles.getPermis().getAutrePermis().getValue())) {
                 throw new DonneesPersonnellesNonValideException("Pas de précisions pour un permis de type Autre");
             }
         }

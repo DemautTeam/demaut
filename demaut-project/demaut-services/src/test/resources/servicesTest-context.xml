@@ -22,7 +22,7 @@
             </property>
         </bean>
 
-        <import resource="classpath:META-INF/spring/services-context.xml"/>
+        <import resource="classpath*:META-INF/spring/services-context.xml"/>
 
     </beans>
 

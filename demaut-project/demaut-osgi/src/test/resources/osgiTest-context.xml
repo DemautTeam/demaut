@@ -27,6 +27,6 @@
         <constructor-arg value="src/main/resources/www"/>
     </bean>
 
-    <import resource="classpath:META-INF/spring/osgi-context.xml"/>
+    <import resource="classpath*:META-INF/spring/osgi-context.xml"/>
 
 </beans>

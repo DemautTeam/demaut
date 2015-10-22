@@ -1,11 +1,8 @@
 package ch.vd.demaut.cucumber.steps;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
+import ch.vd.demaut.domain.annexes.ListeTypeAnnexesObligatoires;
+import ch.vd.demaut.domain.config.ConfigDemaut;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
@@ -13,10 +10,13 @@ import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandes.autorisation.StatutDemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
-import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.domain.utilisateurs.Utilisateur;
 import ch.vd.demaut.domain.utilisateurs.UtilisateurRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class DemandeAutorisationSteps {
 
@@ -31,6 +31,7 @@ public class DemandeAutorisationSteps {
 
     private UtilisateurRepository utilisateurRepository;
     private DemandeAutorisationRepository demandeAutorisationRepository;
+    private ConfigDemaut configDemaut;
     private DemandeAutorisationFactory demandeAutorisationFactory;
 
     ////////// Données temporaires pour les tests (non-thread safe)
@@ -42,6 +43,11 @@ public class DemandeAutorisationSteps {
     private AccepteOuRefuse acceptation;
 
     // ********************************************************* Methods
+
+    public void ajouterAnnexesObligatoires(Profession profession,
+                                           ListeTypeAnnexesObligatoires listeTypeAnnexesObligatoires) {
+        configDemaut.ajouterAnnexesObligatoires(profession, listeTypeAnnexesObligatoires);
+    }
 
     public void initialiserUtilisateur(Login login) {
         utilisateur = new Utilisateur(login);
@@ -71,17 +77,9 @@ public class DemandeAutorisationSteps {
 
     }
 
-
-    public void ajouterActivitesAnterieuresADemandeEnCours(int nbActivitesAnterieures) {
-        DonneesProfessionnelles donneesProfessionnelles = demandeEnCours.getDonneesProfessionnelles();
-        for (int n=0; n < nbActivitesAnterieures ; n++) {
-            donneesProfessionnelles.creerEtAjouterActiviteAnterieure();
-        }
-    }    
-
     public void verifieDemandeCree(Profession profession, StatutDemandeAutorisation statut, Login login) {
         demandeAutorisationRepository.findBy(demandeEnCours.getId());
-        
+
         assertThat(demandeEnCours.getProfession()).isEqualTo(profession);
         assertThat(demandeEnCours.getLogin()).isEqualTo(login);
         assertThat(demandeEnCours.getStatutDemandeAutorisation()).isEqualTo(statut);
@@ -146,6 +144,10 @@ public class DemandeAutorisationSteps {
         this.demandeAutorisationFactory = demandeAutorisationFactory;
     }
 
+    public void setConfigDemaut(ConfigDemaut configDemaut) {
+        this.configDemaut = configDemaut;
+    }
+
     // ***************************** **************************** Private
     // methods
 
@@ -153,6 +155,5 @@ public class DemandeAutorisationSteps {
         demandeAutorisationRepository.deleteAll();
         utilisateurRepository.deleteAll();
     }
-
 
 }

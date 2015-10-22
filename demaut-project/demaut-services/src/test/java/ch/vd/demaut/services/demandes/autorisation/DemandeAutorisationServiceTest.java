@@ -6,7 +6,6 @@ import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.exception.DemandeNotFoundException;
 import ch.vd.demaut.domain.exception.ReferenceDemandeNotFoundException;
 import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -52,8 +52,8 @@ public class AlternativePhoneValidator implements ConstraintValidator<Alternativ
         try {
             TelephonePrive telephonePrive = (TelephonePrive) PropertyUtils.getProperty(value, priveField);
             TelephoneMobile telephoneMobile = (TelephoneMobile) PropertyUtils.getProperty(value, mobileField);
-            if(telephonePrive == null || StringUtils.isEmpty(telephonePrive.getValue()) ){
-                if(telephoneMobile == null || StringUtils.isEmpty(telephoneMobile.getValue()) ){
+            if (telephonePrive == null || StringUtils.isEmpty(telephonePrive.getValue())) {
+                if (telephoneMobile == null || StringUtils.isEmpty(telephoneMobile.getValue())) {
                     logger.info("les 2 numeros sont vides -> ko");
                     return false;
                 }
@@ -61,8 +61,7 @@ public class AlternativePhoneValidator implements ConstraintValidator<Alternativ
             logger.info("au moins 1 numéro est rempli -> ok");
             return true;
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
 
         }
         return false;

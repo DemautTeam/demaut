@@ -8,8 +8,9 @@ import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static ch.vd.demaut.commons.bdd.AccepteOuRefuse.accepte;
+import static ch.vd.demaut.commons.bdd.AccepteOuRefuse.refuse;
 import static org.assertj.core.api.Assertions.assertThat;
-import static ch.vd.demaut.commons.bdd.AccepteOuRefuse.*;
 
 
 public class DonneesPersonnellesSteps {
@@ -32,7 +33,7 @@ public class DonneesPersonnellesSteps {
 
     //************************************************************
 
-    public void initNomEtPrenom(Nom nom, Prenom prenom) {
+    public void initDonneePersonnelles(Nom nom, Prenom prenom) {
         Localite localite = new Localite("Lausanne");
         NPA npa = new NPA("1000");
         Pays pays = Pays.Suisse;
@@ -52,7 +53,7 @@ public class DonneesPersonnellesSteps {
                 dateDeNaissance, nationalite, langue, permis);
     }
 
-    public void initTels(TelephonePrive telephonePrive, TelephoneMobile telephoneMobile) {
+    public void initDonneePersonnelles(TelephonePrive telephonePrive, TelephoneMobile telephoneMobile) {
         Nom nom = new Nom("test nom");
         Prenom prenom = new Prenom("Test prenom");
         Localite localite = new Localite("Lausanne");
@@ -72,12 +73,12 @@ public class DonneesPersonnellesSteps {
                 dateDeNaissance, nationalite, langue, permis);
     }
 
-    public void initNationaliteEtPermis(Pays nationalite, Permis permis) {
+    public void initDonneePersonnelles(Pays nationalite, Permis permis) {
         Nom nom = new Nom("test nom");
         Prenom prenom = new Prenom("Test prenom");
         Localite localite = new Localite("Lausanne");
         NPA npa = new NPA("1000");
-        Pays pays = nationalite;
+        Pays pays = Pays.Suisse;
         Adresse adresse = new Adresse("", "", localite, npa, pays);
         Email email = new Email("john.doe@nobody.com");
         Genre genre = Genre.Feminin;
@@ -102,7 +103,7 @@ public class DonneesPersonnellesSteps {
             logger.info("donnees personnelles acceptées");
             actionActuelle = accepte;
         } catch (DomainException e) {
-            logger.info("donnees personnelles refusées",e);
+            logger.info("donnees personnelles refusées", e);
             actionActuelle = refuse;
         }
     }

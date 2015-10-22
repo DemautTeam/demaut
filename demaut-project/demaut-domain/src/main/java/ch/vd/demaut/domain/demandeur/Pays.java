@@ -5,7 +5,6 @@ import ch.vd.demaut.domain.config.TypeProgres;
 import ch.vd.demaut.domain.exception.PaysNotFoundException;
 
 public enum Pays implements TypeProgres {
-    Vide(-1, null, null),
     ListeIncomplete(0, "Incomplète", "Liste incomplète..."),
     Suisse(1, "CH", "Suisse"),
     Afghanistan(2, "AF", "Afghanistan"),
@@ -290,12 +289,5 @@ public enum Pays implements TypeProgres {
 
     public String getCode() {
         return code;
-    }
-    
-    public boolean estSuisse() {
-        return this.equals(Suisse);
-    }
-    public boolean estEtranger() {
-        return !estSuisse();
     }
 }

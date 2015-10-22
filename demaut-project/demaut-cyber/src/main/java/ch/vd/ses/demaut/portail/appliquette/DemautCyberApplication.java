@@ -45,13 +45,13 @@ public class DemautCyberApplication extends SpringBootServletInitializer {
     @Value("${baseMicrobiz}")
     private String urlPrefix;
 
-    @PostConstruct
-    private void showUrl(){
-        logger.info("Backend Microbiz : {}", urlPrefix);
-    }
-
     public static void main(String... args) {
         SpringApplication.run(DemautCyberApplication.class, args);
+    }
+
+    @PostConstruct
+    private void showUrl() {
+        logger.info("Backend Microbiz : {}", urlPrefix);
     }
 
     @Override
@@ -77,16 +77,17 @@ public class DemautCyberApplication extends SpringBootServletInitializer {
     /**
      * Server initialisé de manière automatique.
      * Seul les services JAX-RS annoté @Path seron pris en charge
+     *
      * @return
      */
     @Bean
     public Server cyberRestService() {
         List<ResourceProvider> resourceProviders = new LinkedList<>();
-        for(String beanName: applicationContext.getBeanNamesForAnnotation(Path.class)){
-                logger.info("Detection du service REST : {}", beanName );
-                SpringResourceFactory factory = new SpringResourceFactory(beanName);
-                factory.setApplicationContext(applicationContext);
-                resourceProviders.add(factory);
+        for (String beanName : applicationContext.getBeanNamesForAnnotation(Path.class)) {
+            logger.info("Detection du service REST : {}", beanName);
+            SpringResourceFactory factory = new SpringResourceFactory(beanName);
+            factory.setApplicationContext(applicationContext);
+            resourceProviders.add(factory);
         }
         if (resourceProviders.size() > 0) {
             JAXRSServerFactoryBean factory = new JAXRSServerFactoryBean();

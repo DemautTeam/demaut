@@ -21,7 +21,7 @@ public class SimpleConstraintViolation<T> extends BaseValueObject {
 
     /**
      * Retourne le hashCode de la propriété.
-     *
+     * <p/>
      * Suppression d'une alerte critique de sonar.
      *
      * @return

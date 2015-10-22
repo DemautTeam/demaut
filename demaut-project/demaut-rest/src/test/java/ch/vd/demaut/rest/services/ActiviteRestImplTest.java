@@ -1,7 +1,6 @@
 package ch.vd.demaut.rest.services;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import ch.vd.demaut.rest.services.impl.ActiviteRestImpl;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
@@ -12,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import ch.vd.demaut.rest.services.impl.ActiviteRestImpl;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Ignore("TODO Should mock @Context HttpHeaders demaut-user-id")
 @ContextConfiguration({"classpath*:restTest-context.xml"})

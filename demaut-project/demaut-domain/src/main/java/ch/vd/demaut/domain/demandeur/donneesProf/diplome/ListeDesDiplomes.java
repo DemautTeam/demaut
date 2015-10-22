@@ -1,20 +1,14 @@
 package ch.vd.demaut.domain.demandeur.donneesProf.diplome;
 
+import ch.vd.demaut.domain.exception.DiplomeIntrouvableException;
+import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
+import org.apache.commons.collections.CollectionUtils;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
-import org.apache.commons.collections.CollectionUtils;
-
-import ch.vd.demaut.domain.exception.DiplomeIntrouvableException;
-
-/**
- * Liste des diplomes
- * TODO: Utiliser "extends EntityFKAList<Diplome>"
- *
- */
 public class ListeDesDiplomes {
 
     // ********************************************************* Fields
@@ -61,18 +55,16 @@ public class ListeDesDiplomes {
         return (Diplome) diplomeTrouvee;
     }
 
-    public void supprimerUnDiplome(DiplomeFK diplomeFK) {
-        Diplome diplome = trouverDiplome(diplomeFK);
+    public void supprimerUnDiplome(ReferenceDeDiplome referenceDeDiplome) {
+        Diplome diplome = trouverDiplome(referenceDeDiplome);
         diplomes.remove(diplome);
     }
 
-    private Diplome trouverDiplome(DiplomeFK diplomeFK) {
-        Diplome diplomeTrouve = (Diplome) CollectionUtils.find(diplomes, new BeanPropertyValueEqualsPredicate("functionalKey", diplomeFK));
+    private Diplome trouverDiplome(ReferenceDeDiplome referenceDeDiplome) {
+        Object diplomeTrouve = CollectionUtils.find(diplomes, new BeanPropertyValueEqualsPredicate("referenceDeDiplome", referenceDeDiplome));
         if (diplomeTrouve == null) {
             throw new DiplomeIntrouvableException();
         }
-        return diplomeTrouve;
+        return (Diplome) diplomeTrouve;
     }
-    
-    
 }

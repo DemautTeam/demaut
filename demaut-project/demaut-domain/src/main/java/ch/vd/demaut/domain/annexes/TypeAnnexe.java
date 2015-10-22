@@ -1,15 +1,15 @@
 package ch.vd.demaut.domain.annexes;
 
-import java.util.Comparator;
-
 import ch.vd.demaut.domain.config.RefProgresID;
 import ch.vd.demaut.domain.config.TypeProgres;
 import ch.vd.demaut.domain.exception.TypeAnnexeNotFoundException;
 
+import java.util.Comparator;
+
 /**
  * Représente le type d'une annexe
  */
-public enum TypeAnnexe implements TypeProgres, Comparator<TypeAnnexe> {
+public enum TypeAnnexe implements TypeProgres, Comparator {
     CV(1, "CV"),
     Diplome(2, "Diplôme"),
     Titre(3, "Titre(s) (pour chaque Postgrade)"),
@@ -23,8 +23,11 @@ public enum TypeAnnexe implements TypeProgres, Comparator<TypeAnnexe> {
     AttestationNiveauFrancais(11, "Attestation de niveau de français"),
     AutorisationPratiquer(12, "Autorisation(s) de pratiquer"),
     Recusation(13, "Récusation"),
-    SpecimenSignature(14, "Spécimen signature (à transmettre par courrier postal)"),
-    Aucun(15, "Aucun");
+    Originaux(14, "Présenter les originaux des diplômes au SSP"),
+    SpecimenSignature(15, "Spécimen signature (à transmettre par courrier postal)"),
+    Divers(16, "Divers"),
+    AutoPratiquer(17, "Auto. Pratiquer"),
+    AutoExcercer(18, "Auto. Excercer");
 
     private RefProgresID refProgresID;
 
@@ -54,8 +57,8 @@ public enum TypeAnnexe implements TypeProgres, Comparator<TypeAnnexe> {
     }
 
     @Override
-    public int compare(TypeAnnexe type1, TypeAnnexe type2) {
-        return ((TypeAnnexe)type1).getRefProgresID().getId() - ((TypeAnnexe)type2).getRefProgresID().getId();
+    public int compare(Object type1, Object type2) {
+        return ((TypeAnnexe) type1).getRefProgresID().getId() - ((TypeAnnexe) type2).getRefProgresID().getId();
     }
 
 

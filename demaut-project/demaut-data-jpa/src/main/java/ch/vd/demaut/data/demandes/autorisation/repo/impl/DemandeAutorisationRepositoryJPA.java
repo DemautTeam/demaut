@@ -1,14 +1,5 @@
 package ch.vd.demaut.data.demandes.autorisation.repo.impl;
 
-import java.util.List;
-
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-
-import org.springframework.stereotype.Repository;
-
 import ch.vd.demaut.data.GenericRepositoryImpl;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
@@ -17,6 +8,13 @@ import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationReposit
 import ch.vd.demaut.domain.exception.DemandeBrouillonExisteDejaException;
 import ch.vd.demaut.domain.exception.DemandeNotFoundException;
 import ch.vd.demaut.domain.utilisateurs.Login;
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.List;
 
 @Repository
 public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<DemandeAutorisation, Long>
@@ -63,7 +61,7 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
         TypedQuery<DemandeAutorisation> typedQuery = createQueryBrouillonParUtilisateur(login);
         return typedQuery.getResultList();
     }
-    
+
     private TypedQuery<DemandeAutorisation> createQueryParReference(ReferenceDeDemande referenceDeDemande) {
         final CriteriaBuilder criteriaBuilder = this.getEntityManager().getCriteriaBuilder();
         final CriteriaQuery<DemandeAutorisation> criteriaQuery = criteriaBuilder.createQuery(DemandeAutorisation.class);

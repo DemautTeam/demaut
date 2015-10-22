@@ -2,14 +2,14 @@ package ch.vd.demaut.domain.demandeur.donneesPerso;
 
 import ch.vd.demaut.commons.vo.BaseValueObject;
 
-public class NumeroTelephone extends BaseValueObject {
+public class Nationalite extends BaseValueObject {
 
     private String value;
 
-    public NumeroTelephone() {
+    public Nationalite() {
     }
 
-    public NumeroTelephone(String value) {
+    public Nationalite(String value) {
         this.value = value;
     }
 

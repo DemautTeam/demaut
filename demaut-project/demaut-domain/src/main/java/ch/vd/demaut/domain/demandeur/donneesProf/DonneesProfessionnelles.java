@@ -1,21 +1,17 @@
 package ch.vd.demaut.domain.demandeur.donneesProf;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ch.vd.demaut.commons.annotations.Entity;
 import ch.vd.demaut.commons.entities.AbstractEntity;
-import ch.vd.demaut.domain.annexes.ProcedureAnnexe;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.ActiviteAnterieure;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.ActiviteFuture;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.ListeDesActivitesAnterieures;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.ListeDesActivitesFutures;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.ReferenceActiviteAnterieure;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DiplomeFK;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ListeDesDiplomes;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ReferenceDeDiplome;
 import ch.vd.demaut.domain.exception.CodeGlnObligatoireException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class DonneesProfessionnelles extends AbstractEntity {
@@ -26,29 +22,25 @@ public class DonneesProfessionnelles extends AbstractEntity {
     private List<Diplome> diplomes;
 
     private transient List<ActiviteFuture> activiteFutures;
-    
+
     //TODO: Ajouter la reference a la DemandeAutorisation (ou si pas necessaire a la profession)
     //private Profession profession; 
-    
-    private List<ActiviteAnterieure> activitesAnterieures;
 
     // ********************************************************* Constructor
-    
+
     //Seulement pour JPA
     public DonneesProfessionnelles() {
         super();
         this.codeGLN = null;
-        this.diplomes = new ArrayList<Diplome>();
-        this.activiteFutures = new ArrayList<ActiviteFuture>();
-        this.activitesAnterieures = new ArrayList<ActiviteAnterieure>();
+        this.diplomes = new ArrayList<>();
+        this.activiteFutures = new ArrayList<>();
     }
 
     // TODO: A virer
     public DonneesProfessionnelles(CodeGLN codeGLN, List<Diplome> diplomes) {
         this.codeGLN = codeGLN;
         this.diplomes = diplomes;
-        this.activiteFutures = new ArrayList<ActiviteFuture>();
-        this.activitesAnterieures = new ArrayList<ActiviteAnterieure>();
+        this.activiteFutures = new ArrayList<>();
     }
 
     // ********************************************************* Methodes metiers
@@ -63,6 +55,7 @@ public class DonneesProfessionnelles extends AbstractEntity {
     /**
      * Valide si le Code GLN est obligatoire et correct.
      * Si pas obligatoire, le code peut être nul
+     *
      * @param codeGlnAAjouter CodeGLN
      */
     public void validerEtRenseignerCodeGLN(CodeGLN codeGlnAAjouter, Profession profession) {
@@ -74,37 +67,8 @@ public class DonneesProfessionnelles extends AbstractEntity {
         this.codeGLN = codeGlnAAjouter;
     }
 
-    public void supprimerUnDiplome(DiplomeFK diplomeFK) {
-        getListeDesDiplomes().supprimerUnDiplome(diplomeFK);
-    }
-    
-    public void creerEtAjouterActiviteAnterieure() {
-        ReferenceActiviteAnterieure nouvelleReference = getActivitesAnterieures().genererNouvelleReference();
-        ActiviteAnterieure nouvelleActivite = new ActiviteAnterieure(nouvelleReference);
-        
-        ajouterActiviteAnterieure(nouvelleActivite);
-    }
-    
-    public void ajouterActiviteAnterieure(ActiviteAnterieure activiteAnterieure) {
-        getActivitesAnterieures().ajouterActivite(activiteAnterieure);
-    }
-
-    public ProcedureAnnexe calculerProcedureAnnexe() {
-        int tailleActivitesAnterieures = getActivitesAnterieures().taille();
-        if (tailleActivitesAnterieures > 0) {
-            return ProcedureAnnexe.Simplifiee;
-        } else {
-            return ProcedureAnnexe.Ordinaire;
-        }
-    }
-
-    public boolean contientDiplomesEtrangers() {
-        for (Diplome diplome : getListeDesDiplomes().listerDiplomes()) {
-            if (diplome.getPaysObtention().estEtranger()) {
-                return true;
-            }
-        }
-        return false;
+    public void supprimerUnDiplome(ReferenceDeDiplome referenceDeDiplome) {
+        getListeDesDiplomes().supprimerUnDiplome(referenceDeDiplome);
     }
 
     // ********************************************************* Getters
@@ -119,11 +83,11 @@ public class DonneesProfessionnelles extends AbstractEntity {
     public ListeDesActivitesFutures getActiviteFutures() {
         return new ListeDesActivitesFutures(activiteFutures);
     }
-    
-    public ListeDesActivitesAnterieures getActivitesAnterieures() {
-        return new ListeDesActivitesAnterieures(activitesAnterieures);
+
+    public List<Diplome> getDiplomes() {
+        return diplomes;
     }
-    
+
     // ********************************************************* Methodes privées
     private void throwExceptionSiNullEtObligatoire(CodeGLN codeGlnAAjouter, Profession profession) {
         if (codeGlnAAjouter == null) {
@@ -132,7 +96,7 @@ public class DonneesProfessionnelles extends AbstractEntity {
             }
         }
     }
-    
+
     private void throwExceptionSiNonNullEtInvalide(CodeGLN codeGlnAAjouter) {
         if (codeGlnAAjouter != null) {
             new CodeGLNValidator().valider(codeGlnAAjouter);

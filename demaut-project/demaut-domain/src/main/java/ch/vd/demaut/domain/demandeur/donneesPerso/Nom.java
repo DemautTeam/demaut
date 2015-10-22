@@ -1,13 +1,15 @@
 package ch.vd.demaut.domain.demandeur.donneesPerso;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
-import ch.vd.demaut.commons.vo.StringVO;
+import ch.vd.demaut.commons.vo.BaseValueObject;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @ValueObject
-public class Nom extends StringVO {
+public class Nom extends BaseValueObject {
+
+    private String value;
 
     // ********************************************************* Constructor
 
@@ -15,14 +17,13 @@ public class Nom extends StringVO {
     }
 
     public Nom(String value) {
-        super(value);
+        this.value = value;
     }
 
     // ********************************************************* Getters
     @NotNull
     @Size(min = 1, max = 120)
-    @Override
     public String getValue() {
-        return super.getValue();
+        return value;
     }
 }

@@ -22,6 +22,6 @@
         </property>
     </bean>
 
-    <import resource="classpath:META-INF/spring/rest-context.xml"/>
+    <import resource="classpath*:META-INF/spring/rest-context.xml"/>
 
 </beans>
