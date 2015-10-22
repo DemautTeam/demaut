@@ -24,6 +24,7 @@ Fonctionnalité: Saisir les données professionnelles de la demande
       | "D_FORMATION_INITIALE"        |   "Dipl. fédéral de médecin /1,Dipl. fédéral de médecin-dentiste /2,Dipl. fédéral de pharmacien /3,Dipl. fédéral d'opticien /4,CFR d'un diplôme étranger de médecin /8"   |
       | "D_POSTGRADE"                 |   "Allergologie et immunologie clinique /92,Anesthésiologie /2,Angiologie /119,Cardiologie /83"                                   |
 
+
   @saisir-date-obtention
   Plan du scénario: Saisir une date d´obtention du diplôme
     Lorsque l´utilisateur saisit la date d´obtention <date_obtention> du diplôme
@@ -31,12 +32,14 @@ Fonctionnalité: Saisir les données professionnelles de la demande
     Exemples:
       | date_obtention   | action    | message                       |
       | "12.12.2011"     | "accepte" | ""                            |
-      | "32.12.2011"     | "refuse"  | "Date d'obtention non valide" |
-      | "16.07.2015"     | "refuse"  | "Date d'obtention non valide" |
+      | "35.12.2011"     | "refuse"  | "Date d'obtention non valide" |
+      | "16.07.2017"     | "refuse"  | "Date d'obtention non valide" |
+# La date est volontairement mise lointaine puisque la date du jour n'est pas utilisée par les validateurs
 
   @saisir-date-reconnaissance
   Plan du scénario: Saisir une date de reconnaissance du diplôme
     Lorsque l´utilisateur selectionne un type de formation obtenue à l´"étranger" dans la liste
+    Lorsque l´utilisateur saisit la date de reconnaissance <date_reconnaissance> du diplôme
     Alors le système Demaut <action> la date de reconnaissance <date_reconnaissance> avec un <message> en cas d´échec
     Exemples:
       | date_reconnaissance   | action    | message                       |

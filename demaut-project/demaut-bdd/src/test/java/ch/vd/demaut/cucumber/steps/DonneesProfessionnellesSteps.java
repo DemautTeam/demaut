@@ -3,7 +3,9 @@ package ch.vd.demaut.cucumber.steps;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.Set;
 
+import ch.vd.demaut.commons.validation.ValidatorFactoryDefault;
 import org.joda.time.LocalDate;
 import org.springframework.util.StringUtils;
 
@@ -17,6 +19,9 @@ import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ListeDesFormations;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ReferenceDeDiplome;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormation;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TypeDiplomeAccepte;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 
 public class DonneesProfessionnellesSteps {
 
@@ -149,8 +154,17 @@ public class DonneesProfessionnellesSteps {
             LocalDateConverter localDateConverter = new LocalDateConverter();
             LocalDate dateObtentionLocal = (LocalDate) localDateConverter.fromString(dateObtentionStr);
             this.dateObtention = new DateObtention(dateObtentionLocal);
+            Validator validator = ValidatorFactoryDefault.getValidator();
+            Set<ConstraintViolation<DateObtention>> constraint = validator.validate(dateObtention);
+            if(constraint.size() > 0){
+                acceptationDateObtention = AccepteOuRefuse.refuse;
+            }
+            else {
+                acceptationDateObtention = AccepteOuRefuse.accepte;
+            }
         } catch (Exception e) {
             // Format de date invalide
+            acceptationDateObtention = AccepteOuRefuse.refuse;
         }
     }
 
@@ -163,9 +177,11 @@ public class DonneesProfessionnellesSteps {
                 LocalDateConverter localDateConverter = new LocalDateConverter();
                 LocalDate dateReconnaissance = (LocalDate) localDateConverter.fromString(dateReconnaissanceStr);
                 this.dateReconnaissance = new DateReconnaissance(dateReconnaissance);
+                acceptationDateReconnaissance = AccepteOuRefuse.accepte;
             }
         } catch (Exception e) {
             // Format de date invalide
+            acceptationDateReconnaissance = AccepteOuRefuse.refuse;
         }
     }
 
