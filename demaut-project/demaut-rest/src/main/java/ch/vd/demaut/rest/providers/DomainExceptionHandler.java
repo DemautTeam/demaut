@@ -4,12 +4,19 @@ import ch.vd.demaut.commons.exceptions.DomainException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 /**
  * Classe interceptant les Exceptions métier pour les convertir en message JSON
+ * Les messages JSON sont de la forme suivante :
+ * <ul>
+ *     <li>
+ *         {"errorType":"DemandeBrouillonExisteDejaException","message":"Erreur du domaine métier, message non defini..."}
+ *     </li>
+ * </ul>
  */
 @Provider
 public class DomainExceptionHandler implements ExceptionMapper<DomainException> {
@@ -27,9 +34,13 @@ public class DomainExceptionHandler implements ExceptionMapper<DomainException> 
      */
     @Override
     public Response toResponse(DomainException exception) {
-        logger.info("Interception de l'exception : {}", exception.getClass().getName() );
+        logger.info("Interception de l'exception : {}", exception.getClass().getName());
+        logger.warn("Trace de l'exception",exception);
         Response.ResponseBuilder responseBuilder = Response.status(Response.Status.EXPECTATION_FAILED);
-        responseBuilder.entity(exception.getMessage());
+        responseBuilder.encoding("UTF8")
+                .type(MediaType.APPLICATION_JSON)
+                .entity(String.format("{\"errorType\":\"%s\",\"message\":\"%s\"}",
+                        exception.getClass().getSimpleName(), exception.getMessage()));
         return responseBuilder.build();
     }
 }

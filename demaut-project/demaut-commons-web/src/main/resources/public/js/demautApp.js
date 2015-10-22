@@ -67,28 +67,8 @@ ngDemautApp
         $locationProvider.html5Mode(false);
         $locationProvider.hashPrefix('!');
 
-        $httpProvider.interceptors.push(function ($q, $rootScope, $location) {
-            return {
-                'responseError': function (rejection) {
-                    var status = rejection.status;
-                    var config = rejection.config;
-                    var data = rejection.data;
-                    var method = config.method;
-                    var url = config.url;
-
-                    if (status == 401) {
-                        $location.path("/Demaut/aide");
-                    } else {
-                        // TODO resolve errors
-                        $rootScope.error = method + ' on ' + url + ' failed with status ' + status + '<br>' +
-                            (data != null && data != undefined ? data.substring(data.indexOf('<body>') + 6, data.indexOf('</body>')) : "data empty!");
-                        angular.element("#errorModal").modal('toggle');
-                        angular.element("#errorModal").modal('show');
-                    }
-                    return $q.reject(rejection);
-                }
-            };
-        });
+        $httpProvider.interceptors.push('globalDefaultError');
+        $httpProvider.interceptors.push('globalErrorInterceptor');
     }])
     .controller('CockpitController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', '$log', '$window',
         function ($scope, $rootScope, $routeParams, $http, $location, $interval, $log, $window) {
