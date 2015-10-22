@@ -433,6 +433,18 @@ ngDemautApp
                         $log.info('Error ' + urlPrefix + '/personal/renseigner/ \n Status :' + status);
                     });
             };
+
+            $scope.changeTelephoneRequirement = function(telephonePrive, telephoneMobile) {
+
+                if ((telephonePrive.$isEmpty(telephonePrive.$viewValue) && !telephoneMobile.$isEmpty(telephoneMobile.$viewValue)) ||
+                    (!telephonePrive.$isEmpty(telephonePrive.$viewValue) && !telephoneMobile.$isEmpty(telephoneMobile.$viewValue)) ||
+                    (!telephonePrive.$isEmpty(telephonePrive.$viewValue) && telephoneMobile.$isEmpty(telephoneMobile.$viewValue))){
+                    return false;
+                }
+                return true;
+            };
+
+
         }])
     .controller('DonneesDiplomesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$log', '$window', 'nationalityTest',
         function ($scope, $rootScope, $routeParams, $http, $location, $log, $window, nationalityTest) {
@@ -1131,35 +1143,6 @@ ngDemautApp
         $rootScope.openDatePicker = function (targetDatepicker) {
             targetDatepicker.opened = true;
         };
-
-
-        $rootScope.changeTelephonePriveRequirement = function (telephonePrive, telephoneMobile) {
-
-            if (telephonePrive.$pristine){
-                telephonePrive.$error.required = true;
-                return;
-            }
-
-            if (telephonePrive.$valid)
-                telephoneMobile.$error.required = false;
-
-
-        };
-
-
-        $rootScope.changeTelephoneMobileRequirement = function (telephoneMobile, telephonePrive) {
-            if (telephoneMobile.$pristine && telephonePrive.$pristine){
-                telephonePrive.$error.required = true;
-                telephoneMobile.$error.required = true;
-                return;
-            }
-
-            if (telephonePrive.$valid)
-                telephoneMobile.$error.required = false;
-        };
-
-
-
 
         $rootScope.$on('$viewContentLoaded', function () {
         });
