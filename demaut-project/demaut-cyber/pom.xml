@@ -17,9 +17,10 @@
         <properties.urlPrefix>http://slv2395t.etat-de-vaud.ch:53050/webapp-demaut/rest</properties.urlPrefix>
 
 <!-- Jetty Local: <properties.urlPrefix>http://localhost:8083/outils/demautMicrobiz</properties.urlPrefix>-->
+<!-- Tomcat Local: <properties.urlPrefix>http://localhost:8080/demaut-webapp/rest</properties.urlPrefix>-->
 <!-- Microbiz Local : <properties.urlPrefix>http://localhost:40002/outils/demautMicrobiz</properties.urlPrefix>-->
 <!-- Microbiz DEMO : <properties.urlPrefix>http://slv2395t.etat-de-vaud.ch:41002/outils/demautMicrobiz</properties.urlPrefix>-->
-<!-- Weabapp-War DEMO : <properties.urlPrefix>http://slv2395t.etat-de-vaud.ch:53050/webapp-demaut/rest</properties.urlPrefix>-->
+<!-- Webapp-War DEMO : <properties.urlPrefix>http://slv2395t.etat-de-vaud.ch:53050/webapp-demaut/rest</properties.urlPrefix>-->
 
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
