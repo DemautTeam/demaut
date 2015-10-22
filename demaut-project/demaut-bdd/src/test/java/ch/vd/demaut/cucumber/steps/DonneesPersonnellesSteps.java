@@ -32,7 +32,7 @@ public class DonneesPersonnellesSteps {
 
     //************************************************************
 
-    public void initDonneePersonnelles(Nom nom, Prenom prenom) {
+    public void initNomEtPrenom(Nom nom, Prenom prenom) {
         Localite localite = new Localite("Lausanne");
         NPA npa = new NPA("1000");
         Pays pays = Pays.Suisse;
@@ -52,7 +52,7 @@ public class DonneesPersonnellesSteps {
                 dateDeNaissance, nationalite, langue, permis);
     }
 
-    public void initDonneePersonnelles(TelephonePrive telephonePrive, TelephoneMobile telephoneMobile) {
+    public void initTels(TelephonePrive telephonePrive, TelephoneMobile telephoneMobile) {
         Nom nom = new Nom("test nom");
         Prenom prenom = new Prenom("Test prenom");
         Localite localite = new Localite("Lausanne");
@@ -72,12 +72,12 @@ public class DonneesPersonnellesSteps {
                 dateDeNaissance, nationalite, langue, permis);
     }
 
-    public void initDonneePersonnelles(Pays nationalite, Permis permis) {
+    public void initNationaliteEtPermis(Pays nationalite, Permis permis) {
         Nom nom = new Nom("test nom");
         Prenom prenom = new Prenom("Test prenom");
         Localite localite = new Localite("Lausanne");
         NPA npa = new NPA("1000");
-        Pays pays = Pays.Suisse;
+        Pays pays = nationalite;
         Adresse adresse = new Adresse("", "", localite, npa, pays);
         Email email = new Email("john.doe@nobody.com");
         Genre genre = Genre.Feminin;

@@ -129,6 +129,10 @@ public class DonneesPersonnelles extends AbstractEntity {
         return permis;
     }
 
+    public boolean estEtranger() {
+        return nationalite.estEtranger();
+    }
+    
     public void renseignerLesDonneesPersonnelles(Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Adresse adresse, Email email,
                                                  TelephonePrive telephonePrive, TelephoneMobile telephoneMobile, Fax fax, Genre genre,
                                                  DateDeNaissance dateDeNaissance, Pays nationalite, Langue langue, Permis permis) {

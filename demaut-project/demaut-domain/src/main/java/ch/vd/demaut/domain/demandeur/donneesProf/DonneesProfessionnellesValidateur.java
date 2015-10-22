@@ -1,10 +1,11 @@
 package ch.vd.demaut.domain.demandeur.donneesProf;
 
-import ch.vd.demaut.commons.validation.AbstractDataValidateur;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ListeDesDiplomes;
+import java.util.Set;
 
 import javax.validation.ConstraintViolation;
-import java.util.Set;
+
+import ch.vd.demaut.commons.validation.AbstractDataValidateur;
+import ch.vd.demaut.domain.exception.DonneesProfessionnellesNonValideException;
 
 public class DonneesProfessionnellesValidateur extends AbstractDataValidateur<DonneesProfessionnelles> {
 
