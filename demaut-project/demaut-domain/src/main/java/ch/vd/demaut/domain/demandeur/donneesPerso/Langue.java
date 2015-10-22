@@ -5,6 +5,7 @@ import ch.vd.demaut.domain.config.TypeProgres;
 import ch.vd.demaut.domain.exception.LangueNotFoundException;
 
 public enum Langue implements TypeProgres {
+    // TODO Ce ne sera plus une liste. Les cas possibles seront Français(1) Autre(0).
     ListeIncomplete(0, "Incomplète", "Liste incomplète..."),
     SuisseFR(1, "CH_fr", "Français Suisse"),
     SuisseDE(2, "CH_de", "Allemand Suisse"),

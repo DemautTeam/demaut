@@ -1,5 +1,5 @@
 <div ng-include="'template/include/include-titre.html'"></div>
-<div ng-include="'template/include/include-steps.html'"></div>
+<div ng-include="'template/include/include-steps-new.html'"></div>
 
 <div class="bs-wizard-info text-left">
     <div class="row">
@@ -29,7 +29,7 @@
                         <div class="col-md-2"><label for="nom">Nom*</label></div>
                         <div class="col-md-6"
                              popover-enable=" wouldStepNext || (donneesPerso.donneesPersoDataForm.nom.$invalid && !donneesPerso.donneesPersoDataForm.nom.$pristine)"
-                             popover-trigger="none" popover-is-open="wouldStepNext && donneesPerso.donneesPersoDataForm.nom.$invalid" popover-placement="right"
+                             popover-trigger="none" popover-is-open="(wouldStepNext && donneesPerso.donneesPersoDataForm.nom.$invalid ) || (donneesPerso.donneesPersoDataForm.nom.$invalid && !donneesPerso.donneesPersoDataForm.nom.$pristine)" popover-placement="right"
                              uib-popover="Veuillez saisir votre nom.">
                             <input type="text" id="nom" name="nom" class="form-control" required ng-model="personalData.nom">
                         </div>
@@ -38,7 +38,7 @@
                     <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesPerso.donneesPersoDataForm.prenom.$invalid ) || (donneesPerso.donneesPersoDataForm.prenom.$invalid && !donneesPerso.donneesPersoDataForm.prenom.$pristine)}" >
                         <div class="col-md-2"><label for="prenom">Prénom(s)*</label></div>
                         <div class="col-md-6" popover-enable="wouldStepNext || (donneesPerso.donneesPersoDataForm.prenom.$invalid && !donneesPerso.donneesPersoDataForm.prenom.$pristine)"
-                             popover-trigger="none" popover-is-open="wouldStepNext && donneesPerso.donneesPersoDataForm.prenom.$invalid" popover-placement="right"
+                             popover-trigger="none" popover-is-open="(wouldStepNext && donneesPerso.donneesPersoDataForm.prenom.$invalid ) || (donneesPerso.donneesPersoDataForm.prenom.$invalid && !donneesPerso.donneesPersoDataForm.prenom.$pristine)" popover-placement="right"
                              uib-popover="Veuillez saisir votre prénom.">
                             <input type="text" id="prenom" name="prenom" class="form-control" required ng-model="personalData.prenom">
                         </div>
@@ -60,7 +60,7 @@
                     <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesPerso.donneesPersoDataForm.adressePersonnelle.$invalid ) || (donneesPerso.donneesPersoDataForm.adressePersonnelle.$invalid && !donneesPerso.donneesPersoDataForm.adressePersonnelle.$pristine)}" >
                         <div class="col-md-2"><label for="adressePersonnelle">Adresse privée*</label></div>
                         <div class="col-md-6" popover-enable="wouldStepNext || (donneesPerso.donneesPersoDataForm.adressePersonnelle.$invalid && !donneesPerso.donneesPersoDataForm.adressePersonnelle.$pristine)"
-                             popover-trigger="none" popover-is-open="wouldStepNext && donneesPerso.donneesPersoDataForm.adressePersonnelle.$invalid" popover-placement="right"
+                             popover-trigger="none" popover-is-open="(wouldStepNext && donneesPerso.donneesPersoDataForm.adressePersonnelle.$invalid ) || (donneesPerso.donneesPersoDataForm.adressePersonnelle.$invalid && !donneesPerso.donneesPersoDataForm.adressePersonnelle.$pristine)" popover-placement="right"
                              uib-popover="Veuillez saisir votre adresse privée.">
                             <input type="text" id="adressePersonnelle" name="adressePersonnelle" class="form-control" required="required" ng-model="personalData.adressePersonnelle">
                         </div>
@@ -69,7 +69,7 @@
                     <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesPerso.donneesPersoDataForm.localite.$invalid ) || (donneesPerso.donneesPersoDataForm.localite.$invalid && !donneesPerso.donneesPersoDataForm.localite.$pristine)}" >
                         <label for="localite" class="col-md-2">Localité*</label>
                         <div class="col-md-2" popover-enable="wouldStepNext || (donneesPerso.donneesPersoDataForm.localite.$invalid && !donneesPerso.donneesPersoDataForm.localite.$pristine)"
-                             popover-trigger="none" popover-is-open="wouldStepNext && donneesPerso.donneesPersoDataForm.localite.$invalid" popover-placement="right"
+                             popover-trigger="none" popover-is-open="(wouldStepNext && donneesPerso.donneesPersoDataForm.localite.$invalid ) || (donneesPerso.donneesPersoDataForm.localite.$invalid && !donneesPerso.donneesPersoDataForm.localite.$pristine)" popover-placement="right"
                              uib-popover="Veuillez saisir la localité de votre adresse privée.">
                             <input type="text" id="localite" name="localite" class="form-control" required="required" ng-model="personalData.localite">
                         </div>
@@ -78,7 +78,7 @@
                     <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesPerso.donneesPersoDataForm.localite.$invalid ) || (donneesPerso.donneesPersoDataForm.npa.$invalid && !donneesPerso.donneesPersoDataForm.npa.$pristine)}" >
                         <label for="npa" class="col-md-2">NPA*</label>
                         <div class="col-md-2" popover-enable="wouldStepNext || (donneesPerso.donneesPersoDataForm.npa.$invalid && !donneesPerso.donneesPersoDataForm.npa.$pristine)"
-                             popover-trigger="none" popover-is-open="wouldStepNext && donneesPerso.donneesPersoDataForm.npa.$invalid" popover-placement="right"
+                             popover-trigger="none" popover-is-open="(wouldStepNext && donneesPerso.donneesPersoDataForm.localite.$invalid ) || (donneesPerso.donneesPersoDataForm.npa.$invalid && !donneesPerso.donneesPersoDataForm.npa.$pristine)" popover-placement="right"
                              uib-popover="Veuillez saisir un NPA est valide.">
                             <input type="text" id="npa" name="npa" class="form-control" required="required" ng-model="personalData.npa">
                         </div>
@@ -87,7 +87,7 @@
                     <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesPerso.donneesPersoDataForm.pays.$invalid ) || (donneesPerso.donneesPersoDataForm.pays.$invalid && !donneesPerso.donneesPersoDataForm.pays.$pristine)}" >
                         <label for="pays" class="col-md-2">Pays*</label>
                         <div class="col-md-2" popover-enable="wouldStepNext || (donneesPerso.donneesPersoDataForm.pays.$invalid && !donneesPerso.donneesPersoDataForm.pays.$pristine)"
-                             popover-trigger="none" popover-is-open="wouldStepNext && donneesPerso.donneesPersoDataForm.pays.$invalid" popover-placement="right"
+                             popover-trigger="none" popover-is-open="(wouldStepNext && donneesPerso.donneesPersoDataForm.pays.$invalid ) || (donneesPerso.donneesPersoDataForm.pays.$invalid && !donneesPerso.donneesPersoDataForm.pays.$pristine)" popover-placement="right"
                              uib-popover="Veuillez saisir le pays de votre adresse privée.">
                             <select id="pays" name="pays" ng-model="personalData.pays" required ng-options="pays.libl for pays in personalData.paysList track by pays.id"/>
                         </div>
@@ -98,39 +98,42 @@
                 <!--Données de contact-->
                 <fieldset>
                     <!--Téléphone privé-->
-                    <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && (donneesPerso.donneesPersoDataForm.telephonePrive.$invalid || donneesPerso.donneesPersoDataForm.telephoneMobile.$invalid) ) || (donneesPerso.donneesPersoDataForm.telephonePrive.$invalid && !donneesPerso.donneesPersoDataForm.telephonePrive.$pristine)}" >
-                        <label for="telephonePrive" class="col-md-2">Téléphone privé<span ng-hide="donneesPerso.donneesPersoDataForm.telephoneMobile.$valid">*</span></label>
-                        <div class="col-md-2" popover-enable="wouldStepNext || (donneesPerso.donneesPersoDataForm.telephonePrive.$error.required && !donneesPerso.donneesPersoDataForm.telephonePrive.$pristine)"
-                             popover-trigger="none" popover-is-open="wouldStepNext && (donneesPerso.donneesPersoDataForm.telephonePrive.$invalid || donneesPerso.donneesPersoDataForm.telephoneMobile.$invalid)" popover-placement="right"
-                             uib-popover="Veuillez saisir au moins un numéro de telephone.">
-                            <input type="tel" id="telephonePrive" name="telephonePrive" ng-required="changeTelephonePriveRequirement(donneesPerso.donneesPersoDataForm.telephonePrive, donneesPerso.donneesPersoDataForm.telephoneMobile)" class="form-control"
-                                   ng-model="personalData.telephonePrive" placeholder="0123456 ou +41123456">
+                    <div class="row form-group" ng-class="{ 'has-error' : donneesPerso.donneesPersoDataForm.telephonePrive.$invalid && !donneesPerso.donneesPersoDataForm.telephonePrive.$pristine }">
+                        <label for="telephonePrive" class="col-md-2">Téléphone privé<span ng-show="donneesPerso.donneesPersoDataForm.telephoneMobile.$isEmpty(personalData.telephoneMobile)">*</span></label>
+                        <div class="col-md-2" popover-enable="wouldStepNext || (donneesPerso.donneesPersoDataForm.telephonePrive.$invalid && !donneesPerso.donneesPersoDataForm.telephonePrive.$pristine)"
+                             popover-trigger="none" popover-is-open="(wouldStepNext && donneesPerso.donneesPersoDataForm.telephonePrive.$invalid ) || (donneesPerso.donneesPersoDataForm.telephonePrive.$invalid && !donneesPerso.donneesPersoDataForm.telephonePrive.$pristine)" popover-placement="right"
+                             uib-popover="Veuillez saisir le numéro privé.">
+                            <input type="tel" id="telephonePrive" name="telephonePrive" class="form-control"  ng-model="personalData.telephonePrive" ng-required="changeTelephoneRequirement(donneesPerso.donneesPersoDataForm.telephonePrive, donneesPerso.donneesPersoDataForm.telephoneMobile)"/>
                         </div>
                     </div>
                     <!--Téléphone mobile-->
-                    <div class="row form-group" ng-class="{ 'has-error' : donneesPerso.donneesPersoDataForm.telephoneMobile.$invalid && !donneesPerso.donneesPersoDataForm.telephoneMobile.$pristine}" >
-                        <label for="telephoneMobile" class="col-md-2">Mobile<span ng-hide="donneesPerso.donneesPersoDataForm.telephonePrive.$valid">*</span></label>
-                        <div class="col-md-2" popover-enable="donneesPerso.donneesPersoDataForm.telephoneMobile.$error.required && !donneesPerso.donneesPersoDataForm.telephoneMobile.$pristine"
-                             popover-trigger="none" popover-is-open="wouldStepNext && donneesPerso.donneesPersoDataForm.telephoneMobile.$error.required" popover-placement="right"
-                             uib-popover="Veuillez saisir au moins un numéro de telephone.">
-                            <input type="tel" id="telephoneMobile" name="telephoneMobile" ng-required="changeTelephoneMobileRequirement(donneesPerso.donneesPersoDataForm.telephoneMobile, donneesPerso.donneesPersoDataForm.telephonePrive)" class="form-control"
-                                   ng-model="personalData.telephoneMobile" placeholder="0123456 ou +41123456">
+                    <div class="row form-group" ng-class="{ 'has-error' : (donneesPerso.donneesPersoDataForm.telephoneMobile.$invalid && !donneesPerso.donneesPersoDataForm.telephoneMobile.$pristine) || (donneesPerso.donneesPersoDataForm.telephonePrive.$invalid && !donneesPerso.donneesPersoDataForm.telephonePrive.$pristine)}">
+                        <label for="telephoneMobile" class="col-md-2">Mobile<span ng-show="donneesPerso.donneesPersoDataForm.telephonePrive.$isEmpty(personalData.telephonePrive)">*</span></label>
+                        <div class="col-md-2" popover-enable="wouldStepNext || (donneesPerso.donneesPersoDataForm.telephoneMobile.$invalid && !donneesPerso.donneesPersoDataForm.telephoneMobile.$pristine)"
+                             popover-trigger="none" popover-is-open="(wouldStepNext && donneesPerso.donneesPersoDataForm.telephoneMobile.$invalid ) || (donneesPerso.donneesPersoDataForm.telephoneMobile.$invalid && !donneesPerso.donneesPersoDataForm.telephoneMobile.$pristine) && !(donneesPerso.donneesPersoDataForm.telephonePrive.$invalid && !donneesPerso.donneesPersoDataForm.telephonePrive.$pristine)" popover-placement="right"
+                             uib-popover="Veuillez saisir le numéro mobile.">
+                             <input type="tel" id="telephoneMobile" name="telephoneMobile" class="form-control" ng-model="personalData.telephoneMobile" ng-required="changeTelephoneRequirement(donneesPerso.donneesPersoDataForm.telephonePrive, donneesPerso.donneesPersoDataForm.telephoneMobile)"
+                                    popover-enable="donneesPerso.donneesPersoDataForm.telephonePrive.$invalid && !donneesPerso.donneesPersoDataForm.telephonePrive.$pristine"
+                                    popover-trigger="none" popover-is-open="(donneesPerso.donneesPersoDataForm.telephonePrive.$invalid && !donneesPerso.donneesPersoDataForm.telephonePrive.$pristine)" popover-placement="right"
+                                    uib-popover="ou le numéro mobile.">
+                            <!--<div ng-show="donneesPerso.donneesPersoDataForm.telephonePrive.$invalid && !donneesPerso.donneesPersoDataForm.telephonePrive.$pristine" >-->
+                            <!--</div>-->
                         </div>
                     </div>
                     <!--Fax-->
                     <div class="row form-group">
                         <label for="fax" class="col-md-2">Fax</label>
                         <div class="col-md-2">
-                            <input type="tel" id="fax" name="fax" class="form-control" ng-model="personalData.fax" placeholder="0123456 ou +41123456">
+                            <input type="tel" id="fax" name="fax" class="form-control" ng-model="personalData.fax">
                         </div>
                     </div>
                     <!--Email-->
                     <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesPerso.donneesPersoDataForm.email.$invalid ) || (donneesPerso.donneesPersoDataForm.email.$invalid && !donneesPerso.donneesPersoDataForm.email.$pristine)}" >
                         <label for="email" class="col-md-2">Adresse email*</label>
                         <div class="col-md-4" popover-enable="wouldStepNext || (donneesPerso.donneesPersoDataForm.email.$invalid && !donneesPerso.donneesPersoDataForm.email.$pristine)"
-                             popover-trigger="none" popover-is-open="wouldStepNext && donneesPerso.donneesPersoDataForm.email.$invalid" popover-placement="right"
+                             popover-trigger="none" popover-is-open="(wouldStepNext && donneesPerso.donneesPersoDataForm.email.$invalid ) || (donneesPerso.donneesPersoDataForm.email.$invalid && !donneesPerso.donneesPersoDataForm.email.$pristine)" popover-placement="right"
                              uib-popover="Veuillez saisir un email valide.">
-                            <input type="email" id="email" name="email" class="form-control" required ng-model="personalData.email">
+                            <input type="email" id="email" name="email" class="form-control" required ng-model="personalData.email"/>
                         </div>
                     </div>
                 </fieldset>
@@ -143,7 +146,7 @@
                     <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesPerso.donneesPersoDataForm.dateDeNaissance.$invalid ) || (donneesPerso.donneesPersoDataForm.dateDeNaissance.$invalid && !donneesPerso.donneesPersoDataForm.dateDeNaissance.$pristine)}" >
                         <label for="dateDeNaissance" class="col-md-2">Date de naissance*</label>
                         <div class="col-md-2" popover-enable="wouldStepNext || (donneesPerso.donneesPersoDataForm.dateDeNaissance.$invalid && !donneesPerso.donneesPersoDataForm.dateDeNaissance.$pristine)"
-                             popover-trigger="none" popover-is-open="wouldStepNext && donneesPerso.donneesPersoDataForm.dateDeNaissance.$invalid" popover-placement="right"
+                             popover-trigger="none" popover-is-open="(wouldStepNext && donneesPerso.donneesPersoDataForm.dateDeNaissance.$invalid ) || (donneesPerso.donneesPersoDataForm.dateDeNaissance.$invalid && !donneesPerso.donneesPersoDataForm.dateDeNaissance.$pristine)" popover-placement="right"
                              uib-popover="Veuillez saisir une date de naissance valide.">
                             <p class="input-group">
                                 <input type="text" class="form-control" id="dateDeNaissance" name="dateDeNaissance" placeholder="{{datePicker.placeholder}}"
@@ -162,36 +165,37 @@
                     <!--Nationalité-->
                     <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesPerso.donneesPersoDataForm.nationalite.$invalid) || (donneesPerso.donneesPersoDataForm.nationalite.$invalid && !donneesPerso.donneesPersoDataForm.nationalite.$pristine)}" >
                         <label for="nationalite" class="col-md-2">Nationalité*</label>
-                        <div class="col-md-3" popover-enable="wouldStepNext || (donneesPerso.donneesPersoDataForm.nationalite.$invalid && !donneesPerso.donneesPersoDataForm.nationalite.$pristine)"
-                             popover-trigger="none" popover-is-open="wouldStepNext && donneesPerso.donneesPersoDataForm.nationalite.$invalid" popover-placement="right"
+                        <div class="col-md-2" popover-enable="wouldStepNext || (donneesPerso.donneesPersoDataForm.nationalite.$invalid && !donneesPerso.donneesPersoDataForm.nationalite.$pristine)"
+                             popover-trigger="none" popover-is-open="(wouldStepNext && donneesPerso.donneesPersoDataForm.nationalite.$invalid) || (donneesPerso.donneesPersoDataForm.nationalite.$invalid && !donneesPerso.donneesPersoDataForm.nationalite.$pristine)" popover-placement="right"
                              uib-popover="Veuillez saisir votre nationalité.">
                             <select id="nationalite" name="nationalite" ng-model="personalData.nationalite" required ng-change="resetPermis()"
                                     ng-options="nationalite.libl for nationalite in personalData.nationalites track by nationalite.id"/>
                         </div>
                     </div>
 
-                    <!--Parlez français-->
+                    <!--Langue Maternelle-->
                     <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesPerso.donneesPersoDataForm.langue.$invalid ) || (donneesPerso.donneesPersoDataForm.langue.$invalid && !donneesPerso.donneesPersoDataForm.langue.$pristine)}" >
-                        <label for="langue" class="col-md-2">Si vous parler le français*</label>
-                        <div class="col-md-3" popover-enable="wouldStepNext || (donneesPerso.donneesPersoDataForm.langue.$invalid && !donneesPerso.donneesPersoDataForm.langue.$pristine)"
-                             popover-trigger="none" popover-is-open="wouldStepNext && donneesPerso.donneesPersoDataForm.langue.$invalid" popover-placement="right"
-                             uib-popover="Veuillez saisir votre langue.">
-                            <select id="langue" name="langue" ng-model="personalData.langue" required
-                                    ng-options="langue.libl for langue in personalData.langues track by langue.id"/>
+                        <label for="langue" class="col-md-2">Langue maternelle*</label>
+                        <div class="col-md-6">
+                            <div class="col-md-3"><label><input type="radio" name="langue" value="1" ng-model="personalData.langue" required/> Français </label></div>
+                            <div class="col-md-3" popover-enable="wouldStepNext || (donneesPerso.donneesPersoDataForm.langue.$invalid && !donneesPerso.donneesPersoDataForm.langue.$pristine)"
+                                 popover-trigger="none" popover-is-open="(wouldStepNext && donneesPerso.donneesPersoDataForm.langue.$invalid ) || (donneesPerso.donneesPersoDataForm.langue.$invalid && !donneesPerso.donneesPersoDataForm.langue.$pristine)" popover-placement="right"
+                                 uib-popover="Veuillez saisir votre langue.">
+                                <label><input type="radio" name="langue" value="0" ng-model="personalData.langue" required/> Autre </label>
+                            </div>
                         </div>
                     </div>
                     <!--fin Langue parlée-->
 
                     <!--Permis-->
-                    <div  ng-show="isPermisRequired()" class="row form-group"
-                          ng-class="{ 'has-error' : (wouldStepNext && donneesPerso.donneesPersoDataForm.permis.$invalid ) || (donneesPerso.donneesPersoDataForm.permis.$invalid && !donneesPerso.donneesPersoDataForm.permis.$pristine)}" >
+                    <div  ng-show="isSuisse()" class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesPerso.donneesPersoDataForm.permis.$invalid ) || (donneesPerso.donneesPersoDataForm.permis.$invalid && !donneesPerso.donneesPersoDataForm.permis.$pristine)}" >
                         <label class="col-md-2">Permis<span ng-hide="!isPermisRequired()">*</span></label>
-                        <div class="col-md-1"><label><input type="radio" name="permis" value="B" ng-disabled="isSuisse()" ng-model="personalData.permis" ng-required="isPermisRequired()"/> B </label></div>
-                        <div class="col-md-1"><label><input type="radio" name="permis" value="C" ng-disabled="isSuisse()" ng-model="personalData.permis" ng-required="isPermisRequired()"/> C </label></div>
-                        <div class="col-md-2"><label><input type="radio" name="permis" value="demande en cours" ng-disabled="isSuisse()" ng-model="personalData.permis" ng-required="isPermisRequired()"/>Demande en cours</label></div>
-                        <div class="col-md-2"><label><input type="radio" name="permis" value="autre" ng-disabled="isSuisse()" ng-model="personalData.permis" ng-required="isPermisRequired()"/>Autre</label></div>
+                        <div class="col-md-1"><label><input type="radio" name="permis" value="B" ng-disabled="!isSuisse()" ng-model="personalData.permis" ng-required="isPermisRequired()"/> B </label></div>
+                        <div class="col-md-1"><label><input type="radio" name="permis" value="C" ng-disabled="!isSuisse()" ng-model="personalData.permis" ng-required="isPermisRequired()"/> C </label></div>
+                        <div class="col-md-2"><label><input type="radio" name="permis" value="demande en cours" ng-disabled="!isSuisse()" ng-model="personalData.permis" ng-required="isPermisRequired()"/>Demande en cours</label></div>
+                        <div class="col-md-2"><label><input type="radio" name="permis" value="autre" ng-disabled="!isSuisse()" ng-model="personalData.permis" ng-required="isPermisRequired()"/>Autre</label></div>
                         <div class="col-md-2" popover-enable="wouldStepNext || (donneesPerso.donneesPersoDataForm.permis.$invalid && !donneesPerso.donneesPersoDataForm.permis.$pristine)"
-                             popover-trigger="none" popover-is-open="wouldStepNext && donneesPerso.donneesPersoDataForm.permis.$invalid" popover-placement="right"
+                             popover-trigger="none" popover-is-open="(wouldStepNext && donneesPerso.donneesPersoDataForm.permis.$invalid ) || (donneesPerso.donneesPersoDataForm.permis.$invalid && !donneesPerso.donneesPersoDataForm.permis.$pristine)" popover-placement="right"
                              uib-popover="Veuillez préciser votre permis de séjour.">
                              <input type="text" class="form-control" ng-required="(personalData.permis == 'autre')" ng-show="(personalData.permis == 'autre')" ng-model="personalData.permisOther">
                         </div>
