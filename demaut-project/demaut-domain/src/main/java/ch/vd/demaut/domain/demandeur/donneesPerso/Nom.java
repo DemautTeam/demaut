@@ -20,7 +20,7 @@ public class Nom extends StringVO {
 
     // ********************************************************* Getters
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 1, max = 120)
     @Override
     public String getValue() {
         return super.getValue();

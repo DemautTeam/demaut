@@ -56,7 +56,7 @@ public class AnnexeRestImplTest {
         demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null, login);
         ReferenceDeDemande referenceDeDemande = demandeEnCours.getReferenceDeDemande();
         assertNotNull(referenceDeDemande);
-        Annexe annexe = new Annexe(TypeAnnexe.CV, "Test_multipart.pdf", byteArray, "01.01.2015 11:00");
+        Annexe annexe = new Annexe("Test_multipart.pdf", byteArray, "01.01.2015 11:00");
         demandeEnCours.validerEtAttacherAnnexe(annexe);
     }
 

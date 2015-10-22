@@ -2,11 +2,13 @@ package ch.vd.demaut.cucumber.steps.definitions;
 
 import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
 import ch.vd.demaut.cucumber.converteurs.demandes.ReferenceDeDemandeConverter;
+import ch.vd.demaut.cucumber.converteurs.donneespro.CodeGLNConverter;
 import ch.vd.demaut.cucumber.converteurs.utilisateurs.LoginConverter;
 import ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandes.autorisation.StatutDemandeAutorisation;
+import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import cucumber.api.Transform;
 import cucumber.api.java.fr.Alors;
@@ -58,6 +60,12 @@ public class CreationDemandeStepDefinitions extends StepDefinitions {
         getDemandeAutorisationSteps().initialiserDemandeEnCours(profession, demandeAutorisationSteps.getCodeGlnVide());
     }
 
+    @Lorsque("^l´utilisateur initialise une demande de profession \"([^\"]*)\" avec un code GLN \"([^\"]*)\"$")
+    public void lutilisateur_initialise_une_demande_de_profession_avec_codeGLN(Profession profession,
+            @Transform(CodeGLNConverter.class) CodeGLN gln) throws Throwable {
+        getDemandeAutorisationSteps().initialiserDemandeEnCours(profession, gln);
+    }
+
     // ********************************************************* Then
 
     @Alors("^le système Demaut crée la demande avec les caractéristiques \\[état: \"([^\"]*)\", utilisateur: \"([^\"]*)\", type: \"([^\"]*)\"\\]$")
@@ -68,8 +76,8 @@ public class CreationDemandeStepDefinitions extends StepDefinitions {
         getDemandeAutorisationSteps().verifieDemandeCree(profession, statut, login);
     }
 
-    @Alors("^le système Demaut refuse de créer la demande$")
-    public void le_système_Demaut_refuse_de_créer_la_demande() {
-        getDemandeAutorisationSteps().verifieAcceptationAnnexe(AccepteOuRefuse.refuse);
+    @Alors("^le système Demaut \"(accepte|refuse)\" de créer la demande$")
+    public void le_système_Demaut_refuse_de_créer_la_demande(AccepteOuRefuse action) {
+        getDemandeAutorisationSteps().verifieAcceptationAnnexe(action);
     }
 }

@@ -28,7 +28,7 @@
     </bean>
 
     <!-- TODO enlever le dependance Microbiz dans REST -->
-    <import resource="classpath:META-INF/spring/microbiz-context.xml"/>
+    <import resource="classpath:META-INF/spring/rest-context.xml"/>
 
 <!--     <cxf:server address="${demaut.progre.soa.endpoint}"> -->
 <!--         <cxf:serviceBeans> -->

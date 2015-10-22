@@ -17,8 +17,8 @@ echo Lister config : $configContent
 #script_dir=$current_dir
 #fi
 
-projectFolderName=demaut-microbiz
-projectConfigName=demautMicrobiz
+projectFolderName=demaut-osgi
+projectConfigName=demautOsgi
 projectBasedir=${WORKSPACE}/demaut-project/$projectFolderName
 
 # deploy to smx4

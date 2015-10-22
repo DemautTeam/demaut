@@ -67,28 +67,8 @@ ngDemautApp
         $locationProvider.html5Mode(false);
         $locationProvider.hashPrefix('!');
 
-        $httpProvider.interceptors.push(function ($q, $rootScope, $location) {
-            return {
-                'responseError': function (rejection) {
-                    var status = rejection.status;
-                    var config = rejection.config;
-                    var data = rejection.data;
-                    var method = config.method;
-                    var url = config.url;
-
-                    if (status == 401) {
-                        $location.path("/Demaut/aide");
-                    } else {
-                        // TODO resolve errors
-                        $rootScope.error = method + ' on ' + url + ' failed with status ' + status + '<br>' +
-                            (data != null && data != undefined ? data.substring(data.indexOf('<body>') + 6, data.indexOf('</body>')) : "data empty!");
-                        angular.element("#errorModal").modal('toggle');
-                        angular.element("#errorModal").modal('show');
-                    }
-                    return $q.reject(rejection);
-                }
-            };
-        });
+        $httpProvider.interceptors.push('globalDefaultError');
+        $httpProvider.interceptors.push('globalErrorInterceptor');
     }])
     .controller('CockpitController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', '$log', '$window',
         function ($scope, $rootScope, $routeParams, $http, $location, $interval, $log, $window) {
@@ -144,6 +124,8 @@ ngDemautApp
                     });
             };
 
+            // indispensable pour le rendering initiale du cockpit
+            $scope.initilized = true;
         }])
     .controller('ProfessionSanteController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$log', '$window', 'professionTest',
         function ($scope, $rootScope, $routeParams, $http, $location, $log, $window, professionTest) {
@@ -198,7 +180,9 @@ ngDemautApp
                             }
                         }
                         $scope.professionData.gln = response[1] == null || response[1] == undefined ? '' : response[1];
-                        $scope.professionSante.professionDataForm.$pristine = false;
+                        if($scope.professionData.profession != null && $scope.professionData.profession != undefined) {
+                            $scope.professionSante.professionDataForm.$pristine = false;
+                        }
                         $log.info('Profession de la demande a été récupérée avec succès!');
                     })
                     .error(function (data, status, headers, config) {
@@ -225,14 +209,13 @@ ngDemautApp
                             }
                         })
                             .success(function (data, status, headers, config) {
-                                var refDemande = angular.fromJson(data.response);
-                                //TODO : Ajouter le error handling if refDemande null ou undefined
+                                var referenceDeDemande = angular.fromJson(data.response);
+                                $window.localStorage.setItem('referenceDeDemande', referenceDeDemande.value);
                                 $log.info('Une nouvelle demande a été intitialisée avec succès!');
                             })
                             .error(function (data, status, headers, config) {
                                 $rootScope.error = 'Error fetching ../demande/initialiser/';
                                 $log.info('Error ' + urlPrefix + '/demande/initialiser/ \n Status :' + status);
-
                             });
                     }
                     else {
@@ -327,22 +310,28 @@ ngDemautApp
                         $scope.personalData.nom = response.nom.value;
                         $scope.personalData.prenom = response.prenom.value;
                         $scope.personalData.nomDeCelibataire = response.nomDeCelibataire.value;
-                        $scope.personalData.adressePersonnelle = response.adresse.voie;
-                        $scope.personalData.complement = response.adresse.complement;
-                        $scope.personalData.localite = response.adresse.localite.value;
-                        $scope.personalData.npa = response.adresse.npa.value;
-                        for (var indexI = 0; indexI < $scope.personalData.paysList.length; indexI++) {
-                            if ($scope.personalData.paysList[indexI].name == response.adresse.pays) {
-                                $scope.personalData.pays = $scope.personalData.paysList[indexI];
-                                break;
+
+                        if(response.adresse != null && response.adresse != undefined) {
+                            $scope.personalData.adressePersonnelle = response.adresse.voie;
+                            $scope.personalData.complement = response.adresse.complement;
+                            $scope.personalData.localite = response.adresse.localite.value;
+                            $scope.personalData.npa = response.adresse.npa.value;
+
+                            for (var indexI = 0; indexI < $scope.personalData.paysList.length; indexI++) {
+                                if ($scope.personalData.paysList[indexI].name == response.adresse.pays) {
+                                    $scope.personalData.pays = $scope.personalData.paysList[indexI];
+                                    break;
+                                }
                             }
                         }
+
                         $scope.personalData.telephonePrive = response.telephonePrive.value;
                         $scope.personalData.telephoneMobile = response.telephoneMobile.value;
                         $scope.personalData.email = response.email.value;
                         $scope.personalData.fax = response.fax.value;
                         $scope.personalData.genre = response.genre;
                         $scope.personalData.dateDeNaissance = new Date(response.dateDeNaissance.value);
+
                         for (var indexJ = 0; indexJ < $scope.personalData.nationalites.length; indexJ++) {
                             if ($scope.personalData.nationalites[indexJ].name == response.nationalite) {
                                 $scope.personalData.nationalite = $scope.personalData.nationalites[indexJ];
@@ -355,9 +344,13 @@ ngDemautApp
                                 break;
                             }
                         }
-                        $scope.personalData.permis = response.permis.typePermis;
-                        $scope.personalData.permisOther = response.permis.autrePermis.value;
-                        $scope.donneesPerso.donneesPersoDataForm.$pristine = false;
+                        if(response.permis != null && response.permis != undefined) {
+                            $scope.personalData.permis = response.permis.typePermis;
+                            $scope.personalData.permisOther = response.permis.autrePermis.value;
+                        }
+                        if(response != null && response != undefined) {
+                            $scope.donneesPerso.donneesPersoDataForm.$pristine = false;
+                        }
                         $log.info('Objet Données personnlles a été récupéré avec succès!');
                     }).
                     error(function (data, status, headers, config) {
@@ -560,7 +553,9 @@ ngDemautApp
                                 $scope.diplomeData.diplomes.push(displayedDiplome);
                             }
                         }
-                        $scope.donneesDiplome.diplomeDataForm.$pristine = false;
+                        if($scope.diplomeData.diplomes.length > 0) {
+                            $scope.donneesDiplome.diplomeDataForm.$pristine = false;
+                        }
                         $log.info('liste de diplomes saisis a été récupérée avec succès!');
                     })
                     .error(function (data, status, headers, config) {
@@ -626,7 +621,6 @@ ngDemautApp
                     $scope.diplomeData.diplome = {};
                     $scope.donneesDiplome.diplomeDataForm.$valid = true;
                     $scope.donneesDiplome.diplomeDataForm.$error = {};
-                    $scope.donneesDiplome.diplomeDataForm.$setPristine();
                     $scope.wouldAddDiplome = false;
                 }
             };
@@ -893,17 +887,20 @@ ngDemautApp
                                     }
                                 }
 
-                                displayedAnnexe.name = currentAnnexe.nomFichier.value;
+                                displayedAnnexe.name = currentAnnexe.nomFichier.nomFichier;
                                 displayedAnnexe.dateDeCreation = new Date(currentAnnexe.dateDeCreation.value);
                                 $scope.annexesData.referenceFiles.push(displayedAnnexe);
                             }
                         }
-                        $scope.donneesDiplome.diplomeDataForm.$pristine = false;
-                        $log.info('liste de diplomes saisis a été récupérée avec succès!');
+                        $scope.files = $scope.annexesData.referenceFiles;
+                        if($scope.files.length > 0) {
+                            $scope.annexes.annexesDataForm.$pristine = false;
+                        }
+                        $log.info('liste de annexes saisis a été récupérée avec succès!');
                     })
                     .error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error fetching ../diplomes/diplomesSaisis';
-                        $log.info('Error ' + urlPrefix + '/diplomes/diplomesSaisis/ \n Status :' + status);
+                        $rootScope.error = 'Error fetching ../annexes/annexesSaisis';
+                        $log.info('Error ' + urlPrefix + '/annexes/annexesSaisis/ \n Status :' + status);
                     });
             }
 

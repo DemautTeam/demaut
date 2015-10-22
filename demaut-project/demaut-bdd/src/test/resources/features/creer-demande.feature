@@ -24,7 +24,7 @@ Fonctionnalité: Créer une demande
   
   Scénario: Refuser de créer une demande sans code GLN
     Lorsque l´utilisateur initialise une demande de profession "Medecin" sans code GLN
-    Alors le système Demaut refuse de créer la demande
+    Alors le système Demaut "refuse" de créer la demande
 
   Scénario: Créer une demande sans code GLN
     Lorsque l´utilisateur initialise une demande de profession "Osteopathe" sans code GLN
@@ -33,4 +33,18 @@ Fonctionnalité: Créer une demande
   Scénario: Refuser de créer une demande si le brouillon existe déjà
   	Etant donné une demande de profession "Medecin" en cours de saisie ayant la référence "12345"
     Lorsque l´utilisateur initialise une demande de profession "Osteopathe" sans code GLN
-    Alors le système Demaut refuse de créer la demande
+    Alors le système Demaut "refuse" de créer la demande
+  
+  @code-gln  
+  Plan du scénario: Valider le code gln du demandeur
+    Lorsque l´utilisateur initialise une demande de profession "Medecin" avec un code GLN <gln>
+    Alors le système Demaut <action> de créer la demande
+    Exemples:
+      | gln              | action    | 
+      | "7601000000125"  | "accepte" |
+      | ""               | "refuse"  |
+      | "g7601000000125" | "refuse"  |
+
+
+
+   

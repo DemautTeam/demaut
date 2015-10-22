@@ -11,14 +11,6 @@
 		http://www.springframework.org/schema/util
 		http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <bean id="demandeAutorisationService" class="ch.vd.demaut.services.demandes.autorisation.impl.DemandeAutorisationServiceImpl"/>
-
-    <bean id="annexesService" class="ch.vd.demaut.services.annexes.impl.AnnexesServiceImpl"/>
-
-    <bean id="donneesProfessionnellesService" class="ch.vd.demaut.services.demandeurs.donneesProf.impl.DonneesProfessionnellesServiceImpl"/>
-    
-    <bean id="utilisateurService" class="ch.vd.demaut.services.utilisateurs.impl.UtilisateurServiceImpl"/>
-
     <context:annotation-config/>
     
     <context:component-scan base-package="ch.vd.demaut"/>

@@ -12,11 +12,14 @@ import ch.vd.demaut.domain.exception.ReferenceDemandeNotFoundException;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service("demandeAutorisationService")
 public class DemandeAutorisationServiceImpl implements DemandeAutorisationService {
 
     @Autowired
@@ -28,23 +31,24 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
     @Transactional
     @Override
     public DemandeAutorisation initialiserDemandeAutorisation(Profession profession, CodeGLN codeGLN, Login login) {
-        
+
         DemandeAutorisation demandeAutorisation = demandeAutorisationFactory.initierDemandeAutorisation(login, profession, codeGLN);
-        
+
         demandeAutorisationRepository.store(demandeAutorisation);
         return demandeAutorisation;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande referenceDeDemande) {
         try {
             return demandeAutorisationRepository.recupererDemandeParReference(referenceDeDemande);
-        } catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException | NoResultException e) {
             throw new ReferenceDemandeNotFoundException();
         }
     }
 
+    @Transactional(readOnly = true)
     @Override
     public DemandeAutorisation recupererBrouillon(Login login) {
         try {
@@ -54,6 +58,7 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
         }
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<DemandeAutorisation> recupererListeBrouillons(Login login) {
         try {
