@@ -1,11 +1,5 @@
 input.ng-invalid.ng-untouched {
 }
-/*TODO Supprimer si confirmé le comportement de required */
-/*input.ng-invalid.ng-touched  {*/
-    /*background-color: rgba(255, 218, 220,100);*/
-    /*background-image: none;*/
-    /*border-color: #d9534f;*/
-/*}*/
 
 ul.error-message {
     margin-left: auto;
@@ -24,4 +18,13 @@ ul.error-message li{
     font-weight: bold;
     font-size: larger;
     color: #a94442;
+}
+
+input[type="tel"], input[type="email"]  {
+    background-image: url(../legacy/images/input_shadow.png);
+    background-repeat: no-repeat;
+    border: 1px solid;
+    border-color: #bfbfbf #DEDEDe #dedede #BFBFBF;
+    font: 1em Arial, Helvetica, Verdana, sans-serif;
+    padding: 5px 1px
 }
