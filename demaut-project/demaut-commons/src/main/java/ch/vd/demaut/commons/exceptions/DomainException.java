@@ -3,6 +3,9 @@ package ch.vd.demaut.commons.exceptions;
 
 import org.apache.commons.lang3.StringUtils;
 
+import javax.validation.ConstraintViolation;
+import java.util.Set;
+
 /**
  * <strong>Exception du Domaine :</strong> Gestion des toutes les erreurs liées au domaine.
  */
@@ -10,6 +13,7 @@ public class DomainException extends BaseException {
 
     private static final long serialVersionUID = 6413485124943479155L;
 
+    private Set<ConstraintViolation<?>> constraintViolations;
 
     /**
      * Constructs a new runtime exception with {@code null} as its
@@ -66,6 +70,22 @@ public class DomainException extends BaseException {
         super(cause);
     }
 
+    /**
+     * Initialisation des containtes de validation
+     *
+     * @param message
+     * @param constraintViolations
+     */
+    public DomainException(String message, Set<ConstraintViolation<?>> constraintViolations){
+        super(message);
+        this.constraintViolations = constraintViolations;
+    }
+
+    public DomainException(String message, Throwable cause, Set<ConstraintViolation<?>> constraintViolations){
+        super(message, cause);
+        this.constraintViolations = constraintViolations;
+    }
+
     @Override
     public String getMessage() {
         String message = super.getMessage();
@@ -73,5 +93,14 @@ public class DomainException extends BaseException {
             message = "Erreur du domaine métier, message non defini...";
         }
         return message;
+    }
+
+    /**
+     * Retourne les contraintes de validation. peut être null.
+     *
+     * @return
+     */
+    public Set<ConstraintViolation<?>> getConstraintViolations() {
+        return constraintViolations;
     }
 }
