@@ -1,7 +1,22 @@
 package ch.vd.demaut.domain.demandes.autorisation;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import javax.validation.constraints.NotNull;
+
 import ch.vd.demaut.commons.annotations.Aggregate;
-import ch.vd.demaut.domain.annexes.*;
+import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.domain.annexes.AnnexeFK;
+import ch.vd.demaut.domain.annexes.AnnexeMetadata;
+import ch.vd.demaut.domain.annexes.AnnexeValidateur;
+import ch.vd.demaut.domain.annexes.ContenuAnnexe;
+import ch.vd.demaut.domain.annexes.CriteresAnnexeObligatoire;
+import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
+import ch.vd.demaut.domain.annexes.MoteurReglesPourAnnexesObligatoires;
+import ch.vd.demaut.domain.annexes.ProcedureAnnexe;
+import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.Demande;
 import ch.vd.demaut.domain.demandes.DemandeFK;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
@@ -9,12 +24,8 @@ import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnelles;
 import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnellesValidateur;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnellesValidateur;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.ActiviteAnterieure;
 import ch.vd.demaut.domain.utilisateurs.Login;
-
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Demande d'autorisation associée à un utilisateur <br>
@@ -27,8 +38,6 @@ public class DemandeAutorisation extends Demande {
     private static final DonneesPersonnellesValidateur DONNEES_PERSONNELLES_VALIDATEUR = new DonneesPersonnellesValidateur();
 
     private static final DonneesProfessionnellesValidateur DONNEES_PROFESSIONNELLES_VALIDATEUR = new DonneesProfessionnellesValidateur();
-
-
 
     // ********************************************************* Fields
     private Profession profession;
@@ -45,7 +54,7 @@ public class DemandeAutorisation extends Demande {
 
     // ********************************************************* Constructor
 
-    //Used for OpenJPA only
+    // Used for OpenJPA only
     protected DemandeAutorisation() {
         super();
         this.annexes = new ArrayList<>();
@@ -53,7 +62,7 @@ public class DemandeAutorisation extends Demande {
         this.donneesProfessionnelles = new DonneesProfessionnelles();
     }
 
-    //Ne pas utiliser ce constructeur mais uniquement la Factory
+    // Ne pas utiliser ce constructeur mais uniquement la Factory
     public DemandeAutorisation(Login login, Profession profession) {
         this();
         this.referenceDeDemande = new ReferenceDeDemande();
@@ -64,12 +73,14 @@ public class DemandeAutorisation extends Demande {
         this.donneesProfessionnelles = new DonneesProfessionnelles();
     }
 
-    // ********************************************************* Business Methods
+    // ********************************************************* Business
+    // Methods
 
     /**
      * Attache une annexe à la demande.
      *
-     * @param annexeALier Annexe
+     * @param annexeALier
+     *            Annexe
      */
     public void validerEtAttacherAnnexe(Annexe annexeALier) {
         ANNEXE_VALIDATEUR.valider(annexeALier);
@@ -78,10 +89,6 @@ public class DemandeAutorisation extends Demande {
 
     public void supprimerUneAnnexe(AnnexeFK annexeFK) {
         getListeDesAnnexes().supprimerUneAnnexe(annexeFK);
-    }
-
-    public Collection<Annexe> extraireAnnexesDeType(TypeAnnexe typeAnnexe) {
-        return getListeDesAnnexes().extraireAnnexesDeType(typeAnnexe);
     }
 
     public List<Annexe> listerLesAnnexes() {
@@ -95,12 +102,23 @@ public class DemandeAutorisation extends Demande {
         return getListeDesAnnexes().listerAnnexesMetadata();
     }
 
-    public List<TypeAnnexe> listerLesTypeAnnexesObligatoires() {
-        return determinerListeTypeAnnexesObligatoires().listerTypesAnnexeObligatoires();
+    public List<TypeAnnexe> calculerTypesAnnexeObligatoires() {
+        CriteresAnnexeObligatoire criteres = buildCriteresAnnexeObligatoire();
+        List<TypeAnnexe> typesAnnexeObligatoires = MoteurReglesPourAnnexesObligatoires.calculerTypesAnnexeObligatoires(criteres);
+        return typesAnnexeObligatoires;
     }
 
-    public ListeTypeAnnexesObligatoires determinerListeTypeAnnexesObligatoires() {
-        return new ListeTypeAnnexesObligatoires(this).determinerListeTypeAnnexesObligatoires();
+    private CriteresAnnexeObligatoire buildCriteresAnnexeObligatoire() {
+        ProcedureAnnexe procedureAnnexe = calculerProcedureAnnnexe();
+        boolean contientDiplomesEtrangers = getDonneesProfessionnelles().contientDiplomesEtrangers();
+        boolean estEtranger = getDonneesPersonnelles().estEtranger();
+        CriteresAnnexeObligatoire criteres = new CriteresAnnexeObligatoire(procedureAnnexe, getProfession(),
+                contientDiplomesEtrangers, estEtranger);
+        return criteres;
+    }
+
+    public ProcedureAnnexe calculerProcedureAnnnexe() {
+        return getDonneesProfessionnelles().calculerProcedureAnnexe();
     }
 
     public ContenuAnnexe extraireContenuAnnexe(AnnexeFK annexeFK) {
@@ -123,8 +141,11 @@ public class DemandeAutorisation extends Demande {
         new DonneesPersonnellesValidateur().valider(donneesPersonnelles);
     }
 
-    // ********************************************************* Private Methods
+    public void ajouterActiviteAnterieure(ActiviteAnterieure activiteAnterieure) {
+        getDonneesProfessionnelles().ajouterActiviteAnterieure(activiteAnterieure);
+    }
 
+    // ********************************************************* Private Methods
 
     // ********************************************************* Getters
 
@@ -157,10 +178,10 @@ public class DemandeAutorisation extends Demande {
 
     // ********************************************************* Setters
 
-    // ********************************************************* Technical methods
+    // ********************************************************* Technical
+    // methods
     @Override
     public DemandeFK<DemandeAutorisation> getFunctionalKey() {
         return new DemandeFK<DemandeAutorisation>(this);
     }
-
 }

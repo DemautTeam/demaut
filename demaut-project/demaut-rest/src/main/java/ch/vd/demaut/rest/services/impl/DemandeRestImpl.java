@@ -1,7 +1,6 @@
 package ch.vd.demaut.rest.services.impl;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
@@ -15,8 +14,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.exception.DemandeNotFoundException;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +23,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;

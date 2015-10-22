@@ -3,12 +3,6 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!-- Config-->
-
-    <bean id="configDemaut" class="ch.vd.demaut.domain.config.mock.ConfigDemautMock"
-        scope="cucumber-glue">
-    </bean>
-
     <!-- Steps-->
 
     <bean id="demandeAutorisationSteps" class="ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps"
@@ -16,16 +10,10 @@
         <property name="utilisateurRepository" ref="utilisateurRepository"/>
         <property name="demandeAutorisationRepository" ref="demandeAutorisationRepository"/>
         <property name="demandeAutorisationFactory" ref="demandeAutorisationFactory"/>
-        <property name="configDemaut" ref="configDemaut"/>
-    </bean>
-
-    <bean id="annexesSteps" class="ch.vd.demaut.cucumber.steps.AnnexesSteps"
-        scope="cucumber-glue">
-        <property name="demandeAutorisationSteps" ref="demandeAutorisationSteps"/>
     </bean>
 
     <bean id="donneesPersonnellesSteps" class="ch.vd.demaut.cucumber.steps.DonneesPersonnellesSteps"
-          scope="cucumber-glue">
+        scope="cucumber-glue">
         <property name="demandeAutorisationSteps" ref="demandeAutorisationSteps"/>
     </bean>
 
@@ -35,8 +23,14 @@
         <property name="demandeAutorisationSteps" ref="demandeAutorisationSteps"/>
     </bean>
 
+    <bean id="annexesSteps" class="ch.vd.demaut.cucumber.steps.AnnexesSteps"
+        scope="cucumber-glue">
+        <property name="demandeAutorisationSteps" ref="demandeAutorisationSteps"/>
+        <property name="donneesPersonnellesSteps" ref="donneesPersonnellesSteps"/>
+        <property name="donneesProfessionnellesSteps" ref="donneesProfessionnellesSteps"/>
+    </bean>
+    
     <!-- Step Definitions-->
-
     <bean
         class="ch.vd.demaut.cucumber.steps.definitions.BackgroundStepDefinitions"
         scope="cucumber-glue">
@@ -50,29 +44,21 @@
     </bean>
 
     <bean
-        class="ch.vd.demaut.cucumber.steps.definitions.AnnexesStepDefinitions"
-        scope="cucumber-glue">
-        <property name="demandeAutorisationSteps" ref="demandeAutorisationSteps"/>
-        <property name="annexesSteps" ref="annexesSteps"/>
-    </bean>
-
-    <bean
-        class="ch.vd.demaut.cucumber.steps.definitions.SaisirProfessionStepDefinitions"
-        scope="cucumber-glue">
-        <property name="donneesProfessionnellesSteps" ref="donneesProfessionnellesSteps"/>
-    </bean>
-
-    <bean
         class="ch.vd.demaut.cucumber.steps.definitions.SaisirDiplomeStepDefinitions"
         scope="cucumber-glue">
         <property name="donneesProfessionnellesSteps" ref="donneesProfessionnellesSteps"/>
     </bean>
 
     <bean
-    class="ch.vd.demaut.cucumber.steps.definitions.SaisirDonneePersoStepDefinitions"
-    scope="cucumber-glue">
-        <property name="demandeAutorisationSteps" ref="demandeAutorisationSteps"/>
+        class="ch.vd.demaut.cucumber.steps.definitions.SaisirDonneePersoStepDefinitions"
+        scope="cucumber-glue">
         <property name="donneesPersonnellesSteps" ref="donneesPersonnellesSteps"/>
-</bean>
+    </bean>
+
+    <bean
+        class="ch.vd.demaut.cucumber.steps.definitions.AnnexesStepDefinitions"
+        scope="cucumber-glue">
+        <property name="annexesSteps" ref="annexesSteps"/>
+    </bean>
 
 </beans>

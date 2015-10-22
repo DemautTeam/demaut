@@ -1,6 +1,22 @@
 package ch.vd.demaut.services.annexes.impl;
 
-import ch.vd.demaut.domain.annexes.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Collection;
+
+import org.apache.commons.io.IOUtils;
+import org.joda.time.LocalDate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.domain.annexes.AnnexeFK;
+import ch.vd.demaut.domain.annexes.AnnexeMetadata;
+import ch.vd.demaut.domain.annexes.ContenuAnnexe;
+import ch.vd.demaut.domain.annexes.NomFichier;
+import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.DateDeCreation;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
@@ -8,17 +24,6 @@ import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationReposit
 import ch.vd.demaut.domain.exception.AnnexeNonValideException;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.annexes.AnnexesService;
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
-import org.apache.commons.io.IOUtils;
-import org.joda.time.LocalDate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Collection;
 
 @Service("annexesService")
 public class AnnexesServiceImpl implements AnnexesService {
@@ -47,7 +52,7 @@ public class AnnexesServiceImpl implements AnnexesService {
     @Override
     public Collection<TypeAnnexe> listerLesTypeAnnexesObligatoires(Login login, ReferenceDeDemande referenceDeDemande) {
         DemandeAutorisation demandeAutorisation = demandeAutorisationRepository.recupererDemandeParReference(referenceDeDemande);
-        return demandeAutorisation.listerLesTypeAnnexesObligatoires();
+        return demandeAutorisation.calculerTypesAnnexeObligatoires();
     }
 
     /**
@@ -67,10 +72,10 @@ public class AnnexesServiceImpl implements AnnexesService {
 
     @Transactional
     @Override
-    public void attacherUneAnnexe(Login login, ReferenceDeDemande referenceDeDemande, File file, NomFichier nomFichier, TypeAnnexe type) {
+    public void attacherUneAnnexe(Login login, ReferenceDeDemande referenceDeDemande, File file, NomFichier nomFichier) {
         DemandeAutorisation demandeAutorisation = demandeAutorisationRepository.recupererDemandeParReference(referenceDeDemande);
         ContenuAnnexe contenuAnnexe = buildContenuAnnexe(file);
-        Annexe annexe = new Annexe(type, nomFichier, contenuAnnexe, new DateDeCreation(new LocalDate()));
+        Annexe annexe = new Annexe(nomFichier, contenuAnnexe, new DateDeCreation(new LocalDate()));
         demandeAutorisation.validerEtAttacherAnnexe(annexe);
     }
 

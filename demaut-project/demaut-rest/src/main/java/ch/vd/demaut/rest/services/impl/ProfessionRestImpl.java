@@ -14,8 +14,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.utilisateurs.Login;
@@ -31,7 +31,6 @@ import ch.vd.demaut.progreSoa.services.ProgreSoaService;
 import ch.vd.demaut.rest.commons.json.RestUtils;
 import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
 import ch.vd.ses.referentiel.demaut_1_0.VcType;
-import org.springframework.util.StringUtils;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
 @Service("professionRestImpl")

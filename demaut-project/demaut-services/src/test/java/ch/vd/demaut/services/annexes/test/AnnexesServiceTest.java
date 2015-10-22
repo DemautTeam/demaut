@@ -17,19 +17,17 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import ch.vd.demaut.commons.exceptions.EntityNotUniqueException;
 import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.AnnexeFK;
 import ch.vd.demaut.domain.annexes.ContenuAnnexe;
 import ch.vd.demaut.domain.annexes.NomFichier;
-import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.DateDeCreation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
-import ch.vd.demaut.domain.exception.AnnexeNonUniqueException;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.annexes.AnnexesService;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
@@ -63,7 +61,7 @@ public class AnnexesServiceTest {
         file = new File("src/test/resources/demautServicesTest.cfg");
 
         nomFichier = new NomFichier("Test_multipart.pdf");
-        annexe = new Annexe(TypeAnnexe.CV, nomFichier, new ContenuAnnexe(byteArray), new DateDeCreation(new LocalDate()));
+        annexe = new Annexe(nomFichier, new ContenuAnnexe(byteArray), new DateDeCreation(new LocalDate()));
 
         profession = Profession.Medecin;
         login = null;
@@ -72,6 +70,8 @@ public class AnnexesServiceTest {
     }
 
     @Test
+    @Transactional
+    @Rollback(value = true)
     public void testListerLesAnnexesMetadata() throws Exception {
         //Setup fixtures
         creerDemandeEnCoursAvecAnnexe(annexe, new Login("admin4@admin"));
@@ -83,13 +83,13 @@ public class AnnexesServiceTest {
     //FIXME Il y a un problème dans la délimitation de la transaction !
     @Test
     @Transactional
-    @Rollback(value = false)
+    @Rollback(value = true)
     public void testerAttacherUneAnnexe() {
         //Setup fixtures
         creerDemandeEnCoursAvecAnnexe(annexe, new Login("admin1@admin"));
         
         //Attache une annexe
-        annexesService.attacherUneAnnexe(login, demandeEnCours.getReferenceDeDemande(), file, nomFichier, TypeAnnexe.AttestationBonneConduite);
+        annexesService.attacherUneAnnexe(login, demandeEnCours.getReferenceDeDemande(), file, new NomFichier("Test_multipart2.pdf"));
 
         //Récupère demande en cours
         demandeEnCours = demandeAutorisationService.recupererBrouillon(login);
@@ -109,14 +109,16 @@ public class AnnexesServiceTest {
         creerDemandeEnCoursAvecAnnexe(annexe, new Login("admin2@admin"));
         try {
             //Attache une annexe
-            annexesService.attacherUneAnnexe(login, demandeEnCours.getReferenceDeDemande(), file, nomFichier, TypeAnnexe.CV);
-            failBecauseExceptionWasNotThrown(AnnexeNonUniqueException.class);
-        } catch (AnnexeNonUniqueException e) {
+            annexesService.attacherUneAnnexe(login, demandeEnCours.getReferenceDeDemande(), file, nomFichier);
+            failBecauseExceptionWasNotThrown(EntityNotUniqueException.class);
+        } catch (EntityNotUniqueException e) {
 
         }
     }
 
     @Test
+    @Transactional
+    @Rollback(value = true)
     public void testerRecupererContenuAnnexe() {
 
         //Setup fixtures
@@ -128,7 +130,7 @@ public class AnnexesServiceTest {
         demandeEnCours = demandeAutorisationService.recupererBrouillon(login);
 
         //Vérifie si annexe attachée
-        AnnexeFK annexeFK = new AnnexeFK(nomFichier, TypeAnnexe.CV);
+        AnnexeFK annexeFK = new AnnexeFK(nomFichier);
         ContenuAnnexe contenuAnnexe = annexesService.recupererContenuAnnexe(login, demandeEnCours.getReferenceDeDemande(), annexeFK);
 
         assertThat(contenuAnnexe).isNotNull();
@@ -137,7 +139,6 @@ public class AnnexesServiceTest {
 
     // ********************************************************* Private methods for fixtures
 
-    @Transactional(propagation = Propagation.REQUIRED)
     private void creerDemandeEnCoursAvecAnnexe(Annexe annexeALier, Login login) {
         this.login = login;
 

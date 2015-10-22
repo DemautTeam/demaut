@@ -17,8 +17,6 @@ public class Annexe extends EntityFunctionalKeyAware {
     // ********************************************************* Static Fields
 
     // ********************************************************* Fields
-    private TypeAnnexe typeAnnexe;
-
     private ContenuAnnexe contenu;
 
     private NomFichier nomFichier;
@@ -31,24 +29,19 @@ public class Annexe extends EntityFunctionalKeyAware {
     public Annexe() {
     }
 
-    public Annexe(TypeAnnexe typeAnnexe, String nomFichier, byte[] contenu, String dateCreation) {
-        this(typeAnnexe, new NomFichier(nomFichier), new ContenuAnnexe(contenu),
+    public Annexe(String nomFichier, byte[] contenu, String dateCreation) {
+        this(new NomFichier(nomFichier), new ContenuAnnexe(contenu),
                 new DateDeCreation(LocalDate.parse(dateCreation, DateTimeFormat.forPattern("dd.MM.yyyy hh:mm"))));
     }
 
-    public Annexe(TypeAnnexe typeAnnexe, NomFichier nomFichier, ContenuAnnexe contenu, DateDeCreation dateDeCreation) {
+    public Annexe(NomFichier nomFichier, ContenuAnnexe contenu, DateDeCreation dateDeCreation) {
         super();
-        this.typeAnnexe = typeAnnexe;
         this.nomFichier = nomFichier;
         this.contenu = contenu;
         this.dateDeCreation = dateDeCreation;
     }
 
     // ********************************************************* Getters
-
-    public TypeAnnexe getTypeAnnexe() {
-        return typeAnnexe;
-    }
 
     public ContenuAnnexe getContenu() {
         return contenu;
@@ -67,7 +60,7 @@ public class Annexe extends EntityFunctionalKeyAware {
     }
 
     public AnnexeMetadata getAnnexeMetadata() {
-        return new AnnexeMetadata(typeAnnexe, nomFichier.getNomFichier(), getTaille(), dateDeCreation);
+        return new AnnexeMetadata(nomFichier.getNomFichier(), getTaille(), dateDeCreation);
     }
 
     @Override
