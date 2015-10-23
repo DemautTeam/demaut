@@ -36,7 +36,8 @@ Fonctionnalité: Saisir les données professionnelles de la demande
       | "16.07.2017"     | "refuse"  | "Date d'obtention non valide" |
 # La date est volontairement mise lointaine puisque la date du jour n'est pas utilisée par les validateurs
 
-  @saisir-date-reconnaissance
+  #Ce senario doit être revue, le metier a changé maintenan, c'est le pays d'optention qu'il faut tester pas la valeur "étranger"
+  @ignore-me @saisir-date-reconnaissance
   Plan du scénario: Saisir une date de reconnaissance du diplôme
     Lorsque l´utilisateur selectionne un type de formation obtenue à l´"étranger" dans la liste
     Lorsque l´utilisateur saisit la date de reconnaissance <date_reconnaissance> du diplôme
