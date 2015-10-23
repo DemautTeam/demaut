@@ -413,7 +413,7 @@ ngDemautApp
                         genre: $scope.personalData.genre,
                         dateDeNaissance: $scope.personalData.dateDeNaissance,
                         nationalite: $scope.personalData.nationalite.id,
-                        langue: $scope.personalData.langue.id,
+                        langue: $scope.personalData.langue,
                         permis: $scope.personalData.permis,
                         permisOther: $scope.personalData.permisOther
                     }
