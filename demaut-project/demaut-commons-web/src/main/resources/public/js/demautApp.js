@@ -364,7 +364,7 @@ ngDemautApp
             };
 
             $scope.isPermisRequired = function () {
-                return !$scope.isSuisse() && !$scope.personalData.permis;
+                return !$scope.isSuisse();
             };
 
             $scope.isSuisse = function () {

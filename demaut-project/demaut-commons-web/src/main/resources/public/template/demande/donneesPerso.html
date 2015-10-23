@@ -27,8 +27,7 @@
                     <!--Nom-->
                     <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesPerso.donneesPersoDataForm.nom.$invalid ) || (donneesPerso.donneesPersoDataForm.nom.$invalid && !donneesPerso.donneesPersoDataForm.nom.$pristine)}" >
                         <div class="col-md-2"><label for="nom">Nom*</label></div>
-                        <div class="col-md-6"
-                             popover-enable=" wouldStepNext || (donneesPerso.donneesPersoDataForm.nom.$invalid && !donneesPerso.donneesPersoDataForm.nom.$pristine)"
+                        <div class="col-md-6" popover-enable=" wouldStepNext || (donneesPerso.donneesPersoDataForm.nom.$invalid && !donneesPerso.donneesPersoDataForm.nom.$pristine)"
                              popover-trigger="none" popover-is-open="(wouldStepNext && donneesPerso.donneesPersoDataForm.nom.$invalid ) || (donneesPerso.donneesPersoDataForm.nom.$invalid && !donneesPerso.donneesPersoDataForm.nom.$pristine)" popover-placement="right"
                              uib-popover="Veuillez saisir votre nom.">
                             <input type="text" id="nom" name="nom" class="form-control" required ng-model="personalData.nom">
@@ -89,7 +88,7 @@
                         <div class="col-md-2" popover-enable="wouldStepNext || (donneesPerso.donneesPersoDataForm.pays.$invalid && !donneesPerso.donneesPersoDataForm.pays.$pristine)"
                              popover-trigger="none" popover-is-open="(wouldStepNext && donneesPerso.donneesPersoDataForm.pays.$invalid ) || (donneesPerso.donneesPersoDataForm.pays.$invalid && !donneesPerso.donneesPersoDataForm.pays.$pristine)" popover-placement="right"
                              uib-popover="Veuillez saisir le pays de votre adresse privée.">
-                            <select id="pays" name="pays" ng-model="personalData.pays" required ng-options="pays.libl for pays in personalData.paysList track by pays.id"/>
+                            <select id="pays" name="pays" ng-model="personalData.pays" required ng-options="pays.libl for pays in personalData.paysList track by pays.id" class="form-control"/>
                         </div>
                     </div>
                 </fieldset>
@@ -170,7 +169,7 @@
                              popover-trigger="none" popover-is-open="(wouldStepNext && donneesPerso.donneesPersoDataForm.nationalite.$invalid) || (donneesPerso.donneesPersoDataForm.nationalite.$invalid && !donneesPerso.donneesPersoDataForm.nationalite.$pristine)" popover-placement="right"
                              uib-popover="Veuillez saisir votre nationalité.">
                             <select id="nationalite" name="nationalite" ng-model="personalData.nationalite" required ng-change="resetPermis()"
-                                    ng-options="nationalite.libl for nationalite in personalData.nationalites track by nationalite.id"/>
+                                    ng-options="nationalite.libl for nationalite in personalData.nationalites track by nationalite.id" class="form-control" />
                         </div>
                     </div>
 
@@ -180,10 +179,12 @@
                         <div class="col-md-1"><label><input type="radio" name="permis" value="B" ng-disabled="!isPermisRequired()" ng-model="personalData.permis" ng-required="isPermisRequired()"/> B </label></div>
                         <div class="col-md-1"><label><input type="radio" name="permis" value="C" ng-disabled="!isPermisRequired()" ng-model="personalData.permis" ng-required="isPermisRequired()"/> C </label></div>
                         <div class="col-md-2"><label><input type="radio" name="permis" value="demande en cours" ng-disabled="!isPermisRequired()" ng-model="personalData.permis" ng-required="isPermisRequired()"/>Demande en cours</label></div>
-                        <div class="col-md-2"><label><input type="radio" name="permis" value="autre" ng-disabled="!isPermisRequired()" ng-model="personalData.permis" ng-required="isPermisRequired()"/>Autre</label></div>
-                        <div class="col-md-2" popover-enable="wouldStepNext || (donneesPerso.donneesPersoDataForm.permis.$invalid && !donneesPerso.donneesPersoDataForm.permis.$pristine)"
+                        <div class="col-md-2"popover-enable="wouldStepNext || (donneesPerso.donneesPersoDataForm.permis.$invalid && !donneesPerso.donneesPersoDataForm.permis.$pristine)"
                              popover-trigger="none" popover-is-open="(wouldStepNext && donneesPerso.donneesPersoDataForm.permis.$invalid ) || (donneesPerso.donneesPersoDataForm.permis.$invalid && !donneesPerso.donneesPersoDataForm.permis.$pristine)" popover-placement="right"
                              uib-popover="Veuillez préciser votre permis de séjour.">
+                            <label><input type="radio" name="permis" value="autre" ng-disabled="!isPermisRequired()" ng-model="personalData.permis" ng-required="isPermisRequired()"/>Autre</label>
+                        </div>
+                        <div class="col-md-2">
                             <input type="text" class="form-control" ng-required="(personalData.permis == 'autre')" ng-show="(personalData.permis == 'autre')" ng-model="personalData.permisOther">
                         </div>
                     </div>
@@ -196,7 +197,7 @@
                             <div class="col-md-3" popover-enable="wouldStepNext || (donneesPerso.donneesPersoDataForm.langue.$invalid && !donneesPerso.donneesPersoDataForm.langue.$pristine)"
                                  popover-trigger="none" popover-is-open="(wouldStepNext && donneesPerso.donneesPersoDataForm.langue.$invalid ) || (donneesPerso.donneesPersoDataForm.langue.$invalid && !donneesPerso.donneesPersoDataForm.langue.$pristine)" popover-placement="right"
                                  uib-popover="Veuillez saisir votre langue.">
-                                <label><input type="radio" name="langue" value="0" ng-model="personalData.langue" required/> Autre </label>
+                                <label><input type="radio" name="langue" value="0" ng-model="personalData.langue" required /> Autre </label>
                             </div>
                         </div>
                     </div>

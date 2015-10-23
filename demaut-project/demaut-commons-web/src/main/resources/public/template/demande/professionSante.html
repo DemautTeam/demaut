@@ -9,31 +9,15 @@
         <legend>Veuillez indiquer la profession pour laquelle vous faîtes une demande :</legend>
         <div>
             <ng-form name="professionSante.professionDataForm">
-                <div id="Formulaire_vide" class="alert alert-danger" ng-show="professionSante.professionDataForm.$pristine && wouldStepNext">
-                    <button type="button" class="close" data-target="#Formulaire_vide" data-dismiss="alert">
-                        <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
-                    </button>
-                    Veuillez saisir l'information concernant votre demande.
-                </div>
-                <div ng-hide="professionSante.professionDataForm.$pristine || professionSante.professionDataForm.$valid">
-                    <div id="Profession_obligatoire" class="alert alert-danger" ng-show="professionSante.professionDataForm.profession.$touched && professionSante.professionDataForm.profession.$error.required">
-                        <button type="button" class="close" data-target="#Profession_obligatoire" data-dismiss="alert">
-                            <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
-                        </button>
-                        Veuillez saisir votre profession.
-                    </div>
-                    <div id="GLN_obligatoire" class="alert alert-danger" ng-show="(professionSante.professionDataForm.gln.$touched || wouldStepNext) && professionSante.professionDataForm.gln.$error.required">
-                        <button type="button" class="close" data-target="#GLN_obligatoire" data-dismiss="alert">
-                            <span aria-hidden="true">&times;</span><span class="sr-only">×</span>
-                        </button>
-                        Veuillez saisir votre code GLN.
-                    </div>
-                </div>
-                <div class="row">
+                <!--Données Profession demandé-->
+                <!--Profession-->
+                <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && professionSante.professionDataForm.profession.$invalid ) || (professionSante.professionDataForm.profession.$invalid && !professionSante.professionDataForm.profession.$pristine)}" >
                     <div class="col-md-4"><label for="profession">Profession demandée</label></div>
-                    <div class="col-md-6">
+                    <div class="col-md-3" popover-enable=" wouldStepNext || (professionSante.professionDataForm.profession.$invalid && !professionSante.professionDataForm.profession.$pristine)"
+                         popover-trigger="none" popover-is-open="(wouldStepNext && professionSante.professionDataForm.profession.$invalid ) || (professionSante.professionDataForm.profession.$invalid && !professionSante.professionDataForm.profession.$pristine)" popover-placement="right"
+                         uib-popover="Veuillez saisir votre profession.">
                         <select id="profession" name="profession" ng-model="professionData.profession" required ng-disabled="isBrouillonExistant()"
-                                ng-options="profession.libl for profession in professionData.professions track by profession.id"/>
+                                ng-options="profession.libl for profession in professionData.professions track by profession.id" class="form-control"/>
                     </div>
                 </div>
                 <div class="row">
@@ -42,13 +26,17 @@
                 <div class="row">
                     <br/>
                 </div>
-                <div class="row">
+                <!--GLN-->
+                <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && professionSante.professionDataForm.gln.$invalid ) || (professionSante.professionDataForm.gln.$invalid && !professionSante.professionDataForm.gln.$pristine)}" >
                     <div class="col-md-4"><label for="gln">Code GLN (EAN)</label></div>
-                    <div class="col-md-6">
-                        <input type="text" id="gln" name="gln" ng-minlength="0" ng-maxlength="13" ng-model="professionData.gln"
+                    <div class="col-md-2" popover-enable=" wouldStepNext || (professionSante.professionDataForm.gln.$invalid && !professionSante.professionDataForm.gln.$pristine)"
+                         popover-trigger="none" popover-is-open="(wouldStepNext && professionSante.professionDataForm.gln.$invalid ) || (professionSante.professionDataForm.gln.$invalid && !professionSante.professionDataForm.gln.$pristine)" popover-placement="right"
+                         uib-popover="Veuillez saisir votre code GLN.">
+                        <input type="text" id="gln" name="gln" ng-minlength="0" ng-maxlength="13" ng-model="professionData.gln" class="form-control"
                                placeholder="7601000000125" onfocus="this.placeholder = ''" onblur="this.placeholder = '7601000000125'" ng-required="isProfessionNecessiteCodeGLN()">
                     </div>
                 </div>
+                <!--fin Données Profession demandé-->
                 <div class="row">
                     <br/>
                 </div>

@@ -20,7 +20,7 @@ ul.error-message li{
     color: #a94442;
 }
 
-input[type="tel"], input[type="email"]  {
+input[type="tel"], input[type="email"] {
     background-image: url(../legacy/images/input_shadow.png);
     background-repeat: no-repeat;
     border: 1px solid;
