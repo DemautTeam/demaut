@@ -364,7 +364,7 @@ ngDemautApp
             };
 
             $scope.isPermisRequired = function () {
-                return $scope.personalData.nationalite != null && $scope.personalData.nationalite != undefined && !nationalityTest.isSuisse($scope.personalData.nationalite.libl) && !$scope.personalData.permis;
+                return !$scope.isSuisse() && !$scope.personalData.permis;
             };
 
             $scope.isSuisse = function () {
