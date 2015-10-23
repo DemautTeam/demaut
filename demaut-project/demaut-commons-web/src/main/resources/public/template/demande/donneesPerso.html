@@ -1,5 +1,5 @@
 <div ng-include="'template/include/include-titre.html'"></div>
-<div ng-include="'template/include/include-steps-new.html'"></div>
+<div ng-include="'template/include/include-steps.html'"></div>
 
 <div class="bs-wizard-info text-left">
     <div class="row">
@@ -174,6 +174,20 @@
                         </div>
                     </div>
 
+                    <!--Permis-->
+                    <div  ng-hide="!isPermisRequired() || donneesPerso.donneesPersoDataForm.nationalite.$pristine" class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesPerso.donneesPersoDataForm.permis.$invalid ) || (donneesPerso.donneesPersoDataForm.permis.$invalid && !donneesPerso.donneesPersoDataForm.permis.$pristine)}" >
+                        <label class="col-md-2">Permis<span ng-hide="!isPermisRequired()">*</span></label>
+                        <div class="col-md-1"><label><input type="radio" name="permis" value="B" ng-disabled="!isPermisRequired()" ng-model="personalData.permis" ng-required="isPermisRequired()"/> B </label></div>
+                        <div class="col-md-1"><label><input type="radio" name="permis" value="C" ng-disabled="!isPermisRequired()" ng-model="personalData.permis" ng-required="isPermisRequired()"/> C </label></div>
+                        <div class="col-md-2"><label><input type="radio" name="permis" value="demande en cours" ng-disabled="!isPermisRequired()" ng-model="personalData.permis" ng-required="isPermisRequired()"/>Demande en cours</label></div>
+                        <div class="col-md-2"><label><input type="radio" name="permis" value="autre" ng-disabled="!isPermisRequired()" ng-model="personalData.permis" ng-required="isPermisRequired()"/>Autre</label></div>
+                        <div class="col-md-2" popover-enable="wouldStepNext || (donneesPerso.donneesPersoDataForm.permis.$invalid && !donneesPerso.donneesPersoDataForm.permis.$pristine)"
+                             popover-trigger="none" popover-is-open="(wouldStepNext && donneesPerso.donneesPersoDataForm.permis.$invalid ) || (donneesPerso.donneesPersoDataForm.permis.$invalid && !donneesPerso.donneesPersoDataForm.permis.$pristine)" popover-placement="right"
+                             uib-popover="Veuillez préciser votre permis de séjour.">
+                            <input type="text" class="form-control" ng-required="(personalData.permis == 'autre')" ng-show="(personalData.permis == 'autre')" ng-model="personalData.permisOther">
+                        </div>
+                    </div>
+
                     <!--Langue Maternelle-->
                     <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesPerso.donneesPersoDataForm.langue.$invalid ) || (donneesPerso.donneesPersoDataForm.langue.$invalid && !donneesPerso.donneesPersoDataForm.langue.$pristine)}" >
                         <label for="langue" class="col-md-2">Langue maternelle*</label>
@@ -186,21 +200,7 @@
                             </div>
                         </div>
                     </div>
-                    <!--fin Langue parlée-->
 
-                    <!--Permis-->
-                    <div  ng-show="isSuisse()" class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesPerso.donneesPersoDataForm.permis.$invalid ) || (donneesPerso.donneesPersoDataForm.permis.$invalid && !donneesPerso.donneesPersoDataForm.permis.$pristine)}" >
-                        <label class="col-md-2">Permis<span ng-hide="!isPermisRequired()">*</span></label>
-                        <div class="col-md-1"><label><input type="radio" name="permis" value="B" ng-disabled="!isSuisse()" ng-model="personalData.permis" ng-required="isPermisRequired()"/> B </label></div>
-                        <div class="col-md-1"><label><input type="radio" name="permis" value="C" ng-disabled="!isSuisse()" ng-model="personalData.permis" ng-required="isPermisRequired()"/> C </label></div>
-                        <div class="col-md-2"><label><input type="radio" name="permis" value="demande en cours" ng-disabled="!isSuisse()" ng-model="personalData.permis" ng-required="isPermisRequired()"/>Demande en cours</label></div>
-                        <div class="col-md-2"><label><input type="radio" name="permis" value="autre" ng-disabled="!isSuisse()" ng-model="personalData.permis" ng-required="isPermisRequired()"/>Autre</label></div>
-                        <div class="col-md-2" popover-enable="wouldStepNext || (donneesPerso.donneesPersoDataForm.permis.$invalid && !donneesPerso.donneesPersoDataForm.permis.$pristine)"
-                             popover-trigger="none" popover-is-open="(wouldStepNext && donneesPerso.donneesPersoDataForm.permis.$invalid ) || (donneesPerso.donneesPersoDataForm.permis.$invalid && !donneesPerso.donneesPersoDataForm.permis.$pristine)" popover-placement="right"
-                             uib-popover="Veuillez préciser votre permis de séjour.">
-                             <input type="text" class="form-control" ng-required="(personalData.permis == 'autre')" ng-show="(personalData.permis == 'autre')" ng-model="personalData.permisOther">
-                        </div>
-                    </div>
                 </fiedlset>
                 <!--fin données d'origine-->
             </ng-form>
