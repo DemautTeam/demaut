@@ -1,9 +1,11 @@
-package ch.vd.demaut.domain.demandeur.donneesPerso;
+package ch.vd.demaut.domain.demandeur;
 
+import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.StringVO;
 
 import javax.validation.constraints.NotNull;
 
+@ValueObject
 public class Email extends StringVO {
 
     public Email() {

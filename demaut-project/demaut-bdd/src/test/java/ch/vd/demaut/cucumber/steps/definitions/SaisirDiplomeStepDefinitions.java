@@ -111,6 +111,12 @@ public class SaisirDiplomeStepDefinitions extends StepDefinitions {
         this.donneesProfessionnellesSteps.initialiserDiplomeEnCours();
     }
 
+    @Lorsque("^l´utilisateur saisit la date de reconnaissance \"([^\"]*)\" du diplôme$")
+    public void l_utilisateur_saisit_la_date_de_reconnaissance_du_diplôme(String dateReconnaissanceStr) throws Throwable {
+        this.donneesProfessionnellesSteps.verifierEtRenseignerDateReconnaissance(dateReconnaissanceStr);
+
+    }
+
     // ********************************************************* Then
 
     @Alors("^le système Demaut retourne la liste des \"([^\"]*)\" liéé au type de diplôme$")
@@ -123,30 +129,25 @@ public class SaisirDiplomeStepDefinitions extends StepDefinitions {
 
     @Alors("^le système Demaut \"(accepte|refuse)\" la date d´obtention \"([^\"]*)\" avec un \"([^\"]*)\" en cas d´échec$")
     public void le_système_Demaut_action_la_date_d_obtention_avec_un_message_en_cas_d_échec(AccepteOuRefuse action, String dateObtentionStr, String message) throws Throwable {
-        try {
-            this.donneesProfessionnellesSteps.verifierEtRenseignerDateObtention(dateObtentionStr);
-            assertThat(action).isEqualTo(AccepteOuRefuse.accepte);
-            this.donneesProfessionnellesSteps.setAcceptationDateObtention(action);
-        } catch (Exception | AssertionError e) {
-            assertThat(message).isNotEmpty();
-            assertThat(action).isEqualTo(AccepteOuRefuse.refuse);
-            this.donneesProfessionnellesSteps.setAcceptationDateObtention(AccepteOuRefuse.refuse);
-        }
+
+            assertThat(this.donneesProfessionnellesSteps.getAcceptationDateObtention()).isEqualTo(action);
+
     }
 
     @Alors("^le système Demaut \"(accepte|refuse)\" la date de reconnaissance \"([^\"]*)\" avec un \"([^\"]*)\" en cas d´échec$")
     public void le_système_Demaut_action_la_date_de_reconnaissance_avec_un_message_en_cas_d_échec(AccepteOuRefuse action, String dateReconnaissanceStr, String message) throws Throwable {
         assertThat(action).isNotNull();
-        assertThat(this.donneesProfessionnellesSteps.getCritereDiplomeEtranger()).isNotEmpty();
-        try {
-            this.donneesProfessionnellesSteps.verifierEtRenseignerDateReconnaissance(dateReconnaissanceStr);
-            assertThat(action).isEqualTo(AccepteOuRefuse.accepte);
-            this.donneesProfessionnellesSteps.setAcceptationDateReconnaissance(action);
-        } catch (Exception | AssertionError e) {
-            assertThat(message).isNotEmpty();
-            assertThat(action).isEqualTo(AccepteOuRefuse.refuse);
-            this.donneesProfessionnellesSteps.setAcceptationDateReconnaissance(AccepteOuRefuse.refuse);
-        }
+            assertThat(this.donneesProfessionnellesSteps.getCritereDiplomeEtranger()).isNotEmpty();
+        assertThat(this.donneesProfessionnellesSteps.getAcceptationDateReconnaissance()).isEqualTo(action);
+//        try {
+//           // this.donneesProfessionnellesSteps.verifierEtRenseignerDateReconnaissance(dateReconnaissanceStr);
+//            assertThat(action).isEqualTo(AccepteOuRefuse.accepte);
+//            this.donneesProfessionnellesSteps.setAcceptationDateReconnaissance(action);
+//        } catch (Exception | AssertionError e) {
+//            assertThat(message).isNotEmpty();
+//            assertThat(action).isEqualTo(AccepteOuRefuse.refuse);
+//            this.donneesProfessionnellesSteps.setAcceptationDateReconnaissance(AccepteOuRefuse.refuse);
+//        }
     }
 
     @Alors("^le système Demaut \"(accepte|refuse)\" le diplome avec un \"([^\"]*)\" en cas d´échec$")

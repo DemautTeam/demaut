@@ -2,6 +2,7 @@ package ch.vd.ses.demaut.portail.tomcat;
 
 import ch.vd.cyber.common.boot.SpringBootSanitizer;
 import ch.vd.ses.demaut.portail.appliquette.DemautCyberApplication;
+import org.springframework.boot.SpringApplication;
 
 /**
  * Ceci n'est pas un test unitaire, juste une classe utilitaire pour charger
@@ -36,7 +37,7 @@ public class DemautTomcatRunner {
         SpringBootSanitizer.copyLogbackDevFile();
 
         args = SpringBootSanitizer.getSpringBootArgs();
-        DemautCyberApplication.main(args);
+        SpringApplication.run(DemautCyberApplication.class, args);
     }
 
 }

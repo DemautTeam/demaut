@@ -1,5 +1,8 @@
 package ch.vd.demaut.rest.services;
 
+import ch.vd.demaut.domain.demandeur.Email;
+import ch.vd.demaut.domain.demandeur.Fax;
+import ch.vd.demaut.domain.demandeur.Localite;
 import ch.vd.demaut.domain.demandeur.Pays;
 import ch.vd.demaut.domain.demandeur.donneesPerso.*;
 import ch.vd.demaut.rest.services.impl.PersonelRestImpl;

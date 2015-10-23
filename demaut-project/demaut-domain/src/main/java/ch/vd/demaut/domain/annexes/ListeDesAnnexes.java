@@ -3,10 +3,11 @@ package ch.vd.demaut.domain.annexes;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
+
 
 import ch.vd.demaut.commons.entities.EntityFKAList;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.Transformer;
 
 /**
  * Représente une liste d'annexes uniques
@@ -53,12 +54,11 @@ public class ListeDesAnnexes extends EntityFKAList<Annexe> {
         return listerEntities();
     }
 
-    @SuppressWarnings("all")
     public Collection<AnnexeMetadata> listerAnnexesMetadata() {
-        return CollectionUtils.collect(listerEntities(), new Transformer() {
+        return CollectionUtils.collect(listerEntities(), new Transformer<Annexe, AnnexeMetadata>() {
             @Override
-            public Object transform(Object input) {
-                return ((Annexe) input).getAnnexeMetadata();
+            public AnnexeMetadata transform(Annexe input) {
+                return input.getAnnexeMetadata();
             }
         });
     }

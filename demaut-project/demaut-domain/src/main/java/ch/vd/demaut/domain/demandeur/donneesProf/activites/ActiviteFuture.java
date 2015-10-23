@@ -3,15 +3,21 @@ package ch.vd.demaut.domain.demandeur.donneesProf.activites;
 import ch.vd.demaut.commons.annotations.Entity;
 import ch.vd.demaut.commons.vo.BaseValueObjectWithId;
 
+import javax.validation.Valid;
+
 @Entity
 public class ActiviteFuture extends BaseValueObjectWithId {
 
+    @Valid
     private ReferenceDeActivite referenceDeActivite;
 
+    @Valid
     private TypeActivite typeActivite;
 
+    @Valid
     private Etablissement etablissement;
 
+    @Valid
     private TypePratiqueLamal typePratiqueLamal;
 
     public ActiviteFuture() {

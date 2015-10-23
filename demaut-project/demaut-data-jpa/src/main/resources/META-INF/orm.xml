@@ -330,7 +330,7 @@
         </attributes>
     </embeddable>
 
-    <embeddable class="ch.vd.demaut.domain.demandeur.donneesPerso.Localite">
+    <embeddable class="ch.vd.demaut.domain.demandeur.Localite">
         <attributes>
             <basic name="value">
                 <column name="localite" column-definition="varchar"
@@ -377,7 +377,7 @@
         </attributes>
     </embeddable>
 
-    <embeddable class="ch.vd.demaut.domain.demandeur.donneesPerso.Email">
+    <embeddable class="ch.vd.demaut.domain.demandeur.Email">
         <attributes>
             <basic name="value">
                 <column name="email" column-definition="varchar"
@@ -416,7 +416,7 @@
         </attributes>
     </embeddable>
 
-    <embeddable class="ch.vd.demaut.domain.demandeur.donneesPerso.Fax">
+    <embeddable class="ch.vd.demaut.domain.demandeur.Fax">
         <attributes>
             <basic name="value">
                 <column name="fax" column-definition="varchar"

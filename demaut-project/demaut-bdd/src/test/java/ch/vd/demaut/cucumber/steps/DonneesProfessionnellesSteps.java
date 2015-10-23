@@ -3,7 +3,9 @@ package ch.vd.demaut.cucumber.steps;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.Set;
 
+import ch.vd.demaut.commons.validation.ValidatorFactoryDefault;
 import org.joda.time.LocalDate;
 import org.springframework.util.StringUtils;
 
@@ -17,6 +19,9 @@ import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ListeDesFormations;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ReferenceDeDiplome;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormation;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TypeDiplomeAccepte;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 
 public class DonneesProfessionnellesSteps {
 
@@ -149,24 +154,50 @@ public class DonneesProfessionnellesSteps {
             LocalDateConverter localDateConverter = new LocalDateConverter();
             LocalDate dateObtentionLocal = (LocalDate) localDateConverter.fromString(dateObtentionStr);
             this.dateObtention = new DateObtention(dateObtentionLocal);
+            acceptationDateObtention = validateData(dateObtention);
         } catch (Exception e) {
             // Format de date invalide
+            acceptationDateObtention = AccepteOuRefuse.refuse;
         }
     }
 
+    //FIXME le process metier à changer, maintenant, c'est le pays d'optention qu'il faut vérifier
     public void verifierEtRenseignerDateReconnaissance(String dateReconnaissanceStr) {
         assertThat(dateReconnaissanceStr).isNotEmpty();
         try {
-            if (this.titreFormation != null && !StringUtils.isEmpty(this.titreFormation.getValue())
-                    && !StringUtils.isEmpty(this.critereDiplomeEtranger)
-                    && this.titreFormation.getValue().contains(this.critereDiplomeEtranger)) {
+            if(this.titreFormation != null && !StringUtils.isEmpty(this.titreFormation.getValue())){
+                acceptationDateReconnaissance = AccepteOuRefuse.refuse;
+                return;
+            }
+            if(StringUtils.isEmpty(this.critereDiplomeEtranger)){
+                acceptationDateReconnaissance = AccepteOuRefuse.refuse;
+                return;
+            }
+            if ( this.titreFormation.getValue().contains(this.critereDiplomeEtranger)) {
                 LocalDateConverter localDateConverter = new LocalDateConverter();
                 LocalDate dateReconnaissance = (LocalDate) localDateConverter.fromString(dateReconnaissanceStr);
                 this.dateReconnaissance = new DateReconnaissance(dateReconnaissance);
+                acceptationDateReconnaissance = validateData(dateReconnaissance);
+            }
+            else {
+
             }
         } catch (Exception e) {
             // Format de date invalide
+            acceptationDateReconnaissance = AccepteOuRefuse.refuse;
         }
+    }
+
+    /**
+     * Methode utilitaire qui retourne "accepte" si la validation est bonne
+     *
+     * @param objectToValidate
+     * @return
+     */
+    private <T> AccepteOuRefuse validateData(T objectToValidate){
+        Validator validator = ValidatorFactoryDefault.getValidator();
+        Set<ConstraintViolation<T>> constraint = validator.validate(objectToValidate);
+        return AccepteOuRefuse.accepteIfTrue(constraint.isEmpty());
     }
 
 }
