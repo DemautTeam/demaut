@@ -12,7 +12,8 @@
                 <!--Données Profession demandé-->
                 <!--Profession-->
                 <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && professionSante.professionDataForm.profession.$invalid ) || (professionSante.professionDataForm.profession.$invalid && !professionSante.professionDataForm.profession.$pristine)}" >
-                    <div class="col-md-4"><label for="profession">Profession demandée</label></div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-3"><label for="profession">Profession demandée</label></div>
                     <div class="col-md-3" popover-enable=" wouldStepNext || (professionSante.professionDataForm.profession.$invalid && !professionSante.professionDataForm.profession.$pristine)"
                          popover-trigger="none" popover-is-open="(wouldStepNext && professionSante.professionDataForm.profession.$invalid ) || (professionSante.professionDataForm.profession.$invalid && !professionSante.professionDataForm.profession.$pristine)" popover-placement="right"
                          uib-popover="Veuillez saisir votre profession.">
@@ -23,12 +24,10 @@
                 <div class="row">
                     <br/>
                 </div>
-                <div class="row">
-                    <br/>
-                </div>
                 <!--GLN-->
                 <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && professionSante.professionDataForm.gln.$invalid ) || (professionSante.professionDataForm.gln.$invalid && !professionSante.professionDataForm.gln.$pristine)}" >
-                    <div class="col-md-4"><label for="gln">Code GLN (EAN)</label></div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-3"><label for="gln">Code GLN (EAN)</label></div>
                     <div class="col-md-2" popover-enable=" wouldStepNext || (professionSante.professionDataForm.gln.$invalid && !professionSante.professionDataForm.gln.$pristine)"
                          popover-trigger="none" popover-is-open="(wouldStepNext && professionSante.professionDataForm.gln.$invalid ) || (professionSante.professionDataForm.gln.$invalid && !professionSante.professionDataForm.gln.$pristine)" popover-placement="right"
                          uib-popover="Veuillez saisir votre code GLN.">
@@ -41,7 +40,7 @@
                     <br/>
                 </div>
                 <div class="row">
-                    <div class="col-md-4"><label></label></div>
+                    <div class="col-md-2"><label></label></div>
                     <div class="col-md-8">
                         <label>
                             Si vous ne disposez pas d'un code GLN (EAN), veuillez vous adresser à l'Office fédéral de la santé publique
