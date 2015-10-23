@@ -50,10 +50,6 @@ public class DemautCyberApplication extends SpringBootServletInitializer {
         logger.info("Backend Microbiz : {}", urlPrefix);
     }
 
-    public static void main(String... args) {
-        SpringApplication.run(DemautCyberApplication.class, args);
-    }
-
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         return builder.sources(DemautCyberApplication.class);
