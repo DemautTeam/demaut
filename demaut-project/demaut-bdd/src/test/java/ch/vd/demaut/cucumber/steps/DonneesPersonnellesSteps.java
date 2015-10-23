@@ -2,6 +2,7 @@ package ch.vd.demaut.cucumber.steps;
 
 import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
 import ch.vd.demaut.commons.exceptions.DomainException;
+import ch.vd.demaut.domain.demandeur.Localite;
 import ch.vd.demaut.domain.demandeur.Pays;
 import ch.vd.demaut.domain.demandeur.donneesPerso.*;
 import org.joda.time.LocalDate;
