@@ -4,6 +4,7 @@ import ch.vd.demaut.commons.exceptions.DomainException;
 
 /**
  * Indique que le code GLN est invalide
+ *
  */
 public class CodeGlnNonValideException extends DomainException {
 

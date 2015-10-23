@@ -1,7 +1,7 @@
 package ch.vd.demaut.domain.demandes;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
-import ch.vd.demaut.commons.vo.BaseValueObject;
+import ch.vd.demaut.commons.vo.StringVO;
 
 import java.util.UUID;
 
@@ -10,23 +10,19 @@ import java.util.UUID;
  * visibilité client et ne correspond pas à un ID technique en base de données.
  */
 @ValueObject
-public class ReferenceDeDemande extends BaseValueObject {
+public class ReferenceDeDemande extends StringVO {
 
     // ********************************************************* Fields
-    private String value;
 
     // ********************************************************* Constructor
     public ReferenceDeDemande() {
-        this.value = UUID.randomUUID().toString();
+        super(UUID.randomUUID().toString());
     }
 
     public ReferenceDeDemande(String reference) {
-        this.value = reference;
+        super(reference);
     }
 
     // ********************************************************* Getters
 
-    public String getValue() {
-        return value;
-    }
 }

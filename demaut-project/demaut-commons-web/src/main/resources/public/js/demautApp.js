@@ -67,28 +67,8 @@ ngDemautApp
         $locationProvider.html5Mode(false);
         $locationProvider.hashPrefix('!');
 
-        $httpProvider.interceptors.push(function ($q, $rootScope, $location) {
-            return {
-                'responseError': function (rejection) {
-                    var status = rejection.status;
-                    var config = rejection.config;
-                    var data = rejection.data;
-                    var method = config.method;
-                    var url = config.url;
-
-                    if (status == 401) {
-                        $location.path("/Demaut/aide");
-                    } else {
-                        // TODO resolve errors
-                        $rootScope.error = method + ' on ' + url + ' failed with status ' + status + '<br>' +
-                            (data != null && data != undefined ? data.substring(data.indexOf('<body>') + 6, data.indexOf('</body>')) : "data empty!");
-                        angular.element("#errorModal").modal('toggle');
-                        angular.element("#errorModal").modal('show');
-                    }
-                    return $q.reject(rejection);
-                }
-            };
-        });
+        $httpProvider.interceptors.push('globalDefaultError');
+        $httpProvider.interceptors.push('globalErrorInterceptor');
     }])
     .controller('CockpitController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', '$log', '$window',
         function ($scope, $rootScope, $routeParams, $http, $location, $interval, $log, $window) {
@@ -329,7 +309,7 @@ ngDemautApp
                         var response = angular.fromJson(data.response);
                         $scope.personalData.nom = response.nom.value;
                         $scope.personalData.prenom = response.prenom.value;
-                        $scope.personalData.nomDeCelibataire = response.nomDeCelibataire != null ? response.nomDeCelibataire.value : null;
+                        $scope.personalData.nomDeCelibataire = response.nomDeCelibataire.value;
 
                         if(response.adresse != null && response.adresse != undefined) {
                             $scope.personalData.adressePersonnelle = response.adresse.voie;
@@ -345,10 +325,10 @@ ngDemautApp
                             }
                         }
 
-                        $scope.personalData.telephonePrive = response.telephonePrive != null ? response.telephonePrive.value : null;
-                        $scope.personalData.telephoneMobile = response.telephoneMobile != null ? response.telephoneMobile.value : null;
-                        $scope.personalData.fax = response.fax != null ? response.fax.value : null;
+                        $scope.personalData.telephonePrive = response.telephonePrive.value;
+                        $scope.personalData.telephoneMobile = response.telephoneMobile.value;
                         $scope.personalData.email = response.email.value;
+                        $scope.personalData.fax = response.fax.value;
                         $scope.personalData.genre = response.genre;
                         $scope.personalData.dateDeNaissance = new Date(response.dateDeNaissance.value);
 
@@ -405,7 +385,7 @@ ngDemautApp
             $scope.nextStep = function () {
                 $rootScope.wouldStepNext = true;
 
-                if (true) { // TODO if ($scope.donneesPerso.donneesPersoDataForm.$valid) {
+                if ($scope.donneesPerso.donneesPersoDataForm.$valid) {
                     $log.info('Formulaire valide !');
                     doUpdateDonneesPerso();
                     $location.path('/Demaut/demande/donneesDiplomes');
@@ -446,6 +426,18 @@ ngDemautApp
                         $log.info('Error ' + urlPrefix + '/personal/renseigner/ \n Status :' + status);
                     });
             };
+
+            $scope.changeTelephoneRequirement = function(telephonePrive, telephoneMobile) {
+
+                if ((telephonePrive.$isEmpty(telephonePrive.$viewValue) && !telephoneMobile.$isEmpty(telephoneMobile.$viewValue)) ||
+                    (!telephonePrive.$isEmpty(telephonePrive.$viewValue) && !telephoneMobile.$isEmpty(telephoneMobile.$viewValue)) ||
+                    (!telephonePrive.$isEmpty(telephonePrive.$viewValue) && telephoneMobile.$isEmpty(telephoneMobile.$viewValue))){
+                    return false;
+                }
+                return true;
+            };
+
+
         }])
     .controller('DonneesDiplomesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$log', '$window', 'nationalityTest',
         function ($scope, $rootScope, $routeParams, $http, $location, $log, $window, nationalityTest) {
@@ -527,40 +519,38 @@ ngDemautApp
                     .success(function (data, status, headers, config) {
                         var fetchedDiplomes = angular.fromJson(data.response);
 
-                        if(fetchedDiplomes != null && fetchedDiplomes != undefined) {
-                            for (var indexOut = 0; indexOut < fetchedDiplomes.length; indexOut++) {
-                                if (fetchedDiplomes[indexOut] != null && fetchedDiplomes[indexOut] != undefined) {
+                        for (var indexOut = 0; indexOut < fetchedDiplomes.length; indexOut++) {
+                            if (fetchedDiplomes[indexOut] != null && fetchedDiplomes[indexOut] != undefined) {
 
-                                    var currentDiplome = fetchedDiplomes[indexOut];
-                                    var displayedDiplome = {};
+                                var currentDiplome = fetchedDiplomes[indexOut];
+                                var displayedDiplome = {};
 
-                                    displayedDiplome.referenceDeDiplome = currentDiplome.referenceDeDiplome.value;
+                                displayedDiplome.referenceDeDiplome = currentDiplome.referenceDeDiplome.value;
 
-                                    for (var indexJ = 0; indexJ < $scope.diplomeData.typeDiplomes.length; indexJ++) {
-                                        if ($scope.diplomeData.typeDiplomes[indexJ].name == currentDiplome.typeDiplomeAccepte) {
-                                            displayedDiplome.typeDiplome = $scope.diplomeData.typeDiplomes[indexJ];
-                                            break;
-                                        }
+                                for (var indexJ = 0; indexJ < $scope.diplomeData.typeDiplomes.length; indexJ++) {
+                                    if ($scope.diplomeData.typeDiplomes[indexJ].name == currentDiplome.typeDiplomeAccepte) {
+                                        displayedDiplome.typeDiplome = $scope.diplomeData.typeDiplomes[indexJ];
+                                        break;
                                     }
-
-                                    for (var indexZ = 0; indexZ < $scope.diplomeData.typeFormationsAll.length; indexZ++) {
-                                        if ($scope.diplomeData.typeFormationsAll[indexZ].name == currentDiplome.titreFormation.value) {
-                                            displayedDiplome.typeFormation = $scope.diplomeData.typeFormationsAll[indexZ];
-                                            break;
-                                        }
-                                    }
-                                    displayedDiplome.complement = currentDiplome.complement;
-                                    displayedDiplome.dateObtention = new Date(currentDiplome.dateObtention.value);
-
-                                    for (var indexK = 0; indexK < $scope.diplomeData.paysList.length; indexK++) {
-                                        if ($scope.diplomeData.paysList[indexK].name == currentDiplome.paysObtention.value) {
-                                            displayedDiplome.paysObtention = $scope.diplomeData.paysList[indexK];
-                                            break;
-                                        }
-                                    }
-                                    displayedDiplome.dateReconnaissance = currentDiplome.dateReconnaissance == null || currentDiplome.dateReconnaissance == undefined || currentDiplome.dateReconnaissance.value == null ? '' : new Date(currentDiplome.dateReconnaissance.value);
-                                    $scope.diplomeData.diplomes.push(displayedDiplome);
                                 }
+
+                                for (var indexZ = 0; indexZ < $scope.diplomeData.typeFormationsAll.length; indexZ++) {
+                                    if ($scope.diplomeData.typeFormationsAll[indexZ].name == currentDiplome.titreFormation.value) {
+                                        displayedDiplome.typeFormation = $scope.diplomeData.typeFormationsAll[indexZ];
+                                        break;
+                                    }
+                                }
+                                displayedDiplome.complement = currentDiplome.complement;
+                                displayedDiplome.dateObtention = new Date(currentDiplome.dateObtention.value);
+
+                                for (var indexK = 0; indexK < $scope.diplomeData.paysList.length; indexK++) {
+                                    if ($scope.diplomeData.paysList[indexK].name == currentDiplome.paysObtention.value) {
+                                        displayedDiplome.paysObtention = $scope.diplomeData.paysList[indexK];
+                                        break;
+                                    }
+                                }
+                                displayedDiplome.dateReconnaissance = currentDiplome.dateReconnaissance == null || currentDiplome.dateReconnaissance == undefined || currentDiplome.dateReconnaissance.value == null ? '' : new Date(currentDiplome.dateReconnaissance.value);
+                                $scope.diplomeData.diplomes.push(displayedDiplome);
                             }
                         }
                         if($scope.diplomeData.diplomes.length > 0) {
@@ -602,7 +592,7 @@ ngDemautApp
 
             $scope.nextStep = function () {
                 $rootScope.wouldStepNext = true;
-                if (true) { // TODO if ($scope.donneesDiplome.diplomeDataForm.$valid) {
+                if ($scope.donneesDiplome.diplomeDataForm.$valid) {
                     $log.info('Formulaire valide !');
                     $location.path('/Demaut/demande/donneesActivites');
                 }
@@ -730,7 +720,7 @@ ngDemautApp
 
             $scope.nextStep = function () {
                 $rootScope.wouldStepNext = true;
-                if (true) { // TODO  ($scope.donneesActivite.donneesActiviteForm.$valid) {
+                if ($scope.donneesActivite.donneesActiviteForm.$valid) {
                     $log.info('Formulaire valide !');
                     $location.path('/Demaut/demande/annexes');
                 }
@@ -1010,7 +1000,7 @@ ngDemautApp
                 } else {
                     $scope.files = $scope.annexesData.referenceFiles;
                     $scope.annexesData.annexeTypeSelected = {};
-                    $rootScope.error = 'Une/plusieurs pièces ne respectent pas les règles de nommage ou ne correspondent pas aux formats supportés (pdf, image)';
+                    $rootScope.error = typeAnnexe + ' : une/plusieurs pièces ne respectent pas les règles de nommage ou ne correspondent pas aux formats supportés (pdf, image)';
                     $log.info($rootScope.error);
                 }
                 //$scope.$apply();
@@ -1150,35 +1140,6 @@ ngDemautApp
         $rootScope.openDatePicker = function (targetDatepicker) {
             targetDatepicker.opened = true;
         };
-
-
-        $rootScope.changeTelephonePriveRequirement = function (telephonePrive, telephoneMobile) {
-
-            if (telephonePrive.$pristine){
-                telephonePrive.$error.required = true;
-                return;
-            }
-
-            if (telephonePrive.$valid)
-                telephoneMobile.$error.required = false;
-
-
-        };
-
-
-        $rootScope.changeTelephoneMobileRequirement = function (telephoneMobile, telephonePrive) {
-            if (telephoneMobile.$pristine && telephonePrive.$pristine){
-                telephonePrive.$error.required = true;
-                telephoneMobile.$error.required = true;
-                return;
-            }
-
-            if (telephonePrive.$valid)
-                telephoneMobile.$error.required = false;
-        };
-
-
-
 
         $rootScope.$on('$viewContentLoaded', function () {
         });

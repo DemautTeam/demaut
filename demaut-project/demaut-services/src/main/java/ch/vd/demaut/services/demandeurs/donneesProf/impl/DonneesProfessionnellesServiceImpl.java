@@ -1,20 +1,28 @@
 package ch.vd.demaut.services.demandeurs.donneesProf.impl;
 
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
-import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
-import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
-import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnellesNotFoundException;
-import ch.vd.demaut.domain.demandeur.donneesProf.diplome.*;
-import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
+import ch.vd.demaut.domain.demandeur.Pays;
+import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
+import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateObtention;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateReconnaissance;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DiplomeFK;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ReferenceDeDiplome;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormation;
+import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TypeDiplomeAccepte;
+import ch.vd.demaut.domain.exception.DonneesProfessionnellesNotFoundException;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
 
 @Service("donneesProfessionnellesService")
 public class DonneesProfessionnellesServiceImpl implements DonneesProfessionnellesService {
@@ -27,7 +35,7 @@ public class DonneesProfessionnellesServiceImpl implements DonneesProfessionnell
     public List<Profession> listerProfessionsAvecCodeGlnObligatoire() {
         return Profession.listerProfessionsAvecCodeGlnObligatoire();
     }
-
+    
     @Override
     @Transactional(readOnly = true)
     public Profession recupererProfessionDeDemande(Login login, ReferenceDeDemande referenceDeDemande) {
@@ -48,7 +56,7 @@ public class DonneesProfessionnellesServiceImpl implements DonneesProfessionnell
     @Override
     @Transactional
     public void ajouterUnDiplome(Login login, ReferenceDeDemande referenceDeDemande, ReferenceDeDiplome referenceDeDiplome, TypeDiplomeAccepte typeDiplomeAccepte,
-                                 TitreFormation titreFormation, String complement, DateObtention dateObtention, PaysObtention paysObtention,
+                                 TitreFormation titreFormation, String complement, DateObtention dateObtention, Pays paysObtention,
                                  DateReconnaissance dateReconnaissance) {
         DemandeAutorisation demandeAutorisation = demandeAutorisationRepository.recupererDemandeParReference(referenceDeDemande);
         Diplome diplome = new Diplome(referenceDeDiplome, typeDiplomeAccepte, titreFormation, complement, dateObtention, paysObtention, dateReconnaissance);
@@ -60,7 +68,7 @@ public class DonneesProfessionnellesServiceImpl implements DonneesProfessionnell
     @Transactional
     public void supprimerUnDiplome(Login login, ReferenceDeDemande referenceDeDemande, ReferenceDeDiplome referenceDeDiplome) {
         DemandeAutorisation demandeAutorisation = demandeAutorisationRepository.recupererDemandeParReference(referenceDeDemande);
-        demandeAutorisation.getDonneesProfessionnelles().supprimerUnDiplome(referenceDeDiplome);
+        demandeAutorisation.getDonneesProfessionnelles().supprimerUnDiplome(new DiplomeFK(referenceDeDiplome));
         //TODO trace login de modification dans DB
     }
 

@@ -46,11 +46,17 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
         </dependency>
-
-        <!-- Oracle -->
+        
+        <!-- H2 -->
         <dependency>
-            <groupId>oracle.jdbc</groupId>
-            <artifactId>ojdbc6</artifactId>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>oracle</groupId>
+            <artifactId>oracle-jdbc</artifactId>
+            <version>${oracle.jdbc.version}</version>
             <scope>runtime</scope>
         </dependency>
         
@@ -74,13 +80,6 @@
         <dependency>
             <groupId>javax.ws.rs</groupId>
             <artifactId>javax.ws.rs-api</artifactId>
-        </dependency>
-
-        <!-- H2 -->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>test</scope>
         </dependency>
 
     </dependencies>

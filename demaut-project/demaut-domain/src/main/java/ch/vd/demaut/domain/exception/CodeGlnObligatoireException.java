@@ -4,6 +4,7 @@ import ch.vd.demaut.commons.exceptions.DomainException;
 
 /**
  * Exception qui indique que le code GLN est obligatoire
+ *
  */
 
 public class CodeGlnObligatoireException extends DomainException {

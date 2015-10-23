@@ -5,6 +5,7 @@ import cucumber.api.Transformer;
 
 /**
  * Converter Cucumber pour le {@link CodeGLN}
+ *
  */
 public class CodeGLNConverter extends Transformer<CodeGLN> {
 

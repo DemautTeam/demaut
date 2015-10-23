@@ -1,22 +1,21 @@
 package ch.vd.demaut.domain.demandeur.donneesPerso;
 
-import ch.vd.demaut.commons.vo.BaseValueObject;
+import ch.vd.demaut.commons.vo.StringVO;
 
 import javax.validation.constraints.Size;
 
-public class NPA extends BaseValueObject {
-
-    private String value;
+public class NPA extends StringVO {
 
     public NPA() {
     }
 
     public NPA(String value) {
-        this.value = value;
+        super(value);
     }
 
     @Size(max = 15)
+    @Override
     public String getValue() {
-        return value;
+        return super.getValue();
     }
 }

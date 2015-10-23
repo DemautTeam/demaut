@@ -44,7 +44,7 @@ public class CreationDemandeStepDefinitions extends StepDefinitions {
 
     @Etantdonné("^une demande de profession \"([^\"]*)\" en cours de saisie ayant la référence \"([^\"]*)\"$")
     public void simulerDemandeEnCours(Profession profession,
-                                      @Transform(ReferenceDeDemandeConverter.class) ReferenceDeDemande refDemande) throws Throwable {
+            @Transform(ReferenceDeDemandeConverter.class) ReferenceDeDemande refDemande) throws Throwable {
         getDemandeAutorisationSteps().simulerDemandeEnCours(profession, refDemande);
     }
 
@@ -62,7 +62,7 @@ public class CreationDemandeStepDefinitions extends StepDefinitions {
 
     @Lorsque("^l´utilisateur initialise une demande de profession \"([^\"]*)\" avec un code GLN \"([^\"]*)\"$")
     public void lutilisateur_initialise_une_demande_de_profession_avec_codeGLN(Profession profession,
-                                                                               @Transform(CodeGLNConverter.class) CodeGLN gln) throws Throwable {
+            @Transform(CodeGLNConverter.class) CodeGLN gln) throws Throwable {
         getDemandeAutorisationSteps().initialiserDemandeEnCours(profession, gln);
     }
 
@@ -71,7 +71,7 @@ public class CreationDemandeStepDefinitions extends StepDefinitions {
     @Alors("^le système Demaut crée la demande avec les caractéristiques \\[état: \"([^\"]*)\", utilisateur: \"([^\"]*)\", type: \"([^\"]*)\"\\]$")
     public void le_système_Demaut_crée_la_demande_avec_les_caractéristiques_état_utilisateur_type(
             StatutDemandeAutorisation statut, @Transform(LoginConverter.class) Login login, Profession profession)
-            throws Throwable {
+                    throws Throwable {
         getDemandeAutorisationSteps().verifieAcceptationAnnexe(AccepteOuRefuse.accepte);
         getDemandeAutorisationSteps().verifieDemandeCree(profession, statut, login);
     }

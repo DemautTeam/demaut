@@ -8,7 +8,7 @@ public class TelephoneMobileConverter extends Transformer<TelephoneMobile> {
 
     @Override
     public TelephoneMobile transform(String str) {
-        if (StringUtils.isEmpty(str)) {
+        if(StringUtils.isEmpty(str)){
             return null;
         }
         return new TelephoneMobile(str);

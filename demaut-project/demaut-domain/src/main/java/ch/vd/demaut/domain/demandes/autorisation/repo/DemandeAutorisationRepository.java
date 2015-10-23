@@ -41,7 +41,6 @@ public interface DemandeAutorisationRepository
 
     /**
      * Teste si l'utilisateur a un brouillon associé
-     *
      * @param login Login
      * @return boolean
      */

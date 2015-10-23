@@ -94,7 +94,7 @@ public class AnnexeRestImpl {
 
         Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
 
-        LOGGER.info("listerLesTypeAnnexesObligatoires pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr);
+        LOGGER.info("listerLesTypeAnnexesObligatoires pour : " + login.getValue()+ ", referenceDeDemande=" + referenceDeDemandeStr);
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
 
@@ -157,7 +157,7 @@ public class AnnexeRestImpl {
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
         AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
 
-        annexesService.attacherUneAnnexe(login, referenceDeDemande, file, annexeFK.getNomFichier(), annexeFK.getTypeAnnexe());
+        annexesService.attacherUneAnnexe(login, referenceDeDemande, file, annexeFK.getNomFichier());
         return RestUtils.buildJSon(true);
     }
 
@@ -182,8 +182,6 @@ public class AnnexeRestImpl {
 
     private AnnexeFK buildAnnexeFK(String annexeFileName, String annexeTypeIdStr) {
         NomFichier nomFichier = new NomFichier(annexeFileName);
-        //Integer annexeTypeId = Integer.valueOf(annexeTypeIdStr);
-        TypeAnnexe typeAnnexe = TypeAnnexe.AutoPratiquer;
-        return new AnnexeFK(nomFichier, typeAnnexe);
+        return new AnnexeFK(nomFichier);
     }
 }

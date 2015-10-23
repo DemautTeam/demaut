@@ -1,8 +1,8 @@
 package ch.vd.demaut.domain.demandeur.donneesProf;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
-import ch.vd.demaut.commons.vo.BaseValueObject;
-//import org.hibernate.validator.constraints.EAN;
+import ch.vd.demaut.commons.vo.StringVO;
+import org.hibernate.validator.constraints.EAN;
 
 import javax.validation.constraints.NotNull;
 
@@ -13,9 +13,7 @@ import javax.validation.constraints.NotNull;
  * @see https://en.wikipedia.org/wiki/Global_Location_Number
  */
 @ValueObject
-public class CodeGLN extends BaseValueObject {
-
-    private String value;
+public class CodeGLN extends StringVO {
 
     // ********************************************************* Constructor
 
@@ -23,13 +21,14 @@ public class CodeGLN extends BaseValueObject {
     }
 
     public CodeGLN(String value) {
-        this.value = value;
+        super(value);
     }
 
     @NotNull
-    //@EAN(type = EAN.Type.EAN13)
+    @EAN(type = EAN.Type.EAN13)
+    @Override
     public String getValue() {
-        return value;
+        return super.getValue();
     }
 
 }

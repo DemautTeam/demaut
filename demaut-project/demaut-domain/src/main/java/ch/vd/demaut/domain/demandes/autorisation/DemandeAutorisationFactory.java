@@ -19,14 +19,14 @@ public class DemandeAutorisationFactory {
     // ********************************************************* Public methods 
     public DemandeAutorisation initierDemandeAutorisation(Login login, Profession profession, CodeGLN codeGLN) {
         DemandeAutorisation demandeAutorisation = new DemandeAutorisation(login, profession);
-
+        
         throwExceptionSiDemandeBrouillonExisteDeja(login);
-
+        
         demandeAutorisation.getDonneesProfessionnelles().validerEtRenseignerCodeGLN(codeGLN, profession);
-
+        
         demandeAutorisation.generateReference();
         demandeAutorisation.generateDateDeCreation();
-
+        
         return demandeAutorisation;
     }
 
@@ -37,7 +37,7 @@ public class DemandeAutorisationFactory {
             throw new DemandeBrouillonExisteDejaException();
         }
     }
-
+    
     // ********************************************************* Technical methods 
     public void setDemandeAutorisationRepository(DemandeAutorisationRepository demandeAutorisationRepository) {
         this.demandeAutorisationRepository = demandeAutorisationRepository;

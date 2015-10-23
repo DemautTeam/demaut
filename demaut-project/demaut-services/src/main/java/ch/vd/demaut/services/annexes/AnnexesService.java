@@ -15,7 +15,7 @@ public interface AnnexesService {
 
     ContenuAnnexe recupererContenuAnnexe(Login login, ReferenceDeDemande referenceDeDemande, AnnexeFK annexeFK);
 
-    void attacherUneAnnexe(Login login, ReferenceDeDemande referenceDeDemande, File file, NomFichier nomFichier, TypeAnnexe type);
+    void attacherUneAnnexe(Login login, ReferenceDeDemande referenceDeDemande, File file, NomFichier nomFichier);
 
     void attacherUneAnnexe(Login login, ReferenceDeDemande referenceDeDemande, Annexe annexeALier);
 

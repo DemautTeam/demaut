@@ -1,24 +1,23 @@
 package ch.vd.demaut.domain.demandeur.donneesProf.diplome;
 
-import ch.vd.demaut.commons.vo.BaseValueObject;
+import ch.vd.demaut.commons.vo.StringVO;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class TitreFormation extends BaseValueObject {
-
-    private String value;
+public class TitreFormation extends StringVO {
 
     public TitreFormation() {
     }
 
     public TitreFormation(String value) {
-        this.value = value;
+        super(value);
     }
 
     @NotNull
     @Size(min = 1, max = 255)
+    @Override
     public String getValue() {
-        return value;
+        return super.getValue();
     }
 }

@@ -1,13 +1,19 @@
 package ch.vd.demaut.rest.services.impl;
 
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
-import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.progreSoa.services.ProgreSoaService;
-import ch.vd.demaut.rest.commons.json.RestUtils;
-import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
-import ch.vd.ses.referentiel.demaut_1_0.VcType;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,14 +23,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.*;
-import java.util.Arrays;
-import java.util.List;
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.progreSoa.services.ProgreSoaService;
+import ch.vd.demaut.rest.commons.json.RestUtils;
+import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
+import ch.vd.ses.referentiel.demaut_1_0.VcType;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
 @Service("professionRestImpl")
@@ -91,7 +97,7 @@ public class ProfessionRestImpl {
     public Response listerProfessionsAvecCodeGLNObligatoire() throws Exception {
 
         LOGGER.info("listerProfessionsAvecCodeGLNObligatoire");
-
+        
         List<Profession> professionsAvecGLN = donneesProfessionnellesService.listerProfessionsAvecCodeGlnObligatoire();
 
         return RestUtils.buildRef(professionsAvecGLN);
@@ -105,13 +111,13 @@ public class ProfessionRestImpl {
 
         Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
 
-        LOGGER.info("recuperer Profession de demande " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr);
+        LOGGER.info("recuperer Profession de demande " + login.getValue()  + ", referenceDeDemande=" + referenceDeDemandeStr);
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
 
         Profession profession = donneesProfessionnellesService.recupererProfessionDeDemande(login, referenceDeDemande);
         CodeGLN codeGLN = donneesProfessionnellesService.recupererDonneesProfessionnelles(login, referenceDeDemande).getCodeGLN();
-        return RestUtils.buildJSon(Arrays.asList(profession.getRefProgresID().getId(), codeGLN != null ? codeGLN.getValue() : null));
+        return RestUtils.buildJSon(Arrays.asList(profession.getRefProgresID().getId(), codeGLN.getValue()));
     }
 
     @GET
@@ -123,12 +129,12 @@ public class ProfessionRestImpl {
 
         Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
 
-        LOGGER.info("validerEtRenseignerCodeGLN " + login.getValue() + ", codeGln=" + codeGln);
+        LOGGER.info("validerEtRenseignerCodeGLN " + login.getValue()  + ", codeGln=" + codeGln);
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
-        CodeGLN codeGLN = StringUtils.isEmpty(codeGln) ? null : new CodeGLN(codeGln);
+        CodeGLN codeGLN =  StringUtils.isEmpty(codeGln) ? null : new CodeGLN(codeGln);
 
         donneesProfessionnellesService.validerEtRenseignerCodeGLN(login, referenceDeDemande, codeGLN);
-        return RestUtils.buildJSon(true);
+        return RestUtils.buildJSon(true);    
     }
 }

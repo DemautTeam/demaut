@@ -1,27 +1,22 @@
 package ch.vd.demaut.domain.demandeur.donneesProf.diplome;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
-import ch.vd.demaut.commons.vo.BaseValueObject;
+import ch.vd.demaut.commons.vo.StringVO;
 
-//TODO: A virer absolument. Pas besoin de Reference De Diplome ! 
 @ValueObject
-public class ReferenceDeDiplome extends BaseValueObject {
+public class ReferenceDeDiplome extends StringVO {
 
     // ********************************************************* Fields
-    private String value;
 
     // ********************************************************* Constructor
 
     public ReferenceDeDiplome() {
     }
 
-    public ReferenceDeDiplome(String value) {
-        this.value = value;
+    public ReferenceDeDiplome(String reference) {
+        super(reference);
     }
 
     // ********************************************************* Getters
 
-    public String getValue() {
-        return value;
-    }
 }
