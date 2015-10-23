@@ -2,6 +2,7 @@ package ch.vd.demaut.domain.demandeur.donneesPerso;
 
 import ch.vd.demaut.commons.annotations.Entity;
 import ch.vd.demaut.commons.entities.AbstractEntity;
+import ch.vd.demaut.domain.demandeur.Fax;
 import ch.vd.demaut.domain.demandeur.Pays;
 
 import javax.validation.Valid;
