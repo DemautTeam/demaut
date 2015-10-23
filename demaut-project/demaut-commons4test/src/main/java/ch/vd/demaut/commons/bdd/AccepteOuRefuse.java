@@ -13,4 +13,11 @@ public enum AccepteOuRefuse {
         assertThat(actualAcceptation).isEqualTo(expectedAcceptation);
     }
 
+    public static AccepteOuRefuse accepteIfTrue(boolean value){
+        if(value){
+            return accepte;
+        }
+        return refuse;
+    }
+
 }
