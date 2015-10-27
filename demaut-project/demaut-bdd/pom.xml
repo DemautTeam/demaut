@@ -8,7 +8,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>demaut-bdd</artifactId>
-    <name>Demaut-bdd</name>
+    <name>demaut-bdd</name>
     <description>Demaut Scénarios BDD Module</description>
     <packaging>jar</packaging>
 

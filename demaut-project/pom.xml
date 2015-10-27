@@ -18,8 +18,6 @@
         <module>demaut-data-jpa</module>
         <module>demaut-data-mock</module>
         <module>demaut-bdd</module>
-        <module>progreSOA-domain</module>
-        <module>progreSOA-services</module>
         <module>demaut-services</module>
         <module>demaut-rest</module>
         <module>demaut-war</module>
@@ -28,6 +26,11 @@
         <!-- Front End Modules -->
         <module>demaut-commons-web</module>
         <module>demaut-cyber</module>
+
+        <!-- ProgreSOA modules -->
+        <module>progreSOA-domain</module>
+        <module>progreSOA-services</module>
+        
     </modules>
 
     <profiles>
@@ -165,7 +168,7 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- Demaut -->
+            <!-- Demaut Backend -->
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>demaut-commons</artifactId>
@@ -183,22 +186,24 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>progreSOA-domain</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>progreSOA-services</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
                 <artifactId>demaut-services</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>demaut-rest</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- ProgreSOA anit-corruption layer -->
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>progreSOA-domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>progreSOA-services</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -356,13 +361,11 @@
                 <artifactId>cxf-rt-rs-extension-search</artifactId>
                 <version>${cxf.rt.version}</version>
             </dependency>
-            
-            <!-- CXF Client : used for ProgreSOA -->
             <dependency>
                 <groupId>org.apache.cxf</groupId>
                 <artifactId>cxf-rt-rs-client</artifactId>
                 <version>${cxf.rt.version}</version>
-<!--                 <scope>test</scope> -->
+                <scope>test</scope>
             </dependency>
             
             <!-- Jackson -->

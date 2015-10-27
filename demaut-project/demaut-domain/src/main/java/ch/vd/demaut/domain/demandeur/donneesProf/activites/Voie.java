@@ -1,10 +1,9 @@
 package ch.vd.demaut.domain.demandeur.donneesProf.activites;
 
+import javax.validation.constraints.NotNull;
+
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.StringVO;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  * Représente la voie de l'adresse

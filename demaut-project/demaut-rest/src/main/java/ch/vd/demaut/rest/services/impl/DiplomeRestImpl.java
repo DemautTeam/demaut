@@ -40,10 +40,8 @@ import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormationInitialeP
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormationPostgradeProgres;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.TypeDiplomeAccepte;
 import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.progreSoa.services.ProgreSoaService;
 import ch.vd.demaut.rest.commons.json.RestUtils;
 import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
-import ch.vd.ses.referentiel.demaut_1_0.VcType;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
 @Service("diplomeRestImpl")
@@ -53,8 +51,6 @@ public class DiplomeRestImpl {
 
     public static final DateTimeFormatter SHORT_DATE_PARSER = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     private static final Logger LOGGER = LoggerFactory.getLogger(DiplomeRestImpl.class);
-    @Autowired
-    private ProgreSoaService progreSoaService;
 
     @Autowired
     private DonneesProfessionnellesService donneesProfessionnellesService;
@@ -127,23 +123,6 @@ public class DiplomeRestImpl {
                 return Arrays.asList(TitreFormationInitialeProgres.values());
             case D_POSTGRADE:
                 return Arrays.asList(TitreFormationPostgradeProgres.values());
-            default:
-                return new ArrayList<>();
-        }
-    }
-
-    @SuppressWarnings("unused")
-    private List<VcType> buildListeTitresFormationsAvecProgresSOA(UriInfo uriInfo, TypeDiplomeAccepte typeDiplomeAccepte) throws Exception {
-        String path = uriInfo != null ? uriInfo.getBaseUri().toString() : null;
-        switch (typeDiplomeAccepte) {
-            case D_FORMATION_APPROFONDIE:
-                return progreSoaService.listeSOADiplomesFormationApprofondie(path).getVcList().getVc();
-            case D_FORMATION_COMPLEMENTAIRE:
-                return progreSoaService.listeSOADiplomesFormationComplementaire(path).getVcList().getVc();
-            case D_FORMATION_INITIALE:
-                return progreSoaService.listeSOADiplomesFormationInitiale(path).getVcList().getVc();
-            case D_POSTGRADE:
-                return progreSoaService.listeSOADiplomesFormationPostGrade(path).getVcList().getVc();
             default:
                 return new ArrayList<>();
         }
