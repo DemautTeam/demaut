@@ -91,6 +91,7 @@
                 <div class="row">
                     <br/>
                 </div>
+                <hr>
 
                 <!--Activitée évisagée-->
                 <div>
@@ -118,11 +119,13 @@
                                 <label>à titre dépendant sous supervision**</label>
                             </div>
                             <div class="col-md-3">
-                                <div ng-show="donneesActivite.donneesActiviteForm.statusTypeActivite.$viewValue == 'flagTauxDependantSousSupervision'">
+                                <div ng-show="donneesActivite.donneesActiviteForm.statusTypeActivite.$viewValue == 'flagTauxDependantSousSupervision'"
+                                     popover-enable="(wouldStepNext && donneesActivite.donneesActiviteForm.nomSuperviseur.$invalid ) || (donneesActivite.donneesActiviteForm.nomSuperviseur.$invalid && !donneesActivite.donneesActiviteForm.nomSuperviseur.$pristine)"
+                                     popover-trigger="none" popover-is-open="wouldStepNext && donneesActivite.donneesActiviteForm.nomSuperviseur.$invalid" popover-placement="right"
+                                     uib-popover="Choisissez saisir le nom du superviseur.">
                                     <select  type="text" name="nomSuperviseur" id="nomSuperviseur" placeholder="Nom du superviseur" ng-disabled="donneesActivite.donneesActiviteForm.flagTauxDependantSousSupervision.$viewValue != 'flagTauxDependantSousSupervision'" required ng-model="activiteData.activite.flagTauxDependantSousSupervision.superviseur">
-
+                                        <option></option>
                                     </select>
-                                    <span>Choisissez ou indiquez le nom du superviseur</span>
                                 </div>
                             </div>
                         </div>
@@ -141,34 +144,14 @@
                                 </p>
                             </div>
                         </div>
-                        <!--Taux d'activité-->
+                        <!--Nombre demi-journée-->
                         <div class="row form-group">
-                            <div class="col-md-3 col-md-offset-2"><label>Nombre demi-journées/semaine</label></div>
-                            <div class="col-md-2"><input type="text" id="tauxIndependant" class="form-control" required="isTauxIndependantRequired" ng-model="activiteData.activite.tauxIndependant"/></div>
+                            <div class="col-md-3 col-md-offset-2"><label>Taux d'activité. Indiquez le nombre de demi-journée par semaine</label></div>
+                            <div class="col-md-2"><input type="text" name="nombreDemiJournee" id="nombreDemiJournee" class="form-control" required="isTauxIndependantRequired" ng-model="activiteData.activite.nombreDemiJournee"/></div>
                         </div>
 
                         <div class="row"></br></div>
 
-                        <!--À titre dépendant-->
-                        <div class="row form-group">
-                            <div class="col-md-3 col-md-offset-2"><label>Nombre demi-journées/semaine</label></div>
-                            <div class="col-md-2"><input type="text" id="tauxDependant" class="form-control" required="isTauxDependantRequired" ng-model="activiteData.activite.tauxDependant"></div>
-                        </div>
-
-                        <div class="row form-group">
-                            <div class="col-md-3 col-md-offset-2"><label>Date prévue de début</label></div>
-                            <div class="col-md-2">
-                                <p class="input-group">
-                                    <input type="text" class="form-control" id="dateDebutDependant" name="dateDebutDependant" placeholder="{{datePicker.placeholder}}"
-                                           datepicker-popup="{{datePicker.format}}" ng-model="activiteData.activite.dateDebutDependant"
-                                           is-open="activiteData.datePicker.status.dateDebutDependant.opened" max-date="datePicker.maxDate" datepicker-options="datePicker.dateOptions"
-                                           required="isDateDebutDependantRequired" close-text="Fermer" clear-text="Effacer" current-text="Aujourd'hui"/>
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default" ng-click="openDatePicker(activiteData.datePicker.status.dateDebutDependant)"><i class="glyphicon glyphicon-calendar"></i></button>
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
                         <!--Message-->
                         <div class="row">
                             <br/>
@@ -186,16 +169,16 @@
                     </fieldset>
                 </div>
                 <!--fin activitée évisagée-->
-
                 <div class="row">
                     <br/>
                 </div>
+                <hr>
 
                 <!--Assurance maladie-->
                 <div>
                     <fieldset>
                         <div class="row form-group"><label class="col-md-2">Assurance maladie</label></div>
-                        <div class="row form-group"><label class="col-md-8">Avez-vous l’intention de pratiquer à charge de l’assurance-maladie obligatoire (assurance de base)?</label></div>
+                        <div class="row form-group"><label class="col-md-8 col-md-offset-1">Avez-vous l’intention de pratiquer à charge de l’assurance-maladie obligatoire (assurance de base)?</label></div>
                         <div class="row">
                             <div class="col-md-8 col-md-offset-1">
                                 <input type="radio" name="pratiquerBase" value="independant" ng-model="activiteData.activite.pratiquerBase" ng-required="iPratiquerBaseRequired()"/>
@@ -213,9 +196,6 @@
                                 <input type="radio" name="pratiquerBase" value="non" ng-model="activiteData.activite.pratiquerBase" ng-required="iPratiquerBaseRequired()"/>
                                 <label>non</label>
                             </div>
-                        </div>
-                        <div class="row">
-                            <br/>
                         </div>
                     </fieldset>
                 </div>
