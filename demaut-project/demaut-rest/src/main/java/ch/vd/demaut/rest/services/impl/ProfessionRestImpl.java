@@ -27,10 +27,8 @@ import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.progreSoa.services.ProgreSoaService;
 import ch.vd.demaut.rest.commons.json.RestUtils;
 import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
-import ch.vd.ses.referentiel.demaut_1_0.VcType;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
 @Service("professionRestImpl")
@@ -40,8 +38,6 @@ public class ProfessionRestImpl {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProfessionRestImpl.class);
 
-    @Autowired
-    private ProgreSoaService progreSoaService;
 
     @Autowired
     private DonneesProfessionnellesService donneesProfessionnellesService;
@@ -74,20 +70,6 @@ public class ProfessionRestImpl {
      */
     private List<Profession> buildListeProfessionsSansProgresSOA() {
         return Arrays.asList(Profession.values());
-    }
-
-    /**
-     * Cette méthode sera peut-etre utilisé suivant les futures décisions prises
-     * TODO: Quoiqu'il en soit virer progreSoaService du projet microbiz et le
-     * mettre dans Service (qui correspond a la facade REST)
-     *
-     * @throws Exception
-     */
-    @SuppressWarnings("unused")
-    private List<VcType> buildListeProfessionsAvecProgresSOA(UriInfo uriInfo) throws Exception {
-        // TODO mettre en cache la liste des professions
-        String path = uriInfo != null ? uriInfo.getBaseUri().getPath() : null;
-        return progreSoaService.listeSOAProfession(path).getVcList().getVc();
     }
 
     @GET

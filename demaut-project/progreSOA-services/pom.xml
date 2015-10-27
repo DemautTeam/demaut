@@ -17,15 +17,15 @@
         <!-- Demaut -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>progreSOA-domain</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>demaut-commons</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>demaut-commons4test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>progreSOA-domain</artifactId>
         </dependency>
 
         <!-- Utilities -->

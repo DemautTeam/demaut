@@ -1,23 +1,25 @@
 package ch.vd.demaut.progreSoa.domain.test;
 
-import ch.vd.ses.referentiel.demaut_1_0.RefRoot;
-import ch.vd.ses.referentiel.demaut_1_0.VcListType;
-import ch.vd.ses.referentiel.demaut_1_0.VcType;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.StringWriter;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.StringWriter;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+
+import ch.vd.ses.referentiel.demaut_1_0.RefRoot;
+import ch.vd.ses.referentiel.demaut_1_0.VcListType;
+import ch.vd.ses.referentiel.demaut_1_0.VcType;
 
 @RunWith(JUnit4.class)
 public class JaxbXmlTransformTest {

@@ -3,8 +3,6 @@ package ch.vd.demaut.domain.demandeur.donneesProf.activites;
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.StringVO;
 
-import javax.validation.constraints.NotNull;
-
 /**
  * Représente le complement d'adresse
  */

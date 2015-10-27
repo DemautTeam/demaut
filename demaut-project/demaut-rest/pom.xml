@@ -29,15 +29,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>demaut-services</artifactId>
         </dependency>
-        <!-- Demaut Progres SOA -->
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>progreSOA-domain</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>progreSOA-services</artifactId>
-        </dependency>
         
         <!-- Demaut test -->
         <dependency>
