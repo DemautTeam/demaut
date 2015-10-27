@@ -8,24 +8,6 @@
     <description>Demaut Parent Project</description>
     <packaging>pom</packaging>
 
-    <developers>
-        <developer>
-            <name>Fabien Benichou</name>
-            <id>gut6te</id>
-            <email>fabien.benichou@vd.ch</email>
-        </developer>
-        <developer>
-            <name>Charles Mourad Jaber</name>
-            <id>jaxija</id>
-            <email>charles.mourad.jaber@vd.ch</email>
-        </developer>
-        <developer>
-            <name>Ezzedine Thebti</name>
-            <id>b5cav2</id>
-            <email>ezzedine.thebti@vd.ch</email>
-        </developer>
-    </developers>
-
     <modules>
         <!-- Common & POJO Modules -->
         <module>demaut-commons</module>
@@ -45,7 +27,6 @@
 
         <!-- Front End Modules -->
         <module>demaut-commons-web</module>
-        <module>demaut-backoffice</module>
         <module>demaut-cyber</module>
     </modules>
 
