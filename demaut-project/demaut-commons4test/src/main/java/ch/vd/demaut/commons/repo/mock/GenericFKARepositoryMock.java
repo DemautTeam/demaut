@@ -39,7 +39,7 @@ public abstract class GenericFKARepositoryMock<E extends EntityFunctionalKeyAwar
     public E getByFK(FK functionalKey) {
         E entity = findByFK(functionalKey);
         if (entity == null) {
-            throw new EntityNotFoundException();
+            throw new EntityNotFoundException(functionalKey);
         }
         return entity;
     }

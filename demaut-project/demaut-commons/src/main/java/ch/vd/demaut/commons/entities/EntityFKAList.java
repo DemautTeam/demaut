@@ -54,7 +54,7 @@ public abstract class EntityFKAList<E extends EntityFunctionalKeyAware> {
     protected E trouverEntity(FunctionalKey<E> eFK) {
         Object entity = CollectionUtils.find(entities, new BeanPropertyValueEqualsPredicate("functionalKey", eFK));
         if (entity == null) {
-            throw new EntityNotFoundException();
+            throw new EntityNotFoundException(eFK);
         }
         return (E)entity;
     }
