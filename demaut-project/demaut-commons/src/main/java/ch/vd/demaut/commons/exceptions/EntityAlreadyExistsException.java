@@ -8,7 +8,7 @@ public class EntityAlreadyExistsException extends DomainException {
     private static final long serialVersionUID = -951117752810923154L;
 
     public EntityAlreadyExistsException() {
-        super();
+        super("L'entité existe déjà");
     }
 
 }
