@@ -11,7 +11,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
@@ -28,8 +27,11 @@ public class DemandeRestImpl {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DemandeRestImpl.class);
 
-    @Autowired
     private DemandeAutorisationService demandeAutorisationService;
+
+    public void setDemandeAutorisationService(DemandeAutorisationService demandeAutorisationService) {
+        this.demandeAutorisationService = demandeAutorisationService;
+    }
 
     @Context
     private UriInfo uriInfo;

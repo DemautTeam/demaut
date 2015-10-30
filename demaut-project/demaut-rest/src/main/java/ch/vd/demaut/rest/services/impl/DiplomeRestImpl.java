@@ -32,8 +32,11 @@ public class DiplomeRestImpl {
     public static final DateTimeFormatter SHORT_DATE_PARSER = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     private static final Logger LOGGER = LoggerFactory.getLogger(DiplomeRestImpl.class);
 
-    @Autowired
     private DonneesProfessionnellesService donneesProfessionnellesService;
+
+    public void setDonneesProfessionnellesService(DonneesProfessionnellesService donneesProfessionnellesService) {
+        this.donneesProfessionnellesService = donneesProfessionnellesService;
+    }
 
     @Context
     private UriInfo uriInfo;

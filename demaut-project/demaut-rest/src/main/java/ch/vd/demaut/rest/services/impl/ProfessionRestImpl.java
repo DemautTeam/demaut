@@ -9,7 +9,6 @@ import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesServi
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.security.RolesAllowed;
@@ -27,8 +26,11 @@ public class ProfessionRestImpl {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProfessionRestImpl.class);
 
-    @Autowired
     private DonneesProfessionnellesService donneesProfessionnellesService;
+
+    public void setDonneesProfessionnellesService(DonneesProfessionnellesService donneesProfessionnellesService) {
+        this.donneesProfessionnellesService = donneesProfessionnellesService;
+    }
 
     @Context
     private UriInfo uriInfo;
