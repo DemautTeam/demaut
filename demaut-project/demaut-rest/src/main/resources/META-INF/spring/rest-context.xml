@@ -19,13 +19,13 @@
 
     <jaxrs:server address="${demaut.rest.service.endpoint}">
         <jaxrs:serviceBeans>
-            <ref bean="sharedRestImpl"/>
-            <ref bean="annexeRestImpl"/>
-            <ref bean="professionRestImpl"/>
-            <ref bean="demandeRestImpl"/>
-            <ref bean="diplomeRestImpl"/>
-            <ref bean="personelRestImpl"/>
-            <ref bean="activiteRestImpl"/>
+            <ref bean="sharedRest"/>
+            <ref bean="annexeRest"/>
+            <ref bean="professionRest"/>
+            <ref bean="demandeRest"/>
+            <ref bean="diplomeRest"/>
+            <ref bean="personnelRest"/>
+            <ref bean="activiteRest"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <ref bean="customJacksonJaxbJsonProvider"/>
