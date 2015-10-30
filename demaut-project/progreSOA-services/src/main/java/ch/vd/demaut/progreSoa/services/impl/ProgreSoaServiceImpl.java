@@ -4,9 +4,9 @@ import ch.vd.demaut.progreSoa.services.ProgreSoaService;
 import ch.vd.ses.referentiel.demaut_1_0.RefRoot;
 import ch.vd.ses.referentiel.tiers_v01.ReportedOrganisationType;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -106,8 +106,9 @@ public class ProgreSoaServiceImpl implements ProgreSoaService {
     }
 
     private boolean isAbsolute(String url) throws URISyntaxException {
-        if (StringUtils.isEmpty(url))
+        if (StringUtils.isEmpty(url)) {
             return false;
+        }
         return new URI(url).isAbsolute();
     }
 }
