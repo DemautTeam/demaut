@@ -13,14 +13,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandeur.Pays;
@@ -46,12 +43,10 @@ import ch.vd.demaut.rest.commons.json.RestUtils;
 import ch.vd.demaut.services.demandeurs.donneesPerso.DonneesPersonnellesService;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
-@Service("personelRestImpl")
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Path("/personal")
-public class PersonelRestImpl {
+public class PersonnelRestImpl {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PersonelRestImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PersonnelRestImpl.class);
 
     @Autowired
     private DonneesPersonnellesService donneesPersonnellesService;
@@ -65,7 +60,9 @@ public class PersonelRestImpl {
     /**
      * Méthode qui renseigner les Donnees Personnelles du demandeur
      * dateDeNaissance String (format 2015-10-06T22:00:00.000Z)
+     *
      */
+    //TODO typage de la date de naissance ?
     @SuppressWarnings("all")
     @GET
     @Path("/renseigner")

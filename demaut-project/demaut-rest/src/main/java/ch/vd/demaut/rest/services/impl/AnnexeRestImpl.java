@@ -41,8 +41,6 @@ import ch.vd.demaut.rest.commons.json.RestUtils;
 import ch.vd.demaut.services.annexes.AnnexesService;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
-@Service("annexeRestImpl")
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Path("/annexes")
 public class AnnexeRestImpl {
 

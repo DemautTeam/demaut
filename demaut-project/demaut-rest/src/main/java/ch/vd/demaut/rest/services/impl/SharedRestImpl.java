@@ -6,9 +6,6 @@ import ch.vd.demaut.rest.commons.json.RestUtils;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
@@ -18,9 +15,13 @@ import javax.ws.rs.core.*;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * API Rest des services "partagés", l'ensemble des services disponibles pour toute l'application.
+ *
+ * Pas de métier dépendant d'un type de donnees
+ *
+ */
 @CrossOriginResourceSharing(allowAllOrigins = true)
-@Service("sharedRestImpl")
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Path("/shared")
 public class SharedRestImpl {
 
