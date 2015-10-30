@@ -483,6 +483,11 @@
                 <artifactId>serp</artifactId>
                 <version>${serp.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>4.3.6.Final</version>
+            </dependency>
 
             <!-- Validation -->
             <dependency>

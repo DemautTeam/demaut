@@ -1,21 +1,22 @@
 package ch.vd.demaut.domain.demandeur.donneesPerso;
 
-import ch.vd.demaut.commons.vo.StringVO;
+import ch.vd.demaut.commons.vo.BaseValueObject;
 
 import javax.validation.constraints.Pattern;
 
-public class TelephoneMobile extends StringVO {
+public class TelephoneMobile extends BaseValueObject {
+
+    private String value;
 
     public TelephoneMobile() {
     }
 
     public TelephoneMobile(String value) {
-        super(value);
+        this.value = value;
     }
 
-    @Pattern(regexp = "[0\\+]+\\d{5,}", message = "Veuillez entrer un numéro de téléphone valide...")
-    @Override
+    @Pattern(regexp = "[0\\+]+\\d{5,}", message = "Veuillez entrer un numéro de téléphone mobile valide...")
     public String getValue() {
-        return super.getValue();
+        return value;
     }
 }

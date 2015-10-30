@@ -20,7 +20,7 @@
 <!--     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/> -->
 
     <bean id="jpaAdapterDemaut"
-        class="org.springframework.orm.jpa.vendor.OpenJpaVendorAdapter">
+        class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
         <property name="databasePlatform" value="${demaut.database.jpa.dictionary}"/>
         <property name="database" value="${demaut.database.jpa.type}"/>
         <property name="showSql" value="true"/>
@@ -44,7 +44,7 @@
         <property name="persistenceUnitName" value="demaut-data-jpa"/>
         <property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml"/>
         <property name="jpaDialect">
-            <bean class="org.springframework.orm.jpa.vendor.OpenJpaDialect"/>
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
         </property>
         <property name="jpaVendorAdapter" ref="jpaAdapterDemaut"/>
         <!-- See General LoadTimeWeaver to be started with the Spring agen on
@@ -60,7 +60,7 @@
         <property name="entityManagerFactory" ref="entityManagerFactoryDemaut"/>
     </bean>
 
-    <tx:annotation-driven transaction-manager="transactionManagerDemaut"/>
+    <tx:annotation-driven transaction-manager="transactionManagerDemaut" mode="proxy" proxy-target-class="true"/>
 
     <context:annotation-config/>
     <context:component-scan base-package="ch.vd.demaut.data"/>

@@ -1,18 +1,19 @@
 package ch.vd.demaut.domain.demandeur.donneesPerso;
 
-import ch.vd.demaut.commons.vo.StringVO;
+import ch.vd.demaut.commons.vo.BaseValueObject;
 
-public class NumeroTelephone extends StringVO {
+public class NumeroTelephone extends BaseValueObject {
+
+    private String value;
 
     public NumeroTelephone() {
     }
 
     public NumeroTelephone(String value) {
-        super(value);
+        this.value = value;
     }
 
-    @Override
     public String getValue() {
-        return super.getValue();
+        return value;
     }
 }
