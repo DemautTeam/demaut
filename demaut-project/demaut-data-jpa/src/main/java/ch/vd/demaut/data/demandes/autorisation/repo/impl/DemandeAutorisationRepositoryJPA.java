@@ -18,7 +18,6 @@ import ch.vd.demaut.domain.exception.DemandeBrouillonExisteDejaException;
 import ch.vd.demaut.domain.exception.DemandeNotFoundException;
 import ch.vd.demaut.domain.utilisateurs.Login;
 
-@Repository
 public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<DemandeAutorisation, Long>
         implements DemandeAutorisationRepository {
 

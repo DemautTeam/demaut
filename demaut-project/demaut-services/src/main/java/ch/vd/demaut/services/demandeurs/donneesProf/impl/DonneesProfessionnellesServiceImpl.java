@@ -2,8 +2,6 @@ package ch.vd.demaut.services.demandeurs.donneesProf.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
@@ -24,10 +22,8 @@ import ch.vd.demaut.domain.exception.DonneesProfessionnellesNotFoundException;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
 
-@Service("donneesProfessionnellesService")
 public class DonneesProfessionnellesServiceImpl implements DonneesProfessionnellesService {
 
-    @Autowired
     private DemandeAutorisationRepository demandeAutorisationRepository;
 
     @Override
@@ -85,5 +81,9 @@ public class DonneesProfessionnellesServiceImpl implements DonneesProfessionnell
     public List<Diplome> recupererDiplomesSaisis(Login login, ReferenceDeDemande referenceDeDemande) {
         DemandeAutorisation demandeAutorisation = demandeAutorisationRepository.recupererDemandeParReference(referenceDeDemande);
         return demandeAutorisation.getDonneesProfessionnelles().getListeDesDiplomes().listerDiplomes();
+    }
+
+    public void setDemandeAutorisationRepository(DemandeAutorisationRepository demandeAutorisationRepository) {
+        this.demandeAutorisationRepository = demandeAutorisationRepository;
     }
 }

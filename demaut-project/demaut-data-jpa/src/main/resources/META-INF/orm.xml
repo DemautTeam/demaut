@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <entity-mappings version="2.0"
-    xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm
+                 xmlns="http://java.sun.com/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm
 				 http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
 
     <!-- - OpenJPA limitations / bugs : - Not working well with access="PROPERTY"
@@ -137,8 +138,8 @@
         <table name="DONNEES_PROFESSIONNELLES"/>
         <attributes>
             <!-- On ne peut pas utiliser EAGER : https://issues.apache.org/jira/browse/OPENJPA-1908 -->
-            <one-to-many name="diplomes">
-                <join-column name="DIPLOMES_ID"/>
+            <one-to-many name="diplomes" >
+                <join-column/>
                 <cascade>
                     <cascade-all/>
                 </cascade>
