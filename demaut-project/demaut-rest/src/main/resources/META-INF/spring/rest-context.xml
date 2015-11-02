@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ctx="http://www.springframework.org/schema/context"
-    xmlns:jaxrs="http://cxf.apache.org/jaxrs" xmlns:p="http://www.springframework.org/schema/p"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ctx="http://www.springframework.org/schema/context"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd
@@ -36,10 +36,10 @@
     </jaxrs:server>
 
     <bean id="corsFilter"
-        class="org.apache.cxf.rs.security.cors.CrossOriginResourceSharingFilter"/>
+          class="org.apache.cxf.rs.security.cors.CrossOriginResourceSharingFilter"/>
 
     <bean id="customJacksonJaxbJsonProvider"
-        class="ch.vd.demaut.rest.providers.CustomJacksonJaxbJsonProvider"/>
+          class="ch.vd.demaut.rest.providers.CustomJacksonJaxbJsonProvider"/>
     <bean id="domainExceptionHandler" class="ch.vd.demaut.rest.providers.DomainExceptionHandler"/>
 
     <bean id="authenticationFilter" class="ch.vd.demaut.rest.filter.CustomAuthenticationFilter">
@@ -50,17 +50,15 @@
 
     <bean class="ch.vd.demaut.rest.services.impl.ActiviteRestImpl" id="activiteRest" scope="prototype"/>
     <bean class="ch.vd.demaut.rest.services.impl.AnnexeRestImpl" id="annexeRest" scope="prototype"
-            p:annexesService-ref="annexesService"/>
+          p:annexesService-ref="annexesService"/>
     <bean class="ch.vd.demaut.rest.services.impl.DemandeRestImpl" id="demandeRest" scope="prototype"
-            p:demandeAutorisationService-ref="demandeAutorisationService"/>
+          p:demandeAutorisationService-ref="demandeAutorisationService"/>
     <bean class="ch.vd.demaut.rest.services.impl.DiplomeRestImpl" id="diplomeRest" scope="prototype"
-            p:donneesProfessionnellesService-ref="donneesProfessionnellesService"/>
+          p:donneesProfessionnellesService-ref="donneesProfessionnellesService"/>
     <bean class="ch.vd.demaut.rest.services.impl.PersonnelRestImpl" id="personnelRest" scope="prototype"
-            p:donneesPersonnellesService-ref="donneesPersonnellesService"/>
+          p:donneesPersonnellesService-ref="donneesPersonnellesService"/>
     <bean class="ch.vd.demaut.rest.services.impl.ProfessionRestImpl" id="professionRest" scope="prototype"
-            p:donneesProfessionnellesService-ref="donneesProfessionnellesService"/>
-    <bean class="ch.vd.demaut.rest.services.impl.SharedRestImpl" id="sharedRest" scope="prototype" />
-
-
+          p:donneesProfessionnellesService-ref="donneesProfessionnellesService"/>
+    <bean class="ch.vd.demaut.rest.services.impl.SharedRestImpl" id="sharedRest" scope="prototype"/>
 
 </beans>
