@@ -36,9 +36,6 @@
         <property name="dataSource" ref="dataSourceDemaut"/>
         <property name="persistenceUnitName" value="demaut-data-jpa"/>
         <property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml"/>
-        <property name="jpaDialect">
-            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
-        </property>
         <property name="jpaVendorAdapter" ref="jpaAdapterDemaut"/>
         <!-- See General LoadTimeWeaver to be started with the Spring agen on
             http://docs.spring.io/spring/docs/2.0.x/reference/orm.html#orm-jpa-setup-lcemfb -->
