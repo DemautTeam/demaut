@@ -314,8 +314,8 @@
         </dependency>
 	   <!-- Dev Run with Jetty & Oracle DB -->
         <dependency>
-            <groupId>oracle</groupId>
-            <artifactId>oracle-jdbc</artifactId>
+            <groupId>oracle.jdbc</groupId>
+            <artifactId>ojdbc6</artifactId>
         </dependency>
 
     </dependencies>

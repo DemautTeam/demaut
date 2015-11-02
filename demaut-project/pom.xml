@@ -136,7 +136,7 @@
 
         <!-- Database -->
         <com.h2.version>1.4.186</com.h2.version>
-        <oracle.jdbc.version>6.0</oracle.jdbc.version>
+        <oracle.jdbc.version>11.2.0.2.0</oracle.jdbc.version>
 
         <!-- Test -->
         <junit.version>4.12</junit.version>
@@ -607,8 +607,8 @@
             
 	    <!-- Dev Run with Jetty & Oracle DB -->
             <dependency>
-                <groupId>oracle</groupId>
-                <artifactId>oracle-jdbc</artifactId>
+                <groupId>oracle.jdbc</groupId>
+                <artifactId>ojdbc6</artifactId>
                 <version>${oracle.jdbc.version}</version>
                 <scope>test</scope>
             </dependency>
