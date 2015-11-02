@@ -1,0 +1,37 @@
+<configuration scan="true" scanPeriod="5 seconds">
+
+	<contextName>demaut-war</contextName>
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>[demaut] [%t] %-5p [%d{yyyy-MM-dd HH:mm:ss.SSS}] %c{1} | %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="LOGFILE" class="ch.qos.logback.core.FileAppender">
+		<file>${ch.vd.dataDir}/logs/demaut.log</file>
+		<encoder>
+			<pattern>[demaut] [%t] %-5p [%d{yyyy-MM-dd HH:mm:ss.SSS}] %c{1} | %m%n</pattern>
+		</encoder>
+	</appender>
+
+    <logger name="ch.vd.demaut" level="DEBUG"/>
+
+    <logger name="ch.vd.iam" level="DEBUG"/>
+
+	<logger name="ch.vd.shared" level="DEBUG"/>
+
+	<logger name="org.apache" level="INFO"/>
+	<logger name="org.apache.cxf" level="DEBUG"/>
+	<logger name="org.apache.openjpa" level="TRACE"/>
+	<logger name="openjpa.Runtime" level="TRACE"/>
+
+    <logger name="org.springframework" level="DEBUG"/>
+	<logger name="org.springframework.security" level="WARN"/>
+
+	<root level="INFO">
+		<appender-ref ref="LOGFILE"/>
+		<appender-ref ref="CONSOLE"/>
+	</root>
+
+</configuration>
