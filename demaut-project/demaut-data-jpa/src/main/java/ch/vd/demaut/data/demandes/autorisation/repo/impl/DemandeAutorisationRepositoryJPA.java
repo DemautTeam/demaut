@@ -66,6 +66,7 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
         final CriteriaBuilder criteriaBuilder = this.getEntityManager().getCriteriaBuilder();
         final CriteriaQuery<DemandeAutorisation> criteriaQuery = criteriaBuilder.createQuery(DemandeAutorisation.class);
         Root<DemandeAutorisation> autorisationRoot = criteriaQuery.from(DemandeAutorisation.class);
+        //A completer le fetch si besoin de nouveaux elements en eager
         Fetch<DemandeAutorisation, DonneesProfessionnelles> fetchDonneesProfessionnelles = autorisationRoot.fetch("donneesProfessionnelles",JoinType.INNER);
         fetchDonneesProfessionnelles.fetch("diplomes", JoinType.LEFT);
         criteriaQuery.where(criteriaBuilder.equal(autorisationRoot.get("referenceDeDemande").get("value"), referenceDeDemande.getValue()));
