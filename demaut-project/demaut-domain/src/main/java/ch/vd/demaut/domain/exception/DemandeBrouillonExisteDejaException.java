@@ -10,4 +10,10 @@ public class DemandeBrouillonExisteDejaException extends DomainException {
 
     private static final long serialVersionUID = 6507126130204632518L;
 
+    public DemandeBrouillonExisteDejaException() {
+    }
+
+    public DemandeBrouillonExisteDejaException(String message) {
+        super(message);
+    }
 }
