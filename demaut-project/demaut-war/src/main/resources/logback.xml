@@ -22,11 +22,10 @@
 	<logger name="ch.vd.shared" level="INFO"/>
 
 	<logger name="org.apache" level="INFO"/>
-	<logger name="org.apache.cxf" level="DEBUG"/>
+	<logger name="org.apache.cxf" level="INFO"/>
 
     <logger name="org.springframework" level="DEBUG"/>
 	<logger name="org.springframework.security" level="WARN"/>
-	<logger name="org.apache.openjpa" level="WARN"/>
 
 	<root level="INFO">
 		<appender-ref ref="LOGFILE"/>
