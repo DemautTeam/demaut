@@ -3,7 +3,7 @@ package ch.vd.demaut.rest.services.impl;
 import ch.vd.demaut.domain.annexes.*;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.rest.commons.json.RestUtils;
+import ch.vd.demaut.rest.json.commons.RestUtils;
 import ch.vd.demaut.services.annexes.AnnexesService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;

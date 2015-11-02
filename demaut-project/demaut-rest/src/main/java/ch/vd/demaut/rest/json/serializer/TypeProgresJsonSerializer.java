@@ -1,7 +1,7 @@
-package ch.vd.demaut.rest.json.converters;
+package ch.vd.demaut.rest.json.serializer;
 
 import ch.vd.demaut.domain.config.TypeProgres;
-import ch.vd.demaut.rest.commons.json.EnumJsonSerializer;
+import ch.vd.demaut.rest.json.commons.EnumJsonSerializer;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 

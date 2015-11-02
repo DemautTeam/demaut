@@ -7,7 +7,7 @@ import ch.vd.demaut.domain.demandeur.Localite;
 import ch.vd.demaut.domain.demandeur.Pays;
 import ch.vd.demaut.domain.demandeur.donneesPerso.*;
 import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.rest.commons.json.RestUtils;
+import ch.vd.demaut.rest.json.commons.RestUtils;
 import ch.vd.demaut.services.demandeurs.donneesPerso.DonneesPersonnellesService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;

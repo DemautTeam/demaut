@@ -4,7 +4,7 @@ import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.rest.commons.json.RestUtils;
+import ch.vd.demaut.rest.json.commons.RestUtils;
 import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
@@ -89,6 +89,9 @@ public class ProfessionRestImpl {
 
         Profession profession = donneesProfessionnellesService.recupererProfessionDeDemande(login, referenceDeDemande);
         CodeGLN codeGLN = donneesProfessionnellesService.recupererDonneesProfessionnelles(login, referenceDeDemande).getCodeGLN();
+        if(codeGLN == null){
+            return RestUtils.buildJSon(Arrays.asList(profession.getRefProgresID().getId(), null));
+        }
         return RestUtils.buildJSon(Arrays.asList(profession.getRefProgresID().getId(), codeGLN.getValue()));
     }
 
