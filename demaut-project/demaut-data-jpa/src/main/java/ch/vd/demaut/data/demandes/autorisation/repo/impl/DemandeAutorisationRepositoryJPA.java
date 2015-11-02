@@ -3,10 +3,9 @@ package ch.vd.demaut.data.demandes.autorisation.repo.impl;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 
+import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
 import org.springframework.stereotype.Repository;
 
 import ch.vd.demaut.data.GenericRepositoryImpl;
@@ -67,6 +66,8 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
         final CriteriaBuilder criteriaBuilder = this.getEntityManager().getCriteriaBuilder();
         final CriteriaQuery<DemandeAutorisation> criteriaQuery = criteriaBuilder.createQuery(DemandeAutorisation.class);
         Root<DemandeAutorisation> autorisationRoot = criteriaQuery.from(DemandeAutorisation.class);
+        Fetch<DemandeAutorisation, DonneesProfessionnelles> fetchDonneesProfessionnelles = autorisationRoot.fetch("donneesProfessionnelles",JoinType.INNER);
+        fetchDonneesProfessionnelles.fetch("diplomes", JoinType.LEFT);
         criteriaQuery.where(criteriaBuilder.equal(autorisationRoot.get("referenceDeDemande").get("value"), referenceDeDemande.getValue()));
         return this.getEntityManager().createQuery(criteriaQuery);
     }

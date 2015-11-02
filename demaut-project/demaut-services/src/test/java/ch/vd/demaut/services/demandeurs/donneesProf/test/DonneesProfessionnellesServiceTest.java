@@ -66,8 +66,6 @@ public class DonneesProfessionnellesServiceTest {
     }
 
     @Test
-    @Transactional
-    @Rollback(value = true)
     public void testHasListeDeDiplomes() {
         intialiserDemandeEnCours("admin2@admin.com");
 
@@ -79,8 +77,6 @@ public class DonneesProfessionnellesServiceTest {
     }
 
     @Test
-    @Transactional
-    @Rollback(value = true)
     public void testAjouterUnDiplomes() {
         intialiserDemandeEnCours("admin3@admin.com");
 
@@ -91,13 +87,13 @@ public class DonneesProfessionnellesServiceTest {
                 TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
                 new TitreFormation(TitreFormationApprofondieProgres.ChirurgieDeLaMain.name()), null,
                 new DateObtention(new LocalDate()), Pays.AfriqueDuSud, null);
-        assertThat(donneesProfessionnelles).isNotNull();
-        assertThat(donneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(1);
+        DonneesProfessionnelles resultDonneesProfessionnelles = donneesProfessionnellesService
+                .recupererDonneesProfessionnelles(login, demandeAutorisation.getReferenceDeDemande());
+        assertThat(resultDonneesProfessionnelles).isNotNull();
+        assertThat(resultDonneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(1);
     }
 
     @Test
-    @Transactional
-    @Rollback(value = true)
     public void testSupprimerUnDiplomes() {
         intialiserDemandeEnCours("admin4@admin.com");
 
@@ -118,8 +114,6 @@ public class DonneesProfessionnellesServiceTest {
     }
 
     @Test
-    @Transactional
-    @Rollback(value = true)
     public void testValiderEtRenseignerCodeGLN() {
         intialiserDemandeEnCours("admin3@admin.com");
         donneesProfessionnellesService.validerEtRenseignerCodeGLN(login, demandeAutorisation.getReferenceDeDemande(), new CodeGLN("4719512002889"));
@@ -132,8 +126,6 @@ public class DonneesProfessionnellesServiceTest {
     }
 
     @Test
-    @Transactional
-    @Rollback(value = true)
     public void testRecupererDiplomesSaisis() throws Exception {
         intialiserDemandeEnCours("admin3@admin.com");
         DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService
@@ -171,6 +163,11 @@ public class DonneesProfessionnellesServiceTest {
                         new DateObtention(new LocalDate()), Pays.Suisse, null));
     }
 
+    /**
+     * Cette methode utilise des transaction uniquement pour l'initialisation de la deamde
+     * @param loginStr
+     */
+    //TOD réviser la méthode d'initialisation de ce test
     @Transactional(propagation = Propagation.REQUIRED)
     private void intialiserDemandeEnCours(String loginStr) {
         this.login = new Login(loginStr);
