@@ -50,7 +50,8 @@
         <property name="entityManagerFactory" ref="entityManagerFactoryDemaut"/>
     </bean>
 
-    <tx:annotation-driven transaction-manager="transactionManagerDemaut" mode="proxy" proxy-target-class="true"/>
+    <!-- proxy-target-class="true" devrait être supprimé mauvaises performamces + utilisation de CGLIB -->
+    <tx:annotation-driven transaction-manager="transactionManagerDemaut"/>
 
     <!--Repositories-->
     <bean id="demandeAutorisationRepository"
