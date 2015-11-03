@@ -8,7 +8,7 @@
     </parent>
 
     <artifactId>demaut-war</artifactId>
-    <name>deamut-war</name>
+    <name>demaut-war</name>
     <packaging>war</packaging>
     <description>Maven Module pour construire un WAR déployable sur Tomcat/Jetty</description>
 
