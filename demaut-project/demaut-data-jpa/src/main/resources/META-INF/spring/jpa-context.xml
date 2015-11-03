@@ -14,8 +14,8 @@
 
     <bean id="jpaAdapterDemaut"
         class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-        <property name="databasePlatform" value="${demaut.database.jpa.dictionary}"/>
-        <property name="database" value="${demaut.database.jpa.type}"/>
+<!--        <property name="databasePlatform" value="${demaut.database.jpa.dictionary}"/> -->
+<!--        <property name="database" value="${demaut.database.jpa.type}"/> -->
         <property name="showSql" value="true"/>
         <property name="generateDdl" value="true"/>
     </bean>
