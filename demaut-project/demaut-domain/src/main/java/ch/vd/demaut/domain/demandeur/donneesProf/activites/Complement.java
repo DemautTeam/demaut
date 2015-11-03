@@ -1,13 +1,15 @@
 package ch.vd.demaut.domain.demandeur.donneesProf.activites;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
-import ch.vd.demaut.commons.vo.StringVO;
+import ch.vd.demaut.commons.vo.BaseValueObject;
 
 /**
  * Représente le complement d'adresse
  */
 @ValueObject
-public class Complement extends StringVO {
+public class Complement extends BaseValueObject {
+
+    private String value;
 
     // ********************************************************* Constructor
 
@@ -15,11 +17,10 @@ public class Complement extends StringVO {
     }
 
     public Complement(String value) {
-        super(value);
+        this.value = value;
     }
 
-    @Override
     public String getValue() {
-        return super.getValue();
+        return value;
     }
 }
