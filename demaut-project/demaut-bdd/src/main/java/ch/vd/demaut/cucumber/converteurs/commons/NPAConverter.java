@@ -1,9 +1,14 @@
 package ch.vd.demaut.cucumber.converteurs.commons;
 
+import ch.vd.demaut.domain.demandeur.donneesPerso.NPA;
 import cucumber.api.Transformer;
+import org.apache.commons.lang.StringUtils;
 
-/**
- * Created by aecio on 03.11.15.
- */
-public class NPAConverter extends Transformer {
+public class NPAConverter extends Transformer<NPA> {
+
+        @Override
+        public NPA transform(String str ) {
+            return StringUtils.isEmpty(str)? null: new NPA(str);
+        }
+
 }
