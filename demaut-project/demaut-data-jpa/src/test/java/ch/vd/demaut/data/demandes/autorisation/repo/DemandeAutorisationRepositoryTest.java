@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import ch.vd.demaut.domain.annexes.Annexe;
@@ -75,8 +77,8 @@ public class DemandeAutorisationRepositoryTest {
     // ********************************************************* Tests
 
     @Test
+    @Transactional
     public void sauvegarderUneDemande() {
-        transaction = beginTransaction();
 
         // Construction de la demande
         Utilisateur utilisateur = creerUtilisateur("admin1@admin");
@@ -88,6 +90,7 @@ public class DemandeAutorisationRepositoryTest {
     }
 
     @Test
+    @Transactional(readOnly = true)
     public void countAllDemande(){
         long result = demandeAutorisationRepository.countAll();
         assertThat(result).isGreaterThanOrEqualTo(0);
@@ -182,11 +185,9 @@ public class DemandeAutorisationRepositoryTest {
         return transactionManagerDemaut.getTransaction(definition);
     }
 
-    private DemandeAutorisation recupererDemandePersistee(DemandeAutorisation demandeAutorisation) {
-        commitTransaction(transaction);
-        transaction = beginTransaction();
+    private DemandeAutorisation recupererDemandePersistee(ReferenceDeDemande referenceDeDemande) {
         return demandeAutorisationRepository
-                .recupererDemandeParReference(demandeAutorisation.getReferenceDeDemande());
+                .recupererDemandeParReference(referenceDeDemande);
     }
 
     private void verifieMemeDemande(DemandeAutorisation demandePersistee, DemandeAutorisation demandeInit) {
@@ -226,11 +227,13 @@ public class DemandeAutorisationRepositoryTest {
         // Sauvegarder la demande
         demandeAutorisationRepository.store(demandeInit);
 
+        //commitTransaction(transaction);
+
         // Teste que la demande a été persistée correctement
-        DemandeAutorisation memeDemande = recupererDemandePersistee(demandeInit);
+        DemandeAutorisation memeDemande = recupererDemandePersistee(demandeInit.getReferenceDeDemande());
         verifieMemeDemande(memeDemande, demandeInit);
 
-        commitTransaction(transaction);
+
     }
 
 

@@ -5,7 +5,10 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 
+import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnelles;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import ch.vd.demaut.data.GenericRepositoryImpl;
@@ -20,6 +23,8 @@ import ch.vd.demaut.domain.utilisateurs.Login;
 public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<DemandeAutorisation, Long>
         implements DemandeAutorisationRepository {
 
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     // ********************************************************* Constructor
     public DemandeAutorisationRepositoryJPA() {
         super(DemandeAutorisation.class);
@@ -28,6 +33,7 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
     // ********************************************************* Implementation des interfaces
     @Override
     public DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande referenceDeDemande) {
+        logger.debug("Chargement de la demande  {}", referenceDeDemande.getValue());
         TypedQuery<DemandeAutorisation> typedQuery = createQueryParReference(referenceDeDemande);
         return typedQuery.getSingleResult();
     }
@@ -65,11 +71,14 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
     private TypedQuery<DemandeAutorisation> createQueryParReference(ReferenceDeDemande referenceDeDemande) {
         final CriteriaBuilder criteriaBuilder = this.getEntityManager().getCriteriaBuilder();
         final CriteriaQuery<DemandeAutorisation> criteriaQuery = criteriaBuilder.createQuery(DemandeAutorisation.class);
-        Root<DemandeAutorisation> autorisationRoot = criteriaQuery.from(DemandeAutorisation.class);
+        final Root<DemandeAutorisation> autorisationRoot = criteriaQuery.from(DemandeAutorisation.class);
         //A completer le fetch si besoin de nouveaux elements en eager
         Fetch<DemandeAutorisation, DonneesProfessionnelles> fetchDonneesProfessionnelles = autorisationRoot.fetch("donneesProfessionnelles",JoinType.INNER);
         fetchDonneesProfessionnelles.fetch("diplomes", JoinType.LEFT);
-        criteriaQuery.where(criteriaBuilder.equal(autorisationRoot.get("referenceDeDemande").get("value"), referenceDeDemande.getValue()));
+        Fetch<DemandeAutorisation, DonneesPersonnelles> fetchDonneesPersonnelles = autorisationRoot.fetch("donneesPersonnelles",JoinType.INNER);
+        fetchDonneesPersonnelles.fetch("adresse", JoinType.LEFT);
+
+        criteriaQuery.where(criteriaBuilder.equal(autorisationRoot.get("referenceDeDemande"), referenceDeDemande));
         return this.getEntityManager().createQuery(criteriaQuery);
     }
 
