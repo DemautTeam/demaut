@@ -251,18 +251,20 @@ ngDemautApp
             $scope.indexStep = 2;
             this.name = "DonneesPersoController";
             this.params = $routeParams;
-            $scope.testSuisse = nationalityTest;//récupération du service de test des nationnalité
+            $scope.testSuisse = nationalityTest;//récupération du service de test des nationnalités
+
+            $scope.nationalites = [];
+            $scope.langues = [];
+            $scope.paysList = [];
+
             $scope.personalData = {};
-            $scope.personalData.nationalites = [];
-            $scope.personalData.langues = [];
-            $scope.personalData.paysList = [];
             $scope.personalData.datePicker = {};
             $scope.personalData.datePicker.status = {};
 
-            if ($scope.personalData.nationalites.length == 0) {
+            if ($scope.nationalites.length == 0) {
                 $http.get(urlPrefix + '/shared/nationalites').
                     success(function (data, status, headers, config) {
-                        $scope.personalData.nationalites = angular.fromJson(data.response);
+                        $scope.nationalites = angular.fromJson(data.response);
                         $log.info('Liste nationalites a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
@@ -271,10 +273,10 @@ ngDemautApp
                     });
             }
 
-            if ($scope.personalData.langues.length == 0) {
+            if ($scope.langues.length == 0) {
                 $http.get(urlPrefix + '/shared/langues').
                     success(function (data, status, headers, config) {
-                        $scope.personalData.langues = angular.fromJson(data.response);
+                        $scope.langues = angular.fromJson(data.response);
                         $log.info('Liste langues a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
@@ -283,10 +285,10 @@ ngDemautApp
                     });
             }
 
-            if ($scope.personalData.paysList.length == 0) {
+            if ($scope.paysList.length == 0) {
                 $http.get(urlPrefix + '/shared/paysList').
                     success(function (data, status, headers, config) {
-                        $scope.personalData.paysList = angular.fromJson(data.response);
+                        $scope.paysList = angular.fromJson(data.response);
                         $log.info('Liste pays a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
@@ -294,7 +296,7 @@ ngDemautApp
                         $log.info('Error ' + urlPrefix + '/shared/paysList/ \n Status :' + status);
                     });
             }
-
+            //TODO faire un service ou un provider pour la gestion de l'état de la demande
             $scope.isBrouillonExistant = function () {
                 return window.localStorage && $window.localStorage.getItem('referenceDeDemande');
             };
@@ -306,52 +308,58 @@ ngDemautApp
                     }
                 }).
                     success(function (data, status, headers, config) {
-                        var response = angular.fromJson(data.response);
-                        $scope.personalData.nom = response.nom.value;
-                        $scope.personalData.prenom = response.prenom.value;
-                        $scope.personalData.nomDeCelibataire = response.nomDeCelibataire.value;
+                        var responseValues = angular.fromJson(data.response);
+                        var donneesPerso = [];
+                        angular.forEach(responseValues, function(value, key) {
+                            $log.info("Filtrage : " + key + " : " + value);
+                            this.push(key + ': ' + value);
+                        }, donneesPerso);
 
-                        if(response.adresse != null && response.adresse != undefined) {
-                            $scope.personalData.adressePersonnelle = response.adresse.voie;
-                            $scope.personalData.complement = response.adresse.complement;
-                            $scope.personalData.localite = response.adresse.localite.value;
-                            $scope.personalData.npa = response.adresse.npa.value;
+                        $scope.personalData.nom = responseValues.nom.value;
+                        $scope.personalData.prenom = responseValues.prenom.value;
+                        $scope.personalData.nomDeCelibataire = responseValues.nomDeCelibataire.value;
 
-                            for (var indexI = 0; indexI < $scope.personalData.paysList.length; indexI++) {
-                                if ($scope.personalData.paysList[indexI].name == response.adresse.pays) {
-                                    $scope.personalData.pays = $scope.personalData.paysList[indexI];
+                        if(responseValues.adresse != null && responseValues.adresse != undefined) {
+                            $scope.personalData.adressePersonnelle = responseValues.adresse.voie;
+                            $scope.personalData.complement = responseValues.adresse.complement;
+                            $scope.personalData.localite = responseValues.adresse.localite.value;
+                            $scope.personalData.npa = responseValues.adresse.npa.value;
+
+                            for (var indexI = 0; indexI < $scope.paysList.length; indexI++) {
+                                if ($scope.paysList[indexI].name == responseValues.adresse.pays) {
+                                    $scope.personalData.pays = $scope.paysList[indexI];
                                     break;
                                 }
                             }
                         }
 
-                        $scope.personalData.telephonePrive = response.telephonePrive.value;
-                        $scope.personalData.telephoneMobile = response.telephoneMobile.value;
-                        $scope.personalData.email = response.email.value;
-                        $scope.personalData.fax = response.fax.value;
-                        $scope.personalData.genre = response.genre;
-                        $scope.personalData.dateDeNaissance = new Date(response.dateDeNaissance.value);
+                        $scope.personalData.telephonePrive = responseValues.telephonePrive.value;
+                        $scope.personalData.telephoneMobile = responseValues.telephoneMobile.value;
+                        $scope.personalData.email = responseValues.email.value;
+                        $scope.personalData.fax = responseValues.fax.value;
+                        $scope.personalData.genre = responseValues.genre;
+                        $scope.personalData.dateDeNaissance = new Date(responseValues.dateDeNaissance.value);
 
-                        for (var indexJ = 0; indexJ < $scope.personalData.nationalites.length; indexJ++) {
-                            if ($scope.personalData.nationalites[indexJ].name == response.nationalite) {
-                                $scope.personalData.nationalite = $scope.personalData.nationalites[indexJ];
+                        for (var indexJ = 0; indexJ < $scope.nationalites.length; indexJ++) {
+                            if ($scope.nationalites[indexJ].name == responseValues.nationalite) {
+                                $scope.personalData.nationalite = $scope.nationalites[indexJ];
                                 break;
                             }
                         }
-                        for (var indexK = 0; indexK < $scope.personalData.langues.length; indexK++) {
-                            if ($scope.personalData.langues[indexK].name == response.langue) {
-                                $scope.personalData.langue = $scope.personalData.langues[indexK];
+                        for (var indexK = 0; indexK < $scope.langues.length; indexK++) {
+                            if ($scope.langues[indexK].name == responseValues.langue) {
+                                $scope.personalData.langue = $scope.langues[indexK];
                                 break;
                             }
                         }
-                        if(response.permis != null && response.permis != undefined) {
-                            $scope.personalData.permis = response.permis.typePermis;
-                            $scope.personalData.permisOther = response.permis.autrePermis.value;
+                        if(responseValues.permis != null && responseValues.permis != undefined) {
+                            $scope.personalData.permis = responseValues.permis.typePermis;
+                            $scope.personalData.permisOther = responseValues.permis.autrePermis.value;
                         }
-                        if(response != null && response != undefined) {
+                        if(responseValues != null && responseValues != undefined) {
                             $scope.donneesPerso.donneesPersoDataForm.$pristine = false;
                         }
-                        $log.info('Objet Données personnlles a été récupéré avec succès!');
+                        $log.info('Objet Données personnelles a été récupéré avec succès!');
                     }).
                     error(function (data, status, headers, config) {
                         $rootScope.error = 'Error fetching ../personal/recuperer';
@@ -396,6 +404,7 @@ ngDemautApp
             };
 
             function doUpdateDonneesPerso() {
+                //TODO envoyer en POST ou PUT
                 $http.get(urlPrefix + '/personal/renseigner', {
                     params: {
                         referenceDeDemande: $window.localStorage.getItem('referenceDeDemande'),

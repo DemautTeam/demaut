@@ -88,7 +88,7 @@
                         <div class="col-md-2" popover-enable="wouldStepNext || (donneesPerso.donneesPersoDataForm.pays.$invalid && !donneesPerso.donneesPersoDataForm.pays.$pristine)"
                              popover-trigger="none" popover-is-open="(wouldStepNext && donneesPerso.donneesPersoDataForm.pays.$invalid ) || (donneesPerso.donneesPersoDataForm.pays.$invalid && !donneesPerso.donneesPersoDataForm.pays.$pristine)" popover-placement="right"
                              uib-popover="Veuillez saisir le pays de votre adresse privée.">
-                            <select id="pays" name="pays" ng-model="personalData.pays" required ng-options="pays.libl for pays in personalData.paysList track by pays.id" class="form-control"/>
+                            <select id="pays" name="pays" ng-model="personalData.pays" required ng-options="pays.libl for pays in paysList track by pays.id" class="form-control"/>
                         </div>
                     </div>
                 </fieldset>
@@ -169,7 +169,7 @@
                              popover-trigger="none" popover-is-open="(wouldStepNext && donneesPerso.donneesPersoDataForm.nationalite.$invalid) || (donneesPerso.donneesPersoDataForm.nationalite.$invalid && !donneesPerso.donneesPersoDataForm.nationalite.$pristine)" popover-placement="right"
                              uib-popover="Veuillez saisir votre nationalité.">
                             <select id="nationalite" name="nationalite" ng-model="personalData.nationalite" required ng-change="resetPermis()"
-                                    ng-options="nationalite.libl for nationalite in personalData.nationalites track by nationalite.id" class="form-control" />
+                                    ng-options="nationalite.libl for nationalite in nationalites track by nationalite.id" class="form-control" />
                         </div>
                     </div>
 

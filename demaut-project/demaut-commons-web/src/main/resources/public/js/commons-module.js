@@ -1,5 +1,6 @@
 var commonsModule = angular.module('commonsModule', ['ngResource']);
 
+//----------------------- Factory -----------------------
 commonsModule.factory('globalErrorInterceptor', ['$log', function($log){
         var globalErrorInterceptor = {
             responseError: function(response){
@@ -35,6 +36,7 @@ commonsModule.factory('globalDefaultError', [function ($q, $rootScope, $location
     };
 }]);
 
+//------------------------- Service -------------------------
 commonsModule.service('nationalityTest', ['$log', function ($log) {
     this.suissePattern = new RegExp('[Ss]uisse');
     this.isSuisse = function (textValue) {
@@ -63,6 +65,7 @@ commonsModule.service('configService', ['$resource', function ($resource) {
 
 }]);
 
+//------------------------ Directive -------------------------
 commonsModule.directive('stepActions', function () {
     return {
         restrict: 'E',
