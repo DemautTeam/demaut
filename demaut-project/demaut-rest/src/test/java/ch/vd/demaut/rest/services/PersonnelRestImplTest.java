@@ -5,7 +5,7 @@ import ch.vd.demaut.domain.demandeur.Fax;
 import ch.vd.demaut.domain.demandeur.Localite;
 import ch.vd.demaut.domain.demandeur.Pays;
 import ch.vd.demaut.domain.demandeur.donneesPerso.*;
-import ch.vd.demaut.rest.services.impl.PersonelRestImpl;
+import ch.vd.demaut.rest.services.impl.PersonnelRestImpl;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
@@ -24,9 +24,9 @@ import static org.junit.Assert.assertTrue;
 @ContextConfiguration({"classpath*:restTest-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class PersonelRestImplTest {
+public class PersonnelRestImplTest {
 
-    private PersonelRestImpl personelRest;
+    private PersonnelRestImpl personelRest;
 
     private String referenceDeDemande;
 

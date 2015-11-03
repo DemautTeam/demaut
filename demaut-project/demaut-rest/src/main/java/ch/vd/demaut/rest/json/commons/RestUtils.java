@@ -1,7 +1,7 @@
-package ch.vd.demaut.rest.commons.json;
+package ch.vd.demaut.rest.json.commons;
 
 import ch.vd.demaut.domain.exception.UtilisateurNotFoundException;
-import ch.vd.demaut.rest.json.converters.TypeProgresJsonSerializer;
+import ch.vd.demaut.rest.json.serializer.TypeProgresJsonSerializer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;

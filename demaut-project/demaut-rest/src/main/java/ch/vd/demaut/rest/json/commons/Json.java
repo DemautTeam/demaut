@@ -1,4 +1,4 @@
-package ch.vd.demaut.rest.commons.json;
+package ch.vd.demaut.rest.json.commons;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

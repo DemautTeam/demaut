@@ -1,60 +1,38 @@
 package ch.vd.demaut.rest.services.impl;
 
-import java.io.IOException;
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandeur.Email;
+import ch.vd.demaut.domain.demandeur.Fax;
+import ch.vd.demaut.domain.demandeur.Localite;
+import ch.vd.demaut.domain.demandeur.Pays;
+import ch.vd.demaut.domain.demandeur.donneesPerso.*;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.rest.json.commons.RestUtils;
+import ch.vd.demaut.services.demandeurs.donneesPerso.DonneesPersonnellesService;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-
-import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.demandeur.Pays;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Adresse;
-import ch.vd.demaut.domain.demandeur.donneesPerso.AutrePermis;
-import ch.vd.demaut.domain.demandeur.donneesPerso.DateDeNaissance;
-import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnelles;
-import ch.vd.demaut.domain.demandeur.Email;
-import ch.vd.demaut.domain.demandeur.Fax;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Genre;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Langue;
-import ch.vd.demaut.domain.demandeur.Localite;
-import ch.vd.demaut.domain.demandeur.donneesPerso.NPA;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Nom;
-import ch.vd.demaut.domain.demandeur.donneesPerso.NomDeCelibataire;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Permis;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Prenom;
-import ch.vd.demaut.domain.demandeur.donneesPerso.TelephoneMobile;
-import ch.vd.demaut.domain.demandeur.donneesPerso.TelephonePrive;
-import ch.vd.demaut.domain.demandeur.donneesPerso.TypePermis;
-import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.rest.commons.json.RestUtils;
-import ch.vd.demaut.services.demandeurs.donneesPerso.DonneesPersonnellesService;
+import javax.ws.rs.core.*;
+import java.io.IOException;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
-@Service("personelRestImpl")
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Path("/personal")
-public class PersonelRestImpl {
+public class PersonnelRestImpl {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PersonelRestImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PersonnelRestImpl.class);
 
-    @Autowired
     private DonneesPersonnellesService donneesPersonnellesService;
+
+    public void setDonneesPersonnellesService(DonneesPersonnellesService donneesPersonnellesService) {
+        this.donneesPersonnellesService = donneesPersonnellesService;
+    }
 
     @Context
     private UriInfo uriInfo;
@@ -65,7 +43,9 @@ public class PersonelRestImpl {
     /**
      * Méthode qui renseigner les Donnees Personnelles du demandeur
      * dateDeNaissance String (format 2015-10-06T22:00:00.000Z)
+     *
      */
+    //TODO typage de la date de naissance ?
     @SuppressWarnings("all")
     @GET
     @Path("/renseigner")

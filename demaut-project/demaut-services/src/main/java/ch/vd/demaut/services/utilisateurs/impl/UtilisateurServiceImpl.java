@@ -3,9 +3,7 @@ package ch.vd.demaut.services.utilisateurs.impl;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.domain.utilisateurs.Utilisateur;
 import ch.vd.demaut.domain.utilisateurs.UtilisateurService;
-import org.springframework.stereotype.Service;
 
-@Service("utilisateurService")
 public class UtilisateurServiceImpl implements UtilisateurService {
 
     @Override

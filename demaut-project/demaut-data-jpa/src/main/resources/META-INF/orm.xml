@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <entity-mappings version="2.0"
-    xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm
+                 xmlns="http://java.sun.com/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm
 				 http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
 
     <!-- - OpenJPA limitations / bugs : - Not working well with access="PROPERTY"
@@ -137,8 +138,8 @@
         <table name="DONNEES_PROFESSIONNELLES"/>
         <attributes>
             <!-- On ne peut pas utiliser EAGER : https://issues.apache.org/jira/browse/OPENJPA-1908 -->
-            <one-to-many name="diplomes">
-                <join-column name="DIPLOMES_ID"/>
+            <one-to-many name="diplomes" >
+                <join-column/>
                 <cascade>
                     <cascade-all/>
                 </cascade>
@@ -194,7 +195,7 @@
                 <enumerated>STRING</enumerated>
             </basic>
             <basic name="complement">
-                <column name="complement" column-definition="varchar"
+                <column name="complement"
                     length="254"/>
             </basic>
             <embedded name="referenceDeDiplome"/>
@@ -214,11 +215,11 @@
                 <enumerated>ORDINAL</enumerated>
             </basic>
             <basic name="voie">
-                <column name="voie" column-definition="varchar"
+                <column name="voie"
                     length="254"/>
             </basic>
             <basic name="complement">
-                <column name="complement" column-definition="varchar"
+                <column name="complement"
                     length="254"/>
             </basic>
             <embedded name="npa"/>
@@ -231,7 +232,7 @@
     <embeddable class="ch.vd.demaut.domain.annexes.NomFichier">
         <attributes>
             <basic name="nomFichier">
-                <column name="nom_fichier" column-definition="varchar"
+                <column name="nom_fichier"
                     length="254"/>
             </basic>
         </attributes>
@@ -250,7 +251,7 @@
     <embeddable class="ch.vd.demaut.domain.utilisateurs.Login">
         <attributes>
             <basic name="value">
-                <column name="login" column-definition="varchar"
+                <column name="login"
                     length="254"/>
             </basic>
         </attributes>
@@ -260,7 +261,7 @@
         <attributes>
             <basic name="value">
                 <column name="reference_Demande"
-                    column-definition="varchar" length="254"/>
+                    length="254"/>
             </basic>
         </attributes>
     </embeddable>
@@ -268,8 +269,8 @@
     <embeddable class="ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN">
         <attributes>
             <basic name="value">
-                <column name="code_GLN" column-definition="varchar"
-                    length="254"/>
+                <column name="code_GLN"
+                    length="13"/>
             </basic>
         </attributes>
     </embeddable>
@@ -278,7 +279,7 @@
         class="ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormation">
         <attributes>
             <basic name="value">
-                <column name="titre_Formation" column-definition="varchar"
+                <column name="titre_Formation"
                     length="254"/>
             </basic>
         </attributes>
@@ -288,7 +289,7 @@
         class="ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateObtention">
         <attributes>
             <basic name="value">
-                <column name="date_Obtention" column-definition="date"/>
+                <column name="date_Obtention"/>
             </basic>
         </attributes>
     </embeddable>
@@ -297,8 +298,7 @@
         class="ch.vd.demaut.domain.demandeur.donneesProf.diplome.DateReconnaissance">
         <attributes>
             <basic name="value">
-                <column name="date_Reconnaissance"
-                    column-definition="date"/>
+                <column name="date_Reconnaissance"/>
             </basic>
         </attributes>
     </embeddable>
@@ -306,7 +306,7 @@
     <embeddable class="ch.vd.demaut.domain.demandes.DateDeCreation">
         <attributes>
             <basic name="value">
-                <column name="date_Creation" column-definition="date"/>
+                <column name="date_creation"/>
             </basic>
         </attributes>
     </embeddable>
@@ -316,7 +316,7 @@
         <attributes>
             <basic name="value">
                 <column name="reference_Diplome"
-                    column-definition="varchar" length="254"/>
+                    length="254"/>
             </basic>
         </attributes>
     </embeddable>
@@ -324,7 +324,7 @@
     <embeddable class="ch.vd.demaut.domain.demandeur.donneesPerso.NPA">
         <attributes>
             <basic name="value">
-                <column name="npa" column-definition="varchar"
+                <column name="npa"
                     length="254"/>
             </basic>
         </attributes>
@@ -333,7 +333,7 @@
     <embeddable class="ch.vd.demaut.domain.demandeur.Localite">
         <attributes>
             <basic name="value">
-                <column name="localite" column-definition="varchar"
+                <column name="localite"
                     length="254"/>
             </basic>
         </attributes>
@@ -342,7 +342,7 @@
     <embeddable class="ch.vd.demaut.domain.demandeur.donneesPerso.Nom">
         <attributes>
             <basic name="value">
-                <column name="nom" column-definition="varchar"
+                <column name="nom"
                     length="254"/>
             </basic>
         </attributes>
@@ -351,7 +351,7 @@
     <embeddable class="ch.vd.demaut.domain.demandeur.donneesPerso.Prenom">
         <attributes>
             <basic name="value">
-                <column name="prenom" column-definition="varchar"
+                <column name="prenom"
                     length="254"/>
             </basic>
         </attributes>
@@ -361,8 +361,8 @@
         class="ch.vd.demaut.domain.demandeur.donneesPerso.NomDeCelibataire">
         <attributes>
             <basic name="value">
-                <column name="nom_de_Celibataire"
-                    column-definition="varchar" length="254"/>
+                <column name="nom_de_celibataire"
+                    length="254"/>
             </basic>
         </attributes>
     </embeddable>
@@ -371,7 +371,7 @@
         class="ch.vd.demaut.domain.demandeur.donneesPerso.DateDeNaissance">
         <attributes>
             <basic name="value">
-                <column name="date_de_Naissance"
+                <column name="date_de_naissance"
                     column-definition="date"/>
             </basic>
         </attributes>
@@ -380,7 +380,7 @@
     <embeddable class="ch.vd.demaut.domain.demandeur.Email">
         <attributes>
             <basic name="value">
-                <column name="email" column-definition="varchar"
+                <column name="email"
                     length="254"/>
             </basic>
         </attributes>
@@ -390,8 +390,8 @@
         class="ch.vd.demaut.domain.demandeur.donneesPerso.NumeroTelephone">
         <attributes>
             <basic name="value">
-                <column name="telephone" column-definition="varchar"
-                    length="254"/>
+                <column name="telephone"
+                    length="50"/>
             </basic>
         </attributes>
     </embeddable>
@@ -400,8 +400,8 @@
         class="ch.vd.demaut.domain.demandeur.donneesPerso.TelephonePrive">
         <attributes>
             <basic name="value">
-                <column name="telephone_prive" column-definition="varchar"
-                    length="254"/>
+                <column name="telephone_prive"
+                    length="50"/>
             </basic>
         </attributes>
     </embeddable>
@@ -411,7 +411,7 @@
         <attributes>
             <basic name="value">
                 <column name="telephone_mobile"
-                    column-definition="varchar" length="254"/>
+                    length="50"/>
             </basic>
         </attributes>
     </embeddable>
@@ -419,8 +419,8 @@
     <embeddable class="ch.vd.demaut.domain.demandeur.Fax">
         <attributes>
             <basic name="value">
-                <column name="fax" column-definition="varchar"
-                    length="254"/>
+                <column name="fax"
+                    length="50"/>
             </basic>
         </attributes>
     </embeddable>
@@ -438,7 +438,7 @@
     <embeddable class="ch.vd.demaut.domain.demandeur.donneesPerso.AutrePermis">
         <attributes>
             <basic name="value">
-                <column name="autre_permis" column-definition="varchar"
+                <column name="autre_permis"
                     length="254"/>
             </basic>
         </attributes>

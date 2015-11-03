@@ -11,21 +11,16 @@ import ch.vd.demaut.domain.exception.DemandeNotFoundException;
 import ch.vd.demaut.domain.exception.ReferenceDemandeNotFoundException;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("demandeAutorisationService")
 public class DemandeAutorisationServiceImpl implements DemandeAutorisationService {
 
-    @Autowired
     private DemandeAutorisationRepository demandeAutorisationRepository;
 
-    @Autowired
     private DemandeAutorisationFactory demandeAutorisationFactory;
 
     @Transactional
@@ -78,4 +73,18 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
             throw new ReferenceDemandeNotFoundException();
         }
     }
+
+    public void setDemandeAutorisationRepository(DemandeAutorisationRepository demandeAutorisationRepository) {
+        this.demandeAutorisationRepository = demandeAutorisationRepository;
+    }
+
+    public void setDemandeAutorisationFactory(DemandeAutorisationFactory demandeAutorisationFactory) {
+        this.demandeAutorisationFactory = demandeAutorisationFactory;
+    }
+
+    // ********************************************************* Methodes
+    // privees
+
+
+
 }

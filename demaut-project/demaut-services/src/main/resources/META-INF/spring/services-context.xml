@@ -1,17 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context
-		http://www.springframework.org/schema/context/spring-context.xsd">
-
-    <context:annotation-config/>
-    
-    <context:component-scan base-package="ch.vd.demaut"/>
+		http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <import resource="classpath:META-INF/spring/jpa-context.xml"/>
+
+    <!--Services-->
+    <bean id="annexesService" class="ch.vd.demaut.services.annexes.impl.AnnexesServiceImpl">
+        <property name="demandeAutorisationRepository" ref="demandeAutorisationRepository"/>
+    </bean>
+    <bean id="demandeAutorisationService" class="ch.vd.demaut.services.demandes.autorisation.impl.DemandeAutorisationServiceImpl">
+        <property name="demandeAutorisationRepository" ref="demandeAutorisationRepository"/>
+        <property name="demandeAutorisationFactory" ref="demandeAutorisationFactory"/>
+    </bean>
+    <bean id="donneesPersonnellesService" class="ch.vd.demaut.services.demandeurs.donneesPerso.impl.DonneesPersonnellesServiceImpl">
+        <property name="demandeAutorisationRepository" ref="demandeAutorisationRepository"/>
+    </bean>
+    <bean id="donneesProfessionnellesService" class="ch.vd.demaut.services.demandeurs.donneesProf.impl.DonneesProfessionnellesServiceImpl">
+        <property name="demandeAutorisationRepository" ref="demandeAutorisationRepository"/>
+    </bean>
+    <bean id="utilisateurService" class="ch.vd.demaut.services.utilisateurs.impl.UtilisateurServiceImpl"/>
 
 </beans>
