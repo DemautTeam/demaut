@@ -149,7 +149,10 @@ public class DonneesProfessionnellesServiceTest {
                 TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
                 new TitreFormation(TitreFormationApprofondieProgres.ChirurgieDeLaMain.name()), null,
                 new DateObtention(new LocalDate()), Pays.AfriqueDuSud, null);
-        assertThat(donneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(1);
+        //L'objet Données professionnelles n'est pas rafraichi, l'instance est déconnectée...
+        DonneesProfessionnelles donneesProfessionnellesAfter = donneesProfessionnellesService
+                .recupererDonneesProfessionnelles(login, demandeAutorisation.getReferenceDeDemande());
+        assertThat(donneesProfessionnellesAfter.getListeDesDiplomes().listerDiplomes()).hasSize(1);
 
         List<Diplome> diplomesSaisis = donneesProfessionnellesService.recupererDiplomesSaisis(login, demandeAutorisation.getReferenceDeDemande());
 
