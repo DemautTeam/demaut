@@ -118,12 +118,19 @@ public class DonneesProfessionnellesServiceTest {
                 TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
                 new TitreFormation(TitreFormationApprofondieProgres.ChirurgieDeLaMain.name()), null,
                 new DateObtention(new LocalDate()), Pays.AfriqueDuSud, null);
-        assertThat(donneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(1);
 
-        Diplome diplome = donneesProfessionnelles.getListeDesDiplomes().listerDiplomes().get(0);
+        //Rafraichissement des donnees progfessionnelles pour être en phase avec la base.
+        DonneesProfessionnelles donneesProfessionnellesAfterInsert = donneesProfessionnellesService
+                .recupererDonneesProfessionnelles(login, demandeAutorisation.getReferenceDeDemande());
+
+        assertThat(donneesProfessionnellesAfterInsert.getListeDesDiplomes().listerDiplomes()).hasSize(1);
+        //----- Test suppression ------
+        Diplome diplome = donneesProfessionnellesAfterInsert.getListeDesDiplomes().listerDiplomes().get(0);
         donneesProfessionnellesService.supprimerUnDiplome(login, demandeAutorisation.getReferenceDeDemande(), diplome.getReferenceDeDiplome());
-        assertThat(donneesProfessionnelles).isNotNull();
-        assertThat(donneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(0);
+        DonneesProfessionnelles resultDonneesProfessionnelles = donneesProfessionnellesService
+                .recupererDonneesProfessionnelles(login, demandeAutorisation.getReferenceDeDemande());
+
+        assertThat(resultDonneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(0);
     }
 
     @Test
