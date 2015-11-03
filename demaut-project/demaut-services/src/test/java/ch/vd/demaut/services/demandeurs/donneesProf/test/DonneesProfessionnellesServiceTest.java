@@ -9,6 +9,8 @@ import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
@@ -40,6 +42,8 @@ import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesServi
 @RunWith(SpringJUnit4ClassRunner.class)
 public class DonneesProfessionnellesServiceTest {
 
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     @Autowired
     private DonneesProfessionnellesService donneesProfessionnellesService;
 
@@ -50,6 +54,9 @@ public class DonneesProfessionnellesServiceTest {
     private Profession profession;
     private Login login;
 
+    private String genericLogin = "test@test.com";
+    private static int currentLoginCounter = 1;
+
     @Before
     public void setUp() throws Exception {
         assertThat(donneesProfessionnellesService).isNotNull();
@@ -57,9 +64,15 @@ public class DonneesProfessionnellesServiceTest {
         profession = Profession.Medecin;
     }
 
+    private String getCurrentLogin(){
+        String loginStr = currentLoginCounter++ + genericLogin;
+        logger.info("Login actuel {}", loginStr);
+        return loginStr;
+    }
+
     @Test
     public void testRecupererDonneesProfession() throws Exception {
-        intialiserDemandeEnCours("admin1@admin.com");
+        intialiserDemandeEnCours(getCurrentLogin());
 
         Profession profession = donneesProfessionnellesService.recupererProfessionDeDemande(login, demandeAutorisation.getReferenceDeDemande());
         assertThat(profession).isNotNull();
@@ -67,7 +80,7 @@ public class DonneesProfessionnellesServiceTest {
 
     @Test
     public void testHasListeDeDiplomes() {
-        intialiserDemandeEnCours("admin2@admin.com");
+        intialiserDemandeEnCours(getCurrentLogin());
 
         DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService
                 .recupererDonneesProfessionnelles(login, demandeAutorisation.getReferenceDeDemande());
@@ -78,7 +91,7 @@ public class DonneesProfessionnellesServiceTest {
 
     @Test
     public void testAjouterUnDiplomes() {
-        intialiserDemandeEnCours("admin3@admin.com");
+        intialiserDemandeEnCours(getCurrentLogin());
 
         DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService
                 .recupererDonneesProfessionnelles(login, demandeAutorisation.getReferenceDeDemande());
@@ -95,7 +108,7 @@ public class DonneesProfessionnellesServiceTest {
 
     @Test
     public void testSupprimerUnDiplomes() {
-        intialiserDemandeEnCours("admin4@admin.com");
+        intialiserDemandeEnCours(getCurrentLogin());
 
         DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService
                 .recupererDonneesProfessionnelles(login, demandeAutorisation.getReferenceDeDemande());
@@ -115,7 +128,7 @@ public class DonneesProfessionnellesServiceTest {
 
     @Test
     public void testValiderEtRenseignerCodeGLN() {
-        intialiserDemandeEnCours("admin3@admin.com");
+        intialiserDemandeEnCours(getCurrentLogin());
         donneesProfessionnellesService.validerEtRenseignerCodeGLN(login, demandeAutorisation.getReferenceDeDemande(), new CodeGLN("4719512002889"));
 
         DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService
@@ -127,7 +140,7 @@ public class DonneesProfessionnellesServiceTest {
 
     @Test
     public void testRecupererDiplomesSaisis() throws Exception {
-        intialiserDemandeEnCours("admin3@admin.com");
+        intialiserDemandeEnCours(getCurrentLogin());
         DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService
                 .recupererDonneesProfessionnelles(login, demandeAutorisation.getReferenceDeDemande());
         assertThat(donneesProfessionnelles).isNotNull();
