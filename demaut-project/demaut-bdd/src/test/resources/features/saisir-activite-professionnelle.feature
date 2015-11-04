@@ -1,5 +1,5 @@
 #language: fr
-@donnees-activite-professionnelle
+@donnees-activite-professionnelle @ignoreme
 Fonctionnalité: Saisir les données de la future activité professionnelle
 
   Contexte: 
