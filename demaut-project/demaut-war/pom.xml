@@ -56,7 +56,6 @@
         <dependency>
             <groupId>oracle</groupId>
             <artifactId>oracle-jdbc</artifactId>
-            <version>${oracle.jdbc.version}</version>
             <scope>runtime</scope>
         </dependency>
         
@@ -85,7 +84,7 @@
     </dependencies>
 
     <build>
-        <finalName>demaut-webapp</finalName>
+        <finalName>demaut</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
