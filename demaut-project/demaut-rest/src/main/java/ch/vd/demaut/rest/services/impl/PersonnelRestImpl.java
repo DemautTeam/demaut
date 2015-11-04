@@ -67,7 +67,7 @@ public class PersonnelRestImpl {
                                                      @QueryParam("genre") String genreStr,
                                                      @QueryParam("dateDeNaissance") String dateDeNaissanceStr,
                                                      @QueryParam("nationalite") String nationaliteId,
-                                                     @QueryParam("langue") String langueId,
+                                                     @QueryParam("langue") String langueStr,
                                                      @QueryParam("permis") String permisStr,
                                                      @QueryParam("permisOther") String permisOther) throws Exception {
 
@@ -90,7 +90,14 @@ public class PersonnelRestImpl {
         Genre genre = Genre.valueOf(genreStr);
         DateDeNaissance dateDeNaissance = new DateDeNaissance(DiplomeRestImpl.SHORT_DATE_PARSER.parseLocalDate(dateDeNaissanceStr));
         Pays nationalite = Pays.getTypeById(Integer.parseInt(nationaliteId));
-        Langue langue = Langue.getTypeById(Integer.parseInt(langueId));
+        Langue langue;
+        if(langueStr.equalsIgnoreCase("autre")){
+            langue = Langue.AUTRE;
+        }
+        else {
+            langue = Langue.Francais;
+        }
+
         Permis permis = null;
         if (!Pays.Suisse.equals(nationalite)) {
             if (StringUtils.isEmpty(permisStr)) {
