@@ -1,6 +1,6 @@
 Jetty
     Lancer la classe StartWebappMain.java
-    Accès au demaut-microbiz : http://localhost:8083/outils/demaut-microbiz
+    Accès au demaut-microbiz : http://localhost:8084/demaut-webapp/rest
 
 Microbiz :
     https://portail.etat-de-vaud.ch/outils/dsiwiki/display/SES/Installation+Microbiz+Local
