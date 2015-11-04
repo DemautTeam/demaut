@@ -1,9 +1,9 @@
+"use strict";
 var ngDemautApp = angular.module('ngDemautApp', ['ngSanitize', 'ngRoute', 'ngAnimate', 'commonsModule', 'ui.bootstrap']);
 
 
 ngDemautApp
     .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
-
         $routeProvider
             .when('/Demaut/recherche', {
                 templateUrl: prestationContext + '/template/recherche.html',
@@ -69,8 +69,9 @@ ngDemautApp
 
         $httpProvider.interceptors.push('globalDefaultError');
         $httpProvider.interceptors.push('globalErrorInterceptor');
-    }])
-    .controller('CockpitController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', '$log', '$window',
+    }]);
+
+ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', '$log', '$window',
         function ($scope, $rootScope, $routeParams, $http, $location, $interval, $log, $window) {
             $rootScope.contextMenu = 'Cockpit';
             $scope.indexStep = 0;
@@ -245,8 +246,8 @@ ngDemautApp
                     professionTest.isProfessionNecessiteCodeGLN($scope.professionData.profession, $scope.professionData.professionsCodeGLN)
             };
         }])
-    .controller('DonneesPersoController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', '$log', '$window', 'nationalityTest',
-        function ($scope, $rootScope, $routeParams, $http, $location, $interval, $log, $window, nationalityTest) {
+    .controller('DonneesPersoController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', '$log', '$window', 'nationalityTest', 'utils',
+        function ($scope, $rootScope, $routeParams, $http, $location, $interval, $log, $window, nationalityTest, utils) {
             $rootScope.contextMenu = 'DemandeAutorisation';
             $scope.indexStep = 2;
             this.name = "DonneesPersoController";
@@ -319,7 +320,7 @@ ngDemautApp
                         $scope.personalData.prenom = responseValues.prenom.value;
                         $scope.personalData.nomDeCelibataire = responseValues.nomDeCelibataire.value;
 
-                        if(responseValues.adresse != null && responseValues.adresse != undefined) {
+                        if(utils.isNotEmpty(responseValues.adresse)) {
                             $scope.personalData.adressePersonnelle = responseValues.adresse.voie;
                             $scope.personalData.complement = responseValues.adresse.complement;
                             $scope.personalData.localite = responseValues.adresse.localite.value;
@@ -352,18 +353,20 @@ ngDemautApp
                                 break;
                             }
                         }
-                        if(responseValues.permis != null && responseValues.permis != undefined) {
+                        if(utils.isNotEmpty(responseValues.permis)) {
                             $scope.personalData.permis = responseValues.permis.typePermis;
-                            $scope.personalData.permisOther = responseValues.permis.autrePermis.value;
+                            if(utils.isNotEmpty(responseValues.permis.autrePermis)) {
+                                $scope.personalData.permisOther = responseValues.permis.autrePermis.value;
+                            }
                         }
-                        if(responseValues != null && responseValues != undefined) {
+                        if(utils.isNotEmpty(responseValues)) {
                             $scope.donneesPerso.donneesPersoDataForm.$pristine = false;
                         }
-                        $log.info('Objet Données personnelles a été récupéré avec succès!');
+                        $log.debug('Objet Données personnelles a été récupéré avec succès!');
                     }).
                     error(function (data, status, headers, config) {
                         $rootScope.error = 'Error fetching ../personal/recuperer';
-                        $log.info('Error ' + urlPrefix + '/personal/recuperer/ \n Status :' + status);
+                        $log.error('Error ' + urlPrefix + '/personal/recuperer/ \n Status :' + status);
                     });
             }
 
