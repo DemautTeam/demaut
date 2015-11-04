@@ -174,7 +174,7 @@
                     </div>
 
                     <!--Permis-->
-                    <div  ng-hide="!isPermisRequired() || donneesPerso.donneesPersoDataForm.nationalite.$pristine" class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesPerso.donneesPersoDataForm.permis.$invalid ) || (donneesPerso.donneesPersoDataForm.permis.$invalid && !donneesPerso.donneesPersoDataForm.permis.$pristine)}" >
+                    <div  ng-hide="!isPermisRequired() || donneesPerso.donneesPersoDataForm.nationalite.$pristine && personalData.permis == null" class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesPerso.donneesPersoDataForm.permis.$invalid ) || (donneesPerso.donneesPersoDataForm.permis.$invalid && !donneesPerso.donneesPersoDataForm.permis.$pristine)}" >
                         <label class="col-md-2">Permis<span ng-hide="!isPermisRequired()">*</span></label>
                         <div class="col-md-1"><label><input type="radio" name="permis" value="B" ng-disabled="!isPermisRequired()" ng-model="personalData.permis" ng-required="isPermisRequired()"/> B </label></div>
                         <div class="col-md-1"><label><input type="radio" name="permis" value="C" ng-disabled="!isPermisRequired()" ng-model="personalData.permis" ng-required="isPermisRequired()"/> C </label></div>
