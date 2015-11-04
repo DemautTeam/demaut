@@ -1,3 +1,4 @@
+"use strict";
 var commonsModule = angular.module('commonsModule', ['ngResource']);
 
 commonsModule.factory('globalDefaultError', ['$q', '$rootScope', '$location', '$log', function ($q, $rootScope, $location, $log) {
@@ -26,7 +27,7 @@ commonsModule.factory('globalDefaultError', ['$q', '$rootScope', '$location', '$
     };
 }]);
 
-
+//------------------------- Service -------------------------
 commonsModule.service('nationalityTest', ['$log', function ($log) {
     this.suissePattern = new RegExp('[Ss]uisse');
     this.isSuisse = function (textValue) {
@@ -47,6 +48,18 @@ commonsModule.service('professionTest', ['$log', function ($log) {
     };
 }]);
 
+/**
+ * Le but de ce service est de fournir des methodes utilitaires
+ */
+commonsModule.service('utils', ['$log', function ($log) {
+    this.isNotEmpty = function (value){
+        return value != undefined || value != null;
+    };
+    this.isEmpty = function (value){
+        return value == undefined || value == null;
+    };
+}]);
+
 commonsModule.service('configService', ['$resource', function ($resource) {
     this.config = $resource('api/config/urlprefix');
     this.getUrlPrefix = function () {
@@ -55,6 +68,7 @@ commonsModule.service('configService', ['$resource', function ($resource) {
 
 }]);
 
+//------------------------ Directive -------------------------
 commonsModule.directive('stepActions', function () {
     return {
         restrict: 'E',

@@ -9,6 +9,8 @@ import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
@@ -40,6 +42,8 @@ import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesServi
 @RunWith(SpringJUnit4ClassRunner.class)
 public class DonneesProfessionnellesServiceTest {
 
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     @Autowired
     private DonneesProfessionnellesService donneesProfessionnellesService;
 
@@ -50,6 +54,9 @@ public class DonneesProfessionnellesServiceTest {
     private Profession profession;
     private Login login;
 
+    private String genericLogin = "test@test.com";
+    private static int currentLoginCounter = 1;
+
     @Before
     public void setUp() throws Exception {
         assertThat(donneesProfessionnellesService).isNotNull();
@@ -57,19 +64,23 @@ public class DonneesProfessionnellesServiceTest {
         profession = Profession.Medecin;
     }
 
+    private String getCurrentLogin(){
+        String loginStr = currentLoginCounter++ + genericLogin;
+        logger.info("Login actuel {}", loginStr);
+        return loginStr;
+    }
+
     @Test
     public void testRecupererDonneesProfession() throws Exception {
-        intialiserDemandeEnCours("admin1@admin.com");
+        intialiserDemandeEnCours(getCurrentLogin());
 
         Profession profession = donneesProfessionnellesService.recupererProfessionDeDemande(login, demandeAutorisation.getReferenceDeDemande());
         assertThat(profession).isNotNull();
     }
 
     @Test
-    @Transactional
-    @Rollback(value = true)
     public void testHasListeDeDiplomes() {
-        intialiserDemandeEnCours("admin2@admin.com");
+        intialiserDemandeEnCours(getCurrentLogin());
 
         DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService
                 .recupererDonneesProfessionnelles(login, demandeAutorisation.getReferenceDeDemande());
@@ -79,10 +90,8 @@ public class DonneesProfessionnellesServiceTest {
     }
 
     @Test
-    @Transactional
-    @Rollback(value = true)
     public void testAjouterUnDiplomes() {
-        intialiserDemandeEnCours("admin3@admin.com");
+        intialiserDemandeEnCours(getCurrentLogin());
 
         DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService
                 .recupererDonneesProfessionnelles(login, demandeAutorisation.getReferenceDeDemande());
@@ -91,15 +100,15 @@ public class DonneesProfessionnellesServiceTest {
                 TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
                 new TitreFormation(TitreFormationApprofondieProgres.ChirurgieDeLaMain.name()), null,
                 new DateObtention(new LocalDate()), Pays.AfriqueDuSud, null);
-        assertThat(donneesProfessionnelles).isNotNull();
-        assertThat(donneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(1);
+        DonneesProfessionnelles resultDonneesProfessionnelles = donneesProfessionnellesService
+                .recupererDonneesProfessionnelles(login, demandeAutorisation.getReferenceDeDemande());
+        assertThat(resultDonneesProfessionnelles).isNotNull();
+        assertThat(resultDonneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(1);
     }
 
     @Test
-    @Transactional
-    @Rollback(value = true)
     public void testSupprimerUnDiplomes() {
-        intialiserDemandeEnCours("admin4@admin.com");
+        intialiserDemandeEnCours(getCurrentLogin());
 
         DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService
                 .recupererDonneesProfessionnelles(login, demandeAutorisation.getReferenceDeDemande());
@@ -109,19 +118,24 @@ public class DonneesProfessionnellesServiceTest {
                 TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
                 new TitreFormation(TitreFormationApprofondieProgres.ChirurgieDeLaMain.name()), null,
                 new DateObtention(new LocalDate()), Pays.AfriqueDuSud, null);
-        assertThat(donneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(1);
 
-        Diplome diplome = donneesProfessionnelles.getListeDesDiplomes().listerDiplomes().get(0);
+        //Rafraichissement des donnees progfessionnelles pour être en phase avec la base.
+        DonneesProfessionnelles donneesProfessionnellesAfterInsert = donneesProfessionnellesService
+                .recupererDonneesProfessionnelles(login, demandeAutorisation.getReferenceDeDemande());
+
+        assertThat(donneesProfessionnellesAfterInsert.getListeDesDiplomes().listerDiplomes()).hasSize(1);
+        //----- Test suppression ------
+        Diplome diplome = donneesProfessionnellesAfterInsert.getListeDesDiplomes().listerDiplomes().get(0);
         donneesProfessionnellesService.supprimerUnDiplome(login, demandeAutorisation.getReferenceDeDemande(), diplome.getReferenceDeDiplome());
-        assertThat(donneesProfessionnelles).isNotNull();
-        assertThat(donneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(0);
+        DonneesProfessionnelles resultDonneesProfessionnelles = donneesProfessionnellesService
+                .recupererDonneesProfessionnelles(login, demandeAutorisation.getReferenceDeDemande());
+
+        assertThat(resultDonneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(0);
     }
 
     @Test
-    @Transactional
-    @Rollback(value = true)
     public void testValiderEtRenseignerCodeGLN() {
-        intialiserDemandeEnCours("admin3@admin.com");
+        intialiserDemandeEnCours(getCurrentLogin());
         donneesProfessionnellesService.validerEtRenseignerCodeGLN(login, demandeAutorisation.getReferenceDeDemande(), new CodeGLN("4719512002889"));
 
         DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService
@@ -132,10 +146,8 @@ public class DonneesProfessionnellesServiceTest {
     }
 
     @Test
-    @Transactional
-    @Rollback(value = true)
     public void testRecupererDiplomesSaisis() throws Exception {
-        intialiserDemandeEnCours("admin3@admin.com");
+        intialiserDemandeEnCours(getCurrentLogin());
         DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService
                 .recupererDonneesProfessionnelles(login, demandeAutorisation.getReferenceDeDemande());
         assertThat(donneesProfessionnelles).isNotNull();
@@ -144,7 +156,10 @@ public class DonneesProfessionnellesServiceTest {
                 TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,
                 new TitreFormation(TitreFormationApprofondieProgres.ChirurgieDeLaMain.name()), null,
                 new DateObtention(new LocalDate()), Pays.AfriqueDuSud, null);
-        assertThat(donneesProfessionnelles.getListeDesDiplomes().listerDiplomes()).hasSize(1);
+        //L'objet Données professionnelles n'est pas rafraichi, l'instance est déconnectée...
+        DonneesProfessionnelles donneesProfessionnellesAfter = donneesProfessionnellesService
+                .recupererDonneesProfessionnelles(login, demandeAutorisation.getReferenceDeDemande());
+        assertThat(donneesProfessionnellesAfter.getListeDesDiplomes().listerDiplomes()).hasSize(1);
 
         List<Diplome> diplomesSaisis = donneesProfessionnellesService.recupererDiplomesSaisis(login, demandeAutorisation.getReferenceDeDemande());
 
@@ -171,6 +186,11 @@ public class DonneesProfessionnellesServiceTest {
                         new DateObtention(new LocalDate()), Pays.Suisse, null));
     }
 
+    /**
+     * Cette methode utilise des transaction uniquement pour l'initialisation de la deamde
+     * @param loginStr
+     */
+    //TOD réviser la méthode d'initialisation de ce test
     @Transactional(propagation = Propagation.REQUIRED)
     private void intialiserDemandeEnCours(String loginStr) {
         this.login = new Login(loginStr);

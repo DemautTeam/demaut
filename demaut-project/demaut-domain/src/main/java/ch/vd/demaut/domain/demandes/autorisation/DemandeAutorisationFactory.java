@@ -34,7 +34,7 @@ public class DemandeAutorisationFactory {
     private void throwExceptionSiDemandeBrouillonExisteDeja(Login login) {
         boolean brouillonExiste = demandeAutorisationRepository.brouillonExiste(login);
         if (brouillonExiste) {
-            throw new DemandeBrouillonExisteDejaException();
+            throw new DemandeBrouillonExisteDejaException("Il existe un brouillon pour ce login");
         }
     }
     

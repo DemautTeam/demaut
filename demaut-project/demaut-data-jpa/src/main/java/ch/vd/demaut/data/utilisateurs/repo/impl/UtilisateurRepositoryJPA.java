@@ -5,7 +5,6 @@ import ch.vd.demaut.domain.utilisateurs.Utilisateur;
 import ch.vd.demaut.domain.utilisateurs.UtilisateurRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
 public class UtilisateurRepositoryJPA extends GenericRepositoryImpl<Utilisateur, Long>
         implements UtilisateurRepository {
 

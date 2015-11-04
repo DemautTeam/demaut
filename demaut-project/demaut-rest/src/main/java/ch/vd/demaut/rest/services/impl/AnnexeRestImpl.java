@@ -1,55 +1,36 @@
 package ch.vd.demaut.rest.services.impl;
 
+import ch.vd.demaut.domain.annexes.*;
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.rest.json.commons.RestUtils;
+import ch.vd.demaut.services.annexes.AnnexesService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import org.apache.cxf.jaxrs.ext.multipart.Multipart;
+import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.*;
+import javax.ws.rs.core.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-
-import org.apache.cxf.jaxrs.ext.multipart.Multipart;
-import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-
-import ch.vd.demaut.domain.annexes.AnnexeFK;
-import ch.vd.demaut.domain.annexes.AnnexeMetadata;
-import ch.vd.demaut.domain.annexes.ContenuAnnexe;
-import ch.vd.demaut.domain.annexes.NomFichier;
-import ch.vd.demaut.domain.annexes.TypeAnnexe;
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.rest.commons.json.RestUtils;
-import ch.vd.demaut.services.annexes.AnnexesService;
-
 @CrossOriginResourceSharing(allowAllOrigins = true)
-@Service("annexeRestImpl")
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Path("/annexes")
 public class AnnexeRestImpl {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AnnexeRestImpl.class);
 
-    @Autowired
     private AnnexesService annexesService;
+
+    public void setAnnexesService(AnnexesService annexesService) {
+        this.annexesService = annexesService;
+    }
 
     // permet d'accéder aux propriétés HTTP sans polluer les signatures de méthode...
     // nécessite une scope prototype pour éviter des mélanges de context

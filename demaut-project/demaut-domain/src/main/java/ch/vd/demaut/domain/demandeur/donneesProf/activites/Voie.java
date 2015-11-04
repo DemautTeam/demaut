@@ -1,9 +1,9 @@
 package ch.vd.demaut.domain.demandeur.donneesProf.activites;
 
-import javax.validation.constraints.NotNull;
-
 import ch.vd.demaut.commons.annotations.ValueObject;
-import ch.vd.demaut.commons.vo.StringVO;
+import ch.vd.demaut.commons.vo.BaseValueObject;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * Représente la voie de l'adresse
@@ -13,7 +13,9 @@ import ch.vd.demaut.commons.vo.StringVO;
  *
  */
 @ValueObject
-public class Voie extends StringVO {
+public class Voie extends BaseValueObject {
+
+    private String value;
 
     // ********************************************************* Constructor
 
@@ -21,12 +23,11 @@ public class Voie extends StringVO {
     }
 
     public Voie(String value) {
-        super(value);
+        this.value = value;
     }
 
     @NotNull
-    @Override
     public String getValue() {
-        return super.getValue();
+        return value;
     }
 }

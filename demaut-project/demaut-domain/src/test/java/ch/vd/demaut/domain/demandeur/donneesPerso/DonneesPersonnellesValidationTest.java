@@ -47,7 +47,7 @@ public class DonneesPersonnellesValidationTest extends AbstractValidationTest<Do
         numeroMobile = new TelephoneMobile("00625225123");
         fax = new Fax("023456789");
         nationalite = Pays.Suisse;
-        langue = Langue.Allemand;
+        langue = Langue.Francais;
         permis = new Permis(TypePermis.C);
 
         donneesPersonnellesValides = new DonneesPersonnelles(nomValide, prenomValide, null, adresseValide, emailValide, telephonePrive, numeroMobile, fax, genreValide, dateDeNaissance, nationalite, langue, permis);

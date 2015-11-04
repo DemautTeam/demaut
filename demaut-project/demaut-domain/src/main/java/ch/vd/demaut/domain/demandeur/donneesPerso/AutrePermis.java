@@ -1,20 +1,21 @@
 package ch.vd.demaut.domain.demandeur.donneesPerso;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
-import ch.vd.demaut.commons.vo.StringVO;
+import ch.vd.demaut.commons.vo.BaseValueObject;
 
 @ValueObject
-public class AutrePermis extends StringVO {
+public class AutrePermis extends BaseValueObject {
+
+    private String value;
 
     public AutrePermis() {
     }
 
     public AutrePermis(String value) {
-        super(value);
+        this.value = value;
     }
 
-    @Override
     public String getValue() {
-        return super.getValue();
+        return value;
     }
 }

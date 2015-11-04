@@ -1,7 +1,7 @@
 package ch.vd.demaut.domain.demandeur.donneesProf.activites;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
-import ch.vd.demaut.commons.vo.StringVO;
+import ch.vd.demaut.commons.vo.BaseValueObject;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -12,19 +12,20 @@ import javax.validation.constraints.Size;
  *
  */
 @ValueObject
-public class NPAProfessionnel extends StringVO {
+public class NPAProfessionnel extends BaseValueObject {
+
+    private String value;
 
     public NPAProfessionnel() {
     }
 
     public NPAProfessionnel(String value) {
-        super(value);
+        this.value = value;
     }
 
     @Size(min = 4, max = 4)
     @Pattern(regexp = "\\d{4}")
-    @Override
     public String getValue() {
-        return super.getValue();
+        return value;
     }
 }

@@ -29,8 +29,9 @@ public class DonneesProfessionnelles extends AbstractEntity {
     
     //TODO: Ajouter la reference a la DemandeAutorisation (ou si pas necessaire a la profession)
     //private Profession profession; 
-    
-    private List<ActiviteAnterieure> activitesAnterieures;
+
+    //TODO: Ce champ n'est pas mappé encore. Enlever le transient
+    private transient List<ActiviteAnterieure> activitesAnterieures;
 
     // ********************************************************* Constructor
     

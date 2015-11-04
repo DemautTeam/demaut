@@ -1,7 +1,5 @@
 package ch.vd.demaut.services.demandeurs.donneesPerso.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
@@ -25,10 +23,8 @@ import ch.vd.demaut.domain.exception.DonneesProfessionnellesNotFoundException;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.demandeurs.donneesPerso.DonneesPersonnellesService;
 
-@Service("donneesPersonnellesService")
 public class DonneesPersonnellesServiceImpl implements DonneesPersonnellesService {
 
-    @Autowired
     private DemandeAutorisationRepository demandeAutorisationRepository;
 
     @Override
@@ -51,5 +47,9 @@ public class DonneesPersonnellesServiceImpl implements DonneesPersonnellesServic
         demandeAutorisation.getDonneesPersonnelles().renseignerLesDonneesPersonnelles(nom, prenom, nomDeCelibataire, adresse, email,
                 telephonePrive, telephoneMobile, fax, genre, dateDeNaissance, nationalite, langue, permis);
         demandeAutorisation.validerDonneesPersonnelles();
+    }
+
+    public void setDemandeAutorisationRepository(DemandeAutorisationRepository demandeAutorisationRepository) {
+        this.demandeAutorisationRepository = demandeAutorisationRepository;
     }
 }

@@ -20,7 +20,10 @@ public abstract class GenericRepositoryImpl<T, I extends Serializable> implement
 
     private final Class<T> entityClass;
 
-    @PersistenceContext
+    /**
+     * le nom du persistence unit semble important pour OSGi -> prévision du passage à blueprint
+     */
+    @PersistenceContext(unitName = "demaut-data-jpa")
     private EntityManager entityManager;
 
     /**

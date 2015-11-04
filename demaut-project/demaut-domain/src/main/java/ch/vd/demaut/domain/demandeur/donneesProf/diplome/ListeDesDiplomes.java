@@ -42,7 +42,7 @@ public class ListeDesDiplomes {
         this.diplomes.add(diplome);
     }
 
-    @SuppressWarnings("unchecked")
+    //TODO reimplementer en utilisant org.apache.collection4
     public Collection<Diplome> extraireDiplomesDeType(TypeDiplomeAccepte typeDiplomeAccepte) {
         return CollectionUtils.select(diplomes, new BeanPropertyValueEqualsPredicate("typeDiplomeAccepte", typeDiplomeAccepte));
     }
