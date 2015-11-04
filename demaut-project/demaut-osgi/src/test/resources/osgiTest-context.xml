@@ -21,8 +21,6 @@
 
     <util:properties id="props" location="demautOsgiTest.cfg"/>
 
-    <bean id="iamInteceptor" class="ch.vd.demaut.microbiz.rest.IamBypassInterceptor"/>
-
     <bean id="microbizResourceResolver" class="ch.vd.pee.microbiz.core.web.FSResourceResolver">
         <constructor-arg value="src/main/resources/www"/>
     </bean>
