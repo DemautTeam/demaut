@@ -95,7 +95,7 @@ public class DonneesPersonnellesServiceTest {
         TelephoneMobile telephoneMobile = new TelephoneMobile("07625225123");
         Fax fax = new Fax("023456789");
         Pays nationalite = Pays.Allemagne;
-        Langue langue = Langue.AUTRE;
+        Langue langue = Langue.Autre;
         Permis permis = new Permis(TypePermis.C);
 
         donneesPersonnellesService.renseignerLesDonneesPersonnelles(login, demandeEnCours.getReferenceDeDemande(), nom, prenom, null, adresse, email,

@@ -193,11 +193,11 @@
                     <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesPerso.donneesPersoDataForm.langue.$invalid ) || (donneesPerso.donneesPersoDataForm.langue.$invalid && !donneesPerso.donneesPersoDataForm.langue.$pristine)}" >
                         <label for="langue" class="col-md-2">Langue maternelle*</label>
                         <div class="col-md-6">
-                            <div class="col-md-3"><label><input type="radio" name="langue" value="1" ng-model="personalData.langue" required/> Français </label></div>
+                            <div class="col-md-3"><label><input type="radio" name="langue" value="Francais" ng-model="personalData.langue" required/> Français </label></div>
                             <div class="col-md-3" popover-enable="wouldStepNext || (donneesPerso.donneesPersoDataForm.langue.$invalid && !donneesPerso.donneesPersoDataForm.langue.$pristine)"
                                  popover-trigger="none" popover-is-open="(wouldStepNext && donneesPerso.donneesPersoDataForm.langue.$invalid ) || (donneesPerso.donneesPersoDataForm.langue.$invalid && !donneesPerso.donneesPersoDataForm.langue.$pristine)" popover-placement="right"
                                  uib-popover="Veuillez saisir votre langue.">
-                                <label><input type="radio" name="langue" id="langue" value="0" ng-model="personalData.langue" required /> Autre </label>
+                                <label><input type="radio" name="langue" id="langue" value="Autre" ng-model="personalData.langue" required /> Autre </label>
                             </div>
                         </div>
                     </div>

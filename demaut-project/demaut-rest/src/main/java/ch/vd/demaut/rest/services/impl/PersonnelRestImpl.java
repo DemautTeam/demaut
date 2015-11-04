@@ -92,7 +92,7 @@ public class PersonnelRestImpl {
         Pays nationalite = Pays.getTypeById(Integer.parseInt(nationaliteId));
         Langue langue;
         if(langueStr.equalsIgnoreCase("autre")){
-            langue = Langue.AUTRE;
+            langue = Langue.Autre;
         }
         else {
             langue = Langue.Francais;

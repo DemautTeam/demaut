@@ -7,7 +7,7 @@ import ch.vd.demaut.domain.exception.LangueNotFoundException;
 //TODO refactorer pour être en ligne avec ProgresSoa
 public enum Langue implements TypeProgres {
     Francais(1, "fr", "Français"),
-    AUTRE(0, "non_fr", "Autre");
+    Autre(0, "non_fr", "Autre");
 
     private RefProgresID progresId;
 

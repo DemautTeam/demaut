@@ -274,18 +274,6 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                     });
             }
 
-            if ($scope.langues.length == 0) {
-                $http.get(urlPrefix + '/shared/langues').
-                    success(function (data, status, headers, config) {
-                        $scope.langues = angular.fromJson(data.response);
-                        $log.info('Liste langues a été récupérée avec succès!');
-                    }).
-                    error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error fetching ../shared/langues';
-                        $log.info('Error ' + urlPrefix + '/shared/langues/ \n Status :' + status);
-                    });
-            }
-
             if ($scope.paysList.length == 0) {
                 $http.get(urlPrefix + '/shared/paysList').
                     success(function (data, status, headers, config) {
@@ -340,6 +328,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                         $scope.personalData.fax = responseValues.fax.value;
                         $scope.personalData.genre = responseValues.genre;
                         $scope.personalData.dateDeNaissance = new Date(responseValues.dateDeNaissance.value);
+                        $scope.personalData.langue = responseValues.langue;
 
                         for (var indexJ = 0; indexJ < $scope.nationalites.length; indexJ++) {
                             if ($scope.nationalites[indexJ].name == responseValues.nationalite) {
@@ -347,12 +336,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                                 break;
                             }
                         }
-                        for (var indexK = 0; indexK < $scope.langues.length; indexK++) {
-                            if ($scope.langues[indexK].name == responseValues.langue) {
-                                $scope.personalData.langue = $scope.langues[indexK];
-                                break;
-                            }
-                        }
+
                         if(utils.isNotEmpty(responseValues.permis)) {
                             $scope.personalData.permis = responseValues.permis.typePermis;
                             if(utils.isNotEmpty(responseValues.permis.autrePermis)) {
