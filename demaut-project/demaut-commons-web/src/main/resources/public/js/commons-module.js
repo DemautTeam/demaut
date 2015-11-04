@@ -1,3 +1,4 @@
+"use strict";
 var commonsModule = angular.module('commonsModule', ['ngResource']);
 
 //----------------------- Factory -----------------------
@@ -54,6 +55,18 @@ commonsModule.service('professionTest', ['$log', function ($log) {
             }
         }
         return false;
+    };
+}]);
+
+/**
+ * Le but de ce service est de fournir des methodes utilitaires
+ */
+commonsModule.service('utils', ['$log', function ($log) {
+    this.isNotEmpty = function (value){
+        return value != undefined || value != null;
+    };
+    this.isEmpty = function (value){
+        return value == undefined || value == null;
     };
 }]);
 
