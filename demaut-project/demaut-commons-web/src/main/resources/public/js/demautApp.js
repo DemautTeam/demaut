@@ -68,7 +68,6 @@ ngDemautApp
         $locationProvider.hashPrefix('!');
 
         $httpProvider.interceptors.push('globalDefaultError');
-        $httpProvider.interceptors.push('globalErrorInterceptor');
     }])
     .controller('CockpitController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', '$log', '$window',
         function ($scope, $rootScope, $routeParams, $http, $location, $interval, $log, $window) {
@@ -129,48 +128,62 @@ ngDemautApp
         }])
     .controller('ProfessionSanteController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$log', '$window', 'professionTest',
         function ($scope, $rootScope, $routeParams, $http, $location, $log, $window, professionTest) {
-            $rootScope.contextMenu = 'DemandeAutorisation';
+
+    		//////////////// Private functions
+	        $scope.isBrouillonExistant = function () {
+	            return window.localStorage && $window.localStorage.getItem('referenceDeDemande');
+	        };
+	
+	        $scope.isProfessionNecessiteCodeGLN = function() {
+	            return $scope.professionData.profession != null && $scope.professionData.profession != undefined &&
+	                professionTest.isProfessionNecessiteCodeGLN($scope.professionData.profession, $scope.professionData.professionsCodeGLN)
+	        };
+        
+	        $scope.initListesProfessions = function() {
+	            $scope.professionData = {};
+
+	            //TODO: Extract in a function
+	            $scope.professionData.professions = [];
+	            $http.get(urlPrefix + '/profession/professionsList')
+	            .success(function (data, status, headers, config) {
+	                $scope.professionData.professions = angular.fromJson(data.response);
+	                $log.info('Liste professions a été récupérée avec succès!');
+	            })
+	            .error(function (data, status, headers, config) {
+	                $rootScope.error = 'Error fetching ../profession/professionsList';
+	                $log.info('Error ' + urlPrefix + '/profession/professionsList/ \n Status :' + status);
+	            });            	
+
+	            
+	            //TODO: Extract in a function
+	        	$scope.professionData.professionsCodeGLN = [];
+	            $http.get(urlPrefix + '/profession/professionsCodeGLNObligatoire')
+	            .success(function (data, status, headers, config) {
+	                $scope.professionData.professionsCodeGLN = angular.fromJson(data.response);
+	                $log.info('Liste professions exigeant code GLN a été récupérée avec succès!');
+	            })
+	            .error(function (data, status, headers, config) {
+	                $rootScope.error = 'Error fetching ../profession/professionsCodeGLNObligatoire';
+	                $log.info('Error ' + urlPrefix + '/profession/professionsCodeGLNObligatoire/ \n Status :' + status);
+	            });
+	        }
+    	
+    		//////////////// Controller main flow
+
+	        $rootScope.contextMenu = 'DemandeAutorisation';
             $scope.indexStep = 1;
             this.name = "ProfessionSanteController";
             this.params = $routeParams;
-            $scope.professionData = {};
-            $scope.professionData.professions = [];
-            $scope.professionData.professionsCodeGLN = [];
-
-            if ($scope.professionData.professions.length == 0) {
-                $http.get(urlPrefix + '/profession/professionsList')
-                    .success(function (data, status, headers, config) {
-                        $scope.professionData.professions = angular.fromJson(data.response);
-                        $log.info('Liste professions a été récupérée avec succès!');
-                    })
-                    .error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error fetching ../profession/professionsList';
-                        $log.info('Error ' + urlPrefix + '/profession/professionsList/ \n Status :' + status);
-                    });
-            }
-
-            if ($scope.professionData.professionsCodeGLN.length == 0) {
-                $http.get(urlPrefix + '/profession/professionsCodeGLNObligatoire')
-                    .success(function (data, status, headers, config) {
-                        $scope.professionData.professionsCodeGLN = angular.fromJson(data.response);
-                        $log.info('Liste professions exigeant code GLN a été récupérée avec succès!');
-                    })
-                    .error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error fetching ../profession/professionsCodeGLNObligatoire';
-                        $log.info('Error ' + urlPrefix + '/profession/professionsCodeGLNObligatoire/ \n Status :' + status);
-                    });
-            }
-
-            $scope.isBrouillonExistant = function () {
-                return window.localStorage && $window.localStorage.getItem('referenceDeDemande');
-            };
-
+            
+            $scope.initListesProfessions();
+            
             if($scope.isBrouillonExistant()) {
-                $http.get(urlPrefix + '/profession/professionDeDemande', {
-                    params: {
-                        referenceDeDemande: $window.localStorage.getItem('referenceDeDemande')
-                    }
-                })
+                $http
+                    .get(urlPrefix + '/profession/professionDeDemande', {
+	                    params: {
+	                        referenceDeDemande: $window.localStorage.getItem('referenceDeDemande')
+	                    }
+                    })
                     .success(function (data, status, headers, config) {
                         var response = angular.fromJson(data.response);
                         for (var indexI = 0; indexI < $scope.professionData.professions.length; indexI++) {
@@ -195,11 +208,10 @@ ngDemautApp
             //Etape suivante
             $scope.nextStep = function () {
                 $rootScope.wouldStepNext = true;
+                
                 if ($scope.professionSante.professionDataForm.$valid &&
                     !(professionTest.isProfessionNecessiteCodeGLN($scope.professionData.profession, $scope.professionData.professionsCodeGLN) &&
                     ($scope.professionData.gln == null || $scope.professionData.gln == undefined))) {
-
-                    $window.localStorage.setItem('profession', $scope.professionData.profession);
 
                     if(!$scope.isBrouillonExistant()) {
                         $http.get(urlPrefix + '/demande/initialiser', {
@@ -212,6 +224,7 @@ ngDemautApp
                                 var referenceDeDemande = angular.fromJson(data.response);
                                 $window.localStorage.setItem('referenceDeDemande', referenceDeDemande.value);
                                 $log.info('Une nouvelle demande a été intitialisée avec succès!');
+                                $location.path('/Demaut/demande/donneesPerso');
                             })
                             .error(function (data, status, headers, config) {
                                 $rootScope.error = 'Error fetching ../demande/initialiser/';
@@ -227,23 +240,19 @@ ngDemautApp
                         })
                             .success(function (data, status, headers, config) {
                                 $log.info('Code GLN de la demande a été updaté avec succès!');
+                                $location.path('/Demaut/demande/donneesPerso');
                             })
                             .error(function (data, status, headers, config) {
                                 $rootScope.error = 'Error fetching ../profession/updateCodeGLN';
                                 $log.info('Error ' + urlPrefix + '/profession/updateCodeGLN/ \n Status :' + status);
                             });
                     }
-                    $location.path('/Demaut/demande/donneesPerso');
                 }
                 else {
                     $log.info('Formulaire invalide !');
                 }
             };
 
-            $scope.isProfessionNecessiteCodeGLN = function() {
-                return $scope.professionData.profession != null && $scope.professionData.profession != undefined &&
-                    professionTest.isProfessionNecessiteCodeGLN($scope.professionData.profession, $scope.professionData.professionsCodeGLN)
-            };
         }])
     .controller('DonneesPersoController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', '$log', '$window', 'nationalityTest',
         function ($scope, $rootScope, $routeParams, $http, $location, $interval, $log, $window, nationalityTest) {
@@ -831,7 +840,6 @@ ngDemautApp
             $scope.annexesData.annexeTypesObligatoires = [];
             $scope.annexesData.referenceFiles = [];
             $scope.annexesData.annexeTypeSelected = {};
-            $scope.annexesData.profession = $window.localStorage.getItem('profession');
 
             if ($scope.annexesData.annexeTypes.length == 0) {
                 $http.get(urlPrefix + '/annexes/typesList').
