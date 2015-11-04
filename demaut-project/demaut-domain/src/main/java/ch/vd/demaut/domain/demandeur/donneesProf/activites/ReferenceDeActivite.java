@@ -18,7 +18,7 @@ public class ReferenceDeActivite extends BaseValueObject {
     }
 
     public ReferenceDeActivite(String reference) {
-        this.value = value;
+        this.value = reference;
     }
 
     // ********************************************************* Getters

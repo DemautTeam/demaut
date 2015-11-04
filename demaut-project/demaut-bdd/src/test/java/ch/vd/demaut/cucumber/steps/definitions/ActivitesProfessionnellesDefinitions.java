@@ -1,6 +1,6 @@
 package ch.vd.demaut.cucumber.steps.definitions;
 
-import ch.vd.demaut.cucumber.converteurs.commons.NPAConverter;
+import ch.vd.demaut.cucumber.converteurs.commons.NPAProfessionnelConverter;
 import ch.vd.demaut.cucumber.steps.ActivitesProfessionnellesSteps;
 import ch.vd.demaut.domain.demandeur.donneesPerso.NPA;
 import cucumber.api.Transform;
@@ -28,7 +28,7 @@ public class ActivitesProfessionnellesDefinitions extends StepDefinitions {
 
 
     @Etantdonné("^un NPA prof. de format numérique et de (\\d+) caractères$")
-    public void un_NPA_prof_de_format_numérique_et_de_caractères(@Transform(NPAConverter.class) NPA npa) throws Throwable {
+    public void un_NPA_prof_de_format_numérique_et_de_caractères(@Transform(NPAProfessionnelConverter.class) NPA npa) throws Throwable {
         activitesProfessionnellesSteps.initDemandeur();
         //activitesProfessionnellesSteps.setNPA(npa);
 
