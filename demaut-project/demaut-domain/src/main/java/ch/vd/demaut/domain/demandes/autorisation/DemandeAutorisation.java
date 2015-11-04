@@ -135,6 +135,13 @@ public class DemandeAutorisation extends Demande {
         getDonneesProfessionnelles().ajouterActiviteAnterieure(activiteAnterieure);
     }
 
+    // ******* Donnees Activités Professionnelles
+    public void validerActivitesProfessionnelles() {
+        DONNEES_PROFESSIONNELLES_VALIDATEUR.valider(donneesProfessionnelles);
+    }
+
+
+
     // ********************************************************* Private Methods
 
     // ********************************************************* Getters

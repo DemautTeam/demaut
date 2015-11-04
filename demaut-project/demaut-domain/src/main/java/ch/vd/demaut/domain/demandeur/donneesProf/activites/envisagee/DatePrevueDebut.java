@@ -1,7 +1,33 @@
 package ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee;
 
+import ch.vd.demaut.commons.annotations.ValueObject;
+import ch.vd.demaut.commons.vo.BaseValueObject;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import java.util.Date;
+
 /**
- * Created by aecio on 04.11.15.
+ * Représente la date estimée pour de l'activité envisagée
  */
-public class DatePrevueDebut {
+@ValueObject
+public class DatePrevueDebut extends BaseValueObject {
+
+    @NotNull
+    @Past
+    private Date value;
+
+    // ********************************************************* Constructor
+
+    public DatePrevueDebut() {
+    }
+
+    public DatePrevueDebut(Date value) {
+        this.value = value;
+    }
+
+    public Date getValue() {
+        return value;
+    }
 }
+
