@@ -3,6 +3,8 @@ package ch.vd.demaut.domain.demandeur.donneesProf.activites;
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.BaseValueObject;
 import ch.vd.demaut.domain.demandeur.Localite;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.etablissement.TelephoneMobile;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.etablissement.TelephonePrive;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -19,6 +21,11 @@ public class Etablissement extends BaseValueObject {
     private Localite localite;
 
     private NPAProfessionnel npaProfessionnel;
+
+    private TelephonePrive telephonePrive;
+
+    private TelephoneMobile telephoneMobile;
+
 
     // ********************************************************* Constructors
     //For JPA usage only
@@ -57,4 +64,14 @@ public class Etablissement extends BaseValueObject {
         return localite;
     }
 
+    @NotNull
+    @Valid
+    public TelephonePrive getTelephonePrive() {
+        return telephonePrive;
+    }
+
+    @Valid
+    public TelephoneMobile getTelephoneMobile() {
+        return telephoneMobile;
+    }
 }
