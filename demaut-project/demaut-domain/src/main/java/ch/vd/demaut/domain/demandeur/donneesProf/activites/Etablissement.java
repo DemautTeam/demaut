@@ -2,6 +2,7 @@ package ch.vd.demaut.domain.demandeur.donneesProf.activites;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.BaseValueObject;
+import ch.vd.demaut.domain.demandeur.Fax;
 import ch.vd.demaut.domain.demandeur.Localite;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.etablissement.TelephoneMobile;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.etablissement.TelephonePrive;
@@ -26,17 +27,21 @@ public class Etablissement extends BaseValueObject {
 
     private TelephoneMobile telephoneMobile;
 
+    private Fax fax;
 
     // ********************************************************* Constructors
     //For JPA usage only
     Etablissement(){
     }
 
-    public Etablissement(Voie voie, Complement complement, Localite localite, NPAProfessionnel npaProfessionnel) {
+    public Etablissement(Voie voie, Complement complement, Localite localite, NPAProfessionnel npaProfessionnel, TelephonePrive telephonePrive, TelephoneMobile telephoneMobile, Fax fax) {
         this.voie = voie;
         this.complement = complement;
         this.localite = localite;
         this.npaProfessionnel = npaProfessionnel;
+        this.telephonePrive = telephonePrive;
+        this.telephoneMobile = telephoneMobile;
+        this.fax = fax;
     }
 
     // ********************************************************* Getters & Contraintes
