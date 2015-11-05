@@ -1,6 +1,6 @@
 #language: fr
 @activites-futures
-Fonctionnalité: Vérification du code NPA
+Fonctionnalité: Vérification du scenario de l'activité future
 
   Contexte: 
     Etant donné la date du jour: "15.10.2015 11:00"
