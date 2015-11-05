@@ -1,4 +1,4 @@
 /**
- * Regroupement des exception du domain
+ * Regroupement des exceptions du domain
  */
 package ch.vd.demaut.domain.exception;

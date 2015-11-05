@@ -5,9 +5,8 @@ import cucumber.api.Transformer;
 
 public class NPAProfessionnelConverter extends Transformer<NPAProfessionnel> {
 
-        @Override
-        public NPAProfessionnel transform(String str) {
-            return "".equals(str) ? null: new NPAProfessionnel(str);
-        }
-
+    @Override
+    public NPAProfessionnel transform(String str) {
+        return new NPAProfessionnel(str);
+    }
 }

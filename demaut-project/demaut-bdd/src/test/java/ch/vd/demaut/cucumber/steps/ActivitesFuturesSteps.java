@@ -1,5 +1,7 @@
 package ch.vd.demaut.cucumber.steps;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.joda.time.LocalDate;
 
 import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
@@ -16,6 +18,7 @@ import ch.vd.demaut.domain.demandeur.donneesProf.activites.Voie;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.ActiviteEnvisagee;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.DatePrevueDebut;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.TauxActiviteEnDemiJournee;
+import ch.vd.demaut.domain.exception.ActiviteFutureNonValideException;
 
 /**
  * Steps pour la "Saisie d'activités futures"
@@ -83,26 +86,32 @@ public class ActivitesFuturesSteps {
                 new DatePrevueDebut(new LocalDate(2015, 1, 1)), null);
     }
 
-    public ActiviteFuture initActiviteFutureValide() {
+    public void initActiviteFutureValide() {
 
         initTypeActiviteValideSiNonRenseigne();
         initEtablissement();
+        initTypePratiqueLamal();
         initActiviteEnvisagee();
-
-        ActiviteFuture activiteFuture = new ActiviteFuture(typeActivite, etablissement, typePratiqueLamal,
-                activiteEnvisagee);
         
-        return activiteFuture;
+
+        activiteFuture = new ActiviteFuture(typeActivite, etablissement, typePratiqueLamal,
+                activiteEnvisagee);
     }
 
     public void ajouterActiviteFutureCourante() {
         try {
-            getDemandeEnCours().ajouterActiviteFuture(activiteFuture);
+            getDemandeEnCours().validerEtAjouterActiviteFuture(activiteFuture);
             accepteActiviteFuture();
-        } catch (DomainException e) {
+        } catch (ActiviteFutureNonValideException e) {
             refuseActiviteFuture();
         }
     }
+    
+    //TODO: Mutualiser cela avec AnnexeSteps et autres
+    public void verifieAcceptationActiviteFuture(AccepteOuRefuse expectedAcceptationActiviteFuture) {
+        assertThat(actualAcceptationActiviteFuture).isEqualTo(expectedAcceptationActiviteFuture);
+    }
+
 
     // *********************************************** Getters
     
@@ -127,6 +136,12 @@ public class ActivitesFuturesSteps {
         etablissement = new Etablissement(voie, complement, localite, npa);
     }
 
+    private void initTypePratiqueLamal() {
+        if (typePratiqueLamal == null) {
+            typePratiqueLamal = TypePratiqueLamal.Non;
+        }
+    }
+    
     private void initLocaliteValideSiNonRenseignee() {
         if (localite == null) {
             localite = new Localite("Lausanne");

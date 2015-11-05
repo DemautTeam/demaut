@@ -17,8 +17,12 @@
         <property name="demandeAutorisationSteps" ref="demandeAutorisationSteps"/>
     </bean>
 
-    <bean id="donneesProfessionnellesSteps"
-        class="ch.vd.demaut.cucumber.steps.DonneesProfessionnellesSteps"
+    <bean id="donneesProfessionnellesSteps" class="ch.vd.demaut.cucumber.steps.DonneesProfessionnellesSteps"
+        scope="cucumber-glue">
+        <property name="demandeAutorisationSteps" ref="demandeAutorisationSteps"/>
+    </bean>
+
+    <bean id="activitesFuturesSteps" class="ch.vd.demaut.cucumber.steps.ActivitesFuturesSteps"
         scope="cucumber-glue">
         <property name="demandeAutorisationSteps" ref="demandeAutorisationSteps"/>
     </bean>
@@ -59,6 +63,12 @@
         class="ch.vd.demaut.cucumber.steps.definitions.AnnexesStepDefinitions"
         scope="cucumber-glue">
         <property name="annexesSteps" ref="annexesSteps"/>
+    </bean>
+
+    <bean
+        class="ch.vd.demaut.cucumber.steps.definitions.ActivitesFuturesStepDefinitions"
+        scope="cucumber-glue">
+        <property name="activitesFuturesSteps" ref="activitesFuturesSteps"/>
     </bean>
 
 </beans>

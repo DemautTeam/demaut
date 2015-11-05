@@ -49,9 +49,16 @@ public class ActivitesFuturesStepDefinitions extends StepDefinitions {
 
     // ********************************************************* Then
 
-    @Alors("^le système Demaut \"([^\"]*)\" ce code NPA en tant que NPA Suisse avec quatre caractères$")
-    public void le_système_Demaut_action_ce_code_NPA_en_tant_que_NPA_Suisse_avec_caractères(AccepteOuRefuse action) throws Throwable {
-//        AccepteOuRefuse.verifieAcceptation(action, activitesFuturesSteps.getActionActuelle());
+    @Alors("^le système Demaut (accepte|refuse) ce code NPA en tant que NPA Suisse avec quatre caractères$")
+    public void le_système_Demaut_action_ce_code_NPA_en_tant_que_NPA_Suisse_avec_caractères(AccepteOuRefuse action) {
+        activitesFuturesSteps.verifieAcceptationActiviteFuture(action);
     }
+    
+    // ********************************************************* Setters (for Injection)
+    
+    public void setActivitesFuturesSteps(ActivitesFuturesSteps activitesFuturesSteps) {
+        this.activitesFuturesSteps = activitesFuturesSteps;
+    }
+    
 
 }

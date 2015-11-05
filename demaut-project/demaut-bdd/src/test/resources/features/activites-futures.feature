@@ -1,5 +1,5 @@
 #language: fr
-@activites-futures @ignoreme
+@activites-futures
 Fonctionnalité: Vérification du code NPA
 
   Contexte: 
@@ -13,7 +13,6 @@ Fonctionnalité: Vérification du code NPA
     Etant donné que tous les autres champs de l´activité future sont remplis et valides
     Lorsque le demandeur ajoute cette activité future
     Alors le système Demaut <action> ce code NPA en tant que NPA Suisse avec quatre caractères
-
     Exemples: 
       | npa     | action  |
       | "1234"  | accepte |
@@ -24,6 +23,7 @@ Fonctionnalité: Vérification du code NPA
       | "12345" | refuse  |
       | "123a"  | refuse  |
 
+  @ignoreme
   Plan du Scénario: Contrôler le format du téléphone
     Etant donné le numéro de téléphone <tel> renseigné par l'utilisateur
     Etant donné que tous les autres champs de l'activité future sont remplis et valides
@@ -31,6 +31,6 @@ Fonctionnalité: Vérification du code NPA
     Alors le système Demaut <action> ce code NPA en tant que NPA Suisse avec quatre caractères
 
     Exemples: 
-      | npa    | action  |
-      | "1234" | accepte |
-      | ""     | refuse  |
+      | tel        | action  |
+      | "12345678" | accepte |
+      | ""         | refuse  |

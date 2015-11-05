@@ -3,6 +3,9 @@ package ch.vd.demaut.domain.demandeur.donneesProf;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import ch.vd.demaut.commons.annotations.Entity;
 import ch.vd.demaut.commons.entities.AbstractEntity;
 import ch.vd.demaut.domain.annexes.ProcedureAnnexe;
@@ -110,6 +113,7 @@ public class DonneesProfessionnelles extends AbstractEntity {
     }
 
     // ********************************************************* Getters
+    @Valid
     public CodeGLN getCodeGLN() {
         return codeGLN;
     }
@@ -118,6 +122,8 @@ public class DonneesProfessionnelles extends AbstractEntity {
         return new ListeDesDiplomes(diplomes);
     }
 
+    @NotNull
+    @Valid
     public ListeDesActivitesFutures getActivitesFutures() {
         return new ListeDesActivitesFutures(activiteFutures);
     }

@@ -17,9 +17,7 @@ public class DonneesProfessionnellesValidateur extends AbstractDataValidateur<Do
 
     // ********************************************************* Constructeur
 
-
     // ********************************************************* Méthodes métier
-
 
     /**
      * Vérifie que la donneesProfessionnelles est valide. Si non valide, renvoie une
@@ -33,7 +31,8 @@ public class DonneesProfessionnellesValidateur extends AbstractDataValidateur<Do
     }
 
     public void validerStructure(DonneesProfessionnelles donneesProfessionnelles) {
-        Set<ConstraintViolation<DonneesProfessionnelles>> constraintViolationsResult = validateData(donneesProfessionnelles);
+        Set<ConstraintViolation<DonneesProfessionnelles>> constraintViolationsResult = validateData(
+                donneesProfessionnelles);
 
         if (constraintViolationsResult.size() > 0) {
             throw new DonneesProfessionnellesNonValideException();

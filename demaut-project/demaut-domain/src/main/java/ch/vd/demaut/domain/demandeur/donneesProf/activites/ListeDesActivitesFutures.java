@@ -3,6 +3,9 @@ package ch.vd.demaut.domain.demandeur.donneesProf.activites;
 import java.util.Collections;
 import java.util.List;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 
 /**
@@ -22,6 +25,12 @@ public class ListeDesActivitesFutures {
 
     // ********************************************************* Business methods
 
+    @NotNull
+    @Valid
+    public List<ActiviteFuture> getActivitesFutures() {
+        return activitesFutures;
+    }
+    
     /**
      * Renvoie la liste des annexes
      */

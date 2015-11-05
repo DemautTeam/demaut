@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import ch.vd.demaut.commons.annotations.Aggregate;
@@ -21,6 +20,7 @@ import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.Demande;
 import ch.vd.demaut.domain.demandes.DemandeFK;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandes.donneesProf.activites.ActiviteFutureValidateur;
 import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnelles;
 import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnellesValidateur;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
@@ -41,6 +41,8 @@ public class DemandeAutorisation extends Demande {
     private static final DonneesPersonnellesValidateur DONNEES_PERSONNELLES_VALIDATEUR = new DonneesPersonnellesValidateur();
 
     private static final DonneesProfessionnellesValidateur DONNEES_PROFESSIONNELLES_VALIDATEUR = new DonneesProfessionnellesValidateur();
+
+    private static final ActiviteFutureValidateur ACTIVITE_FUTURE_VALIDATEUR = new ActiviteFutureValidateur();
 
     // ********************************************************* Fields
     private Profession profession;
@@ -125,7 +127,11 @@ public class DemandeAutorisation extends Demande {
      * @param activiteFuture
      *            Activite future Valide
      */
-    public void ajouterActiviteFuture(@Valid @NotNull ActiviteFuture activiteFuture) {
+    public void validerEtAjouterActiviteFuture(ActiviteFuture activiteFuture) {
+        //1- Valider activiteFuture
+        ACTIVITE_FUTURE_VALIDATEUR.valider(activiteFuture);
+        
+        //2- Ajouter activiteFuture
         getActivitesFutures().ajouterUneActiviteFuture(activiteFuture);
     }
 
