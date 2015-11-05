@@ -79,4 +79,9 @@ public class Etablissement extends BaseValueObject {
     public TelephoneMobile getTelephoneMobile() {
         return telephoneMobile;
     }
+
+    @Valid
+    public Fax getFax() {
+        return fax;
+    }
 }

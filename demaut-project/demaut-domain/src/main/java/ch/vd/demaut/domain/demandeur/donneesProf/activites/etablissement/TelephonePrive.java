@@ -1,9 +1,11 @@
 package ch.vd.demaut.domain.demandeur.donneesProf.activites.etablissement;
 
+import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.BaseValueObject;
 
 import javax.validation.constraints.Pattern;
 
+@ValueObject
 public class TelephonePrive extends BaseValueObject {
 
     // ********************************************************* Field
