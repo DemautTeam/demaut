@@ -28,3 +28,12 @@ input[type="tel"], input[type="email"] {
     font: 1em Arial, Helvetica, Verdana, sans-serif;
     padding: 5px 1px
 }
+
+.btn-primary {
+  text-shadow: none;
+  font-weight: bold;
+}
+
+.btn-primary:hover {
+  background-image: none;
+}
