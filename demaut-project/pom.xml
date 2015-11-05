@@ -133,6 +133,7 @@
         <geronimo.jpa.spec.version>1.1.1</geronimo.jpa.spec.version>
         <commons.dbcp.version>1.4</commons.dbcp.version>
         <javax.jta.version>1.1</javax.jta.version>
+        <hibernate.version>4.3.6.Final</hibernate.version>
 
         <!-- Database -->
         <com.h2.version>1.4.186</com.h2.version>
@@ -486,7 +487,7 @@
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-entitymanager</artifactId>
-                <version>4.3.6.Final</version>
+                <version>${hibernate.version}</version>
             </dependency>
 
             <!-- Validation -->

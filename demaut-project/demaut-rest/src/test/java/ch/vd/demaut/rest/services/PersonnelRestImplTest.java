@@ -51,7 +51,7 @@ public class PersonnelRestImplTest {
         TelephoneMobile telephoneMobile = new TelephoneMobile("07625225123");
         Fax fax = new Fax("023456789");
         Pays nationalite = Pays.Allemagne;
-        Langue langue = Langue.Allemand;
+        Langue langue = Langue.Francais;
         Permis permis = new Permis(TypePermis.C);
 
         Response response = personelRest.renseignerLesDonneesPersonnelles(referenceDeDemande, nom.getValue(), prenom.getValue(), null, adresse.getVoie(), adresse.getComplement(), localite.getValue(),

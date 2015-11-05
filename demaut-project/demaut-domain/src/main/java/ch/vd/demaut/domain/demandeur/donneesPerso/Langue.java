@@ -4,26 +4,10 @@ import ch.vd.demaut.domain.config.RefProgresID;
 import ch.vd.demaut.domain.config.TypeProgres;
 import ch.vd.demaut.domain.exception.LangueNotFoundException;
 
+//TODO refactorer pour être en ligne avec ProgresSoa
 public enum Langue implements TypeProgres {
-    // TODO Ce ne sera plus une liste. Les cas possibles seront Français(1) Autre(0).
-    ListeIncomplete(0, "Incomplète", "Liste incomplète..."),
-    SuisseFR(1, "CH_fr", "Français Suisse"),
-    SuisseDE(2, "CH_de", "Allemand Suisse"),
-    SuisseIT(3, "CH_it", "Italien Suisse"),
-    Afghan(4, "AF", "Afghan"),
-    Albanai(5, "AL", "Albanai"),
-    Allemand(6, "DE", "Allemand"),
-    Andorre(7, "AD", "Andorre"),
-    Anglais(7, "EN", "Anglais"),
-    Argentin(14, "AR", "Argentine"),
-    Armenien(15, "AM", "Arménie"),
-    Arabe(16, "AR", "Aruba"),
-    Australie(17, "AU", "Australie"),
-    Autrichen(18, "AT", "Autriche"),
-    Azerbaidjan(19, "AZ", "Azerbaïdjan"),
-    Neerlandaises(8, "NE", "Néerlandais");
-
-    // TODO completer la liste
+    Francais(1, "fr", "Français"),
+    Autre(0, "non_fr", "Autre");
 
     private RefProgresID progresId;
 

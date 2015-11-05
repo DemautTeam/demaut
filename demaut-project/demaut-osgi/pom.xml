@@ -74,6 +74,10 @@
                     <groupId>org.apache.activemq</groupId>
                     <artifactId>activemq-ra</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-core</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -100,6 +104,10 @@
                 <exclusion>
                     <groupId>org.apache.activemq</groupId>
                     <artifactId>activemq-ra</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-core</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

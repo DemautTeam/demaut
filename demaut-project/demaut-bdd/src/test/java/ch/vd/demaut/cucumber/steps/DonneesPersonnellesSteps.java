@@ -45,7 +45,7 @@ public class DonneesPersonnellesSteps {
         TelephonePrive numeroTelephone = new TelephonePrive("022222222");
         TelephoneMobile numeroMobile = new TelephoneMobile("07625225123");
         Pays nationalite = Pays.Andorre;
-        Langue langue = Langue.Anglais;
+        Langue langue = Langue.Autre;
         Permis permis = new Permis(TypePermis.B);
 
 
@@ -65,7 +65,7 @@ public class DonneesPersonnellesSteps {
         Genre genre = Genre.Feminin;
         DateDeNaissance dateDeNaissance = new DateDeNaissance(LocalDate.now());
         Pays nationalite = Pays.Andorre;
-        Langue langue = Langue.Anglais;
+        Langue langue = Langue.Francais;
         Permis permis = new Permis(TypePermis.B);
 
 
@@ -86,7 +86,7 @@ public class DonneesPersonnellesSteps {
         DateDeNaissance dateDeNaissance = new DateDeNaissance(LocalDate.now());
         TelephonePrive numeroTelephone = new TelephonePrive("022222222");
         TelephoneMobile numeroMobile = new TelephoneMobile("07625225123");
-        Langue langue = Langue.Anglais;
+        Langue langue = Langue.Francais;
 
         currentDonnees = new DonneesPersonnelles(nom, prenom, null, adresse, email, numeroTelephone, numeroMobile, null, genre,
                 dateDeNaissance, nationalite, langue, permis);

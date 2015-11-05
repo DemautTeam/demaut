@@ -12,15 +12,6 @@ public class UtilisateurRepositoryJava extends GenericRepositoryMock<Utilisateur
 
     private static Long idSequence = 0L;
 
-    private static UtilisateurRepositoryJava INSTANCE = null;
-
-    public synchronized static UtilisateurRepository getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new UtilisateurRepositoryJava();
-        }
-        return INSTANCE;
-    }
-
     @Override
     protected Long getNextID() {
         return ++idSequence;

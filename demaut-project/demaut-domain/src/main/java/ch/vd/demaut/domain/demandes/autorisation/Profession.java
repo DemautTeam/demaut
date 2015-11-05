@@ -5,6 +5,7 @@ import java.util.List;
 
 import ch.vd.demaut.domain.config.RefProgresID;
 import ch.vd.demaut.domain.config.TypeProgres;
+import ch.vd.demaut.domain.exception.ProfessionNotFoundException;
 import ch.vd.demaut.domain.exception.TypeDiplomeNotFoundException;
 
 public enum Profession implements TypeProgres {
@@ -50,14 +51,14 @@ public enum Profession implements TypeProgres {
         this.categorie = categorie;
     }
 
-    //TODO: refactor avec TypeAnnexe
+    //TODO: refactor avec TypeAnnexe pour mutualiser
     static public Profession getTypeById(Integer id2) {
         for (Profession type : Profession.values()) {
             if (type.getRefProgresID().equals(new RefProgresID(id2))) {
                 return type;
             }
         }
-        throw new TypeDiplomeNotFoundException();
+        throw new ProfessionNotFoundException();
     }
 
     public RefProgresID getRefProgresID() {

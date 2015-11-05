@@ -1,9 +1,9 @@
+"use strict";
 var ngDemautApp = angular.module('ngDemautApp', ['ngSanitize', 'ngRoute', 'ngAnimate', 'commonsModule', 'ui.bootstrap']);
 
 
 ngDemautApp
     .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
-
         $routeProvider
             .when('/Demaut/recherche', {
                 templateUrl: prestationContext + '/template/recherche.html',
@@ -68,9 +68,9 @@ ngDemautApp
         $locationProvider.hashPrefix('!');
 
         $httpProvider.interceptors.push('globalDefaultError');
-        $httpProvider.interceptors.push('globalErrorInterceptor');
-    }])
-    .controller('CockpitController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', '$log', '$window',
+    }]);
+
+ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', '$log', '$window',
         function ($scope, $rootScope, $routeParams, $http, $location, $interval, $log, $window) {
             $rootScope.contextMenu = 'Cockpit';
             $scope.indexStep = 0;
@@ -129,48 +129,62 @@ ngDemautApp
         }])
     .controller('ProfessionSanteController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$log', '$window', 'professionTest',
         function ($scope, $rootScope, $routeParams, $http, $location, $log, $window, professionTest) {
-            $rootScope.contextMenu = 'DemandeAutorisation';
+
+    		//////////////// Private functions
+	        $scope.isBrouillonExistant = function () {
+	            return window.localStorage && $window.localStorage.getItem('referenceDeDemande');
+	        };
+	
+	        $scope.isProfessionNecessiteCodeGLN = function() {
+	            return $scope.professionData.profession != null && $scope.professionData.profession != undefined &&
+	                professionTest.isProfessionNecessiteCodeGLN($scope.professionData.profession, $scope.professionData.professionsCodeGLN)
+	        };
+        
+	        $scope.initListesProfessions = function() {
+	            $scope.professionData = {};
+
+	            //TODO: Extract in a function
+	            $scope.professionData.professions = [];
+	            $http.get(urlPrefix + '/profession/professionsList')
+	            .success(function (data, status, headers, config) {
+	                $scope.professionData.professions = angular.fromJson(data.response);
+	                $log.info('Liste professions a été récupérée avec succès!');
+	            })
+	            .error(function (data, status, headers, config) {
+	                $rootScope.error = 'Error fetching ../profession/professionsList';
+	                $log.info('Error ' + urlPrefix + '/profession/professionsList/ \n Status :' + status);
+	            });            	
+
+	            
+	            //TODO: Extract in a function
+	        	$scope.professionData.professionsCodeGLN = [];
+	            $http.get(urlPrefix + '/profession/professionsCodeGLNObligatoire')
+	            .success(function (data, status, headers, config) {
+	                $scope.professionData.professionsCodeGLN = angular.fromJson(data.response);
+	                $log.info('Liste professions exigeant code GLN a été récupérée avec succès!');
+	            })
+	            .error(function (data, status, headers, config) {
+	                $rootScope.error = 'Error fetching ../profession/professionsCodeGLNObligatoire';
+	                $log.info('Error ' + urlPrefix + '/profession/professionsCodeGLNObligatoire/ \n Status :' + status);
+	            });
+	        }
+    	
+    		//////////////// Controller main flow
+
+	        $rootScope.contextMenu = 'DemandeAutorisation';
             $scope.indexStep = 1;
             this.name = "ProfessionSanteController";
             this.params = $routeParams;
-            $scope.professionData = {};
-            $scope.professionData.professions = [];
-            $scope.professionData.professionsCodeGLN = [];
-
-            if ($scope.professionData.professions.length == 0) {
-                $http.get(urlPrefix + '/profession/professionsList')
-                    .success(function (data, status, headers, config) {
-                        $scope.professionData.professions = angular.fromJson(data.response);
-                        $log.info('Liste professions a été récupérée avec succès!');
-                    })
-                    .error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error fetching ../profession/professionsList';
-                        $log.info('Error ' + urlPrefix + '/profession/professionsList/ \n Status :' + status);
-                    });
-            }
-
-            if ($scope.professionData.professionsCodeGLN.length == 0) {
-                $http.get(urlPrefix + '/profession/professionsCodeGLNObligatoire')
-                    .success(function (data, status, headers, config) {
-                        $scope.professionData.professionsCodeGLN = angular.fromJson(data.response);
-                        $log.info('Liste professions exigeant code GLN a été récupérée avec succès!');
-                    })
-                    .error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error fetching ../profession/professionsCodeGLNObligatoire';
-                        $log.info('Error ' + urlPrefix + '/profession/professionsCodeGLNObligatoire/ \n Status :' + status);
-                    });
-            }
-
-            $scope.isBrouillonExistant = function () {
-                return window.localStorage && $window.localStorage.getItem('referenceDeDemande');
-            };
-
+            
+            $scope.initListesProfessions();
+            
             if($scope.isBrouillonExistant()) {
-                $http.get(urlPrefix + '/profession/professionDeDemande', {
-                    params: {
-                        referenceDeDemande: $window.localStorage.getItem('referenceDeDemande')
-                    }
-                })
+                $http
+                    .get(urlPrefix + '/profession/professionDeDemande', {
+	                    params: {
+	                        referenceDeDemande: $window.localStorage.getItem('referenceDeDemande')
+	                    }
+                    })
                     .success(function (data, status, headers, config) {
                         var response = angular.fromJson(data.response);
                         for (var indexI = 0; indexI < $scope.professionData.professions.length; indexI++) {
@@ -195,11 +209,10 @@ ngDemautApp
             //Etape suivante
             $scope.nextStep = function () {
                 $rootScope.wouldStepNext = true;
+                
                 if ($scope.professionSante.professionDataForm.$valid &&
                     !(professionTest.isProfessionNecessiteCodeGLN($scope.professionData.profession, $scope.professionData.professionsCodeGLN) &&
                     ($scope.professionData.gln == null || $scope.professionData.gln == undefined))) {
-
-                    $window.localStorage.setItem('profession', $scope.professionData.profession);
 
                     if(!$scope.isBrouillonExistant()) {
                         $http.get(urlPrefix + '/demande/initialiser', {
@@ -212,6 +225,7 @@ ngDemautApp
                                 var referenceDeDemande = angular.fromJson(data.response);
                                 $window.localStorage.setItem('referenceDeDemande', referenceDeDemande.value);
                                 $log.info('Une nouvelle demande a été intitialisée avec succès!');
+                                $location.path('/Demaut/demande/donneesPerso');
                             })
                             .error(function (data, status, headers, config) {
                                 $rootScope.error = 'Error fetching ../demande/initialiser/';
@@ -227,42 +241,40 @@ ngDemautApp
                         })
                             .success(function (data, status, headers, config) {
                                 $log.info('Code GLN de la demande a été updaté avec succès!');
+                                $location.path('/Demaut/demande/donneesPerso');
                             })
                             .error(function (data, status, headers, config) {
                                 $rootScope.error = 'Error fetching ../profession/updateCodeGLN';
                                 $log.info('Error ' + urlPrefix + '/profession/updateCodeGLN/ \n Status :' + status);
                             });
                     }
-                    $location.path('/Demaut/demande/donneesPerso');
                 }
                 else {
                     $log.info('Formulaire invalide !');
                 }
             };
 
-            $scope.isProfessionNecessiteCodeGLN = function() {
-                return $scope.professionData.profession != null && $scope.professionData.profession != undefined &&
-                    professionTest.isProfessionNecessiteCodeGLN($scope.professionData.profession, $scope.professionData.professionsCodeGLN)
-            };
         }])
-    .controller('DonneesPersoController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', '$log', '$window', 'nationalityTest',
-        function ($scope, $rootScope, $routeParams, $http, $location, $interval, $log, $window, nationalityTest) {
+    .controller('DonneesPersoController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$interval', '$log', '$window', 'nationalityTest', 'utils',
+        function ($scope, $rootScope, $routeParams, $http, $location, $interval, $log, $window, nationalityTest, utils) {
             $rootScope.contextMenu = 'DemandeAutorisation';
             $scope.indexStep = 2;
             this.name = "DonneesPersoController";
             this.params = $routeParams;
-            $scope.testSuisse = nationalityTest;//récupération du service de test des nationnalité
+            $scope.testSuisse = nationalityTest;//récupération du service de test des nationnalités
+
+            $scope.nationalites = [];
+            $scope.langues = [];
+            $scope.paysList = [];
+
             $scope.personalData = {};
-            $scope.personalData.nationalites = [];
-            $scope.personalData.langues = [];
-            $scope.personalData.paysList = [];
             $scope.personalData.datePicker = {};
             $scope.personalData.datePicker.status = {};
 
-            if ($scope.personalData.nationalites.length == 0) {
+            if ($scope.nationalites.length == 0) {
                 $http.get(urlPrefix + '/shared/nationalites').
                     success(function (data, status, headers, config) {
-                        $scope.personalData.nationalites = angular.fromJson(data.response);
+                        $scope.nationalites = angular.fromJson(data.response);
                         $log.info('Liste nationalites a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
@@ -271,22 +283,10 @@ ngDemautApp
                     });
             }
 
-            if ($scope.personalData.langues.length == 0) {
-                $http.get(urlPrefix + '/shared/langues').
-                    success(function (data, status, headers, config) {
-                        $scope.personalData.langues = angular.fromJson(data.response);
-                        $log.info('Liste langues a été récupérée avec succès!');
-                    }).
-                    error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error fetching ../shared/langues';
-                        $log.info('Error ' + urlPrefix + '/shared/langues/ \n Status :' + status);
-                    });
-            }
-
-            if ($scope.personalData.paysList.length == 0) {
+            if ($scope.paysList.length == 0) {
                 $http.get(urlPrefix + '/shared/paysList').
                     success(function (data, status, headers, config) {
-                        $scope.personalData.paysList = angular.fromJson(data.response);
+                        $scope.paysList = angular.fromJson(data.response);
                         $log.info('Liste pays a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
@@ -294,7 +294,7 @@ ngDemautApp
                         $log.info('Error ' + urlPrefix + '/shared/paysList/ \n Status :' + status);
                     });
             }
-
+            //TODO faire un service ou un provider pour la gestion de l'état de la demande
             $scope.isBrouillonExistant = function () {
                 return window.localStorage && $window.localStorage.getItem('referenceDeDemande');
             };
@@ -306,56 +306,60 @@ ngDemautApp
                     }
                 }).
                     success(function (data, status, headers, config) {
-                        var response = angular.fromJson(data.response);
-                        $scope.personalData.nom = response.nom.value;
-                        $scope.personalData.prenom = response.prenom.value;
-                        $scope.personalData.nomDeCelibataire = response.nomDeCelibataire.value;
+                        var responseValues = angular.fromJson(data.response);
+                        var donneesPerso = [];
+                        angular.forEach(responseValues, function(value, key) {
+                            $log.info("Filtrage : " + key + " : " + value);
+                            this.push(key + ': ' + value);
+                        }, donneesPerso);
 
-                        if(response.adresse != null && response.adresse != undefined) {
-                            $scope.personalData.adressePersonnelle = response.adresse.voie;
-                            $scope.personalData.complement = response.adresse.complement;
-                            $scope.personalData.localite = response.adresse.localite.value;
-                            $scope.personalData.npa = response.adresse.npa.value;
+                        $scope.personalData.nom = responseValues.nom.value;
+                        $scope.personalData.prenom = responseValues.prenom.value;
+                        $scope.personalData.nomDeCelibataire = responseValues.nomDeCelibataire.value;
 
-                            for (var indexI = 0; indexI < $scope.personalData.paysList.length; indexI++) {
-                                if ($scope.personalData.paysList[indexI].name == response.adresse.pays) {
-                                    $scope.personalData.pays = $scope.personalData.paysList[indexI];
+                        if(utils.isNotEmpty(responseValues.adresse)) {
+                            $scope.personalData.adressePersonnelle = responseValues.adresse.voie;
+                            $scope.personalData.complement = responseValues.adresse.complement;
+                            $scope.personalData.localite = responseValues.adresse.localite.value;
+                            $scope.personalData.npa = responseValues.adresse.npa.value;
+
+                            for (var indexI = 0; indexI < $scope.paysList.length; indexI++) {
+                                if ($scope.paysList[indexI].name == responseValues.adresse.pays) {
+                                    $scope.personalData.pays = $scope.paysList[indexI];
                                     break;
                                 }
                             }
                         }
 
-                        $scope.personalData.telephonePrive = response.telephonePrive.value;
-                        $scope.personalData.telephoneMobile = response.telephoneMobile.value;
-                        $scope.personalData.email = response.email.value;
-                        $scope.personalData.fax = response.fax.value;
-                        $scope.personalData.genre = response.genre;
-                        $scope.personalData.dateDeNaissance = new Date(response.dateDeNaissance.value);
+                        $scope.personalData.telephonePrive = responseValues.telephonePrive.value;
+                        $scope.personalData.telephoneMobile = responseValues.telephoneMobile.value;
+                        $scope.personalData.email = responseValues.email.value;
+                        $scope.personalData.fax = responseValues.fax.value;
+                        $scope.personalData.genre = responseValues.genre;
+                        $scope.personalData.dateDeNaissance = new Date(responseValues.dateDeNaissance.value);
+                        $scope.personalData.langue = responseValues.langue;
 
-                        for (var indexJ = 0; indexJ < $scope.personalData.nationalites.length; indexJ++) {
-                            if ($scope.personalData.nationalites[indexJ].name == response.nationalite) {
-                                $scope.personalData.nationalite = $scope.personalData.nationalites[indexJ];
+                        for (var indexJ = 0; indexJ < $scope.nationalites.length; indexJ++) {
+                            if ($scope.nationalites[indexJ].name == responseValues.nationalite) {
+                                $scope.personalData.nationalite = $scope.nationalites[indexJ];
                                 break;
                             }
                         }
-                        for (var indexK = 0; indexK < $scope.personalData.langues.length; indexK++) {
-                            if ($scope.personalData.langues[indexK].name == response.langue) {
-                                $scope.personalData.langue = $scope.personalData.langues[indexK];
-                                break;
+
+                        if(utils.isNotEmpty(responseValues.permis)) {
+                            $scope.personalData.permis = responseValues.permis.typePermis;
+                            if(utils.isNotEmpty(responseValues.permis.autrePermis)) {
+                                $scope.personalData.permisOther = responseValues.permis.autrePermis.value;
                             }
                         }
-                        if(response.permis != null && response.permis != undefined) {
-                            $scope.personalData.permis = response.permis.typePermis;
-                            $scope.personalData.permisOther = response.permis.autrePermis.value;
-                        }
-                        if(response != null && response != undefined) {
+                        if(utils.isNotEmpty(responseValues)) {
                             $scope.donneesPerso.donneesPersoDataForm.$pristine = false;
                         }
-                        $log.info('Objet Données personnlles a été récupéré avec succès!');
+                        $log.debug('Objet Données personnelles a été récupéré avec succès!');
                     }).
                     error(function (data, status, headers, config) {
                         $rootScope.error = 'Error fetching ../personal/recuperer';
-                        $log.info('Error ' + urlPrefix + '/personal/recuperer/ \n Status :' + status);
+                        $log.error('Error ' + urlPrefix + '/personal/recuperer/ \n Status :' + status);
                     });
             }
 
@@ -396,6 +400,7 @@ ngDemautApp
             };
 
             function doUpdateDonneesPerso() {
+                //TODO envoyer en POST ou PUT
                 $http.get(urlPrefix + '/personal/renseigner', {
                     params: {
                         referenceDeDemande: $window.localStorage.getItem('referenceDeDemande'),
@@ -831,7 +836,6 @@ ngDemautApp
             $scope.annexesData.annexeTypesObligatoires = [];
             $scope.annexesData.referenceFiles = [];
             $scope.annexesData.annexeTypeSelected = {};
-            $scope.annexesData.profession = $window.localStorage.getItem('profession');
 
             if ($scope.annexesData.annexeTypes.length == 0) {
                 $http.get(urlPrefix + '/annexes/typesList').

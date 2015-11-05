@@ -1,19 +1,7 @@
+"use strict";
 var commonsModule = angular.module('commonsModule', ['ngResource']);
 
-commonsModule.factory('globalErrorInterceptor', ['$log', function($log){
-        var globalErrorInterceptor = {
-            responseError: function(response){
-                if(response.status == 417){//Erreur dans le domaine
-                    $log.info('Interception du message');
-                    $log.debug(response.data);
-                }
-            }
-        }
-        return globalErrorInterceptor;
-    }]
-);
-
-commonsModule.factory('globalDefaultError', [function ($q, $rootScope, $location) {
+commonsModule.factory('globalDefaultError', ['$q', '$rootScope', '$location', '$log', function ($q, $rootScope, $location, $log) {
     return {
         'responseError': function (rejection) {
             var status = rejection.status;
@@ -22,10 +10,14 @@ commonsModule.factory('globalDefaultError', [function ($q, $rootScope, $location
             var method = config.method;
             var url = config.url;
 
+            $log.info('Error status=' + status);
+
             if (status == 401) {
                 $location.path("/Demaut/aide");
             }
-            else if(status != 417) {//TODO unifier les 2 systèmes de gestion d'erreur
+            else if (status == 417) {//Erreur dans le domaine
+            }
+            else {
                 $rootScope.error = true;
                 $rootScope.errorMessage = method + ' on ' + url + ' failed with status ' + status + '<br>' +
                     (data != null && data != undefined ? data.substring(data.indexOf('<body>') + 6, data.indexOf('</body>')) : "data empty!");
@@ -35,6 +27,7 @@ commonsModule.factory('globalDefaultError', [function ($q, $rootScope, $location
     };
 }]);
 
+//------------------------- Service -------------------------
 commonsModule.service('nationalityTest', ['$log', function ($log) {
     this.suissePattern = new RegExp('[Ss]uisse');
     this.isSuisse = function (textValue) {
@@ -55,6 +48,18 @@ commonsModule.service('professionTest', ['$log', function ($log) {
     };
 }]);
 
+/**
+ * Le but de ce service est de fournir des methodes utilitaires
+ */
+commonsModule.service('utils', ['$log', function ($log) {
+    this.isNotEmpty = function (value){
+        return value != undefined || value != null;
+    };
+    this.isEmpty = function (value){
+        return value == undefined || value == null;
+    };
+}]);
+
 commonsModule.service('configService', ['$resource', function ($resource) {
     this.config = $resource('api/config/urlprefix');
     this.getUrlPrefix = function () {
@@ -63,6 +68,7 @@ commonsModule.service('configService', ['$resource', function ($resource) {
 
 }]);
 
+//------------------------ Directive -------------------------
 commonsModule.directive('stepActions', function () {
     return {
         restrict: 'E',
