@@ -5,9 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.Map;
 
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
-
 import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
 import ch.vd.demaut.commons.utils.FileMockHelper;
 import ch.vd.demaut.cucumber.converteurs.annexes.ListeDesAnnexesConverter;
@@ -27,7 +24,6 @@ import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
 import ch.vd.demaut.domain.annexes.NomFichier;
 import ch.vd.demaut.domain.annexes.ProcedureAnnexe;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
-import ch.vd.demaut.domain.demandes.DateDeCreation;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.CategorieProfession;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
@@ -193,11 +189,7 @@ public class AnnexesStepDefinitions extends StepDefinitions {
 
         byte[] contenuFichier = FileMockHelper.buildContenuFichier(tailleFichier);
 
-        // TODO: Utiliser la date du jour et tester
-        DateDeCreation dateDeCreation = new DateDeCreation(
-                LocalDate.parse("01.01.2015 11:00", DateTimeFormat.forPattern("dd.MM.yyyy hh:mm")));
-
-        Annexe annexe = new Annexe(nomFichier, new ContenuAnnexe(contenuFichier), dateDeCreation);
+        Annexe annexe = new Annexe(nomFichier, new ContenuAnnexe(contenuFichier));
 
         annexesSteps.attacherUneAnnexe(annexe);
     }
@@ -217,8 +209,8 @@ public class AnnexesStepDefinitions extends StepDefinitions {
         List<Map<String, String>> mappingTypesNomFichiersAnnexesSaisies = dataTable.asMaps(String.class, String.class);
         for (Map<String, String> mappingUnTypeNomFichierAnnexesSaisies : mappingTypesNomFichiersAnnexesSaisies) {
             String nomFichier = mappingUnTypeNomFichierAnnexesSaisies.get("Nom du fichier");
-            byte[] contenuFichier = FileMockHelper.buildContenuFichier(2);
-            Annexe annexe = new Annexe(nomFichier, contenuFichier, "01.01.2015 11:00");
+            byte[] bytes = FileMockHelper.buildContenuFichier(2);
+            Annexe annexe = new Annexe(new NomFichier(nomFichier), new ContenuAnnexe(bytes));
             annexes.ajouterAnnexe(annexe);
         }
 

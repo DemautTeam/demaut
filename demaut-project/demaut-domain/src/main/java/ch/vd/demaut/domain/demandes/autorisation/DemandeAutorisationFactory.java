@@ -2,6 +2,7 @@ package ch.vd.demaut.domain.demandes.autorisation;
 
 
 import ch.vd.demaut.commons.annotations.Factory;
+import ch.vd.demaut.domain.demandes.DateDeCreation;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.exception.DemandeBrouillonExisteDejaException;
@@ -17,15 +18,14 @@ public class DemandeAutorisationFactory {
     private DemandeAutorisationRepository demandeAutorisationRepository;
 
     // ********************************************************* Public methods 
-    public DemandeAutorisation initierDemandeAutorisation(Login login, Profession profession, CodeGLN codeGLN) {
-        DemandeAutorisation demandeAutorisation = new DemandeAutorisation(login, profession);
+    public DemandeAutorisation initierDemandeAutorisation(Login login, Profession profession, CodeGLN codeGLN, DateDeCreation dateDeCreation) {
+        DemandeAutorisation demandeAutorisation = new DemandeAutorisation(login, profession, dateDeCreation);
         
         throwExceptionSiDemandeBrouillonExisteDeja(login);
         
         demandeAutorisation.getDonneesProfessionnelles().validerEtRenseignerCodeGLN(codeGLN, profession);
         
         demandeAutorisation.generateReference();
-        demandeAutorisation.generateDateDeCreation();
         
         return demandeAutorisation;
     }

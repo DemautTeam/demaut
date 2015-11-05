@@ -1,13 +1,13 @@
 package ch.vd.demaut.rest.services;
 
-import ch.vd.demaut.domain.annexes.Annexe;
-import ch.vd.demaut.domain.annexes.TypeAnnexe;
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.rest.services.impl.AnnexeRestImpl;
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+import java.io.FileInputStream;
+
+import javax.ws.rs.core.Response;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
@@ -20,12 +20,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.ws.rs.core.Response;
-import java.io.File;
-import java.io.FileInputStream;
-
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.domain.annexes.ContenuAnnexe;
+import ch.vd.demaut.domain.annexes.NomFichier;
+import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.rest.services.impl.AnnexeRestImpl;
+import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 
 @Ignore("TODO Should mock @Context HttpHeaders demaut-user-id")
 @ContextConfiguration({"classpath*:restTest-context.xml"})
@@ -46,6 +50,8 @@ public class AnnexeRestImplTest {
     @Before
     public void setUp() throws Exception {
         byteArray = IOUtils.toByteArray(new FileInputStream("src/test/resources/demautRestTest.cfg"));
+        ContenuAnnexe contenu = new ContenuAnnexe(byteArray);
+        NomFichier nomFichier = new NomFichier("Test_multipart.pdf");
 
         Profession profession = Profession.Medecin;
         Login login = new Login("admin@admin");
@@ -56,7 +62,8 @@ public class AnnexeRestImplTest {
         demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null, login);
         ReferenceDeDemande referenceDeDemande = demandeEnCours.getReferenceDeDemande();
         assertNotNull(referenceDeDemande);
-        Annexe annexe = new Annexe("Test_multipart.pdf", byteArray, "01.01.2015 11:00");
+
+        Annexe annexe = new Annexe(nomFichier, contenu);
         demandeEnCours.validerEtAttacherAnnexe(annexe);
     }
 

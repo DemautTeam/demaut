@@ -1,12 +1,14 @@
-package ch.vd.demaut.spring.utils;
+package ch.vd.demaut.commons.utils;
 
-import ch.vd.demaut.commons.utils.TransactionManagerWrapper;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-//TODO: rendre cette classe diponible pour tous les tests mais ne pas la mettre dans commons4test car pas de Spring injecté
-//FIXME : à quoi sert cette classe ?
+/**
+ * Wrapper d'un {@link PlatformTransactionManager} utilisé dans le BDD et classes de test JPA 
+ *
+ */
 public class JpaTransactionManagerWrapper implements TransactionManagerWrapper {
 
     //Injected via Spring XML
@@ -16,7 +18,7 @@ public class JpaTransactionManagerWrapper implements TransactionManagerWrapper {
 
     @Override
     public void startTransaction() {
-        DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
+        DefaultTransactionDefinition definition = new DefaultTransactionDefinition(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
         transaction = platformTransactionManager.getTransaction(definition);
     }
 
@@ -24,13 +26,19 @@ public class JpaTransactionManagerWrapper implements TransactionManagerWrapper {
     public void commitTransaction() {
         platformTransactionManager.commit(transaction);
     }
-
+    
     @Override
     public void rollbackTransaction() {
         platformTransactionManager.rollback(transaction);
     }
 
+    @Override
+    public TransactionStatus getTransaction() {
+        return transaction;
+    }
+
     public void setPlatformTransactionManager(PlatformTransactionManager platformTransactionManager) {
         this.platformTransactionManager = platformTransactionManager;
     }
+    
 }

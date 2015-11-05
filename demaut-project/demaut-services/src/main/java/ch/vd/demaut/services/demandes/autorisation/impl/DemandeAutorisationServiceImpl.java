@@ -1,6 +1,7 @@
 package ch.vd.demaut.services.demandes.autorisation.impl;
 
 import ch.vd.demaut.commons.exceptions.EntityNotFoundException;
+import ch.vd.demaut.domain.demandes.DateDeCreation;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
@@ -27,7 +28,7 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
     @Override
     public DemandeAutorisation initialiserDemandeAutorisation(Profession profession, CodeGLN codeGLN, Login login) {
 
-        DemandeAutorisation demandeAutorisation = demandeAutorisationFactory.initierDemandeAutorisation(login, profession, codeGLN);
+        DemandeAutorisation demandeAutorisation = demandeAutorisationFactory.initierDemandeAutorisation(login, profession, codeGLN, new DateDeCreation());
 
         demandeAutorisationRepository.store(demandeAutorisation);
         return demandeAutorisation;

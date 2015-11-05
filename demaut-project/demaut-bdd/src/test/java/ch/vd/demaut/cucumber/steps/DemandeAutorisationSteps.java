@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
+import ch.vd.demaut.domain.demandes.DateDeCreation;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
@@ -24,14 +25,17 @@ public class DemandeAutorisationSteps {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DemandeAutorisationSteps.class);
 
+    // ********************************************************* Injected Fields
+    private UtilisateurRepository utilisateurRepository;
+    private DemandeAutorisationRepository demandeAutorisationRepository;
+    private DemandeAutorisationFactory demandeAutorisationFactory;
+    private BackgroundSteps backgroundSteps;
+
+
     // ********************************************************* Fields
     private CodeGLN codeGlnValide = new CodeGLN("4719512002889");
     private CodeGLN codeGlnVide = null;
     private CodeGLN codeGlnInvalide = new CodeGLN("4719512002885");
-
-    private UtilisateurRepository utilisateurRepository;
-    private DemandeAutorisationRepository demandeAutorisationRepository;
-    private DemandeAutorisationFactory demandeAutorisationFactory;
 
     ////////// Données temporaires pour les tests (non-thread safe)
     // FIXME utiliser l'objet ThreadLocal ?
@@ -58,8 +62,9 @@ public class DemandeAutorisationSteps {
 
     public void initialiserDemandeEnCours(Profession profession, CodeGLN codeGln) {
         try {
+            DateDeCreation dateDeCreation = new DateDeCreation(backgroundSteps.getDateHeureCourant().getLocalDate());
             demandeEnCours = demandeAutorisationFactory.initierDemandeAutorisation(utilisateur.getLogin(), profession,
-                    codeGln);
+                    codeGln, dateDeCreation);
             demandeAutorisationRepository.store(demandeEnCours);
             accepteInitiliserDemande();
             LOGGER.debug("La demande autorisation " + demandeEnCours + " a été ajoutée au repository avec l'id technique:"
@@ -68,9 +73,7 @@ public class DemandeAutorisationSteps {
             refuseInitialiserDemande();
             LOGGER.debug("La demande autorisation " + demandeEnCours + " n'a pas été ajoutée au repo");
         }
-
     }
-
 
     public void ajouterActivitesAnterieuresADemandeEnCours(int nbActivitesAnterieures) {
         DonneesProfessionnelles donneesProfessionnelles = demandeEnCours.getDonneesProfessionnelles();
@@ -144,6 +147,10 @@ public class DemandeAutorisationSteps {
 
     public void setDemandeAutorisationFactory(DemandeAutorisationFactory demandeAutorisationFactory) {
         this.demandeAutorisationFactory = demandeAutorisationFactory;
+    }
+    
+    public void setBackgroundSteps(BackgroundSteps backgroundSteps) {
+        this.backgroundSteps = backgroundSteps;
     }
 
     // ***************************** **************************** Private

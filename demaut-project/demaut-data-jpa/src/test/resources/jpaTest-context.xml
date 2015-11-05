@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-       xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:util="http://www.springframework.org/schema/util"
-       xsi:schemaLocation="
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/jdbc
@@ -17,7 +15,8 @@
 		http://www.springframework.org/schema/util
 		http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <bean id="props" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <bean id="props"
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
                 <value>classpath:demautJpaTest.cfg</value>
@@ -25,6 +24,21 @@
         </property>
     </bean>
 
-	<import resource="classpath:META-INF/spring/jpa-context.xml"/>
+    <import resource="classpath:META-INF/spring/jpa-context.xml"/>
+
+    <bean id="transactionManagerWrapper"
+        class="ch.vd.demaut.commons.utils.JpaTransactionManagerWrapper">
+        <property name="platformTransactionManager" ref="transactionManagerDemaut"/>
+    </bean>
+    
+<!--     A décommenter lorsqu'on aura réussi a virer les @Autowired dans les tests Repo -->
+
+<!--     <bean id="demandeAutorisationRepositoryTest" -->
+<!--         class="ch.vd.demaut.data.demandes.autorisation.repo.DemandeAutorisationRepositoryTest"> -->
+<!--         <property name="demandeAutorisationRepository" ref="demandeAutorisationRepository"/> -->
+<!--         <property name="utilisateurRepository" ref="utilisateurRepository"/> -->
+<!--         <property name="demandeAutorisationFactory" ref="demandeAutorisationFactory"/> -->
+<!--         <property name="transactionManagerWrapper" ref="transactionManagerWrapper"/> -->
+<!--     </bean> -->
 
 </beans>

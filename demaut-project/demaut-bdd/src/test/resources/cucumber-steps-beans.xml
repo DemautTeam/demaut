@@ -4,9 +4,15 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!-- Steps-->
+    <bean id="backgroundSteps"
+        class="ch.vd.demaut.cucumber.steps.BackgroundSteps"
+        scope="cucumber-glue">
+        <property name="transactionManagerWrapper" ref="transactionManagerWrapper"/>
+    </bean>
 
     <bean id="demandeAutorisationSteps" class="ch.vd.demaut.cucumber.steps.DemandeAutorisationSteps"
         scope="cucumber-glue">
+        <property name="backgroundSteps" ref="backgroundSteps"/>
         <property name="utilisateurRepository" ref="utilisateurRepository"/>
         <property name="demandeAutorisationRepository" ref="demandeAutorisationRepository"/>
         <property name="demandeAutorisationFactory" ref="demandeAutorisationFactory"/>
@@ -38,7 +44,7 @@
     <bean
         class="ch.vd.demaut.cucumber.steps.definitions.BackgroundStepDefinitions"
         scope="cucumber-glue">
-        <property name="transactionManagerWrapper" ref="transactionManagerWrapper"/>
+        <property name="backgroundSteps" ref="backgroundSteps"/>
     </bean>
 
     <bean

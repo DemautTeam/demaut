@@ -57,11 +57,8 @@
     <bean id="demandeAutorisationRepository"
         class="ch.vd.demaut.data.demandes.autorisation.repo.impl.DemandeAutorisationRepositoryJPA"/>
 
-    <bean id="utilisateurRepositoryJPA"
+    <bean id="utilisateurRepository"
           class="ch.vd.demaut.data.utilisateurs.repo.impl.UtilisateurRepositoryJPA"/>
-
-    <bean id="demandeAutorisationRepositoryJPA"
-          class="ch.vd.demaut.data.demandes.autorisation.repo.impl.DemandeAutorisationRepositoryJPA"/>
 
     <bean id="demandeAutorisationFactory"
         class="ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory">

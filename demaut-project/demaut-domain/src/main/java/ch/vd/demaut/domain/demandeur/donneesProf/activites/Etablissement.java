@@ -7,7 +7,7 @@ import ch.vd.demaut.domain.demandeur.Localite;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-//TOOD : Renommer Etablissement en Addresse & Ajouter JavaDoc
+//TOOD : Renommer Etablissement en Adresse (et AdresseSuisse) & Ajouter JavaDoc
 @ValueObject
 public class Etablissement extends BaseValueObject {
 

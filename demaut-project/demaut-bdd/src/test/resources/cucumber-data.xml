@@ -29,7 +29,7 @@
     </bean>
 
     <bean id="transactionManagerWrapper"
-        class="ch.vd.demaut.spring.utils.JpaTransactionManagerWrapper"
+        class="ch.vd.demaut.commons.utils.JpaTransactionManagerWrapper"
         scope="cucumber-glue">
         <property name="platformTransactionManager" ref="transactionManagerDemaut"/>
     </bean>

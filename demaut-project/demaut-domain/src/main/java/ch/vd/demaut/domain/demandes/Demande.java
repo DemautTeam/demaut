@@ -14,6 +14,10 @@ public abstract class Demande extends EntityFunctionalKeyAware {
     protected Demande() {
     }
 
+    protected Demande(DateDeCreation dateDeCreation) {
+        this.dateDeCreation = dateDeCreation;
+    }
+    
     // ********************************************************* Business Methodes
 
     public void generateReference() {
