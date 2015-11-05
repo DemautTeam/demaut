@@ -1,7 +1,23 @@
 package ch.vd.demaut.domain.demandes.autorisation;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import ch.vd.demaut.commons.annotations.Aggregate;
-import ch.vd.demaut.domain.annexes.*;
+import ch.vd.demaut.domain.annexes.Annexe;
+import ch.vd.demaut.domain.annexes.AnnexeFK;
+import ch.vd.demaut.domain.annexes.AnnexeMetadata;
+import ch.vd.demaut.domain.annexes.AnnexeValidateur;
+import ch.vd.demaut.domain.annexes.ContenuAnnexe;
+import ch.vd.demaut.domain.annexes.CriteresAnnexeObligatoire;
+import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
+import ch.vd.demaut.domain.annexes.MoteurReglesPourAnnexesObligatoires;
+import ch.vd.demaut.domain.annexes.ProcedureAnnexe;
+import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.Demande;
 import ch.vd.demaut.domain.demandes.DemandeFK;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
@@ -10,12 +26,9 @@ import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnellesValidateur;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnellesValidateur;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.ActiviteAnterieure;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.ActiviteFuture;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.ListeDesActivitesFutures;
 import ch.vd.demaut.domain.utilisateurs.Login;
-
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Demande d'autorisation associée à un utilisateur <br>
@@ -66,6 +79,7 @@ public class DemandeAutorisation extends Demande {
     // ********************************************************* Business
     // Methods
 
+    // ******* Annexes
     /**
      * Attache une annexe à la demande.
      *
@@ -94,28 +108,36 @@ public class DemandeAutorisation extends Demande {
 
     public List<TypeAnnexe> calculerTypesAnnexeObligatoires() {
         CriteresAnnexeObligatoire criteres = buildCriteresAnnexeObligatoire();
-        List<TypeAnnexe> typesAnnexeObligatoires = MoteurReglesPourAnnexesObligatoires.calculerTypesAnnexeObligatoires(criteres);
+        List<TypeAnnexe> typesAnnexeObligatoires = MoteurReglesPourAnnexesObligatoires
+                .calculerTypesAnnexeObligatoires(criteres);
         return typesAnnexeObligatoires;
-    }
-
-    private CriteresAnnexeObligatoire buildCriteresAnnexeObligatoire() {
-        ProcedureAnnexe procedureAnnexe = calculerProcedureAnnnexe();
-        boolean contientDiplomesEtrangers = getDonneesProfessionnelles().contientDiplomesEtrangers();
-        boolean estEtranger = getDonneesPersonnelles().estEtranger();
-        CriteresAnnexeObligatoire criteres = new CriteresAnnexeObligatoire(procedureAnnexe, getProfession(),
-                contientDiplomesEtrangers, estEtranger);
-        return criteres;
-    }
-
-    public ProcedureAnnexe calculerProcedureAnnnexe() {
-        return getDonneesProfessionnelles().calculerProcedureAnnexe();
     }
 
     public ContenuAnnexe extraireContenuAnnexe(AnnexeFK annexeFK) {
         return getListeDesAnnexes().extraireContenu(annexeFK);
     }
 
-    // ******** Donnees Personnelles
+    // ******* Activites Futures
+
+    /**
+     * Ajoute une {@link ActiviteFuture} à l aliste des activites futures de cette demande
+     * 
+     * @param activiteFuture
+     *            Activite future Valide
+     */
+    public void ajouterActiviteFuture(@Valid @NotNull ActiviteFuture activiteFuture) {
+        getActivitesFutures().ajouterUneActiviteFuture(activiteFuture);
+    }
+
+    public ListeDesActivitesFutures getActivitesFutures() {
+        return getDonneesProfessionnelles().getActivitesFutures();
+    }
+
+    public ProcedureAnnexe calculerProcedureAnnnexe() {
+        return getDonneesProfessionnelles().calculerProcedureAnnexe();
+    }
+
+    // ******* Donnees Personnelles
 
     public void validerEtAttacherLesDonneesPersonnelles(DonneesPersonnelles donneesPersonnelles) {
         DONNEES_PERSONNELLES_VALIDATEUR.valider(donneesPersonnelles);
@@ -123,6 +145,7 @@ public class DemandeAutorisation extends Demande {
     }
 
     // ******* Donnees Professionnelles
+    //TODO : A revoir apres le refactoring des activites futures
     public void validerDonneesProfessionnelles() {
         DONNEES_PROFESSIONNELLES_VALIDATEUR.valider(donneesProfessionnelles);
     }
@@ -140,9 +163,16 @@ public class DemandeAutorisation extends Demande {
         DONNEES_PROFESSIONNELLES_VALIDATEUR.valider(donneesProfessionnelles);
     }
 
-
-
     // ********************************************************* Private Methods
+
+    private CriteresAnnexeObligatoire buildCriteresAnnexeObligatoire() {
+        ProcedureAnnexe procedureAnnexe = calculerProcedureAnnnexe();
+        boolean contientDiplomesEtrangers = getDonneesProfessionnelles().contientDiplomesEtrangers();
+        boolean estEtranger = getDonneesPersonnelles().estEtranger();
+        CriteresAnnexeObligatoire criteres = new CriteresAnnexeObligatoire(procedureAnnexe, getProfession(),
+                contientDiplomesEtrangers, estEtranger);
+        return criteres;
+    }
 
     // ********************************************************* Getters
 
@@ -181,4 +211,5 @@ public class DemandeAutorisation extends Demande {
     public DemandeFK<DemandeAutorisation> getFunctionalKey() {
         return new DemandeFK<DemandeAutorisation>(this);
     }
+
 }

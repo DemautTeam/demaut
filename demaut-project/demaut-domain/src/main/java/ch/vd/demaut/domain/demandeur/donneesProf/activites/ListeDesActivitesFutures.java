@@ -1,14 +1,14 @@
 package ch.vd.demaut.domain.demandeur.donneesProf.activites;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
-import org.apache.commons.collections.CollectionUtils;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 
-import ch.vd.demaut.domain.exception.ActiviteFutureIntrouvableException;
-
+/**
+ * Encapsule la liste des activités futures {@link ActiviteFuture} liées a une {@link DemandeAutorisation}
+ *
+ */
 public class ListeDesActivitesFutures {
 
     // ********************************************************* Fields
@@ -20,7 +20,7 @@ public class ListeDesActivitesFutures {
         this.activitesFutures = ActiviteFutures;
     }
 
-    // ********************************************************* Getters
+    // ********************************************************* Business methods
 
     /**
      * Renvoie la liste des annexes
@@ -33,23 +33,8 @@ public class ListeDesActivitesFutures {
         this.activitesFutures.add(ActiviteFuture);
     }
 
-    @SuppressWarnings("unchecked")
-    public Collection<ActiviteFuture> extraireActiviteFuturesDeType(TypeActivite typeActivite) {
-        return CollectionUtils.select(activitesFutures,
-                new BeanPropertyValueEqualsPredicate("typeActivite", typeActivite));
+    public void supprimerActiviteFuture(ActiviteFuture ActiviteFuture) {
+        this.activitesFutures.remove(ActiviteFuture);
     }
 
-    public void supprimerUneActiviteFuture(ActiviteFuture activiteFuture) {
-        ActiviteFuture ActiviteFuture = trouverActiviteFuture(activiteFuture.getReferenceDeActivite());
-        activitesFutures.remove(ActiviteFuture);
-    }
-
-    private ActiviteFuture trouverActiviteFuture(ReferenceDeActivite referenceDeActivite) {
-        Object ActiviteFutureTrouve = CollectionUtils.find(activitesFutures,
-                new BeanPropertyValueEqualsPredicate("referenceDeActivite", referenceDeActivite));
-        if (ActiviteFutureTrouve == null) {
-            throw new ActiviteFutureIntrouvableException();
-        }
-        return (ActiviteFuture) ActiviteFutureTrouve;
-    }
 }

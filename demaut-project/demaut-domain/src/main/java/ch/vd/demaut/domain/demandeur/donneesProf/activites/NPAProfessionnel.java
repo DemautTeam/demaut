@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 /**
  *
  * Ce NPAProfessionnel est forcement un NPAProfessionnel suisse donc il doit contenir 4 chiffres.
- *
+ * TODO: Renommer en NPASuisse & Changer la String en Integer
  */
 @ValueObject
 public class NPAProfessionnel extends BaseValueObject {

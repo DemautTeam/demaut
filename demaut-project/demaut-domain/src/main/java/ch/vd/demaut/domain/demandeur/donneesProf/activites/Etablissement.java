@@ -7,25 +7,22 @@ import ch.vd.demaut.domain.demandeur.Localite;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+//TOOD : Renommer Etablissement en Addresse & Ajouter JavaDoc
 @ValueObject
 public class Etablissement extends BaseValueObject {
 
-    @NotNull
-    @Valid
+    // ********************************************************* Fields
     private Voie voie;
 
-    @Valid
     private Complement complement;
 
-    @NotNull
-    @Valid
     private Localite localite;
 
-    @NotNull
-    @Valid
     private NPAProfessionnel npaProfessionnel;
 
-    public Etablissement(){
+    // ********************************************************* Constructors
+    //For JPA usage only
+    Etablissement(){
     }
 
     public Etablissement(Voie voie, Complement complement, Localite localite, NPAProfessionnel npaProfessionnel) {
@@ -35,18 +32,27 @@ public class Etablissement extends BaseValueObject {
         this.npaProfessionnel = npaProfessionnel;
     }
 
+    // ********************************************************* Getters & Contraintes
+
+    @NotNull
+    @Valid
     public Voie getVoie() {
         return voie;
     }
 
+    @Valid
     public Complement getComplement() {
         return complement;
     }
 
+    @NotNull
+    @Valid
     public NPAProfessionnel getNpaProfessionnel() {
         return npaProfessionnel;
     }
 
+    @NotNull
+    @Valid
     public Localite getLocalite() {
         return localite;
     }

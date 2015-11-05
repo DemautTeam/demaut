@@ -7,14 +7,16 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.util.Date;
 
+//TODO: Java doc
 public class DateReconnaissance extends BaseValueObject {
 
-    @NotNull
+    //TODO: Utiliser du LocalDate directement
     private Date value;
 
     // ********************************************************* Constructors
 
-    public DateReconnaissance() {
+    //For JPA Usage only
+    DateReconnaissance() {
     }
 
     public DateReconnaissance(LocalDate value) {

@@ -17,6 +17,7 @@ import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DiplomeFK;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ListeDesDiplomes;
 import ch.vd.demaut.domain.exception.CodeGlnObligatoireException;
 
+//TODO : Virer DonneesProfessionnelles pour dispatcher diplomes, activiteFutures, codeGLN et activiteFutures  directement dans la Demande
 @Entity
 public class DonneesProfessionnelles extends AbstractEntity {
 
@@ -58,7 +59,7 @@ public class DonneesProfessionnelles extends AbstractEntity {
     }
 
     public void validerEtAjouterActiviteFuture(ActiviteFuture activiteFutureAAjouter) {
-        getActiviteFutures().ajouterUneActiviteFuture(activiteFutureAAjouter);
+        getActivitesFutures().ajouterUneActiviteFuture(activiteFutureAAjouter);
     }
 
     /**
@@ -117,7 +118,7 @@ public class DonneesProfessionnelles extends AbstractEntity {
         return new ListeDesDiplomes(diplomes);
     }
 
-    public ListeDesActivitesFutures getActiviteFutures() {
+    public ListeDesActivitesFutures getActivitesFutures() {
         return new ListeDesActivitesFutures(activiteFutures);
     }
     

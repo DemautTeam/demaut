@@ -1,32 +1,35 @@
 package ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee;
 
+import javax.validation.constraints.NotNull;
+
+import org.joda.time.LocalDate;
+
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.BaseValueObject;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import java.util.Date;
-
 /**
- * Représente la date estimée pour de l'activité envisagée
+ * Représente la date estimée pour le début de l'activité envisagée
  */
 @ValueObject
 public class DatePrevueDebut extends BaseValueObject {
 
-    @NotNull
-    @Past
-    private Date value;
+    // ********************************************************* Fields
+    private LocalDate value;
 
     // ********************************************************* Constructor
 
-    public DatePrevueDebut() {
+    //Used for JPA Only
+    DatePrevueDebut() {
     }
 
-    public DatePrevueDebut(Date value) {
+    public DatePrevueDebut(LocalDate value) {
         this.value = value;
     }
 
-    public Date getValue() {
+    // ********************************************************* Getters
+    @NotNull
+    //TODO: Doit-on vérifier que la date est dans le future ?
+    public LocalDate getValue() {
         return value;
     }
 }

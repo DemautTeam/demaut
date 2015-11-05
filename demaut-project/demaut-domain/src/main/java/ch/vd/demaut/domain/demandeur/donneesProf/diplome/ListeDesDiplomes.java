@@ -42,7 +42,7 @@ public class ListeDesDiplomes {
         this.diplomes.add(diplome);
     }
 
-    //TODO reimplementer en utilisant org.apache.collection4
+    //TODO: réimplementer en utilisant org.apache.collection4
     public Collection<Diplome> extraireDiplomesDeType(TypeDiplomeAccepte typeDiplomeAccepte) {
         return CollectionUtils.select(diplomes, new BeanPropertyValueEqualsPredicate("typeDiplomeAccepte", typeDiplomeAccepte));
     }

@@ -12,7 +12,7 @@ public class Localite extends BaseValueObject {
     private String value;
 
     //Used only for JPA
-    private Localite() {
+    Localite() {
     }
 
     public Localite(String value) {

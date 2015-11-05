@@ -70,14 +70,6 @@ public class AnnexesSteps {
         assertThat(actualAcceptationAnnexe).isEqualTo(expectedAcceptationAnnexe);
     }
 
-    public void accepteAnnexe() {
-        actualAcceptationAnnexe = AccepteOuRefuse.accepte;
-    }
-
-    public void refuseAnnexe() {
-        actualAcceptationAnnexe = AccepteOuRefuse.refuse;
-    }
-
     // ***************************** **************************** Technical
     // methods
 
@@ -105,4 +97,13 @@ public class AnnexesSteps {
         this.donneesProfessionnellesSteps = donneesProfessionnellesSteps;
     }
     
+    // ********************************************************* Private methods
+    
+    private void accepteAnnexe() {
+        actualAcceptationAnnexe = AccepteOuRefuse.accepte;
+    }
+
+    private void refuseAnnexe() {
+        actualAcceptationAnnexe = AccepteOuRefuse.refuse;
+    }
 }

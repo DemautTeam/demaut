@@ -1,17 +1,16 @@
 package ch.vd.demaut.domain.demandes.autorisation;
 
-import ch.vd.demaut.commons.vo.BaseValueObject;
+import javax.validation.constraints.NotNull;
+
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
+import ch.vd.demaut.commons.vo.BaseValueObject;
 
 public class DateSoumissionDemande extends BaseValueObject {
 
     public static final String PATTERN = "dd.MM.yyyy hh.mm";
 
-    @NotNull
     private LocalDate value;
 
     // ********************************************************* Constructors
@@ -34,7 +33,6 @@ public class DateSoumissionDemande extends BaseValueObject {
     // ********************************************************* Business Methods
 
     @NotNull
-    @Past
     public LocalDate getValue() {
         return value;
     }

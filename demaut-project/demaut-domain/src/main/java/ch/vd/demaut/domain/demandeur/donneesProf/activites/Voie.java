@@ -20,7 +20,7 @@ public class Voie extends BaseValueObject {
     // ********************************************************* Constructor
 
     //Used only for JPA
-    private Voie() {
+    Voie() {
     }
 
     public Voie(String value) {

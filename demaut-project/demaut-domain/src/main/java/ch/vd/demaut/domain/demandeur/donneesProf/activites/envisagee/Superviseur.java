@@ -1,31 +1,33 @@
 package ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee;
 
+import javax.validation.constraints.Size;
+
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.BaseValueObject;
 
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
 /**
- * Représente le superviseur de l'activité envisagée quand l'activité est titre independant
+ * Représente le superviseur de l'activité envisagée quand l'activité est à titre dépendant
  */
 @ValueObject
 public class Superviseur extends BaseValueObject {
 
-    @Size(max=50, message = "Veiullez saisir le nom du superviseur")
+    // ********************************************************* Field
     private String value;
 
     // ********************************************************* Constructor
 
-    public Superviseur() {
+    //For JPA usage only
+    Superviseur() {
     }
 
     public Superviseur(String value) {
         this.value = value;
     }
 
+    // ********************************************************* Getters
+    @Size(max=50)
     public String getValue() {
         return value;
     }
+
 }
