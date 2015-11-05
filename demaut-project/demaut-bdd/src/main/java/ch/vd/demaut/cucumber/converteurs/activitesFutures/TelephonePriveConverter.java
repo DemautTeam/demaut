@@ -8,9 +8,6 @@ public class TelephonePriveConverter extends Transformer<TelephonePrive> {
 
     @Override
     public TelephonePrive transform(String str) {
-        if(StringUtils.isEmpty(str)){
-            return null;
-        }
         return new TelephonePrive(str);
     }
 
