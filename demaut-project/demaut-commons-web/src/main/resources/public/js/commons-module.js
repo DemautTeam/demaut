@@ -1,7 +1,24 @@
 "use strict";
 var commonsModule = angular.module('commonsModule', ['ngResource']);
 
-commonsModule.factory('globalDefaultError', ['$q', '$rootScope', '$location', '$log', function ($q, $rootScope, $location, $log) {
+commonsModule.service('globalMessagesService', ['$rootScope',function($rootScope) {
+
+    $rootScope.alertMessages = [];
+
+    this.showMessage = function(text,level){
+        $rootScope.alertMessages.push({
+            text:text,
+            level:level
+        });
+    }
+
+    this.clearMessages = function(){
+        $rootScope.alertMessages = [];
+    }
+
+}]);
+
+commonsModule.factory('globalDefaultError', ['$q', '$rootScope', '$log','globalMessagesService', function ($q, $rootScope, $log, globalMessagesService) {
     return {
         'responseError': function (rejection) {
             var status = rejection.status;
@@ -10,17 +27,16 @@ commonsModule.factory('globalDefaultError', ['$q', '$rootScope', '$location', '$
             var method = config.method;
             var url = config.url;
 
-            $log.info('Error status=' + status);
+            $log.debug('Error status=' + status);
 
-            if (status == 401) {
-                $location.path("/Demaut/aide");
-            }
-            else if (status == 417) {//Erreur dans le domaine
+            if (status == 417) {//Erreur dans le domaine
+                globalMessagesService.showMessage(data.message,'warning');
             }
             else {
-                $rootScope.error = true;
-                $rootScope.errorMessage = method + ' on ' + url + ' failed with status ' + status + '<br>' +
+                var errorMessage = method + ' on ' + url + ' failed with status ' + status + '<br>' +
                     (data != null && data != undefined ? data.substring(data.indexOf('<body>') + 6, data.indexOf('</body>')) : "data empty!");
+                globalMessagesService.showMessage(errorMessage,'error');
+
             }
             return $q.reject(rejection);
         }
