@@ -6,6 +6,7 @@ import ch.vd.demaut.domain.demandeur.Pays;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.*;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.rest.json.commons.RestUtils;
+import ch.vd.demaut.rest.services.AbstractRestService;
 import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
@@ -26,7 +27,7 @@ import java.util.List;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
 @Path("/diplomes")
-public class DiplomeRestImpl {
+public class DiplomeRestImpl extends AbstractRestService {
 
     public static final DateTimeFormatter SHORT_DATE_PARSER = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     private static final Logger LOGGER = LoggerFactory.getLogger(DiplomeRestImpl.class);
@@ -36,12 +37,6 @@ public class DiplomeRestImpl {
     public void setDonneesProfessionnellesService(DonneesProfessionnellesService donneesProfessionnellesService) {
         this.donneesProfessionnellesService = donneesProfessionnellesService;
     }
-
-    @Context
-    private UriInfo uriInfo;
-
-    @Context
-    private HttpHeaders httpHeaders;
 
     @GET
     @Path("/typeDiplomesList")
@@ -129,7 +124,7 @@ public class DiplomeRestImpl {
                                      @QueryParam("paysObtention") String paysObtentionId,
                                      @QueryParam("dateReconnaissance") String dateReconnaissanceStr) throws Exception {
 
-        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
+        Login login = getLogin();
 
         LOGGER.info("ajouterUnDiplome pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr + ", typeDiplome=" + typeDiplomeId + ", typeFormation=" + typeFormationId);
 
@@ -172,7 +167,7 @@ public class DiplomeRestImpl {
     public Response supprimerUnDiplome(@QueryParam("referenceDeDemande") String referenceDeDemandeStr,
                                        @QueryParam("referenceDeDiplome") String referenceDeDiplomeStr) throws Exception {
 
-        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
+        Login login = getLogin();
 
         LOGGER.info("supprimerUnDiplome pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr + ", referenceDeDiplome=" + referenceDeDiplomeStr);
 
@@ -189,7 +184,7 @@ public class DiplomeRestImpl {
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
     public Response recupererDiplomesSaisis(@QueryParam("referenceDeDemande") String referenceDeDemandeStr) throws Exception {
-        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
+        Login login = getLogin();
 
         LOGGER.info("recupererDiplomesSaisis pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr);
 
