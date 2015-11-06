@@ -6,6 +6,7 @@ import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.rest.json.commons.RestUtils;
+import ch.vd.demaut.rest.services.AbstractRestService;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
@@ -23,7 +24,7 @@ import java.util.List;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
 @Path("/demande")
-public class DemandeRestImpl {
+public class DemandeRestImpl extends AbstractRestService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DemandeRestImpl.class);
 
@@ -33,12 +34,6 @@ public class DemandeRestImpl {
         this.demandeAutorisationService = demandeAutorisationService;
     }
 
-    @Context
-    private UriInfo uriInfo;
-
-    @Context
-    private HttpHeaders httpHeaders;
-
     @GET
     @Path("/initialiser")
     @Produces(MediaType.APPLICATION_JSON)
@@ -46,7 +41,7 @@ public class DemandeRestImpl {
     public Response initialiserDemande(@QueryParam("professionId") String professionIdStr,
                                        @QueryParam("codeGln") String codeGlnStr) throws IOException {
 
-        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
+        Login login = getLogin();
 
         LOGGER.info("initialiser demande pour : " + login.getValue() + ", profession=" + professionIdStr + ", codeGLN="
                 + codeGlnStr);
@@ -72,7 +67,7 @@ public class DemandeRestImpl {
     @RolesAllowed("USER")
     public Response recupererBrouillon(@QueryParam("referenceDeDemande") String referenceDeDemandeStr) throws IOException {
 
-        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
+        Login login = getLogin();
 
         LOGGER.info("recuperer Brouillon pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr);
 
@@ -91,7 +86,7 @@ public class DemandeRestImpl {
     @RolesAllowed("USER")
     public Response recupererListeBrouillons() throws IOException {
 
-        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
+        Login login = getLogin();
 
         LOGGER.info("recuperer listes Brouillons pour : " + login.getValue());
 
@@ -105,7 +100,7 @@ public class DemandeRestImpl {
     @RolesAllowed("USER")
     public Response supprimerUnBrouillon(@QueryParam("referenceDeDemande") String referenceDeDemandeStr) throws IOException {
 
-        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
+        Login login = getLogin();
 
         LOGGER.info("supprimer un brouillons pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr);
 

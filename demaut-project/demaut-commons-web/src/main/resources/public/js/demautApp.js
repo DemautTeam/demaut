@@ -88,7 +88,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                 })
                 .error(function (data, status, headers, config) {
                     $rootScope.error = 'Error fetching ../demande/recupererListBrouillons';
-                    $log.info('Error ' + urlPrefix + '/demande/recupererListBrouillons/ \n Status :' + status);
+                    $log.debug('Error ' + urlPrefix + '/demande/recupererListBrouillons/ \n Status :' + status);
                 });
 
             $scope.viewDemande = function (referenceDeDemande) {
@@ -120,7 +120,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                     })
                     .error(function (data, status, headers, config) {
                         $rootScope.error = 'Error ' + urlPrefix + '/demande/supprimer/ \n Status :' + status;
-                        $log.info('Error ' + urlPrefix + '/demande/supprimer/ \n Status :' + status);
+                        $log.debug('Error ' + urlPrefix + '/demande/supprimer/ \n Status :' + status);
                     });
             };
 
@@ -151,8 +151,8 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
 	                $log.info('Liste professions a été récupérée avec succès!');
 	            })
 	            .error(function (data, status, headers, config) {
-	                $rootScope.error = 'Error fetching ../profession/professionsList';
-	                $log.info('Error ' + urlPrefix + '/profession/professionsList/ \n Status :' + status);
+	                //$rootScope.error = 'Error fetching ../profession/professionsList';
+	                $log.debug('Error ' + urlPrefix + '/profession/professionsList/ \n Status :' + status);
 	            });            	
 
 	            
@@ -165,7 +165,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
 	            })
 	            .error(function (data, status, headers, config) {
 	                $rootScope.error = 'Error fetching ../profession/professionsCodeGLNObligatoire';
-	                $log.info('Error ' + urlPrefix + '/profession/professionsCodeGLNObligatoire/ \n Status :' + status);
+	                $log.debug('Error ' + urlPrefix + '/profession/professionsCodeGLNObligatoire/ \n Status :' + status);
 	            });
 	        }
     	
@@ -201,7 +201,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                     })
                     .error(function (data, status, headers, config) {
                         $rootScope.error = 'Error fetching ../profession/professionDeDemande';
-                        $log.info('Error ' + urlPrefix + '/profession/professionDeDemande/ \n Status :' + status);
+                        $log.debug('Error ' + urlPrefix + '/profession/professionDeDemande/ \n Status :' + status);
 
                     });
             }
@@ -229,7 +229,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                             })
                             .error(function (data, status, headers, config) {
                                 $rootScope.error = 'Error fetching ../demande/initialiser/';
-                                $log.info('Error ' + urlPrefix + '/demande/initialiser/ \n Status :' + status);
+                                $log.debug('Error ' + urlPrefix + '/demande/initialiser/ \n Status :' + status);
                             });
                     }
                     else {
@@ -244,8 +244,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                                 $location.path('/Demaut/demande/donneesPerso');
                             })
                             .error(function (data, status, headers, config) {
-                                $rootScope.error = 'Error fetching ../profession/updateCodeGLN';
-                                $log.info('Error ' + urlPrefix + '/profession/updateCodeGLN/ \n Status :' + status);
+                                $log.debug('Error ' + urlPrefix + '/profession/updateCodeGLN/ \n Status :' + status);
                             });
                     }
                 }
@@ -278,8 +277,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                         $log.info('Liste nationalites a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error fetching ../shared/nationalites';
-                        $log.info('Error ' + urlPrefix + '/shared/nationalites/ \n Status :' + status);
+                        $log.debug('Error ' + urlPrefix + '/shared/nationalites/ \n Status :' + status);
                     });
             }
 
@@ -290,8 +288,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                         $log.info('Liste pays a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error fetching ../shared/paysList';
-                        $log.info('Error ' + urlPrefix + '/shared/paysList/ \n Status :' + status);
+                        $log.debug('Error ' + urlPrefix + '/shared/paysList/ \n Status :' + status);
                     });
             }
             //TODO faire un service ou un provider pour la gestion de l'état de la demande
@@ -358,7 +355,6 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                         $log.debug('Objet Données personnelles a été récupéré avec succès!');
                     }).
                     error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error fetching ../personal/recuperer';
                         $log.error('Error ' + urlPrefix + '/personal/recuperer/ \n Status :' + status);
                     });
             }
@@ -372,7 +368,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
             };
 
             $scope.isSuisse = function () {
-                return $scope.personalData.nationalite != null && $scope.personalData.nationalite != undefined && nationalityTest.isSuisse($scope.personalData.nationalite.libl);
+                return utils.isNotEmpty($scope.personalData.nationalite) && nationalityTest.isSuisse($scope.personalData.nationalite.libl);
             };
 
             $scope.resetPermis = function () {
@@ -427,8 +423,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                         $log.info('Une donnée personnelle a été crée avec succès!');
                     })
                     .error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error ' + urlPrefix + '/personal/renseigner/ \n Status :' + status;
-                        $log.info('Error ' + urlPrefix + '/personal/renseigner/ \n Status :' + status);
+                        $log.debug('Error ' + urlPrefix + '/personal/renseigner/ \n Status :' + status);
                     });
             };
 
@@ -444,56 +439,57 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
 
 
         }])
-    .controller('DonneesDiplomesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$log', '$window', 'nationalityTest',
-        function ($scope, $rootScope, $routeParams, $http, $location, $log, $window, nationalityTest) {
+    .controller('DonneesDiplomesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$log', '$window', 'nationalityTest', 'utils',
+        function ($scope, $rootScope, $routeParams, $http, $location, $log, $window, nationalityTest, utils) {
             $rootScope.contextMenu = 'DemandeAutorisation';
             $scope.indexStep = 3;
             this.name = "DonneesDiplomes";
             this.params = $routeParams;
             $scope.testSuisse = nationalityTest;
+
             $scope.diplomeData = {};
-            $scope.diplomeData.typeDiplomes = [];
-            $scope.diplomeData.typeFormationsAll = [];
-            $scope.diplomeData.typeFormations = [];
-            $scope.diplomeData.paysList = [];
-            $scope.diplomeData.diplomes = [];
             $scope.diplomeData.diplome = {};
             $scope.diplomeData.datePicker = {};
             $scope.diplomeData.datePicker.status = {};
+            $scope.diplomeData.diplomes = [];
 
-            if ($scope.diplomeData.typeDiplomes.length == 0) {
+            $scope.typeDiplomes = [];
+            $scope.typeFormationsAll = [];
+            $scope.typeFormations = [];
+            $scope.paysList = [];
+
+
+
+            if ($scope.typeDiplomes.length == 0) {
                 $http.get(urlPrefix + '/diplomes/typeDiplomesList').
                     success(function (data, status, headers, config) {
-                        $scope.diplomeData.typeDiplomes = angular.fromJson(data.response);
+                        $scope.typeDiplomes = angular.fromJson(data.response);
                         $log.info('Liste types diplomes a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error fetching ../diplomes/typeDiplomesList';
-                        $log.info('Error ' + urlPrefix + '/diplomes/typeDiplomesList/ \n Status :' + status);
+                        $log.debug('Error ' + urlPrefix + '/diplomes/typeDiplomesList/ \n Status :' + status);
                     });
             }
 
-            if ($scope.diplomeData.typeFormationsAll.length == 0) {
+            if ($scope.typeFormationsAll.length == 0) {
                 $http.get(urlPrefix + '/diplomes/typeFormationsAll').
                     success(function (data, status, headers, config) {
-                        $scope.diplomeData.typeFormationsAll = angular.fromJson(data.response);
+                        $scope.typeFormationsAll = angular.fromJson(data.response);
                         $log.info('Liste types diplomes a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error fetching ../diplomes/typeFormationsAll';
-                        $log.info('Error ' + urlPrefix + '/diplomes/typeFormationsAll/ \n Status :' + status);
+                        $log.debug('Error ' + urlPrefix + '/diplomes/typeFormationsAll/ \n Status :' + status);
                     });
             }
 
-            if ($scope.diplomeData.paysList.length == 0) {
+            if ($scope.paysList.length == 0) {
                 $http.get(urlPrefix + '/shared/paysList').
                     success(function (data, status, headers, config) {
-                        $scope.diplomeData.paysList = angular.fromJson(data.response);
+                        $scope.paysList = angular.fromJson(data.response);
                         $log.info('Liste pays a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error fetching ../shared/paysList';
-                        $log.info('Error ' + urlPrefix + '/shared/paysList/ \n Status :' + status);
+                        $log.debug('Error ' + urlPrefix + '/shared/paysList/ \n Status :' + status);
                     });
             }
 
@@ -506,12 +502,11 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                     params: {typeDiplome: $scope.diplomeData.diplome.typeDiplome.id}
                 }).
                     success(function (data, status, headers, config) {
-                        $scope.diplomeData.typeFormations = angular.fromJson(data.response);
+                        $scope.typeFormations = angular.fromJson(data.response);
                         $log.info('Liste types fromations a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error fetching ../diplomes/typeFormationsList/';
-                        $log.info('Error ' + urlPrefix + '/diplomes/typeFormationsList/ \n Status :' + status);
+                        $log.debug('Error ' + urlPrefix + '/diplomes/typeFormationsList/ \n Status :' + status);
                     });
             };
 
@@ -532,25 +527,25 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
 
                                 displayedDiplome.referenceDeDiplome = currentDiplome.referenceDeDiplome.value;
 
-                                for (var indexJ = 0; indexJ < $scope.diplomeData.typeDiplomes.length; indexJ++) {
-                                    if ($scope.diplomeData.typeDiplomes[indexJ].name == currentDiplome.typeDiplomeAccepte) {
-                                        displayedDiplome.typeDiplome = $scope.diplomeData.typeDiplomes[indexJ];
+                                for (var indexJ = 0; indexJ < $scope.typeDiplomes.length; indexJ++) {
+                                    if ($scope.typeDiplomes[indexJ].name == currentDiplome.typeDiplomeAccepte) {
+                                        displayedDiplome.typeDiplome = $scope.typeDiplomes[indexJ];
                                         break;
                                     }
                                 }
 
-                                for (var indexZ = 0; indexZ < $scope.diplomeData.typeFormationsAll.length; indexZ++) {
-                                    if ($scope.diplomeData.typeFormationsAll[indexZ].name == currentDiplome.titreFormation.value) {
-                                        displayedDiplome.typeFormation = $scope.diplomeData.typeFormationsAll[indexZ];
+                                for (var indexZ = 0; indexZ < $scope.typeFormationsAll.length; indexZ++) {
+                                    if ($scope.typeFormationsAll[indexZ].name == currentDiplome.titreFormation.value) {
+                                        displayedDiplome.typeFormation = $scope.typeFormationsAll[indexZ];
                                         break;
                                     }
                                 }
                                 displayedDiplome.complement = currentDiplome.complement;
                                 displayedDiplome.dateObtention = new Date(currentDiplome.dateObtention.value);
 
-                                for (var indexK = 0; indexK < $scope.diplomeData.paysList.length; indexK++) {
-                                    if ($scope.diplomeData.paysList[indexK].name == currentDiplome.paysObtention.value) {
-                                        displayedDiplome.paysObtention = $scope.diplomeData.paysList[indexK];
+                                for (var indexK = 0; indexK < $scope.paysList.length; indexK++) {
+                                    if ($scope.paysList[indexK].name == currentDiplome.paysObtention.value) {
+                                        displayedDiplome.paysObtention = $scope.paysList[indexK];
                                         break;
                                     }
                                 }
@@ -564,8 +559,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                         $log.info('liste de diplomes saisis a été récupérée avec succès!');
                     })
                     .error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error fetching ../diplomes/diplomesSaisis';
-                        $log.info('Error ' + urlPrefix + '/diplomes/diplomesSaisis/ \n Status :' + status);
+                        $log.debug('Error ' + urlPrefix + '/diplomes/diplomesSaisis/ \n Status :' + status);
                     });
             }
 
@@ -577,7 +571,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
             };
 
             $scope.isDateReconnaissanceRequired = function () {
-                return $scope.diplomeData.diplome.paysObtention != null && $scope.diplomeData.diplome.paysObtention != undefined && !nationalityTest.isSuisse($scope.diplomeData.diplome.paysObtention.libl);
+                return utils.isNotEmpty($scope.diplomeData.diplome.paysObtention) && !nationalityTest.isSuisse($scope.diplomeData.diplome.paysObtention.libl);
             };
 
             $scope.isDateReconnaissanceSaisie = function () {
@@ -597,6 +591,9 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
 
             $scope.nextStep = function () {
                 $rootScope.wouldStepNext = true;
+                $log.debug('Formulaire pristine ' + $scope.donneesDiplome.diplomeDataForm.$pristine);
+                $log.debug('Formulaire untouched ' + $scope.donneesDiplome.diplomeDataForm.$untouched);
+
                 if ($scope.donneesDiplome.diplomeDataForm.$valid) {
                     $log.info('Formulaire valide !');
                     $location.path('/Demaut/demande/donneesActivites');
@@ -624,8 +621,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                     $scope.diplomeData.diplomes.push(diplome);
                     doCreateDiplome(diplome);
                     $scope.diplomeData.diplome = {};
-                    $scope.donneesDiplome.diplomeDataForm.$valid = true;
-                    $scope.donneesDiplome.diplomeDataForm.$error = {};
+                    $scope.donneesDiplome.diplomeDataForm.$setPristine();
                     $scope.wouldAddDiplome = false;
                 }
             };
@@ -677,8 +673,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                         $log.info('Un diplôme a été crée avec succès!');
                     })
                     .error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error ' + urlPrefix + '/diplomes/ajouter/ \n Status :' + status;
-                        $log.info('Error ' + urlPrefix + '/diplomes/ajouter/ \n Status :' + status);
+                        $log.debug('Error ' + urlPrefix + '/diplomes/ajouter/ \n Status :' + status);
                     });
             };
 
@@ -693,11 +688,11 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                         $log.info('Un diplôme a été supprimé avec succès!');
                     })
                     .error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error ' + urlPrefix + '/diplomes/supprimer/ \n Status :' + status;
-                        $log.info('Error ' + urlPrefix + '/diplomes/supprimer/ \n Status :' + status);
+                        $log.debug('Error ' + urlPrefix + '/diplomes/supprimer/ \n Status :' + status);
                     });
             };
         }])
+    //------------------- DonneesActivitesController ----------------------------------
     .controller('DonneesActivitesController', ['$scope', '$rootScope', '$routeParams', '$location', '$log',
         function ($scope, $rootScope, $routeParams, $location, $log) {
             $rootScope.contextMenu = 'DemandeAutorisation';
@@ -804,8 +799,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                         $log.info('Une activité a été crée avec succès!');
                     })
                     .error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error ' + urlPrefix + '/activites/ajouter/ \n Status :' + status;
-                        $log.info('Error ' + urlPrefix + '/activites/ajouter/ \n Status :' + status);
+                        $log.debug('Error ' + urlPrefix + '/activites/ajouter/ \n Status :' + status);
                     });
             };
 
@@ -819,8 +813,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                         $log.info('Une activité a été supprimée avec succès!');
                     })
                     .error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error ' + urlPrefix + '/activites/supprimer/ \n Status :' + status;
-                        $log.info('Error ' + urlPrefix + '/activites/supprimer/ \n Status :' + status);
+                        $log.debug('Error ' + urlPrefix + '/activites/supprimer/ \n Status :' + status);
                     });
             };
         }])
@@ -844,8 +837,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                         $log.info('Liste types annexes a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error fetching ../annexes/typesList';
-                        $log.info('Error ' + urlPrefix + '/annexes/typesList/ \n Status :' + status);
+                        $log.debug('Error ' + urlPrefix + '/annexes/typesList/ \n Status :' + status);
                     });
             }
 
@@ -860,8 +852,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                         $log.info('Liste types annexes obligatoires a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error fetching ../annexes/typesObligatoiresList';
-                        $log.info('Error ' + urlPrefix + '/annexes/typesObligatoiresList/ \n Status :' + status);
+                        $log.debug('Error ' + urlPrefix + '/annexes/typesObligatoiresList/ \n Status :' + status);
                     });
             }
 
@@ -892,7 +883,6 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                                 }
 
                                 displayedAnnexe.name = currentAnnexe.nomFichier.nomFichier;
-                                displayedAnnexe.dateDeCreation = new Date(currentAnnexe.dateDeCreation.value);
                                 $scope.annexesData.referenceFiles.push(displayedAnnexe);
                             }
                         }
@@ -903,8 +893,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                         $log.info('liste de annexes saisis a été récupérée avec succès!');
                     })
                     .error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error fetching ../annexes/annexesSaisis';
-                        $log.info('Error ' + urlPrefix + '/annexes/annexesSaisis/ \n Status :' + status);
+                        $log.debug('Error ' + urlPrefix + '/annexes/annexesSaisis/ \n Status :' + status);
                     });
             }
 
@@ -1007,7 +996,6 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                     $rootScope.error = typeAnnexe + ' : une/plusieurs pièces ne respectent pas les règles de nommage ou ne correspondent pas aux formats supportés (pdf, image)';
                     $log.info($rootScope.error);
                 }
-                //$scope.$apply();
             };
 
             $scope.viewAnnexe = function (file) {
@@ -1025,8 +1013,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                         $log.info('Une annexes a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error ' + urlPrefix + '/annexes/afficher/ \n Status :' + status;
-                        $log.info('Error ' + urlPrefix + '/annexes/afficher/ \n Status :' + status);
+                        $log.debug('Error ' + urlPrefix + '/annexes/afficher/ \n Status :' + status);
                     });
 
                 function displayAnnexeFromBinary(data) {
@@ -1073,8 +1060,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                         $log.info('Une annexe a été supprimée avec succès!');
                     })
                     .error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error ' + urlPrefix + '/annexes/supprimer/ \n Status :' + status;
-                        $log.info('Error ' + urlPrefix + '/annexes/supprimer/ \n Status :' + status);
+                        $log.debug('Error ' + urlPrefix + '/annexes/supprimer/ \n Status :' + status);
                     });
             };
 
@@ -1097,8 +1083,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                         $log.info('Une annexe a été uplodée avec succès!');
                     })
                     .error(function (data, status, headers, config) {
-                        $rootScope.error = 'Error Upload: [' + urlPrefix + '/annexes/attacher' + status;
-                        $log.info('Error ' + urlPrefix + '/annexes/attacher/ \n Status :' + status);
+                        $log.debug('Error ' + urlPrefix + '/annexes/attacher/ \n Status :' + status);
                     });
                 $timeout(function () {
                     deferred.resolve();

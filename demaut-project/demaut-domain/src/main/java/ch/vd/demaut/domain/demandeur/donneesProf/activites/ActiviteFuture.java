@@ -16,8 +16,6 @@ public class ActiviteFuture extends BaseValueObjectWithId {
 
     // *********************************************** Fields
 
-    private TypeActivite typeActivite;
-
     private Etablissement etablissement;
 
     private TypePratiqueLamal typePratiqueLamal;
@@ -30,20 +28,13 @@ public class ActiviteFuture extends BaseValueObjectWithId {
     ActiviteFuture() {
     }
 
-    public ActiviteFuture(TypeActivite typeActivite, Etablissement etablissement, TypePratiqueLamal typePratiqueLamal, ActiviteEnvisagee activiteEnvisagee) {
-        this.typeActivite = typeActivite;
+    public ActiviteFuture(Etablissement etablissement, TypePratiqueLamal typePratiqueLamal, ActiviteEnvisagee activiteEnvisagee) {
         this.etablissement = etablissement;
         this.typePratiqueLamal = typePratiqueLamal;
         this.activiteEnvisagee = activiteEnvisagee;
     }
 
     // *********************************************** Getters
-    
-    @NotNull
-    @Valid
-    public TypeActivite getTypeActivite() {
-        return typeActivite;
-    }
     
     @NotNull
     @Valid

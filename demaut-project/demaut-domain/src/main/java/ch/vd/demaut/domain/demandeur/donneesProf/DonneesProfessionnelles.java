@@ -20,7 +20,7 @@ import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DiplomeFK;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ListeDesDiplomes;
 import ch.vd.demaut.domain.exception.CodeGlnObligatoireException;
 
-//TODO : Virer DonneesProfessionnelles pour dispatcher diplomes, activiteFutures, codeGLN et activiteFutures  directement dans la Demande
+//TODO : Virer DonneesProfessionnelles pour dispatcher diplomes, activiteFutures, codeGLN et activiteFutures directement dans la Demande
 @Entity
 public class DonneesProfessionnelles extends AbstractEntity {
 
@@ -29,7 +29,7 @@ public class DonneesProfessionnelles extends AbstractEntity {
 
     private List<Diplome> diplomes;
 
-    private transient List<ActiviteFuture> activiteFutures;
+    private List<ActiviteFuture> activitesFutures;
     
     //TODO: Ajouter la reference a la DemandeAutorisation (ou si pas necessaire a la profession)
     //private Profession profession; 
@@ -44,7 +44,7 @@ public class DonneesProfessionnelles extends AbstractEntity {
         super();
         this.codeGLN = null;
         this.diplomes = new ArrayList<Diplome>();
-        this.activiteFutures = new ArrayList<ActiviteFuture>();
+        this.activitesFutures = new ArrayList<ActiviteFuture>();
         this.activitesAnterieures = new ArrayList<ActiviteAnterieure>();
     }
 
@@ -52,7 +52,7 @@ public class DonneesProfessionnelles extends AbstractEntity {
     public DonneesProfessionnelles(CodeGLN codeGLN, List<Diplome> diplomes) {
         this.codeGLN = codeGLN;
         this.diplomes = diplomes;
-        this.activiteFutures = new ArrayList<ActiviteFuture>();
+        this.activitesFutures = new ArrayList<ActiviteFuture>();
         this.activitesAnterieures = new ArrayList<ActiviteAnterieure>();
     }
 
@@ -62,7 +62,7 @@ public class DonneesProfessionnelles extends AbstractEntity {
     }
 
     public void validerEtAjouterActiviteFuture(ActiviteFuture activiteFutureAAjouter) {
-        getActivitesFutures().ajouterUneActiviteFuture(activiteFutureAAjouter);
+        getListeDesActivitesFutures().ajouterUneActiviteFuture(activiteFutureAAjouter);
     }
 
     /**
@@ -84,18 +84,18 @@ public class DonneesProfessionnelles extends AbstractEntity {
     }
     
     public void creerEtAjouterActiviteAnterieure() {
-        ReferenceActiviteAnterieure nouvelleReference = getActivitesAnterieures().genererNouvelleReference();
+        ReferenceActiviteAnterieure nouvelleReference = getListeDesActivitesAnterieures().genererNouvelleReference();
         ActiviteAnterieure nouvelleActivite = new ActiviteAnterieure(nouvelleReference);
         
         ajouterActiviteAnterieure(nouvelleActivite);
     }
     
     public void ajouterActiviteAnterieure(ActiviteAnterieure activiteAnterieure) {
-        getActivitesAnterieures().ajouterActivite(activiteAnterieure);
+        getListeDesActivitesAnterieures().ajouterActivite(activiteAnterieure);
     }
 
     public ProcedureAnnexe calculerProcedureAnnexe() {
-        int tailleActivitesAnterieures = getActivitesAnterieures().taille();
+        int tailleActivitesAnterieures = getListeDesActivitesAnterieures().taille();
         if (tailleActivitesAnterieures > 0) {
             return ProcedureAnnexe.Simplifiee;
         } else {
@@ -124,11 +124,11 @@ public class DonneesProfessionnelles extends AbstractEntity {
 
     @NotNull
     @Valid
-    public ListeDesActivitesFutures getActivitesFutures() {
-        return new ListeDesActivitesFutures(activiteFutures);
+    public ListeDesActivitesFutures getListeDesActivitesFutures() {
+        return new ListeDesActivitesFutures(activitesFutures);
     }
     
-    public ListeDesActivitesAnterieures getActivitesAnterieures() {
+    public ListeDesActivitesAnterieures getListeDesActivitesAnterieures() {
         return new ListeDesActivitesAnterieures(activitesAnterieures);
     }
     

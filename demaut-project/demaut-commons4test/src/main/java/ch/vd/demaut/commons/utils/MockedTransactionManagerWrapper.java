@@ -17,4 +17,9 @@ public class MockedTransactionManagerWrapper implements TransactionManagerWrappe
     public void rollbackTransaction() {
     }
 
+    @Override
+    public Object getTransaction() {
+        return null;
+    }
+
 }

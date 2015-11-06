@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.Collection;
 
 import org.apache.commons.io.IOUtils;
-import org.joda.time.LocalDate;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.vd.demaut.domain.annexes.Annexe;
@@ -15,7 +14,6 @@ import ch.vd.demaut.domain.annexes.AnnexeMetadata;
 import ch.vd.demaut.domain.annexes.ContenuAnnexe;
 import ch.vd.demaut.domain.annexes.NomFichier;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
-import ch.vd.demaut.domain.demandes.DateDeCreation;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
@@ -71,7 +69,7 @@ public class AnnexesServiceImpl implements AnnexesService {
     public void attacherUneAnnexe(Login login, ReferenceDeDemande referenceDeDemande, File file, NomFichier nomFichier) {
         DemandeAutorisation demandeAutorisation = demandeAutorisationRepository.recupererDemandeParReference(referenceDeDemande);
         ContenuAnnexe contenuAnnexe = buildContenuAnnexe(file);
-        Annexe annexe = new Annexe(nomFichier, contenuAnnexe, new DateDeCreation(new LocalDate()));
+        Annexe annexe = new Annexe(nomFichier, contenuAnnexe);
         demandeAutorisation.validerEtAttacherAnnexe(annexe);
     }
 

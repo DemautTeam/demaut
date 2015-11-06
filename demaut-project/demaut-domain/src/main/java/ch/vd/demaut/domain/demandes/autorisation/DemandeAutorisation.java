@@ -17,6 +17,7 @@ import ch.vd.demaut.domain.annexes.ListeDesAnnexes;
 import ch.vd.demaut.domain.annexes.MoteurReglesPourAnnexesObligatoires;
 import ch.vd.demaut.domain.annexes.ProcedureAnnexe;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.domain.demandes.DateDeCreation;
 import ch.vd.demaut.domain.demandes.Demande;
 import ch.vd.demaut.domain.demandes.DemandeFK;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
@@ -62,18 +63,23 @@ public class DemandeAutorisation extends Demande {
     // Used for OpenJPA only
     protected DemandeAutorisation() {
         super();
-        this.annexes = new ArrayList<>();
-        this.donneesPersonnelles = new DonneesPersonnelles();
-        this.donneesProfessionnelles = new DonneesProfessionnelles();
+        initListes();
     }
 
     // Ne pas utiliser ce constructeur mais uniquement la Factory
-    public DemandeAutorisation(Login login, Profession profession) {
-        this();
+    public DemandeAutorisation(Login login, Profession profession, DateDeCreation dateDeCreation) {
+        super(dateDeCreation);
+        initListes();
         this.referenceDeDemande = new ReferenceDeDemande();
         this.statutDemandeAutorisation = StatutDemandeAutorisation.Brouillon;
         this.login = login;
         this.profession = profession;
+        this.donneesPersonnelles = new DonneesPersonnelles();
+        this.donneesProfessionnelles = new DonneesProfessionnelles();
+    }
+
+    private void initListes() {
+        this.annexes = new ArrayList<>();
         this.donneesPersonnelles = new DonneesPersonnelles();
         this.donneesProfessionnelles = new DonneesProfessionnelles();
     }
@@ -136,7 +142,7 @@ public class DemandeAutorisation extends Demande {
     }
 
     public ListeDesActivitesFutures getActivitesFutures() {
-        return getDonneesProfessionnelles().getActivitesFutures();
+        return getDonneesProfessionnelles().getListeDesActivitesFutures();
     }
 
     public ProcedureAnnexe calculerProcedureAnnnexe() {

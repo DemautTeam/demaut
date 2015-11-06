@@ -23,11 +23,10 @@ public class ListeDesAnnexesTest {
     @Before
     public void setUp() throws Exception {
         listeDesAnnexes = new ListeDesAnnexes(new ArrayList<Annexe>());
-        String dateCreation = "01.01.2015 11:00";
-        listeDesAnnexes.ajouterAnnexe(new Annexe("certificat1.pdf", null, dateCreation));
-        listeDesAnnexes.ajouterAnnexe(new Annexe("certificat2.pdf", null, dateCreation));
-        listeDesAnnexes.ajouterAnnexe(new Annexe("certificat3.pdf", null, dateCreation));
-        listeDesAnnexes.ajouterAnnexe(new Annexe("cv.pdf", null, dateCreation));
+        listeDesAnnexes.ajouterAnnexe(new Annexe(new NomFichier("certificat1.pdf"), null));
+        listeDesAnnexes.ajouterAnnexe(new Annexe(new NomFichier("certificat2.pdf"), null));
+        listeDesAnnexes.ajouterAnnexe(new Annexe(new NomFichier("certificat3.pdf"), null));
+        listeDesAnnexes.ajouterAnnexe(new Annexe(new NomFichier("cv.pdf"), null));
     }
 
     @Test

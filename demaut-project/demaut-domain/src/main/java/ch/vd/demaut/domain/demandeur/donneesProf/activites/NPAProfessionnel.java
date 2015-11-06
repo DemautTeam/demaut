@@ -14,15 +14,19 @@ import javax.validation.constraints.Size;
 @ValueObject
 public class NPAProfessionnel extends BaseValueObject {
 
+    // ********************************************************* Fields
     private String value;
 
-    public NPAProfessionnel() {
+    // ********************************************************* Constructor
+    //Used only for JPA
+    NPAProfessionnel() {
     }
 
     public NPAProfessionnel(String value) {
         this.value = value;
     }
 
+    // ********************************************************* Getters
     @Size(min = 4, max = 4)
     @Pattern(regexp = "\\d{4}")
     public String getValue() {

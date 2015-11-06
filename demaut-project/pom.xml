@@ -13,6 +13,7 @@
         <module>demaut-commons</module>
         <module>demaut-commons4test</module>
         <module>demaut-domain</module>
+        <module>demaut-spring4test</module>
 
         <!-- Backend End Modules -->
         <module>demaut-data-jpa</module>
@@ -142,7 +143,7 @@
         <!-- Test -->
         <junit.version>4.12</junit.version>
         <mockito.version>1.10.19</mockito.version>
-        <assertj.version>2.1.0</assertj.version>
+        <assertj.version>2.2.0</assertj.version>
         <serp.version>1.15.1</serp.version>
 
 
@@ -212,6 +213,12 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>demaut-commons4test</artifactId>
+                <version>${project.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>demaut-spring4test</artifactId>
                 <version>${project.version}</version>
                 <scope>test</scope>
             </dependency>

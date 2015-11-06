@@ -109,10 +109,8 @@ public class ActivitesFuturesSteps {
         initEtablissement();
         initTypePratiqueLamal();
         initActiviteEnvisagee();
-        
 
-        activiteFuture = new ActiviteFuture(typeActivite, etablissement, typePratiqueLamal,
-                activiteEnvisagee);
+        activiteFuture = new ActiviteFuture(etablissement, typePratiqueLamal, activiteEnvisagee);
     }
 
     public void ajouterActiviteFutureCourante() {
@@ -123,19 +121,18 @@ public class ActivitesFuturesSteps {
             refuseActiviteFuture();
         }
     }
-    
-    //TODO: Mutualiser cela avec AnnexeSteps et autres
+
+    // TODO: Mutualiser cela avec AnnexeSteps et autres
     public void verifieAcceptationActiviteFuture(AccepteOuRefuse expectedAcceptationActiviteFuture) {
         assertThat(actualAcceptationActiviteFuture).isEqualTo(expectedAcceptationActiviteFuture);
     }
 
-
     // *********************************************** Getters
-    
+
     public AccepteOuRefuse getActualAcceptationActiviteFuture() {
         return actualAcceptationActiviteFuture;
     }
-    
+
     // *********************************************** Private Methods
 
     private void accepteActiviteFuture() {
@@ -160,7 +157,7 @@ public class ActivitesFuturesSteps {
             typePratiqueLamal = TypePratiqueLamal.Non;
         }
     }
-    
+
     private void initLocaliteValideSiNonRenseignee() {
         if (localite == null) {
             localite = new Localite("Lausanne");

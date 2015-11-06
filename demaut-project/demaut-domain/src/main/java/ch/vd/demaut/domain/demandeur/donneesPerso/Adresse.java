@@ -11,18 +11,14 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Adresse extends AbstractEntity {
 
-    @NotNull
     private String voie;
 
     private String complement;
 
-    @Valid
     private NPA npa;
 
-    @Valid
     private Localite localite;
 
-    @Valid
     private Pays pays;
 
     public Adresse() {
@@ -37,18 +33,22 @@ public class Adresse extends AbstractEntity {
         this.pays = pays;
     }
 
+    @NotNull
     public String getVoie() {
         return voie;
     }
 
+    @Valid
     public Localite getLocalite() {
         return localite;
     }
 
+    @Valid
     public NPA getNpa() {
         return npa;
     }
 
+    @Valid
     public Pays getPays() {
         return pays;
     }

@@ -1,5 +1,6 @@
 package ch.vd.demaut.domain.demandes.autorisation.services;
 
+import ch.vd.demaut.domain.demandes.DateDeCreation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
@@ -9,8 +10,7 @@ import ch.vd.demaut.domain.utilisateurs.Utilisateur;
 import ch.vd.demaut.domain.utilisateurs.UtilisateurService;
 
 /**
- * Domain service pour les {@link DemandeAutorisationDomainService}
- * TODO: Utiliser cette classe !
+ * Domain service pour les {@link DemandeAutorisationDomainService} TODO: Utiliser cette classe !
  */
 public class DemandeAutorisationDomainService {
 
@@ -27,7 +27,8 @@ public class DemandeAutorisationDomainService {
 
     public DemandeAutorisation initialiserDemandeAutorisation(Profession profession, CodeGLN codeGLN) {
         Utilisateur utilisateurCourant = utilisateurService.recupererUtilisateurCourant();
-        DemandeAutorisation nouvelleDemande = factory.initierDemandeAutorisation(utilisateurCourant.getLogin(), profession,codeGLN);
+        DemandeAutorisation nouvelleDemande = factory.initierDemandeAutorisation(utilisateurCourant.getLogin(),
+                profession, codeGLN, new DateDeCreation());
         demandeAutorisationRepository.store(nouvelleDemande);
         return nouvelleDemande;
     }

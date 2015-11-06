@@ -1,6 +1,5 @@
 package ch.vd.demaut.rest.json.commons;
 
-import ch.vd.demaut.domain.exception.UtilisateurNotFoundException;
 import ch.vd.demaut.rest.json.serializer.TypeProgresJsonSerializer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,16 +7,11 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.apache.cxf.common.util.StringUtils;
 
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
 
 public final class RestUtils {
-
-    private static final String DEMAUT_USER_ID_HEADER = "demaut-user-id";
-    private static final String IAM_USER_ID_HEADER = "iam-user-id";
 
     private static final ObjectWriter viewWriter = new ObjectMapper().configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false).writer();
 
@@ -53,14 +47,4 @@ public final class RestUtils {
         return Response.ok().entity(json).build();
     }
 
-    public static String fetchCurrentUserToken(HttpHeaders httpHeaders) {
-        String userToken = httpHeaders.getHeaderString(DEMAUT_USER_ID_HEADER);
-        if (StringUtils.isEmpty(userToken)) {
-            userToken = httpHeaders.getHeaderString(IAM_USER_ID_HEADER);
-            if (StringUtils.isEmpty(userToken)) {
-                throw new UtilisateurNotFoundException();
-            }
-        }
-        return userToken;
-    }
 }

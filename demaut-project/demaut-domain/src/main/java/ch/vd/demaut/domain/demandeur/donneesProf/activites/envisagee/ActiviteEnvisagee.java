@@ -26,6 +26,11 @@ public class ActiviteEnvisagee extends BaseValueObject {
 
     // ********************************************************* Constructor
 
+    //FOR JPA Usage only
+    ActiviteEnvisagee() {
+        
+    }
+    
     public ActiviteEnvisagee(TypeActivite typeActivite, TauxActiviteEnDemiJournee nombreJourParSemaine,
             DatePrevueDebut datePrevueDebut, Superviseur superviseur) {
         super();

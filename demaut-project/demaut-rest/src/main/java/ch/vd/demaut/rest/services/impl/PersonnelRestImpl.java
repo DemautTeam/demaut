@@ -8,6 +8,7 @@ import ch.vd.demaut.domain.demandeur.Pays;
 import ch.vd.demaut.domain.demandeur.donneesPerso.*;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.rest.json.commons.RestUtils;
+import ch.vd.demaut.rest.services.AbstractRestService;
 import ch.vd.demaut.services.demandeurs.donneesPerso.DonneesPersonnellesService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
@@ -24,7 +25,7 @@ import java.io.IOException;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
 @Path("/personal")
-public class PersonnelRestImpl {
+public class PersonnelRestImpl extends AbstractRestService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PersonnelRestImpl.class);
 
@@ -33,12 +34,6 @@ public class PersonnelRestImpl {
     public void setDonneesPersonnellesService(DonneesPersonnellesService donneesPersonnellesService) {
         this.donneesPersonnellesService = donneesPersonnellesService;
     }
-
-    @Context
-    private UriInfo uriInfo;
-
-    @Context
-    private HttpHeaders httpHeaders;
 
     /**
      * Méthode qui renseigner les Donnees Personnelles du demandeur
@@ -71,7 +66,7 @@ public class PersonnelRestImpl {
                                                      @QueryParam("permis") String permisStr,
                                                      @QueryParam("permisOther") String permisOther) throws Exception {
 
-        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
+        Login login = getLogin();
 
         LOGGER.info("renseignerLesDonneesPersonnelles pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr);
 
@@ -124,7 +119,7 @@ public class PersonnelRestImpl {
     @RolesAllowed("USER")
     public Response recupererDonneesPersonnelles(@QueryParam("referenceDeDemande") String referenceDeDemandeStr) throws IOException {
 
-        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
+        Login login = getLogin();
 
         LOGGER.info("recuperer Brouillon de donnees personnelles pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr);
 

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context docBase="${ch.vd.projectDir}/applications/demaut-webapp/demaut-webapp.war"
          workDir="${catalina.base}/work/demaut-webapp"
-         unpackWAR="true"
-         path="/demaut-webapp">
+         unpackWAR="true">
 
     <Valve className="org.apache.catalina.valves.AccessLogValve"
            prefix="demaut-${ch.vd.serverName}-access_log" suffix=".txt"

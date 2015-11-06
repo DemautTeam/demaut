@@ -5,6 +5,7 @@ import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.rest.json.commons.RestUtils;
+import ch.vd.demaut.rest.services.AbstractRestService;
 import ch.vd.demaut.services.demandeurs.donneesProf.DonneesProfessionnellesService;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
@@ -22,7 +23,7 @@ import java.util.List;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
 @Path("/profession")
-public class ProfessionRestImpl {
+public class ProfessionRestImpl extends AbstractRestService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProfessionRestImpl.class);
 
@@ -32,12 +33,6 @@ public class ProfessionRestImpl {
         this.donneesProfessionnellesService = donneesProfessionnellesService;
     }
 
-    @Context
-    private UriInfo uriInfo;
-
-    @Context
-    private HttpHeaders httpHeaders;
-
     @GET
     @Path("/professionsList")
     @Produces(MediaType.APPLICATION_JSON)
@@ -46,10 +41,10 @@ public class ProfessionRestImpl {
 
         LOGGER.info("listerLesProfessionsDeLaSante");
 
-        // Altrenative:
+        // Alternative:
         List<Profession> professions = buildListeProfessionsSansProgresSOA();
 
-        // Altrenative SOA:
+        // Alternative SOA:
         // List<VcType> typesAnnexe = buildListeProfessionsAvecProgresSOA(uriInfo);
         // TODO filtrer la liste selon Universitaire ou non
         return RestUtils.buildRef(professions);
@@ -81,7 +76,7 @@ public class ProfessionRestImpl {
     @RolesAllowed("USER")
     public Response recupererProfessionDeDemande(@QueryParam("referenceDeDemande") String referenceDeDemandeStr) throws Exception {
 
-        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
+        Login login = getLogin();
 
         LOGGER.info("recuperer Profession de demande " + login.getValue()  + ", referenceDeDemande=" + referenceDeDemandeStr);
 
@@ -102,7 +97,7 @@ public class ProfessionRestImpl {
     public Response validerEtRenseignerCodeGLN(@QueryParam("referenceDeDemande") String referenceDeDemandeStr,
                                                @QueryParam("codeGln") String codeGln) throws Exception {
 
-        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
+        Login login = getLogin();
 
         LOGGER.info("validerEtRenseignerCodeGLN " + login.getValue()  + ", codeGln=" + codeGln);
 

@@ -2,10 +2,7 @@ package ch.vd.demaut.domain.annexes;
 
 import ch.vd.demaut.commons.annotations.Entity;
 import ch.vd.demaut.commons.entities.EntityFunctionalKeyAware;
-import ch.vd.demaut.domain.demandes.DateDeCreation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
 
 /**
  * Représente une Annexe associée à une demande {@link DemandeAutorisation} <br>
@@ -21,24 +18,16 @@ public class Annexe extends EntityFunctionalKeyAware {
 
     private NomFichier nomFichier;
 
-    private DateDeCreation dateDeCreation;
-
     // ********************************************************* Constructor
 
     //Only here for OpenJPA
     public Annexe() {
     }
 
-    public Annexe(String nomFichier, byte[] contenu, String dateCreation) {
-        this(new NomFichier(nomFichier), new ContenuAnnexe(contenu),
-                new DateDeCreation(LocalDate.parse(dateCreation, DateTimeFormat.forPattern("dd.MM.yyyy hh:mm"))));
-    }
-
-    public Annexe(NomFichier nomFichier, ContenuAnnexe contenu, DateDeCreation dateDeCreation) {
+    public Annexe(NomFichier nomFichier, ContenuAnnexe contenu) {
         super();
         this.nomFichier = nomFichier;
         this.contenu = contenu;
-        this.dateDeCreation = dateDeCreation;
     }
 
     // ********************************************************* Getters
@@ -55,12 +44,8 @@ public class Annexe extends EntityFunctionalKeyAware {
         return nomFichier;
     }
 
-    public DateDeCreation getDateDeCreation() {
-        return dateDeCreation;
-    }
-
     public AnnexeMetadata getAnnexeMetadata() {
-        return new AnnexeMetadata(nomFichier.getNomFichier(), getTaille(), dateDeCreation);
+        return new AnnexeMetadata(nomFichier.getNomFichier(), getTaille());
     }
 
     @Override

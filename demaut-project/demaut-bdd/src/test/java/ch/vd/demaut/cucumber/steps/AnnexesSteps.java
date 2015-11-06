@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class AnnexesSteps {
 
-    // ********************************************************* Static fields
+    // ********************************************************* Injected fields
     private DemandeAutorisationSteps demandeAutorisationSteps;
 
     private DonneesPersonnellesSteps donneesPersonnellesSteps;

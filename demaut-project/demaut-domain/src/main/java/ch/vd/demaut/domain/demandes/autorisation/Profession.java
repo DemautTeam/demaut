@@ -6,7 +6,6 @@ import java.util.List;
 import ch.vd.demaut.domain.config.RefProgresID;
 import ch.vd.demaut.domain.config.TypeProgres;
 import ch.vd.demaut.domain.exception.ProfessionNotFoundException;
-import ch.vd.demaut.domain.exception.TypeDiplomeNotFoundException;
 
 public enum Profession implements TypeProgres {
     Chiropraticien(53843599, "Chiropraticien", true, true, CategorieProfession.Universitaire),//

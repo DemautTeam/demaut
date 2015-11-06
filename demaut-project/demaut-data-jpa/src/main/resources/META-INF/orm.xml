@@ -1,18 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<entity-mappings version="2.0"
-                 xmlns="http://java.sun.com/xml/ns/persistence/orm"
-                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm
-				 http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
-
-    <!-- - OpenJPA limitations / bugs : - Not working well with access="PROPERTY"
-        - <enumerated>STRING not working well when used in a OneToMany - OneToMany
-        + EAGER not working - OneToMany + LAZY => create null list (voir explication https://issues.apache.org/jira/browse/OPENJPA-2483) - Wrong warnings
-        from OpenJPA "non-er - Access property ne marche pas
-        - Enumarated as STRING does not work in many-2-one
-	- BUG : Optimistic locking errors were detected when flushing to the data store
-        - OpenJpaDialect does not support custom isolation levels due to limitations in standard JPA : @Transactional(isolation = Isolation.READ_COMMITTED)
-        -->
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
+    version="2.1">
 
     <persistence-unit-metadata>
         <persistence-unit-defaults>
@@ -127,7 +117,6 @@
         <attributes>
             <embedded name="nomFichier"/>
             <embedded name="contenu"/>
-            <embedded name="dateDeCreation"/>
         </attributes>
     </entity>
 
@@ -137,8 +126,13 @@
         class="ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles">
         <table name="DONNEES_PROFESSIONNELLES"/>
         <attributes>
-            <!-- On ne peut pas utiliser EAGER : https://issues.apache.org/jira/browse/OPENJPA-1908 -->
-            <one-to-many name="diplomes" >
+            <one-to-many name="diplomes">
+                <join-column/>
+                <cascade>
+                    <cascade-all/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="activitesFutures">
                 <join-column/>
                 <cascade>
                     <cascade-all/>
@@ -154,11 +148,11 @@
         <attributes>
             <basic name="nationalite">
                 <column name="nationalite"/>
-                <enumerated>ORDINAL</enumerated>
+                <enumerated>STRING</enumerated>
             </basic>
             <basic name="langue">
                 <column name="langue"/>
-                <enumerated>ORDINAL</enumerated>
+                <enumerated>STRING</enumerated>
             </basic>
             <basic name="genre">
                 <column name="genre"/>
@@ -181,6 +175,24 @@
         </attributes>
     </entity>
 
+    <!-- ACTIVITE FUTURE -->
+
+    <entity
+        class="ch.vd.demaut.domain.demandeur.donneesProf.activites.ActiviteFuture">
+        <table name="ACTIVITE_FUTURE"/>
+        <attributes>
+            <basic name="typeActivite">
+                <enumerated>STRING</enumerated>
+            </basic>
+            <basic name="typePratiqueLamal">
+                <enumerated>STRING</enumerated>
+            </basic>
+            <basic name="etablissement"/>
+            <basic name="activiteEnvisagee"/>
+        </attributes>
+    </entity>
+    
+
     <!-- DIPLOME -->
 
     <entity class="ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome">
@@ -195,8 +207,7 @@
                 <enumerated>STRING</enumerated>
             </basic>
             <basic name="complement">
-                <column name="complement"
-                    length="254"/>
+                <column name="complement" length="254"/>
             </basic>
             <embedded name="referenceDeDiplome"/>
             <embedded name="titreFormation"/>
@@ -204,6 +215,7 @@
             <embedded name="dateReconnaissance"/>
         </attributes>
     </entity>
+
 
     <!-- ADRESSE -->
 
@@ -215,12 +227,10 @@
                 <enumerated>ORDINAL</enumerated>
             </basic>
             <basic name="voie">
-                <column name="voie"
-                    length="254"/>
+                <column name="voie" length="254"/>
             </basic>
             <basic name="complement">
-                <column name="complement"
-                    length="254"/>
+                <column name="complement" length="254"/>
             </basic>
             <embedded name="npa"/>
             <embedded name="localite"/>
@@ -232,8 +242,7 @@
     <embeddable class="ch.vd.demaut.domain.annexes.NomFichier">
         <attributes>
             <basic name="nomFichier">
-                <column name="nom_fichier"
-                    length="254"/>
+                <column name="nom_fichier" length="254"/>
             </basic>
         </attributes>
     </embeddable>
@@ -251,8 +260,7 @@
     <embeddable class="ch.vd.demaut.domain.utilisateurs.Login">
         <attributes>
             <basic name="value">
-                <column name="login"
-                    length="254"/>
+                <column name="login" length="254"/>
             </basic>
         </attributes>
     </embeddable>
@@ -260,8 +268,7 @@
     <embeddable class="ch.vd.demaut.domain.demandes.ReferenceDeDemande">
         <attributes>
             <basic name="value">
-                <column name="reference_Demande"
-                    length="254"/>
+                <column name="reference_Demande" length="254"/>
             </basic>
         </attributes>
     </embeddable>
@@ -269,8 +276,7 @@
     <embeddable class="ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN">
         <attributes>
             <basic name="value">
-                <column name="code_GLN"
-                    length="13"/>
+                <column name="code_GLN" length="13"/>
             </basic>
         </attributes>
     </embeddable>
@@ -279,8 +285,7 @@
         class="ch.vd.demaut.domain.demandeur.donneesProf.diplome.TitreFormation">
         <attributes>
             <basic name="value">
-                <column name="titre_Formation"
-                    length="254"/>
+                <column name="titre_Formation" length="254"/>
             </basic>
         </attributes>
     </embeddable>
@@ -307,6 +312,8 @@
         <attributes>
             <basic name="value">
                 <column name="date_creation"/>
+                <convert
+                    converter="ch.vd.demaut.data.converters.JodaLocalDateConverter"/>
             </basic>
         </attributes>
     </embeddable>
@@ -315,8 +322,7 @@
         class="ch.vd.demaut.domain.demandeur.donneesProf.diplome.ReferenceDeDiplome">
         <attributes>
             <basic name="value">
-                <column name="reference_Diplome"
-                    length="254"/>
+                <column name="reference_Diplome" length="254"/>
             </basic>
         </attributes>
     </embeddable>
@@ -324,8 +330,7 @@
     <embeddable class="ch.vd.demaut.domain.demandeur.donneesPerso.NPA">
         <attributes>
             <basic name="value">
-                <column name="npa"
-                    length="254"/>
+                <column name="npa" length="254"/>
             </basic>
         </attributes>
     </embeddable>
@@ -333,8 +338,7 @@
     <embeddable class="ch.vd.demaut.domain.demandeur.Localite">
         <attributes>
             <basic name="value">
-                <column name="localite"
-                    length="254"/>
+                <column name="localite" length="254"/>
             </basic>
         </attributes>
     </embeddable>
@@ -342,8 +346,7 @@
     <embeddable class="ch.vd.demaut.domain.demandeur.donneesPerso.Nom">
         <attributes>
             <basic name="value">
-                <column name="nom"
-                    length="254"/>
+                <column name="nom" length="254"/>
             </basic>
         </attributes>
     </embeddable>
@@ -351,8 +354,7 @@
     <embeddable class="ch.vd.demaut.domain.demandeur.donneesPerso.Prenom">
         <attributes>
             <basic name="value">
-                <column name="prenom"
-                    length="254"/>
+                <column name="prenom" length="254"/>
             </basic>
         </attributes>
     </embeddable>
@@ -361,8 +363,7 @@
         class="ch.vd.demaut.domain.demandeur.donneesPerso.NomDeCelibataire">
         <attributes>
             <basic name="value">
-                <column name="nom_de_celibataire"
-                    length="254"/>
+                <column name="nom_de_celibataire" length="254"/>
             </basic>
         </attributes>
     </embeddable>
@@ -380,8 +381,7 @@
     <embeddable class="ch.vd.demaut.domain.demandeur.Email">
         <attributes>
             <basic name="value">
-                <column name="email"
-                    length="254"/>
+                <column name="email" length="254"/>
             </basic>
         </attributes>
     </embeddable>
@@ -390,8 +390,7 @@
         class="ch.vd.demaut.domain.demandeur.donneesPerso.NumeroTelephone">
         <attributes>
             <basic name="value">
-                <column name="telephone"
-                    length="50"/>
+                <column name="telephone" length="50"/>
             </basic>
         </attributes>
     </embeddable>
@@ -400,8 +399,7 @@
         class="ch.vd.demaut.domain.demandeur.donneesPerso.TelephonePrive">
         <attributes>
             <basic name="value">
-                <column name="telephone_prive"
-                    length="50"/>
+                <column name="telephone_prive" length="50"/>
             </basic>
         </attributes>
     </embeddable>
@@ -410,8 +408,7 @@
         class="ch.vd.demaut.domain.demandeur.donneesPerso.TelephoneMobile">
         <attributes>
             <basic name="value">
-                <column name="telephone_mobile"
-                    length="50"/>
+                <column name="telephone_mobile" length="50"/>
             </basic>
         </attributes>
     </embeddable>
@@ -419,8 +416,7 @@
     <embeddable class="ch.vd.demaut.domain.demandeur.Fax">
         <attributes>
             <basic name="value">
-                <column name="fax"
-                    length="50"/>
+                <column name="fax" length="50"/>
             </basic>
         </attributes>
     </embeddable>
@@ -438,10 +434,91 @@
     <embeddable class="ch.vd.demaut.domain.demandeur.donneesPerso.AutrePermis">
         <attributes>
             <basic name="value">
-                <column name="autre_permis"
-                    length="254"/>
+                <column name="autre_permis" length="254"/>
             </basic>
         </attributes>
     </embeddable>
+
+    <embeddable
+        class="ch.vd.demaut.domain.demandeur.donneesProf.activites.Etablissement">
+        <attributes>
+            <embedded name="voie"></embedded>
+            <embedded name="complement"></embedded>
+            <embedded name="localite"></embedded>
+            <embedded name="npaProfessionnel"></embedded>
+        </attributes>
+    </embeddable>
+
+    <embeddable
+        class="ch.vd.demaut.domain.demandeur.donneesProf.activites.Voie">
+        <attributes>
+            <basic name="value">
+                <column name="voie"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+    <embeddable
+        class="ch.vd.demaut.domain.demandeur.donneesProf.activites.Complement">
+        <attributes>
+            <basic name="value">
+                <column name="complement"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+    <embeddable
+        class="ch.vd.demaut.domain.demandeur.donneesProf.activites.NPAProfessionnel">
+        <attributes>
+            <basic name="value">
+                <column name="npa"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+    <embeddable
+        class="ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.ActiviteEnvisagee">
+        <attributes>
+            <basic name="typeActivite">
+                <enumerated>STRING</enumerated>
+            </basic>
+            <embedded name="nombreJourParSemaine"></embedded>
+            <embedded name="datePrevueDebut"></embedded>
+            <embedded name="superviseur"></embedded>
+        </attributes>
+    </embeddable>
+
+    <embeddable
+        class="ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.TauxActiviteEnDemiJournee">
+        <attributes>
+            <basic name="value">
+                <column name="taux_activite"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+    <embeddable
+        class="ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.DatePrevueDebut">
+        <attributes>
+            <basic name="value">
+                <column name="date_prevue_debut"/>
+                <convert
+                    converter="ch.vd.demaut.data.converters.JodaLocalDateConverter"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+    <embeddable
+        class="ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.Superviseur">
+        <attributes>
+            <basic name="value">
+                <column name="superviseur"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+    <converter auto-apply="true"
+        class="ch.vd.demaut.data.converters.JodaLocalDateConverter">
+    </converter>
 
 </entity-mappings>
