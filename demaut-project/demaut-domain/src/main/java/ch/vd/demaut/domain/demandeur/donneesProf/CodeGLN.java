@@ -4,7 +4,9 @@ import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.BaseValueObject;
 import org.hibernate.validator.constraints.EAN;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Représente un Code GLN d'un professionnel de la santé
@@ -28,6 +30,7 @@ public class CodeGLN extends BaseValueObject {
 
     @NotNull
     @EAN(type = EAN.Type.EAN13)
+    @Size(min = 13, max = 13)
     public String getValue() {
         return value;
     }

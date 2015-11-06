@@ -9,6 +9,8 @@ import javax.persistence.criteria.Fetch;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
+import ch.vd.demaut.domain.demandes.Demande;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.ListeDesActivitesFutures;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +40,13 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
     public DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande referenceDeDemande) {
         logger.debug("Chargement de la demande  {}", referenceDeDemande.getValue());
         TypedQuery<DemandeAutorisation> typedQuery = createQueryParReference(referenceDeDemande);
-        return typedQuery.getSingleResult();
+        DemandeAutorisation demande = typedQuery.getSingleResult();
+
+        //Fetcher les activites futures
+        ListeDesActivitesFutures activitesFutures = demande.getDonneesProfessionnelles().getListeDesActivitesFutures();
+        activitesFutures.getActivitesFutures().iterator().hasNext();
+
+        return demande;
     }
 
     @Override
@@ -78,6 +86,9 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
         //A completer le fetch si besoin de nouveaux elements en eager
         Fetch<DemandeAutorisation, DonneesProfessionnelles> fetchDonneesProfessionnelles = autorisationRoot.fetch("donneesProfessionnelles",JoinType.INNER);
         fetchDonneesProfessionnelles.fetch("diplomes", JoinType.LEFT);
+        //fetchDonneesProfessionnelles.fetch("activitesFutures", JoinType.LEFT);
+
+
         Fetch<DemandeAutorisation, DonneesPersonnelles> fetchDonneesPersonnelles = autorisationRoot.fetch("donneesPersonnelles",JoinType.INNER);
         fetchDonneesPersonnelles.fetch("adresse", JoinType.LEFT);
 
