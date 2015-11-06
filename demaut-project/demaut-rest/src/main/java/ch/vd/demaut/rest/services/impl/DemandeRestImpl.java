@@ -66,7 +66,7 @@ public class DemandeRestImpl extends AbstractRestService {
 
         Login login = getLogin();
 
-        LOG.debug("initialiser demande pour : {}, profession= {}, codeGLN= {}", login.getValue(), professionId, codeGLN.getValue());
+        LOG.debug("initialiser demande pour : {}, profession= {}", login.getValue(), professionId);
 
         Profession profession = Profession.getTypeById(professionId);
 

@@ -28,6 +28,7 @@
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <ref bean="customJacksonJaxbJsonProvider"/>
+            <ref bean="domainParamConverterProvider"/>
             <ref bean="domainExceptionHandler"/>
             <ref bean="authenticationFilter"/>
             <ref bean="corsFilter"/>
@@ -36,7 +37,7 @@
 
     <bean id="corsFilter"
           class="org.apache.cxf.rs.security.cors.CrossOriginResourceSharingFilter"/>
-
+    <bean class="ch.vd.demaut.rest.providers.DomainParamConverterProvider" id="domainParamConverterProvider"/>
     <bean id="customJacksonJaxbJsonProvider"
           class="ch.vd.demaut.rest.providers.CustomJacksonJaxbJsonProvider"/>
     <bean id="domainExceptionHandler" class="ch.vd.demaut.rest.providers.DomainExceptionHandler"/>
