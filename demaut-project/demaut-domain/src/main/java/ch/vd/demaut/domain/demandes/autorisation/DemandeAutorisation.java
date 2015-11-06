@@ -70,7 +70,7 @@ public class DemandeAutorisation extends Demande {
     public DemandeAutorisation(Login login, Profession profession, DateDeCreation dateDeCreation) {
         super(dateDeCreation);
         initListes();
-        this.referenceDeDemande = new ReferenceDeDemande();
+        this.referenceDeDemande = new ReferenceDeDemande(dateDeCreation);
         this.statutDemandeAutorisation = StatutDemandeAutorisation.Brouillon;
         this.login = login;
         this.profession = profession;
