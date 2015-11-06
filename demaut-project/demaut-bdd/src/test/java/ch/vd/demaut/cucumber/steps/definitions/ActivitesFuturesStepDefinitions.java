@@ -1,15 +1,16 @@
 package ch.vd.demaut.cucumber.steps.definitions;
 
 import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
-import ch.vd.demaut.cucumber.converteurs.activitesFutures.TelephoneMobileConverter;
-import ch.vd.demaut.cucumber.converteurs.commons.FaxConverter;
-import ch.vd.demaut.cucumber.converteurs.commons.NPAProfessionnelConverter;
-import ch.vd.demaut.cucumber.converteurs.donneesperso.TelephonePriveConverter;
+import ch.vd.demaut.cucumber.converteurs.commons.*;
+import ch.vd.demaut.cucumber.converteurs.donneesperso.NomConverter;
 import ch.vd.demaut.cucumber.steps.ActivitesFuturesSteps;
-import ch.vd.demaut.domain.demandeur.Fax;
+import ch.vd.demaut.domain.demandeur.Email;
+import ch.vd.demaut.domain.demandeur.Localite;
+import ch.vd.demaut.domain.demandeur.donneesPerso.Nom;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.NPAProfessionnel;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.etablissement.TelephoneMobile;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.etablissement.TelephonePrive;
+import ch.vd.demaut.domain.demandeur.Telephone;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.Voie;
+import cucumber.api.PendingException;
 import cucumber.api.Transform;
 import cucumber.api.java.fr.Alors;
 import cucumber.api.java.fr.Etantdonné;
@@ -35,28 +36,47 @@ public class ActivitesFuturesStepDefinitions extends StepDefinitions {
     // ********************************************************* Given
 
 
+
+    @Etantdonné("^une activité future valide en cours de saisie par l´utilisateur$")
+    public void init_activite_future() throws Throwable {
+        activitesFuturesSteps.initActiviteFutureValide();
+    }
+
     @Etantdonné("^le code NPA \"([^\"]*)\" renseigné par l´utilisateur$")
     public void le_code_NPA_npa_renseigné_par_l_utilisateur(@Transform(NPAProfessionnelConverter.class) NPAProfessionnel npaProfessionnel) throws Throwable {
         activitesFuturesSteps.initActiviteNPA(npaProfessionnel);
     }
 
-    @Etantdonné("^que tous les autres champs de l´activité future sont remplis et valides$")
-    public void que_tous_les_autres_champs_de_l_activité_future_sont_remplis_et_valides() throws Throwable {
-        activitesFuturesSteps.initActiviteFutureValide();
-    }
-
-    @Etantdonné("^le numéro de téléphone \"([^\"]*)\" professionnel, le téléphone \"([^\"]*)\" mobile et le numéro de fax \"([^\"]*)\" renseigné par l'utilisateur$")
-    public void le_numéro_de_téléphone_tel_professionnel_le_téléphone_mobile_mobile_et_le_numéro_de_fax_fax_renseigné_par_l_utilisateur(@Transform(TelephonePriveConverter.class) TelephonePrive tel, @Transform(TelephoneMobileConverter.class) TelephoneMobile mobile, @Transform(FaxConverter.class) Fax fax) throws Throwable {
+    @Etantdonné("^le numéro de téléphone ([^\"]*) professionnel, le téléphone ([^\"]*) mobile et le numéro de fax ([^\"]*) renseignés par l'utilisateur$")
+    public void numeros_de_tel(@Transform(TelephoneConverter.class) Telephone tel,
+                               @Transform(TelephoneConverter.class) Telephone mobile,
+                               @Transform(TelephoneConverter.class) Telephone fax) {
         activitesFuturesSteps.initActiviteTelephoneProf(tel);
         activitesFuturesSteps.initActiviteTelephoneMobile(mobile);
         activitesFuturesSteps.initActiviteFax(fax);
     }
+
+    @Etantdonné("^l'email ([^\"]*) renseignés par l'utilisateur$")
+    public void l_email_email_renseignés_par_l_utilisateur(@Transform(EmailConverter.class) Email email)  {
+        activitesFuturesSteps.initActiviteEmail(email);
+    }
+
+    @Etantdonné("^saisi les champs requis nom ([^\"]*), voie ([^\"]*), npa (\\d+), localité ([^\"]*), téléphone ([^\"]*), email ([^\"]*), renseignés par l'utilisateur$")
+    public void noom_adresse_npa_localité_La(@Transform(NomConverter.class) Nom nom,
+                                             @Transform(VoieConverter.class) Voie voie,
+                                             @Transform(NPAProfessionnelConverter.class) NPAProfessionnel npa,
+                                             @Transform(LocaliteConverter.class)Localite localite,
+                                             @Transform(EmailConverter.class) Email email)  {
+
+    }
+
 
 
     // ********************************************************* When
 
     @Lorsque("^le demandeur ajoute cette activité future$")
     public void le_demandeur_valide_ses_activités_futures() throws Throwable {
+        activitesFuturesSteps.creerActiviteFuture();
         activitesFuturesSteps.ajouterActiviteFutureCourante();
     }
 
@@ -67,7 +87,7 @@ public class ActivitesFuturesStepDefinitions extends StepDefinitions {
         activitesFuturesSteps.verifieAcceptationActiviteFuture(action);
     }
 
-    @Alors("^le système Demaut (accepte|refuse) le numéro de télephone qui requiert minimum 5 digits$")
+    @Alors("^le système Demaut (accepte|refuse) les numéros de télephone$")
     public void le_système_Demaut_action_le_numéro_de_télephone_qui_requiert_minimum_digits(AccepteOuRefuse action) throws Throwable {
         activitesFuturesSteps.verifieAcceptationActiviteFuture(action);
     }

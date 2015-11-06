@@ -1,32 +1,34 @@
-package ch.vd.demaut.domain.demandeur.donneesProf.activites.etablissement;
+package ch.vd.demaut.domain.demandeur;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.BaseValueObject;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @ValueObject
-public class TelephonePrive extends BaseValueObject {
+public class Telephone extends BaseValueObject {
 
     // ********************************************************* Field
     private String value;
 
     // ********************************************************* Constructor
+
     //For JPA usage only
-    TelephonePrive() {
+    Telephone() {
     }
 
     // ********************************************************* Getters
-    public TelephonePrive(String value) {
+    public Telephone(String value) {
         this.value = value;
     }
-
-    // ********************************************************* Getters
 
     /**
      * Le pattern valide le téléphone avec minimum 5 digits: 0xxxxx
      */
-    @Pattern(regexp = "[0\\+]+\\d{5,}", message = "Veuillez entrer un numéro de téléphone valide...")
+    @Size(min=5, max=12)
+    @Pattern(regexp = "[0\\+]+\\d{5,12}", message = "Veuillez entrer un numéro de téléphone valide")
     public String getValue() {
         return value;
     }

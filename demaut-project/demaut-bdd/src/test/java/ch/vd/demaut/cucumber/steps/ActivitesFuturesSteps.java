@@ -2,21 +2,15 @@ package ch.vd.demaut.cucumber.steps;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import ch.vd.demaut.domain.demandeur.Fax;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.etablissement.TelephoneMobile;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.etablissement.TelephonePrive;
+import ch.vd.demaut.domain.demandeur.Email;
+import ch.vd.demaut.domain.demandeur.Telephone;
+import ch.vd.demaut.domain.demandeur.donneesPerso.Nom;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.*;
 import org.joda.time.LocalDate;
 
 import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandeur.Localite;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.ActiviteFuture;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.Complement;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.Etablissement;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.NPAProfessionnel;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.TypeActivite;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.TypePratiqueLamal;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.Voie;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.ActiviteEnvisagee;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.DatePrevueDebut;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.TauxActiviteEnDemiJournee;
@@ -41,12 +35,16 @@ public class ActivitesFuturesSteps {
     private ActiviteEnvisagee activiteEnvisagee;
 
     // TODO: Créer VO Adresse avec voie, complement, localite, npa
+    private Nom nom;
     private Voie voie;
     private Complement complement;
     private Localite localite;
     private NPAProfessionnel npa;
-    private TelephonePrive telephonePrive;
-    private TelephoneMobile telephoneMobile;
+    private Telephone telephoneProf;
+    private Telephone telephoneMobile;
+    private Telephone fax;
+    private Email email;
+    private SiteInternet site;
 
     private Etablissement etablissement;
 
@@ -55,7 +53,6 @@ public class ActivitesFuturesSteps {
     // ********************************************************* Injected Fields
 
     private DemandeAutorisationSteps demandeAutorisationSteps;
-    private Fax fax;
 
     // *********************************************** Technical Methods
 
@@ -78,16 +75,20 @@ public class ActivitesFuturesSteps {
         this.npa = npa;
     }
 
-    public void initActiviteTelephoneProf(TelephonePrive telephonePrive) {
-        this.telephonePrive = telephonePrive;
+    public void initActiviteTelephoneProf(Telephone telephoneProf) {
+        this.telephoneProf = telephoneProf;
     }
 
-    public void initActiviteTelephoneMobile(TelephoneMobile telephoneMobile) {
+    public void initActiviteTelephoneMobile(Telephone telephoneMobile) {
         this.telephoneMobile = telephoneMobile;
     }
 
-    public void initActiviteFax(Fax fax) {
+    public void initActiviteFax(Telephone fax) {
         this.fax = fax;
+    }
+
+    public void initActiviteEmail(Email email) {
+        this.email = email;
     }
 
     public void initActiviteDependante() {
@@ -104,12 +105,14 @@ public class ActivitesFuturesSteps {
     }
 
     public void initActiviteFutureValide() {
-
         initTypeActiviteValideSiNonRenseigne();
         initEtablissement();
         initTypePratiqueLamal();
         initActiviteEnvisagee();
+    }
 
+    public void creerActiviteFuture() {
+        etablissement = new Etablissement(nom, voie, complement, localite, npa, telephoneProf, telephoneMobile, fax, email, site);
         activiteFuture = new ActiviteFuture(etablissement, typePratiqueLamal, activiteEnvisagee);
     }
 
@@ -148,8 +151,6 @@ public class ActivitesFuturesSteps {
         initVoieValideSiNonRenseignee();
         initLocaliteValideSiNonRenseignee();
         initTelephoneProfNonRenseignee();
-//        initTelephoneMobileNonRenseignee();
-        etablissement = new Etablissement(voie, complement, localite, npa, telephonePrive, null, fax);
     }
 
     private void initTypePratiqueLamal() {
@@ -183,15 +184,10 @@ public class ActivitesFuturesSteps {
     }
 
     private void initTelephoneProfNonRenseignee() {
-        if(telephonePrive == null){
-            telephonePrive = new TelephonePrive("0123456");
+        if(telephoneProf == null){
+            telephoneProf = new Telephone("0123456");
         }
     }
 
-    private void initTelephoneMobileNonRenseignee() {
-        if(telephoneMobile == null){
-            telephoneMobile = new TelephoneMobile("0123456");
-        }
-    }
 
 }

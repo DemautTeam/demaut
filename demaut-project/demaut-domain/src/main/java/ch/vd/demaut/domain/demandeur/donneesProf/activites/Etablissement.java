@@ -2,19 +2,23 @@ package ch.vd.demaut.domain.demandeur.donneesProf.activites;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.BaseValueObject;
-import ch.vd.demaut.domain.demandeur.Fax;
+import ch.vd.demaut.domain.demandeur.Email;
 import ch.vd.demaut.domain.demandeur.Localite;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.etablissement.TelephoneMobile;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.etablissement.TelephonePrive;
+import ch.vd.demaut.domain.demandeur.Telephone;
+import ch.vd.demaut.domain.demandeur.donneesPerso.Nom;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-//TOOD : Renommer Etablissement en Adresse (et AdresseSuisse) & Ajouter JavaDoc
+//TODO : Renommer Etablissement en Adresse (et AdresseSuisse) & Ajouter JavaDoc
 @ValueObject
 public class Etablissement extends BaseValueObject {
 
     // ********************************************************* Fields
+
+    private Nom nomEtablissement;
+
+    // TODO refactorer les champs en classe Adresse
     private Voie voie;
 
     private Complement complement;
@@ -23,25 +27,33 @@ public class Etablissement extends BaseValueObject {
 
     private NPAProfessionnel npaProfessionnel;
 
-    private TelephonePrive telephonePrive;
+    private Telephone telephoneProf;
 
-    private TelephoneMobile telephoneMobile;
+    private Telephone telephoneMobile;
 
-    private Fax fax;
+    private Telephone fax;
+
+    private Email email;
+
+    private SiteInternet siteInternet;
+
 
     // ********************************************************* Constructors
     //For JPA usage only
     Etablissement(){
     }
 
-    public Etablissement(Voie voie, Complement complement, Localite localite, NPAProfessionnel npaProfessionnel, TelephonePrive telephonePrive, TelephoneMobile telephoneMobile, Fax fax) {
+    public Etablissement(Nom nomEtablissement, Voie voie, Complement complement, Localite localite, NPAProfessionnel npaProfessionnel, Telephone telephoneProf, Telephone telephoneMobile, Telephone fax, Email email, SiteInternet siteInternet) {
+        this.nomEtablissement = nomEtablissement;
         this.voie = voie;
         this.complement = complement;
         this.localite = localite;
         this.npaProfessionnel = npaProfessionnel;
-        this.telephonePrive = telephonePrive;
+        this.telephoneProf = telephoneProf;
         this.telephoneMobile = telephoneMobile;
         this.fax = fax;
+        this.email = email;
+        this.siteInternet = siteInternet;
     }
 
     // ********************************************************* Getters & Contraintes
@@ -71,17 +83,34 @@ public class Etablissement extends BaseValueObject {
 
     @NotNull
     @Valid
-    public TelephonePrive getTelephonePrive() {
-        return telephonePrive;
+    public Telephone getTelephoneProf() {
+        return telephoneProf;
     }
 
     @Valid
-    public TelephoneMobile getTelephoneMobile() {
+    public Telephone getTelephoneMobile() {
         return telephoneMobile;
     }
 
     @Valid
-    public Fax getFax() {
+    public Telephone getFax() {
         return fax;
+    }
+
+    @NotNull
+    @Valid
+    public Email getEmail() {
+        return email;
+    }
+
+    @NotNull
+    @Valid
+    public Nom getNomEtablissement() {
+        return nomEtablissement;
+    }
+
+    @Valid
+    public SiteInternet getSiteInternet() {
+        return siteInternet;
     }
 }

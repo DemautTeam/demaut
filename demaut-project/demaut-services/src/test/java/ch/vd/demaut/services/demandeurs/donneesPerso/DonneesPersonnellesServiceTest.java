@@ -2,6 +2,7 @@ package ch.vd.demaut.services.demandeurs.donneesPerso;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import ch.vd.demaut.domain.demandeur.Telephone;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +23,6 @@ import ch.vd.demaut.domain.demandeur.donneesPerso.Adresse;
 import ch.vd.demaut.domain.demandeur.donneesPerso.DateDeNaissance;
 import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnelles;
 import ch.vd.demaut.domain.demandeur.Email;
-import ch.vd.demaut.domain.demandeur.Fax;
 import ch.vd.demaut.domain.demandeur.donneesPerso.Genre;
 import ch.vd.demaut.domain.demandeur.donneesPerso.Langue;
 import ch.vd.demaut.domain.demandeur.Localite;
@@ -30,8 +30,6 @@ import ch.vd.demaut.domain.demandeur.donneesPerso.NPA;
 import ch.vd.demaut.domain.demandeur.donneesPerso.Nom;
 import ch.vd.demaut.domain.demandeur.donneesPerso.Permis;
 import ch.vd.demaut.domain.demandeur.donneesPerso.Prenom;
-import ch.vd.demaut.domain.demandeur.donneesPerso.TelephoneMobile;
-import ch.vd.demaut.domain.demandeur.donneesPerso.TelephonePrive;
 import ch.vd.demaut.domain.demandeur.donneesPerso.TypePermis;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.utilisateurs.Login;
@@ -91,9 +89,9 @@ public class DonneesPersonnellesServiceTest {
         Email email = new Email("john.doe@nobody.com");
         Genre genre = Genre.Feminin;
         DateDeNaissance dateDeNaissance = new DateDeNaissance(LocalDate.now());
-        TelephonePrive telephonePrive = new TelephonePrive("022222222");
-        TelephoneMobile telephoneMobile = new TelephoneMobile("07625225123");
-        Fax fax = new Fax("023456789");
+        Telephone telephonePrive = new Telephone("022222222");
+        Telephone telephoneMobile = new Telephone("07625225123");
+        Telephone fax = new Telephone("023456789");
         Pays nationalite = Pays.Allemagne;
         Langue langue = Langue.Autre;
         Permis permis = new Permis(TypePermis.C);

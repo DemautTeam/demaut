@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
-    version="2.1">
+<entity-mappings version="2.1"
+                 xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
+                 http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd">
 
     <persistence-unit-metadata>
         <persistence-unit-defaults>
@@ -48,16 +49,6 @@
 
     <!-- Cannot use attribute-override inside embedded attribute even the doc say its OK -->
     <!--http://openjpa.apache.org/builds/1.2.3/apache-openjpa/docs/jpa_overview_mapping_field.html-->
-    <!--<embedded name="telephonePrive">-->
-        <!--<attribute-override name="value">-->
-            <!--<column name="telephone_prive" column-definition="varchar" length="254"/>-->
-        <!--</attribute-override>-->
-    <!--</embedded>-->
-    <!--<embedded name="telephoneMobile">-->
-        <!--<attribute-override name="value">-->
-            <!--<column name="telephone_mobile" column-definition="varchar" length="254"/>-->
-        <!--</attribute-override>-->
-    <!--</embedded>-->
 
 
     <!-- DEMANDE -->
@@ -168,9 +159,21 @@
             <embedded name="nomDeCelibataire"/>
             <embedded name="dateDeNaissance"/>
             <embedded name="email"/>
-            <embedded name="telephonePrive"/>
-            <embedded name="telephoneMobile"/>
-            <embedded name="fax"/>
+            <embedded name="telephonePrive">
+                <attribute-override name="value">
+                    <column name="telephone_prive"/>
+                </attribute-override>
+            </embedded>
+            <embedded name="telephoneMobile">
+                <attribute-override name="value">
+                    <column name="telephone_mobile"/>
+                </attribute-override>
+            </embedded>
+            <embedded name="telephoneMobile">
+                <attribute-override name="value">
+                    <column name="fax"/>
+                </attribute-override>
+            </embedded>
             <embedded name="permis"/>
         </attributes>
     </entity>
@@ -396,27 +399,19 @@
     </embeddable>
 
     <embeddable
-        class="ch.vd.demaut.domain.demandeur.donneesPerso.TelephonePrive">
+        class="ch.vd.demaut.domain.demandeur.Telephone">
         <attributes>
             <basic name="value">
-                <column name="telephone_prive" length="50"/>
+                <column name="telephone"/>
             </basic>
         </attributes>
     </embeddable>
 
     <embeddable
-        class="ch.vd.demaut.domain.demandeur.donneesPerso.TelephoneMobile">
+            class="ch.vd.demaut.domain.demandeur.donneesProf.activites.SiteInternet">
         <attributes>
             <basic name="value">
-                <column name="telephone_mobile" length="50"/>
-            </basic>
-        </attributes>
-    </embeddable>
-
-    <embeddable class="ch.vd.demaut.domain.demandeur.Fax">
-        <attributes>
-            <basic name="value">
-                <column name="fax" length="50"/>
+                <column name="site"/>
             </basic>
         </attributes>
     </embeddable>
@@ -442,10 +437,32 @@
     <embeddable
         class="ch.vd.demaut.domain.demandeur.donneesProf.activites.Etablissement">
         <attributes>
+            <embedded name="nomEtablissement">
+                <attribute-override name="value">
+                    <column name="nom_etablissement"/>
+                </attribute-override>
+            </embedded>
             <embedded name="voie"></embedded>
             <embedded name="complement"></embedded>
             <embedded name="localite"></embedded>
             <embedded name="npaProfessionnel"></embedded>
+            <embedded name="telephoneProf">
+                <attribute-override name="value">
+                    <column name="telephone_prof"/>
+                </attribute-override>
+            </embedded>
+            <embedded name="telephoneMobile">
+                <attribute-override name="value">
+                    <column name="telephone_mobile"/>
+                </attribute-override>
+            </embedded>
+            <embedded name="fax">
+                <attribute-override name="value">
+                    <column name="fax"/>
+                </attribute-override>
+            </embedded>
+            <embedded name="email"></embedded>
+            <embedded name="siteInternet"></embedded>
         </attributes>
     </embeddable>
 

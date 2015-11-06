@@ -6,6 +6,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+import ch.vd.demaut.domain.demandeur.Email;
+import ch.vd.demaut.domain.demandeur.Telephone;
+import ch.vd.demaut.domain.demandeur.donneesPerso.Nom;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.*;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,12 +34,6 @@ import ch.vd.demaut.domain.demandeur.Localite;
 import ch.vd.demaut.domain.demandeur.Pays;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.ActiviteFuture;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.Etablissement;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.NPAProfessionnel;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.TypeActivite;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.TypePratiqueLamal;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.Voie;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.ActiviteEnvisagee;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.DatePrevueDebut;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.Superviseur;
@@ -53,7 +51,7 @@ import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.domain.utilisateurs.Utilisateur;
 import ch.vd.demaut.domain.utilisateurs.UtilisateurRepository;
 
-@ContextConfiguration({ "classpath*:/jpaTest-context.xml" })
+@ContextConfiguration({"classpath*:/jpaTest-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class DemandeAutorisationRepositoryTest {
 
@@ -154,8 +152,8 @@ public class DemandeAutorisationRepositoryTest {
     // ********************************************************* Methods privées
 
     private ActiviteFuture buildActiviteFutureValide() {
-        Etablissement etablissement = new Etablissement(new Voie("2"), null, new Localite("Lausanne"),
-                new NPAProfessionnel("1234"));
+        Etablissement etablissement = new Etablissement(new Nom("Centre medical"), new Voie("2"), null, new Localite("Lausanne"), new NPAProfessionnel("1234"),
+                new Telephone("0123456"), new Telephone("0123456"), new Telephone("0123456"), new Email("toto@titi.com"), new SiteInternet("www.google.com"));
         ActiviteEnvisagee activiteEnvisagee = new ActiviteEnvisagee(TypeActivite.Dependant,
                 new TauxActiviteEnDemiJournee(1), new DatePrevueDebut(new LocalDate(2015, 10, 1)),
                 new Superviseur("superviseur"));

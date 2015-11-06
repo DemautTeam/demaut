@@ -1,5 +1,6 @@
 package ch.vd.demaut.domain.demandeur.donneesPerso;
 
+import ch.vd.demaut.domain.demandeur.Telephone;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -50,8 +51,8 @@ public class AlternativePhoneValidator implements ConstraintValidator<Alternativ
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
         try {
-            TelephonePrive telephonePrive = (TelephonePrive) PropertyUtils.getProperty(value, priveField);
-            TelephoneMobile telephoneMobile = (TelephoneMobile) PropertyUtils.getProperty(value, mobileField);
+            Telephone telephonePrive = (Telephone) PropertyUtils.getProperty(value, priveField);
+            Telephone telephoneMobile = (Telephone) PropertyUtils.getProperty(value, mobileField);
             if(telephonePrive == null || StringUtils.isEmpty(telephonePrive.getValue()) ){
                 if(telephoneMobile == null || StringUtils.isEmpty(telephoneMobile.getValue()) ){
                     logger.info("les 2 numeros sont vides -> ko");
