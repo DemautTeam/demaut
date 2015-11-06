@@ -39,7 +39,8 @@ public class JSonConversionTest {
         donneesPro.validerEtRenseignerCodeGLN(codeGLN, Profession.TherapeuteDeLaMotricite);
         
         //Process transform & Assert
-        assertJsonStr(donneesPro, "{\"id\":null,\"version\":0,\"codeGLN\":\"4719512002889\",\"listeDesActivitesAnterieures\":{},\"listeDesDiplomes\":{},\"listeDesActivitesFutures\":{\"activitesFutures\":[]}}");
+        assertJsonStrContains(donneesPro, "\"codeGLN\":\"4719512002889\"");
+        
     }
     
     
@@ -83,4 +84,12 @@ public class JSonConversionTest {
         
         assertThat(jsonStrActual).isEqualTo(jsonStrExpected);
     }
+
+    private void assertJsonStrContains(Object object, String jsonStrContainsExpected) {
+        
+        String jsonStrActual = RestUtils.buildJSonString(object);
+        
+        assertThat(jsonStrActual).contains(jsonStrContainsExpected);
+    }
+
 }
