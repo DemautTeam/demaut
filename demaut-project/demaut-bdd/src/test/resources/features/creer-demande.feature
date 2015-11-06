@@ -52,6 +52,7 @@ Fonctionnalité: Créer une demande
       | "7601000000125"  | "accepte" |
       | ""               | "refuse"  |
       | "g7601000000125" | "refuse"  |
+      | "125"            | "refuse"  |
 
 
 
