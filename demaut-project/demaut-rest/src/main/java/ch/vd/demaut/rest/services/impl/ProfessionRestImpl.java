@@ -47,7 +47,7 @@ public class ProfessionRestImpl extends AbstractRestService {
         // Alternative SOA:
         // List<VcType> typesAnnexe = buildListeProfessionsAvecProgresSOA(uriInfo);
         // TODO filtrer la liste selon Universitaire ou non
-        return RestUtils.buildRef(professions);
+        return RestUtils.buildJSonResponse(professions);
     }
 
     /**
@@ -67,7 +67,7 @@ public class ProfessionRestImpl extends AbstractRestService {
         
         List<Profession> professionsAvecGLN = donneesProfessionnellesService.listerProfessionsAvecCodeGlnObligatoire();
 
-        return RestUtils.buildRef(professionsAvecGLN);
+        return RestUtils.buildJSonResponse(professionsAvecGLN);
     }
 
     @GET
@@ -85,9 +85,9 @@ public class ProfessionRestImpl extends AbstractRestService {
         Profession profession = donneesProfessionnellesService.recupererProfessionDeDemande(login, referenceDeDemande);
         CodeGLN codeGLN = donneesProfessionnellesService.recupererDonneesProfessionnelles(login, referenceDeDemande).getCodeGLN();
         if(codeGLN == null){
-            return RestUtils.buildJSon(Arrays.asList(profession.getRefProgresID().getId(), null));
+            return RestUtils.buildJSonResponse(Arrays.asList(profession.getRefProgresID().getId(), null));
         }
-        return RestUtils.buildJSon(Arrays.asList(profession.getRefProgresID().getId(), codeGLN.getValue()));
+        return RestUtils.buildJSonResponse(Arrays.asList(profession.getRefProgresID().getId(), codeGLN.getValue()));
     }
 
     @GET
@@ -105,6 +105,6 @@ public class ProfessionRestImpl extends AbstractRestService {
         CodeGLN codeGLN =  StringUtils.isEmpty(codeGln) ? null : new CodeGLN(codeGln);
 
         donneesProfessionnellesService.validerEtRenseignerCodeGLN(login, referenceDeDemande, codeGLN);
-        return RestUtils.buildJSon(true);    
+        return RestUtils.buildJSonResponse(true);    
     }
 }

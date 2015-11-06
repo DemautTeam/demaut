@@ -50,7 +50,7 @@ public class DiplomeRestImpl extends AbstractRestService {
         List<TypeDiplomeAccepte> diplomeAcceptes = buildListeTypesDiplomesAcceptesSansProgresSOA();
         // Autre altrenative:
         //List<VcType> diplomeAcceptes = buildListeTypesDiplomesAcceptesAvecProgresSOA(uriInfo);
-        return RestUtils.buildRef(diplomeAcceptes);
+        return RestUtils.buildJSonResponse(diplomeAcceptes);
     }
 
     private List<TypeDiplomeAccepte> buildListeTypesDiplomesAcceptesSansProgresSOA() {
@@ -71,7 +71,7 @@ public class DiplomeRestImpl extends AbstractRestService {
         List<?> titreFormations = buildListeTitresFormationsSansProgresSOA(typeDiplomeAccepte);
         // Autre altrenative:
         //List<VcType> titreFormations = buildListeTitresFormationsAvecProgresSOA(uriInfo, typeDiplomeAccepte);
-        return RestUtils.buildRef(titreFormations);
+        return RestUtils.buildJSonResponse(titreFormations);
     }
 
     @GET
@@ -87,7 +87,7 @@ public class DiplomeRestImpl extends AbstractRestService {
         typeFormationsAll.addAll(Arrays.<TypeProgres>asList(TitreFormationComplementaireProgres.values()));
         typeFormationsAll.addAll(Arrays.<TypeProgres>asList(TitreFormationInitialeProgres.values()));
         typeFormationsAll.addAll(Arrays.<TypeProgres>asList(TitreFormationPostgradeProgres.values()));
-        return RestUtils.buildRef(typeFormationsAll);
+        return RestUtils.buildJSonResponse(typeFormationsAll);
     }
 
     private List<?> buildListeTitresFormationsSansProgresSOA(TypeDiplomeAccepte typeDiplomeAccepte) {
@@ -141,7 +141,7 @@ public class DiplomeRestImpl extends AbstractRestService {
 
         donneesProfessionnellesService.ajouterUnDiplome(login, referenceDeDemande, referenceDeDiplome, typeDiplomeAccepte,
                 titreFormation, complement, dateObtention, paysObtention, dateReconnaissance);
-        return RestUtils.buildJSon(true);
+        return RestUtils.buildJSonResponse(true);
     }
 
     private TypeProgres convertTypeFormationIdToEnum(TypeDiplomeAccepte typeDiplomeAccepte, String typeFormationId) {
@@ -175,7 +175,7 @@ public class DiplomeRestImpl extends AbstractRestService {
         ReferenceDeDiplome referenceDeDiplome = new ReferenceDeDiplome(referenceDeDiplomeStr);
 
         donneesProfessionnellesService.supprimerUnDiplome(login, referenceDeDemande, referenceDeDiplome);
-        return RestUtils.buildJSon(true);
+        return RestUtils.buildJSonResponse(true);
     }
 
     @SuppressWarnings("all")
@@ -191,6 +191,6 @@ public class DiplomeRestImpl extends AbstractRestService {
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
 
         List<Diplome> diplomesSaisis = donneesProfessionnellesService.recupererDiplomesSaisis(login, referenceDeDemande);
-        return RestUtils.buildJSon(diplomesSaisis);
+        return RestUtils.buildJSonResponse(diplomesSaisis);
     }
 }

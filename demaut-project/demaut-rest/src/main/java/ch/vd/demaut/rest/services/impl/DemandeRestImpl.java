@@ -55,7 +55,7 @@ public class DemandeRestImpl extends AbstractRestService {
         
         DemandeAutorisation demandeAutorisation = demandeAutorisationService.initialiserDemandeAutorisation(profession, codeGLN, login);
         // TODO: Tester s'il existe une demande et si oui, lancer une exception
-        return RestUtils.buildJSon(demandeAutorisation.getReferenceDeDemande());
+        return RestUtils.buildJSonResponse(demandeAutorisation.getReferenceDeDemande());
     }
 
     /**
@@ -74,7 +74,7 @@ public class DemandeRestImpl extends AbstractRestService {
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
 
         DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererDemandeParReference(referenceDeDemande);
-        return RestUtils.buildJSon(demandeAutorisation);
+        return RestUtils.buildJSonResponse(demandeAutorisation);
     }
 
     /**
@@ -91,7 +91,7 @@ public class DemandeRestImpl extends AbstractRestService {
         LOGGER.info("recuperer listes Brouillons pour : " + login.getValue());
 
         List<DemandeAutorisation> demandeAutorisations = demandeAutorisationService.recupererListeBrouillons(login);
-        return RestUtils.buildJSon(demandeAutorisations);
+        return RestUtils.buildJSonResponse(demandeAutorisations);
     }
 
     @GET
@@ -107,6 +107,6 @@ public class DemandeRestImpl extends AbstractRestService {
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
 
         demandeAutorisationService.supprimerUnBrouillon(login, referenceDeDemande);
-        return RestUtils.buildJSon(true);
+        return RestUtils.buildJSonResponse(true);
     }
 }

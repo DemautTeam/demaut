@@ -1,6 +1,7 @@
 package ch.vd.demaut.rest.json.commons;
 
-import ch.vd.demaut.rest.json.serializer.TypeProgresJsonSerializer;
+import javax.ws.rs.core.Response;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -8,43 +9,52 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import javax.ws.rs.core.Response;
-import java.util.Collection;
+import ch.vd.demaut.commons.exceptions.TechnicalException;
+import ch.vd.demaut.rest.json.serializer.CodeGLNJsonSerializer;
+import ch.vd.demaut.rest.json.serializer.TypeProgresJsonSerializer;
 
 public final class RestUtils {
 
-    private static final ObjectWriter viewWriter = new ObjectMapper().configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false).writer();
-
-    private RestUtils() {
+    public static Response BuildStream(byte[] object) {
+        return Response.ok().entity(object).build();
     }
 
-    public static Response BuildStream(byte[] object) throws JsonProcessingException {
-        return Response.ok()
-                .entity(object)
-                .build();
-    }
+    public static Response buildJSonResponse(Object object) {
 
-    public static Response buildJSon(Collection<?> objects) throws JsonProcessingException {
-        return Response.ok()
-                .entity(Json.newObject().put("response", viewWriter.writeValueAsString(objects)))
-                .build();
-    }
-
-    public static Response buildJSon(Object object) throws JsonProcessingException {
-        return Response.ok()
-                .entity(Json.newObject().put("response", viewWriter.writeValueAsString(object)))
-                .build();
-    }
-
-    public static Response buildRef(Collection<?> objects) throws JsonProcessingException {
-        ObjectMapper objMapper = new ObjectMapper();
-        SimpleModule module = new SimpleModule("EnumModule");
-        module.addSerializer(new TypeProgresJsonSerializer());
-        objMapper.registerModule(module);
-        ObjectWriter writer = objMapper.writer();
-        String jsonStr = writer.writeValueAsString(objects);
+        String jsonStr = buildJSonString(object);
+        
         ObjectNode json = Json.newObject().put("response", jsonStr);
+
         return Response.ok().entity(json).build();
     }
+    
+    public static String buildJSonString(Object object) {
+        ObjectWriter writer = buildJSonObjectWriter();
+        String jsonStr;
+        try {
+            jsonStr = writer.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            throw new TechnicalException("Cannot serialize JSon object", e);
+        }
+        return jsonStr;
+    }
+    
+    private static ObjectWriter buildJSonObjectWriter() {
+        ObjectMapper objMapper = buildJSonObjectMapper();
+        return objMapper.writer();
+    }
 
+    private static ObjectMapper buildJSonObjectMapper() {
+        ObjectMapper objMapper = new ObjectMapper();
+        objMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+
+        SimpleModule module = new SimpleModule("EnumModule");
+        module.addSerializer(new TypeProgresJsonSerializer());
+        module.addSerializer(new CodeGLNJsonSerializer());
+
+        objMapper.registerModule(module);
+
+        return objMapper;
+    }
+    
 }

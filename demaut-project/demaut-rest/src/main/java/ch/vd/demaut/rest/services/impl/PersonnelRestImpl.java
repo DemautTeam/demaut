@@ -107,7 +107,7 @@ public class PersonnelRestImpl extends AbstractRestService {
         donneesPersonnellesService.renseignerLesDonneesPersonnelles(login, referenceDeDemande, nom, prenom, nomDeCelibataire, adresse, email,
                 telephonePrive, telephoneMobile, fax, genre, dateDeNaissance, nationalite, langue, permis);
 
-        return RestUtils.buildJSon(true);
+        return RestUtils.buildJSonResponse(true);
     }
 
     /**
@@ -126,6 +126,6 @@ public class PersonnelRestImpl extends AbstractRestService {
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
 
         DonneesPersonnelles donneesPersonnelles = donneesPersonnellesService.recupererDonneesPersonnelles(login, referenceDeDemande);
-        return RestUtils.buildJSon(donneesPersonnelles);
+        return RestUtils.buildJSonResponse(donneesPersonnelles);
     }
 }

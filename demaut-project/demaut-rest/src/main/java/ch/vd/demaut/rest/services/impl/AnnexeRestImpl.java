@@ -60,7 +60,7 @@ public class AnnexeRestImpl extends AbstractRestService {
         // Autre altrenative:
         // List<VcType> typesAnnexe = buildListeTypesAnnexesAvecProgresSOA(uriInfo);
 
-        return RestUtils.buildRef(typesAnnexe);
+        return RestUtils.buildJSonResponse(typesAnnexe);
     }
 
     /**
@@ -84,7 +84,7 @@ public class AnnexeRestImpl extends AbstractRestService {
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
 
         Collection<TypeAnnexe> typeAnnexes = annexesService.listerLesTypeAnnexesObligatoires(login, referenceDeDemande);
-        return RestUtils.buildRef(typeAnnexes);
+        return RestUtils.buildJSonResponse(typeAnnexes);
     }
 
     @GET
@@ -101,7 +101,7 @@ public class AnnexeRestImpl extends AbstractRestService {
 
         Collection<AnnexeMetadata> annexesMetadata = annexesService.listerLesAnnexeMetadatas(login, referenceDeDemande);
 
-        return RestUtils.buildJSon(annexesMetadata);
+        return RestUtils.buildJSonResponse(annexesMetadata);
     }
 
     @GET
@@ -143,7 +143,7 @@ public class AnnexeRestImpl extends AbstractRestService {
         AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
 
         annexesService.attacherUneAnnexe(login, referenceDeDemande, file, annexeFK.getNomFichier());
-        return RestUtils.buildJSon(true);
+        return RestUtils.buildJSonResponse(true);
     }
 
     @GET
@@ -162,7 +162,7 @@ public class AnnexeRestImpl extends AbstractRestService {
         AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
 
         annexesService.supprimerUneAnnexe(login, referenceDeDemande, annexeFK);
-        return RestUtils.buildJSon(true);
+        return RestUtils.buildJSonResponse(true);
     }
 
     private AnnexeFK buildAnnexeFK(String annexeFileName, String annexeTypeIdStr) {

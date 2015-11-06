@@ -4,14 +4,12 @@ public class TechnicalException extends RuntimeException {
 
     private static final long serialVersionUID = 6115324290688968492L;
 
-    private String message;
-
     public TechnicalException(String message) {
-        this.message = message;
+        super(message);
+    }
+    
+    public TechnicalException(String message, Throwable e) {
+        super(message, e);
     }
 
-    @Override
-    public String getMessage() {
-        return message;
-    }
 }
