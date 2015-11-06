@@ -1,26 +1,28 @@
 package ch.vd.demaut.services.demandes.autorisation;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
+import java.util.List;
+
+import javax.persistence.NoResultException;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
+
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.exception.DemandeNotFoundException;
 import ch.vd.demaut.domain.exception.ReferenceDemandeNotFoundException;
 import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.NoResultException;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 @ContextConfiguration({"classpath*:/servicesTest-context.xml"})
 @ActiveProfiles({"data"})
@@ -49,6 +51,7 @@ public class DemandeAutorisationServiceTest {
 
     @Test
     @Transactional
+    @Rollback(value = true)
     public void testerInitialiserDemandeAutorisation() {
         demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null, login);
         assertThat(demandeEnCours).isNotNull();
@@ -58,6 +61,7 @@ public class DemandeAutorisationServiceTest {
 
     @Test
     @Transactional
+    @Rollback(value = true)
     public void testerRecupererDemandeParReference() {
         demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null, login);
         ReferenceDeDemande referenceDeDemande = demandeEnCours.getReferenceDeDemande();
@@ -70,6 +74,7 @@ public class DemandeAutorisationServiceTest {
 
     @Test
     @Transactional
+    @Rollback(value = true)
     public void testerRecupererBrouillon() {
         demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null, login);
         //Récupère demande en cours
@@ -80,6 +85,7 @@ public class DemandeAutorisationServiceTest {
 
     @Test(expected = DemandeNotFoundException.class)
     @Transactional
+    @Rollback(value = true)
     public void testerRecupererBrouillonNonExistant() {
         demandeEnCours = demandeAutorisationService.recupererBrouillon(login);
         fail("Should rise DemandeNotFoundException exception !");
@@ -87,6 +93,7 @@ public class DemandeAutorisationServiceTest {
 
     @Test
     @Transactional
+    @Rollback(value = true)
     public void testerRecupererListeBrouillons() {
         demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null, login);
 
@@ -98,6 +105,7 @@ public class DemandeAutorisationServiceTest {
 
     @Test
     @Transactional
+    @Rollback(value = true)
     public void testerSupprimerUnBrouillon() {
         demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, null, login);
         //Récupère demande en cours

@@ -75,7 +75,6 @@ public class DemandeAutorisationRepositoryTest {
     // ********************************************************* Transient
     // fields
     private final CodeGLN glnValide = new CodeGLN("4719512002889");
-    private final DateDeCreation dateDeCreation = new DateDeCreation(2015, 10, 1);
 
     // ********************************************************* Setup
     @Before
@@ -95,7 +94,7 @@ public class DemandeAutorisationRepositoryTest {
         // Construction de la demande
         Utilisateur utilisateur = creerUtilisateur("admin1@admin");
         DemandeAutorisation demandeInit = demandeAutorisationFactory.initierDemandeAutorisation(utilisateur.getLogin(),
-                Profession.Ergotherapeute, glnValide, dateDeCreation);
+                Profession.Ergotherapeute, glnValide, new DateDeCreation(2015, 1, 1));
         assertThat(demandeInit.getId()).isNull();
 
         persisterDemandeEtVerifier(demandeInit);
@@ -107,7 +106,7 @@ public class DemandeAutorisationRepositoryTest {
         // Construction de la demande
         Utilisateur utilisateur = creerUtilisateur("admin2@admin");
         DemandeAutorisation demandeInit = demandeAutorisationFactory.initierDemandeAutorisation(utilisateur.getLogin(),
-                Profession.Chiropraticien, glnValide, dateDeCreation);
+                Profession.Chiropraticien, glnValide, new DateDeCreation(2015, 2, 1));
         byte[] contenu = "AnnexeContenu".getBytes();
         Annexe annexe = new Annexe(new NomFichier("test.pdf"), new ContenuAnnexe(contenu));
         demandeInit.validerEtAttacherAnnexe(annexe);
@@ -119,8 +118,9 @@ public class DemandeAutorisationRepositoryTest {
     public void sauvegarderUneDemandeAvecActivitesFutures() {
         // Construction de la demande
         Utilisateur utilisateur = creerUtilisateur("admin4@admin");
+        
         DemandeAutorisation demandeInit = demandeAutorisationFactory.initierDemandeAutorisation(utilisateur.getLogin(),
-                Profession.Chiropraticien, glnValide, dateDeCreation);
+                Profession.Chiropraticien, glnValide, new DateDeCreation(2015, 3, 1));
 
         ActiviteFuture activiteFuture = buildActiviteFutureValide();
 
@@ -135,7 +135,7 @@ public class DemandeAutorisationRepositoryTest {
 
         // Sauvegarder la demande
         DemandeAutorisation demandeAutorisation = demandeAutorisationFactory
-                .initierDemandeAutorisation(utilisateur.getLogin(), Profession.Medecin, glnValide, dateDeCreation);
+                .initierDemandeAutorisation(utilisateur.getLogin(), Profession.Medecin, glnValide, new DateDeCreation(2015, 4, 1));
 
         DonneesProfessionnelles donneesProfessionnelles = demandeAutorisation.getDonneesProfessionnelles();
         creerListeDiplomes(donneesProfessionnelles);
