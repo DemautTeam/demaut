@@ -46,9 +46,9 @@ public class DiplomeRestImpl extends AbstractRestService {
 
         LOGGER.info("listerLesTypesDeDiplomes");
 
-        // Altrenative:
+        // Alternative:
         List<TypeDiplomeAccepte> diplomeAcceptes = buildListeTypesDiplomesAcceptesSansProgresSOA();
-        // Autre altrenative:
+        // Autre alternative:
         //List<VcType> diplomeAcceptes = buildListeTypesDiplomesAcceptesAvecProgresSOA(uriInfo);
         return RestUtils.buildRef(diplomeAcceptes);
     }
@@ -61,11 +61,11 @@ public class DiplomeRestImpl extends AbstractRestService {
     @Path("/typeFormationsList")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response listerLesTitresFormations(@QueryParam("typeDiplome") String typeDiplomeId) throws Exception {
+    public Response listerLesTitresFormations(@QueryParam("typeDiplome") Integer typeDiplomeId) throws Exception {
 
         LOGGER.info("listerLesTitresFormations " + typeDiplomeId);
 
-        TypeDiplomeAccepte typeDiplomeAccepte = TypeDiplomeAccepte.getTypeById(Integer.parseInt(typeDiplomeId));
+        TypeDiplomeAccepte typeDiplomeAccepte = TypeDiplomeAccepte.getTypeById(typeDiplomeId);
 
         // Altrenative:
         List<?> titreFormations = buildListeTitresFormationsSansProgresSOA(typeDiplomeAccepte);
@@ -117,11 +117,11 @@ public class DiplomeRestImpl extends AbstractRestService {
     @RolesAllowed("USER")
     public Response ajouterUnDiplome(@QueryParam("referenceDeDemande") String referenceDeDemandeStr,
                                      @QueryParam("referenceDeDiplome") String referenceDeDiplomeStr,
-                                     @QueryParam("typeDiplome") String typeDiplomeId,
-                                     @QueryParam("typeFormation") String typeFormationId,
+                                     @QueryParam("typeDiplome") Integer typeDiplomeId,
+                                     @QueryParam("typeFormation") Integer typeFormationId,
                                      @QueryParam("complement") String complement,
                                      @QueryParam("dateObtention") String dateObtentionStr,
-                                     @QueryParam("paysObtention") String paysObtentionId,
+                                     @QueryParam("paysObtention") Integer paysObtentionId,
                                      @QueryParam("dateReconnaissance") String dateReconnaissanceStr) throws Exception {
 
         Login login = getLogin();
@@ -130,10 +130,10 @@ public class DiplomeRestImpl extends AbstractRestService {
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
         ReferenceDeDiplome referenceDeDiplome = new ReferenceDeDiplome(referenceDeDiplomeStr);
-        TypeDiplomeAccepte typeDiplomeAccepte = TypeDiplomeAccepte.getTypeById(Integer.parseInt(typeDiplomeId));
+        TypeDiplomeAccepte typeDiplomeAccepte = TypeDiplomeAccepte.getTypeById(typeDiplomeId);
         TitreFormation titreFormation = new TitreFormation(convertTypeFormationIdToEnum(typeDiplomeAccepte, typeFormationId).name());
         DateObtention dateObtention = new DateObtention(SHORT_DATE_PARSER.parseLocalDate(dateObtentionStr));
-        Pays paysObtention = Pays.getTypeById(Integer.parseInt(paysObtentionId));
+        Pays paysObtention = Pays.getTypeById(paysObtentionId);
         DateReconnaissance dateReconnaissance = null;
         if (!StringUtils.isEmpty(dateReconnaissanceStr) && !"-".equals(dateReconnaissanceStr)) {
             dateReconnaissance = new DateReconnaissance(SHORT_DATE_PARSER.parseLocalDate(dateReconnaissanceStr));
@@ -144,16 +144,16 @@ public class DiplomeRestImpl extends AbstractRestService {
         return RestUtils.buildJSon(true);
     }
 
-    private TypeProgres convertTypeFormationIdToEnum(TypeDiplomeAccepte typeDiplomeAccepte, String typeFormationId) {
+    private TypeProgres convertTypeFormationIdToEnum(TypeDiplomeAccepte typeDiplomeAccepte, Integer typeFormationId) {
         switch (typeDiplomeAccepte) {
             case D_FORMATION_APPROFONDIE:
-                return TitreFormationApprofondieProgres.getTypeById(Integer.parseInt(typeFormationId));
+                return TitreFormationApprofondieProgres.getTypeById(typeFormationId);
             case D_FORMATION_COMPLEMENTAIRE:
-                return TitreFormationComplementaireProgres.getTypeById(Integer.parseInt(typeFormationId));
+                return TitreFormationComplementaireProgres.getTypeById(typeFormationId);
             case D_FORMATION_INITIALE:
-                return TitreFormationInitialeProgres.getTypeById(Integer.parseInt(typeFormationId));
+                return TitreFormationInitialeProgres.getTypeById(typeFormationId);
             case D_POSTGRADE:
-                return TitreFormationPostgradeProgres.getTypeById(Integer.parseInt(typeFormationId));
+                return TitreFormationPostgradeProgres.getTypeById(typeFormationId);
             default:
                 return null;
         }

@@ -54,14 +54,14 @@ public class PersonnelRestImpl extends AbstractRestService {
                                                      @QueryParam("complement") String complement,
                                                      @QueryParam("localite") String localiteStr,
                                                      @QueryParam("npa") String npaStr,
-                                                     @QueryParam("pays") String paysId,
+                                                     @QueryParam("pays") Integer paysId,
                                                      @QueryParam("telephonePrive") String telephonePriveStr,
                                                      @QueryParam("telephoneMobile") String telephoneMobileStr,
                                                      @QueryParam("email") String emailStr,
                                                      @QueryParam("fax") String faxStr,
                                                      @QueryParam("genre") String genreStr,
                                                      @QueryParam("dateDeNaissance") String dateDeNaissanceStr,
-                                                     @QueryParam("nationalite") String nationaliteId,
+                                                     @QueryParam("nationalite") Integer nationaliteId,
                                                      @QueryParam("langue") String langueStr,
                                                      @QueryParam("permis") String permisStr,
                                                      @QueryParam("permisOther") String permisOther) throws Exception {
@@ -76,7 +76,7 @@ public class PersonnelRestImpl extends AbstractRestService {
         NomDeCelibataire nomDeCelibataire = StringUtils.isEmpty(nomDeCelibataireStr) ? null : new NomDeCelibataire(nomDeCelibataireStr);
         Localite localite = new Localite(localiteStr);
         NPA npa = new NPA(npaStr);
-        Pays pays = Pays.getTypeById(Integer.parseInt(paysId));
+        Pays pays = Pays.getTypeById(paysId);
         Adresse adresse = new Adresse(adressePersonnelle, complement, localite, npa, pays);
         Email email = new Email(emailStr);
         TelephonePrive telephonePrive = StringUtils.isEmpty(telephonePriveStr) ? null : new TelephonePrive(telephonePriveStr);
@@ -84,7 +84,7 @@ public class PersonnelRestImpl extends AbstractRestService {
         Fax fax = StringUtils.isEmpty(faxStr) ? null : new Fax(faxStr);
         Genre genre = Genre.valueOf(genreStr);
         DateDeNaissance dateDeNaissance = new DateDeNaissance(DiplomeRestImpl.SHORT_DATE_PARSER.parseLocalDate(dateDeNaissanceStr));
-        Pays nationalite = Pays.getTypeById(Integer.parseInt(nationaliteId));
+        Pays nationalite = Pays.getTypeById(nationaliteId);
         Langue langue;
         if(langueStr.equalsIgnoreCase("autre")){
             langue = Langue.Autre;
