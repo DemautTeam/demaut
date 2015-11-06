@@ -68,7 +68,8 @@ public class DemandeAutorisationServiceImpl implements DemandeAutorisationServic
     @Override
     public void supprimerUnBrouillon(Login login, ReferenceDeDemande referenceDeDemande) {
         try {
-            demandeAutorisationRepository.delete(demandeAutorisationRepository.recupererDemandeParReference(referenceDeDemande));
+            DemandeAutorisation demande = demandeAutorisationRepository.recupererDemandeParReference(referenceDeDemande);
+            demandeAutorisationRepository.delete(demande);
             //TODO trace login de modification dans DB
         } catch (EntityNotFoundException e) {
             throw new ReferenceDemandeNotFoundException();
