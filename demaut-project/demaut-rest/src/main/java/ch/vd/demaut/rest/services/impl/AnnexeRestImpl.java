@@ -4,6 +4,8 @@ import ch.vd.demaut.domain.annexes.*;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.rest.json.commons.RestUtils;
+import ch.vd.demaut.rest.services.AbstractRestService;
+import ch.vd.demaut.rest.utils.LoginUtils;
 import ch.vd.demaut.services.annexes.AnnexesService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
@@ -22,9 +24,9 @@ import java.util.List;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
 @Path("/annexes")
-public class AnnexeRestImpl {
+public class AnnexeRestImpl extends AbstractRestService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AnnexeRestImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(AnnexeRestImpl.class);
 
     private AnnexesService annexesService;
 
@@ -32,21 +34,13 @@ public class AnnexeRestImpl {
         this.annexesService = annexesService;
     }
 
-    // permet d'accéder aux propriétés HTTP sans polluer les signatures de méthode...
-    // nécessite une scope prototype pour éviter des mélanges de context
-    @Context
-    private UriInfo uriInfo;
-
-    @Context
-    private HttpHeaders httpHeaders;
-
     @GET
     @Path("/typesList")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
     public Response listerLesTypesAnnexe() throws Exception {
 
-        LOGGER.info("listerLesTypesAnnexes");
+        logger.info("listerLesTypesAnnexes");
 
         // Altrenative:
         List<TypeAnnexe> typesAnnexe = buildListeTypesAnnexesSansProgresSOA();
@@ -71,9 +65,9 @@ public class AnnexeRestImpl {
     @RolesAllowed("USER")
     public Response listerLesTypeAnnexesObligatoires(@QueryParam("referenceDeDemande") String referenceDeDemandeStr) throws Exception {
 
-        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
+        Login login = getLogin();
 
-        LOGGER.info("listerLesTypeAnnexesObligatoires pour : " + login.getValue()+ ", referenceDeDemande=" + referenceDeDemandeStr);
+        logger.info("listerLesTypeAnnexesObligatoires pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr);
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
 
@@ -87,9 +81,9 @@ public class AnnexeRestImpl {
     @RolesAllowed("USER")
     public Response listerLesAnnexes(@QueryParam("referenceDeDemande") String referenceDeDemandeStr) throws JsonProcessingException {
 
-        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
+        Login login = getLogin();
 
-        LOGGER.info("listerLesAnnexes pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr);
+        logger.info("listerLesAnnexes pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr);
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
 
@@ -106,9 +100,9 @@ public class AnnexeRestImpl {
                                       @QueryParam("annexeFileName") String annexeFileName,
                                       @QueryParam("annexeType") String annexeTypeIdStr) throws JsonProcessingException {
 
-        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
+        Login login = getLogin();
 
-        LOGGER.info("afficherUneAnnexe pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr + ", annexeFileName=" + annexeFileName + ", annexeTypeIdStr=" + annexeTypeIdStr);
+        logger.info("afficherUneAnnexe pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr + ", annexeFileName=" + annexeFileName + ", annexeTypeIdStr=" + annexeTypeIdStr);
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
         AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
@@ -129,9 +123,9 @@ public class AnnexeRestImpl {
                                       @Multipart("annexeFileType") String annexeFileType,
                                       @Multipart("annexeType") String annexeTypeIdStr) throws IOException {
 
-        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
+        Login login = getLogin();
 
-        LOGGER.info("attacherUneAnnexe pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr + ", annexeFileName=" + annexeFileName + ", annexeTypeIdStr=" + annexeTypeIdStr);
+        logger.info("attacherUneAnnexe pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr + ", annexeFileName=" + annexeFileName + ", annexeTypeIdStr=" + annexeTypeIdStr);
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
         AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
@@ -148,9 +142,9 @@ public class AnnexeRestImpl {
                                        @QueryParam("annexeFileName") String annexeFileName,
                                        @QueryParam("annexeType") String annexeTypeIdStr) throws JsonProcessingException {
 
-        Login login = new Login(RestUtils.fetchCurrentUserToken(httpHeaders));
+        Login login = getLogin();
 
-        LOGGER.info("supprimerUneAnnexe pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr + ", annexeFileName=" + annexeFileName + ", annexeTypeIdStr=" + annexeTypeIdStr);
+        logger.info("supprimerUneAnnexe pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr + ", annexeFileName=" + annexeFileName + ", annexeTypeIdStr=" + annexeTypeIdStr);
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
         AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);

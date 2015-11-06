@@ -27,12 +27,6 @@ public class SharedRestImpl {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SharedRestImpl.class);
 
-    @Context
-    private UriInfo uriInfo;
-
-    @Context
-    private HttpHeaders httpHeaders;
-
     @GET
     @Path("/nationalites")
     @Produces(MediaType.APPLICATION_JSON)
@@ -41,9 +35,9 @@ public class SharedRestImpl {
 
         LOGGER.info("listerLesNationalites");
 
-        // Altrenative:
+        // Alternative:
         List<Pays> paysList = buildListePaysSansProgresSOA();
-        // Autre altrenative:
+        // Autre alternative:
         //List<VcType> paysList = buildListePaysAvecProgresSOA(uriInfo);
         return RestUtils.buildRef(paysList);
     }
@@ -71,9 +65,9 @@ public class SharedRestImpl {
 
         LOGGER.info("listerLesPays");
 
-        // Altrenative:
+        // Alternative:
         List<Pays> paysList = buildListePaysSansProgresSOA();
-        // Autre altrenative:
+        // Autre alternative:
         //List<VcType> paysList = buildListePaysAvecProgresSOA(uriInfo);
         return RestUtils.buildRef(paysList);
     }
