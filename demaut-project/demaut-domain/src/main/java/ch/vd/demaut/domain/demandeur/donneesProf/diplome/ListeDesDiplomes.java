@@ -5,8 +5,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.Predicate;
 
 import ch.vd.demaut.domain.exception.DiplomeIntrouvableException;
 
@@ -42,9 +42,14 @@ public class ListeDesDiplomes {
         this.diplomes.add(diplome);
     }
 
-    //TODO: réimplementer en utilisant org.apache.collection4
-    public Collection<Diplome> extraireDiplomesDeType(TypeDiplomeAccepte typeDiplomeAccepte) {
-        return CollectionUtils.select(diplomes, new BeanPropertyValueEqualsPredicate("typeDiplomeAccepte", typeDiplomeAccepte));
+    public Collection<Diplome> extraireDiplomesDeType(final TypeDiplomeAccepte typeDiplomeAccepte) {
+        Collection<Diplome>  diplomesTrouves = CollectionUtils.select(diplomes, new Predicate<Diplome>() {
+            @Override
+            public boolean evaluate(Diplome object) {
+                return object.getTypeDiplomeAccepte().equals(typeDiplomeAccepte);
+            }
+        });
+        return diplomesTrouves;
     }
 
     public void supprimerUnDiplomeParTypeEtTitre(TypeDiplomeAccepte typeDiplomeAccepte, TitreFormation titreFormation) {
@@ -52,13 +57,18 @@ public class ListeDesDiplomes {
         diplomes.remove(diplome);
     }
 
-    private Diplome trouverDiplomeParTypeEtTitre(TypeDiplomeAccepte typeDiplomeAccepte, TitreFormation titreFormation) {
+    private Diplome trouverDiplomeParTypeEtTitre(TypeDiplomeAccepte typeDiplomeAccepte, final TitreFormation titreFormation) {
         Collection<Diplome> diplomesAccepte = extraireDiplomesDeType(typeDiplomeAccepte);
-        Object diplomeTrouvee = CollectionUtils.find(diplomesAccepte, new BeanPropertyValueEqualsPredicate("titreFormation", titreFormation));
+        Diplome diplomeTrouvee = CollectionUtils.find(diplomesAccepte, new Predicate<Diplome>() {
+            @Override
+            public boolean evaluate(Diplome object) {
+                return object.getTitreFormation().equals(titreFormation);
+            }
+        });
         if (diplomeTrouvee == null) {
             throw new DiplomeIntrouvableException();
         }
-        return (Diplome) diplomeTrouvee;
+        return diplomeTrouvee;
     }
 
     public void supprimerUnDiplome(DiplomeFK diplomeFK) {
@@ -66,13 +76,16 @@ public class ListeDesDiplomes {
         diplomes.remove(diplome);
     }
 
-    private Diplome trouverDiplome(DiplomeFK diplomeFK) {
-        Diplome diplomeTrouve = (Diplome) CollectionUtils.find(diplomes, new BeanPropertyValueEqualsPredicate("functionalKey", diplomeFK));
+    private Diplome trouverDiplome(final DiplomeFK diplomeFK) {
+        Diplome diplomeTrouve = (Diplome) CollectionUtils.find(diplomes, new Predicate<Diplome>() {
+            @Override
+            public boolean evaluate(Diplome object) {
+                return object.getFunctionalKey().equals(diplomeFK);
+            }
+        });
         if (diplomeTrouve == null) {
             throw new DiplomeIntrouvableException();
         }
         return diplomeTrouve;
     }
-    
-    
 }
