@@ -43,8 +43,6 @@ public class JSonConversionTest {
         
     }
     
-    
-
     @Test
     public void testConversionTypeAnnexe() {
         //Fixture
@@ -52,7 +50,6 @@ public class JSonConversionTest {
 
         //Process transform & Assert
         assertJsonStr(type, "{\"name\":\"CV\",\"id\":1,\"libl\":\"CV\"}");
-
     }
 
     @Test
