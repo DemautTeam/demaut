@@ -30,7 +30,7 @@ import java.util.List;
 public class DiplomeRestImpl extends AbstractRestService {
 
     public static final DateTimeFormatter SHORT_DATE_PARSER = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-    private static final Logger LOGGER = LoggerFactory.getLogger(DiplomeRestImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DiplomeRestImpl.class);
 
     private DonneesProfessionnellesService donneesProfessionnellesService;
 
@@ -44,7 +44,7 @@ public class DiplomeRestImpl extends AbstractRestService {
     @RolesAllowed("USER")
     public Response listerLesTypesDeDiplomes() throws Exception {
 
-        LOGGER.info("listerLesTypesDeDiplomes");
+        LOG.info("listerLesTypesDeDiplomes");
 
         // Alternative:
         List<TypeDiplomeAccepte> diplomeAcceptes = buildListeTypesDiplomesAcceptesSansProgresSOA();
@@ -63,13 +63,13 @@ public class DiplomeRestImpl extends AbstractRestService {
     @RolesAllowed("USER")
     public Response listerLesTitresFormations(@QueryParam("typeDiplome") Integer typeDiplomeId) throws Exception {
 
-        LOGGER.info("listerLesTitresFormations " + typeDiplomeId);
+        LOG.info("listerLesTitresFormations {}", typeDiplomeId);
 
         TypeDiplomeAccepte typeDiplomeAccepte = TypeDiplomeAccepte.getTypeById(typeDiplomeId);
 
-        // Altrenative:
+        // Alternative:
         List<?> titreFormations = buildListeTitresFormationsSansProgresSOA(typeDiplomeAccepte);
-        // Autre altrenative:
+        // Autre alternative:
         //List<VcType> titreFormations = buildListeTitresFormationsAvecProgresSOA(uriInfo, typeDiplomeAccepte);
         return RestUtils.buildRef(titreFormations);
     }
@@ -80,7 +80,7 @@ public class DiplomeRestImpl extends AbstractRestService {
     @RolesAllowed("USER")
     public Response listerLesTitresFormationsAll() throws Exception {
 
-        LOGGER.info("listerLesTitresFormationsAll");
+        LOG.debug("listerLesTitresFormationsAll");
 
         List<TypeProgres> typeFormationsAll = new ArrayList<>();
         typeFormationsAll.addAll(Arrays.<TypeProgres>asList(TitreFormationApprofondieProgres.values()));
@@ -110,7 +110,6 @@ public class DiplomeRestImpl extends AbstractRestService {
      * dateObtention String (format 2015-10-06T22:00:00.000Z)
      * dateReconnaissance String (format 2015-10-06T22:00:00.000Z)
      */
-    @SuppressWarnings("all")
     @GET
     @Path("/ajouter")
     @Produces(MediaType.APPLICATION_JSON)
@@ -126,7 +125,8 @@ public class DiplomeRestImpl extends AbstractRestService {
 
         Login login = getLogin();
 
-        LOGGER.info("ajouterUnDiplome pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr + ", typeDiplome=" + typeDiplomeId + ", typeFormation=" + typeFormationId);
+        LOG.info("ajouterUnDiplome pour : {}, referenceDeDemande= {}, typeDiplome= {}, typeFormation= {}",
+                login.getValue(), referenceDeDemandeStr, typeDiplomeId, typeFormationId);
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
         ReferenceDeDiplome referenceDeDiplome = new ReferenceDeDiplome(referenceDeDiplomeStr);
@@ -159,7 +159,6 @@ public class DiplomeRestImpl extends AbstractRestService {
         }
     }
 
-    @SuppressWarnings("all")
     @GET
     @Path("/supprimer")
     @Produces(MediaType.APPLICATION_JSON)
@@ -169,7 +168,8 @@ public class DiplomeRestImpl extends AbstractRestService {
 
         Login login = getLogin();
 
-        LOGGER.info("supprimerUnDiplome pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr + ", referenceDeDiplome=" + referenceDeDiplomeStr);
+        LOG.info("supprimerUnDiplome pour : {}, referenceDeDemande= {}, referenceDeDiplome= {}",
+                login.getValue(), referenceDeDemandeStr, referenceDeDiplomeStr);
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
         ReferenceDeDiplome referenceDeDiplome = new ReferenceDeDiplome(referenceDeDiplomeStr);
@@ -178,7 +178,6 @@ public class DiplomeRestImpl extends AbstractRestService {
         return RestUtils.buildJSon(true);
     }
 
-    @SuppressWarnings("all")
     @GET
     @Path("/diplomesSaisis")
     @Produces(MediaType.APPLICATION_JSON)
@@ -186,7 +185,7 @@ public class DiplomeRestImpl extends AbstractRestService {
     public Response recupererDiplomesSaisis(@QueryParam("referenceDeDemande") String referenceDeDemandeStr) throws Exception {
         Login login = getLogin();
 
-        LOGGER.info("recupererDiplomesSaisis pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr);
+        LOG.info("recupererDiplomesSaisis pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr);
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
 

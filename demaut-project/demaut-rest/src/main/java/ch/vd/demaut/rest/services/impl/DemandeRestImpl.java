@@ -10,7 +10,6 @@ import ch.vd.demaut.rest.json.commons.RestUtils;
 import ch.vd.demaut.rest.services.AbstractRestService;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +29,7 @@ import java.util.Set;
 @Path("/demande")
 public class DemandeRestImpl extends AbstractRestService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DemandeRestImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DemandeRestImpl.class);
 
     private DemandeAutorisationService demandeAutorisationService;
 
@@ -48,10 +47,10 @@ public class DemandeRestImpl extends AbstractRestService {
     @GET
     @Path("/validerGln")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response validerCodeGln(@QueryParam("codegln")CodeGLN codeGLN) throws JsonProcessingException {
-        LOGGER.debug("CodeGLN : {}", codeGLN.getValue());
+    public Response validerCodeGln(@QueryParam("codegln") CodeGLN codeGLN) throws JsonProcessingException {
+        LOG.debug("CodeGLN : {}", codeGLN.getValue());
         Set<ConstraintViolation<CodeGLN>> contraints = ValidatorFactoryDefault.getValidator().validate(codeGLN);
-        if(contraints.isEmpty()) {
+        if (contraints.isEmpty()) {
             return RestUtils.buildJSon("OK");
         } else {
             return RestUtils.buildJSon("Nok");
@@ -63,12 +62,11 @@ public class DemandeRestImpl extends AbstractRestService {
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
     public Response initialiserDemande(@QueryParam("professionId") Integer professionId,
-                                       @QueryParam("codeGln") CodeGLN codeGLN ) throws IOException {
+                                       @QueryParam("codeGln") CodeGLN codeGLN) throws IOException {
 
         Login login = getLogin();
 
-        LOGGER.info("initialiser demande pour : " + login.getValue() + ", profession=" + professionId + ", codeGLN="
-                + codeGLN.getValue());
+        LOG.debug("initialiser demande pour : {}, profession= {}, codeGLN= {}", login.getValue(), professionId, codeGLN.getValue());
 
         Profession profession = Profession.getTypeById(professionId);
 
@@ -84,13 +82,11 @@ public class DemandeRestImpl extends AbstractRestService {
     @Path("/recupererBrouillon")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response recupererBrouillon(@QueryParam("referenceDeDemande") String referenceDeDemandeStr) throws IOException {
+    public Response recupererBrouillon(@QueryParam("referenceDeDemande") ReferenceDeDemande referenceDeDemande) throws IOException {
 
         Login login = getLogin();
 
-        LOGGER.info("recuperer Brouillon pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr);
-
-        ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
+        LOG.debug("recuperer Brouillon pour : {}, referenceDeDemande= {}", login.getValue(), referenceDeDemande.getValue());
 
         DemandeAutorisation demandeAutorisation = demandeAutorisationService.recupererDemandeParReference(referenceDeDemande);
         return RestUtils.buildJSon(demandeAutorisation);
@@ -107,7 +103,7 @@ public class DemandeRestImpl extends AbstractRestService {
 
         Login login = getLogin();
 
-        LOGGER.info("recuperer listes Brouillons pour : " + login.getValue());
+        LOG.debug("recuperer listes Brouillons pour : {}", login.getValue());
 
         List<DemandeAutorisation> demandeAutorisations = demandeAutorisationService.recupererListeBrouillons(login);
         return RestUtils.buildJSon(demandeAutorisations);
@@ -117,13 +113,11 @@ public class DemandeRestImpl extends AbstractRestService {
     @Path("/supprimer")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response supprimerUnBrouillon(@QueryParam("referenceDeDemande") String referenceDeDemandeStr) throws IOException {
+    public Response supprimerUnBrouillon(@QueryParam("referenceDeDemande") ReferenceDeDemande referenceDeDemande) throws IOException {
 
         Login login = getLogin();
 
-        LOGGER.info("supprimer un brouillons pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr);
-
-        ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
+        LOG.debug("supprimer un brouillons pour : {}, referenceDeDemande= {}", login.getValue(), referenceDeDemande);
 
         demandeAutorisationService.supprimerUnBrouillon(login, referenceDeDemande);
         return RestUtils.buildJSon(true);

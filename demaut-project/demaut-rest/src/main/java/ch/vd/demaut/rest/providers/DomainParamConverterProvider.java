@@ -1,5 +1,6 @@
 package ch.vd.demaut.rest.providers;
 
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.rest.providers.converter.DomaineParamConverter;
 
@@ -33,8 +34,8 @@ public class DomainParamConverterProvider implements ParamConverterProvider {
      */
     @Override
     public <T> ParamConverter<T> getConverter(Class<T> rawType, Type genericType, Annotation[] annotations) {
-        if(CodeGLN.class.isAssignableFrom(rawType)) {
-            return new DomaineParamConverter<T>(CodeGLN.class);
+        if(CodeGLN.class.isAssignableFrom(rawType) || ReferenceDeDemande.class.isAssignableFrom(rawType)) {
+            return new DomaineParamConverter<T>(rawType);
         }
         return null;
     }
