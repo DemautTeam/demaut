@@ -18,5 +18,4 @@ public class TypeProgresJsonSerializer extends EnumJsonSerializer<TypeProgres> {
         jgen.writeFieldName("libl");
         jgen.writeString(value.getLibl());
     }
-
 }
