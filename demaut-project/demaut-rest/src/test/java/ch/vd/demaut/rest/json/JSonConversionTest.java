@@ -1,41 +1,62 @@
 package ch.vd.demaut.rest.json;
 
-import ch.vd.demaut.domain.annexes.TypeAnnexe;
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.Before;
+import org.junit.Test;
 
-@Ignore
+import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
+import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
+import ch.vd.demaut.rest.json.commons.RestUtils;
+
 public class JSonConversionTest {
-
-    private ObjectMapper objMapper;
 
     @Before
     public void setUp() throws Exception {
     }
+    
+    
+    @Test
+    public void testCodeGLN() {
+        //Fixture
+        CodeGLN codeGLN = new CodeGLN("4719512002889");
+
+        //Process transform & Assert
+        assertJsonStr(codeGLN, "\"4719512002889\"");
+    }
+    
+    @Test
+    public void testCodeGLNDansDonneesProfessionnelles() {
+        //Fixture
+        CodeGLN codeGLN = new CodeGLN("4719512002889");
+        DonneesProfessionnelles donneesPro = new DonneesProfessionnelles();
+        donneesPro.validerEtRenseignerCodeGLN(codeGLN, Profession.TherapeuteDeLaMotricite);
+        
+        //Process transform & Assert
+        assertJsonStrContains(donneesPro, "\"codeGLN\":\"4719512002889\"");
+        
+    }
+    
+    
 
     @Test
-    public void testConversionTypeAnnexe() throws JsonProcessingException {
+    public void testConversionTypeAnnexe() {
         //Fixture
         TypeAnnexe type = TypeAnnexe.CV;
 
         //Process transform & Assert
-        assertJsonStr(type, "{\"name\":\"CV\",\"id\":50283749,\"libl\":\"CV\"}");
+        assertJsonStr(type, "{\"name\":\"CV\",\"id\":1,\"libl\":\"CV\"}");
 
     }
 
     @Test
-    public void testConversionProfession() throws JsonProcessingException {
+    public void testConversionProfession() {
 
         //Fixture
         List<Profession> professions = new ArrayList<Profession>();
@@ -48,7 +69,7 @@ public class JSonConversionTest {
     }
 
     @Test
-    public void testConversionReferenceDemande() throws JsonProcessingException {
+    public void testConversionReferenceDemande() {
         //Fixture
         ReferenceDeDemande ref = new ReferenceDeDemande("1234");
 
@@ -57,9 +78,18 @@ public class JSonConversionTest {
     }
 
 
-    private void assertJsonStr(Object object, String jsonStrExpected) throws JsonProcessingException {
-        ObjectWriter viewWriter = objMapper.writer();
-        String jsonStrActual = viewWriter.writeValueAsString(object);
+    private void assertJsonStr(Object object, String jsonStrExpected) {
+        
+        String jsonStrActual = RestUtils.buildJSonString(object);
+        
         assertThat(jsonStrActual).isEqualTo(jsonStrExpected);
     }
+
+    private void assertJsonStrContains(Object object, String jsonStrContainsExpected) {
+        
+        String jsonStrActual = RestUtils.buildJSonString(object);
+        
+        assertThat(jsonStrActual).contains(jsonStrContainsExpected);
+    }
+
 }

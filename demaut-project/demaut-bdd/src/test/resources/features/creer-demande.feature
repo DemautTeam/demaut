@@ -6,17 +6,25 @@ Fonctionnalité: Créer une demande
   Contexte: 
     Etant donné la date du jour: "15.07.2015 11:00"
     Etant donné l´utilisateur identifié et connecté avec le login "joe.dalton@vd.ch"
-    Etant donné les professions nécessitant un code GLN obligatoire:
-      | Medecin                    |
-      | MedecinDentiste            |
-      | Pharmacien                 |
-      | Chiropraticien             |
-      | Infirmier                  |
-      | Physiotherapeute           |
-      | Ergotherapeute             |
-      | SageFemme                  |
-      | Dieteticien                |
-      | PsychotherapeuteNonMedecin |
+    Etant donné les professions disponibles avec les caractéristiques suivantes:
+      | Profession                | CodeGLNObligatoire | Categorie     |
+      | Médecin                   | oui                | Universitaire |
+      | Médecin-dentiste          | oui                | Universitaire |
+      | Chiropraticien            | oui                | Universitaire |
+      | Pharmacien                | oui                | Universitaire |
+      | Diététicien               | oui                | Autre         |
+      | Droguiste                 | non                | Autre         |
+      | Ergothérapeute            | oui                | Autre         |
+      | Hygiéniste dentaire       | non                | Autre         |
+      | Infirmière                | oui                | Autre         |
+      | Logopédiste-orthophoniste | non                | Autre         |
+      | Opticien-optométriste     | non                | Autre         |
+      | Ostéopathe                | non                | Autre         |
+      | Physiothérapeute          | oui                | Autre         |
+      | Podologue                 | non                | Autre         |
+      | Psychologue               | non                | Autre         |
+      | Sage-femme                | oui                | Autre         |
+      | Thérapeute de la motricité| non                | Autre         |
 
   Scénario: Créer une demande avec code GLN valide
     Lorsque l´utilisateur initialise une demande de profession "Medecin" avec un code GLN valide
@@ -44,6 +52,7 @@ Fonctionnalité: Créer une demande
       | "7601000000125"  | "accepte" |
       | ""               | "refuse"  |
       | "g7601000000125" | "refuse"  |
+      | "125"            | "refuse"  |
 
 
 

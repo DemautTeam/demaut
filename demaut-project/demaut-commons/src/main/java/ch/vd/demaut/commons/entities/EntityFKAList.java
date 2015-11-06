@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.Predicate;
 
 import ch.vd.demaut.commons.exceptions.EntityNotFoundException;
 import ch.vd.demaut.commons.exceptions.EntityNotUniqueException;
@@ -51,8 +51,15 @@ public abstract class EntityFKAList<E extends EntityFunctionalKeyAware> {
     }
     
     @SuppressWarnings("unchecked")
-    protected E trouverEntity(FunctionalKey<E> eFK) {
-        Object entity = CollectionUtils.find(entities, new BeanPropertyValueEqualsPredicate("functionalKey", eFK));
+    protected E trouverEntity(final FunctionalKey<E> eFK) {
+        
+        Object entity = CollectionUtils.find(entities, new Predicate<E>() {
+            @Override
+            public boolean evaluate(E object) {
+                return object.getFunctionalKey().equals(eFK);
+            }
+        });
+        
         if (entity == null) {
             throw new EntityNotFoundException(eFK);
         }

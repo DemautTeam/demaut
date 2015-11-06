@@ -39,7 +39,7 @@ public class SharedRestImpl {
         List<Pays> paysList = buildListePaysSansProgresSOA();
         // Autre alternative:
         //List<VcType> paysList = buildListePaysAvecProgresSOA(uriInfo);
-        return RestUtils.buildRef(paysList);
+        return RestUtils.buildJSonResponse(paysList);
     }
 
     private List<Pays> buildListePaysSansProgresSOA() {
@@ -54,7 +54,7 @@ public class SharedRestImpl {
 
         LOGGER.info("listerLesLangues");
 
-        return RestUtils.buildRef(Arrays.asList(Langue.values()));
+        return RestUtils.buildJSonResponse(Arrays.asList(Langue.values()));
     }
 
     @GET
@@ -69,6 +69,6 @@ public class SharedRestImpl {
         List<Pays> paysList = buildListePaysSansProgresSOA();
         // Autre alternative:
         //List<VcType> paysList = buildListePaysAvecProgresSOA(uriInfo);
-        return RestUtils.buildRef(paysList);
+        return RestUtils.buildJSonResponse(paysList);
     }
 }

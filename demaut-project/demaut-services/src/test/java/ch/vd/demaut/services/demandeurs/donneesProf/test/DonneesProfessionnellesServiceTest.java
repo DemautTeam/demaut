@@ -92,8 +92,6 @@ public class DonneesProfessionnellesServiceTest {
     public void testAjouterUnDiplomes() {
         intialiserDemandeEnCours(getCurrentLogin());
 
-        DonneesProfessionnelles donneesProfessionnelles = donneesProfessionnellesService
-                .recupererDonneesProfessionnelles(login, demandeAutorisation.getReferenceDeDemande());
         donneesProfessionnellesService.ajouterUnDiplome(login, demandeAutorisation.getReferenceDeDemande(),
                 new ReferenceDeDiplome(UUID.randomUUID().toString()),
                 TypeDiplomeAccepte.D_FORMATION_APPROFONDIE,

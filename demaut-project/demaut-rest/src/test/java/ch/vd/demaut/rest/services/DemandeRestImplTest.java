@@ -1,5 +1,6 @@
 package ch.vd.demaut.rest.services;
 
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.rest.services.impl.DemandeRestImpl;
 import org.junit.Before;
@@ -34,13 +35,13 @@ public class DemandeRestImplTest {
     @Test
     public void testInitialiserDemande() throws Exception {
         Profession profession = Profession.Medecin;
-        Response response = demandeRest.initialiserDemande(String.valueOf(profession.getRefProgresID()), null);
+        Response response = demandeRest.initialiserDemande(profession.getRefProgresID().getId(), null);
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
     @Test
     public void testRecupererCurrentBrouillon() throws Exception {
-        Response response = demandeRest.recupererBrouillon("9e88c31c-9cdf-4b8d-964a-b0af8fd06c1b");
+        Response response = demandeRest.recupererBrouillon(new ReferenceDeDemande("9e88c31c-9cdf-4b8d-964a-b0af8fd06c1b"));
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
@@ -49,9 +50,11 @@ public class DemandeRestImplTest {
         Response response = demandeRest.recupererListeBrouillons();
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
+
     @Test
     public void testSupprimerUnBrouillon() throws Exception {
-        Response response = demandeRest.supprimerUnBrouillon(demandeRest.recupererBrouillon("9e88c31c-9cdf-4b8d-964a-b0af8fd06c1b").getEntity().toString());
+        Response response = demandeRest.supprimerUnBrouillon(new ReferenceDeDemande(demandeRest.recupererBrouillon(
+                new ReferenceDeDemande("9e88c31c-9cdf-4b8d-964a-b0af8fd06c1b")).getEntity().toString()));
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 }

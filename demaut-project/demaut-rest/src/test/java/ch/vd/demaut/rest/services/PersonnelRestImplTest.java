@@ -55,8 +55,8 @@ public class PersonnelRestImplTest {
         Permis permis = new Permis(TypePermis.C);
 
         Response response = personelRest.renseignerLesDonneesPersonnelles(referenceDeDemande, nom.getValue(), prenom.getValue(), null, adresse.getVoie(), adresse.getComplement(), localite.getValue(),
-                npa.getValue(), String.valueOf(pays.getRefProgresID()), email.getValue(), telephonePrive.getValue(), telephoneMobile.getValue(), fax.getValue(), genre.name(),
-                dateDeNaissance, String.valueOf(nationalite.getRefProgresID()), String.valueOf(langue.getRefProgresID()), permis.getTypePermis().name(), null);
+                npa.getValue(), pays.getRefProgresID().getId(), email.getValue(), telephonePrive.getValue(), telephoneMobile.getValue(), fax.getValue(), genre.name(),
+                dateDeNaissance, nationalite.getRefProgresID().getId(), langue.toString(), permis.getTypePermis().name(), null);
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 

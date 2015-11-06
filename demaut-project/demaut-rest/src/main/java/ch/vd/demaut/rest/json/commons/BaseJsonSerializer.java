@@ -29,7 +29,6 @@ abstract public class BaseJsonSerializer<T> extends JsonSerializer<T> {
     @Override
     public void serialize(T value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
             JsonProcessingException {
-
         jgen.writeStartObject();
         writeToJsonGenerator(value, jgen);
         jgen.writeEndObject();

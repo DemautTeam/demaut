@@ -1,26 +1,38 @@
 package ch.vd.demaut.rest.services.impl;
 
-import ch.vd.demaut.domain.annexes.*;
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.rest.json.commons.RestUtils;
-import ch.vd.demaut.rest.services.AbstractRestService;
-import ch.vd.demaut.rest.utils.LoginUtils;
-import ch.vd.demaut.services.annexes.AnnexesService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import org.apache.cxf.jaxrs.ext.multipart.Multipart;
-import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.*;
-import javax.ws.rs.core.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+
+import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.apache.cxf.jaxrs.ext.multipart.Multipart;
+import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import ch.vd.demaut.domain.annexes.AnnexeFK;
+import ch.vd.demaut.domain.annexes.AnnexeMetadata;
+import ch.vd.demaut.domain.annexes.ContenuAnnexe;
+import ch.vd.demaut.domain.annexes.NomFichier;
+import ch.vd.demaut.domain.annexes.TypeAnnexe;
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.rest.json.commons.RestUtils;
+import ch.vd.demaut.rest.services.AbstractRestService;
+import ch.vd.demaut.services.annexes.AnnexesService;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
 @Path("/annexes")
@@ -48,7 +60,7 @@ public class AnnexeRestImpl extends AbstractRestService {
         // Autre altrenative:
         // List<VcType> typesAnnexe = buildListeTypesAnnexesAvecProgresSOA(uriInfo);
 
-        return RestUtils.buildRef(typesAnnexe);
+        return RestUtils.buildJSonResponse(typesAnnexe);
     }
 
     /**
@@ -72,7 +84,7 @@ public class AnnexeRestImpl extends AbstractRestService {
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
 
         Collection<TypeAnnexe> typeAnnexes = annexesService.listerLesTypeAnnexesObligatoires(login, referenceDeDemande);
-        return RestUtils.buildRef(typeAnnexes);
+        return RestUtils.buildJSonResponse(typeAnnexes);
     }
 
     @GET
@@ -89,7 +101,7 @@ public class AnnexeRestImpl extends AbstractRestService {
 
         Collection<AnnexeMetadata> annexesMetadata = annexesService.listerLesAnnexeMetadatas(login, referenceDeDemande);
 
-        return RestUtils.buildJSon(annexesMetadata);
+        return RestUtils.buildJSonResponse(annexesMetadata);
     }
 
     @GET
@@ -131,7 +143,7 @@ public class AnnexeRestImpl extends AbstractRestService {
         AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
 
         annexesService.attacherUneAnnexe(login, referenceDeDemande, file, annexeFK.getNomFichier());
-        return RestUtils.buildJSon(true);
+        return RestUtils.buildJSonResponse(true);
     }
 
     @GET
@@ -150,7 +162,7 @@ public class AnnexeRestImpl extends AbstractRestService {
         AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
 
         annexesService.supprimerUneAnnexe(login, referenceDeDemande, annexeFK);
-        return RestUtils.buildJSon(true);
+        return RestUtils.buildJSonResponse(true);
     }
 
     private AnnexeFK buildAnnexeFK(String annexeFileName, String annexeTypeIdStr) {

@@ -45,16 +45,16 @@ public class DiplomeRestImplTest {
 
     @Test
     public void testListerLesTitresFormations() throws Exception {
-        Response response = diplomeRest.listerLesTitresFormations(String.valueOf(TypeDiplomeAccepte.D_POSTGRADE.getRefProgresID().getId()));
+        Response response = diplomeRest.listerLesTitresFormations(TypeDiplomeAccepte.D_POSTGRADE.getRefProgresID().getId());
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
     @Test
     public void testAjouterUnDiplome() throws Exception {
         Response response = diplomeRest.ajouterUnDiplome("9e88c31c-9cdf-4b8d-964a-b0af8fd06c1b", referenceDeDiplomeStr,
-                String.valueOf(TypeDiplomeAccepte.D_POSTGRADE.getRefProgresID().getId()),
-                String.valueOf(TitreFormationPostgradeProgres.Cardiologie.getRefProgresID().getId()), null,
-                new LocalDate().toString(), String.valueOf(Pays.Suisse.getRefProgresID().getId()), null);
+                TypeDiplomeAccepte.D_POSTGRADE.getRefProgresID().getId(),
+                TitreFormationPostgradeProgres.Cardiologie.getRefProgresID().getId(), null,
+                new LocalDate().toString(), Pays.Suisse.getRefProgresID().getId(), null);
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 

@@ -19,6 +19,7 @@ import ch.vd.demaut.domain.demandes.autorisation.StatutDemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnelles;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.ListeDesActivitesFutures;
 import ch.vd.demaut.domain.exception.DemandeBrouillonExisteDejaException;
 import ch.vd.demaut.domain.exception.DemandeNotFoundException;
 import ch.vd.demaut.domain.utilisateurs.Login;
@@ -38,7 +39,13 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
     public DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande referenceDeDemande) {
         logger.debug("Chargement de la demande  {}", referenceDeDemande.getValue());
         TypedQuery<DemandeAutorisation> typedQuery = createQueryParReference(referenceDeDemande);
-        return typedQuery.getSingleResult();
+        DemandeAutorisation demande = typedQuery.getSingleResult();
+
+        //Fetcher les activites futures
+        ListeDesActivitesFutures activitesFutures = demande.getDonneesProfessionnelles().getListeDesActivitesFutures();
+        activitesFutures.getActivitesFutures().iterator().hasNext();
+
+        return demande;
     }
 
     @Override
@@ -78,6 +85,9 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
         //A completer le fetch si besoin de nouveaux elements en eager
         Fetch<DemandeAutorisation, DonneesProfessionnelles> fetchDonneesProfessionnelles = autorisationRoot.fetch("donneesProfessionnelles",JoinType.INNER);
         fetchDonneesProfessionnelles.fetch("diplomes", JoinType.LEFT);
+        //fetchDonneesProfessionnelles.fetch("activitesFutures", JoinType.LEFT);
+
+
         Fetch<DemandeAutorisation, DonneesPersonnelles> fetchDonneesPersonnelles = autorisationRoot.fetch("donneesPersonnelles",JoinType.INNER);
         fetchDonneesPersonnelles.fetch("adresse", JoinType.LEFT);
 
