@@ -2,18 +2,15 @@ package ch.vd.demaut.cucumber.steps;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import ch.vd.demaut.domain.demandeur.Email;
+import ch.vd.demaut.domain.demandeur.Telephone;
+import ch.vd.demaut.domain.demandeur.donneesPerso.Nom;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.*;
 import org.joda.time.LocalDate;
 
 import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandeur.Localite;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.ActiviteFuture;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.Complement;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.Etablissement;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.NPAProfessionnel;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.TypeActivite;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.TypePratiqueLamal;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.Voie;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.ActiviteEnvisagee;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.DatePrevueDebut;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.TauxActiviteEnDemiJournee;
@@ -38,10 +35,16 @@ public class ActivitesFuturesSteps {
     private ActiviteEnvisagee activiteEnvisagee;
 
     // TODO: Créer VO Adresse avec voie, complement, localite, npa
+    private Nom nom;
     private Voie voie;
     private Complement complement;
     private Localite localite;
     private NPAProfessionnel npa;
+    private Telephone telephoneProf;
+    private Telephone telephoneMobile;
+    private Telephone fax;
+    private Email email;
+    private SiteInternet site;
 
     private Etablissement etablissement;
 
@@ -72,6 +75,22 @@ public class ActivitesFuturesSteps {
         this.npa = npa;
     }
 
+    public void initActiviteTelephoneProf(Telephone telephoneProf) {
+        this.telephoneProf = telephoneProf;
+    }
+
+    public void initActiviteTelephoneMobile(Telephone telephoneMobile) {
+        this.telephoneMobile = telephoneMobile;
+    }
+
+    public void initActiviteFax(Telephone fax) {
+        this.fax = fax;
+    }
+
+    public void initActiviteEmail(Email email) {
+        this.email = email;
+    }
+
     public void initActiviteDependante() {
         typeActivite = TypeActivite.Dependant;
     }
@@ -86,12 +105,14 @@ public class ActivitesFuturesSteps {
     }
 
     public void initActiviteFutureValide() {
-
         initTypeActiviteValideSiNonRenseigne();
         initEtablissement();
         initTypePratiqueLamal();
         initActiviteEnvisagee();
+    }
 
+    public void creerActiviteFuture() {
+        etablissement = new Etablissement(nom, voie, complement, localite, npa, telephoneProf, telephoneMobile, fax, email, site);
         activiteFuture = new ActiviteFuture(etablissement, typePratiqueLamal, activiteEnvisagee);
     }
 
@@ -129,7 +150,7 @@ public class ActivitesFuturesSteps {
         initNPAValideSiNonRenseigne();
         initVoieValideSiNonRenseignee();
         initLocaliteValideSiNonRenseignee();
-        etablissement = new Etablissement(voie, complement, localite, npa);
+        initTelephoneProfNonRenseignee();
     }
 
     private void initTypePratiqueLamal() {
@@ -161,5 +182,12 @@ public class ActivitesFuturesSteps {
             npa = new NPAProfessionnel("1234");
         }
     }
+
+    private void initTelephoneProfNonRenseignee() {
+        if(telephoneProf == null){
+            telephoneProf = new Telephone("0123456");
+        }
+    }
+
 
 }

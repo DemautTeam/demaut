@@ -1,10 +1,10 @@
 package ch.vd.demaut.rest.services;
 
 import ch.vd.demaut.domain.demandeur.Email;
-import ch.vd.demaut.domain.demandeur.Fax;
 import ch.vd.demaut.domain.demandeur.Localite;
 import ch.vd.demaut.domain.demandeur.Pays;
 import ch.vd.demaut.domain.demandeur.donneesPerso.*;
+import ch.vd.demaut.domain.demandeur.Telephone;
 import ch.vd.demaut.rest.services.impl.PersonnelRestImpl;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -47,9 +47,9 @@ public class PersonnelRestImplTest {
         Email email = new Email("john.doe@nobody.com");
         Genre genre = Genre.Feminin;
         String dateDeNaissance = "31.05.1980";
-        TelephonePrive telephonePrive = new TelephonePrive("022222222");
-        TelephoneMobile telephoneMobile = new TelephoneMobile("07625225123");
-        Fax fax = new Fax("023456789");
+        Telephone telephonePrive = new Telephone("022222222");
+        Telephone telephoneMobile = new Telephone("07625225123");
+        Telephone fax = new Telephone("023456789");
         Pays nationalite = Pays.Allemagne;
         Langue langue = Langue.Francais;
         Permis permis = new Permis(TypePermis.C);

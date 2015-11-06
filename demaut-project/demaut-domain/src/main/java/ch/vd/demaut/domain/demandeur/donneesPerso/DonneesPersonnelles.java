@@ -3,8 +3,8 @@ package ch.vd.demaut.domain.demandeur.donneesPerso;
 import ch.vd.demaut.commons.annotations.Entity;
 import ch.vd.demaut.commons.entities.AbstractEntity;
 import ch.vd.demaut.domain.demandeur.Email;
-import ch.vd.demaut.domain.demandeur.Fax;
 import ch.vd.demaut.domain.demandeur.Pays;
+import ch.vd.demaut.domain.demandeur.Telephone;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -38,13 +38,13 @@ public class DonneesPersonnelles extends AbstractEntity {
     private Email email;
 
     @Valid
-    private TelephonePrive telephonePrive;
+    private Telephone telephonePrive;
 
     @Valid
-    private TelephoneMobile telephoneMobile;
+    private Telephone telephoneMobile;
 
     @Valid
-    private Fax fax;
+    private Telephone fax;
 
     @NotNull
     private Langue langue;
@@ -60,7 +60,7 @@ public class DonneesPersonnelles extends AbstractEntity {
 
     //TODO: A supprimer
     public DonneesPersonnelles(Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Adresse adresse, Email email,
-                               TelephonePrive telephonePrive, TelephoneMobile telephoneMobile, Fax fax, Genre genre,
+                               Telephone telephonePrive, Telephone telephoneMobile, Telephone fax, Genre genre,
                                DateDeNaissance dateDeNaissance, Pays nationalite, Langue langue, Permis permis) {
         super();
         this.nom = nom;
@@ -103,11 +103,11 @@ public class DonneesPersonnelles extends AbstractEntity {
         return adresse;
     }
 
-    public TelephonePrive getTelephonePrive() {
+    public Telephone getTelephonePrive() {
         return telephonePrive;
     }
 
-    public TelephoneMobile getTelephoneMobile() {
+    public Telephone getTelephoneMobile() {
         return telephoneMobile;
     }
 
@@ -115,7 +115,7 @@ public class DonneesPersonnelles extends AbstractEntity {
         return email;
     }
 
-    public Fax getFax() {
+    public Telephone getFax() {
         return fax;
     }
 
@@ -136,7 +136,7 @@ public class DonneesPersonnelles extends AbstractEntity {
     }
     
     public void renseignerLesDonneesPersonnelles(Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Adresse adresse, Email email,
-                                                 TelephonePrive telephonePrive, TelephoneMobile telephoneMobile, Fax fax, Genre genre,
+                                                 Telephone telephonePrive, Telephone telephoneMobile, Telephone fax, Genre genre,
                                                  DateDeNaissance dateDeNaissance, Pays nationalite, Langue langue, Permis permis) {
         this.nom = nom;
         this.prenom = prenom;

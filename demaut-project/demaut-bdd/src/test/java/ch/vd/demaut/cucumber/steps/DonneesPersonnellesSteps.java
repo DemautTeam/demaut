@@ -6,6 +6,7 @@ import ch.vd.demaut.domain.demandeur.Email;
 import ch.vd.demaut.domain.demandeur.Localite;
 import ch.vd.demaut.domain.demandeur.Pays;
 import ch.vd.demaut.domain.demandeur.donneesPerso.*;
+import ch.vd.demaut.domain.demandeur.Telephone;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,8 +43,8 @@ public class DonneesPersonnellesSteps {
         Email email = new Email("john.doe@nobody.com");
         Genre genre = Genre.Feminin;
         DateDeNaissance dateDeNaissance = new DateDeNaissance(LocalDate.now());
-        TelephonePrive numeroTelephone = new TelephonePrive("022222222");
-        TelephoneMobile numeroMobile = new TelephoneMobile("07625225123");
+        Telephone numeroTelephone = new Telephone("022222222");
+        Telephone numeroMobile = new Telephone("07625225123");
         Pays nationalite = Pays.Andorre;
         Langue langue = Langue.Autre;
         Permis permis = new Permis(TypePermis.B);
@@ -54,7 +55,7 @@ public class DonneesPersonnellesSteps {
                 dateDeNaissance, nationalite, langue, permis);
     }
 
-    public void initTels(TelephonePrive telephonePrive, TelephoneMobile telephoneMobile) {
+    public void initTels(Telephone telephonePrive, Telephone telephoneMobile) {
         Nom nom = new Nom("test nom");
         Prenom prenom = new Prenom("Test prenom");
         Localite localite = new Localite("Lausanne");
@@ -84,8 +85,8 @@ public class DonneesPersonnellesSteps {
         Email email = new Email("john.doe@nobody.com");
         Genre genre = Genre.Feminin;
         DateDeNaissance dateDeNaissance = new DateDeNaissance(LocalDate.now());
-        TelephonePrive numeroTelephone = new TelephonePrive("022222222");
-        TelephoneMobile numeroMobile = new TelephoneMobile("07625225123");
+        Telephone numeroTelephone = new Telephone("022222222");
+        Telephone numeroMobile = new Telephone("07625225123");
         Langue langue = Langue.Francais;
 
         currentDonnees = new DonneesPersonnelles(nom, prenom, null, adresse, email, numeroTelephone, numeroMobile, null, genre,

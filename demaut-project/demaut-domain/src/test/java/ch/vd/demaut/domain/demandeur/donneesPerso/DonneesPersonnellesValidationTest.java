@@ -2,9 +2,9 @@ package ch.vd.demaut.domain.demandeur.donneesPerso;
 
 import ch.vd.demaut.commons.validation.test.AbstractValidationTest;
 import ch.vd.demaut.domain.demandeur.Email;
-import ch.vd.demaut.domain.demandeur.Fax;
 import ch.vd.demaut.domain.demandeur.Localite;
 import ch.vd.demaut.domain.demandeur.Pays;
+import ch.vd.demaut.domain.demandeur.Telephone;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,9 +24,9 @@ public class DonneesPersonnellesValidationTest extends AbstractValidationTest<Do
     private Email emailValide;
     private Genre genreValide;
     private DateDeNaissance dateDeNaissance;
-    private TelephonePrive telephonePrive;
-    private TelephoneMobile numeroMobile;
-    private Fax fax;
+    private Telephone telephonePrive;
+    private Telephone numeroMobile;
+    private Telephone fax;
     private Pays nationalite;
     private Langue langue;
     private Permis permis;
@@ -43,9 +43,9 @@ public class DonneesPersonnellesValidationTest extends AbstractValidationTest<Do
         emailValide = new Email("john.doe@nobody.com");
         genreValide = Genre.Feminin;
         dateDeNaissance = new DateDeNaissance(LocalDate.now());
-        telephonePrive = new TelephonePrive("+4122222222");
-        numeroMobile = new TelephoneMobile("00625225123");
-        fax = new Fax("023456789");
+        telephonePrive = new Telephone("+4122222222");
+        numeroMobile = new Telephone("00625225123");
+        fax = new Telephone("023456789");
         nationalite = Pays.Suisse;
         langue = Langue.Francais;
         permis = new Permis(TypePermis.C);

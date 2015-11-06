@@ -6,6 +6,7 @@ import ch.vd.demaut.commons.vo.BaseValueObject;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+//TODO refactorer le packaging de cette classe. Elle est reutilisé par Etablissement
 @ValueObject
 public class Nom extends BaseValueObject {
 

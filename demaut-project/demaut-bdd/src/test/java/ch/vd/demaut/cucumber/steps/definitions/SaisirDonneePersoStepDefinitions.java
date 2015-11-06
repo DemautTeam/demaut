@@ -1,19 +1,17 @@
 package ch.vd.demaut.cucumber.steps.definitions;
 
+import ch.vd.demaut.cucumber.converteurs.commons.TelephoneConverter;
+import ch.vd.demaut.domain.demandeur.Telephone;
 import org.apache.commons.lang3.StringUtils;
 
 import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
 import ch.vd.demaut.cucumber.converteurs.donneesperso.NomConverter;
 import ch.vd.demaut.cucumber.converteurs.donneesperso.PrenomConverter;
-import ch.vd.demaut.cucumber.converteurs.donneesperso.TelephoneMobileConverter;
-import ch.vd.demaut.cucumber.converteurs.donneesperso.TelephonePriveConverter;
 import ch.vd.demaut.cucumber.steps.DonneesPersonnellesSteps;
 import ch.vd.demaut.domain.demandeur.Pays;
 import ch.vd.demaut.domain.demandeur.donneesPerso.Nom;
 import ch.vd.demaut.domain.demandeur.donneesPerso.Permis;
 import ch.vd.demaut.domain.demandeur.donneesPerso.Prenom;
-import ch.vd.demaut.domain.demandeur.donneesPerso.TelephoneMobile;
-import ch.vd.demaut.domain.demandeur.donneesPerso.TelephonePrive;
 import ch.vd.demaut.domain.demandeur.donneesPerso.TypePermis;
 import cucumber.api.Transform;
 import cucumber.api.java.fr.Alors;
@@ -73,14 +71,14 @@ public class SaisirDonneePersoStepDefinitions extends StepDefinitions {
     }
 
     @Lorsque("^l´utilisateur saisit son nom \"([^\"]*)\"$")
-    public void l_utilisateur_saisit_son_nom(@Transform(NomConverter.class) Nom nom) throws Throwable {
+    public void l_utilisateur_saisit_son_nom(@Transform(NomConverter.class) Nom nom) {
         donneesPersonnellesSteps.initNomEtPrenom(nom, prenomValid);
         donneesPersonnellesSteps.attacheDonneesPersonellesALaDemandeDAutorisation();
     }
 
     @Lorsque("^l´utilisateur saisit ses donnees personnelles: téléphone privé=\"([^\"]*)\", Téléphone Mobile=\"([^\"]*)\"$")
-    public void l_utilisateur_saisit_ses_donnees_personnelles_téléphone_fixe_Téléphone_Mobile(@Transform(TelephonePriveConverter.class) TelephonePrive telephonePrive,
-                                                                                              @Transform(TelephoneMobileConverter.class) TelephoneMobile telephoneMobile) throws Throwable {
+    public void l_utilisateur_saisit_ses_donnees_personnelles_téléphone_fixe_Téléphone_Mobile(@Transform(TelephoneConverter.class) Telephone telephonePrive,
+                                                                                              @Transform(TelephoneConverter.class) Telephone telephoneMobile) {
         donneesPersonnellesSteps.initTels(telephonePrive, telephoneMobile);
         donneesPersonnellesSteps.attacheDonneesPersonellesALaDemandeDAutorisation();
 
@@ -89,7 +87,7 @@ public class SaisirDonneePersoStepDefinitions extends StepDefinitions {
     // ********************************************************* Then
 
     @Alors("^le système Demaut \"([^\"]*)\" les données personnelles$")
-    public void le_système_Demaut_les_données_personnelles(AccepteOuRefuse action) throws Throwable {
+    public void le_système_Demaut_les_données_personnelles(AccepteOuRefuse action) {
         AccepteOuRefuse.verifieAcceptation(action,donneesPersonnellesSteps.getActionActuelle());
 
     }

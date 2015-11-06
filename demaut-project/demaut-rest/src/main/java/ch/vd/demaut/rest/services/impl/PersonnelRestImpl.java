@@ -2,10 +2,10 @@ package ch.vd.demaut.rest.services.impl;
 
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandeur.Email;
-import ch.vd.demaut.domain.demandeur.Fax;
 import ch.vd.demaut.domain.demandeur.Localite;
 import ch.vd.demaut.domain.demandeur.Pays;
 import ch.vd.demaut.domain.demandeur.donneesPerso.*;
+import ch.vd.demaut.domain.demandeur.Telephone;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.rest.json.commons.RestUtils;
 import ch.vd.demaut.rest.services.AbstractRestService;
@@ -79,9 +79,9 @@ public class PersonnelRestImpl extends AbstractRestService {
         Pays pays = Pays.getTypeById(paysId);
         Adresse adresse = new Adresse(adressePersonnelle, complement, localite, npa, pays);
         Email email = new Email(emailStr);
-        TelephonePrive telephonePrive = StringUtils.isEmpty(telephonePriveStr) ? null : new TelephonePrive(telephonePriveStr);
-        TelephoneMobile telephoneMobile = StringUtils.isEmpty(telephoneMobileStr) ? null : new TelephoneMobile(telephoneMobileStr);
-        Fax fax = StringUtils.isEmpty(faxStr) ? null : new Fax(faxStr);
+        Telephone telephonePrive = StringUtils.isEmpty(telephonePriveStr) ? null : new Telephone(telephonePriveStr);
+        Telephone telephoneMobile = StringUtils.isEmpty(telephoneMobileStr) ? null : new Telephone(telephoneMobileStr);
+        Telephone fax = StringUtils.isEmpty(faxStr) ? null : new Telephone(faxStr);
         Genre genre = Genre.valueOf(genreStr);
         DateDeNaissance dateDeNaissance = new DateDeNaissance(DiplomeRestImpl.SHORT_DATE_PARSER.parseLocalDate(dateDeNaissanceStr));
         Pays nationalite = Pays.getTypeById(nationaliteId);
