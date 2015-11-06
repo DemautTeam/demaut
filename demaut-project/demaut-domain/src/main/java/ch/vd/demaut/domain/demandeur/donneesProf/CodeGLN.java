@@ -1,12 +1,12 @@
 package ch.vd.demaut.domain.demandeur.donneesProf;
 
-import ch.vd.demaut.commons.annotations.ValueObject;
-import ch.vd.demaut.commons.vo.BaseValueObject;
-import org.hibernate.validator.constraints.EAN;
-
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.EAN;
+
+import ch.vd.demaut.commons.annotations.ValueObject;
+import ch.vd.demaut.commons.vo.BaseValueObject;
 
 /**
  * Représente un Code GLN d'un professionnel de la santé

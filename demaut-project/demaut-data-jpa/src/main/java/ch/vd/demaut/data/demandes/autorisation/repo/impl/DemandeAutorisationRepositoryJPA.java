@@ -9,8 +9,6 @@ import javax.persistence.criteria.Fetch;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
-import ch.vd.demaut.domain.demandes.Demande;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.ListeDesActivitesFutures;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +19,7 @@ import ch.vd.demaut.domain.demandes.autorisation.StatutDemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnelles;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.ListeDesActivitesFutures;
 import ch.vd.demaut.domain.exception.DemandeBrouillonExisteDejaException;
 import ch.vd.demaut.domain.exception.DemandeNotFoundException;
 import ch.vd.demaut.domain.utilisateurs.Login;
