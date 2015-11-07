@@ -35,7 +35,7 @@ public class ActivitesFuturesSteps {
     private ActiviteEnvisagee activiteEnvisagee;
 
     // TODO: Créer VO Adresse avec voie, complement, localite, npa
-    private Nom nom;
+    private Nom nomEtablissement;
     private Voie voie;
     private Complement complement;
     private Localite localite;
@@ -91,6 +91,18 @@ public class ActivitesFuturesSteps {
         this.email = email;
     }
 
+    public void initActiviteNomEtablissement(Nom nomEtablissement) {
+        this.nomEtablissement = nomEtablissement;
+    }
+
+    public void initActiviteVoie(Voie voie) {
+        this.voie = voie;
+    }
+
+    public void initActiviteLocalite(Localite localite) {
+        this.localite = localite;
+    }
+
     public void initActiviteDependante() {
         typeActivite = TypeActivite.Dependant;
     }
@@ -106,13 +118,13 @@ public class ActivitesFuturesSteps {
 
     public void initActiviteFutureValide() {
         initTypeActiviteValideSiNonRenseigne();
-        initEtablissement();
+        initValideEtablissement();
         initTypePratiqueLamal();
         initActiviteEnvisagee();
     }
 
     public void creerActiviteFuture() {
-        etablissement = new Etablissement(nom, voie, complement, localite, npa, telephoneProf, telephoneMobile, fax, email, site);
+        etablissement = new Etablissement(nomEtablissement, voie, complement, localite, npa, telephoneProf, telephoneMobile, fax, email, site);
         activiteFuture = new ActiviteFuture(etablissement, typePratiqueLamal, activiteEnvisagee);
     }
 
@@ -146,11 +158,13 @@ public class ActivitesFuturesSteps {
         actualAcceptationActiviteFuture = AccepteOuRefuse.refuse;
     }
 
-    private void initEtablissement() {
+    private void initValideEtablissement() {
         initNPAValideSiNonRenseigne();
         initVoieValideSiNonRenseignee();
         initLocaliteValideSiNonRenseignee();
         initTelephoneProfNonRenseignee();
+        initEmailSiNonRenseignee();
+        initNomEtablissementSiNonRenseignee();
     }
 
     private void initTypePratiqueLamal() {
@@ -184,10 +198,20 @@ public class ActivitesFuturesSteps {
     }
 
     private void initTelephoneProfNonRenseignee() {
-        if(telephoneProf == null){
+        if (telephoneProf == null) {
             telephoneProf = new Telephone("0123456");
         }
     }
 
+    private void initEmailSiNonRenseignee() {
+        if (email == null) {
+            email = new Email("alice@vd.com");
+        }
+    }
 
+    private void initNomEtablissementSiNonRenseignee() {
+        if (nomEtablissement == null) {
+            nomEtablissement = new Nom("Centre medical");
+        }
+    }
 }

@@ -8,6 +8,7 @@ import ch.vd.demaut.domain.demandeur.Pays;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+//TODO cette classe est vraiment une entité? Cette classe pourrait être reutilisé par "Activités/futures/Etablissement"
 @Entity
 public class Adresse extends AbstractEntity {
 
