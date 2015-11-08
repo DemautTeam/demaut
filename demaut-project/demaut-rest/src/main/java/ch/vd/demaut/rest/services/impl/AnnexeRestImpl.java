@@ -1,7 +1,6 @@
 package ch.vd.demaut.rest.services.impl;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -20,8 +19,6 @@ import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 import ch.vd.demaut.domain.annexes.AnnexeFK;
 import ch.vd.demaut.domain.annexes.AnnexeMetadata;
@@ -63,19 +60,12 @@ public class AnnexeRestImpl extends AbstractRestService {
         return RestUtils.buildJSonResponse(typesAnnexe);
     }
 
-    /**
-     * Méthode qui renvoie la liste des types d'annexe sans passer par le WS
-     * ProgresSOA
-     */
-    private List<TypeAnnexe> buildListeTypesAnnexesSansProgresSOA() {
-        return Arrays.asList(TypeAnnexe.values());
-    }
 
     @GET
     @Path("/typesObligatoiresList")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response listerLesTypeAnnexesObligatoires(@QueryParam("referenceDeDemande") String referenceDeDemandeStr) throws Exception {
+    public Response listerLesTypeAnnexesObligatoires(@QueryParam("referenceDeDemande") String referenceDeDemandeStr) {
 
         Login login = getLogin();
 
@@ -91,7 +81,7 @@ public class AnnexeRestImpl extends AbstractRestService {
     @Path("/annexesSaisis")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response listerLesAnnexes(@QueryParam("referenceDeDemande") String referenceDeDemandeStr) throws JsonProcessingException {
+    public Response listerLesAnnexes(@QueryParam("referenceDeDemande") String referenceDeDemandeStr) {
 
         Login login = getLogin();
 
@@ -110,7 +100,7 @@ public class AnnexeRestImpl extends AbstractRestService {
     @RolesAllowed("USER")
     public Response afficherUneAnnexe(@QueryParam("referenceDeDemande") String referenceDeDemandeStr,
                                       @QueryParam("annexeFileName") String annexeFileName,
-                                      @QueryParam("annexeType") String annexeTypeIdStr) throws JsonProcessingException {
+                                      @QueryParam("annexeType") String annexeTypeIdStr) {
 
         Login login = getLogin();
 
@@ -133,7 +123,7 @@ public class AnnexeRestImpl extends AbstractRestService {
                                       @Multipart("annexeFileName") String annexeFileName,
                                       @Multipart("annexeFileSize") String annexeFileSize,
                                       @Multipart("annexeFileType") String annexeFileType,
-                                      @Multipart("annexeType") String annexeTypeIdStr) throws IOException {
+                                      @Multipart("annexeType") String annexeTypeIdStr) {
 
         Login login = getLogin();
 
@@ -152,7 +142,7 @@ public class AnnexeRestImpl extends AbstractRestService {
     @RolesAllowed("USER")
     public Response supprimerUneAnnexe(@QueryParam("referenceDeDemande") String referenceDeDemandeStr,
                                        @QueryParam("annexeFileName") String annexeFileName,
-                                       @QueryParam("annexeType") String annexeTypeIdStr) throws JsonProcessingException {
+                                       @QueryParam("annexeType") String annexeTypeIdStr) {
 
         Login login = getLogin();
 
@@ -165,6 +155,16 @@ public class AnnexeRestImpl extends AbstractRestService {
         return RestUtils.buildJSonResponse(true);
     }
 
+    // ********************************************************* Methodes privees
+
+    /**
+     * Méthode qui renvoie la liste des types d'annexe sans passer par le WS
+     * ProgresSOA
+     */
+    private List<TypeAnnexe> buildListeTypesAnnexesSansProgresSOA() {
+        return Arrays.asList(TypeAnnexe.values());
+    }
+    
     private AnnexeFK buildAnnexeFK(String annexeFileName, String annexeTypeIdStr) {
         NomFichier nomFichier = new NomFichier(annexeFileName);
         return new AnnexeFK(nomFichier);

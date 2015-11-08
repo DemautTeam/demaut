@@ -720,13 +720,8 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
 
             $scope.nextStep = function () {
                 $rootScope.wouldStepNext = true;
-                if ($scope.donneesActivite.donneesActiviteForm.$valid) {
-                    $log.info('Formulaire valide !');
-                    $location.path('/Demaut/demande/annexes');
-                }
-                else {
-                    $log.info('Formulaire invalide !');
-                }
+                $log.info('Formulaire valide !');
+                $location.path('/Demaut/demande/annexes');
             };
 
             $scope.addAnotherActivite = function () {
