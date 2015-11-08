@@ -18,7 +18,6 @@ import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.exception.AnnexeNonValideException;
-import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.annexes.AnnexesService;
 
 public class AnnexesServiceImpl implements AnnexesService {
@@ -37,14 +36,14 @@ public class AnnexesServiceImpl implements AnnexesService {
      */
     @Transactional(readOnly = true)
     @Override
-    public Collection<AnnexeMetadata> listerLesAnnexeMetadatas(Login login, ReferenceDeDemande referenceDeDemande) {
+    public Collection<AnnexeMetadata> listerLesAnnexeMetadatas(ReferenceDeDemande referenceDeDemande) {
         DemandeAutorisation demandeAutorisation = demandeAutorisationRepository.recupererDemandeParReference(referenceDeDemande);
         return demandeAutorisation.listerLesAnnexeMetadatas();
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Collection<TypeAnnexe> listerLesTypeAnnexesObligatoires(Login login, ReferenceDeDemande referenceDeDemande) {
+    public Collection<TypeAnnexe> listerLesTypeAnnexesObligatoires(ReferenceDeDemande referenceDeDemande) {
         DemandeAutorisation demandeAutorisation = demandeAutorisationRepository.recupererDemandeParReference(referenceDeDemande);
         return demandeAutorisation.calculerTypesAnnexeObligatoires();
     }
@@ -59,14 +58,14 @@ public class AnnexesServiceImpl implements AnnexesService {
      */
     @Transactional(readOnly = true)
     @Override
-    public ContenuAnnexe recupererContenuAnnexe(Login login, ReferenceDeDemande referenceDeDemande, AnnexeFK annexeFK) {
+    public ContenuAnnexe recupererContenuAnnexe(ReferenceDeDemande referenceDeDemande, AnnexeFK annexeFK) {
         DemandeAutorisation demandeAutorisation = demandeAutorisationRepository.recupererDemandeParReference(referenceDeDemande);
         return demandeAutorisation.extraireContenuAnnexe(annexeFK);
     }
 
     @Transactional
     @Override
-    public void attacherUneAnnexe(Login login, ReferenceDeDemande referenceDeDemande, File file, NomFichier nomFichier) {
+    public void attacherUneAnnexe(ReferenceDeDemande referenceDeDemande, File file, NomFichier nomFichier) {
         DemandeAutorisation demandeAutorisation = demandeAutorisationRepository.recupererDemandeParReference(referenceDeDemande);
         ContenuAnnexe contenuAnnexe = buildContenuAnnexe(file);
         Annexe annexe = new Annexe(nomFichier, contenuAnnexe);
@@ -75,17 +74,19 @@ public class AnnexesServiceImpl implements AnnexesService {
 
     @Transactional
     @Override
-    public void attacherUneAnnexe(Login login, ReferenceDeDemande referenceDeDemande, Annexe annexe) {
+    public void attacherUneAnnexe(ReferenceDeDemande referenceDeDemande, Annexe annexe) {
         DemandeAutorisation demandeAutorisation = demandeAutorisationRepository.recupererDemandeParReference(referenceDeDemande);
         demandeAutorisation.validerEtAttacherAnnexe(annexe);
     }
 
     @Transactional
     @Override
-    public void supprimerUneAnnexe(Login login, ReferenceDeDemande referenceDeDemande, AnnexeFK annexeFK) {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationRepository.recupererBrouillon(login);
+    public void supprimerUneAnnexe(ReferenceDeDemande referenceDeDemande, AnnexeFK annexeFK) {
+        DemandeAutorisation demandeAutorisation = demandeAutorisationRepository.recupererDemandeParReference(referenceDeDemande);
         demandeAutorisation.supprimerUneAnnexe(annexeFK);
     }
+
+    // ********************************************************* Setters for injection
 
     public void setDemandeAutorisationRepository(DemandeAutorisationRepository demandeAutorisationRepository) {
         this.demandeAutorisationRepository = demandeAutorisationRepository;

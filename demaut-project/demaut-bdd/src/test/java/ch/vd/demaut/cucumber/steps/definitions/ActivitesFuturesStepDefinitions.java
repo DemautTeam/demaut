@@ -2,18 +2,12 @@ package ch.vd.demaut.cucumber.steps.definitions;
 
 import ch.vd.demaut.commons.bdd.AccepteOuRefuse;
 import ch.vd.demaut.cucumber.converteurs.commons.EmailConverter;
-import ch.vd.demaut.cucumber.converteurs.commons.LocaliteConverter;
 import ch.vd.demaut.cucumber.converteurs.commons.NPAProfessionnelConverter;
 import ch.vd.demaut.cucumber.converteurs.commons.TelephoneConverter;
-import ch.vd.demaut.cucumber.converteurs.commons.VoieConverter;
-import ch.vd.demaut.cucumber.converteurs.donneesperso.NomConverter;
 import ch.vd.demaut.cucumber.steps.ActivitesFuturesSteps;
 import ch.vd.demaut.domain.demandeur.Email;
-import ch.vd.demaut.domain.demandeur.Localite;
 import ch.vd.demaut.domain.demandeur.Telephone;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Nom;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.NPAProfessionnel;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.Voie;
 import cucumber.api.Transform;
 import cucumber.api.java.fr.Alors;
 import cucumber.api.java.fr.Etantdonné;

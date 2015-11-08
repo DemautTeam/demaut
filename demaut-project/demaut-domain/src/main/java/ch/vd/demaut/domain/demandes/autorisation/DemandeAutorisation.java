@@ -20,7 +20,6 @@ import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.DateDeCreation;
 import ch.vd.demaut.domain.demandes.Demande;
 import ch.vd.demaut.domain.demandes.DemandeFK;
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.donneesProf.activites.ActiviteFutureValidateur;
 import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnelles;
 import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnellesValidateur;
@@ -70,18 +69,16 @@ public class DemandeAutorisation extends Demande {
     public DemandeAutorisation(Login login, Profession profession, DateDeCreation dateDeCreation) {
         super(dateDeCreation);
         initListes();
-        this.referenceDeDemande = new ReferenceDeDemande(dateDeCreation);
         this.statutDemandeAutorisation = StatutDemandeAutorisation.Brouillon;
         this.login = login;
         this.profession = profession;
-        this.donneesPersonnelles = new DonneesPersonnelles();
-        this.donneesProfessionnelles = new DonneesProfessionnelles();
     }
 
     private void initListes() {
         this.annexes = new ArrayList<>();
         this.donneesPersonnelles = new DonneesPersonnelles();
         this.donneesProfessionnelles = new DonneesProfessionnelles();
+
     }
 
     // ********************************************************* Business

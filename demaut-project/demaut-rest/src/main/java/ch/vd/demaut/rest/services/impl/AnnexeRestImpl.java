@@ -83,7 +83,7 @@ public class AnnexeRestImpl extends AbstractRestService {
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
 
-        Collection<TypeAnnexe> typeAnnexes = annexesService.listerLesTypeAnnexesObligatoires(login, referenceDeDemande);
+        Collection<TypeAnnexe> typeAnnexes = annexesService.listerLesTypeAnnexesObligatoires(referenceDeDemande);
         return RestUtils.buildJSonResponse(typeAnnexes);
     }
 
@@ -99,7 +99,7 @@ public class AnnexeRestImpl extends AbstractRestService {
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
 
-        Collection<AnnexeMetadata> annexesMetadata = annexesService.listerLesAnnexeMetadatas(login, referenceDeDemande);
+        Collection<AnnexeMetadata> annexesMetadata = annexesService.listerLesAnnexeMetadatas(referenceDeDemande);
 
         return RestUtils.buildJSonResponse(annexesMetadata);
     }
@@ -119,7 +119,7 @@ public class AnnexeRestImpl extends AbstractRestService {
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
         AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
 
-        ContenuAnnexe contenuAnnexe = annexesService.recupererContenuAnnexe(login, referenceDeDemande, annexeFK);
+        ContenuAnnexe contenuAnnexe = annexesService.recupererContenuAnnexe(referenceDeDemande, annexeFK);
         return RestUtils.BuildStream(contenuAnnexe.getContenu());
     }
 
@@ -142,7 +142,7 @@ public class AnnexeRestImpl extends AbstractRestService {
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
         AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
 
-        annexesService.attacherUneAnnexe(login, referenceDeDemande, file, annexeFK.getNomFichier());
+        annexesService.attacherUneAnnexe(referenceDeDemande, file, annexeFK.getNomFichier());
         return RestUtils.buildJSonResponse(true);
     }
 
@@ -161,7 +161,7 @@ public class AnnexeRestImpl extends AbstractRestService {
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
         AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
 
-        annexesService.supprimerUneAnnexe(login, referenceDeDemande, annexeFK);
+        annexesService.supprimerUneAnnexe(referenceDeDemande, annexeFK);
         return RestUtils.buildJSonResponse(true);
     }
 

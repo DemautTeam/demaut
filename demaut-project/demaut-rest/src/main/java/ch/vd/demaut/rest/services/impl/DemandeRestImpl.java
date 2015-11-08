@@ -129,7 +129,8 @@ public class DemandeRestImpl extends AbstractRestService {
 
         LOG.debug("supprimer un brouillons pour : {}, referenceDeDemande= {}", login.getValue(), referenceDeDemande);
 
-        demandeAutorisationService.supprimerUnBrouillon(login, referenceDeDemande);
+        demandeAutorisationService.supprimerUnBrouillon(referenceDeDemande);
+        
         return RestUtils.buildJSonResponse(true);
     }
     

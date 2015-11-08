@@ -12,17 +12,17 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import ch.vd.demaut.commons.exceptions.EntityNotUniqueException;
 import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.AnnexeFK;
+import ch.vd.demaut.domain.annexes.AnnexeMetadata;
 import ch.vd.demaut.domain.annexes.ContenuAnnexe;
 import ch.vd.demaut.domain.annexes.NomFichier;
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
@@ -35,6 +35,8 @@ import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class AnnexesServiceTest {
 
+    private static Login login = new Login("login1");
+    
     @Autowired
     private DemandeAutorisationService demandeAutorisationService;
 
@@ -47,10 +49,10 @@ public class AnnexesServiceTest {
 
     private NomFichier nomFichier;
     private DemandeAutorisation demandeEnCours;
+    private ReferenceDeDemande referenceDemandeEnCours;
     private Annexe annexe;
 
     private Profession profession;
-    private Login login;
     private CodeGLN glnValide = new CodeGLN("4719512002889");
 
     @Before
@@ -62,52 +64,45 @@ public class AnnexesServiceTest {
         annexe = new Annexe(nomFichier, new ContenuAnnexe(byteArray));
 
         profession = Profession.Medecin;
-        login = null;
+        login = new Login(login.getValue() + "1");
 
         assertThat(annexesService).isNotNull();
     }
 
     @Test
-    @Transactional
-    @Rollback(value = true)
     public void testListerLesAnnexesMetadata() throws Exception {
         //Setup fixtures
-        creerDemandeEnCoursAvecAnnexe(annexe, new Login("admin4@admin"));
+        creerDemandeEnCoursAvecAnnexe(annexe);
 
-        Collection<?> listerLesAnnexes = annexesService.listerLesAnnexeMetadatas(login, demandeEnCours.getReferenceDeDemande());
-        assertThat(listerLesAnnexes).isNotEmpty();
+        //Appel service listerLesAnnexeMetadatas
+        Collection<AnnexeMetadata> listerLesAnnexes = annexesService.listerLesAnnexeMetadatas(referenceDemandeEnCours);
+        
+        assertThat(listerLesAnnexes).hasSize(1);
     }
 
-    //FIXME Il y a un problème dans la délimitation de la transaction !
     @Test
-    @Transactional
-    @Rollback(value = true)
     public void testerAttacherUneAnnexe() {
         //Setup fixtures
-        creerDemandeEnCoursAvecAnnexe(annexe, new Login("admin1@admin"));
+        creerDemandeEnCoursAvecAnnexe(annexe);
         
         //Attache une annexe
-        annexesService.attacherUneAnnexe(login, demandeEnCours.getReferenceDeDemande(), file, new NomFichier("Test_multipart2.pdf"));
+        annexesService.attacherUneAnnexe(referenceDemandeEnCours, file, new NomFichier("Test_multipart2.pdf"));
 
-        //Récupère demande en cours
-        demandeEnCours = demandeAutorisationService.recupererBrouillon(login);
+        //Récupère la demande pour le traitement des annexes
+        Collection<AnnexeMetadata> listerLesAnnexes = annexesService.listerLesAnnexeMetadatas(referenceDemandeEnCours);     
 
-        //Vérifie si annexe attachée
-        Collection<Annexe> annexes = demandeEnCours.listerLesAnnexes();
         //Attention la demande possède déjà une annexe
-        assertThat(annexes).hasSize(2);
+        assertThat(listerLesAnnexes).hasSize(2);
     }
 
-    //FIXME Il y a un problème dans la délimitation de la transaction !
     @Test
-    @Transactional
-    @Rollback(value = true)
     public void testerAttacherAnnexeNonUnique() {
         //Setup fixtures
-        creerDemandeEnCoursAvecAnnexe(annexe, new Login("admin2@admin"));
+        creerDemandeEnCoursAvecAnnexe(annexe);
+        
         try {
             //Attache une annexe
-            annexesService.attacherUneAnnexe(login, demandeEnCours.getReferenceDeDemande(), file, nomFichier);
+            annexesService.attacherUneAnnexe(referenceDemandeEnCours, file, nomFichier);
             failBecauseExceptionWasNotThrown(EntityNotUniqueException.class);
         } catch (EntityNotUniqueException e) {
 
@@ -115,21 +110,18 @@ public class AnnexesServiceTest {
     }
 
     @Test
-    @Transactional
-    @Rollback(value = true)
     public void testerRecupererContenuAnnexe() {
 
         //Setup fixtures
-        creerDemandeEnCoursAvecAnnexe(annexe, new Login("admin3@admin"));
+        creerDemandeEnCoursAvecAnnexe(annexe);
 
         long tailleAnnexe = annexe.getTaille();
 
         //Récupère demande en cours
-        demandeEnCours = demandeAutorisationService.recupererBrouillon(login);
 
         //Vérifie si annexe attachée
         AnnexeFK annexeFK = new AnnexeFK(nomFichier);
-        ContenuAnnexe contenuAnnexe = annexesService.recupererContenuAnnexe(login, demandeEnCours.getReferenceDeDemande(), annexeFK);
+        ContenuAnnexe contenuAnnexe = annexesService.recupererContenuAnnexe(referenceDemandeEnCours, annexeFK);
 
         assertThat(contenuAnnexe).isNotNull();
         assertThat(contenuAnnexe.getTaille()).isEqualTo(tailleAnnexe);
@@ -137,11 +129,13 @@ public class AnnexesServiceTest {
 
     // ********************************************************* Private methods for fixtures
 
-    private void creerDemandeEnCoursAvecAnnexe(Annexe annexeALier, Login login) {
-        this.login = login;
-
+    private void creerDemandeEnCours() {
         demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, glnValide, login);
-        
-        annexesService.attacherUneAnnexe(login, demandeEnCours.getReferenceDeDemande(), annexeALier);
+        referenceDemandeEnCours = demandeEnCours.getReferenceDeDemande();
+    }
+    
+    private void creerDemandeEnCoursAvecAnnexe(Annexe annexeALier) {
+        creerDemandeEnCours();
+        annexesService.attacherUneAnnexe(referenceDemandeEnCours, annexeALier);
     }
 }

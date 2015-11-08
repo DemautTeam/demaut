@@ -6,10 +6,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-import ch.vd.demaut.domain.demandeur.Email;
-import ch.vd.demaut.domain.demandeur.Telephone;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Nom;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.*;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,16 +20,25 @@ import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.AnnexeMetadata;
 import ch.vd.demaut.domain.annexes.ContenuAnnexe;
 import ch.vd.demaut.domain.annexes.NomFichier;
-import ch.vd.demaut.domain.demandes.DateDeCreation;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
+import ch.vd.demaut.domain.demandeur.Email;
 import ch.vd.demaut.domain.demandeur.Localite;
 import ch.vd.demaut.domain.demandeur.Pays;
+import ch.vd.demaut.domain.demandeur.Telephone;
+import ch.vd.demaut.domain.demandeur.donneesPerso.Nom;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.ActiviteFuture;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.Etablissement;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.NPAProfessionnel;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.SiteInternet;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.TypeActivite;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.TypePratiqueLamal;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.Voie;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.ActiviteEnvisagee;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.DatePrevueDebut;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.Superviseur;
@@ -92,7 +97,7 @@ public class DemandeAutorisationRepositoryTest {
         // Construction de la demande
         Utilisateur utilisateur = creerUtilisateur("admin1@admin");
         DemandeAutorisation demandeInit = demandeAutorisationFactory.initierDemandeAutorisation(utilisateur.getLogin(),
-                Profession.Ergotherapeute, glnValide, new DateDeCreation(2015, 1, 1));
+                Profession.Ergotherapeute, glnValide);
         assertThat(demandeInit.getId()).isNull();
 
         persisterDemandeEtVerifier(demandeInit);
@@ -104,7 +109,7 @@ public class DemandeAutorisationRepositoryTest {
         // Construction de la demande
         Utilisateur utilisateur = creerUtilisateur("admin2@admin");
         DemandeAutorisation demandeInit = demandeAutorisationFactory.initierDemandeAutorisation(utilisateur.getLogin(),
-                Profession.Chiropraticien, glnValide, new DateDeCreation(2015, 2, 1));
+                Profession.Chiropraticien, glnValide);
         byte[] contenu = "AnnexeContenu".getBytes();
         Annexe annexe = new Annexe(new NomFichier("test.pdf"), new ContenuAnnexe(contenu));
         demandeInit.validerEtAttacherAnnexe(annexe);
@@ -118,7 +123,7 @@ public class DemandeAutorisationRepositoryTest {
         Utilisateur utilisateur = creerUtilisateur("admin4@admin");
         
         DemandeAutorisation demandeInit = demandeAutorisationFactory.initierDemandeAutorisation(utilisateur.getLogin(),
-                Profession.Chiropraticien, glnValide, new DateDeCreation(2015, 3, 1));
+                Profession.Chiropraticien, glnValide);
 
         ActiviteFuture activiteFuture = buildActiviteFutureValide();
 
@@ -133,7 +138,7 @@ public class DemandeAutorisationRepositoryTest {
 
         // Sauvegarder la demande
         DemandeAutorisation demandeAutorisation = demandeAutorisationFactory
-                .initierDemandeAutorisation(utilisateur.getLogin(), Profession.Medecin, glnValide, new DateDeCreation(2015, 4, 1));
+                .initierDemandeAutorisation(utilisateur.getLogin(), Profession.Medecin, glnValide);
 
         DonneesProfessionnelles donneesProfessionnelles = demandeAutorisation.getDonneesProfessionnelles();
         creerListeDiplomes(donneesProfessionnelles);

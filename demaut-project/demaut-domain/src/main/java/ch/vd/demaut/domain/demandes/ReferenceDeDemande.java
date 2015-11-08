@@ -6,8 +6,9 @@ import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.BaseValueObject;
 
 /**
- * Référence unique d'une demande dans le système Demaut. Cette référence a une
- * visibilité client et ne correspond pas à un ID technique en base de données.
+ * Référence unique d'une demande dans le système Demaut.<br>
+ * 
+ * Cette référence a une visibilité client et ne correspond pas à un ID technique en base de données.
  */
 @ValueObject
 public class ReferenceDeDemande extends BaseValueObject {
@@ -16,14 +17,15 @@ public class ReferenceDeDemande extends BaseValueObject {
     private String value;
 
     // ********************************************************* Constructor
-    //Used only for JPA
+    // Used only for JPA
     ReferenceDeDemande() {
-        
     }
-    
-    public ReferenceDeDemande(DateDeCreation dateDeCreation) {
+
+    public ReferenceDeDemande(DateDeCreation dateDeCreation, Long sequence) {
         LocalDate localDate = dateDeCreation.getValue();
-        this.value = localDate.toString("yyyyMM-0001");
+        String dateStr = localDate.toString("yyyyMM");
+        String sequenceStr = String.format("%04d", sequence);
+        this.value = dateStr + "-" + sequenceStr;
     }
 
     public ReferenceDeDemande(String reference) {
