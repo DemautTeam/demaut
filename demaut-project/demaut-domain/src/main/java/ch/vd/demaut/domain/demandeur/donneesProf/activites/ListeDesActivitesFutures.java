@@ -1,49 +1,39 @@
 package ch.vd.demaut.domain.demandeur.donneesProf.activites;
 
-import java.util.Collections;
 import java.util.List;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
+import ch.vd.demaut.commons.entities.ListeDesEntitesOrdonnees;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 
 /**
  * Encapsule la liste des activités futures {@link ActiviteFuture} liées a une {@link DemandeAutorisation}
  *
  */
-public class ListeDesActivitesFutures {
+public class ListeDesActivitesFutures extends ListeDesEntitesOrdonnees<ActiviteFuture> {
 
     // ********************************************************* Fields
-    private List<ActiviteFuture> activitesFutures;
 
     // ********************************************************* Constructor
 
-    public ListeDesActivitesFutures(List<ActiviteFuture> ActiviteFutures) {
-        this.activitesFutures = ActiviteFutures;
+    public ListeDesActivitesFutures(List<ActiviteFuture> activiteFutures) {
+        super(activiteFutures);
     }
 
     // ********************************************************* Business methods
 
-    @NotNull
-    @Valid
-    public List<ActiviteFuture> getActivitesFutures() {
-        return activitesFutures;
-    }
-    
     /**
-     * Renvoie la liste des annexes
+     * Renvoie la liste des {@link ActiviteFuture}
      */
     public List<ActiviteFuture> listerActivitesFutures() {
-        return Collections.unmodifiableList(activitesFutures);
+        return listerEntities();
     }
 
-    public void ajouterUneActiviteFuture(ActiviteFuture ActiviteFuture) {
-        this.activitesFutures.add(ActiviteFuture);
+    public void ajouterUneActiviteFuture(ActiviteFuture activiteFuture) {
+        ajouterEntity(activiteFuture);
     }
 
-    public void supprimerActiviteFuture(ActiviteFuture ActiviteFuture) {
-        this.activitesFutures.remove(ActiviteFuture);
+    public void supprimerActiviteFuture(ActiviteFutureFK activiteFutureFK) {
+        supprimerEntity(activiteFutureFK);
     }
 
 }

@@ -14,7 +14,7 @@ import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandes.autorisation.StatutDemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
-import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.ActiviteAnterieure;
 import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.domain.utilisateurs.Utilisateur;
 import ch.vd.demaut.domain.utilisateurs.UtilisateurRepository;
@@ -74,13 +74,17 @@ public class DemandeAutorisationSteps {
             LOGGER.debug("La demande autorisation " + demandeEnCours + " n'a pas été ajoutée au repo");
         }
     }
+    
+    public void resetReferenceSequence() {
+        demandeAutorisationFactory.resetReferenceSequence();
+    }
 
     // ********************************************************* Methodes d'Action
     
     public void ajouterActivitesAnterieuresADemandeEnCours(int nbActivitesAnterieures) {
-        DonneesProfessionnelles donneesProfessionnelles = demandeEnCours.getDonneesProfessionnelles();
         for (int n=0; n < nbActivitesAnterieures ; n++) {
-            donneesProfessionnelles.creerEtAjouterActiviteAnterieure();
+            ActiviteAnterieure activiteAnterieure = new ActiviteAnterieure();
+            demandeEnCours.validerEtAjouterActiviteAnterieure(activiteAnterieure);
         }
     }    
 

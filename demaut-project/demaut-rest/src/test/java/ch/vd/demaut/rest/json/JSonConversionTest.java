@@ -7,8 +7,11 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import ch.vd.demaut.data.demandes.autorisation.repo.impl.DemandeAutorisationRepositoryJava;
 import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.DateDeCreation;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
@@ -21,10 +24,16 @@ import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.rest.dto.DemandeAutorisationCockpitDTO;
 import ch.vd.demaut.rest.json.commons.RestUtils;
 
+@ContextConfiguration({"classpath*:jsonTest-context.xml"})
+@RunWith(SpringJUnit4ClassRunner.class)
 public class JSonConversionTest {
 
+    @Autowired
+    private DemandeAutorisationFactory demandeAutorisationFactory;
+    
     @Before
     public void setUp() throws Exception {
+        assertThat(demandeAutorisationFactory).isNotNull();
     }
 
     @Test
@@ -51,9 +60,6 @@ public class JSonConversionTest {
     @Test
     public void testDemandeAutorisationCockpitDTO() {
         // Fixture
-        DemandeAutorisationFactory demandeAutorisationFactory = new DemandeAutorisationFactory();
-        demandeAutorisationFactory.setDemandeAutorisationRepository(new DemandeAutorisationRepositoryJava());
-
         DemandeAutorisation demande = demandeAutorisationFactory.initierDemandeAutorisation(new Login("c123"),
                 Profession.Medecin, new CodeGLN("4719512002889"), new DateDeCreation(2015, 10, 1));
         DemandeAutorisationCockpitDTO dto = new DemandeAutorisationCockpitDTO(demande);

@@ -21,4 +21,11 @@ public class DomainException extends BaseException {
         super(message);
     }
 
+    /**
+     * @See {@link BaseException#BaseException(String, Throwable)}
+     */
+    protected DomainException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
 }

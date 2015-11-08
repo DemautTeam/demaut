@@ -13,4 +13,9 @@ public interface Sequenceur {
      */
     Long nextSequence();
     
+    /**
+     * Reinitialise le séquenceur
+     */
+    void reset();
+    
 }

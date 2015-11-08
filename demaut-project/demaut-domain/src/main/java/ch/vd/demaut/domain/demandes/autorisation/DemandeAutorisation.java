@@ -27,6 +27,7 @@ import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnellesValidateur;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.ActiviteAnterieure;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.ActiviteFuture;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.ListeDesActivitesAnterieures;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.ListeDesActivitesFutures;
 import ch.vd.demaut.domain.utilisateurs.Login;
 
@@ -125,12 +126,15 @@ public class DemandeAutorisation extends Demande {
     // ******* Activites Futures
 
     /**
-     * Ajoute une {@link ActiviteFuture} à l aliste des activites futures de cette demande
+     * Ajoute une {@link ActiviteFuture} à la liste des activites futures de cette demande
      * 
      * @param activiteFuture
      *            Activite future Valide
      */
     public void validerEtAjouterActiviteFuture(ActiviteFuture activiteFuture) {
+        //0- Generer ordre au sein de ListeDesActivitesFutures
+        activiteFuture.genererOrdre(getActivitesFutures());
+        
         //1- Valider activiteFuture
         ACTIVITE_FUTURE_VALIDATEUR.valider(activiteFuture);
         
@@ -146,6 +150,26 @@ public class DemandeAutorisation extends Demande {
         return getDonneesProfessionnelles().calculerProcedureAnnexe();
     }
 
+    // ******* Activites Antérieures
+    
+    public void validerEtAjouterActiviteAnterieure(ActiviteAnterieure activiteAnterieure) {
+        //0- Generer ordre au sein de ListeDesActivitesFutures
+        ListeDesActivitesAnterieures activitesAnterieures = getListeDesActivitesAnterieures();
+        
+        activiteAnterieure.genererOrdre(activitesAnterieures);
+        
+        //1- Valider activiteAnterieure
+        //TODO : ACTIVITE_ANTERIEURE_VALIDATEUR.valider(activiteAnterieure);
+        
+        //2- Ajouter activiteFuture
+        activitesAnterieures.ajouterActivite(activiteAnterieure);
+    }
+
+    public ListeDesActivitesAnterieures getListeDesActivitesAnterieures() {
+        return getDonneesProfessionnelles().getListeDesActivitesAnterieures();
+    }
+    
+    
     // ******* Donnees Personnelles
 
     public void validerEtAttacherLesDonneesPersonnelles(DonneesPersonnelles donneesPersonnelles) {
@@ -161,10 +185,6 @@ public class DemandeAutorisation extends Demande {
 
     public void validerDonneesPersonnelles() {
         new DonneesPersonnellesValidateur().valider(donneesPersonnelles);
-    }
-
-    public void ajouterActiviteAnterieure(ActiviteAnterieure activiteAnterieure) {
-        getDonneesProfessionnelles().ajouterActiviteAnterieure(activiteAnterieure);
     }
 
     // ******* Donnees Activités Professionnelles

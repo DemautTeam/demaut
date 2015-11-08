@@ -57,6 +57,7 @@ Fonctionnalité: Créer une demande
   
   @reference-demande
   Scénario: Générer la référence de la demande
+    Lorsque la sequence de référence de la demande est initialisée
     Lorsque l´utilisateur initialise une demande de profession "Medecin" avec un code GLN valide
     Alors le système Demaut "accepte" de créer la demande
     Alors cette demande a la référence "201507-0001"

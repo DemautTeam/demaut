@@ -24,6 +24,7 @@ public interface AnnexesService {
 
     ContenuAnnexe recupererContenuAnnexe(ReferenceDeDemande referenceDeDemande, AnnexeFK annexeFK);
 
+    //TODO : Supprimer cette methode redondante
     void attacherUneAnnexe(ReferenceDeDemande referenceDeDemande, File file, NomFichier nomFichier);
 
     void attacherUneAnnexe(ReferenceDeDemande referenceDeDemande, Annexe annexeALier);

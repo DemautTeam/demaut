@@ -19,7 +19,9 @@ public abstract class ObjectFunctionalKeyAware implements FunctionalKeyAware {
 //            return false;
 //        }
 
-        return this.getFunctionalKey().equals(((ObjectFunctionalKeyAware) o).getFunctionalKey());
+        FunctionalKey<? extends FunctionalKeyAware> otherFK = ((ObjectFunctionalKeyAware) o).getFunctionalKey();
+        
+        return this.getFunctionalKey().equals(otherFK);
     }
 
     @Override

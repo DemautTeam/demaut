@@ -18,7 +18,9 @@ public class ReferenceDeDemandeTest {
     @Test
     public void testGenerationReferenceDeDemande() {
         
-        ReferenceDeDemande ref = new ReferenceDeDemande(new DateDeCreation(2015,  10, 1), 1L);
+        DateDeCreation dateDeCreation = new DateDeCreation(2015,  10, 1);
+        
+        ReferenceDeDemande ref = new ReferenceDeDemande(dateDeCreation, 1L);
         assertThat(ref.getValue()).isEqualTo("201510-0001");
         
     }

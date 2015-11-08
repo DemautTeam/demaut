@@ -18,4 +18,9 @@ public class SequenceurImplStatic implements Sequenceur {
         return sequence;
     }
 
+    @Override
+    public void reset() {
+        sequence = 0L;
+    }
+
 }

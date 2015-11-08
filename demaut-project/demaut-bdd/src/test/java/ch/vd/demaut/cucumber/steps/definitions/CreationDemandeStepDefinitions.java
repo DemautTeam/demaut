@@ -65,6 +65,11 @@ public class CreationDemandeStepDefinitions extends StepDefinitions {
             @Transform(CodeGLNConverter.class) CodeGLN gln) throws Throwable {
         getDemandeAutorisationSteps().initialiserDemandeEnCours(profession, gln);
     }
+    
+    @Lorsque("^la sequence de référence de la demande est initialisée$")
+    public void init_sequence_ref() {
+        getDemandeAutorisationSteps().resetReferenceSequence();
+    }
 
     // ********************************************************* Then
 

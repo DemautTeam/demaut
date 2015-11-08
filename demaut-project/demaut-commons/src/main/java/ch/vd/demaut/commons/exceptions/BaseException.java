@@ -14,10 +14,17 @@ public abstract class BaseException extends RuntimeException {
     }
 
     /**
-     * @see RuntimeException#RuntimeException()
+     * @see RuntimeException#RuntimeException(String)
      */
-    public BaseException(String message) {
+    protected BaseException(String message) {
         super(message);
+    }
+
+    /**
+     * @see RuntimeException#RuntimeException(String,Throwable)
+     */
+    protected BaseException(String message, Throwable cause) {
+        super(message, cause);
     }
 
 }

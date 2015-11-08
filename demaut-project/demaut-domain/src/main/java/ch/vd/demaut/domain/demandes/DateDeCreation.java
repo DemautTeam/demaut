@@ -13,10 +13,14 @@ import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
  */
 public class DateDeCreation extends BaseValueObject {
 
+    // ********************************************************* Fields
     private LocalDate value;
 
     // ********************************************************* Constructors
 
+    /**
+     * Construit une {@link DateDeCreation} à la date du jours system
+     */
     public DateDeCreation() {
         this.value = new LocalDate();
     }

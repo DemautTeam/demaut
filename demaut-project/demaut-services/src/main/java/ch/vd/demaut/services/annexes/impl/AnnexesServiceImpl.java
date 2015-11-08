@@ -17,7 +17,7 @@ import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
-import ch.vd.demaut.domain.exception.AnnexeNonValideException;
+import ch.vd.demaut.domain.exception.AnnexeContenuException;
 import ch.vd.demaut.services.annexes.AnnexesService;
 
 public class AnnexesServiceImpl implements AnnexesService {
@@ -66,10 +66,8 @@ public class AnnexesServiceImpl implements AnnexesService {
     @Transactional
     @Override
     public void attacherUneAnnexe(ReferenceDeDemande referenceDeDemande, File file, NomFichier nomFichier) {
-        DemandeAutorisation demandeAutorisation = demandeAutorisationRepository.recupererDemandeParReference(referenceDeDemande);
-        ContenuAnnexe contenuAnnexe = buildContenuAnnexe(file);
-        Annexe annexe = new Annexe(nomFichier, contenuAnnexe);
-        demandeAutorisation.validerEtAttacherAnnexe(annexe);
+        Annexe annexe = buildAnnexe(file, nomFichier);
+        attacherUneAnnexe(referenceDeDemande, annexe);
     }
 
     @Transactional
@@ -92,15 +90,20 @@ public class AnnexesServiceImpl implements AnnexesService {
         this.demandeAutorisationRepository = demandeAutorisationRepository;
     }
 
-    // ********************************************************* Methodes
-    // privees
+    // ********************************************************* Methodes privees
+
+    private Annexe buildAnnexe(File file, NomFichier nomFichier) {
+        ContenuAnnexe contenuAnnexe = buildContenuAnnexe(file);
+        Annexe annexe = new Annexe(nomFichier, contenuAnnexe);
+        return annexe;
+    }
 
     private ContenuAnnexe buildContenuAnnexe(File file) {
         byte[] contenu;
         try {
             contenu = IOUtils.toByteArray(new FileInputStream(file));
         } catch (IOException e) {
-            throw new AnnexeNonValideException();
+            throw new AnnexeContenuException("Imposible de lire le fichier transmis pour cette annexe", e);
         }
         return new ContenuAnnexe(contenu);
     }

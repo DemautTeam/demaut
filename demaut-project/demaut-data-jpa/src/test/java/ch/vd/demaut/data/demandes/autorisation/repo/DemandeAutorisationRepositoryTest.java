@@ -56,6 +56,7 @@ import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.domain.utilisateurs.Utilisateur;
 import ch.vd.demaut.domain.utilisateurs.UtilisateurRepository;
 
+//TODO: Splitter cette classe de test et surtout mieux verifier TOUS les atttributs des objets persistés
 @ContextConfiguration({"classpath*:/jpaTest-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class DemandeAutorisationRepositoryTest {

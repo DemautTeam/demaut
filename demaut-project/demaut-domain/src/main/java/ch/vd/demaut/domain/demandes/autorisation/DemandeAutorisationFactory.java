@@ -3,7 +3,6 @@ package ch.vd.demaut.domain.demandes.autorisation;
 import ch.vd.demaut.commons.annotations.Factory;
 import ch.vd.demaut.domain.demandes.DateDeCreation;
 import ch.vd.demaut.domain.demandes.Sequenceur;
-import ch.vd.demaut.domain.demandes.SequenceurImplStatic;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.exception.DemandeBrouillonExisteDejaException;
@@ -18,8 +17,7 @@ public class DemandeAutorisationFactory {
     // ********************************************************* Fields
     private DemandeAutorisationRepository demandeAutorisationRepository;
     
-    //TODO: Injecter le sequenceur DB ou Static en fonction du contexte
-    private Sequenceur sequenceur = new SequenceurImplStatic();
+    private Sequenceur sequenceur;
 
     // ********************************************************* Public methods
     
@@ -56,6 +54,13 @@ public class DemandeAutorisationFactory {
 
         return demandeAutorisation;
     }
+    
+    /**
+     * Reinitialise le séquenceur
+     */
+    public void resetReferenceSequence() {
+        sequenceur.reset();
+    }
 
     // ********************************************************* Private methods
     private void throwExceptionSiDemandeBrouillonExisteDeja(Login login) {
@@ -65,8 +70,12 @@ public class DemandeAutorisationFactory {
         }
     }
 
-    // ********************************************************* Technical methods
+    // ********************************************************* Technical methods for injection
     public void setDemandeAutorisationRepository(DemandeAutorisationRepository demandeAutorisationRepository) {
         this.demandeAutorisationRepository = demandeAutorisationRepository;
+    }
+    
+    public void setSequenceur(Sequenceur sequenceur) {
+        this.sequenceur = sequenceur;
     }
 }
