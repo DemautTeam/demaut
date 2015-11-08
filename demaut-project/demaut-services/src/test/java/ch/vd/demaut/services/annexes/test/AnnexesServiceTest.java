@@ -22,23 +22,13 @@ import ch.vd.demaut.domain.annexes.AnnexeFK;
 import ch.vd.demaut.domain.annexes.AnnexeMetadata;
 import ch.vd.demaut.domain.annexes.ContenuAnnexe;
 import ch.vd.demaut.domain.annexes.NomFichier;
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
-import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.services.annexes.AnnexesService;
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
+import ch.vd.demaut.services.test.AbstractServiceTest;
 
 @ContextConfiguration({"classpath*:/servicesTest-context.xml"})
 @ActiveProfiles({"data"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class AnnexesServiceTest {
-
-    private static Login login = new Login("login1");
-    
-    @Autowired
-    private DemandeAutorisationService demandeAutorisationService;
+public class AnnexesServiceTest extends AbstractServiceTest {
 
     @Autowired
     private AnnexesService annexesService;
@@ -48,23 +38,17 @@ public class AnnexesServiceTest {
     private File file;
 
     private NomFichier nomFichier;
-    private DemandeAutorisation demandeEnCours;
-    private ReferenceDeDemande referenceDemandeEnCours;
     private Annexe annexe;
-
-    private Profession profession;
-    private CodeGLN glnValide = new CodeGLN("4719512002889");
 
     @Before
     public void setUp() throws Exception {
+        super.setUp();
+        
         byteArray = IOUtils.toByteArray(new FileInputStream("src/test/resources/demautServicesTest.cfg"));
         file = new File("src/test/resources/demautServicesTest.cfg");
 
         nomFichier = new NomFichier("Test_multipart.pdf");
         annexe = new Annexe(nomFichier, new ContenuAnnexe(byteArray));
-
-        profession = Profession.Medecin;
-        login = new Login(login.getValue() + "1");
 
         assertThat(annexesService).isNotNull();
     }
@@ -128,11 +112,6 @@ public class AnnexesServiceTest {
     }
 
     // ********************************************************* Private methods for fixtures
-
-    private void creerDemandeEnCours() {
-        demandeEnCours = demandeAutorisationService.initialiserDemandeAutorisation(profession, glnValide, login);
-        referenceDemandeEnCours = demandeEnCours.getReferenceDeDemande();
-    }
     
     private void creerDemandeEnCoursAvecAnnexe(Annexe annexeALier) {
         creerDemandeEnCours();

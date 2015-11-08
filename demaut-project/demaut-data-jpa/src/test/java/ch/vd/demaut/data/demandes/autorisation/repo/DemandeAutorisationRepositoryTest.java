@@ -57,7 +57,7 @@ import ch.vd.demaut.domain.utilisateurs.Utilisateur;
 import ch.vd.demaut.domain.utilisateurs.UtilisateurRepository;
 
 //TODO: Splitter cette classe de test et surtout mieux verifier TOUS les atttributs des objets persistés
-@ContextConfiguration({"classpath*:/jpaTest-context.xml"})
+@ContextConfiguration({ "classpath*:/jpaTest-context.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 public class DemandeAutorisationRepositoryTest {
 
@@ -122,7 +122,7 @@ public class DemandeAutorisationRepositoryTest {
     public void sauvegarderUneDemandeAvecActivitesFutures() {
         // Construction de la demande
         Utilisateur utilisateur = creerUtilisateur("admin4@admin");
-        
+
         DemandeAutorisation demandeInit = demandeAutorisationFactory.initierDemandeAutorisation(utilisateur.getLogin(),
                 Profession.Chiropraticien, glnValide);
 
@@ -158,8 +158,10 @@ public class DemandeAutorisationRepositoryTest {
     // ********************************************************* Methods privées
 
     private ActiviteFuture buildActiviteFutureValide() {
-        Etablissement etablissement = new Etablissement(new Nom("Centre medical"), new Voie("2"), null, new Localite("Lausanne"), new NPAProfessionnel("1234"),
-                new Telephone("0123456"), new Telephone("0123456"), new Telephone("0123456"), new Email("toto@titi.com"), new SiteInternet("www.google.com"));
+        Etablissement etablissement = new Etablissement(new Nom("Centre medical"), new Voie("2"), null,
+                new Localite("Lausanne"), new NPAProfessionnel("1234"), new Telephone("0123456"),
+                new Telephone("0123456"), new Telephone("0123456"), new Email("toto@titi.com"),
+                new SiteInternet("www.google.com"));
         ActiviteEnvisagee activiteEnvisagee = new ActiviteEnvisagee(TypeActivite.Dependant,
                 new TauxActiviteEnDemiJournee(1), new DatePrevueDebut(new LocalDate(2015, 10, 1)),
                 new Superviseur("superviseur"));

@@ -26,6 +26,7 @@ import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnellesValidateur;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.ActiviteAnterieure;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.ActiviteFuture;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.ActiviteFutureFK;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.ActiviteFutureValidateur;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.ListeDesActivitesAnterieures;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.ListeDesActivitesFutures;
@@ -123,6 +124,11 @@ public class DemandeAutorisation extends Demande {
         return getListeDesAnnexes().extraireContenu(annexeFK);
     }
 
+    public ProcedureAnnexe calculerProcedureAnnnexe() {
+        return getDonneesProfessionnelles().calculerProcedureAnnexe();
+    }
+
+
     // ******* Activites Futures
 
     /**
@@ -145,9 +151,9 @@ public class DemandeAutorisation extends Demande {
     public ListeDesActivitesFutures getActivitesFutures() {
         return getDonneesProfessionnelles().getListeDesActivitesFutures();
     }
-
-    public ProcedureAnnexe calculerProcedureAnnnexe() {
-        return getDonneesProfessionnelles().calculerProcedureAnnexe();
+    
+    public void supprimerUneActiviteFuture(ActiviteFutureFK activiteFutureFK) {
+        getActivitesFutures().supprimerActiviteFuture(activiteFutureFK);
     }
 
     // ******* Activites Antérieures
