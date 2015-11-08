@@ -45,7 +45,7 @@ public class DemandeAutorisationSteps {
 
     private AccepteOuRefuse acceptation;
 
-    // ********************************************************* Methods
+    // ********************************************************* Methodes Initialisation
 
     public void initialiserUtilisateur(Login login) {
         utilisateur = new Utilisateur(login);
@@ -75,6 +75,8 @@ public class DemandeAutorisationSteps {
         }
     }
 
+    // ********************************************************* Methodes d'Action
+    
     public void ajouterActivitesAnterieuresADemandeEnCours(int nbActivitesAnterieures) {
         DonneesProfessionnelles donneesProfessionnelles = demandeEnCours.getDonneesProfessionnelles();
         for (int n=0; n < nbActivitesAnterieures ; n++) {
@@ -82,6 +84,8 @@ public class DemandeAutorisationSteps {
         }
     }    
 
+    // ********************************************************* Methodes de verification
+    
     public void verifieDemandeCree(Profession profession, StatutDemandeAutorisation statut, Login login) {
         demandeAutorisationRepository.findBy(demandeEnCours.getId());
         
@@ -90,27 +94,28 @@ public class DemandeAutorisationSteps {
         assertThat(demandeEnCours.getStatutDemandeAutorisation()).isEqualTo(statut);
     }
 
-    public DemandeAutorisation getDemandeViaReference(ReferenceDeDemande refScenario) {
-        ReferenceDeDemande refDomaine = mappingReferences.trouverDomaineRef(refScenario);
-        DemandeAutorisation demande = demandeAutorisationRepository.recupererDemandeParReference(refDomaine);
-        return demande;
-    }
-
-    public void enregistrerReferenceDemandeEnCours(ReferenceDeDemande refScenario) {
-        ReferenceDeDemande refDomaine = getDemandeEnCours().getReferenceDeDemande();
-        mappingReferences.ajouterMapping(refScenario, refDomaine);
-    }
-
     public void verifieAcceptationAnnexe(AccepteOuRefuse expectedAcceptationAnnexe) {
         assertThat(acceptation).isEqualTo(expectedAcceptationAnnexe);
     }
 
+    public void verifierReferenceDeDemande(ReferenceDeDemande refDemande) {
+        assertThat(demandeEnCours.getReferenceDeDemande()).isEqualTo(refDemande);
+    }
+    
+    // ********************************************************* Methodes utilitaires pour Scenario
     public void accepteInitiliserDemande() {
         acceptation = AccepteOuRefuse.accepte;
     }
 
     public void refuseInitialiserDemande() {
         acceptation = AccepteOuRefuse.refuse;
+    }
+    
+
+    public DemandeAutorisation getDemandeViaReference(ReferenceDeDemande refScenario) {
+        ReferenceDeDemande refDomaine = mappingReferences.trouverDomaineRef(refScenario);
+        DemandeAutorisation demande = demandeAutorisationRepository.recupererDemandeParReference(refDomaine);
+        return demande;
     }
     // ********************************************************* Getters
 
@@ -134,8 +139,7 @@ public class DemandeAutorisationSteps {
         return codeGlnVide;
     }
 
-    // ***************************** **************************** Technical
-    // methods
+    // ***************************** **************************** Setters pour injection
 
     public void setUtilisateurRepository(UtilisateurRepository utilisateurRepository) {
         this.utilisateurRepository = utilisateurRepository;
@@ -152,14 +156,5 @@ public class DemandeAutorisationSteps {
     public void setBackgroundSteps(BackgroundSteps backgroundSteps) {
         this.backgroundSteps = backgroundSteps;
     }
-
-    // ***************************** **************************** Private
-    // methods
-
-    public void clean() {
-        demandeAutorisationRepository.deleteAll();
-        utilisateurRepository.deleteAll();
-    }
-
 
 }

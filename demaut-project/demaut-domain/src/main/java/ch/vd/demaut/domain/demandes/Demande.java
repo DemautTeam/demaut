@@ -33,7 +33,7 @@ public abstract class Demande extends EntityFunctionalKeyAware {
     public ReferenceDeDemande getReferenceDeDemande() {
         return referenceDeDemande;
     }
-
+    
     public DateDeCreation getDateDeCreation() {
         return dateDeCreation;
     }
