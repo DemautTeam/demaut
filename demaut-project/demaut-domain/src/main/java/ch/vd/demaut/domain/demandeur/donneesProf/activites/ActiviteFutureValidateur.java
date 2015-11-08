@@ -1,4 +1,4 @@
-package ch.vd.demaut.domain.demandes.donneesProf.activites;
+package ch.vd.demaut.domain.demandeur.donneesProf.activites;
 
 import java.util.Set;
 
@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import ch.vd.demaut.commons.exceptions.DomainException;
 import ch.vd.demaut.commons.validation.AbstractDataValidateur;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.ActiviteFuture;
 import ch.vd.demaut.domain.exception.ActiviteFutureNonValideException;
 
 /**
