@@ -285,24 +285,12 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
             this.params = $routeParams;
             $scope.testSuisse = nationalityTest;//récupération du service de test des nationnalités
 
-            $scope.nationalites = [];
             $scope.langues = [];
             $scope.paysList = [];
 
             $scope.personalData = {};
             $scope.personalData.datePicker = {};
             $scope.personalData.datePicker.status = {};
-
-            if ($scope.nationalites.length == 0) {
-                $http.get(urlPrefix + '/shared/nationalites').
-                    success(function (data, status, headers, config) {
-                        $scope.nationalites = angular.fromJson(data.response);
-                        $log.info('Liste nationalites a été récupérée avec succès!');
-                    }).
-                    error(function (data, status, headers, config) {
-                        $log.debug('Error ' + urlPrefix + '/shared/nationalites/ \n Status :' + status);
-                    });
-            }
 
             if ($scope.paysList.length == 0) {
                 $http.get(urlPrefix + '/shared/paysList').
@@ -353,9 +341,9 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                     $scope.personalData.dateDeNaissance = new Date(responseValues.dateDeNaissance);
                     $scope.personalData.langue = responseValues.langue;
 
-                    for (var indexJ = 0; indexJ < $scope.nationalites.length; indexJ++) {
-                        if ($scope.nationalites[indexJ].id == responseValues.nationalite.id) {
-                            $scope.personalData.nationalite = $scope.nationalites[indexJ];
+                    for (var indexJ = 0; indexJ < $scope.paysList.length; indexJ++) {
+                        if ($scope.paysList[indexJ].id == responseValues.nationalite.id) {
+                            $scope.personalData.nationalite = $scope.paysList[indexJ];
                             break;
                         }
                     }
@@ -829,21 +817,8 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
             this.params = $routeParams;
             $scope.annexesData = {};
             $scope.annexesData.annexeFormats = ["application/pdf", "image/jpg", "image/jpeg", "image/png"];
-            $scope.annexesData.annexeTypes = [];
             $scope.annexesData.annexeTypesObligatoires = [];
             $scope.annexesData.referenceFiles = [];
-            $scope.annexesData.annexeTypeSelected = {};
-
-            if ($scope.annexesData.annexeTypes.length == 0) {
-                $http.get(urlPrefix + '/annexes/typesList').
-                    success(function (data, status, headers, config) {
-                        $scope.annexesData.annexeTypes = angular.fromJson(data.response);
-                        $log.info('Liste types annexes a été récupérée avec succès!');
-                    }).
-                    error(function (data, status, headers, config) {
-                        $log.debug('Error ' + urlPrefix + '/annexes/typesList/ \n Status :' + status);
-                    });
-            }
 
             if ($scope.annexesData.annexeTypesObligatoires.length == 0) {
                 $http.get(urlPrefix + '/annexes/typesObligatoiresList', {
@@ -873,14 +848,6 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
 
                             var currentAnnexe = fetchedAnnexes[indexOut];
                             var displayedAnnexe = {};
-
-                            for (var indexJ = 0; indexJ < $scope.annexesData.annexeTypes.length; indexJ++) {
-                                if ($scope.annexesData.annexeTypes[indexJ].id == currentAnnexe.typeAnnexe.id) {
-                                    displayedAnnexe.annexeType = $scope.annexesData.annexeTypes[indexJ];
-                                    break;
-                                }
-                            }
-
                             displayedAnnexe.name = currentAnnexe.nomFichier.nomFichier;
                             $scope.annexesData.referenceFiles.push(displayedAnnexe);
                         }
@@ -911,17 +878,11 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                 }
             };
 
-            $scope.isAnnexeTypeNotSelected = function () {
-                return $scope.annexesData.annexeTypeSelected == null || $scope.annexesData.annexeTypeSelected == undefined ||
-                    $scope.annexesData.annexeTypeSelected.id == null;
-            };
-
             $scope.filesChanged = function (targetFiles) {
                 $scope.files = [];
 
                 var fileThreshold = 3; // MB
                 var newFilesList = targetFiles.files;
-                var typeAnnexe = $scope.annexesData.annexeTypeSelected.id;
                 var isValidList = true;
 
                 // Check format for all files list
@@ -937,7 +898,6 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
 
                 for (var indexI = 0; indexI < newFilesList.length; indexI++) {
                     var currentFile = newFilesList[indexI];
-                    currentFile["typeAnnexe"] = typeAnnexe;
                     var fileType = currentFile.type;
                     var fileSize = currentFile.size;
                     var fileName = currentFile.name;
@@ -974,7 +934,6 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                             }
                         }
                         $scope.files = $scope.annexesData.referenceFiles;
-                        $scope.annexesData.annexeTypeSelected = {};
                         $log.info('Document(s) valide(s) !');
                     } else {
                         $scope.annexesData.referenceFiles = [];
@@ -985,13 +944,11 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                             doUploadFile(currentValidFile);
                         }
                         $scope.files = $scope.annexesData.referenceFiles;
-                        $scope.annexesData.annexeTypeSelected = {};
                         $log.info('Document(s) valide(s) !');
                     }
                 } else {
                     $scope.files = $scope.annexesData.referenceFiles;
-                    $scope.annexesData.annexeTypeSelected = {};
-                    $rootScope.error = typeAnnexe + ' : une/plusieurs pièces ne respectent pas les règles de nommage ou ne correspondent pas aux formats supportés (pdf, image)';
+                    $rootScope.error = 'une/plusieurs pièces ne respectent pas les règles de nommage ou ne correspondent pas aux formats supportés (pdf, image)';
                     $log.info($rootScope.error);
                 }
             };
@@ -1002,8 +959,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                     responseType: 'arraybuffer',
                     params: {
                         referenceDeDemande: $window.localStorage.getItem('referenceDeDemande'),
-                        annexeFileName: file.name,
-                        annexeType: file.typeAnnexe
+                        annexeFileName: file.name
                     }
                 })
                     .success(function (data, status, headers, config) {
@@ -1037,21 +993,19 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                         if (file.name == currentFetchedFile.name) {
                             // TODO attendre la reponse server avant de faire le splice
                             $scope.annexesData.referenceFiles.splice(indexH, 1);
-                            doDeleteFile(currentFetchedFile, file.typeAnnexe);
+                            doDeleteFile(currentFetchedFile);
                             break;
                         }
                     }
                 }
                 $$scope.files = $scope.annexesData.referenceFiles;
-                $scope.annexesData.annexeTypeSelected = {};
             };
 
             function doDeleteFile(file) {
                 $http.get(urlPrefix + '/annexes/supprimer', {
                     params: {
                         referenceDeDemande: $window.localStorage.getItem('referenceDeDemande'),
-                        annexeFileName: file.name,
-                        annexeType: file.typeAnnexe
+                        annexeFileName: file.name
                     }
                 })
                     .success(function (data, status, headers, config) {
@@ -1070,7 +1024,6 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                 formData.append("annexeFileName", currentFetchedFile.name);
                 formData.append("annexeFileSize", currentFetchedFile.size);
                 formData.append("annexeFileType", currentFetchedFile.type);
-                formData.append("annexeType", currentFetchedFile.typeAnnexe);
                 var deferred = $q.defer();
                 $http.post(urlPrefix + '/annexes/attacher', formData, {
                     transformRequest: angular.identity,

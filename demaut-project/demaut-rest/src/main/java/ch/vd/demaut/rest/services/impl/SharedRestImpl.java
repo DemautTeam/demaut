@@ -28,25 +28,6 @@ public class SharedRestImpl {
     private static final Logger LOGGER = LoggerFactory.getLogger(SharedRestImpl.class);
 
     @GET
-    @Path("/nationalites")
-    @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed("USER")
-    public Response listerLesNationalites() throws Exception {
-
-        LOGGER.info("listerLesNationalites");
-
-        // Alternative:
-        List<Pays> paysList = buildListePaysSansProgresSOA();
-        // Autre alternative:
-        //List<VcType> paysList = buildListePaysAvecProgresSOA(uriInfo);
-        return RestUtils.buildJSonResponse(paysList);
-    }
-
-    private List<Pays> buildListePaysSansProgresSOA() {
-        return Arrays.asList(Pays.values());
-    }
-
-    @GET
     @Path("/langues")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
@@ -67,8 +48,12 @@ public class SharedRestImpl {
 
         // Alternative:
         List<Pays> paysList = buildListePaysSansProgresSOA();
-        // Autre alternative:
-        //List<VcType> paysList = buildListePaysAvecProgresSOA(uriInfo);
+
         return RestUtils.buildJSonResponse(paysList);
     }
+
+    private List<Pays> buildListePaysSansProgresSOA() {
+        return Arrays.asList(Pays.values());
+    }
+
 }

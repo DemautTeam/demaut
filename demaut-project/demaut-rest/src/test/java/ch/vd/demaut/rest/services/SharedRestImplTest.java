@@ -30,11 +30,6 @@ public class SharedRestImplTest {
     public void setUp() throws Exception {
         assertThat(sharedRest).isNotNull();
     }
-    @Test
-    public void testListerLesNationalites() throws Exception {
-        Response response = sharedRest.listerLesNationalites();
-        assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
-    }
 
     @Test
     public void testListerLesLangues() throws Exception {

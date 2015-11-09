@@ -60,7 +60,6 @@ public class AnnexeRestImpl extends AbstractRestService {
         return RestUtils.buildJSonResponse(typesAnnexe);
     }
 
-
     @GET
     @Path("/typesObligatoiresList")
     @Produces(MediaType.APPLICATION_JSON)
@@ -69,7 +68,8 @@ public class AnnexeRestImpl extends AbstractRestService {
 
         Login login = getLogin();
 
-        logger.info("listerLesTypeAnnexesObligatoires pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr);
+        logger.info("listerLesTypeAnnexesObligatoires pour : " + login.getValue() + ", referenceDeDemande="
+                + referenceDeDemandeStr);
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
 
@@ -99,15 +99,15 @@ public class AnnexeRestImpl extends AbstractRestService {
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @RolesAllowed("USER")
     public Response afficherUneAnnexe(@QueryParam("referenceDeDemande") String referenceDeDemandeStr,
-                                      @QueryParam("annexeFileName") String annexeFileName,
-                                      @QueryParam("annexeType") String annexeTypeIdStr) {
+            @QueryParam("annexeFileName") String annexeFileName) {
 
         Login login = getLogin();
 
-        logger.info("afficherUneAnnexe pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr + ", annexeFileName=" + annexeFileName + ", annexeTypeIdStr=" + annexeTypeIdStr);
+        logger.info("afficherUneAnnexe pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr
+                + ", annexeFileName=" + annexeFileName);
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
-        AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
+        AnnexeFK annexeFK = buildAnnexeFK(annexeFileName);
 
         ContenuAnnexe contenuAnnexe = annexesService.recupererContenuAnnexe(referenceDeDemande, annexeFK);
         return RestUtils.BuildStream(contenuAnnexe.getContenu());
@@ -119,18 +119,16 @@ public class AnnexeRestImpl extends AbstractRestService {
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
     public Response attacherUneAnnexe(@Multipart("referenceDeDemande") String referenceDeDemandeStr,
-                                      @Multipart("annexeFile") File file,
-                                      @Multipart("annexeFileName") String annexeFileName,
-                                      @Multipart("annexeFileSize") String annexeFileSize,
-                                      @Multipart("annexeFileType") String annexeFileType,
-                                      @Multipart("annexeType") String annexeTypeIdStr) {
+            @Multipart("annexeFile") File file, @Multipart("annexeFileName") String annexeFileName,
+            @Multipart("annexeFileSize") String annexeFileSize, @Multipart("annexeFileType") String annexeFileType) {
 
         Login login = getLogin();
 
-        logger.info("attacherUneAnnexe pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr + ", annexeFileName=" + annexeFileName + ", annexeTypeIdStr=" + annexeTypeIdStr);
+        logger.info("attacherUneAnnexe pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr
+                + ", annexeFileName=" + annexeFileName);
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
-        AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
+        AnnexeFK annexeFK = buildAnnexeFK(annexeFileName);
 
         annexesService.attacherUneAnnexe(referenceDeDemande, file, annexeFK.getNomFichier());
         return RestUtils.buildJSonResponse(true);
@@ -141,15 +139,15 @@ public class AnnexeRestImpl extends AbstractRestService {
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
     public Response supprimerUneAnnexe(@QueryParam("referenceDeDemande") String referenceDeDemandeStr,
-                                       @QueryParam("annexeFileName") String annexeFileName,
-                                       @QueryParam("annexeType") String annexeTypeIdStr) {
+            @QueryParam("annexeFileName") String annexeFileName) {
 
         Login login = getLogin();
 
-        logger.info("supprimerUneAnnexe pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr + ", annexeFileName=" + annexeFileName + ", annexeTypeIdStr=" + annexeTypeIdStr);
+        logger.info("supprimerUneAnnexe pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr
+                + ", annexeFileName=" + annexeFileName);
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
-        AnnexeFK annexeFK = buildAnnexeFK(annexeFileName, annexeTypeIdStr);
+        AnnexeFK annexeFK = buildAnnexeFK(annexeFileName);
 
         annexesService.supprimerUneAnnexe(referenceDeDemande, annexeFK);
         return RestUtils.buildJSonResponse(true);
@@ -158,14 +156,13 @@ public class AnnexeRestImpl extends AbstractRestService {
     // ********************************************************* Methodes privees
 
     /**
-     * Méthode qui renvoie la liste des types d'annexe sans passer par le WS
-     * ProgresSOA
+     * Méthode qui renvoie la liste des types d'annexe sans passer par le WS ProgresSOA
      */
     private List<TypeAnnexe> buildListeTypesAnnexesSansProgresSOA() {
         return Arrays.asList(TypeAnnexe.values());
     }
-    
-    private AnnexeFK buildAnnexeFK(String annexeFileName, String annexeTypeIdStr) {
+
+    private AnnexeFK buildAnnexeFK(String annexeFileName) {
         NomFichier nomFichier = new NomFichier(annexeFileName);
         return new AnnexeFK(nomFichier);
     }

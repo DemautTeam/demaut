@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.ContenuAnnexe;
 import ch.vd.demaut.domain.annexes.NomFichier;
-import ch.vd.demaut.domain.annexes.TypeAnnexe;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
@@ -32,7 +31,7 @@ import ch.vd.demaut.rest.services.impl.AnnexeRestImpl;
 import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 
 @Ignore("TODO Should mock @Context HttpHeaders demaut-user-id")
-@ContextConfiguration({"classpath*:restTest-context.xml"})
+@ContextConfiguration({ "classpath*:restTest-context.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AnnexeRestImplTest {
@@ -81,7 +80,8 @@ public class AnnexeRestImplTest {
 
     @Test
     public void testAfficherUneAnnexeInvalid() throws Exception {
-        Response response = annexeRest.afficherUneAnnexe(demandeEnCours.getReferenceDeDemande().getValue(), "Test_multipart.pdf", "1");
+        Response response = annexeRest.afficherUneAnnexe(demandeEnCours.getReferenceDeDemande().getValue(),
+                "Test_multipart.pdf");
         assertNotNull(response);
     }
 
@@ -89,16 +89,15 @@ public class AnnexeRestImplTest {
     public void testAttacherUneAnnexe() throws Exception {
         File fileMultipart = new File("target/Test_multipart.cfg");
         FileUtils.writeByteArrayToFile(fileMultipart, byteArray);
-        Response response = annexeRest.attacherUneAnnexe(demandeEnCours.getReferenceDeDemande().getValue(), fileMultipart,
-                "Test_multipart.pdf", String.valueOf(byteArray.length), "application/cfg",
-                String.valueOf(TypeAnnexe.CV.getRefProgresID().getId()));
+        Response response = annexeRest.attacherUneAnnexe(demandeEnCours.getReferenceDeDemande().getValue(),
+                fileMultipart, "Test_multipart.pdf", String.valueOf(byteArray.length), "application/cfg");
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 
     @Test
     public void testSupprimerAnnexe() throws Exception {
-        Response response = annexeRest.supprimerUneAnnexe(demandeEnCours.getReferenceDeDemande().getValue(), "Test_multipart.pdf",
-                String.valueOf(TypeAnnexe.CV.getRefProgresID().getId()));
+        Response response = annexeRest.supprimerUneAnnexe(demandeEnCours.getReferenceDeDemande().getValue(),
+                "Test_multipart.pdf");
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
     }
 }

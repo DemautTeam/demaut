@@ -169,7 +169,7 @@
                              popover-trigger="none" popover-is-open="(wouldStepNext && donneesPerso.donneesPersoDataForm.nationalite.$invalid) || (donneesPerso.donneesPersoDataForm.nationalite.$invalid && !donneesPerso.donneesPersoDataForm.nationalite.$pristine)" popover-placement="right"
                              uib-popover="Veuillez saisir votre nationalité.">
                             <select id="nationalite" name="nationalite" ng-model="personalData.nationalite" required ng-change="resetPermis()"
-                                    ng-options="nationalite.libl for nationalite in nationalites track by nationalite.id" class="form-control" />
+                                    ng-options="nationalite.libl for nationalite in paysList track by nationalite.id" class="form-control" />
                         </div>
                     </div>
 

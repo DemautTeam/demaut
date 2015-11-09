@@ -66,19 +66,6 @@ public class JSonConversionTest extends AbstractJSonConversionTest {
     }
 
     @Test
-    public void testConversionProfession() {
-
-        // Fixture
-        List<Profession> professions = new ArrayList<Profession>();
-        professions.add(Profession.Chiropraticien);
-        professions.add(Profession.Dieteticien);
-
-        // Process transform & Assert
-        assertJsonStr(professions,
-                "[{\"name\":\"Chiropraticien\",\"id\":53843599,\"libl\":\"Chiropraticien\"},{\"name\":\"Dieteticien\",\"id\":53843600,\"libl\":\"Diététicien\"}]");
-    }
-
-    @Test
     public void testConversionReferenceDemande() {
         // Fixture
         ReferenceDeDemande ref = new ReferenceDeDemande("1234");

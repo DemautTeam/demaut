@@ -126,6 +126,7 @@ public class PersonnelRestImpl extends AbstractRestService {
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
 
         DonneesPersonnelles donneesPersonnelles = donneesPersonnellesService.recupererDonneesPersonnelles(login, referenceDeDemande);
+        
         return RestUtils.buildJSonResponse(donneesPersonnelles);
     }
 }

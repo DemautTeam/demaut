@@ -65,7 +65,7 @@ public final class RestUtils {
         ObjectMapper objMapper = new ObjectMapper();
         objMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 
-        SimpleModule module = new SimpleModule("EnumModule");
+        SimpleModule module = new SimpleModule("DemautModule");
         module.addSerializer(new TypeProgresJsonSerializer());
         module.addSerializer(new CodeGLNJsonSerializer());
         module.addSerializer(new NomJsonSerializer());
