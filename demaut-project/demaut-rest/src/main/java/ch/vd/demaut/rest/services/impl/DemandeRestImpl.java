@@ -57,9 +57,9 @@ public class DemandeRestImpl extends AbstractRestService {
         LOG.debug("CodeGLN : {}", codeGLN.getValue());
         Set<ConstraintViolation<CodeGLN>> contraints = ValidatorFactoryDefault.getValidator().validate(codeGLN);
         if (contraints.isEmpty()) {
-            return RestUtils.buildJSonResponse("OK");
+            return RestUtils.buildJSonResponse("{\"response\":\"OK\"}");
         } else {
-            return RestUtils.buildJSonResponse("Nok");
+            return RestUtils.buildJSonResponse("{\"response\":\"NOK\"}");
         }
     }
 
