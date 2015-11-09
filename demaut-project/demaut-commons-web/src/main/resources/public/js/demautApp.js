@@ -94,7 +94,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
             $scope.viewDemande = function (referenceDeDemande) {
                 $scope.indexStep += 1;
                 $window.localStorage.setItem('referenceDeDemande', referenceDeDemande);
-                $location.path('/Demaut/demande/professionSante');
+                $location.path('/Demaut/demande/donneesPerso');
             };
 
             $scope.deleteDemande = function (referenceDeDemande) {
