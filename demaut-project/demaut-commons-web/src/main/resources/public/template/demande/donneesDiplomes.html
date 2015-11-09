@@ -28,7 +28,7 @@
                              popover-trigger="none" popover-is-open="wouldStepNext && donneesDiplome.diplomeDataForm.typeDiplome.$invalid" popover-placement="right"
                              uib-popover="Veuillez selectionner un type de diplôme.">
                             <select id="typeDiplome" name="typeDiplome" ng-model="diplomeData.diplome.typeDiplome" ng-change="fetchListeFormations()" required class="form-control"
-                                ng-options="typeDiplome.libl for typeDiplome in diplomeData.typeDiplomes track by typeDiplome.id"></select>
+                                ng-options="typeDiplome.libl for typeDiplome in typeDiplomes track by typeDiplome.id"></select>
                         </div>
                     </div>
                     <!--Titre de la formation-->
@@ -38,7 +38,7 @@
                              popover-trigger="none" popover-is-open="wouldStepNext && donneesDiplome.diplomeDataForm.typeFormation.$invalid" popover-placement="right"
                              uib-popover="Veuillez selectionner un titre de formation.">
                             <select id="typeFormation" name="typeFormation" ng-model="diplomeData.diplome.typeFormation" required class="form-control"
-                                    ng-options="typeFormation.libl for typeFormation in diplomeData.typeFormations track by typeFormation.id"></select>
+                                    ng-options="typeFormation.libl for typeFormation in typeFormations track by typeFormation.id"></select>
                         </div>
                     </div>
                     <!--Complément-->
@@ -74,7 +74,7 @@
                              popover-trigger="none" popover-is-open="wouldStepNext && donneesDiplome.diplomeDataForm.paysObtention.$invalid" popover-placement="right"
                              uib-popover="Veuillez saisir le pays d'obtention du diplôme.">
                             <select id="paysObtention" name="paysObtention" ng-model="diplomeData.diplome.paysObtention" required class="form-control"
-                                    ng-options="pays.libl for pays in diplomeData.paysList track by pays.id"/>
+                                    ng-options="pays.libl for pays in paysList track by pays.id"/>
                         </div>
                     </div>
                     <!--Date de réconnaissance-->

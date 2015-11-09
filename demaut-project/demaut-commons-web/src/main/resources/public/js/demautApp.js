@@ -338,7 +338,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                         $scope.personalData.npa = responseValues.adresse.npa;
 
                         for (var indexI = 0; indexI < $scope.paysList.length; indexI++) {
-                            if ($scope.paysList[indexI].name == responseValues.adresse.pays) {
+                            if ($scope.paysList[indexI].id == responseValues.adresse.pays.id) {
                                 $scope.personalData.pays = $scope.paysList[indexI];
                                 break;
                             }
@@ -354,7 +354,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                     $scope.personalData.langue = responseValues.langue;
 
                     for (var indexJ = 0; indexJ < $scope.nationalites.length; indexJ++) {
-                        if ($scope.nationalites[indexJ].name == responseValues.nationalite) {
+                        if ($scope.nationalites[indexJ].id == responseValues.nationalite.id) {
                             $scope.personalData.nationalite = $scope.nationalites[indexJ];
                             break;
                         }
@@ -482,7 +482,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                         $log.info('Liste types diplomes a été récupérée avec succès!');
                     }).
                     error(function (data, status, headers, config) {
-                        $log.debug('Error ' + urlPrefix + '/diplomes/typeDiplomesList/ \n Status :' + status);
+                        $log.warn('Error ' + urlPrefix + '/diplomes/typeDiplomesList/ \n Status :' + status);
                     });
             }
 
@@ -538,7 +538,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                             displayedDiplome.referenceDeDiplome = currentDiplome.referenceDeDiplome.value;
 
                             for (var indexJ = 0; indexJ < $scope.typeDiplomes.length; indexJ++) {
-                                if ($scope.typeDiplomes[indexJ].name == currentDiplome.typeDiplomeAccepte) {
+                                if ($scope.typeDiplomes[indexJ].id == currentDiplome.typeDiplomeAccepte.id) {
                                     displayedDiplome.typeDiplome = $scope.typeDiplomes[indexJ];
                                     break;
                                 }
@@ -554,7 +554,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                             displayedDiplome.dateObtention = new Date(currentDiplome.dateObtention.value);
 
                             for (var indexK = 0; indexK < $scope.paysList.length; indexK++) {
-                                if ($scope.paysList[indexK].name == currentDiplome.paysObtention.value) {
+                                if ($scope.paysList[indexK].id == currentDiplome.paysObtention.id) {
                                     displayedDiplome.paysObtention = $scope.paysList[indexK];
                                     break;
                                 }
@@ -875,7 +875,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                             var displayedAnnexe = {};
 
                             for (var indexJ = 0; indexJ < $scope.annexesData.annexeTypes.length; indexJ++) {
-                                if ($scope.annexesData.annexeTypes[indexJ].name == currentAnnexe.typeAnnexe) {
+                                if ($scope.annexesData.annexeTypes[indexJ].id == currentAnnexe.typeAnnexe.id) {
                                     displayedAnnexe.annexeType = $scope.annexesData.annexeTypes[indexJ];
                                     break;
                                 }
