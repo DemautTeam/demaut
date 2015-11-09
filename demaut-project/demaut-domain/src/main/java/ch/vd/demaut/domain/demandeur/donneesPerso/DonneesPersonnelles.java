@@ -18,7 +18,7 @@ public class DonneesPersonnelles extends AbstractEntity {
 
     private Prenom prenom;
 
-    private NomDeCelibataire nomDeCelibataire;
+    private Nom nomDeCelibataire;
 
     private Genre genre;
 
@@ -48,7 +48,7 @@ public class DonneesPersonnelles extends AbstractEntity {
     }
 
     //TODO: A supprimer
-    public DonneesPersonnelles(Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Adresse adresse, Email email,
+    public DonneesPersonnelles(Nom nom, Prenom prenom, Nom nomDeCelibataire, Adresse adresse, Email email,
                                Telephone telephonePrive, Telephone telephoneMobile, Telephone fax, Genre genre,
                                DateDeNaissance dateDeNaissance, Pays nationalite, Langue langue, Permis permis) {
         super();
@@ -80,9 +80,8 @@ public class DonneesPersonnelles extends AbstractEntity {
         return prenom;
     }
 
-    //TODO refactorer nom de celibataire pour Nom
     @Valid
-    public NomDeCelibataire getNomDeCelibataire() {
+    public Nom getNomDeCelibataire() {
         return nomDeCelibataire;
     }
 
@@ -144,7 +143,7 @@ public class DonneesPersonnelles extends AbstractEntity {
         return nationalite.estEtranger();
     }
     
-    public void renseignerLesDonneesPersonnelles(Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Adresse adresse, Email email,
+    public void renseignerLesDonneesPersonnelles(Nom nom, Prenom prenom, Nom nomDeCelibataire, Adresse adresse, Email email,
                                                  Telephone telephonePrive, Telephone telephoneMobile, Telephone fax, Genre genre,
                                                  DateDeNaissance dateDeNaissance, Pays nationalite, Langue langue, Permis permis) {
         this.nom = nom;

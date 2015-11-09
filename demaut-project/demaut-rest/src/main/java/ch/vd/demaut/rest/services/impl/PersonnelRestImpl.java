@@ -73,7 +73,7 @@ public class PersonnelRestImpl extends AbstractRestService {
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
         Nom nom = new Nom(nomStr);
         Prenom prenom = new Prenom(prenomStr);
-        NomDeCelibataire nomDeCelibataire = StringUtils.isEmpty(nomDeCelibataireStr) ? null : new NomDeCelibataire(nomDeCelibataireStr);
+        Nom nomDeCelibataire = StringUtils.isEmpty(nomDeCelibataireStr) ? null : new Nom(nomDeCelibataireStr);
         Localite localite = new Localite(localiteStr);
         NPA npa = new NPA(npaStr);
         Pays pays = Pays.getTypeById(paysId);

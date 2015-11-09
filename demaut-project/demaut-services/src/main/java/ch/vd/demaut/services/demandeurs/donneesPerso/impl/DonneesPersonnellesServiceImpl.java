@@ -1,20 +1,19 @@
 package ch.vd.demaut.services.demandeurs.donneesPerso.impl;
 
-import ch.vd.demaut.domain.demandeur.Telephone;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
+import ch.vd.demaut.domain.demandeur.Email;
 import ch.vd.demaut.domain.demandeur.Pays;
+import ch.vd.demaut.domain.demandeur.Telephone;
 import ch.vd.demaut.domain.demandeur.donneesPerso.Adresse;
 import ch.vd.demaut.domain.demandeur.donneesPerso.DateDeNaissance;
 import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnelles;
-import ch.vd.demaut.domain.demandeur.Email;
 import ch.vd.demaut.domain.demandeur.donneesPerso.Genre;
 import ch.vd.demaut.domain.demandeur.donneesPerso.Langue;
 import ch.vd.demaut.domain.demandeur.donneesPerso.Nom;
-import ch.vd.demaut.domain.demandeur.donneesPerso.NomDeCelibataire;
 import ch.vd.demaut.domain.demandeur.donneesPerso.Permis;
 import ch.vd.demaut.domain.demandeur.donneesPerso.Prenom;
 import ch.vd.demaut.domain.exception.DonneesProfessionnellesNotFoundException;
@@ -38,7 +37,7 @@ public class DonneesPersonnellesServiceImpl implements DonneesPersonnellesServic
     @Transactional
     @Override
     public void renseignerLesDonneesPersonnelles(Login login, ReferenceDeDemande referenceDeDemande,
-                                                 Nom nom, Prenom prenom, NomDeCelibataire nomDeCelibataire, Adresse adresse, Email email,
+                                                 Nom nom, Prenom prenom, Nom nomDeCelibataire, Adresse adresse, Email email,
                                                  Telephone telephonePrive, Telephone telephoneMobile, Telephone fax, Genre genre, DateDeNaissance dateDeNaissance,
                                                  Pays nationalite, Langue langue, Permis permis) {
         DemandeAutorisation demandeAutorisation = demandeAutorisationRepository.recupererDemandeParReference(referenceDeDemande);
