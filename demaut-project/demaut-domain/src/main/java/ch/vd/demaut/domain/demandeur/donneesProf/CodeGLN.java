@@ -21,7 +21,8 @@ public class CodeGLN extends BaseValueObject {
 
     // ********************************************************* Constructor
 
-    public CodeGLN() {
+    //Used for JPA Only
+    CodeGLN() {
     }
 
     public CodeGLN(String value) {

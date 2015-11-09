@@ -12,7 +12,7 @@ Fonctionnalité: Vérification du scenario de l'activité future
   Plan du Scénario: Contrôler le format du code NPA Suisse
     Etant donné le code NPA <npa> renseigné par l´utilisateur
     Lorsque le demandeur ajoute cette activité future
-    Alors le système Demaut <action> ce code NPA en tant que NPA Suisse avec quatre caractères
+    Alors le système Demaut <action> d´ajouter cette activité future à la demande en cours
     Exemples: 
       | npa     | action  |
       | "1234"  | accepte |
@@ -25,9 +25,9 @@ Fonctionnalité: Vérification du scenario de l'activité future
 
   @controler-telephones
   Plan du Scénario: Contrôler le format du téléphone
-    Etant donné le numéro de téléphone <pro> professionnel, le téléphone <mobile> mobile et le numéro de fax <fax> renseignés par l'utilisateur
+    Etant donné le numéro de téléphone <pro> professionnel, le téléphone <mobile> mobile et le numéro de fax <fax> renseignés par l´utilisateur
     Lorsque le demandeur ajoute cette activité future
-    Alors le système Demaut <action> les numéros de télephone
+    Alors le système Demaut <action> d´ajouter cette activité future à la demande en cours
 
     Exemples: 
       | pro            | mobile      | fax          | action  |
@@ -39,12 +39,11 @@ Fonctionnalité: Vérification du scenario de l'activité future
       | 123456         |             |              | refuse  |
       | 0123456        | 45+54a5     |              | refuse  |
 
-
   @controler-email
   Plan du Scénario: Contrôler le formulaire completement saisi est valide
-    Etant donné  l'email <email> renseignés par l'utilisateur
+    Etant donné  l´email <email> renseignés par l´utilisateur
     Lorsque le demandeur ajoute cette activité future
-    Alors le système Demaut <action> les numéros de télephone
+    Alors le système Demaut <action> d´ajouter cette activité future à la demande en cours
 
     Exemples:
       | email          | action  |
@@ -53,11 +52,11 @@ Fonctionnalité: Vérification du scenario de l'activité future
       | toto@titicom   | accepte |
       |                | refuse  |
 
-  @controler-nom
-  Plan du Scénario: Contrôler le nom de l'établissement
-    Etant donné  le nom de l'établissement <nom> renseignés par l'utilisateur
+  @controler-nom-etablissement
+  Plan du Scénario: Contrôler le nom de l´établissement
+    Etant donné  le nom de l´établissement <nom> renseignés par l´utilisateur
     Lorsque le demandeur ajoute cette activité future
-    Alors le système Demaut <action> le nom de l'établissement
+    Alors le système Demaut <action> d´ajouter cette activité future à la demande en cours
 
     Exemples:
       | nom               | action  |
@@ -66,13 +65,11 @@ Fonctionnalité: Vérification du scenario de l'activité future
       | avec 120 cararcteres. Aasjklaskjkajkaj sjdklsaldk askdlklaskd as dksajdkajskdjasdjksa djs djkaskd jaksjdkajk121314244dfa             | accepte  |
       | plus de 120 cararcteres aasjklaskjkajkaj sjdklsaldk askdlklaskd as dksajdkajskdjasdjksa djs djkaskd jaksjdkajkjkjksajkkjkja          | refuse  |
 
-
-
   @controler-formulaire-rempli
   Plan du Scénario: Contrôler le formulaire rempli
-    Etant donné  les champs requis nom <nom>, adresse <adresse>, npa <npa>, localité <localite>, téléphone <telephone>, email <email>, renseignés par l'utilisateur
+    Etant donné  les champs requis nom <nom>, adresse <adresse>, npa <npa>, localité <localite>, téléphone <telephone>, email <email>, renseignés par l´utilisateur
     Lorsque le demandeur ajoute cette activité future
-    Alors le système Demaut <action> le formulaires d'activité futures
+    Alors le système Demaut <action> d´ajouter cette activité future à la demande en cours
 
     Exemples:
       | nom             | adresse         | npa   | localite   | telephone   | email          | action  |

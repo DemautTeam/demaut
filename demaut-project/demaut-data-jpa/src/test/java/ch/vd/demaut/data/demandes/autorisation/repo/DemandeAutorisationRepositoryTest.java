@@ -6,10 +6,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-import ch.vd.demaut.domain.demandeur.Email;
-import ch.vd.demaut.domain.demandeur.Telephone;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Nom;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.*;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,16 +20,25 @@ import ch.vd.demaut.domain.annexes.Annexe;
 import ch.vd.demaut.domain.annexes.AnnexeMetadata;
 import ch.vd.demaut.domain.annexes.ContenuAnnexe;
 import ch.vd.demaut.domain.annexes.NomFichier;
-import ch.vd.demaut.domain.demandes.DateDeCreation;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory;
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
+import ch.vd.demaut.domain.demandeur.Email;
 import ch.vd.demaut.domain.demandeur.Localite;
 import ch.vd.demaut.domain.demandeur.Pays;
+import ch.vd.demaut.domain.demandeur.Telephone;
+import ch.vd.demaut.domain.demandeur.donneesPerso.Nom;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.ActiviteFuture;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.Etablissement;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.NPAProfessionnel;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.SiteInternet;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.TypeActivite;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.TypePratiqueLamal;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.Voie;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.ActiviteEnvisagee;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.DatePrevueDebut;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.Superviseur;
@@ -51,7 +56,8 @@ import ch.vd.demaut.domain.utilisateurs.Login;
 import ch.vd.demaut.domain.utilisateurs.Utilisateur;
 import ch.vd.demaut.domain.utilisateurs.UtilisateurRepository;
 
-@ContextConfiguration({"classpath*:/jpaTest-context.xml"})
+//TODO: Splitter cette classe de test et surtout mieux verifier TOUS les atttributs des objets persistés
+@ContextConfiguration({ "classpath*:/jpaTest-context.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 public class DemandeAutorisationRepositoryTest {
 
@@ -73,7 +79,6 @@ public class DemandeAutorisationRepositoryTest {
     // ********************************************************* Transient
     // fields
     private final CodeGLN glnValide = new CodeGLN("4719512002889");
-    private final DateDeCreation dateDeCreation = new DateDeCreation(2015, 10, 1);
 
     // ********************************************************* Setup
     @Before
@@ -93,7 +98,7 @@ public class DemandeAutorisationRepositoryTest {
         // Construction de la demande
         Utilisateur utilisateur = creerUtilisateur("admin1@admin");
         DemandeAutorisation demandeInit = demandeAutorisationFactory.initierDemandeAutorisation(utilisateur.getLogin(),
-                Profession.Ergotherapeute, glnValide, dateDeCreation);
+                Profession.Ergotherapeute, glnValide);
         assertThat(demandeInit.getId()).isNull();
 
         persisterDemandeEtVerifier(demandeInit);
@@ -105,7 +110,7 @@ public class DemandeAutorisationRepositoryTest {
         // Construction de la demande
         Utilisateur utilisateur = creerUtilisateur("admin2@admin");
         DemandeAutorisation demandeInit = demandeAutorisationFactory.initierDemandeAutorisation(utilisateur.getLogin(),
-                Profession.Chiropraticien, glnValide, dateDeCreation);
+                Profession.Chiropraticien, glnValide);
         byte[] contenu = "AnnexeContenu".getBytes();
         Annexe annexe = new Annexe(new NomFichier("test.pdf"), new ContenuAnnexe(contenu));
         demandeInit.validerEtAttacherAnnexe(annexe);
@@ -117,8 +122,9 @@ public class DemandeAutorisationRepositoryTest {
     public void sauvegarderUneDemandeAvecActivitesFutures() {
         // Construction de la demande
         Utilisateur utilisateur = creerUtilisateur("admin4@admin");
+
         DemandeAutorisation demandeInit = demandeAutorisationFactory.initierDemandeAutorisation(utilisateur.getLogin(),
-                Profession.Chiropraticien, glnValide, dateDeCreation);
+                Profession.Chiropraticien, glnValide);
 
         ActiviteFuture activiteFuture = buildActiviteFutureValide();
 
@@ -133,7 +139,7 @@ public class DemandeAutorisationRepositoryTest {
 
         // Sauvegarder la demande
         DemandeAutorisation demandeAutorisation = demandeAutorisationFactory
-                .initierDemandeAutorisation(utilisateur.getLogin(), Profession.Medecin, glnValide, dateDeCreation);
+                .initierDemandeAutorisation(utilisateur.getLogin(), Profession.Medecin, glnValide);
 
         DonneesProfessionnelles donneesProfessionnelles = demandeAutorisation.getDonneesProfessionnelles();
         creerListeDiplomes(donneesProfessionnelles);
@@ -152,8 +158,10 @@ public class DemandeAutorisationRepositoryTest {
     // ********************************************************* Methods privées
 
     private ActiviteFuture buildActiviteFutureValide() {
-        Etablissement etablissement = new Etablissement(new Nom("Centre medical"), new Voie("2"), null, new Localite("Lausanne"), new NPAProfessionnel("1234"),
-                new Telephone("0123456"), new Telephone("0123456"), new Telephone("0123456"), new Email("toto@titi.com"), new SiteInternet("www.google.com"));
+        Etablissement etablissement = new Etablissement(new Nom("Centre medical"), new Voie("2"), null,
+                new Localite("Lausanne"), new NPAProfessionnel("1234"), new Telephone("0123456"),
+                new Telephone("0123456"), new Telephone("0123456"), new Email("toto@titi.com"),
+                new SiteInternet("www.google.com"));
         ActiviteEnvisagee activiteEnvisagee = new ActiviteEnvisagee(TypeActivite.Dependant,
                 new TauxActiviteEnDemiJournee(1), new DatePrevueDebut(new LocalDate(2015, 10, 1)),
                 new Superviseur("superviseur"));

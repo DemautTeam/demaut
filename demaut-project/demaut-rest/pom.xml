@@ -35,6 +35,10 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>demaut-commons4test</artifactId>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>demaut-data-mock</artifactId>
+        </dependency>
 
         <!-- CXF -->
         <dependency>

@@ -14,7 +14,6 @@ import ch.vd.demaut.domain.demandeur.donneesProf.activites.ActiviteAnterieure;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.ActiviteFuture;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.ListeDesActivitesAnterieures;
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.ListeDesActivitesFutures;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.ReferenceActiviteAnterieure;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.Diplome;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.DiplomeFK;
 import ch.vd.demaut.domain.demandeur.donneesProf.diplome.ListeDesDiplomes;
@@ -61,10 +60,6 @@ public class DonneesProfessionnelles extends AbstractEntity {
         getListeDesDiplomes().ajouterUnDiplome(diplomeAAjouter);
     }
 
-    public void validerEtAjouterActiviteFuture(ActiviteFuture activiteFutureAAjouter) {
-        getListeDesActivitesFutures().ajouterUneActiviteFuture(activiteFutureAAjouter);
-    }
-
     /**
      * Valide si le Code GLN est obligatoire et correct.
      * Si pas obligatoire, le code peut être nul
@@ -81,17 +76,6 @@ public class DonneesProfessionnelles extends AbstractEntity {
 
     public void supprimerUnDiplome(DiplomeFK diplomeFK) {
         getListeDesDiplomes().supprimerUnDiplome(diplomeFK);
-    }
-    
-    public void creerEtAjouterActiviteAnterieure() {
-        ReferenceActiviteAnterieure nouvelleReference = getListeDesActivitesAnterieures().genererNouvelleReference();
-        ActiviteAnterieure nouvelleActivite = new ActiviteAnterieure(nouvelleReference);
-        
-        ajouterActiviteAnterieure(nouvelleActivite);
-    }
-    
-    public void ajouterActiviteAnterieure(ActiviteAnterieure activiteAnterieure) {
-        getListeDesActivitesAnterieures().ajouterActivite(activiteAnterieure);
     }
 
     public ProcedureAnnexe calculerProcedureAnnexe() {

@@ -5,13 +5,22 @@ import javax.validation.constraints.NotNull;
 import org.joda.time.LocalDate;
 
 import ch.vd.demaut.commons.vo.BaseValueObject;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
 
+/**
+ * Date de création d'une {@link DemandeAutorisation}
+ *
+ */
 public class DateDeCreation extends BaseValueObject {
 
+    // ********************************************************* Fields
     private LocalDate value;
 
     // ********************************************************* Constructors
 
+    /**
+     * Construit une {@link DateDeCreation} à la date du jours system
+     */
     public DateDeCreation() {
         this.value = new LocalDate();
     }

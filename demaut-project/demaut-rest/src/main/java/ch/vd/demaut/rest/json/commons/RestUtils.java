@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import ch.vd.demaut.commons.exceptions.TechnicalException;
 import ch.vd.demaut.rest.json.serializer.CodeGLNJsonSerializer;
+import ch.vd.demaut.rest.json.serializer.DateDeCreationJsonSerializer;
 import ch.vd.demaut.rest.json.serializer.TypeProgresJsonSerializer;
 
 public final class RestUtils {
@@ -51,6 +52,7 @@ public final class RestUtils {
         SimpleModule module = new SimpleModule("EnumModule");
         module.addSerializer(new TypeProgresJsonSerializer());
         module.addSerializer(new CodeGLNJsonSerializer());
+        module.addSerializer(new DateDeCreationJsonSerializer());
 
         objMapper.registerModule(module);
 

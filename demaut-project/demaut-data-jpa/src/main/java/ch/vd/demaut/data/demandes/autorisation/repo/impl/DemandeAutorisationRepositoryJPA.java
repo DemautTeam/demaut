@@ -19,7 +19,6 @@ import ch.vd.demaut.domain.demandes.autorisation.StatutDemandeAutorisation;
 import ch.vd.demaut.domain.demandes.autorisation.repo.DemandeAutorisationRepository;
 import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnelles;
 import ch.vd.demaut.domain.demandeur.donneesProf.DonneesProfessionnelles;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.ListeDesActivitesFutures;
 import ch.vd.demaut.domain.exception.DemandeBrouillonExisteDejaException;
 import ch.vd.demaut.domain.exception.DemandeNotFoundException;
 import ch.vd.demaut.domain.utilisateurs.Login;
@@ -38,13 +37,10 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
     @Override
     public DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande referenceDeDemande) {
         logger.debug("Chargement de la demande  {}", referenceDeDemande.getValue());
+
         TypedQuery<DemandeAutorisation> typedQuery = createQueryParReference(referenceDeDemande);
         DemandeAutorisation demande = typedQuery.getSingleResult();
-
-        //Fetcher les activites futures
-        ListeDesActivitesFutures activitesFutures = demande.getDonneesProfessionnelles().getListeDesActivitesFutures();
-        activitesFutures.getActivitesFutures().iterator().hasNext();
-
+        
         return demande;
     }
 
@@ -82,13 +78,13 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
         final CriteriaBuilder criteriaBuilder = this.getEntityManager().getCriteriaBuilder();
         final CriteriaQuery<DemandeAutorisation> criteriaQuery = criteriaBuilder.createQuery(DemandeAutorisation.class);
         final Root<DemandeAutorisation> autorisationRoot = criteriaQuery.from(DemandeAutorisation.class);
-        //A completer le fetch si besoin de nouveaux elements en eager
         Fetch<DemandeAutorisation, DonneesProfessionnelles> fetchDonneesProfessionnelles = autorisationRoot.fetch("donneesProfessionnelles",JoinType.INNER);
+        //TODO: Supprimer ce fetch et le remplacer par un appel Service (comme Annexes et ActivitesFutures)
         fetchDonneesProfessionnelles.fetch("diplomes", JoinType.LEFT);
-        //fetchDonneesProfessionnelles.fetch("activitesFutures", JoinType.LEFT);
 
-
+        //TODO: Supprimer ce fetch et le remplacer pas un appel Service lors de l'écran des donnees perso 
         Fetch<DemandeAutorisation, DonneesPersonnelles> fetchDonneesPersonnelles = autorisationRoot.fetch("donneesPersonnelles",JoinType.INNER);
+        //TODO: Ce Fetch ne doit pas exister car l'adresse doit être directement incluse dans la table DonneesPersonnelles (Adresse est un VO)
         fetchDonneesPersonnelles.fetch("adresse", JoinType.LEFT);
 
         criteriaQuery.where(criteriaBuilder.equal(autorisationRoot.get("referenceDeDemande"), referenceDeDemande));
@@ -102,7 +98,8 @@ public class DemandeAutorisationRepositoryJPA extends GenericRepositoryImpl<Dema
         cq.where(
                 builder.equal(autorisationRoot.get("statutDemandeAutorisation"), StatutDemandeAutorisation.Brouillon),
                 builder.equal(autorisationRoot.get("login").get("value"), login.getValue()));
-        return this.getEntityManager().createQuery(cq);
+        TypedQuery<DemandeAutorisation> query = this.getEntityManager().createQuery(cq);
+        return query;
     }
 
 }

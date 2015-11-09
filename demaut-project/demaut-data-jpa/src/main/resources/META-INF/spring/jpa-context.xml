@@ -60,9 +60,12 @@
     <bean id="utilisateurRepository"
           class="ch.vd.demaut.data.utilisateurs.repo.impl.UtilisateurRepositoryJPA"/>
 
+    <bean id="sequenceur" class="ch.vd.demaut.domain.demandes.SequenceurImplStatic"/>
+
     <bean id="demandeAutorisationFactory"
         class="ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisationFactory">
         <property name="demandeAutorisationRepository" ref="demandeAutorisationRepository"/>
+        <property name="sequenceur" ref="sequenceur"/>
     </bean>
 
 </beans>

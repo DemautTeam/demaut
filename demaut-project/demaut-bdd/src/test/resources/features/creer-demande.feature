@@ -38,11 +38,6 @@ Fonctionnalité: Créer une demande
     Lorsque l´utilisateur initialise une demande de profession "Osteopathe" sans code GLN
     Alors le système Demaut crée la demande avec les caractéristiques [état: "Brouillon", utilisateur: "joe.dalton@vd.ch", type: "Osteopathe"]
 
-  Scénario: Refuser de créer une demande si le brouillon existe déjà
-  	Etant donné une demande de profession "Medecin" en cours de saisie ayant la référence "12345"
-    Lorsque l´utilisateur initialise une demande de profession "Osteopathe" sans code GLN
-    Alors le système Demaut "refuse" de créer la demande
-  
   @code-gln  
   Plan du scénario: Valider le code gln du demandeur
     Lorsque l´utilisateur initialise une demande de profession "Medecin" avec un code GLN <gln>
@@ -54,6 +49,22 @@ Fonctionnalité: Créer une demande
       | "g7601000000125" | "refuse"  |
       | "125"            | "refuse"  |
 
-
+  @brouillon
+  Scénario: Refuser de créer une demande si le brouillon existe déjà
+  	Etant donné une demande de profession "Medecin" en cours de saisie ayant la référence "12345"
+    Lorsque l´utilisateur initialise une demande de profession "Osteopathe" sans code GLN
+    Alors le système Demaut "refuse" de créer la demande
+  
+  @reference-demande
+  Scénario: Générer la référence de la demande
+    Lorsque la sequence de référence de la demande est initialisée
+    Lorsque l´utilisateur initialise une demande de profession "Medecin" avec un code GLN valide
+    Alors le système Demaut "accepte" de créer la demande
+    Alors cette demande a la référence "201507-0001"
+    
+    Etant donné l´utilisateur identifié et connecté avec le login "joe.dalton2@vd.ch"
+    Lorsque l´utilisateur initialise une demande de profession "Medecin" avec un code GLN valide
+    Alors le système Demaut "accepte" de créer la demande
+    Alors cette demande a la référence "201507-0002"
 
    

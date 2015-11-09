@@ -1,31 +1,27 @@
 package ch.vd.demaut.domain.demandeur.donneesProf.activites;
 
 import ch.vd.demaut.commons.annotations.Entity;
-import ch.vd.demaut.commons.entities.EntityFunctionalKeyAware;
+import ch.vd.demaut.commons.entities.EntityAvecOrdreFK;
 
 /**
  * Activite anterieure d'un demandeur professionel
  *
  */
 @Entity
-public class ActiviteAnterieure extends EntityFunctionalKeyAware  {
+public class ActiviteAnterieure extends EntityAvecOrdreFK  {
 
     // ********************************************************* Fields
-    private ReferenceActiviteAnterieure refenceActiviteAnterieure;
     
     // ********************************************************* Constructor
-    public ActiviteAnterieure(ReferenceActiviteAnterieure refenceActiviteAnterieure) {
-        this.refenceActiviteAnterieure = refenceActiviteAnterieure;
+    
+    //TODO: Changer ce constructeur lorsque fields implémentés
+    public ActiviteAnterieure() {
     }
     
     // ********************************************************* Getters
     @Override
     public ActiviteAnterieureFK getFunctionalKey() {
         return new ActiviteAnterieureFK(this);
-    }
-
-    public ReferenceActiviteAnterieure getReferenceActiviteAnterieure() {
-        return this.refenceActiviteAnterieure;
     }
 
 }

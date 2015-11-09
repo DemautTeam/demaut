@@ -8,9 +8,7 @@
     <import resource="classpath:META-INF/spring/jpa-context.xml"/>
 
     <!--Services-->
-    <bean id="annexesService" class="ch.vd.demaut.services.annexes.impl.AnnexesServiceImpl">
-        <property name="demandeAutorisationRepository" ref="demandeAutorisationRepository"/>
-    </bean>
+    <bean id="utilisateurService" class="ch.vd.demaut.services.utilisateurs.impl.UtilisateurServiceImpl"/>
     <bean id="demandeAutorisationService" class="ch.vd.demaut.services.demandes.autorisation.impl.DemandeAutorisationServiceImpl">
         <property name="demandeAutorisationRepository" ref="demandeAutorisationRepository"/>
         <property name="demandeAutorisationFactory" ref="demandeAutorisationFactory"/>
@@ -21,6 +19,11 @@
     <bean id="donneesProfessionnellesService" class="ch.vd.demaut.services.demandeurs.donneesProf.impl.DonneesProfessionnellesServiceImpl">
         <property name="demandeAutorisationRepository" ref="demandeAutorisationRepository"/>
     </bean>
-    <bean id="utilisateurService" class="ch.vd.demaut.services.utilisateurs.impl.UtilisateurServiceImpl"/>
+    <bean id="activitesFuturesService" class="ch.vd.demaut.services.demandeurs.donneesProf.activites.ActivitesFuturesServiceImpl">
+        <property name="demandeAutorisationRepository" ref="demandeAutorisationRepository"/>
+    </bean>
+    <bean id="annexesService" class="ch.vd.demaut.services.annexes.impl.AnnexesServiceImpl">
+        <property name="demandeAutorisationRepository" ref="demandeAutorisationRepository"/>
+    </bean>
 
 </beans>

@@ -1,18 +1,9 @@
 package ch.vd.demaut.rest.services.impl;
 
-import ch.vd.demaut.commons.validation.ValidatorFactoryDefault;
-import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
-import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
-import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
-import ch.vd.demaut.domain.utilisateurs.Login;
-import ch.vd.demaut.rest.json.commons.RestUtils;
-import ch.vd.demaut.rest.services.AbstractRestService;
-import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 import javax.annotation.security.RolesAllowed;
 import javax.validation.ConstraintViolation;
@@ -20,10 +11,25 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.*;
-import java.io.IOException;
-import java.util.List;
-import java.util.Set;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import ch.vd.demaut.commons.validation.ValidatorFactoryDefault;
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
+import ch.vd.demaut.domain.demandes.autorisation.DemandeAutorisation;
+import ch.vd.demaut.domain.demandes.autorisation.Profession;
+import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
+import ch.vd.demaut.domain.utilisateurs.Login;
+import ch.vd.demaut.rest.dto.DemandeAutorisationCockpitDTO;
+import ch.vd.demaut.rest.json.commons.RestUtils;
+import ch.vd.demaut.rest.services.AbstractRestService;
+import ch.vd.demaut.services.demandes.autorisation.DemandeAutorisationService;
 
 @CrossOriginResourceSharing(allowAllOrigins = true)
 @Path("/demande")
@@ -106,7 +112,11 @@ public class DemandeRestImpl extends AbstractRestService {
         LOG.debug("recuperer listes Brouillons pour : {}", login.getValue());
 
         List<DemandeAutorisation> demandeAutorisations = demandeAutorisationService.recupererListeBrouillons(login);
-        return RestUtils.buildJSonResponse(demandeAutorisations);
+        
+        List<DemandeAutorisationCockpitDTO> demandeAutorisationDTOs = convertToDemandeAutorisationDTOs(
+                demandeAutorisations);
+        
+        return RestUtils.buildJSonResponse(demandeAutorisationDTOs);
     }
 
     @GET
@@ -119,7 +129,20 @@ public class DemandeRestImpl extends AbstractRestService {
 
         LOG.debug("supprimer un brouillons pour : {}, referenceDeDemande= {}", login.getValue(), referenceDeDemande);
 
-        demandeAutorisationService.supprimerUnBrouillon(login, referenceDeDemande);
+        demandeAutorisationService.supprimerUnBrouillon(referenceDeDemande);
+        
         return RestUtils.buildJSonResponse(true);
     }
+    
+
+    private List<DemandeAutorisationCockpitDTO> convertToDemandeAutorisationDTOs(
+            List<DemandeAutorisation> demandeAutorisations) {
+        List<DemandeAutorisationCockpitDTO> demandeAutorisationDTOs = new ArrayList<DemandeAutorisationCockpitDTO>();
+        for (DemandeAutorisation demandeAutorisation : demandeAutorisations) {
+            demandeAutorisationDTOs.add(new DemandeAutorisationCockpitDTO(demandeAutorisation));
+        }
+        return demandeAutorisationDTOs;
+    }
+
+
 }

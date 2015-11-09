@@ -1,20 +1,15 @@
 package ch.vd.demaut.domain.demandeur.donneesProf.activites;
 
-import ch.vd.demaut.commons.fk.FunctionalKeyAbstract;
+import ch.vd.demaut.commons.fk.OrdreFK;
 
 /**
  * Clé fonctionnelle de {@link ActiviteAnterieure}
  *
  */
-public class ActiviteAnterieureFK extends FunctionalKeyAbstract<ActiviteAnterieure>  {
+public class ActiviteAnterieureFK extends OrdreFK<ActiviteAnterieure>  {
 
-    private ReferenceActiviteAnterieure referenceActiviteAnterieure;
+    public ActiviteAnterieureFK(ActiviteAnterieure entity) {
+        super(entity);
+    }
     
-    public ActiviteAnterieureFK(ActiviteAnterieure activiteAnterieure) {
-        this.referenceActiviteAnterieure = activiteAnterieure.getReferenceActiviteAnterieure();
-    }
-
-    public ReferenceActiviteAnterieure getReferenceActiviteAnterieure() {
-        return referenceActiviteAnterieure;
-    }
 }

@@ -1,18 +1,18 @@
 package ch.vd.demaut.domain.demandeur.donneesProf.activites;
 
-import ch.vd.demaut.commons.annotations.Entity;
-import ch.vd.demaut.commons.vo.BaseValueObjectWithId;
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.ActiviteEnvisagee;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
+import ch.vd.demaut.commons.annotations.Entity;
+import ch.vd.demaut.commons.entities.EntityAvecOrdreFK;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.ActiviteEnvisagee;
 
 /**
  * Représente une activité future prévue par le demandeur  
  *
  */
 @Entity
-public class ActiviteFuture extends BaseValueObjectWithId {
+public class ActiviteFuture extends EntityAvecOrdreFK {
 
     // *********************************************** Fields
 
@@ -33,7 +33,7 @@ public class ActiviteFuture extends BaseValueObjectWithId {
         this.typePratiqueLamal = typePratiqueLamal;
         this.activiteEnvisagee = activiteEnvisagee;
     }
-
+    
     // *********************************************** Getters
     
     @NotNull
@@ -52,6 +52,11 @@ public class ActiviteFuture extends BaseValueObjectWithId {
     @Valid
     public ActiviteEnvisagee getActiviteEnvisagee() {
         return activiteEnvisagee;
+    }
+
+    @Override
+    public ActiviteFutureFK getFunctionalKey() {
+        return new ActiviteFutureFK(this);
     }
 
 }

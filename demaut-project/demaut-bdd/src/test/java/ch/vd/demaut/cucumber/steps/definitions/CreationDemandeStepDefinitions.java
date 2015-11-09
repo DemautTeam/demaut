@@ -38,25 +38,25 @@ public class CreationDemandeStepDefinitions extends StepDefinitions {
     // ********************************************************* Given
 
     @Etantdonné("^l´utilisateur identifié et connecté avec le login \"([^\"]*)\"$")
-    public void initialiser_utilisateur(@Transform(LoginConverter.class) Login login) throws Throwable {
+    public void initialiser_utilisateur(@Transform(LoginConverter.class) Login login) {
         getDemandeAutorisationSteps().initialiserUtilisateur(login);
     }
 
     @Etantdonné("^une demande de profession \"([^\"]*)\" en cours de saisie ayant la référence \"([^\"]*)\"$")
     public void simulerDemandeEnCours(Profession profession,
-            @Transform(ReferenceDeDemandeConverter.class) ReferenceDeDemande refDemande) throws Throwable {
+            @Transform(ReferenceDeDemandeConverter.class) ReferenceDeDemande refDemande) {
         getDemandeAutorisationSteps().simulerDemandeEnCours(profession, refDemande);
     }
 
     // ********************************************************* When
     @Lorsque("^l´utilisateur initialise une demande de profession \"([^\"]*)\" avec un code GLN valide$")
-    public void lutilisateur_initialise_une_demande_de_profession(Profession profession) throws Throwable {
+    public void lutilisateur_initialise_une_demande_de_profession(Profession profession) {
         getDemandeAutorisationSteps().initialiserDemandeEnCours(profession,
                 demandeAutorisationSteps.getCodeGlnValide());
     }
 
     @Lorsque("^l´utilisateur initialise une demande de profession \"([^\"]*)\" sans code GLN$")
-    public void lutilisateur_initialise_une_demande_de_profession_sans_codeGln(Profession profession) throws Throwable {
+    public void lutilisateur_initialise_une_demande_de_profession_sans_codeGln(Profession profession) {
         getDemandeAutorisationSteps().initialiserDemandeEnCours(profession, demandeAutorisationSteps.getCodeGlnVide());
     }
 
@@ -64,6 +64,11 @@ public class CreationDemandeStepDefinitions extends StepDefinitions {
     public void lutilisateur_initialise_une_demande_de_profession_avec_codeGLN(Profession profession,
             @Transform(CodeGLNConverter.class) CodeGLN gln) throws Throwable {
         getDemandeAutorisationSteps().initialiserDemandeEnCours(profession, gln);
+    }
+    
+    @Lorsque("^la sequence de référence de la demande est initialisée$")
+    public void init_sequence_ref() {
+        getDemandeAutorisationSteps().resetReferenceSequence();
     }
 
     // ********************************************************* Then
@@ -80,4 +85,10 @@ public class CreationDemandeStepDefinitions extends StepDefinitions {
     public void le_système_Demaut_refuse_de_créer_la_demande(AccepteOuRefuse action) {
         getDemandeAutorisationSteps().verifieAcceptationAnnexe(action);
     }
+
+    @Alors("^cette demande a la référence \"([^\"]*)\"$")
+    public void verifier_reference(@Transform(ReferenceDeDemandeConverter.class) ReferenceDeDemande refDemande) {
+        getDemandeAutorisationSteps().verifierReferenceDeDemande(refDemande);
+    }
+
 }

@@ -8,12 +8,10 @@
         <div class="col-md-6" style="overflow: auto;" ng-show="cockpitData.demandesBrouillons.length > 0">
             <table class="table table-striped" ng-show="cockpitData.demandesBrouillons">
                 <tr ng-repeat="demande in cockpitData.demandesBrouillons">
-                    <td style="font-weight: bold;">Demande d'autorisation<br/>
-                        Créé le {{demande['dateDeCreation']['value'] | date:'dd.MM.yyyy'}} pour une activité de {{demande['profession']}}<br/>
-                        Code GLN {{demande['donneesProfessionnelles']['codeGLN']}} <br/>
-                        Pour {{demande['donneesPersonnelles']['nom']['value']}},  {{demande['donneesPersonnelles']['prenom']['value']}} <br/>
-                        Date de naissance {{demande['donneesPersonnelles']['dateDeNaissance']['value'] | date:'dd.MM.yyyy'}}, {{demande['donneesPersonnelles']['nationalite']}} <br/>
-                        Habitant à {{demande['donneesPersonnelles']['adresse']['voie']['value']}}, {{demande['donneesPersonnelles']['adresse']['localite']['value']}}
+                    <td style="font-weight: bold;">Demande d'autorisation depratiquer pour la profession {{demande['profession']['libl']}}<br>
+                    	Référence : {{demande['referenceDeDemande']['value']}}<br>
+                        Créé le : {{demande['dateDeCreation']['value'] | date:'dd.MM.yyyy'}}<br/>
+                        Code GLN : {{demande['donneesProfessionnelles']['codeGLN']}} <br>
                     </td>
                     <td>
                         <span class="badge">

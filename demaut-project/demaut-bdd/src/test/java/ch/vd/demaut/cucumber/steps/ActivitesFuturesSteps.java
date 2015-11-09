@@ -30,11 +30,13 @@ public class ActivitesFuturesSteps {
 
     private ActiviteFuture activiteFuture;
 
-    private TypeActivite typeActivite;
     private TypePratiqueLamal typePratiqueLamal;
     private ActiviteEnvisagee activiteEnvisagee;
+    private Etablissement etablissement;
 
-    // TODO: Créer VO Adresse avec voie, complement, localite, npa
+    // TODO: reafctorer les VO Adresse avec voie, complement, localite, npa après mutilaiser ses champs dans une
+    // classe Adresse
+    private TypeActivite typeActivite;
     private Nom nomEtablissement;
     private Voie voie;
     private Complement complement;
@@ -44,9 +46,9 @@ public class ActivitesFuturesSteps {
     private Telephone telephoneMobile;
     private Telephone fax;
     private Email email;
-    private SiteInternet site;
-
-    private Etablissement etablissement;
+    private SiteInternet site; //
+    private TauxActiviteEnDemiJournee tauxActivite;
+    private DatePrevueDebut datePrevue;
 
     private AccepteOuRefuse actualAcceptationActiviteFuture;
 
@@ -67,64 +69,67 @@ public class ActivitesFuturesSteps {
         return demandeEnCours;
     }
 
-    public void setDemandeAutorisationSteps(DemandeAutorisationSteps demandeAutorisationSteps) {
-        this.demandeAutorisationSteps = demandeAutorisationSteps;
-    }
-
-    public void initActiviteNPA(NPAProfessionnel npa) {
+    public void renseignerNPA(NPAProfessionnel npa) {
         this.npa = npa;
     }
 
-    public void initActiviteTelephoneProf(Telephone telephoneProf) {
+    public void renseignerTelephoneProf(Telephone telephoneProf) {
         this.telephoneProf = telephoneProf;
     }
 
-    public void initActiviteTelephoneMobile(Telephone telephoneMobile) {
+    public void renseignerTelephoneMobile(Telephone telephoneMobile) {
         this.telephoneMobile = telephoneMobile;
     }
 
-    public void initActiviteFax(Telephone fax) {
+    public void renseignerFax(Telephone fax) {
         this.fax = fax;
     }
 
-    public void initActiviteEmail(Email email) {
+    public void renseignerEmail(Email email) {
         this.email = email;
     }
 
-    public void initActiviteNomEtablissement(Nom nomEtablissement) {
+    public void renseignerNomEtablissement(Nom nomEtablissement) {
         this.nomEtablissement = nomEtablissement;
     }
 
-    public void initActiviteVoie(Voie voie) {
+    public void renseignerVoie(Voie voie) {
         this.voie = voie;
     }
 
-    public void initActiviteLocalite(Localite localite) {
+    public void renseignerLocalite(Localite localite) {
         this.localite = localite;
     }
 
-    public void initActiviteDependante() {
-        typeActivite = TypeActivite.Dependant;
+    //TODO implementer la partie activités dependante et independante
+    public void renseignerTypeDActivite(TypeActivite typeActivite) {
+        this.typeActivite = typeActivite;
     }
 
-    public void initActiviteInDependante() {
+    // ************ Initialisation Activite Future Valide
+
+    public void initValeursValidesPourActiviteFuture() {
         typeActivite = TypeActivite.Independant;
-    }
 
-    public void initActiviteEnvisagee() {
-        activiteEnvisagee = new ActiviteEnvisagee(typeActivite, new TauxActiviteEnDemiJournee(1),
-                new DatePrevueDebut(new LocalDate(2015, 1, 1)), null);
-    }
+        nomEtablissement = new Nom("Centre medical");
+        npa = new NPAProfessionnel("1234");
+        voie = new Voie("3");
+        localite = new Localite("Lausanne");
+        telephoneProf = new Telephone("0123456");
+        email = new Email("admin@vd.ch");
+        nomEtablissement = new Nom("CHU Lausanne");
 
-    public void initActiviteFutureValide() {
-        initTypeActiviteValideSiNonRenseigne();
-        initValideEtablissement();
-        initTypePratiqueLamal();
-        initActiviteEnvisagee();
+        typePratiqueLamal = TypePratiqueLamal.Non;
+
+        tauxActivite = new TauxActiviteEnDemiJournee(1);
+        datePrevue = new DatePrevueDebut(new LocalDate(2015, 1, 1));
+
     }
 
     public void creerActiviteFuture() {
-        etablissement = new Etablissement(nomEtablissement, voie, complement, localite, npa, telephoneProf, telephoneMobile, fax, email, site);
+        etablissement = new Etablissement(nomEtablissement, voie, complement, localite, npa, telephoneProf, telephoneMobile, fax,
+                email, site);
+        activiteEnvisagee = new ActiviteEnvisagee(typeActivite, tauxActivite, datePrevue, null);
         activiteFuture = new ActiviteFuture(etablissement, typePratiqueLamal, activiteEnvisagee);
     }
 
@@ -148,6 +153,12 @@ public class ActivitesFuturesSteps {
         return actualAcceptationActiviteFuture;
     }
 
+    // *********************************************** Setters for Injection
+
+    public void setDemandeAutorisationSteps(DemandeAutorisationSteps demandeAutorisationSteps) {
+        this.demandeAutorisationSteps = demandeAutorisationSteps;
+    }
+
     // *********************************************** Private Methods
 
     private void accepteActiviteFuture() {
@@ -158,60 +169,4 @@ public class ActivitesFuturesSteps {
         actualAcceptationActiviteFuture = AccepteOuRefuse.refuse;
     }
 
-    private void initValideEtablissement() {
-        initNPAValideSiNonRenseigne();
-        initVoieValideSiNonRenseignee();
-        initLocaliteValideSiNonRenseignee();
-        initTelephoneProfNonRenseignee();
-        initEmailSiNonRenseignee();
-        initNomEtablissementSiNonRenseignee();
-    }
-
-    private void initTypePratiqueLamal() {
-        if (typePratiqueLamal == null) {
-            typePratiqueLamal = TypePratiqueLamal.Non;
-        }
-    }
-
-    private void initLocaliteValideSiNonRenseignee() {
-        if (localite == null) {
-            localite = new Localite("Lausanne");
-        }
-    }
-
-    private void initTypeActiviteValideSiNonRenseigne() {
-        if (typeActivite == null) {
-            typeActivite = TypeActivite.Independant;
-        }
-    }
-
-    private void initVoieValideSiNonRenseignee() {
-        if (voie == null) {
-            voie = new Voie("3");
-        }
-    }
-
-    private void initNPAValideSiNonRenseigne() {
-        if (npa == null) {
-            npa = new NPAProfessionnel("1234");
-        }
-    }
-
-    private void initTelephoneProfNonRenseignee() {
-        if (telephoneProf == null) {
-            telephoneProf = new Telephone("0123456");
-        }
-    }
-
-    private void initEmailSiNonRenseignee() {
-        if (email == null) {
-            email = new Email("alice@vd.com");
-        }
-    }
-
-    private void initNomEtablissementSiNonRenseignee() {
-        if (nomEtablissement == null) {
-            nomEtablissement = new Nom("Centre medical");
-        }
-    }
 }

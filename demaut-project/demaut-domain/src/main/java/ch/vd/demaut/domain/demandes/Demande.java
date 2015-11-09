@@ -20,8 +20,8 @@ public abstract class Demande extends EntityFunctionalKeyAware {
     
     // ********************************************************* Business Methodes
 
-    public void generateReference() {
-        referenceDeDemande = new ReferenceDeDemande();
+    public void generateReference(Long sequence) {
+        referenceDeDemande = new ReferenceDeDemande(dateDeCreation, sequence);
     }
 
 
@@ -33,7 +33,7 @@ public abstract class Demande extends EntityFunctionalKeyAware {
     public ReferenceDeDemande getReferenceDeDemande() {
         return referenceDeDemande;
     }
-
+    
     public DateDeCreation getDateDeCreation() {
         return dateDeCreation;
     }

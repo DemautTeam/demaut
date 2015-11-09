@@ -48,8 +48,6 @@
         <property name="active" value="${demaut.rest.security.active}"/>
     </bean>
 
-    <bean class="ch.vd.demaut.rest.services.impl.AnnexeRestImpl" id="annexeRest" scope="prototype"
-          p:annexesService-ref="annexesService"/>
     <bean class="ch.vd.demaut.rest.services.impl.DemandeRestImpl" id="demandeRest" scope="prototype"
           p:demandeAutorisationService-ref="demandeAutorisationService"/>
     <bean class="ch.vd.demaut.rest.services.impl.DiplomeRestImpl" id="diplomeRest" scope="prototype"
@@ -59,5 +57,7 @@
     <bean class="ch.vd.demaut.rest.services.impl.ProfessionRestImpl" id="professionRest" scope="prototype"
           p:donneesProfessionnellesService-ref="donneesProfessionnellesService"/>
     <bean class="ch.vd.demaut.rest.services.impl.SharedRestImpl" id="sharedRest" scope="prototype"/>
+    <bean class="ch.vd.demaut.rest.services.impl.AnnexeRestImpl" id="annexeRest" scope="prototype"
+          p:annexesService-ref="annexesService"/>
 
 </beans>

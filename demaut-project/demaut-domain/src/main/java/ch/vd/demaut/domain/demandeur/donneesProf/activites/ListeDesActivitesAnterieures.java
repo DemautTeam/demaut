@@ -2,13 +2,13 @@ package ch.vd.demaut.domain.demandeur.donneesProf.activites;
 
 import java.util.List;
 
-import ch.vd.demaut.commons.entities.EntityFKAList;
+import ch.vd.demaut.commons.entities.ListeDesEntitesOrdonnees;
 
 /** 
  * Liste des activites anterieures {@link ActiviteAnterieure}
  *
  */
-public class ListeDesActivitesAnterieures  extends EntityFKAList<ActiviteAnterieure> {
+public class ListeDesActivitesAnterieures extends ListeDesEntitesOrdonnees<ActiviteAnterieure> {
 
 
     // ********************************************************* Constructor
@@ -21,18 +21,7 @@ public class ListeDesActivitesAnterieures  extends EntityFKAList<ActiviteAnterie
         super(activites);
     }
 
-    // ********************************************************* Business
-    // methods
-
-    public ReferenceActiviteAnterieure genererNouvelleReference() {
-        ReferenceActiviteAnterieure refMax = new ReferenceActiviteAnterieure(0);
-        for (ActiviteAnterieure activite : listerActivitesAnterieures()) {
-            if (refMax.compareTo(activite.getReferenceActiviteAnterieure()) < 0) {
-                refMax = activite.getReferenceActiviteAnterieure();
-            }
-        }
-        return refMax;
-    }
+    // ********************************************************* Business methodes
     
     
     /**

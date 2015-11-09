@@ -27,17 +27,12 @@ public interface DemandeAutorisationService {
      */
     DemandeAutorisation recupererDemandeParReference(ReferenceDeDemande referenceDeDemande);
 
-    /**
-     * Récupère une demande brouillon via le login <br/>
-     * Renvoie exception si pas trouvée<br/>
-     *
-     * @param login Login
-     * @return DemandeAutorisation
-     */
-    DemandeAutorisation recupererBrouillon(Login login);
-
     List<DemandeAutorisation> recupererListeBrouillons(Login login);
 
-    void supprimerUnBrouillon(Login login, ReferenceDeDemande referenceDeDemande);
+    /**
+     * Supprime la demande 
+     * @param referenceDeDemande
+     */
+    void supprimerUnBrouillon(ReferenceDeDemande referenceDeDemande);
 }
 

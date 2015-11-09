@@ -1,11 +1,10 @@
 package ch.vd.demaut.domain.demandeur;
 
-import ch.vd.demaut.commons.annotations.ValueObject;
-import ch.vd.demaut.commons.vo.BaseValueObject;
-
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import ch.vd.demaut.commons.annotations.ValueObject;
+import ch.vd.demaut.commons.vo.BaseValueObject;
 
 @ValueObject
 public class Telephone extends BaseValueObject {
