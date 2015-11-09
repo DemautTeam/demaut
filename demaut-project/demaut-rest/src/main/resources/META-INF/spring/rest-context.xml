@@ -25,6 +25,7 @@
             <ref bean="demandeRest"/>
             <ref bean="diplomeRest"/>
             <ref bean="personnelRest"/>
+            <ref bean="activitesFuturesRest"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <ref bean="customJacksonJaxbJsonProvider"/>
@@ -59,5 +60,7 @@
     <bean class="ch.vd.demaut.rest.services.impl.SharedRestImpl" id="sharedRest" scope="prototype"/>
     <bean class="ch.vd.demaut.rest.services.impl.AnnexeRestImpl" id="annexeRest" scope="prototype"
           p:annexesService-ref="annexesService"/>
+    <bean class="ch.vd.demaut.rest.services.impl.ActivitesFuturesRestImpl" id="activitesFuturesRest" scope="prototype"
+          p:activitesFuturesService-ref="activitesFuturesService"/>
 
 </beans>

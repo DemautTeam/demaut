@@ -2,6 +2,8 @@ package ch.vd.demaut.rest.json.commons;
 
 import javax.ws.rs.core.Response;
 
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.DatePrevueDebut;
+import ch.vd.demaut.rest.json.serializer.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -10,9 +12,6 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import ch.vd.demaut.commons.exceptions.TechnicalException;
-import ch.vd.demaut.rest.json.serializer.CodeGLNJsonSerializer;
-import ch.vd.demaut.rest.json.serializer.DateDeCreationJsonSerializer;
-import ch.vd.demaut.rest.json.serializer.TypeProgresJsonSerializer;
 
 public final class RestUtils {
 
@@ -52,7 +51,20 @@ public final class RestUtils {
         SimpleModule module = new SimpleModule("EnumModule");
         module.addSerializer(new TypeProgresJsonSerializer());
         module.addSerializer(new CodeGLNJsonSerializer());
+        module.addSerializer(new NomJsonSerializer());
+        module.addSerializer(new VoieJsonSerializer());
+        module.addSerializer(new LocaliteJsonSerializer());
+        module.addSerializer(new NPAProfessionnelJsonSerializer());
+        module.addSerializer(new TelephoneJsonSerializer());
+        module.addSerializer(new EmailJsonSerializer());
+        module.addSerializer(new SiteInternetJsonSerializer());
+        module.addSerializer(new NombreJourSemaineJsonSerializer());
+        module.addSerializer(new DatePrevueDebutJsonSerializer());
+        module.addSerializer(new SuperviseurJsonSerializer());
+
         module.addSerializer(new DateDeCreationJsonSerializer());
+        module.addSerializer(new LocalDateJsonSerializer());
+
 
         objMapper.registerModule(module);
 

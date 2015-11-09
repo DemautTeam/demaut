@@ -1,8 +1,10 @@
 package ch.vd.demaut.rest.providers;
 
+import ch.vd.demaut.commons.fk.OrdreFK;
 import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
-import ch.vd.demaut.rest.providers.converter.DomaineParamConverter;
+import ch.vd.demaut.rest.providers.converter.DomaineIntegerValueParamConverter;
+import ch.vd.demaut.rest.providers.converter.DomaineStringValueParamConverter;
 
 import javax.ws.rs.ext.ParamConverter;
 import javax.ws.rs.ext.ParamConverterProvider;
@@ -12,7 +14,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
 /**
- * Created by mourad on 06.11.15.
+ * Provider permettqnt d'effectuer les conversions des parametres web dans leur réel typage.
  */
 @Provider
 public class DomainParamConverterProvider implements ParamConverterProvider {
@@ -35,7 +37,9 @@ public class DomainParamConverterProvider implements ParamConverterProvider {
     @Override
     public <T> ParamConverter<T> getConverter(Class<T> rawType, Type genericType, Annotation[] annotations) {
         if(CodeGLN.class.isAssignableFrom(rawType) || ReferenceDeDemande.class.isAssignableFrom(rawType)) {
-            return new DomaineParamConverter<T>(rawType);
+            return new DomaineStringValueParamConverter<T>(rawType);
+        } else if(OrdreFK.class.isAssignableFrom(rawType)){
+            return new DomaineIntegerValueParamConverter<T>(rawType);
         }
         return null;
     }

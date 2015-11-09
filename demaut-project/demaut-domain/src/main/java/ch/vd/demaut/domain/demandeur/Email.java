@@ -2,16 +2,17 @@ package ch.vd.demaut.domain.demandeur;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.BaseValueObject;
+import ch.vd.demaut.commons.vo.StringVOInterface;
 
 import javax.validation.constraints.NotNull;
 
 @ValueObject
-public class Email extends BaseValueObject {
+public class Email extends BaseValueObject  implements StringVOInterface{
 
     private String value;
 
     //Used only for JPA
-    Email() {
+    protected Email() {
     }
 
     public Email(String value) {

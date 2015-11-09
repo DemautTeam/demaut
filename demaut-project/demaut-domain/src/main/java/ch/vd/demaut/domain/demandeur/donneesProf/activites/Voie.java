@@ -2,6 +2,7 @@ package ch.vd.demaut.domain.demandeur.donneesProf.activites;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.BaseValueObject;
+import ch.vd.demaut.commons.vo.StringVOInterface;
 
 import javax.validation.constraints.NotNull;
 
@@ -13,14 +14,14 @@ import javax.validation.constraints.NotNull;
  *
  */
 @ValueObject
-public class Voie extends BaseValueObject {
+public class Voie extends BaseValueObject implements StringVOInterface {
 
     private String value;
 
     // ********************************************************* Constructor
 
     //Used only for JPA
-    Voie() {
+    protected Voie() {
     }
 
     public Voie(String value) {

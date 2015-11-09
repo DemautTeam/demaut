@@ -177,8 +177,8 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                             }
                         })
                             .success(function (data, status, headers, config) {
-                                var serviceResponse = data;
-                                if (data == 'OK') {
+                                var serviceResponse = data.response;
+                                if (serviceResponse.indexOf('OK') != -1 ) {
                                     inputGln.$setValidity('glnValidator',true);
                                 }
                                 else {
@@ -234,7 +234,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
             $scope.nextStep = function () {
                 $rootScope.wouldStepNext = true;
 
-                if ($scope.professionSante.professionDataForm.$valid && !(professionTest.isProfessionNecessiteCodeGLN($scope.professionData.profession, $scope.professionData.professionsCodeGLN) &&
+                if ($scope.professionSante.professionDataForm.$valid && !(professionTest.isProfessionNecessiteCodeGLN($scope.professionData.profession, $scope.professionsCodeGLN) &&
                     ($scope.professionData.gln == null || $scope.professionData.gln == undefined))) {
 
                     if (!$scope.isBrouillonExistant()) {
@@ -247,7 +247,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                             .success(function (data, status, headers, config) {
                                 var referenceDeDemande = angular.fromJson(data.response);
                                 $window.localStorage.setItem('referenceDeDemande', referenceDeDemande.value);
-                                $log.info('Une nouvelle demande a été intitialisée avec succès!');
+                                $log.info('Une nouvelle demande a été initialisée avec succès!');
                                 $location.path('/Demaut/demande/donneesPerso');
                             })
                             .error(function (data, status, headers, config) {
@@ -726,6 +726,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
             $scope.activiteData.activitie = {};
             $scope.activiteData.datePicker = {};
             $scope.activiteData.datePicker.status = {};
+            $scope.activeSaisiActivite = false;
 
             $scope.activiteData.datePicker.status.dateDebutIndependant = {
                 opened: false
@@ -746,11 +747,15 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                 $location.path('/Demaut/demande/annexes');
             };
 
+            $scope.afficheFormulaire = function (active){
+                $scope.activeSaisiActivite = active;
+            };
+
             $scope.addAnotherActivite = function () {
+
                 $scope.wouldAddActivite = true;
-                var keyActivite = $scope.activiteData.activitie.etablissement + '#' + $scope.activiteData.activitie.npa + '#' + $scope.activiteData.activitie.flagTauxIndependant;
+                var activiteFutureFK = $scope.activiteData.activiteFutureFK;
                 var activite = angular.copy($scope.activiteData.activitie);
-                activite.referenceDeActivite = keyActivite.replace(/\s/g, '');
 
                 $scope.activiteData.activities.push(activite);
                 doCreateActivite(activite);
@@ -758,6 +763,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                 $scope.donneesActivite.donneesActiviteForm.$valid = true;
                 $scope.donneesActivite.donneesActiviteForm.$error = null;
                 $scope.donneesActivite.donneesActiviteForm.$setPristine();
+
                 $scope.wouldAddActivite = false;
             };
 
@@ -793,7 +799,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
             function doCreateActivite(targetActivite) {
                 $http.get(urlPrefix + '/activites/ajouter', {
                     params: {
-                        referenceDeActivite: targetActivite.referenceDeActivite,
+                        activiteFutureFK: targetActivite.activiteFutureFK,
                         etablissement: targetActivite.etablissement,
                         adresseRue: targetActivite.adresseRue,
                         npa: targetActivite.npa,

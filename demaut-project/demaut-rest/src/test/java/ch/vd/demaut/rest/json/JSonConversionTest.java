@@ -5,6 +5,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.vd.demaut.domain.demandeur.Email;
+import ch.vd.demaut.domain.demandeur.Localite;
+import ch.vd.demaut.domain.demandeur.Telephone;
+import ch.vd.demaut.domain.demandeur.donneesPerso.Nom;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.*;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.ActiviteEnvisagee;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.DatePrevueDebut;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.Superviseur;
+import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.TauxActiviteEnDemiJournee;
+import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -67,6 +77,38 @@ public class JSonConversionTest {
         // Process transform & Assert
         assertJsonStr(dto,
                 "{\"referenceDeDemande\":{\"value\":\"201510-0001\"},\"dateDeCreation\":1443650400000,\"profession\":{\"name\":\"Medecin\",\"id\":53843613,\"libl\":\"Médecin\"},\"codeGLN\":\"4719512002889\",\"statut\":\"Brouillon\"}");
+    }
+
+    @Test
+    public void testActiviteFutureJson() {
+        //Fixture
+
+        //Build a valid activite future
+        ActiviteFuture activiteFuture = buildActiviteFutureValide();
+
+        assertJsonStr(activiteFuture, "{\"id\":null,\"version\":0,\"ordre\":null," +
+                "\"etablissement\":{\"nomEtablissement\":\"Centre medical\",\"voie\":\"2\",\"complement\":null," +
+                "\"localite\":\"Lausanne\",\"npaProfessionnel\":\"1234\",\"telephoneProf\":\"0123456\"," +
+                "\"telephoneMobile\":\"0123456\",\"fax\":\"0123456\",\"email\":\"toto@titi.com\"," +
+                "\"siteInternet\":\"www.google.com\"},\"typePratiqueLamal\":\"Non\"," +
+                "\"activiteEnvisagee\":{\"typeActivite\":\"Dependant\",\"nombreJourParSemaine\":1," +
+                "\"datePrevueDebut\":1443650400000,\"superviseur\":\"superviseur\"},\"functionalKey\":{\"ordre\":null}}");
+
+    }
+
+
+    private ActiviteFuture buildActiviteFutureValide() {
+
+        Etablissement etablissement = new Etablissement(new Nom("Centre medical"), new Voie("2"), null,
+                new Localite("Lausanne"), new NPAProfessionnel("1234"), new Telephone("0123456"),
+                new Telephone("0123456"), new Telephone("0123456"), new Email("toto@titi.com"),
+                new SiteInternet("www.google.com"));
+        ActiviteEnvisagee activiteEnvisagee = new ActiviteEnvisagee(TypeActivite.Dependant,
+                new TauxActiviteEnDemiJournee(1), new DatePrevueDebut(new LocalDate(2015, 10, 1)),
+                new Superviseur("superviseur"));
+        ActiviteFuture activiteFuture = new ActiviteFuture(etablissement, TypePratiqueLamal.Non, activiteEnvisagee);
+
+        return activiteFuture;
     }
 
     @Test

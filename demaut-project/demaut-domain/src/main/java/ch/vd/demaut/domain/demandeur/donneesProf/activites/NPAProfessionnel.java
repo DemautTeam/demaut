@@ -2,6 +2,7 @@ package ch.vd.demaut.domain.demandeur.donneesProf.activites;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.BaseValueObject;
+import ch.vd.demaut.commons.vo.StringVOInterface;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -12,14 +13,14 @@ import javax.validation.constraints.Size;
  * TODO: Renommer en NPASuisse & Changer la String en Integer
  */
 @ValueObject
-public class NPAProfessionnel extends BaseValueObject {
+public class NPAProfessionnel extends BaseValueObject implements StringVOInterface{
 
     // ********************************************************* Fields
     private String value;
 
     // ********************************************************* Constructor
     //Used only for JPA
-    NPAProfessionnel() {
+    protected NPAProfessionnel() {
     }
 
     public NPAProfessionnel(String value) {
