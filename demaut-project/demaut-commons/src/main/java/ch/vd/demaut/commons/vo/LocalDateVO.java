@@ -4,7 +4,7 @@ import org.joda.time.LocalDate;
 
 import javax.validation.constraints.NotNull;
 
-abstract public class LocalDateVO extends BaseValueObject {
+abstract public class LocalDateVO extends BaseValueObject implements LocalDateVOInterface {
 
     // ********************************************************* Fields
     @NotNull

@@ -1,16 +1,21 @@
 package ch.vd.demaut.domain.demandeur.donneesPerso;
 
-import ch.vd.demaut.commons.vo.BaseValueObject;
-import org.joda.time.LocalDate;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
-import java.util.Date;
 
-public class DateDeNaissance extends BaseValueObject {
+import org.joda.time.LocalDate;
 
-    @NotNull
-    private Date value;
+import ch.vd.demaut.commons.vo.BaseValueObject;
+import ch.vd.demaut.commons.vo.LocalDateVOInterface;
+
+/**
+ * Date de naissance d'une personne
+ *
+ */
+public class DateDeNaissance extends BaseValueObject implements LocalDateVOInterface {
+
+    // ********************************************************* Fields
+    private LocalDate value;
 
     // ********************************************************* Constructors
 
@@ -18,18 +23,18 @@ public class DateDeNaissance extends BaseValueObject {
     }
 
     public DateDeNaissance(LocalDate value) {
-        this.value = value.toDate();
+        this.value = value;
     }
 
     public DateDeNaissance(int annee, int mois, int jourDuMois) {
-        this.value = new LocalDate(annee, mois, jourDuMois).toDate();
+        this.value = new LocalDate(annee, mois, jourDuMois);
     }
 
     // ********************************************************* Business Methods
 
     @NotNull
     @Past
-    public Date getValue() {
+    public LocalDate getValue() {
         return value;
     }
 }

@@ -8,5 +8,4 @@ import com.fasterxml.jackson.databind.JsonSerializer;
  *
  */
 public class SiteInternetJsonSerializer extends StringVOJsonSerializer<SiteInternet> {
-
 }

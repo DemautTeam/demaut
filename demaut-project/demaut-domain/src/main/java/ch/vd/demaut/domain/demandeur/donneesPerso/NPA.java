@@ -1,10 +1,11 @@
 package ch.vd.demaut.domain.demandeur.donneesPerso;
 
-import ch.vd.demaut.commons.vo.BaseValueObject;
-
 import javax.validation.constraints.Size;
 
-public class NPA extends BaseValueObject {
+import ch.vd.demaut.commons.vo.BaseValueObject;
+import ch.vd.demaut.commons.vo.StringVOInterface;
+
+public class NPA extends BaseValueObject implements StringVOInterface {
 
     private String value;
 

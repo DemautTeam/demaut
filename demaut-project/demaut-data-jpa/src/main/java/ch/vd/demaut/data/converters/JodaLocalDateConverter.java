@@ -17,6 +17,9 @@ public class JodaLocalDateConverter implements AttributeConverter<LocalDate, Dat
     }
 
     public LocalDate convertToEntityAttribute(Date date) {
+        if (date == null) {
+            return null;
+        }
         return LocalDate.fromDateFields(date);
     }
 }

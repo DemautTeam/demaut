@@ -2,8 +2,6 @@ package ch.vd.demaut.rest.json.serializer;
 
 import java.io.IOException;
 
-import org.joda.time.LocalDate;
-
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
@@ -13,7 +11,7 @@ import ch.vd.demaut.domain.demandes.DateDeCreation;
 import ch.vd.demaut.rest.json.commons.BaseJsonSerializer;
 
 /**
- * {@link JsonSerializer} pour le {@link LocalDate}
+ * {@link JsonSerializer} pour le {@link DateDeCreation}
  * 
  */
 public class DateDeCreationJsonSerializer extends BaseJsonSerializer<DateDeCreation> {

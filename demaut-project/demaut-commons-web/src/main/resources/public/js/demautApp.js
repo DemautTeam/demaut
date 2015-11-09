@@ -94,7 +94,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
         $scope.viewDemande = function (referenceDeDemande) {
             $scope.indexStep += 1;
             $window.localStorage.setItem('referenceDeDemande', referenceDeDemande);
-            $location.path('/Demaut/demande/professionSante');
+            $location.path('/Demaut/demande/donneesPerso');
         };
 
         $scope.deleteDemande = function (referenceDeDemande) {
@@ -314,73 +314,66 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                         $log.debug('Error ' + urlPrefix + '/shared/paysList/ \n Status :' + status);
                     });
             }
-            //TODO faire un service ou un provider pour la gestion de l'état de la demande
-            $scope.isBrouillonExistant = function () {
-                return window.localStorage && $window.localStorage.getItem('referenceDeDemande');
-            };
+            $http.get(urlPrefix + '/personal/recuperer', {
+                params: {
+                    referenceDeDemande: $window.localStorage.getItem('referenceDeDemande')
+                }
+            }).
+                success(function (data, status, headers, config) {
+                    var responseValues = angular.fromJson(data.response);
+                    var donneesPerso = [];
+                    angular.forEach(responseValues, function (value, key) {
+                        $log.info("Filtrage : " + key + " : " + value);
+                        this.push(key + ': ' + value);
+                    }, donneesPerso);
 
-            if ($scope.isBrouillonExistant()) {
-                $http.get(urlPrefix + '/personal/recuperer', {
-                    params: {
-                        referenceDeDemande: $window.localStorage.getItem('referenceDeDemande')
-                    }
-                }).
-                    success(function (data, status, headers, config) {
-                        var responseValues = angular.fromJson(data.response);
-                        var donneesPerso = [];
-                        angular.forEach(responseValues, function (value, key) {
-                            $log.info("Filtrage : " + key + " : " + value);
-                            this.push(key + ': ' + value);
-                        }, donneesPerso);
+                    $scope.personalData.nom = responseValues.nom;
+                    $scope.personalData.prenom = responseValues.prenom;
+                    $scope.personalData.nomDeCelibataire = responseValues.nomDeCelibataire;
 
-                        $scope.personalData.nom = responseValues.nom.value;
-                        $scope.personalData.prenom = responseValues.prenom.value;
-                        $scope.personalData.nomDeCelibataire = responseValues.nomDeCelibataire.value;
+                    if (utils.isNotEmpty(responseValues.adresse)) {
+                        $scope.personalData.adressePersonnelle = responseValues.adresse.voie;
+                        $scope.personalData.complement = responseValues.adresse.complement;
+                        $scope.personalData.localite = responseValues.adresse.localite;
+                        $scope.personalData.npa = responseValues.adresse.npa;
 
-                        if (utils.isNotEmpty(responseValues.adresse)) {
-                            $scope.personalData.adressePersonnelle = responseValues.adresse.voie;
-                            $scope.personalData.complement = responseValues.adresse.complement;
-                            $scope.personalData.localite = responseValues.adresse.localite.value;
-                            $scope.personalData.npa = responseValues.adresse.npa.value;
-
-                            for (var indexI = 0; indexI < $scope.paysList.length; indexI++) {
-                                if ($scope.paysList[indexI].name == responseValues.adresse.pays) {
-                                    $scope.personalData.pays = $scope.paysList[indexI];
-                                    break;
-                                }
-                            }
-                        }
-
-                        $scope.personalData.telephonePrive = responseValues.telephonePrive.value;
-                        $scope.personalData.telephoneMobile = responseValues.telephoneMobile.value;
-                        $scope.personalData.email = responseValues.email.value;
-                        $scope.personalData.fax = responseValues.fax.value;
-                        $scope.personalData.genre = responseValues.genre;
-                        $scope.personalData.dateDeNaissance = new Date(responseValues.dateDeNaissance.value);
-                        $scope.personalData.langue = responseValues.langue;
-
-                        for (var indexJ = 0; indexJ < $scope.nationalites.length; indexJ++) {
-                            if ($scope.nationalites[indexJ].name == responseValues.nationalite) {
-                                $scope.personalData.nationalite = $scope.nationalites[indexJ];
+                        for (var indexI = 0; indexI < $scope.paysList.length; indexI++) {
+                            if ($scope.paysList[indexI].name == responseValues.adresse.pays) {
+                                $scope.personalData.pays = $scope.paysList[indexI];
                                 break;
                             }
                         }
+                    }
 
-                        if (utils.isNotEmpty(responseValues.permis)) {
-                            $scope.personalData.permis = responseValues.permis.typePermis;
-                            if (utils.isNotEmpty(responseValues.permis.autrePermis)) {
-                                $scope.personalData.permisOther = responseValues.permis.autrePermis.value;
-                            }
+                    $scope.personalData.telephonePrive = responseValues.telephonePrive;
+                    $scope.personalData.telephoneMobile = responseValues.telephoneMobile;
+                    $scope.personalData.email = responseValues.email;
+                    $scope.personalData.fax = responseValues.fax;
+                    $scope.personalData.genre = responseValues.genre;
+                    $scope.personalData.dateDeNaissance = new Date(responseValues.dateDeNaissance);
+                    $scope.personalData.langue = responseValues.langue;
+
+                    for (var indexJ = 0; indexJ < $scope.nationalites.length; indexJ++) {
+                        if ($scope.nationalites[indexJ].name == responseValues.nationalite) {
+                            $scope.personalData.nationalite = $scope.nationalites[indexJ];
+                            break;
                         }
-                        if (utils.isNotEmpty(responseValues)) {
-                            $scope.donneesPerso.donneesPersoDataForm.$pristine = false;
+                    }
+
+                    if (utils.isNotEmpty(responseValues.permis)) {
+                        $scope.personalData.permis = responseValues.permis.typePermis;
+                        if (utils.isNotEmpty(responseValues.permis.autrePermis)) {
+                            $scope.personalData.permisOther = responseValues.permis.autrePermis;
                         }
-                        $log.debug('Objet Données personnelles a été récupéré avec succès!');
-                    }).
-                    error(function (data, status, headers, config) {
-                        $log.error('Error ' + urlPrefix + '/personal/recuperer/ \n Status :' + status);
-                    });
-            }
+                    }
+                    if (utils.isNotEmpty(responseValues)) {
+                        $scope.donneesPerso.donneesPersoDataForm.$pristine = false;
+                    }
+                    $log.debug('Objet Données personnelles a été récupéré avec succès!');
+                }).
+                error(function (data, status, headers, config) {
+                    $log.error('Error ' + urlPrefix + '/personal/recuperer/ \n Status :' + status);
+                });
 
             $scope.personalData.datePicker.status.dateDeNaissance = {
                 opened: false
@@ -515,10 +508,6 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                     });
             }
 
-            $scope.isBrouillonExistant = function () {
-                return window.localStorage && $window.localStorage.getItem('referenceDeDemande');
-            };
-
             $scope.fetchListeFormations = function () {
                 $http.get(urlPrefix + '/diplomes/typeFormationsList', {
                     params: {typeDiplome: $scope.diplomeData.diplome.typeDiplome.id}
@@ -532,58 +521,56 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                     });
             };
 
-            if ($scope.isBrouillonExistant()) {
-                $http.get(urlPrefix + '/diplomes/diplomesSaisis', {
-                    params: {
-                        referenceDeDemande: $window.localStorage.getItem('referenceDeDemande')
-                    }
-                })
-                    .success(function (data, status, headers, config) {
-                        var fetchedDiplomes = angular.fromJson(data.response);
+            $http.get(urlPrefix + '/diplomes/diplomesSaisis', {
+                params: {
+                    referenceDeDemande: $window.localStorage.getItem('referenceDeDemande')
+                }
+            })
+                .success(function (data, status, headers, config) {
+                    var fetchedDiplomes = angular.fromJson(data.response);
 
-                        for (var indexOut = 0; indexOut < fetchedDiplomes.length; indexOut++) {
-                            if (fetchedDiplomes[indexOut] != null && fetchedDiplomes[indexOut] != undefined) {
+                    for (var indexOut = 0; indexOut < fetchedDiplomes.length; indexOut++) {
+                        if (fetchedDiplomes[indexOut] != null && fetchedDiplomes[indexOut] != undefined) {
 
-                                var currentDiplome = fetchedDiplomes[indexOut];
-                                var displayedDiplome = {};
+                            var currentDiplome = fetchedDiplomes[indexOut];
+                            var displayedDiplome = {};
 
-                                displayedDiplome.referenceDeDiplome = currentDiplome.referenceDeDiplome.value;
+                            displayedDiplome.referenceDeDiplome = currentDiplome.referenceDeDiplome.value;
 
-                                for (var indexJ = 0; indexJ < $scope.typeDiplomes.length; indexJ++) {
-                                    if ($scope.typeDiplomes[indexJ].name == currentDiplome.typeDiplomeAccepte) {
-                                        displayedDiplome.typeDiplome = $scope.typeDiplomes[indexJ];
-                                        break;
-                                    }
+                            for (var indexJ = 0; indexJ < $scope.typeDiplomes.length; indexJ++) {
+                                if ($scope.typeDiplomes[indexJ].name == currentDiplome.typeDiplomeAccepte) {
+                                    displayedDiplome.typeDiplome = $scope.typeDiplomes[indexJ];
+                                    break;
                                 }
-
-                                for (var indexZ = 0; indexZ < $scope.typeFormationsAll.length; indexZ++) {
-                                    if ($scope.typeFormationsAll[indexZ].name == currentDiplome.titreFormation.value) {
-                                        displayedDiplome.typeFormation = $scope.typeFormationsAll[indexZ];
-                                        break;
-                                    }
-                                }
-                                displayedDiplome.complement = currentDiplome.complement;
-                                displayedDiplome.dateObtention = new Date(currentDiplome.dateObtention.value);
-
-                                for (var indexK = 0; indexK < $scope.paysList.length; indexK++) {
-                                    if ($scope.paysList[indexK].name == currentDiplome.paysObtention.value) {
-                                        displayedDiplome.paysObtention = $scope.paysList[indexK];
-                                        break;
-                                    }
-                                }
-                                displayedDiplome.dateReconnaissance = currentDiplome.dateReconnaissance == null || currentDiplome.dateReconnaissance == undefined || currentDiplome.dateReconnaissance.value == null ? '' : new Date(currentDiplome.dateReconnaissance.value);
-                                $scope.diplomeData.diplomes.push(displayedDiplome);
                             }
+
+                            for (var indexZ = 0; indexZ < $scope.typeFormationsAll.length; indexZ++) {
+                                if ($scope.typeFormationsAll[indexZ].name == currentDiplome.titreFormation.value) {
+                                    displayedDiplome.typeFormation = $scope.typeFormationsAll[indexZ];
+                                    break;
+                                }
+                            }
+                            displayedDiplome.complement = currentDiplome.complement;
+                            displayedDiplome.dateObtention = new Date(currentDiplome.dateObtention.value);
+
+                            for (var indexK = 0; indexK < $scope.paysList.length; indexK++) {
+                                if ($scope.paysList[indexK].name == currentDiplome.paysObtention.value) {
+                                    displayedDiplome.paysObtention = $scope.paysList[indexK];
+                                    break;
+                                }
+                            }
+                            displayedDiplome.dateReconnaissance = currentDiplome.dateReconnaissance == null || currentDiplome.dateReconnaissance == undefined || currentDiplome.dateReconnaissance.value == null ? '' : new Date(currentDiplome.dateReconnaissance.value);
+                            $scope.diplomeData.diplomes.push(displayedDiplome);
                         }
-                        if ($scope.diplomeData.diplomes.length > 0) {
-                            $scope.donneesDiplome.diplomeDataForm.$pristine = false;
-                        }
-                        $log.info('liste de diplomes saisis a été récupérée avec succès!');
-                    })
-                    .error(function (data, status, headers, config) {
-                        $log.debug('Error ' + urlPrefix + '/diplomes/diplomesSaisis/ \n Status :' + status);
-                    });
-            }
+                    }
+                    if ($scope.diplomeData.diplomes.length > 0) {
+                        $scope.donneesDiplome.diplomeDataForm.$pristine = false;
+                    }
+                    $log.info('liste de diplomes saisis a été récupérée avec succès!');
+                })
+                .error(function (data, status, headers, config) {
+                    $log.debug('Error ' + urlPrefix + '/diplomes/diplomesSaisis/ \n Status :' + status);
+                });
 
             $scope.diplomeData.datePicker.status.dateObtention = {
                 opened: false
@@ -616,13 +603,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                 $log.debug('Formulaire pristine ' + $scope.donneesDiplome.diplomeDataForm.$pristine);
                 $log.debug('Formulaire untouched ' + $scope.donneesDiplome.diplomeDataForm.$untouched);
 
-                if ($scope.donneesDiplome.diplomeDataForm.$valid) {
-                    $log.info('Formulaire valide !');
-                    $location.path('/Demaut/demande/donneesActivites');
-                }
-                else {
-                    $log.info('Formulaire invalide !');
-                }
+                $location.path('/Demaut/demande/donneesActivites');
             };
 
             $scope.addAnotherDiplome = function () {
@@ -879,46 +860,40 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                     });
             }
 
-            $scope.isBrouillonExistant = function () {
-                return window.localStorage && $window.localStorage.getItem('referenceDeDemande');
-            };
+            $http.get(urlPrefix + '/annexes/annexesSaisis', {
+                params: {
+                    referenceDeDemande: $window.localStorage.getItem('referenceDeDemande')
+                }
+            })
+                .success(function (data, status, headers, config) {
+                    var fetchedAnnexes = angular.fromJson(data.response);
 
-            if ($scope.isBrouillonExistant()) {
-                $http.get(urlPrefix + '/annexes/annexesSaisis', {
-                    params: {
-                        referenceDeDemande: $window.localStorage.getItem('referenceDeDemande')
-                    }
-                })
-                    .success(function (data, status, headers, config) {
-                        var fetchedAnnexes = angular.fromJson(data.response);
+                    for (var indexOut = 0; indexOut < fetchedAnnexes.length; indexOut++) {
+                        if (fetchedAnnexes[indexOut] != null && fetchedAnnexes[indexOut] != undefined) {
 
-                        for (var indexOut = 0; indexOut < fetchedAnnexes.length; indexOut++) {
-                            if (fetchedAnnexes[indexOut] != null && fetchedAnnexes[indexOut] != undefined) {
+                            var currentAnnexe = fetchedAnnexes[indexOut];
+                            var displayedAnnexe = {};
 
-                                var currentAnnexe = fetchedAnnexes[indexOut];
-                                var displayedAnnexe = {};
-
-                                for (var indexJ = 0; indexJ < $scope.annexesData.annexeTypes.length; indexJ++) {
-                                    if ($scope.annexesData.annexeTypes[indexJ].name == currentAnnexe.typeAnnexe) {
-                                        displayedAnnexe.annexeType = $scope.annexesData.annexeTypes[indexJ];
-                                        break;
-                                    }
+                            for (var indexJ = 0; indexJ < $scope.annexesData.annexeTypes.length; indexJ++) {
+                                if ($scope.annexesData.annexeTypes[indexJ].name == currentAnnexe.typeAnnexe) {
+                                    displayedAnnexe.annexeType = $scope.annexesData.annexeTypes[indexJ];
+                                    break;
                                 }
-
-                                displayedAnnexe.name = currentAnnexe.nomFichier.nomFichier;
-                                $scope.annexesData.referenceFiles.push(displayedAnnexe);
                             }
+
+                            displayedAnnexe.name = currentAnnexe.nomFichier.nomFichier;
+                            $scope.annexesData.referenceFiles.push(displayedAnnexe);
                         }
-                        $scope.files = $scope.annexesData.referenceFiles;
-                        if ($scope.files.length > 0) {
-                            $scope.annexes.annexesDataForm.$pristine = false;
-                        }
-                        $log.info('liste de annexes saisis a été récupérée avec succès!');
-                    })
-                    .error(function (data, status, headers, config) {
-                        $log.debug('Error ' + urlPrefix + '/annexes/annexesSaisis/ \n Status :' + status);
-                    });
-            }
+                    }
+                    $scope.files = $scope.annexesData.referenceFiles;
+                    if ($scope.files.length > 0) {
+                        $scope.annexes.annexesDataForm.$pristine = false;
+                    }
+                    $log.info('liste de annexes saisis a été récupérée avec succès!');
+                })
+                .error(function (data, status, headers, config) {
+                    $log.debug('Error ' + urlPrefix + '/annexes/annexesSaisis/ \n Status :' + status);
+                });
 
             $scope.backStep = function () {
                 $rootScope.wouldStepBack = true;

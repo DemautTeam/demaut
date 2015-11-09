@@ -6,12 +6,13 @@ import org.joda.time.LocalDate;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.BaseValueObject;
+import ch.vd.demaut.commons.vo.LocalDateVOInterface;
 
 /**
  * Représente la date estimée pour le début de l'activité envisagée
  */
 @ValueObject
-public class DatePrevueDebut extends BaseValueObject {
+public class DatePrevueDebut extends BaseValueObject implements LocalDateVOInterface {
 
     // ********************************************************* Fields
     private LocalDate value;

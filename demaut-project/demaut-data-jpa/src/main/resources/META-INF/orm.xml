@@ -377,8 +377,9 @@
         class="ch.vd.demaut.domain.demandeur.donneesPerso.DateDeNaissance">
         <attributes>
             <basic name="value">
-                <column name="date_de_naissance"
-                    column-definition="date"/>
+                <column name="date_naissance"/>
+                <convert
+                    converter="ch.vd.demaut.data.converters.JodaLocalDateConverter"/>
             </basic>
         </attributes>
     </embeddable>
