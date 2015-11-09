@@ -14,39 +14,28 @@ import javax.validation.constraints.NotNull;
 public class DonneesPersonnelles extends AbstractEntity {
 
     // ********************************************************* Fields
-    @Valid
     private Nom nom;
 
-    @Valid
     private Prenom prenom;
 
     private NomDeCelibataire nomDeCelibataire;
 
-    @NotNull
     private Genre genre;
 
-    @Valid
     private DateDeNaissance dateDeNaissance;
 
-    @Valid
     private Adresse adresse;
 
-    @NotNull
     private Pays nationalite;
 
-    @Valid
     private Email email;
 
-    @Valid
     private Telephone telephonePrive;
 
-    @Valid
     private Telephone telephoneMobile;
 
-    @Valid
     private Telephone fax;
 
-    @NotNull
     private Langue langue;
 
     private Permis permis;
@@ -79,54 +68,74 @@ public class DonneesPersonnelles extends AbstractEntity {
     }
 
     // ********************************************************* Getters
+    @NotNull
+    @Valid
     public Nom getNom() {
         return nom;
     }
 
+    @NotNull
+    @Valid
     public Prenom getPrenom() {
         return prenom;
     }
 
+    //TODO refactorer nom de celibataire pour Nom
+    @Valid
     public NomDeCelibataire getNomDeCelibataire() {
         return nomDeCelibataire;
     }
 
+    @NotNull
+    @Valid
     public Genre getGenre() {
         return genre;
     }
 
+    @Valid
     public DateDeNaissance getDateDeNaissance() {
         return dateDeNaissance;
     }
 
+    @NotNull
+    @Valid
     public Adresse getAdresse() {
         return adresse;
     }
 
+    @Valid
     public Telephone getTelephonePrive() {
         return telephonePrive;
     }
 
+    @Valid
     public Telephone getTelephoneMobile() {
         return telephoneMobile;
     }
 
+    @Valid
     public Email getEmail() {
         return email;
     }
 
+    @Valid
     public Telephone getFax() {
         return fax;
     }
 
+    @NotNull
+    @Valid
     public Pays getNationalite() {
         return nationalite;
     }
 
+    @NotNull
+    @Valid
     public Langue getLangue() {
         return langue;
     }
 
+    @Valid
     public Permis getPermis() {
         return permis;
     }

@@ -34,6 +34,8 @@ public class ActivitesFuturesSteps {
     private ActiviteEnvisagee activiteEnvisagee;
     private Etablissement etablissement;
 
+    // TODO: reafctorer les VO Adresse avec voie, complement, localite, npa après mutilaiser ses champs dans une
+    // classe Adresse
     private TypeActivite typeActivite;
     private Nom nomEtablissement;
     private Voie voie;
@@ -44,7 +46,7 @@ public class ActivitesFuturesSteps {
     private Telephone telephoneMobile;
     private Telephone fax;
     private Email email;
-    private SiteInternet site;
+    private SiteInternet site; //
     private TauxActiviteEnDemiJournee tauxActivite;
     private DatePrevueDebut datePrevue;
 
@@ -87,12 +89,21 @@ public class ActivitesFuturesSteps {
         this.email = email;
     }
 
-    public void renseignerActiviteDependante() {
-        typeActivite = TypeActivite.Dependant;
+    public void renseignerNomEtablissement(Nom nomEtablissement) {
+        this.nomEtablissement = nomEtablissement;
     }
 
-    public void renseignerActiviteIndependante() {
-        typeActivite = TypeActivite.Independant;
+    public void renseignerVoie(Voie voie) {
+        this.voie = voie;
+    }
+
+    public void renseignerLocalite(Localite localite) {
+        this.localite = localite;
+    }
+
+    //TODO implementer la partie activités dependante et independante
+    public void renseignerTypeDActivite(TypeActivite typeActivite) {
+        this.typeActivite = typeActivite;
     }
 
     // ************ Initialisation Activite Future Valide
@@ -100,6 +111,7 @@ public class ActivitesFuturesSteps {
     public void initValeursValidesPourActiviteFuture() {
         typeActivite = TypeActivite.Independant;
 
+        nomEtablissement = new Nom("Centre medical");
         npa = new NPAProfessionnel("1234");
         voie = new Voie("3");
         localite = new Localite("Lausanne");
