@@ -11,13 +11,13 @@ import java.lang.reflect.Method;
 /**
  * Created by mourad on 06.11.15.
  */
-public class DomaineParamConverter<T> implements ParamConverter<T> {
+public class DomaineIntegerValueParamConverter<T> implements ParamConverter<T> {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final Class<?> objectClass;
 
-    public DomaineParamConverter(Class<?> objectClass) {
+    public DomaineIntegerValueParamConverter(Class<?> objectClass) {
         this.objectClass = objectClass;
     }
 
@@ -34,8 +34,9 @@ public class DomaineParamConverter<T> implements ParamConverter<T> {
     @Override
     public T fromString(String value) {
         try {
-            Constructor<?> constructor = objectClass.getConstructor(String.class);
-            return (T) constructor.newInstance(value);
+            Integer valueInt = Integer.getInteger(value);
+            Constructor<?> constructor = objectClass.getConstructor(Integer.class);
+            return (T) constructor.newInstance(valueInt);
         } catch (InstantiationException | NoSuchMethodException | IllegalAccessException
                 | InvocationTargetException e) {
             logger.error("Problème lors de l'instanciation de la classe {}", objectClass.getName());
@@ -60,7 +61,7 @@ public class DomaineParamConverter<T> implements ParamConverter<T> {
     public String toString(T value) {
         try {
             Method valueMethode = objectClass.getMethod("getValue");
-            return (String) valueMethode.invoke(value);
+            return ((Integer) valueMethode.invoke(value)).toString();
         } catch (ReflectiveOperationException e) {
             logger.error("Problème d'invocation de la methode getValue() de la classe {}", objectClass.getName());
             throw new IllegalArgumentException("Problème d'invocation de la methode getValue()", e);

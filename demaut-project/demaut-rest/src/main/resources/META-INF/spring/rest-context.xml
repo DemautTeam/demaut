@@ -25,6 +25,7 @@
             <ref bean="demandeRest"/>
             <ref bean="diplomeRest"/>
             <ref bean="personnelRest"/>
+            <ref bean="activitesFuturesRest"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <ref bean="customJacksonJaxbJsonProvider"/>
