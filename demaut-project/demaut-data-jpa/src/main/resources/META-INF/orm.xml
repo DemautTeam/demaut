@@ -370,15 +370,6 @@
     </embeddable>
 
     <embeddable
-        class="ch.vd.demaut.domain.demandeur.donneesPerso.NomDeCelibataire">
-        <attributes>
-            <basic name="value">
-                <column name="nom_de_celibataire" length="254"/>
-            </basic>
-        </attributes>
-    </embeddable>
-
-    <embeddable
         class="ch.vd.demaut.domain.demandeur.donneesPerso.DateDeNaissance">
         <attributes>
             <basic name="value">
