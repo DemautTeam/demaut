@@ -86,7 +86,13 @@ public class JSonConversionTest {
         //Build a valid activite future
         ActiviteFuture activiteFuture = buildActiviteFutureValide();
 
-        assertJsonStr(activiteFuture, "{}");
+        assertJsonStr(activiteFuture, "{\"id\":null,\"version\":0,\"ordre\":null," +
+                "\"etablissement\":{\"nomEtablissement\":\"Centre medical\",\"voie\":\"2\",\"complement\":null," +
+                "\"localite\":\"Lausanne\",\"npaProfessionnel\":\"1234\",\"telephoneProf\":\"0123456\"," +
+                "\"telephoneMobile\":\"0123456\",\"fax\":\"0123456\",\"email\":\"toto@titi.com\"," +
+                "\"siteInternet\":\"www.google.com\"},\"typePratiqueLamal\":\"Non\"," +
+                "\"activiteEnvisagee\":{\"typeActivite\":\"Dependant\",\"nombreJourParSemaine\":1," +
+                "\"datePrevueDebut\":1443650400000,\"superviseur\":\"superviseur\"},\"functionalKey\":{\"ordre\":null}}");
 
     }
 
