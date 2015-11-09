@@ -3,6 +3,7 @@ package ch.vd.demaut.domain.demandeur.donneesProf;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import ch.vd.demaut.commons.vo.StringVOInterface;
 import org.hibernate.validator.constraints.EAN;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
@@ -15,7 +16,7 @@ import ch.vd.demaut.commons.vo.BaseValueObject;
  * @see https://en.wikipedia.org/wiki/Global_Location_Number
  */
 @ValueObject
-public class CodeGLN extends BaseValueObject {
+public class CodeGLN extends BaseValueObject implements StringVOInterface {
 
     private String value;
 
