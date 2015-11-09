@@ -64,6 +64,7 @@ public final class RestUtils {
 
         module.addSerializer(new DateDeCreationJsonSerializer());
         module.addSerializer(new LocalDateJsonSerializer());
+        module.addSerializer(new OrdreVOJsonSerializer());
 
 
         objMapper.registerModule(module);

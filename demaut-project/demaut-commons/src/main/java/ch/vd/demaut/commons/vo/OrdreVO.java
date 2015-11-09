@@ -8,31 +8,34 @@ import javax.validation.constraints.NotNull;
  * Peut être itilisé aussi en tant que FK dans une liste d'entités
  *
  */
-public class OrdreVO extends BaseValueObject implements Comparable<OrdreVO> {
+public class OrdreVO extends BaseValueObject implements Comparable<OrdreVO>, IntegerVOInterface {
 
     // *********************************************** Fields
-    private Integer ordre;
+    private Integer value;
 
     // *********************************************** Constructeurs
     //For JPA Usage Only
-    OrdreVO() {
+    protected OrdreVO() {
         
     }
     
-    public OrdreVO(int ordre) {
-        this.ordre = ordre;
+    public OrdreVO(int value) {
+        this.value = value;
     }
 
     // *********************************************** Getters
-    @NotNull
-    @Min(value = 0)
-    public Integer getOrdre() {
-        return ordre;
-    }
+
     
     @Override
     public int compareTo(OrdreVO o) {
-        return this.getOrdre().compareTo(o.getOrdre());
+        return this.getValue().compareTo(o.getValue());
     }
-    
+
+    @Override
+    @NotNull
+    @Min(value = 0)
+    public Integer getValue() {
+        return value;
+    }
+
 }

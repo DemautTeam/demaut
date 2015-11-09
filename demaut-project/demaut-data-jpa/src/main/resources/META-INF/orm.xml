@@ -443,7 +443,7 @@
 
     <embeddable class="ch.vd.demaut.commons.vo.OrdreVO">
         <attributes>
-            <basic name="ordre">
+            <basic name="value">
                 <column name="ordre"/>
             </basic>        
         </attributes>
