@@ -15,16 +15,5 @@ import ch.vd.demaut.rest.json.commons.BaseJsonSerializer;
  * TODO: Utiliser un serializer generic pour le StringVO (lorsque la persistence le permettra)
  * 
  */
-public class CodeGLNJsonSerializer extends BaseJsonSerializer<CodeGLN> {
-
-    @Override
-    public void serialize(CodeGLN value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
-            JsonProcessingException {
-        writeToJsonGenerator(value, jgen);
-    }
-    
-    @Override
-    protected void writeToJsonGenerator(CodeGLN value, JsonGenerator jgen) throws IOException, JsonProcessingException {
-        jgen.writeString(value.getValue());
-    }
+public class CodeGLNJsonSerializer extends StringVOJsonSerializer<CodeGLN> {
 }
