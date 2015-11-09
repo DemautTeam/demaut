@@ -32,7 +32,7 @@
                          popover-trigger="none" popover-is-open="(wouldStepNext && professionSante.professionDataForm.gln.$invalid ) || (professionSante.professionDataForm.gln.$invalid && !professionSante.professionDataForm.gln.$pristine)" popover-placement="right"
                          uib-popover="Veuillez saisir votre code GLN.">
                         <input type="text" id="gln" name="gln" ng-minlength="0" ng-maxlength="13" ng-model="professionData.gln" class="form-control"
-                               onfocus="this.placeholder = ''" onblur="this.placeholder = '7601000000125'" ng-required="isProfessionNecessiteCodeGLN()">
+                               ng-required="isProfessionNecessiteCodeGLN()">
                     </div>
                 </div>
                 <!--fin Données Profession demandé-->
