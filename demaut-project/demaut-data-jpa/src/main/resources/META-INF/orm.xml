@@ -162,7 +162,11 @@
             </one-to-one>
             <embedded name="nom"/>
             <embedded name="prenom"/>
-            <embedded name="nomDeCelibataire"/>
+            <embedded name="nomDeCelibataire">
+                <attribute-override name="value">
+                    <column name="nom_celibataire"/>
+                </attribute-override>
+            </embedded>
             <embedded name="dateDeNaissance"/>
             <embedded name="email"/>
             <embedded name="telephonePrive">
