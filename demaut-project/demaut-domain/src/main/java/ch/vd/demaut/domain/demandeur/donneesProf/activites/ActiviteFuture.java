@@ -25,7 +25,7 @@ public class ActiviteFuture extends EntityAvecOrdreFK {
     // *********************************************** Constructeur
 
     //Used only for JPA
-    ActiviteFuture() {
+    protected ActiviteFuture() {
     }
 
     public ActiviteFuture(Etablissement etablissement, TypePratiqueLamal typePratiqueLamal, ActiviteEnvisagee activiteEnvisagee) {

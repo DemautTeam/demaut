@@ -86,18 +86,20 @@ public class JSonConversionTest {
         //Build a valid activite future
         ActiviteFuture activiteFuture = buildActiviteFutureValide();
 
-        assertJsonStr(activiteFuture, "{\"id\":null,\"version\":0,\"ordre\":null," +
+        assertJsonStr(activiteFuture, "{\"id\":null,\"version\":0,\"ordre\":1," +
                 "\"etablissement\":{\"nomEtablissement\":\"Centre medical\",\"voie\":\"2\",\"complement\":null," +
                 "\"localite\":\"Lausanne\",\"npaProfessionnel\":\"1234\",\"telephoneProf\":\"0123456\"," +
                 "\"telephoneMobile\":\"0123456\",\"fax\":\"0123456\",\"email\":\"toto@titi.com\"," +
                 "\"siteInternet\":\"www.google.com\"},\"typePratiqueLamal\":\"Non\"," +
                 "\"activiteEnvisagee\":{\"typeActivite\":\"Dependant\",\"nombreJourParSemaine\":1," +
-                "\"datePrevueDebut\":1443650400000,\"superviseur\":\"superviseur\"},\"functionalKey\":{\"ordre\":null}}");
+                "\"datePrevueDebut\":1443650400000,\"superviseur\":\"superviseur\"},\"functionalKey\":{\"ordre\":1}}");
 
     }
 
 
     private ActiviteFuture buildActiviteFutureValide() {
+
+        ListeDesActivitesFutures listeDesActivitesFutures = new ListeDesActivitesFutures(new ArrayList<ActiviteFuture>());
 
         Etablissement etablissement = new Etablissement(new Nom("Centre medical"), new Voie("2"), null,
                 new Localite("Lausanne"), new NPAProfessionnel("1234"), new Telephone("0123456"),
@@ -107,6 +109,8 @@ public class JSonConversionTest {
                 new TauxActiviteEnDemiJournee(1), new DatePrevueDebut(new LocalDate(2015, 10, 1)),
                 new Superviseur("superviseur"));
         ActiviteFuture activiteFuture = new ActiviteFuture(etablissement, TypePratiqueLamal.Non, activiteEnvisagee);
+
+        activiteFuture.genererOrdre(listeDesActivitesFutures);
 
         return activiteFuture;
     }

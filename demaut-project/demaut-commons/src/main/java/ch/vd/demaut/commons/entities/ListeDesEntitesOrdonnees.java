@@ -22,7 +22,7 @@ public abstract class ListeDesEntitesOrdonnees<E extends EntityAvecOrdreFK> exte
     // *********************************************** Methodes metier
     public OrdreVO genererNouvelOrdre() {
         OrdreVO ordreMax = trouverOrdreMax();
-        OrdreVO ordreActiviteFuture = new OrdreVO(ordreMax.getOrdre() + 1);
+        OrdreVO ordreActiviteFuture = new OrdreVO(ordreMax.getValue() + 1);
         return ordreActiviteFuture;
     }
 
