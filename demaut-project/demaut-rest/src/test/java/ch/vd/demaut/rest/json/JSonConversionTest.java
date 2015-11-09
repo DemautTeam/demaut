@@ -135,7 +135,6 @@ public class JSonConversionTest {
         // Process transform & Assert
         assertJsonStr(professions,
                 "[{\"name\":\"Chiropraticien\",\"id\":53843599,\"libl\":\"Chiropraticien\"},{\"name\":\"Dieteticien\",\"id\":53843600,\"libl\":\"Diététicien\"}]");
-
     }
 
     @Test

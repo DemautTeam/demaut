@@ -23,4 +23,6 @@ if [ $# -eq 1 ]
 	then
 		mvn clean install -DskipTests
 fi
+echo "java -cp $CLASSPATH  $MAIN"
 java -cp $CLASSPATH $MAIN
+

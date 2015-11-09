@@ -1,15 +1,14 @@
 package ch.vd.demaut.rest.json.serializer;
 
-import ch.vd.demaut.commons.vo.BaseValueObject;
-import ch.vd.demaut.commons.vo.StringVOInterface;
-import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
-import ch.vd.demaut.rest.json.commons.BaseJsonSerializer;
+import java.io.IOException;
+
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
-import java.io.IOException;
+import ch.vd.demaut.commons.vo.StringVOInterface;
+import ch.vd.demaut.domain.demandeur.donneesProf.CodeGLN;
+import ch.vd.demaut.rest.json.commons.BaseJsonSerializer;
 
 /**
  * {@link JsonSerializer} pour le {@link CodeGLN}

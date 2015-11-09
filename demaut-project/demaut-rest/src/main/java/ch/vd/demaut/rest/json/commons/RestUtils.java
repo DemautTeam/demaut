@@ -2,8 +2,6 @@ package ch.vd.demaut.rest.json.commons;
 
 import javax.ws.rs.core.Response;
 
-import ch.vd.demaut.domain.demandeur.donneesProf.activites.envisagee.DatePrevueDebut;
-import ch.vd.demaut.rest.json.serializer.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -12,6 +10,20 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import ch.vd.demaut.commons.exceptions.TechnicalException;
+import ch.vd.demaut.rest.json.serializer.CodeGLNJsonSerializer;
+import ch.vd.demaut.rest.json.serializer.DateDeCreationJsonSerializer;
+import ch.vd.demaut.rest.json.serializer.DatePrevueDebutJsonSerializer;
+import ch.vd.demaut.rest.json.serializer.EmailJsonSerializer;
+import ch.vd.demaut.rest.json.serializer.LocalDateJsonSerializer;
+import ch.vd.demaut.rest.json.serializer.LocaliteJsonSerializer;
+import ch.vd.demaut.rest.json.serializer.NPAProfessionnelJsonSerializer;
+import ch.vd.demaut.rest.json.serializer.NomJsonSerializer;
+import ch.vd.demaut.rest.json.serializer.NombreJourSemaineJsonSerializer;
+import ch.vd.demaut.rest.json.serializer.SiteInternetJsonSerializer;
+import ch.vd.demaut.rest.json.serializer.SuperviseurJsonSerializer;
+import ch.vd.demaut.rest.json.serializer.TelephoneJsonSerializer;
+import ch.vd.demaut.rest.json.serializer.TypeProgresJsonSerializer;
+import ch.vd.demaut.rest.json.serializer.VoieJsonSerializer;
 
 public final class RestUtils {
 
