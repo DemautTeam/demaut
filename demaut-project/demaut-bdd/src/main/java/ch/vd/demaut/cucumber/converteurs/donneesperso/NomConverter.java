@@ -7,6 +7,9 @@ public class NomConverter extends Transformer<Nom> {
 
     @Override
     public Nom transform(String str) {
+        if (str.isEmpty()) {
+            return null;
+        }
         return new Nom(str);
     }
 

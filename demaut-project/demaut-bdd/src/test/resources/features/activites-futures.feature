@@ -49,8 +49,10 @@ Fonctionnalité: Vérification du scenario de l'activité future
       | email          | action  |
       | toto@titi.com  | accepte |
       | +41123456      | refuse  |
+      | toto@titicom   | accepte |
+      |                | refuse  |
 
-  @controler-nom-etablissement @ignoreme
+  @controler-nom-etablissement
   Plan du Scénario: Contrôler le nom de l´établissement
     Etant donné  le nom de l´établissement <nom> renseignés par l´utilisateur
     Lorsque le demandeur ajoute cette activité future
@@ -58,19 +60,25 @@ Fonctionnalité: Vérification du scenario de l'activité future
 
     Exemples:
       | nom               | action  |
-      | "Centre Medical"  | accepte |
+      | Centre Medical    | accepte |
+      |                   | refuse  |
+      | avec 120 cararcteres. Aasjklaskjkajkaj sjdklsaldk askdlklaskd as dksajdkajskdjasdjksa djs djkaskd jaksjdkajk121314244dfa             | accepte  |
+      | plus de 120 cararcteres aasjklaskjkajkaj sjdklsaldk askdlklaskd as dksajdkajskdjasdjksa djs djkaskd jaksjdkajkjkjksajkkjkja          | refuse  |
 
-
-
-  @controler-formulaire-valide @ignoreme
-  Plan du Scénario: Contrôler le formulaire completement saisi
+  @controler-formulaire-rempli
+  Plan du Scénario: Contrôler le formulaire rempli
     Etant donné  les champs requis nom <nom>, adresse <adresse>, npa <npa>, localité <localite>, téléphone <telephone>, email <email>, renseignés par l´utilisateur
     Lorsque le demandeur ajoute cette activité future
     Alors le système Demaut <action> d´ajouter cette activité future à la demande en cours
 
     Exemples:
-      | nom             | adresse         | npa   | localite   | email          | action  |
-      | "Centre medical"| "rue de zurich" | 1200  | Lausanne   | toto@titi.com  | accepte |
+      | nom             | adresse         | npa   | localite   | telephone   | email          | action  |
+      |  Centre medical | rue de zurich   | 1200  | Lausanne   | 0223334444  | toto@titi.com  | accepte |
+      |                 | rue de zurich   |       |            |             |                | refuse  |
+      |                 |                 | 1200  |            |             |                | refuse  |
+      |                 |                 |       | Lausanne   |             |                | refuse  |
+      |                 |                 |       |            | 0223334444  |                | refuse  |
+      |                 |                 |       |            |             | toto@titi.com  | refuse  |
 
 
 

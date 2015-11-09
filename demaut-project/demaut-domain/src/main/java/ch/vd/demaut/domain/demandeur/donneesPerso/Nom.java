@@ -14,7 +14,8 @@ public class Nom extends BaseValueObject {
 
     // ********************************************************* Constructor
 
-    public Nom() {
+    //Used only for JPA
+    Nom() {
     }
 
     public Nom(String value) {

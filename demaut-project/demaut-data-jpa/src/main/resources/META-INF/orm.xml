@@ -175,7 +175,7 @@
                     <column name="telephone_mobile"/>
                 </attribute-override>
             </embedded>
-            <embedded name="telephoneMobile">
+            <embedded name="fax">
                 <attribute-override name="value">
                     <column name="fax"/>
                 </attribute-override>

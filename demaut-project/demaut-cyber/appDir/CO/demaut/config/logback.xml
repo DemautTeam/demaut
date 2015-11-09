@@ -1,4 +1,7 @@
-<configuration scan="true" scanPeriod="5 seconds">
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="5 seconds"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:noNamespaceSchemaLocation="../../logback.xsd" > <!-- https://github.com/enricopulatzo/logback-XSD -->
 
     <contextName>example</contextName>
 
@@ -8,12 +11,13 @@
         </encoder>
     </appender>
 
-    <appender name="LOGFILE" class="ch.qos.logback.core.FileAppender">
-        <file>${ch.vd.dataDir}/logs/demaut-co.log</file>
-        <encoder>
-            <pattern>[demaut-co] [%t] %-5p [%d{yyyy-MM-dd HH:mm:ss.SSS}] %c{1} | %m%n</pattern>
-        </encoder>
-    </appender>
+    <!--TODO Activer ce appender sur CEI -->
+    <!--<appender name="LOGFILE" class="ch.qos.logback.core.FileAppender">-->
+        <!--<file>${ch.vd.dataDir}/logs/demaut-co.log</file>-->
+        <!--<encoder>-->
+            <!--<pattern>[demaut-co] [%t] %-5p [%d{yyyy-MM-dd HH:mm:ss.SSS}] %c{1} | %m%n</pattern>-->
+        <!--</encoder>-->
+    <!--</appender>-->
 
     <logger name="ch.vd.demaut" level="DEBUG"/>
 

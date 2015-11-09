@@ -10,7 +10,8 @@ public class Email extends BaseValueObject {
 
     private String value;
 
-    public Email() {
+    //Used only for JPA
+    Email() {
     }
 
     public Email(String value) {
