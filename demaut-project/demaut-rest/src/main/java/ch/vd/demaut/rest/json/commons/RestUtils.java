@@ -19,6 +19,7 @@ import ch.vd.demaut.rest.json.serializer.LocaliteJsonSerializer;
 import ch.vd.demaut.rest.json.serializer.NPAProfessionnelJsonSerializer;
 import ch.vd.demaut.rest.json.serializer.NomJsonSerializer;
 import ch.vd.demaut.rest.json.serializer.NombreJourSemaineJsonSerializer;
+import ch.vd.demaut.rest.json.serializer.OrdreVOJsonSerializer;
 import ch.vd.demaut.rest.json.serializer.SiteInternetJsonSerializer;
 import ch.vd.demaut.rest.json.serializer.SuperviseurJsonSerializer;
 import ch.vd.demaut.rest.json.serializer.TelephoneJsonSerializer;
