@@ -42,7 +42,7 @@ public class DonneesPersonnellesSteps {
         Adresse adresse = new Adresse("", "", localite, npa, pays);
         Email email = new Email("john.doe@nobody.com");
         Genre genre = Genre.Feminin;
-        DateDeNaissance dateDeNaissance = new DateDeNaissance(LocalDate.now());
+        DateDeNaissance dateDeNaissance = new DateDeNaissance(LocalDate.now().minusDays(1000));
         Telephone numeroTelephone = new Telephone("022222222");
         Telephone numeroMobile = new Telephone("07625225123");
         Pays nationalite = Pays.Andorre;
@@ -64,7 +64,7 @@ public class DonneesPersonnellesSteps {
         Adresse adresse = new Adresse("", "", localite, npa, pays);
         Email email = new Email("john.doe@nobody.com");
         Genre genre = Genre.Feminin;
-        DateDeNaissance dateDeNaissance = new DateDeNaissance(LocalDate.now());
+        DateDeNaissance dateDeNaissance = new DateDeNaissance(LocalDate.now().minusDays(1000));
         Pays nationalite = Pays.Andorre;
         Langue langue = Langue.Francais;
         Permis permis = new Permis(TypePermis.B);
@@ -84,7 +84,7 @@ public class DonneesPersonnellesSteps {
         Adresse adresse = new Adresse("", "", localite, npa, pays);
         Email email = new Email("john.doe@nobody.com");
         Genre genre = Genre.Feminin;
-        DateDeNaissance dateDeNaissance = new DateDeNaissance(LocalDate.now());
+        DateDeNaissance dateDeNaissance = new DateDeNaissance(LocalDate.now().minusDays(1000));
         Telephone numeroTelephone = new Telephone("022222222");
         Telephone numeroMobile = new Telephone("07625225123");
         Langue langue = Langue.Francais;

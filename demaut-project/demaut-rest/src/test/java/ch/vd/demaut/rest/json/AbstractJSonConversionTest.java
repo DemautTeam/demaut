@@ -12,7 +12,7 @@ import ch.vd.demaut.rest.json.commons.RestUtils;
 
 @ContextConfiguration({"classpath*:jsonTest-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class AbstractJSonConversionTest {
+abstract public class AbstractJSonConversionTest {
 
     @Autowired
     protected DemandeAutorisationFactory demandeAutorisationFactory;

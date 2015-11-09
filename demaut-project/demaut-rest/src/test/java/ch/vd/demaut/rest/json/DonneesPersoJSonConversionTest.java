@@ -32,7 +32,7 @@ public class DonneesPersoJSonConversionTest extends AbstractJSonConversionTest {
         DonneesPersonnelles donneesPerso = buildDonneesPerso();
 
         String jsonStrExpected = 
-                "{\"id\":null,\"version\":0,\"nom\":\"Newman\",\"prenom\":\"prenom\",\"nomDeCelibataire\":\"Newman2\",\"genre\":\"Feminin\",\"dateDeNaissance\":1447023600000,\"adresse\":{\"id\":null,\"version\":0,\"voie\":\"\",\"complement\":\"\",\"npa\":\"1000\",\"localite\":\"Lausanne\",\"pays\":{\"name\":\"Suisse\",\"id\":1,\"libl\":\"Suisse\"}},\"nationalite\":{\"name\":\"Andorre\",\"id\":7,\"libl\":\"Andorre\"},\"email\":\"john.doe@nobody.com\",\"telephonePrive\":\"022222222\",\"telephoneMobile\":\"07625225123\",\"fax\":\"+411215156\",\"langue\":{\"name\":\"Autre\",\"id\":0,\"libl\":\"Autre\"},\"permis\":{\"typePermis\":\"B\",\"autrePermis\":\"\"}}";
+                "{\"id\":null,\"version\":0,\"nom\":\"Newman\",\"prenom\":\"prenom\",\"nomDeCelibataire\":\"Newman2\",\"genre\":\"Feminin\",\"dateDeNaissance\":1360710000000,\"adresse\":{\"id\":null,\"version\":0,\"voie\":\"\",\"complement\":\"\",\"npa\":\"1000\",\"localite\":\"Lausanne\",\"pays\":{\"name\":\"Suisse\",\"id\":1,\"libl\":\"Suisse\"}},\"nationalite\":{\"name\":\"Andorre\",\"id\":7,\"libl\":\"Andorre\"},\"email\":\"john.doe@nobody.com\",\"telephonePrive\":\"022222222\",\"telephoneMobile\":\"07625225123\",\"fax\":\"+411215156\",\"langue\":{\"name\":\"Autre\",\"id\":0,\"libl\":\"Autre\"},\"permis\":{\"typePermis\":\"B\",\"autrePermis\":\"\"}}";
 
         assertJsonStr(donneesPerso, jsonStrExpected);
 
@@ -45,7 +45,7 @@ public class DonneesPersoJSonConversionTest extends AbstractJSonConversionTest {
         Adresse adresse = new Adresse("", "", localite, npa, pays);
         Email email = new Email("john.doe@nobody.com");
         Genre genre = Genre.Feminin;
-        DateDeNaissance dateDeNaissance = new DateDeNaissance(LocalDate.now());
+        DateDeNaissance dateDeNaissance = new DateDeNaissance(LocalDate.now().minusDays(1000));
         Telephone numeroTelephone = new Telephone("022222222");
         Telephone numeroMobile = new Telephone("07625225123");
         Telephone fax = new Telephone("+411215156");

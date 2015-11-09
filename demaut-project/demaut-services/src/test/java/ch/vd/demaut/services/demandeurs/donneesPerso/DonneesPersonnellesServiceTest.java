@@ -88,7 +88,7 @@ public class DonneesPersonnellesServiceTest {
         Adresse adresse = new Adresse("", "", localite, npa, pays);
         Email email = new Email("john.doe@nobody.com");
         Genre genre = Genre.Feminin;
-        DateDeNaissance dateDeNaissance = new DateDeNaissance(LocalDate.now());
+        DateDeNaissance dateDeNaissance = new DateDeNaissance(LocalDate.now().minusDays(1000));
         Telephone telephonePrive = new Telephone("022222222");
         Telephone telephoneMobile = new Telephone("07625225123");
         Telephone fax = new Telephone("023456789");
