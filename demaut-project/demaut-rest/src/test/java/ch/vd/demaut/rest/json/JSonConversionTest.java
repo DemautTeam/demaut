@@ -1,8 +1,5 @@
 package ch.vd.demaut.rest.json;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 

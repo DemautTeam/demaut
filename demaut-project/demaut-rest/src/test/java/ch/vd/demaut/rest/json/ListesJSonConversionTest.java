@@ -3,25 +3,11 @@ package ch.vd.demaut.rest.json;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
 import ch.vd.demaut.domain.demandes.autorisation.Profession;
-import ch.vd.demaut.domain.demandeur.Email;
-import ch.vd.demaut.domain.demandeur.Localite;
 import ch.vd.demaut.domain.demandeur.Pays;
-import ch.vd.demaut.domain.demandeur.Telephone;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Adresse;
-import ch.vd.demaut.domain.demandeur.donneesPerso.DateDeNaissance;
-import ch.vd.demaut.domain.demandeur.donneesPerso.DonneesPersonnelles;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Genre;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Langue;
-import ch.vd.demaut.domain.demandeur.donneesPerso.NPA;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Nom;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Permis;
-import ch.vd.demaut.domain.demandeur.donneesPerso.Prenom;
-import ch.vd.demaut.domain.demandeur.donneesPerso.TypePermis;
 
 public class ListesJSonConversionTest extends AbstractJSonConversionTest {
 

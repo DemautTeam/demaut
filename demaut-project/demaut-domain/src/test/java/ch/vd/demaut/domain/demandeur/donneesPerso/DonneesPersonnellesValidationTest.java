@@ -42,7 +42,7 @@ public class DonneesPersonnellesValidationTest extends AbstractValidationTest<Do
         adresseValide = new Adresse("", "", localiteValide, npaValide, pays);
         emailValide = new Email("john.doe@nobody.com");
         genreValide = Genre.Feminin;
-        dateDeNaissance = new DateDeNaissance(LocalDate.now());
+        dateDeNaissance = new DateDeNaissance(LocalDate.now().minusDays(1000));
         telephonePrive = new Telephone("+4122222222");
         numeroMobile = new Telephone("00625225123");
         fax = new Telephone("023456789");
