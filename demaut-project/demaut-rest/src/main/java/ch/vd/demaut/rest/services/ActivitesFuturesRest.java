@@ -8,6 +8,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import ch.vd.demaut.domain.demandes.ReferenceDeDemande;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
 
 import ch.vd.demaut.domain.demandeur.donneesProf.activites.ActiviteFuture;
@@ -24,18 +25,18 @@ public interface ActivitesFuturesRest {
     @Path("/liste")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    Response listerLesActivitesFutures(@QueryParam("referenceDeDemande") String referenceDeDemandeStr);
+    Response listerLesActivitesFutures(@QueryParam("referenceDeDemande") ReferenceDeDemande referenceDeDemande);
     
     @GET
     @Path("/ajouter")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER") //   
     //TODO: Ajouter les attributs de la ActiviteFuture
-    Response ajouterActiviteFuture(@QueryParam("referenceDeDemande") String referenceDeDemandeStr);
+    Response ajouterActiviteFuture(@QueryParam("referenceDeDemande") ReferenceDeDemande referenceDeDemande);
     
     @GET
     @Path("/supprimer")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER") //
-    Response supprimerActiviteFuture(@QueryParam("referenceDeDemande") String referenceDeDemandeStr, @QueryParam("ordre") String ordre);
+    Response supprimerActiviteFuture(@QueryParam("referenceDeDemande") ReferenceDeDemande referenceDeDemande, @QueryParam("ordre") String ordre);
 }
