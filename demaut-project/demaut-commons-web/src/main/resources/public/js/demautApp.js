@@ -726,6 +726,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
             $scope.activiteData.activitie = {};
             $scope.activiteData.datePicker = {};
             $scope.activiteData.datePicker.status = {};
+            $scope.activeSaisiActivite = false;
 
             $scope.activiteData.datePicker.status.dateDebutIndependant = {
                 opened: false
@@ -746,11 +747,15 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                 $location.path('/Demaut/demande/annexes');
             };
 
+            $scope.afficheFormulaire = function (active){
+                $scope.activeSaisiActivite = active;
+            };
+
             $scope.addAnotherActivite = function () {
+
                 $scope.wouldAddActivite = true;
-                var keyActivite = $scope.activiteData.activitie.etablissement + '#' + $scope.activiteData.activitie.npa + '#' + $scope.activiteData.activitie.flagTauxIndependant;
+                var activiteFutureFK = $scope.activiteData.activiteFutureFK;
                 var activite = angular.copy($scope.activiteData.activitie);
-                activite.referenceDeActivite = keyActivite.replace(/\s/g, '');
 
                 $scope.activiteData.activities.push(activite);
                 doCreateActivite(activite);
@@ -758,6 +763,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                 $scope.donneesActivite.donneesActiviteForm.$valid = true;
                 $scope.donneesActivite.donneesActiviteForm.$error = null;
                 $scope.donneesActivite.donneesActiviteForm.$setPristine();
+
                 $scope.wouldAddActivite = false;
             };
 
@@ -793,7 +799,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
             function doCreateActivite(targetActivite) {
                 $http.get(urlPrefix + '/activites/ajouter', {
                     params: {
-                        referenceDeActivite: targetActivite.referenceDeActivite,
+                        activiteFutureFK: targetActivite.activiteFutureFK,
                         etablissement: targetActivite.etablissement,
                         adresseRue: targetActivite.adresseRue,
                         npa: targetActivite.npa,

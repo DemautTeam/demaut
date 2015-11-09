@@ -7,7 +7,7 @@
     </div>
     <fieldset>
         <legend>Veuillez saisir vos futures activitées professionnelles :</legend>
-        <div>
+        <div ng-show="activeSaisiActivite">
             <ng-form name="donneesActivite.donneesActiviteForm">
 
 
@@ -207,10 +207,19 @@
         </div>
 
         <div class="modal-footer">
-            <button class="btn btn-primary submit-btn" type="submit" aria-label="Nouvelle" ng-click="addAnotherActivitee()">
+            <button ng-show="!activeSaisiActivite" class="btn btn-primary submit-btn" type="submit" aria-label="Nouvelle" ng-click="afficheFormulaire(true)">
                 <span class="glyphicon glyphicon-plus"></span>
                 Ajouter une activitée
             </button>
+            <button ng-show="activeSaisiActivite" class="btn btn-primary submit-btn" type="submit" aria-label="Nouvelle" ng-click="addAnotherActivite()">
+                <span class="glyphicon glyphicon-floppy-disk"></span>
+                Sauvegarder l'activitée
+            </button>
+            <button ng-show="activeSaisiActivite" class="btn btn-primary submit-btn" type="submit" aria-label="Nouvelle" ng-click="afficheFormulaire(false)">
+                <span class="glyphicon glyphicon-remove"></span>
+                Annuler
+            </button>
+
         </div>
         <div ng-show="activiteData.activites.length > 0">
             <legend>Formations et titres :</legend>
