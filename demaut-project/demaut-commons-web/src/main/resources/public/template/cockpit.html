@@ -8,7 +8,7 @@
         <div class="col-md-6" style="overflow: auto;" ng-show="cockpitData.demandesBrouillons.length > 0">
             <table class="table table-striped" ng-show="cockpitData.demandesBrouillons">
                 <tr ng-repeat="demande in cockpitData.demandesBrouillons">
-                    <td style="font-weight: bold;">Demande d'autorisation depratiquer pour la profession {{demande['profession']['libl']}}<br>
+                    <td style="font-weight: bold;">Demande d'autorisation de pratiquer pour la profession {{demande['profession']['libl']}}<br>
                     	Référence : {{demande['referenceDeDemande']['value']}}<br>
                         Créé le : {{demande['dateDeCreation']['value'] | date:'dd.MM.yyyy'}}<br/>
                         Code GLN : {{demande['donneesProfessionnelles']['codeGLN']}} <br>
