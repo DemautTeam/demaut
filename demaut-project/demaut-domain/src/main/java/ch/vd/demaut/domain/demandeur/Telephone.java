@@ -5,9 +5,10 @@ import javax.validation.constraints.Size;
 
 import ch.vd.demaut.commons.annotations.ValueObject;
 import ch.vd.demaut.commons.vo.BaseValueObject;
+import ch.vd.demaut.commons.vo.StringVOInterface;
 
 @ValueObject
-public class Telephone extends BaseValueObject {
+public class Telephone extends BaseValueObject implements StringVOInterface{
 
     // ********************************************************* Field
     private String value;
@@ -15,7 +16,7 @@ public class Telephone extends BaseValueObject {
     // ********************************************************* Constructor
 
     //For JPA usage only
-    Telephone() {
+    protected Telephone() {
     }
 
     // ********************************************************* Getters
