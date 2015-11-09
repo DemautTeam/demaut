@@ -66,7 +66,7 @@ public class JSonConversionTest {
 
         // Process transform & Assert
         assertJsonStr(dto,
-                "{\"referenceDeDemande\":{\"value\":\"201510-0001\"},\"dateDeCreation\":1443650400000,\"profession\":{\"name\":\"Medecin\",\"id\":53843613,\"libl\":\"Médecin\"},\"codeGLN\":\"4719512002889\"}");
+                "{\"referenceDeDemande\":{\"value\":\"201510-0001\"},\"dateDeCreation\":1443650400000,\"profession\":{\"name\":\"Medecin\",\"id\":53843613,\"libl\":\"Médecin\"},\"codeGLN\":\"4719512002889\",\"statut\":\"Brouillon\"}");
     }
 
     @Test

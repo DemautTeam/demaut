@@ -10,8 +10,9 @@
                 <tr ng-repeat="demande in cockpitData.demandesBrouillons">
                     <td style="font-weight: bold;">Demande d'autorisation de pratiquer pour la profession {{demande['profession']['libl']}}<br>
                     	Référence : {{demande['referenceDeDemande']['value']}}<br>
-                        Créé le : {{demande['dateDeCreation'] | date:'dd.MM.yyyy'}}<br/>
+                        Créé le : {{demande['dateDeCreation'] | date:'dd.MM.yyyy'}}<br>
                         Code GLN : {{demande['codeGLN']}} <br>
+                        Statut : {{demande['statut']}} <br>
                     </td>
                     <td>
                         <span class="badge">
