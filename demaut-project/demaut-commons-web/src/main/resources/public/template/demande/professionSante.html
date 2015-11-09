@@ -18,7 +18,7 @@
                          popover-trigger="none" popover-is-open="(wouldStepNext && professionSante.professionDataForm.profession.$invalid ) || (professionSante.professionDataForm.profession.$invalid && !professionSante.professionDataForm.profession.$pristine)" popover-placement="right"
                          uib-popover="Veuillez saisir votre profession.">
                         <select id="profession" name="profession" ng-model="professionData.profession" required ng-disabled="isBrouillonExistant()"
-                                ng-options="profession.libl for profession in professionData.professions track by profession.id" class="form-control"/>
+                                ng-options="profession.libl for profession in professions track by profession.id" class="form-control"/>
                     </div>
                 </div>
                 <div class="row">
@@ -31,8 +31,8 @@
                     <div class="col-md-2" popover-enable=" wouldStepNext || (professionSante.professionDataForm.gln.$invalid && !professionSante.professionDataForm.gln.$pristine)"
                          popover-trigger="none" popover-is-open="(wouldStepNext && professionSante.professionDataForm.gln.$invalid ) || (professionSante.professionDataForm.gln.$invalid && !professionSante.professionDataForm.gln.$pristine)" popover-placement="right"
                          uib-popover="Veuillez saisir votre code GLN.">
-                        <input type="text" id="gln" name="gln" ng-minlength="0" ng-maxlength="13" ng-model="professionData.gln" class="form-control"
-                               onfocus="this.placeholder = ''" onblur="this.placeholder = '7601000000125'" ng-required="isProfessionNecessiteCodeGLN()">
+                        <input type="text" id="gln" name="gln" ng-minlength="0" ng-maxlength="13" ng-model="professionData.gln" ng-change="validateGln(professionSante.professionDataForm.gln)" class="form-control"
+                               onfocus="this.placeholder = 'Votre code GLN'" onblur="this.placeholder = 'Votre code GLN'" ng-required="isProfessionNecessiteCodeGLN()">
                     </div>
                 </div>
                 <!--fin Données Profession demandé-->
