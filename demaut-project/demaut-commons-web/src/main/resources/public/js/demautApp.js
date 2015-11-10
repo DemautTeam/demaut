@@ -730,14 +730,12 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
 
                 if ($scope.donneesActivite.donneesActiviteForm.$valid) {
                     $log.info('Formulaire valide !');
-                    var activiteFutureFK = $scope.activiteData.activiteFutureFK;
-                    var activite = angular.copy($scope.activiteData.activite);
-                    $scope.activiteData.activities.push(activite);
                     doCreateActivite($scope.activiteData.activite);
-                    $scope.activiteData.activitie = {};
+                    $scope.activiteData.activite = {};
                     $scope.donneesActivite.donneesActiviteForm.$valid = true;
                     $scope.donneesActivite.donneesActiviteForm.$error = null;
                     $scope.donneesActivite.donneesActiviteForm.$setPristine();
+                    $scope.afficheFormulaire(false);
                 }
                 else {
                     $log.info('Formulaire activité future invalide !');
