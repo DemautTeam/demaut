@@ -686,8 +686,8 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
             };
         }])
     //------------------- DonneesActivitesController ----------------------------------
-    .controller('DonneesActivitesController', ['$scope', '$rootScope', '$routeParams', '$location', '$log',
-        function ($scope, $rootScope, $routeParams, $location, $log) {
+    .controller('DonneesActivitesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$log', 'utils',
+        function ($scope, $rootScope, $routeParams, $http, $location, $log, utils) {
             $rootScope.contextMenu = 'DemandeAutorisation';
             $scope.indexStep = 4;
             this.name = "DonneesActivitesController";
@@ -728,9 +728,9 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                 if ($scope.donneesActivite.donneesActiviteForm.$valid) {
                     $log.info('Formulaire valide !');
                     var activiteFutureFK = $scope.activiteData.activiteFutureFK;
-                    var activite = angular.toJson($scope.activiteData.activite);
+                    var activite = angular.copy($scope.activiteData.activite);
                     $scope.activiteData.activities.push(activite);
-                    doCreateActivite(activite);
+                    doCreateActivite($scope.activiteData.activite);
                     $scope.activiteData.activitie = {};
                     $scope.donneesActivite.donneesActiviteForm.$valid = true;
                     $scope.donneesActivite.donneesActiviteForm.$error = null;
@@ -773,8 +773,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
             };
 
             function doCreateActivite(targetActivite) {
-
-                $http.put(urlPrefix + '/activitesFutures/ajouter', {
+                $http.post(urlPrefix + '/activitesFutures/ajouter', {
                     params: {
                         nomEtablissement:targetActivite.etablissement.nomEtablissement,
                         voie:targetActivite.etablissement.voie,

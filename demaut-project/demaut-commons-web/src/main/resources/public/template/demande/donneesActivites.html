@@ -16,42 +16,20 @@
                     <div class="row form-group"><label class="col-md-2">Informations générales</label></div>
                     <!--Nom établissement-->
                     <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.nomEtablissement.$invalid ) || (donneesActivite.donneesActiviteForm.etablissement.nomEtablissement.$invalid && !donneesActivite.donneesActiviteForm.etablissement.nomEtablissement.$pristine)}">
-                        <div class="col-md-2 col-md-offset-1"><label for="etablissement">Nom établissement*</label></div>
+                        <div class="col-md-2 col-md-offset-1"><label for="nomEtablissement">Nom établissement*</label></div>
                         <div class="col-md-6" popover-enable="(wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.nomEtablissement.$invalid ) || (donneesActivite.donneesActiviteForm.etablissement.nomEtablissement.$invalid && !donneesActivite.donneesActiviteForm.etablissement.nomEtablissement.$pristine)"
                              popover-trigger="none" popover-is-open="wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.nomEtablissement.$invalid" popover-placement="right"
                              uib-popover="Veuillez saisir le nom de l'établissement.">
-                            <input type="text" id="nomEtablissement" name="nomEtablissement" class="form-control" required="required" ng-model="activiteData.activite.etablissement.nomEtablissement">
+                            <input type="text" id="nomEtablissement" name="nomEtablissement" class="form-control" ng-required="true" ng-model="activiteData.activite.etablissement.nomEtablissement">
                         </div>
                     </div>
-
-                    <div class="col-xs-3">
-                        <h3>ETABLISSE</h3>
-                        <table class="table table-bordered">
-                            <tbody>
-                            <tr>
-                                <td ng-class="{ success: donneesActivite.donneesActiviteForm.etablissement.$valid, danger: userForm.username.$invalid }">Valid</td>
-                            </tr>
-                            <tr>
-                                <td ng-class="{ success: donneesActivite.donneesActiviteForm.etablissement.$pristine, danger: !userForm.username.$pristine }">Pristine</td>
-                            </tr>
-                            <tr>
-                                <td ng-class="{ success: donneesActivite.donneesActiviteForm.etablissement.$dirty }">Dirty</td>
-                            </tr>
-                            <tr>
-                                <td ng-class="{ success: donneesActivite.donneesActiviteForm.etablissement.$touched }">Touched</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-
                     <!--Adresse-->
                     <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.voie.$invalid ) || (donneesActivite.donneesActiviteForm.etablissement.voie.$invalid && !donneesActivite.donneesActiviteForm.etablissement.voie.$pristine)}">
                         <div class="col-md-2 col-md-offset-1"><label for="voie">Rue, No*</label></div>
                         <div class="col-md-6 " popover-enable="(wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.voie.$invalid ) || (donneesActivite.donneesActiviteForm.etablissement.voie.$invalid && !donneesActivite.donneesActiviteForm.etablissement.voie.$pristine)"
                              popover-trigger="none" popover-is-open="wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.voie.$invalid" popover-placement="right"
                              uib-popover="Veuillez saisir l'adresse de l'établissement.">
-                            <input type="text" id="voie" name="voie" class="form-control" required="required" ng-model="activiteData.activite.etablissement.voie">
+                            <input type="text" id="voie" name="voie" class="form-control" ng-required="true"  ng-model="activiteData.activite.etablissement.voie">
                         </div>
                     </div>
                     <!--NPA-->
@@ -60,7 +38,7 @@
                         <div class="col-md-4" popover-enable="(wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.npaProfessionnel.$invalid ) || (donneesActivite.donneesActiviteForm.etablissement.npaProfessionnel.$invalid && !donneesActivite.donneesActiviteForm.etablissement.npaProfessionnel.$pristine)"
                              popover-trigger="none" popover-is-open="wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.npaProfessionnel.$invalid" popover-placement="right"
                              uib-popover="Veuillez saisir le NPA.">
-                            <input type="text" id="npaProfessionnel" name="npaProfessionnel" class="form-control" required="required"  ng-model="activiteData.activite.etablissement.npaProfessionnel">
+                            <input type="text" id="npaProfessionnel" name="npaProfessionnel" class="form-control" ng-required="true"  ng-model="activiteData.activite.etablissement.npaProfessionnel">
                         </div>
                     </div>
                     <!--Localité-->
@@ -69,7 +47,7 @@
                         <div class="col-md-4" popover-enable="(wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.localite.$invalid ) || (donneesActivite.donneesActiviteForm.etablissement.localite.$invalid && !donneesActivite.donneesActiviteForm.etablissement.localite.$pristine)"
                              popover-trigger="none" popover-is-open="wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.localite.$invalid" popover-placement="right"
                              uib-popover="Veuillez saisir la localité.">
-                            <input type="text" id="localite" name="localite" class="form-control" required="required" ng-model="activiteData.activite.etablissement.localite">
+                            <input type="text" id="localite" name="localite" class="form-control" ng-required="true" ng-model="activiteData.activite.etablissement.localite">
                         </div>
                     </div>
                     <!--Tel professionnel-->
@@ -78,13 +56,13 @@
                         <div class="col-md-4" popover-enable="(wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.telephoneProf.$invalid ) || (donneesActivite.donneesActiviteForm.etablissement.telephoneProf.$invalid && !donneesActivite.donneesActiviteForm.etablissement.telephoneProf.$pristine)"
                              popover-trigger="none" popover-is-open="wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.telephoneProf.$invalid" popover-placement="right"
                              uib-popover="Veuillez saisir le téléphone professionnel.">
-                            <input type="tel" id="telephoneProf" name="telephoneProf" required  class="form-control"  ng-model="activiteData.activite.etablissement.telephoneProf">
+                            <input type="tel" id="telephoneProf" name="telephoneProf" ng-required="true" class="form-control"  ng-model="activiteData.activite.etablissement.telephoneProf">
                         </div>
                     </div>
                     <!--Tel Mobile-->
                     <div class="row form-group">
                         <div class="col-md-2 col-md-offset-1"><label for="telephoneMobile">Téléphone mobile</label></div>
-                        <div class="col-md-4"><input type="tel" id="telephoneMobile" required name="telephoneMobile" class="form-control" ng-model="activiteData.activite.etablissement.telephoneMobile"></div>
+                        <div class="col-md-4"><input type="tel" id="telephoneMobile" name="telephoneMobile" class="form-control" ng-model="activiteData.activite.etablissement.telephoneMobile"></div>
                     </div>
                     <!--Fax-->
                     <div class="row form-group">
@@ -98,7 +76,7 @@
                         <div class="col-md-4" popover-enable="(wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.email.$invalid ) || (donneesActivite.donneesActiviteForm.etablissement.email.$invalid && !donneesActivite.donneesActiviteForm.etablissement.email.$pristine)"
                              popover-trigger="none" popover-is-open="wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.email.$invalid" popover-placement="right"
                              uib-popover="Veuillez saisir le téléphone professionnel.">
-                            <input type="email" id="email" class="form-control" required="required" ng-model="activiteData.activite.etablissement.email">
+                            <input type="email" id="email" class="form-control" ng-required="true" ng-model="activiteData.activite.etablissement.email">
                         </div>
                     </div>
                     <!--Site-->
@@ -141,11 +119,11 @@
                                 <label>à titre dépendant sous supervision**</label>
                             </div>
                             <div class="col-md-3">
-                                <div ng-show="donneesActivite.donneesActiviteForm.activiteEnvisagee.typeActivite.$viewValue == 'flagTauxDependantSousSupervision'"
-                                     popover-enable="(wouldStepNext && donneesActivite.donneesActiviteForm.activiteEnvisagee.superviseur.$invalid ) || (donneesActivite.donneesActiviteForm.activiteEnvisagee.superviseur.$invalid && !donneesActivite.donneesActiviteForm.activiteEnvisagee.superviseur.$pristine)"
-                                     popover-trigger="none" popover-is-open="wouldStepNext && donneesActivite.donneesActiviteForm.activiteEnvisagee.superviseur.$invalid" popover-placement="right"
+                                <div ng-show="donneesActivite.donneesActiviteForm.typeActivite.$viewValue == 'flagTauxDependantSousSupervision'"
+                                     popover-enable="(wouldStepNext && donneesActivite.donneesActiviteForm.superviseur.$invalid ) || (donneesActivite.donneesActiviteForm.superviseur.$invalid && !donneesActivite.donneesActiviteForm.superviseur.$pristine)"
+                                     popover-trigger="none" popover-is-open="wouldStepNext && donneesActivite.donneesActiviteForm.superviseur.$invalid" popover-placement="right"
                                      uib-popover="Choisissez saisir le nom du superviseur.">
-                                    <select  type="text" name="superviseur" id="superviseur" placeholder="Nom du superviseur" ng-disabled="donneesActivite.donneesActiviteForm.activiteEnvisagee.typeActivite.$viewValue != 'flagTauxDependantSousSupervision'" required ng-model="activiteData.activite.activiteEnvisagee.superviseur">
+                                    <select  type="text" name="superviseur" id="superviseur" placeholder="Nom du superviseur" ng-disabled="donneesActivite.donneesActiviteForm.typeActivite.$viewValue != 'flagTauxDependantSousSupervision'" ng-model="activiteData.activite.activiteEnvisagee.superviseur">
                                         <option></option>
                                     </select>
                                 </div>
