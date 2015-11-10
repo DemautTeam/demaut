@@ -721,17 +721,22 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
             };
 
             $scope.addAnotherActivite = function () {
-
                 $scope.wouldAddActivite = true;
-                var activiteFutureFK = $scope.activiteData.activiteFutureFK;
-                var activite = angular.copy($scope.activiteData.activitie);
 
-                $scope.activiteData.activities.push(activite);
-                doCreateActivite(activite);
-                $scope.activiteData.activitie = {};
-                $scope.donneesActivite.donneesActiviteForm.$valid = true;
-                $scope.donneesActivite.donneesActiviteForm.$error = null;
-                $scope.donneesActivite.donneesActiviteForm.$setPristine();
+                if ($scope.donneesActivite.donneesActiviteForm.$valid) {
+                    $log.info('Formulaire valide !');
+                    var activiteFutureFK = $scope.activiteData.activiteFutureFK;
+                    var activite = angular.toJson($scope.activiteData.activite);
+                    $scope.activiteData.activities.push(activite);
+                    doCreateActivite(activite);
+                    $scope.activiteData.activitie = {};
+                    $scope.donneesActivite.donneesActiviteForm.$valid = true;
+                    $scope.donneesActivite.donneesActiviteForm.$error = null;
+                    $scope.donneesActivite.donneesActiviteForm.$setPristine();
+                }
+                else {
+                    $log.info('Formulaire activité future invalide !');
+                }
 
                 $scope.wouldAddActivite = false;
             };
@@ -766,26 +771,25 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
             };
 
             function doCreateActivite(targetActivite) {
-                $http.get(urlPrefix + '/activites/ajouter', {
+
+                $http.put(urlPrefix + '/activitesFutures/ajouter', {
                     params: {
-                        activiteFutureFK: targetActivite.activiteFutureFK,
-                        etablissement: targetActivite.etablissement,
-                        adresseRue: targetActivite.adresseRue,
-                        npa: targetActivite.npa,
-                        localite: targetActivite.localite,
-                        telephoneProf: targetActivite.telephoneProf,
-                        telephoneMobile: targetActivite.telephoneMobile,
-                        email: targetActivite.email,
-                        fax: targetActivite.fax,
-                        site: targetActivite.site,
-                        flagTauxIndependant: targetActivite.flagTauxIndependant,
-                        tauxIndependant: targetActivite.tauxIndependant,
-                        dateDebutIndependant: targetActivite.dateDebutIndependant,
-                        flagTauxDependant: targetActivite.flagTauxDependant,
-                        tauxDependant: targetActivite.tauxDependant,
-                        dateDebutDependant: targetActivite.dateDebutDependant,
-                        pratiquerBase: targetActivite.pratiquerBase
+                        nomEtablissement:targetActivite.etablissement.nomEtablissement,
+                        voie:targetActivite.etablissement.voie,
+                        npaProfessionnel: targetActivite.etablissement.npaProfessionnel,
+                        localite: targetActivite.etablissement.localite,
+                        telephoneProf: targetActivite.etablissement.telephoneProf,
+                        telephoneMobile: targetActivite.etablissement.telephoneMobile,
+                        fax: targetActivite.etablissement.fax,
+                        email: targetActivite.etablissement.email,
+                        siteInternet: targetActivite.etablissement.siteInternet,
+                        typePratiqueLamal:targetActivite.typePratiqueLamal,
+                        typeActivite:targetActivite.activiteEnvisagee.typeActivite,
+                        nombreJourParSemaine:targetActivite.activiteEnvisagee.nombreJourParSemaine,
+                        datePrevueDebut:targetActivite.activiteEnvisagee.datePrevueDebut,
+                        superviseur:targetActivite.activiteEnvisagee.superviseur
                     }
+
                 })
                     .success(function (data, status, headers, config) {
                         $log.info('Une activité a été crée avec succès!');

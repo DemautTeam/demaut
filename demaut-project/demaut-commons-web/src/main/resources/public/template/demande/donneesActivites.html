@@ -11,79 +11,101 @@
             <ng-form name="donneesActivite.donneesActiviteForm">
 
 
-                <!--Données informations géénérales-->
+                <!--Données informations générales-->
                 <fieldset>
                     <div class="row form-group"><label class="col-md-2">Informations générales</label></div>
                     <!--Nom établissement-->
-                    <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.$invalid ) || (donneesActivite.donneesActiviteForm.etablissement.$invalid && !donneesActivite.donneesActiviteForm.etablissement.$pristine)}">
+                    <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.nomEtablissement.$invalid ) || (donneesActivite.donneesActiviteForm.etablissement.nomEtablissement.$invalid && !donneesActivite.donneesActiviteForm.etablissement.nomEtablissement.$pristine)}">
                         <div class="col-md-2 col-md-offset-1"><label for="etablissement">Nom établissement*</label></div>
-                        <div class="col-md-6" popover-enable="(wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.$invalid ) || (donneesActivite.donneesActiviteForm.etablissement.$invalid && !donneesActivite.donneesActiviteForm.etablissement.$pristine)"
-                             popover-trigger="none" popover-is-open="wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.$invalid" popover-placement="right"
+                        <div class="col-md-6" popover-enable="(wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.nomEtablissement.$invalid ) || (donneesActivite.donneesActiviteForm.etablissement.nomEtablissement.$invalid && !donneesActivite.donneesActiviteForm.etablissement.nomEtablissement.$pristine)"
+                             popover-trigger="none" popover-is-open="wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.nomEtablissement.$invalid" popover-placement="right"
                              uib-popover="Veuillez saisir le nom de l'établissement.">
-                            <input type="text" id="etablissement" name="etablissement" class="form-control" required="required" ng-model="activiteData.activite.etablissement">
+                            <input type="text" id="nomEtablissement" name="nomEtablissement" class="form-control" required="required" ng-model="activiteData.activite.etablissement.nomEtablissement">
                         </div>
                     </div>
+
+                    <div class="col-xs-3">
+                        <h3>ETABLISSE</h3>
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <td ng-class="{ success: donneesActivite.donneesActiviteForm.etablissement.$valid, danger: userForm.username.$invalid }">Valid</td>
+                            </tr>
+                            <tr>
+                                <td ng-class="{ success: donneesActivite.donneesActiviteForm.etablissement.$pristine, danger: !userForm.username.$pristine }">Pristine</td>
+                            </tr>
+                            <tr>
+                                <td ng-class="{ success: donneesActivite.donneesActiviteForm.etablissement.$dirty }">Dirty</td>
+                            </tr>
+                            <tr>
+                                <td ng-class="{ success: donneesActivite.donneesActiviteForm.etablissement.$touched }">Touched</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
                     <!--Adresse-->
-                    <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesActivite.donneesActiviteForm.adresseRue.$invalid ) || (donneesActivite.donneesActiviteForm.adresseRue.$invalid && !donneesActivite.donneesActiviteForm.adresseRue.$pristine)}">
-                        <div class="col-md-2 col-md-offset-1"><label for="adresseRue">Rue, No*</label></div>
-                        <div class="col-md-6 " popover-enable="(wouldStepNext && donneesActivite.donneesActiviteForm.adresseRue.$invalid ) || (donneesActivite.donneesActiviteForm.adresseRue.$invalid && !donneesActivite.donneesActiviteForm.adresseRue.$pristine)"
-                             popover-trigger="none" popover-is-open="wouldStepNext && donneesActivite.donneesActiviteForm.adresseRue.$invalid" popover-placement="right"
+                    <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.voie.$invalid ) || (donneesActivite.donneesActiviteForm.etablissement.voie.$invalid && !donneesActivite.donneesActiviteForm.etablissement.voie.$pristine)}">
+                        <div class="col-md-2 col-md-offset-1"><label for="voie">Rue, No*</label></div>
+                        <div class="col-md-6 " popover-enable="(wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.voie.$invalid ) || (donneesActivite.donneesActiviteForm.etablissement.voie.$invalid && !donneesActivite.donneesActiviteForm.etablissement.voie.$pristine)"
+                             popover-trigger="none" popover-is-open="wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.voie.$invalid" popover-placement="right"
                              uib-popover="Veuillez saisir l'adresse de l'établissement.">
-                            <input type="text" id="adresseRue" name="adresseRue" class="form-control" required="required" ng-model="activiteData.activite.adresseRue">
+                            <input type="text" id="voie" name="voie" class="form-control" required="required" ng-model="activiteData.activite.etablissement.voie">
                         </div>
                     </div>
                     <!--NPA-->
-                    <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesActivite.donneesActiviteForm.npa.$invalid ) || (donneesActivite.donneesActiviteForm.npa.$invalid && !donneesActivite.donneesActiviteForm.npa.$pristine)}">
-                       <div class="col-md-2 col-md-offset-1"><label for="npa">NPA*</label></div>
-                        <div class="col-md-4" popover-enable="(wouldStepNext && donneesActivite.donneesActiviteForm.npa.$invalid ) || (donneesActivite.donneesActiviteForm.npa.$invalid && !donneesActivite.donneesActiviteForm.npa.$pristine)"
-                             popover-trigger="none" popover-is-open="wouldStepNext && donneesActivite.donneesActiviteForm.npa.$invalid" popover-placement="right"
+                    <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.npaProfessionnel.$invalid ) || (donneesActivite.donneesActiviteForm.etablissement.npaProfessionnel.$invalid && !donneesActivite.donneesActiviteForm.etablissement.npaProfessionnel.$pristine)}">
+                       <div class="col-md-2 col-md-offset-1"><label for="npaProfessionnel">NPA*</label></div>
+                        <div class="col-md-4" popover-enable="(wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.npaProfessionnel.$invalid ) || (donneesActivite.donneesActiviteForm.etablissement.npaProfessionnel.$invalid && !donneesActivite.donneesActiviteForm.etablissement.npaProfessionnel.$pristine)"
+                             popover-trigger="none" popover-is-open="wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.npaProfessionnel.$invalid" popover-placement="right"
                              uib-popover="Veuillez saisir le NPA.">
-                            <input type="text" id="npa" name="npa" class="form-control" required="required"  ng-model="activiteData.activite.npa">
+                            <input type="text" id="npaProfessionnel" name="npaProfessionnel" class="form-control" required="required"  ng-model="activiteData.activite.etablissement.npaProfessionnel">
                         </div>
                     </div>
                     <!--Localité-->
-                    <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesActivite.donneesActiviteForm.localite.$invalid ) || (donneesActivite.donneesActiviteForm.localite.$invalid && !donneesActivite.donneesActiviteForm.localite.$pristine)}">
+                    <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.localite.$invalid ) || (donneesActivite.donneesActiviteForm.etablissement.localite.$invalid && !donneesActivite.donneesActiviteForm.etablissement.localite.$pristine)}">
                         <div class="col-md-2 col-md-offset-1"><label for="localite">Localité*</label></div>
-                        <div class="col-md-4" popover-enable="(wouldStepNext && donneesActivite.donneesActiviteForm.localite.$invalid ) || (donneesActivite.donneesActiviteForm.localite.$invalid && !donneesActivite.donneesActiviteForm.localite.$pristine)"
-                             popover-trigger="none" popover-is-open="wouldStepNext && donneesActivite.donneesActiviteForm.localite.$invalid" popover-placement="right"
+                        <div class="col-md-4" popover-enable="(wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.localite.$invalid ) || (donneesActivite.donneesActiviteForm.etablissement.localite.$invalid && !donneesActivite.donneesActiviteForm.etablissement.localite.$pristine)"
+                             popover-trigger="none" popover-is-open="wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.localite.$invalid" popover-placement="right"
                              uib-popover="Veuillez saisir la localité.">
-                            <input type="text" id="localite" name="localite" class="form-control" required="required" ng-model="activiteData.activite.localite">
+                            <input type="text" id="localite" name="localite" class="form-control" required="required" ng-model="activiteData.activite.etablissement.localite">
+                        </div>
+                    </div>
+                    <!--Tel professionnel-->
+                    <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.telephoneProf.$invalid ) || (donneesActivite.donneesActiviteForm.etablissement.telephoneProf.$invalid && !donneesActivite.donneesActiviteForm.etablissement.telephoneProf.$pristine)}">
+                        <div class="col-md-2 col-md-offset-1"><label for="telephoneProf">Téléphone prof.*</label></div>
+                        <div class="col-md-4" popover-enable="(wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.telephoneProf.$invalid ) || (donneesActivite.donneesActiviteForm.etablissement.telephoneProf.$invalid && !donneesActivite.donneesActiviteForm.etablissement.telephoneProf.$pristine)"
+                             popover-trigger="none" popover-is-open="wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.telephoneProf.$invalid" popover-placement="right"
+                             uib-popover="Veuillez saisir le téléphone professionnel.">
+                            <input type="tel" id="telephoneProf" name="telephoneProf" required  class="form-control"  ng-model="activiteData.activite.etablissement.telephoneProf">
                         </div>
                     </div>
                     <!--Tel Mobile-->
                     <div class="row form-group">
                         <div class="col-md-2 col-md-offset-1"><label for="telephoneMobile">Téléphone mobile</label></div>
-                        <div class="col-md-4"><input type="tel" id="telephoneMobile" required name="telephoneMobile" class="form-control" ng-model="activiteData.activite.telephoneMobile"></div>
+                        <div class="col-md-4"><input type="tel" id="telephoneMobile" required name="telephoneMobile" class="form-control" ng-model="activiteData.activite.etablissement.telephoneMobile"></div>
                     </div>
                     <!--Fax-->
                     <div class="row form-group">
                         <div class="col-md-2 col-md-offset-1"><label for="fax">Fax</label></div>
-                        <div class="col-md-4"><input type="tel" id="fax" class="form-control" ng-model="activiteData.activite.fax"></div>
-                    </div>
-                    <!--Tel professionnel-->
-                    <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesActivite.donneesActiviteForm.telephoneProf.$invalid ) || (donneesActivite.donneesActiviteForm.telephoneProf.$invalid && !donneesActivite.donneesActiviteForm.telephoneProf.$pristine)}">
-                        <div class="col-md-2 col-md-offset-1"><label for="telephoneProf">Téléphone prof.*</label></div>
-                        <div class="col-md-4" popover-enable="(wouldStepNext && donneesActivite.donneesActiviteForm.telephoneProf.$invalid ) || (donneesActivite.donneesActiviteForm.telephoneProf.$invalid && !donneesActivite.donneesActiviteForm.telephoneProf.$pristine)"
-                             popover-trigger="none" popover-is-open="wouldStepNext && donneesActivite.donneesActiviteForm.telephoneProf.$invalid" popover-placement="right"
-                             uib-popover="Veuillez saisir le téléphone professionnel.">
-                            <input type="tel" id="telephoneProf" name="telephoneProf" required  class="form-control"  ng-model="activiteData.activite.telephoneProf">
-                        </div>
+                        <div class="col-md-4"><input type="tel" id="fax" class="form-control" ng-model="activiteData.activite.etablissement.fax"></div>
                     </div>
 
                     <!--Email-->
-                    <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesActivite.donneesActiviteForm.email.$invalid ) || (donneesActivite.donneesActiviteForm.email.$invalid && !donneesActivite.donneesActiviteForm.email.$pristine)}">
+                    <div class="row form-group" ng-class="{ 'has-error' : (wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.email.$invalid ) || (donneesActivite.donneesActiviteForm.etablissement.email.$invalid && !donneesActivite.donneesActiviteForm.etablissement.email.$pristine)}">
                         <div class="col-md-2 col-md-offset-1"><label for="email">Adresse email*</label></div>
-                        <div class="col-md-4" popover-enable="(wouldStepNext && donneesActivite.donneesActiviteForm.email.$invalid ) || (donneesActivite.donneesActiviteForm.email.$invalid && !donneesActivite.donneesActiviteForm.email.$pristine)"
-                             popover-trigger="none" popover-is-open="wouldStepNext && donneesActivite.donneesActiviteForm.email.$invalid" popover-placement="right"
+                        <div class="col-md-4" popover-enable="(wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.email.$invalid ) || (donneesActivite.donneesActiviteForm.etablissement.email.$invalid && !donneesActivite.donneesActiviteForm.etablissement.email.$pristine)"
+                             popover-trigger="none" popover-is-open="wouldStepNext && donneesActivite.donneesActiviteForm.etablissement.email.$invalid" popover-placement="right"
                              uib-popover="Veuillez saisir le téléphone professionnel.">
-                            <input type="email" id="email" class="form-control" required="required" ng-model="activiteData.activite.email">
+                            <input type="email" id="email" class="form-control" required="required" ng-model="activiteData.activite.etablissement.email">
                         </div>
                     </div>
                     <!--Site-->
                     <div class="row form-group">
-                        <div class="col-md-2 col-md-offset-1"><label for="site">Site internet</label></div>
+                        <div class="col-md-2 col-md-offset-1"><label for="siteInternet">Site internet</label></div>
                         <div class="col-md-4">
-                            <input type="text" id="site" name="site" class="form-control" ng-model="activiteData.activite.site">
+                            <input type="text" id="siteInternet" name="siteInternet" class="form-control" ng-model="activiteData.activite.etablissement.siteInternet">
                         </div>
                     </div>
                 </fieldset>
@@ -101,29 +123,29 @@
                         <!--À titre indépendant-->
                         <div class="row form-group">
                             <div class="col-md-5 col-md-offset-1">
-                                <input type="radio" name="statusTypeActivite" value="flagTauxIndependant" ng-required="isFlagTauxIndependantRequired()" ng-model="activiteData.activite.statusTypeActivite"/>
+                                <input type="radio" name="typeActivite" value="flagTauxIndependant" ng-required="isFlagTauxIndependantRequired()" ng-model="activiteData.activite.activiteEnvisagee.typeActivite"/>
                                 <label>à titre indépendant</label>
                             </div>
                         </div>
                         <!--À titre dépendant sous sa propre-->
                         <div class="row form-group">
                             <div class="col-md-5 col-md-offset-1">
-                                <input type="radio" name="statusTypeActivite" value="flagTauxDependant" ng-required="isFlagTauxIndependantRequired()" ng-model="activiteData.activite.statusTypeActivite"/>
+                                <input type="radio" name="typeActivite" value="flagTauxDependant" ng-required="isFlagTauxIndependantRequired()" ng-model="activiteData.activite.activiteEnvisagee.typeActivite"/>
                                 <label>à titre indépendant sous sa propre responsabilité professionnelle</label>
                             </div>
                         </div>
                         <!--À titre dépendant sous supervision-->
                         <div class="row form-group">
                             <div class="col-md-4 col-md-offset-1">
-                                <input type="radio" name="statusTypeActivite" value="flagTauxDependantSousSupervision" ng-required="isFlagTauxDependantRequired()" ng-model="activiteData.activite.statusTypeActivite"/>
+                                <input type="radio" name="typeActivite" value="flagTauxDependantSousSupervision" ng-required="isFlagTauxDependantRequired()" ng-model="activiteData.activite.activiteEnvisagee.typeActivite"/>
                                 <label>à titre dépendant sous supervision**</label>
                             </div>
                             <div class="col-md-3">
-                                <div ng-show="donneesActivite.donneesActiviteForm.statusTypeActivite.$viewValue == 'flagTauxDependantSousSupervision'"
-                                     popover-enable="(wouldStepNext && donneesActivite.donneesActiviteForm.nomSuperviseur.$invalid ) || (donneesActivite.donneesActiviteForm.nomSuperviseur.$invalid && !donneesActivite.donneesActiviteForm.nomSuperviseur.$pristine)"
-                                     popover-trigger="none" popover-is-open="wouldStepNext && donneesActivite.donneesActiviteForm.nomSuperviseur.$invalid" popover-placement="right"
+                                <div ng-show="donneesActivite.donneesActiviteForm.activiteEnvisagee.typeActivite.$viewValue == 'flagTauxDependantSousSupervision'"
+                                     popover-enable="(wouldStepNext && donneesActivite.donneesActiviteForm.activiteEnvisagee.superviseur.$invalid ) || (donneesActivite.donneesActiviteForm.activiteEnvisagee.superviseur.$invalid && !donneesActivite.donneesActiviteForm.activiteEnvisagee.superviseur.$pristine)"
+                                     popover-trigger="none" popover-is-open="wouldStepNext && donneesActivite.donneesActiviteForm.activiteEnvisagee.superviseur.$invalid" popover-placement="right"
                                      uib-popover="Choisissez saisir le nom du superviseur.">
-                                    <select  type="text" name="nomSuperviseur" id="nomSuperviseur" placeholder="Nom du superviseur" ng-disabled="donneesActivite.donneesActiviteForm.flagTauxDependantSousSupervision.$viewValue != 'flagTauxDependantSousSupervision'" required ng-model="activiteData.activite.flagTauxDependantSousSupervision.superviseur">
+                                    <select  type="text" name="superviseur" id="superviseur" placeholder="Nom du superviseur" ng-disabled="donneesActivite.donneesActiviteForm.activiteEnvisagee.typeActivite.$viewValue != 'flagTauxDependantSousSupervision'" required ng-model="activiteData.activite.activiteEnvisagee.superviseur">
                                         <option></option>
                                     </select>
                                 </div>
@@ -134,8 +156,8 @@
                             <div class="col-md-3 col-md-offset-2"><label>Date prévue de début</label></div>
                             <div class="col-md-2">
                                 <p class="input-group">
-                                    <input type="text" class="form-control" id="dateDebut" name="dateDebutPrevu" placeholder="{{datePicker.placeholder}}"
-                                           datepicker-popup="{{datePicker.format}}" ng-model="activiteData.activite.dateDebutPrevu"
+                                    <input type="text" class="form-control" id="datePrevueDebut" name="datePrevueDebut" placeholder="{{datePicker.placeholder}}"
+                                           datepicker-popup="{{datePicker.format}}" ng-model="activiteData.activite.activiteEnvisagee.datePrevueDebut"
                                            is-open="activiteData.datePicker.status.dateDebutPrevu.opened" min-date="datePicker.minDate" datepicker-options="datePicker.dateOptions"
                                            required="isdateDebutIndependantRequired" close-text="Fermer" clear-text="Effacer" current-text="Aujourd'hui"/>
                                     <span class="input-group-btn">
@@ -147,7 +169,7 @@
                         <!--Nombre demi-journée-->
                         <div class="row form-group">
                             <div class="col-md-3 col-md-offset-2"><label>Taux d'activité. Indiquez le nombre de demi-journée par semaine</label></div>
-                            <div class="col-md-2"><input type="text" name="nombreDemiJournee" id="nombreDemiJournee" class="form-control" required="isTauxIndependantRequired" ng-model="activiteData.activite.nombreDemiJournee"/></div>
+                            <div class="col-md-2"><input type="text" name="nombreJourParSemaine" id="nombreJourParSemaine" class="form-control" required="isTauxIndependantRequired" ng-model="activiteData.activite.activiteEnvisagee.nombreJourParSemaine"/></div>
                         </div>
 
                         <div class="row"></br></div>
@@ -174,26 +196,26 @@
                 </div>
                 <hr>
 
-                <!--Assurance maladie-->
+                <!--Assurance maladie - LAMAL-->
                 <div>
                     <fieldset>
                         <div class="row form-group"><label class="col-md-2">Assurance maladie</label></div>
                         <div class="row form-group"><label class="col-md-8 col-md-offset-1">Avez-vous l’intention de pratiquer à charge de l’assurance-maladie obligatoire (assurance de base)?</label></div>
                         <div class="row">
                             <div class="col-md-8 col-md-offset-1">
-                                <input type="radio" name="pratiquerBase" value="independant" ng-model="activiteData.activite.pratiquerBase" ng-required="iPratiquerBaseRequired()"/>
+                                <input type="radio" name="typePratiqueLamal" value="independant" ng-model="activiteData.activite.typePratiqueLamal" ng-required="iPratiquerBaseRequired()"/>
                                 <label>oui, à titre indépendant (admission personnelle)</label>
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col-md-8 col-md-offset-1">
-                                <input type="radio" name="pratiquerBase" value="dependant"  ng-model="activiteData.activite.pratiquerBase" ng-required="iPratiquerBaseRequired()"/>
+                                <input type="radio" name="typePratiqueLamal" value="dependant"  ng-model="activiteData.activite.typePratiqueLamal" ng-required="iPratiquerBaseRequired()"/>
                                 <label>oui, à titre dépendant, professionnellement responsable (admission par le biais de l'employeur)</label>
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col-md-8 col-md-offset-1">
-                                <input type="radio" name="pratiquerBase" value="non" ng-model="activiteData.activite.pratiquerBase" ng-required="iPratiquerBaseRequired()"/>
+                                <input type="radio" name="typePratiqueLamal" value="non" ng-model="activiteData.activite.typePratiqueLamal" ng-required="iPratiquerBaseRequired()"/>
                                 <label>non</label>
                             </div>
                         </div>
