@@ -4,6 +4,7 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,7 +70,7 @@ public class ActivitesFuturesRestImpl implements ActivitesFuturesRest {
             String typePratiqueLamalStr, //
             String typeActiviteStr, //
             Integer nombreJourParSemaine, //
-            String datePrevueDebutStr, //
+            Long datePrevueDebutTimestamp, //
             String superviseurStr) {
         logger.debug("/ajouter - Reference de la demande : {}", referenceDeDemande);
 
@@ -86,8 +87,7 @@ public class ActivitesFuturesRestImpl implements ActivitesFuturesRest {
         TypePratiqueLamal typePratiqueLamal = TypePratiqueLamal.valueOf(typePratiqueLamalStr);
         TypeActivite typeActivite = TypeActivite.valueOf(typeActiviteStr);
         TauxActiviteEnDemiJournee tauxActiviteEnDemiJournee = new TauxActiviteEnDemiJournee(nombreJourParSemaine);
-        DatePrevueDebut datePrevueDebut = new DatePrevueDebut(
-                DiplomeRestImpl.SHORT_DATE_PARSER.parseLocalDate(datePrevueDebutStr));
+        DatePrevueDebut datePrevueDebut = new DatePrevueDebut(new LocalDate(datePrevueDebutTimestamp));
         Superviseur superviseur = StringUtils.isEmpty(superviseurStr) ? null : new Superviseur(superviseurStr);
         
         Etablissement etablissement = new Etablissement(nomEtablissement, voie, complement, localite, npaProfessionnel, telephoneProf, telephoneMobile, fax, email, siteInternet);

@@ -50,7 +50,7 @@ public interface ActivitesFuturesRest {
             @FormParam("typePratiqueLamal") String typePratiqueLamalStr, //
             @FormParam("typeActivite") String typeActiviteStr, //
             @FormParam("nombreJourParSemaine") Integer nombreJourParSemaine, //
-            @FormParam("datePrevueDebut") String datePrevueDebutStr, //
+            @FormParam("datePrevueDebut") Long datePrevueDebutStr, //
             @FormParam("superviseur") String superviseurStr);
     
     @POST

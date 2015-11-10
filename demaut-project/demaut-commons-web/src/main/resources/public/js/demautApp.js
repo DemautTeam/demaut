@@ -773,8 +773,18 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
             };
 
             function doCreateActivite(targetActivite) {
-                $http.post(urlPrefix + '/activitesFutures/ajouter', {
-                    params: {
+
+                $http({
+                    method: 'POST',
+                    url: urlPrefix + '/activitesFutures/ajouter',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    transformRequest: function(obj) {
+                        var str = [];
+                        for(var p in obj)
+                            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                        return str.join("&");
+                    },
+                    data: {
                         nomEtablissement:targetActivite.etablissement.nomEtablissement,
                         voie:targetActivite.etablissement.voie,
                         npaProfessionnel: targetActivite.etablissement.npaProfessionnel,
@@ -787,12 +797,10 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                         typePratiqueLamal:targetActivite.typePratiqueLamal,
                         typeActivite:targetActivite.activiteEnvisagee.typeActivite,
                         nombreJourParSemaine:targetActivite.activiteEnvisagee.nombreJourParSemaine,
-                        datePrevueDebut:targetActivite.activiteEnvisagee.datePrevueDebut,
+                        datePrevueDebut:targetActivite.activiteEnvisagee.datePrevueDebut.getTime(),
                         superviseur:targetActivite.activiteEnvisagee.superviseur
                     }
-
-                })
-                    .success(function (data, status, headers, config) {
+                }).success(function (data, status, headers, config) {
                         $log.info('Une activité a été crée avec succès!');
                     })
                     .error(function (data, status, headers, config) {
