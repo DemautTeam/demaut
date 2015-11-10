@@ -686,8 +686,8 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
             };
         }])
     //------------------- DonneesActivitesController ----------------------------------
-    .controller('DonneesActivitesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$log', 'utils',
-        function ($scope, $rootScope, $routeParams, $http, $location, $log, utils) {
+    .controller('DonneesActivitesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$log', '$window','utils',
+        function ($scope, $rootScope, $routeParams, $http, $location, $log, $window, utils) {
             $rootScope.contextMenu = 'DemandeAutorisation';
             $scope.indexStep = 4;
             this.name = "DonneesActivitesController";
@@ -785,6 +785,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                         return str.join("&");
                     },
                     data: {
+                        referenceDeDemande: $window.localStorage.getItem('referenceDeDemande'),
                         nomEtablissement:targetActivite.etablissement.nomEtablissement,
                         voie:targetActivite.etablissement.voie,
                         npaProfessionnel: targetActivite.etablissement.npaProfessionnel,
