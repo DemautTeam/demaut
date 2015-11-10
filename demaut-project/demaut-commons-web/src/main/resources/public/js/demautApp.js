@@ -170,6 +170,9 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
 
                 //TODO : faire une directive pour faire une custom validation
                 $scope.validateGln = function (inputGln) {
+                    if(arguments[1] && $scope.professionData.gln.length < 13){
+                        inputGln.$setValidity('glnValidator',false);
+                    }
                     if ($scope.professionData.gln.length == 13) {
                         $http.get(urlPrefix + '/demande/validerGln', {
                             params: {
@@ -178,7 +181,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                         })
                             .success(function (data, status, headers, config) {
                                 var serviceResponse = data.response;
-                                if (serviceResponse.indexOf('OK') != -1 ) {
+                                if (serviceResponse.indexOf('NOK') == -1 ) {
                                     inputGln.$setValidity('glnValidator',true);
                                 }
                                 else {
