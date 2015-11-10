@@ -341,11 +341,13 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                     $scope.personalData.dateDeNaissance = new Date(responseValues.dateDeNaissance);
                     $scope.personalData.langue = responseValues.langue;
 
-                    for (var indexJ = 0; indexJ < $scope.paysList.length; indexJ++) {
-                        if ($scope.paysList[indexJ].id == responseValues.nationalite.id) {
-                            $scope.personalData.nationalite = $scope.paysList[indexJ];
-                            break;
-                        }
+                    if (responseValues.nationalite != null && responseValues.nationalite != undefined) {
+	                    for (var indexJ = 0; indexJ < $scope.paysList.length; indexJ++) {
+	                        if ($scope.paysList[indexJ].id == responseValues.nationalite.id) {
+	                            $scope.personalData.nationalite = $scope.paysList[indexJ];
+	                            break;
+	                        }
+	                    }
                     }
 
                     if (utils.isNotEmpty(responseValues.permis)) {
