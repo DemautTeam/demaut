@@ -30,8 +30,8 @@
                     <div class="col-md-3"><label for="gln">Code GLN (EAN)</label></div>
                     <div class="col-md-2" popover-enable=" wouldStepNext || (professionSante.professionDataForm.gln.$invalid && !professionSante.professionDataForm.gln.$pristine)"
                          popover-trigger="none" popover-is-open="(wouldStepNext && professionSante.professionDataForm.gln.$invalid ) || (professionSante.professionDataForm.gln.$invalid && !professionSante.professionDataForm.gln.$pristine)" popover-placement="right"
-                         uib-popover="Veuillez saisir votre code GLN.">
-                        <input type="text" id="gln" name="gln" ng-minlength="0" ng-maxlength="13" ng-model="professionData.gln" ng-change="validateGln(professionSante.professionDataForm.gln)" class="form-control"
+                         uib-popover="Veuillez saisir un code GLN valide">
+                        <input type="text" id="gln" name="gln" ng-minlength="0" ng-maxlength="13" ng-model="professionData.gln" ng-change="validateGln(professionSante.professionDataForm.gln)" ng-blur="validateGln(professionSante.professionDataForm.gln, true)" class="form-control"
                                ng-required="isProfessionNecessiteCodeGLN()">
                     </div>
                 </div>
