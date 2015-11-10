@@ -170,6 +170,9 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
 
                 //TODO : faire une directive pour faire une custom validation
                 $scope.validateGln = function (inputGln) {
+                    if(arguments[1] && $scope.professionData.gln.length < 13){
+                        inputGln.$setValidity('glnValidator',false);
+                    }
                     if ($scope.professionData.gln.length == 13) {
                         $http.get(urlPrefix + '/demande/validerGln', {
                             params: {
@@ -178,7 +181,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                         })
                             .success(function (data, status, headers, config) {
                                 var serviceResponse = data.response;
-                                if (serviceResponse.indexOf('OK') != -1 ) {
+                                if (serviceResponse.indexOf('NOK') == -1 ) {
                                     inputGln.$setValidity('glnValidator',true);
                                 }
                                 else {
@@ -685,8 +688,8 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
             };
         }])
     //------------------- DonneesActivitesController ----------------------------------
-    .controller('DonneesActivitesController', ['$scope', '$rootScope', '$routeParams', '$location', '$log',
-        function ($scope, $rootScope, $routeParams, $location, $log) {
+    .controller('DonneesActivitesController', ['$scope', '$rootScope', '$routeParams', '$http', '$location', '$log', '$window','utils',
+        function ($scope, $rootScope, $routeParams, $http, $location, $log, $window, utils) {
             $rootScope.contextMenu = 'DemandeAutorisation';
             $scope.indexStep = 4;
             this.name = "DonneesActivitesController";
@@ -722,17 +725,20 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
             };
 
             $scope.addAnotherActivite = function () {
-
                 $scope.wouldAddActivite = true;
-                var activiteFutureFK = $scope.activiteData.activiteFutureFK;
-                var activite = angular.copy($scope.activiteData.activitie);
 
-                $scope.activiteData.activities.push(activite);
-                doCreateActivite(activite);
-                $scope.activiteData.activitie = {};
-                $scope.donneesActivite.donneesActiviteForm.$valid = true;
-                $scope.donneesActivite.donneesActiviteForm.$error = null;
-                $scope.donneesActivite.donneesActiviteForm.$setPristine();
+                if ($scope.donneesActivite.donneesActiviteForm.$valid) {
+                    $log.info('Formulaire valide !');
+                    doCreateActivite($scope.activiteData.activite);
+                    $scope.activiteData.activite = {};
+                    $scope.donneesActivite.donneesActiviteForm.$valid = true;
+                    $scope.donneesActivite.donneesActiviteForm.$error = null;
+                    $scope.donneesActivite.donneesActiviteForm.$setPristine();
+                    $scope.afficheFormulaire(false);
+                }
+                else {
+                    $log.info('Formulaire activité future invalide !');
+                }
 
                 $scope.wouldAddActivite = false;
             };
@@ -767,28 +773,35 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
             };
 
             function doCreateActivite(targetActivite) {
-                $http.get(urlPrefix + '/activites/ajouter', {
-                    params: {
-                        activiteFutureFK: targetActivite.activiteFutureFK,
-                        etablissement: targetActivite.etablissement,
-                        adresseRue: targetActivite.adresseRue,
-                        npa: targetActivite.npa,
-                        localite: targetActivite.localite,
-                        telephoneProf: targetActivite.telephoneProf,
-                        telephoneMobile: targetActivite.telephoneMobile,
-                        email: targetActivite.email,
-                        fax: targetActivite.fax,
-                        site: targetActivite.site,
-                        flagTauxIndependant: targetActivite.flagTauxIndependant,
-                        tauxIndependant: targetActivite.tauxIndependant,
-                        dateDebutIndependant: targetActivite.dateDebutIndependant,
-                        flagTauxDependant: targetActivite.flagTauxDependant,
-                        tauxDependant: targetActivite.tauxDependant,
-                        dateDebutDependant: targetActivite.dateDebutDependant,
-                        pratiquerBase: targetActivite.pratiquerBase
+
+                $http({
+                    method: 'POST',
+                    url: urlPrefix + '/activitesFutures/ajouter',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    transformRequest: function(obj) {
+                        var str = [];
+                        for(var p in obj)
+                            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                        return str.join("&");
+                    },
+                    data: {
+                        referenceDeDemande: $window.localStorage.getItem('referenceDeDemande'),
+                        nomEtablissement:targetActivite.etablissement.nomEtablissement,
+                        voie:targetActivite.etablissement.voie,
+                        npaProfessionnel: targetActivite.etablissement.npaProfessionnel,
+                        localite: targetActivite.etablissement.localite,
+                        telephoneProf: targetActivite.etablissement.telephoneProf,
+                        telephoneMobile: targetActivite.etablissement.telephoneMobile,
+                        fax: targetActivite.etablissement.fax,
+                        email: targetActivite.etablissement.email,
+                        siteInternet: targetActivite.etablissement.siteInternet,
+                        typePratiqueLamal:targetActivite.typePratiqueLamal,
+                        typeActivite:targetActivite.activiteEnvisagee.typeActivite,
+                        nombreJourParSemaine:targetActivite.activiteEnvisagee.nombreJourParSemaine,
+                        datePrevueDebut:targetActivite.activiteEnvisagee.datePrevueDebut.getTime(),
+                        superviseur:targetActivite.activiteEnvisagee.superviseur
                     }
-                })
-                    .success(function (data, status, headers, config) {
+                }).success(function (data, status, headers, config) {
                         $log.info('Une activité a été crée avec succès!');
                     })
                     .error(function (data, status, headers, config) {

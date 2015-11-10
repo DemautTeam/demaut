@@ -37,21 +37,21 @@ public interface ActivitesFuturesRest {
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER") //   
     Response ajouterActiviteFuture(@FormParam("referenceDeDemande") ReferenceDeDemande referenceDeDemande,//
-            @QueryParam("nomEtablissement") String nomEtablissementStr, //
-            @QueryParam("voie") String voieStr, //
-            @QueryParam("complement") String complementStr, //
-            @QueryParam("localite") String localiteStr, //
-            @QueryParam("npaProfessionnel") String npaProfessionnelStr, //
-            @QueryParam("telephoneProf") String telephoneProfStr, //
-            @QueryParam("telephoneMobile") String telephoneMobileStr, //
-            @QueryParam("fax") String faxStr, //
-            @QueryParam("email") String emailStr, //
-            @QueryParam("siteInternet") String siteInternetStr, //
-            @QueryParam("typePratiqueLamal") String typePratiqueLamalStr, //
-            @QueryParam("typeActivite") String typeActiviteStr, //
-            @QueryParam("nombreJourParSemaine") Integer nombreJourParSemaine, //
-            @QueryParam("datePrevueDebut") String datePrevueDebutStr, //
-            @QueryParam("superviseur") String superviseurStr);
+            @FormParam("nomEtablissement") String nomEtablissementStr, //
+            @FormParam("voie") String voieStr, //
+            @FormParam("complement") String complementStr, //
+            @FormParam("localite") String localiteStr, //
+            @FormParam("npaProfessionnel") String npaProfessionnelStr, //
+            @FormParam("telephoneProf") String telephoneProfStr, //
+            @FormParam("telephoneMobile") String telephoneMobileStr, //
+            @FormParam("fax") String faxStr, //
+            @FormParam("email") String emailStr, //
+            @FormParam("siteInternet") String siteInternetStr, //
+            @FormParam("typePratiqueLamal") String typePratiqueLamalStr, //
+            @FormParam("typeActivite") String typeActiviteStr, //
+            @FormParam("nombreJourParSemaine") Integer nombreJourParSemaine, //
+            @FormParam("datePrevueDebut") Long datePrevueDebutStr, //
+            @FormParam("superviseur") String superviseurStr);
     
     @POST
     @Path("supprimer")
