@@ -285,7 +285,6 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
             this.params = $routeParams;
             $scope.testSuisse = nationalityTest;//récupération du service de test des nationnalités
 
-            $scope.langues = [];
             $scope.paysList = [];
 
             $scope.personalData = {};
@@ -351,9 +350,9 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                     }
 
                     if (utils.isNotEmpty(responseValues.permis)) {
-                        $scope.personalData.permis = responseValues.permis.typePermis;
+                        $scope.personalData.typePermis = responseValues.permis.typePermis;
                         if (utils.isNotEmpty(responseValues.permis.autrePermis)) {
-                            $scope.personalData.permisOther = responseValues.permis.autrePermis;
+                            $scope.personalData.autrePermis = responseValues.permis.autrePermis;
                         }
                     }
                     if (utils.isNotEmpty(responseValues)) {
@@ -379,7 +378,7 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
 
             $scope.resetPermis = function () {
                 if ($scope.isSuisse()) {
-                    $scope.personalData.permis = null;
+                    $scope.personalData.typePermis = null;
                 }
             };
 
@@ -421,8 +420,8 @@ ngDemautApp.controller('CockpitController', ['$scope', '$rootScope', '$routePara
                         dateDeNaissance: $scope.personalData.dateDeNaissance,
                         nationalite: $scope.personalData.nationalite.id,
                         langue: $scope.personalData.langue,
-                        permis: $scope.personalData.permis,
-                        permisOther: $scope.personalData.permisOther
+                        typePermis: $scope.personalData.typePermis,
+                        autrePermis: $scope.personalData.autrePermis
                     }
                 })
                     .success(function (data, status, headers, config) {

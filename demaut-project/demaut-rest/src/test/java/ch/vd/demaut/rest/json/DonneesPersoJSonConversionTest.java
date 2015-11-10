@@ -32,7 +32,7 @@ public class DonneesPersoJSonConversionTest extends AbstractJSonConversionTest {
         DonneesPersonnelles donneesPerso = buildDonneesPerso();
 
         String jsonStrExpected = 
-                "{\"id\":null,\"version\":0,\"nom\":\"Newman\",\"prenom\":\"prenom\",\"nomDeCelibataire\":\"Newman2\",\"genre\":\"Feminin\",\"dateDeNaissance\":1360710000000,\"adresse\":{\"id\":null,\"version\":0,\"voie\":\"\",\"complement\":\"\",\"npa\":\"1000\",\"localite\":\"Lausanne\",\"pays\":{\"name\":\"Suisse\",\"id\":1,\"libl\":\"Suisse\"}},\"nationalite\":{\"name\":\"Andorre\",\"id\":7,\"libl\":\"Andorre\"},\"email\":\"john.doe@nobody.com\",\"telephonePrive\":\"022222222\",\"telephoneMobile\":\"07625225123\",\"fax\":\"+411215156\",\"langue\":{\"name\":\"Autre\",\"id\":0,\"libl\":\"Autre\"},\"permis\":{\"typePermis\":\"B\",\"autrePermis\":\"\"}}";
+                "{\"id\":null,\"version\":0,\"nom\":\"Newman\",\"prenom\":\"prenom\",\"nomDeCelibataire\":\"Newman2\",\"genre\":\"Feminin\",\"dateDeNaissance\":1360710000000,\"adresse\":{\"voie\":\"\",\"complement\":\"\",\"npa\":\"1000\",\"localite\":\"Lausanne\",\"pays\":{\"name\":\"Australie\",\"id\":17,\"libl\":\"Australie\"}},\"nationalite\":{\"name\":\"Andorre\",\"id\":7,\"libl\":\"Andorre\"},\"email\":\"john.doe@nobody.com\",\"telephonePrive\":\"022222222\",\"telephoneMobile\":\"07625225123\",\"fax\":\"+411215156\",\"langue\":\"Autre\",\"permis\":{\"typePermis\":\"B\",\"autrePermis\":\"\"}}";
 
         assertJsonStr(donneesPerso, jsonStrExpected);
 
@@ -41,7 +41,7 @@ public class DonneesPersoJSonConversionTest extends AbstractJSonConversionTest {
     private DonneesPersonnelles buildDonneesPerso() {
         Localite localite = new Localite("Lausanne");
         NPA npa = new NPA("1000");
-        Pays pays = Pays.Suisse;
+        Pays pays = Pays.Australie;
         Adresse adresse = new Adresse("", "", localite, npa, pays);
         Email email = new Email("john.doe@nobody.com");
         Genre genre = Genre.Feminin;

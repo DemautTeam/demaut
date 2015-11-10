@@ -37,43 +37,34 @@ public class PersonnelRestImpl extends AbstractRestService {
 
     /**
      * Méthode qui renseigner les Donnees Personnelles du demandeur
-     * dateDeNaissance String (format 2015-10-06T22:00:00.000Z)
      *
      */
-    //TODO typage de la date de naissance ?
     @SuppressWarnings("all")
     @GET
     @Path("/renseigner")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
     public Response renseignerLesDonneesPersonnelles(@QueryParam("referenceDeDemande") String referenceDeDemandeStr,
-                                                     @QueryParam("nom") String nomStr,
-                                                     @QueryParam("prenom") String prenomStr,
-                                                     @QueryParam("nomDeCelibataire") String nomDeCelibataireStr,
-                                                     @QueryParam("adressePersonnelle") String adressePersonnelle,
-                                                     @QueryParam("complement") String complement,
-                                                     @QueryParam("localite") String localiteStr,
-                                                     @QueryParam("npa") String npaStr,
-                                                     @QueryParam("pays") Integer paysId,
-                                                     @QueryParam("telephonePrive") String telephonePriveStr,
-                                                     @QueryParam("telephoneMobile") String telephoneMobileStr,
-                                                     @QueryParam("email") String emailStr,
-                                                     @QueryParam("fax") String faxStr,
-                                                     @QueryParam("genre") String genreStr,
-                                                     @QueryParam("dateDeNaissance") String dateDeNaissanceStr,
-                                                     @QueryParam("nationalite") Integer nationaliteId,
-                                                     @QueryParam("langue") String langueStr,
-                                                     @QueryParam("permis") String permisStr,
-                                                     @QueryParam("permisOther") String permisOther) throws Exception {
+            @QueryParam("nom") String nomStr, @QueryParam("prenom") String prenomStr,
+            @QueryParam("nomDeCelibataire") String nomDeCelibataireStr,
+            @QueryParam("adressePersonnelle") String adressePersonnelle, @QueryParam("complement") String complement,
+            @QueryParam("localite") String localiteStr, @QueryParam("npa") String npaStr,
+            @QueryParam("pays") Integer paysId, @QueryParam("telephonePrive") String telephonePriveStr,
+            @QueryParam("telephoneMobile") String telephoneMobileStr, @QueryParam("email") String emailStr,
+            @QueryParam("fax") String faxStr, @QueryParam("genre") String genreStr,
+            @QueryParam("dateDeNaissance") String dateDeNaissanceStr, @QueryParam("nationalite") Integer nationaliteId,
+            @QueryParam("langue") String langueStr, @QueryParam("typePermis") String typePermisStr,
+            @QueryParam("autrePermis") String autrePermisStr) throws Exception {
 
         Login login = getLogin();
 
-        LOGGER.info("renseignerLesDonneesPersonnelles pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr);
+        LOGGER.info("renseignerLesDonneesPersonnelles pour : " + login.getValue() + ", referenceDeDemande="
+                + referenceDeDemandeStr);
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
         Nom nom = new Nom(nomStr);
         Prenom prenom = new Prenom(prenomStr);
-        Nom nomDeCelibataire = StringUtils.isEmpty(nomDeCelibataireStr) ? null : new Nom(nomDeCelibataireStr);
+        Nom nomDeCelibataire = StringUtils.isEmpty(nomDeCelibataireStr)? null : new Nom(nomDeCelibataireStr);
         Localite localite = new Localite(localiteStr);
         NPA npa = new NPA(npaStr);
         Pays pays = Pays.getTypeById(paysId);
@@ -83,29 +74,22 @@ public class PersonnelRestImpl extends AbstractRestService {
         Telephone telephoneMobile = StringUtils.isEmpty(telephoneMobileStr) ? null : new Telephone(telephoneMobileStr);
         Telephone fax = StringUtils.isEmpty(faxStr) ? null : new Telephone(faxStr);
         Genre genre = Genre.valueOf(genreStr);
-        DateDeNaissance dateDeNaissance = new DateDeNaissance(DiplomeRestImpl.SHORT_DATE_PARSER.parseLocalDate(dateDeNaissanceStr));
+        DateDeNaissance dateDeNaissance = new DateDeNaissance(
+                DiplomeRestImpl.SHORT_DATE_PARSER.parseLocalDate(dateDeNaissanceStr));
         Pays nationalite = Pays.getTypeById(nationaliteId);
-        Langue langue;
-        if(langueStr.equalsIgnoreCase("autre")){
-            langue = Langue.Autre;
-        }
-        else {
-            langue = Langue.Francais;
-        }
-
+        Langue langue = Langue.valueOf(langueStr);
+        
+        //Construction de Permis
         Permis permis = null;
-        if (!Pays.Suisse.equals(nationalite)) {
-            if (StringUtils.isEmpty(permisStr)) {
-                AutrePermis autrePermis = new AutrePermis(permisOther);
-                permis = new Permis(autrePermis);
-            } else {
-                TypePermis typePermis = TypePermis.valueOf(permisStr);
-                permis = new Permis(typePermis);
-            }
+        TypePermis typePermis = StringUtils.isEmpty(typePermisStr)? null : TypePermis.valueOf(typePermisStr);
+        AutrePermis autrePermis = StringUtils.isEmpty(autrePermisStr)? null : new AutrePermis(autrePermisStr);
+        if (typePermis != null) {
+            permis = new Permis(typePermis, autrePermis);
         }
-
-        donneesPersonnellesService.renseignerLesDonneesPersonnelles(login, referenceDeDemande, nom, prenom, nomDeCelibataire, adresse, email,
-                telephonePrive, telephoneMobile, fax, genre, dateDeNaissance, nationalite, langue, permis);
+        
+        donneesPersonnellesService.renseignerLesDonneesPersonnelles(login, referenceDeDemande, nom, prenom,
+                nomDeCelibataire, adresse, email, telephonePrive, telephoneMobile, fax, genre, dateDeNaissance,
+                nationalite, langue, permis);
 
         return RestUtils.buildJSonResponse(true);
     }
@@ -117,16 +101,19 @@ public class PersonnelRestImpl extends AbstractRestService {
     @Path("/recuperer")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public Response recupererDonneesPersonnelles(@QueryParam("referenceDeDemande") String referenceDeDemandeStr) throws IOException {
+    public Response recupererDonneesPersonnelles(@QueryParam("referenceDeDemande") String referenceDeDemandeStr)
+            throws IOException {
 
         Login login = getLogin();
 
-        LOGGER.info("recuperer Brouillon de donnees personnelles pour : " + login.getValue() + ", referenceDeDemande=" + referenceDeDemandeStr);
+        LOGGER.info("recuperer Brouillon de donnees personnelles pour : " + login.getValue() + ", referenceDeDemande="
+                + referenceDeDemandeStr);
 
         ReferenceDeDemande referenceDeDemande = new ReferenceDeDemande(referenceDeDemandeStr);
 
-        DonneesPersonnelles donneesPersonnelles = donneesPersonnellesService.recupererDonneesPersonnelles(login, referenceDeDemande);
-        
+        DonneesPersonnelles donneesPersonnelles = donneesPersonnellesService.recupererDonneesPersonnelles(login,
+                referenceDeDemande);
+
         return RestUtils.buildJSonResponse(donneesPersonnelles);
     }
 }

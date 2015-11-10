@@ -155,11 +155,7 @@
                 <column name="genre"/>
                 <enumerated>STRING</enumerated>
             </basic>
-            <one-to-one name="adresse">
-                <cascade>
-                    <cascade-all/>
-                </cascade>
-            </one-to-one>
+            <embedded name="adresse"/>
             <embedded name="nom"/>
             <embedded name="prenom"/>
             <embedded name="nomDeCelibataire">
@@ -230,26 +226,6 @@
         </attributes>
     </entity>
 
-
-    <!-- ADRESSE -->
-
-    <entity class="ch.vd.demaut.domain.demandeur.donneesPerso.Adresse">
-        <table name="ADRESSE_PERSONNELLE"/>
-        <attributes>
-            <basic name="pays">
-                <column name="pays"/>
-                <enumerated>ORDINAL</enumerated>
-            </basic>
-            <basic name="voie">
-                <column name="voie" length="254"/>
-            </basic>
-            <basic name="complement">
-                <column name="complement" length="254"/>
-            </basic>
-            <embedded name="npa"/>
-            <embedded name="localite"/>
-        </attributes>
-    </entity>
 
     <!-- EMBEDDABLE -->
 
@@ -442,6 +418,20 @@
             <basic name="value">
                 <column name="ordre"/>
             </basic>        
+        </attributes>
+    </embeddable>
+
+    <!-- ADRESSE -->
+
+    <embeddable class="ch.vd.demaut.domain.demandeur.donneesPerso.Adresse">
+        <attributes>
+            <basic name="voie"/>
+            <basic name="complement"/>
+            <basic name="pays">
+                <enumerated>STRING</enumerated>
+            </basic>
+            <embedded name="npa"/>
+            <embedded name="localite"/>
         </attributes>
     </embeddable>
 

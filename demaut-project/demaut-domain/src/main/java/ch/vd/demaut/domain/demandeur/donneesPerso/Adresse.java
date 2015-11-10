@@ -1,16 +1,15 @@
 package ch.vd.demaut.domain.demandeur.donneesPerso;
 
-import ch.vd.demaut.commons.annotations.Entity;
-import ch.vd.demaut.commons.entities.AbstractEntity;
-import ch.vd.demaut.domain.demandeur.Localite;
-import ch.vd.demaut.domain.demandeur.Pays;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-//TODO cette classe est vraiment une entité? Cette classe pourrait être reutilisé par "Activités/futures/Etablissement"
-@Entity
-public class Adresse extends AbstractEntity {
+import ch.vd.demaut.commons.annotations.ValueObject;
+import ch.vd.demaut.commons.vo.BaseValueObject;
+import ch.vd.demaut.domain.demandeur.Localite;
+import ch.vd.demaut.domain.demandeur.Pays;
+
+@ValueObject
+public class Adresse extends BaseValueObject {
 
     private String voie;
 
