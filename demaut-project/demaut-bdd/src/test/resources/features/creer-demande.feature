@@ -26,14 +26,17 @@ Fonctionnalité: Créer une demande
       | Sage-femme                | oui                | Autre         |
       | Thérapeute de la motricité| non                | Autre         |
 
+  @creer-demande-avec-gln
   Scénario: Créer une demande avec code GLN valide
     Lorsque l´utilisateur initialise une demande de profession "Medecin" avec un code GLN valide
     Alors le système Demaut crée la demande avec les caractéristiques [état: "Brouillon", utilisateur: "joe.dalton@vd.ch", type: "Medecin"]
   
+  @creer-demande-avec-gln
   Scénario: Refuser de créer une demande sans code GLN
     Lorsque l´utilisateur initialise une demande de profession "Medecin" sans code GLN
     Alors le système Demaut "refuse" de créer la demande
 
+  @creer-demande-sans-gln
   Scénario: Créer une demande sans code GLN
     Lorsque l´utilisateur initialise une demande de profession "Osteopathe" sans code GLN
     Alors le système Demaut crée la demande avec les caractéristiques [état: "Brouillon", utilisateur: "joe.dalton@vd.ch", type: "Osteopathe"]
