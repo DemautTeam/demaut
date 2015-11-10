@@ -29,6 +29,7 @@ import java.util.List;
 @Path("/diplomes")
 public class DiplomeRestImpl extends AbstractRestService {
 
+    //TODO: Remove this and make it a global class for date patterns
     public static final DateTimeFormatter SHORT_DATE_PARSER = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     private static final Logger LOG = LoggerFactory.getLogger(DiplomeRestImpl.class);
 
