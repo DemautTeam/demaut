@@ -1,0 +1,1 @@
+java -cp "hibernate-5.0.0-Final/*:../../demaut-project/demaut-commons/target/*:../../demaut-project/demaut-domain/target/*" org.hibernate.tool.hbm2ddl.SchemaExport --properties=hibernate-oracle.properties --output=demaut-oracle-hibernate.ddl ../../demaut-project/demaut-data-jpa/src/main/resources/META-INF/orm.xml 
